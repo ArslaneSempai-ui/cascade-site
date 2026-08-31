@@ -160,6 +160,7 @@ if not HOTE.endswith(".github.io"):
     f"User-agent: *\nAllow: /\nSitemap: {BASE_URL}sitemap.xml\n")
 (DOCS / ".well-known").mkdir()
 (DOCS / ".well-known" / "security.txt").write_text(
+    "Contact: mailto:contact@cascade-routing.com\n"
     "Contact: https://github.com/ArslaneSempai-ui/cascade-site/issues\n"
     "Contact: https://github.com/ArslaneSempai-ui/cascade-routing/issues\n"
     "Expires: 2027-08-31T00:00:00.000Z\n"
