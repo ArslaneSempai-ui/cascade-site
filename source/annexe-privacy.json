@@ -14,7 +14,10 @@
         "t": "Verify the lock",
         "p": "The suite fails if any source file gains a network destination outside the two-entry list.",
         "cmd": [
-          { "c": "npm test", "n": "fails on any new outbound destination" }
+          {
+            "c": "npm test",
+            "n": "fails on any new outbound destination"
+          }
         ],
         "refs": "src/cascade.test.ts:1065 &#183; src/cascade.test.ts:1094"
       }
@@ -36,7 +39,10 @@
         "t": "Watch a pass",
         "p": "The egress command observes the measuring process and publishes hosts, verdict, and its own limit.",
         "cmd": [
-          { "c": "npm run egress", "n": "samples connections during a pass; record committed, paths scrubbed" }
+          {
+            "c": "npm run egress",
+            "n": "samples connections during a pass; record committed, paths scrubbed"
+          }
         ],
         "refs": "src/egress.ts:341 &#183; egress.json:12"
       }
@@ -50,7 +56,10 @@
         "t": "Verify the screen",
         "p": "Start it and probe it: the listener is loopback-bound and foreign-origin writes bounce.",
         "cmd": [
-          { "c": "npm start", "n": "serves on localhost only, no request log" }
+          {
+            "c": "npm start",
+            "n": "serves on localhost only, no request log"
+          }
         ],
         "refs": "src/server.ts:702 &#183; src/server.ts:504"
       }
@@ -58,7 +67,7 @@
     {
       "h2": "One production dependency, swept",
       "html": [
-        "<p>The tool has <b>one production dependency</b>, the model runtime library. A telemetry sweep across all of its installed packages finds hits only in a development tool's editor protocol — nothing in the production path. The library's single remote destination is the public weights host, used once on first run; the offline flag turns even that off by telling the library <b>never to reach the network</b>.</p>",
+        "<p>The tool has <b>one production dependency</b>, the model runtime library. A telemetry sweep across all of its installed packages finds hits only in a development tool's editor protocol — nothing in the production path. The library's single remote destination is the public weights host, used once on first run; the offline flag turns even that off by telling the library <b>never to reach the network</b> — and the library disobeys for one public metadata file on every load, which the tool now refuses by name rather than allows in silence. One more address, found by sweeping the dependencies themselves: a package inside the runtime embeds a CDN host for WASM artefacts, on a path this tool never exercises — named here because a list kept in our sources cannot see inside a dependency.</p>",
         "<p>Declared plainly: native binaries cannot be read by a text sweep, so that corner is not verifiable by grep — its floor is the behavioural egress record above.</p>"
       ]
     },

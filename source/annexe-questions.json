@@ -14,7 +14,10 @@
         "t": "Try it on one file",
         "p": "One CSV, one flag. Add your regexes as a free tier with a second flag.",
         "cmd": [
-          { "c": "npm run measure:yours -- --cases=your-file.csv --rules=rules.json", "n": "your fields, your rules, measured as tiers" }
+          {
+            "c": "npm run measure:yours -- --cases=your-file.csv --rules=rules.json",
+            "n": "your fields, your rules, measured as tiers"
+          }
         ],
         "refs": "src/your-cases.ts:18 &#183; src/your-cases.ts:313"
       }
@@ -29,7 +32,10 @@
         "t": "Watch it run",
         "p": "The egress command samples open connections during a pass and publishes hosts and verdict.",
         "cmd": [
-          { "c": "npm run egress", "n": "observes the pass; the committed record shows 0 connections" }
+          {
+            "c": "npm run egress",
+            "n": "observes the pass; the committed record shows 0 connections"
+          }
         ],
         "refs": "src/tiers.ts:523 &#183; egress.json:12"
       }
@@ -37,15 +43,21 @@
     {
       "h2": "&#8220;Do we need a connection?&#8221;",
       "html": [
-        "<p>Once. The first measurement downloads 1.3 GB of pinned model weights from huggingface.co, says so before doing it, and never again. The test suite downloads nothing. In steady state exactly one command touches the network — the public benchmark, where a public dataset comes down and <b>nothing of yours goes up</b>.</p>",
-        "<p>Closed network: the weights export to a USB drive on one machine and import on yours, <b>every file checked against its SHA&#8209;256 and pinned revision before anything is written</b> — then an offline flag refuses the network outright, and a missing model is named with its size instead of hanging.</p>"
+        "<p>Almost only once. The first measurement downloads 1.3 GB of pinned model weights from huggingface.co and says so before doing it. After that, one small call remains, <b>measured and admitted</b>: the model library asks huggingface.co for a public metadata file each time the extractors load — upstream behaviour, nothing of yours in it, and the offline flag turns it into a named refusal. The test suite downloads nothing, and the public benchmark is the one command that fetches a dataset: it comes down, <b>nothing of yours goes up</b>.</p>",
+        "<p>Closed network: the weights export to a USB drive on one machine and import on yours, <b>every file checked against its SHA&#8209;256 and pinned revision before anything is written</b>. One honest stop sign: because of the metadata call above, the encoder tiers cannot yet run fully air&#8209;gapped — under the offline flag the tool <b>refuses loudly, cause named</b>, rather than breaking mid&#8209;run.</p>"
       ],
       "verif": {
         "t": "Cross the air gap",
         "p": "Export on a connected machine, import on the closed one; the offline flag seals it.",
         "cmd": [
-          { "c": "npm run poids -- --export /media/usb/cascade-weights", "n": "packs the pinned weights for transport" },
-          { "c": "npm run poids -- --import /media/usb/cascade-weights", "n": "verifies hash and revision before writing" }
+          {
+            "c": "npm run poids -- --export /media/usb/cascade-weights",
+            "n": "packs the pinned weights for transport"
+          },
+          {
+            "c": "npm run poids -- --import /media/usb/cascade-weights",
+            "n": "verifies hash and revision before writing"
+          }
         ],
         "refs": "README.md:98 &#183; README.md:109"
       }
@@ -60,7 +72,10 @@
         "t": "Verify the witness",
         "p": "The sentinel test is in the suite: plant values, run the tool, fail if one leaks into the output.",
         "cmd": [
-          { "c": "npm test", "n": "fails if a client value reaches the returned file" }
+          {
+            "c": "npm test",
+            "n": "fails if a client value reaches the returned file"
+          }
         ],
         "refs": "src/cascade.test.ts:3376 &#183; src/your-cases.ts:1193"
       }
@@ -82,7 +97,10 @@
         "t": "The one-second version",
         "p": "On a fresh clone, before npm install, the first answer is already reproducible.",
         "cmd": [
-          { "c": "node src/premiere-reponse.mjs", "n": "the conclusion, from the sealed records, no install" }
+          {
+            "c": "node src/premiere-reponse.mjs",
+            "n": "the conclusion, from the sealed records, no install"
+          }
         ],
         "refs": "src/premiere-reponse.mjs:10 &#183; README.md:149"
       }
@@ -104,8 +122,14 @@
         "t": "Verify a report",
         "p": "Any signed report checks against the repository's public key — by your audit team, not by us.",
         "cmd": [
-          { "c": "node src/verifier-rapport.mjs rapport.html", "n": "proves origin and integrity — and nothing about correctness" },
-          { "c": "npm test", "n": "recomputes every published figure against the sources" }
+          {
+            "c": "node src/verifier-rapport.mjs rapport.html",
+            "n": "proves origin and integrity — and nothing about correctness"
+          },
+          {
+            "c": "npm test",
+            "n": "recomputes every published figure against the sources"
+          }
         ],
         "refs": "src/verifier-rapport.mjs:13 &#183; README.md:129"
       }
