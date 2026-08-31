@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-31VKR8/GDl1mctp9+5A7YkHw1mPRwVhHn8a4dqNGDR8='; script-src 'sha256-QivZaX6dmdcOV0nRpHw2yo/u7Nkvrajyj73I7pzzxBY='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-w6WRqMDdOjFTfcicDKbetbnjmsxkhPdFVWFo10onbI0='; script-src 'sha256-QivZaX6dmdcOV0nRpHw2yo/u7Nkvrajyj73I7pzzxBY='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade, method and reproducibility</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://arslanesempai-ui.github.io/cascade-site/method.html">
@@ -206,9 +206,10 @@
     /* la bande donne 100vw au titre : on lui rend la marge droite de la page,
        sinon le clip de la racine mange la fin des lignes (mesuré à 375) */
     .haut{padding-right:calc(50vw + clamp(1.2rem,3.4vw,3.2rem))}
-    .plaque{position:static;transform:none;width:min(70vw,340px);height:auto;
-            margin:1rem auto 0}
-    .plaque img{height:auto}
+    /* la même boîte à deux dimensions qu'au desktop : un portrait (le cadenas)
+       ne domine plus les paysages — constat d'Arslane sur la planche mobile */
+    .plaque{position:static;transform:none;width:min(70vw,340px);
+            height:min(30vh,240px);margin:1rem auto 0}
     .oeil .fno{white-space:nowrap}
     .socle-ombre,.fig-objet{display:none}
     h1{max-width:none}

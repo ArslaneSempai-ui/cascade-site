@@ -321,9 +321,10 @@ CSS = """
     /* la bande donne 100vw au titre : on lui rend la marge droite de la page,
        sinon le clip de la racine mange la fin des lignes (mesuré à 375) */
     .haut{padding-right:calc(50vw + clamp(1.2rem,3.4vw,3.2rem))}
-    .plaque{position:static;transform:none;width:min(70vw,340px);height:auto;
-            margin:1rem auto 0}
-    .plaque img{height:auto}
+    /* la même boîte à deux dimensions qu'au desktop : un portrait (le cadenas)
+       ne domine plus les paysages — constat d'Arslane sur la planche mobile */
+    .plaque{position:static;transform:none;width:min(70vw,340px);
+            height:min(30vh,240px);margin:1rem auto 0}
     .oeil .fno{white-space:nowrap}
     .socle-ombre,.fig-objet{display:none}
     h1{max-width:none}
