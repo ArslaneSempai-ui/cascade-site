@@ -14,7 +14,10 @@
         "t": "Verify the split",
         "p": "Run the suite. The split test walks the corpus and fails if any document or phrasing appears in two slices.",
         "cmd": [
-          { "c": "npm test", "n": "fails if two slices share a document or a phrasing" }
+          {
+            "c": "npm test",
+            "n": "fails if two slices share a document or a phrasing"
+          }
         ],
         "refs": "src/corpus.ts:164 &#183; src/cascade.test.ts:47"
       }
@@ -29,7 +32,10 @@
         "t": "Verify the enumeration",
         "p": "Run the optimiser. It enumerates from the sealed record and announces the human tier as an assumption, every time.",
         "cmd": [
-          { "c": "npm run optimise", "n": "prints the optimal routing, human tier flagged as assumed" }
+          {
+            "c": "npm run optimise",
+            "n": "prints the optimal routing, human tier flagged as assumed"
+          }
         ],
         "refs": "src/optimise.ts:379 &#183; src/readme.ts:790"
       }
@@ -37,14 +43,17 @@
     {
       "h2": "The record is frozen by a fingerprint",
       "html": [
-        "<p>The published record carries a <b>content fingerprint</b> — a canonical SHA&#8209;256, and the reader <b>refuses</b> a record whose fingerprint is absent or no longer matches. Refuses, not warns: a hand&#8209;edited measurement fails loudly. The stamp in this site's masthead is that fingerprint.</p>",
+        "<p>The published record carries a <b>content fingerprint</b> — a canonical SHA&#8209;256, and the reader <b>refuses</b> a record whose fingerprint is absent or no longer matches. Refuses, not warns: a hand&#8209;edited measurement fails loudly. The stamp in this site's masthead is that fingerprint — and because it is a plain SHA&#8209;256 of the content, <b>anyone can recompute it</b>: the seal is not our word, it is arithmetic you can run.</p>",
         "<p>Two limits the sealing tool states about itself: the fingerprint covers everything in the file except the fingerprint key, and it proves nothing about what happened <b>before</b> sealing — the only gesture that produces a measurement is the measurement command. And one repair published rather than hidden: the git commit the reference record was measured at was later rewritten away by a history purge; the repository records the replacement commit and labels the mapping <b>&#8220;inferred, not recorded&#8221;</b>.</p>"
       ],
       "verif": {
         "t": "Verify the seal",
         "p": "The reader refuses an altered record; the sealing command re-fingerprints only what is already on disk.",
         "cmd": [
-          { "c": "npm run sceller", "n": "re-seals the record; an edited file fails on next read" }
+          {
+            "c": "npm run sceller",
+            "n": "re-seals the record; an edited file fails on next read"
+          }
         ],
         "refs": "src/measure.ts:279 &#183; src/sceller.ts:12"
       }
@@ -58,7 +67,10 @@
         "t": "Verify the arithmetic",
         "p": "The interval code is thirty lines and its guard is tested; the declared method is in the published record.",
         "cmd": [
-          { "c": "npm test", "n": "covers the interval guard and the declared method" }
+          {
+            "c": "npm test",
+            "n": "covers the interval guard and the declared method"
+          }
         ],
         "refs": "src/interval.ts:32 &#183; src/inventory.ts:63"
       }
@@ -73,7 +85,10 @@
         "t": "Verify the retirement",
         "p": "Rerun the bench. Below the memory floor it marks its own durations non-transportable rather than publishing them.",
         "cmd": [
-          { "c": "npm run contrainte", "n": "regenerates the bench record, durations qualified in the field name" }
+          {
+            "c": "npm run contrainte",
+            "n": "regenerates the bench record, durations qualified in the field name"
+          }
         ],
         "refs": "rapports/2026-08-22-contrainte-de-sortie.md:17 &#183; contrainte.json:34"
       }
@@ -87,9 +102,18 @@
         "t": "Run it yourself",
         "p": "The three commands below are the whole loop: remeasure, measure yours, compare.",
         "cmd": [
-          { "c": "MESURE_VOULUE=1 npm run measure", "n": "reruns the full measurement and freezes a sealed record" },
-          { "c": "npm run measure:yours -- --cases=your-file.csv", "n": "your cases, same grader, same intervals — nothing leaves your machine" },
-          { "c": "npm run diff", "n": "compares two sealed passes case by case" }
+          {
+            "c": "MESURE_VOULUE=1 npm run measure",
+            "n": "reruns the full measurement and freezes a sealed record"
+          },
+          {
+            "c": "npm run measure:yours -- --cases=your-file.csv",
+            "n": "your cases, same grader, same intervals — nothing leaves your machine"
+          },
+          {
+            "c": "npm run diff",
+            "n": "compares two sealed passes case by case"
+          }
         ],
         "refs": "src/measure.ts:941 &#183; src/your-cases.ts:1185"
       }
