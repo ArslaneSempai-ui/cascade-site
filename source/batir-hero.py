@@ -119,7 +119,7 @@ ETATS = [
         "wilson": None,
         "haut_d": (16807, "16&#8239;807",
                    "Every combination of seven readers over five fields. Not a sample."),
-        "bas_d": (8403, "120 files &#183; 584 tests",
+        "bas_d": (8403, "120 files &#183; 595 tests",
                   "Held out and frozen; the tests run on your machine."),
         "bas_sans_point": True,
         "reserve": ("<b>The corpus here is synthetic:</b> which is exactly why the real "

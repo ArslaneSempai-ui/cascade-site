@@ -17,8 +17,6 @@
     "32": "conclusions rétractées au total",
     "11": "rétractations rattrapées avant que personne ne les voie",
     "16807": "routages énumérés par le banc, sept paliers puissance cinq champs",
-    "584": "tests livrés avec l'outil, comptés depuis les sources",
-    "65": "fichiers de tests",
     "33": "valeurs justes parmi les 53 livrées",
     "53": "valeurs livrées après abstention, 150 moins 97",
     "0": "dossiers perdus par le routage visé : aucun dossier complet du publié n'est cassé — document.json, bloc apparié",
@@ -28,7 +26,7 @@
     "51": "paquets installés sur une machine — LICENCES.md:4",
     "77": "paquets du verrou avec empreinte — SECURITE.md:16 et package-lock.json",
     "523": "ligne de exigerHoteLocal dans src/tiers.ts — retrouvée par la passe du 31/08",
-    "66": "ligne des empreintes de poids dans src/poids.ts — retrouvée par la passe du 31/08",
+    "66": "fichiers de tests — README.md:134, même garde",
     "129": "ligne du test de refus dans src/poids.test.ts — retrouvée par la passe du 31/08",
     "24": "version minimale de Node — package.json:53, engines",
     "295": "ligne du défaut OLLAMA boucle locale dans src/tiers.ts — passe du 31/08",
@@ -74,7 +72,8 @@
     "25": "repère d'échelle des instruments par état — spans HTML depuis le 31/08",
     "40": "repère d'échelle des instruments par état — spans HTML depuis le 31/08",
     "75": "repère d'échelle des instruments par état — spans HTML depuis le 31/08",
-    "200": "repère d'échelle des instruments par état — spans HTML depuis le 31/08"
+    "200": "repère d'échelle des instruments par état — spans HTML depuis le 31/08",
+    "595": "tests livrés avec l'outil, comptés depuis les sources — README.md:134, vérifié par la garde de dérive de assembler.py"
   },
   "derive": {
     "17.7": "94,4 moins 76,7, sur les mêmes 120 dossiers",

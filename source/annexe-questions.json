@@ -115,7 +115,7 @@
     {
       "h2": "&#8220;Why should we believe these figures?&#8221;",
       "html": [
-        "<p>Because they are <b>recomputed, sealed, signed — and retracted when wrong</b>. The test suite first checks that the README, the landing record and the dossier still match the code, then runs <b>584 tests across 65 files, counted from the sources</b>. The security and licence documents are generated, marked as such, and fail the suite when they drift. Measurement records carry a fingerprint, and a hand&#8209;edited one is refused. Reports are signed; the public key lives in the repository and a bundled script verifies any report without trusting us.</p>",
+        "<p>Because they are <b>recomputed, sealed, signed — and retracted when wrong</b>. The test suite first checks that the README, the landing record and the dossier still match the code, then runs <b>595 tests across 66 files, counted from the sources</b>. The security and licence documents are generated, marked as such, and fail the suite when they drift. Measurement records carry a fingerprint, and a hand&#8209;edited one is refused. Reports are signed; the public key lives in the repository and a bundled script verifies any report without trusting us.</p>",
         "<p>The uncomfortable parts are published too: a retraction file lists <b>every published conclusion that turned out to be wrong</b>, and the secret sweep across 633 commits reports 0 undeclared secrets reachable from HEAD — zero among the 20 forms the sweep looks for, which is what a sweep can honestly say.</p>"
       ],
       "verif": {

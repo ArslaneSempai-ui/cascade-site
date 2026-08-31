@@ -160,6 +160,35 @@ publiques = [n for n in PROD.values() if n != "404.html"]
     + "".join(f"  <url><loc>{BASE_URL}{n}</loc></url>\n" for n in publiques)
     + "</urlset>\n")
 
+# ── la garde de dérive : le compte de tests que le site PUBLIE ───────────────
+# Le 31 août, le dépôt est passé de 584/65 à 595/66 en une heure et le site a
+# continué d'afficher l'ancien — sur la page même qui promet qu'un tel chiffre
+# « cannot silently rot ». La règle vérifiable devient donc un refus.
+# Elle dit AUSSI quand elle n'a pas pu regarder : un silence se lirait comme un
+# accord, et c'est exactement le vert vide qu'on cherche à éviter.
+DEPOT = pathlib.Path.home() / "Documents" / "cascade" / "README.md"
+publie = set()
+for page in DOCS.glob("*.html"):
+    publie |= set(re.findall(r"(\d+) tests(?: across (\d+) files)?",
+                             page.read_text()))
+comptes = {n for n, _ in publie}
+fichiers = {f for _, f in publie if f}
+if not DEPOT.exists():
+    print(f"  ! compte de tests NON VÉRIFIÉ : {DEPOT} absent — "
+          f"le site publie {sorted(comptes)} tests / {sorted(fichiers)} fichiers")
+else:
+    m = re.search(r"\*\*(\d+) tests\*\* across (\d+) files", DEPOT.read_text())
+    if not m:
+        sys.exit(f"la phrase des tests est introuvable dans {DEPOT} — "
+                 f"garde cassée, son silence ne vaut rien")
+    vrai_n, vrai_f = m.group(1), m.group(2)
+    if comptes - {vrai_n} or fichiers - {vrai_f}:
+        sys.exit(f"DÉRIVE DU COMPTE DE TESTS : le dépôt dit {vrai_n} tests / "
+                 f"{vrai_f} fichiers, le site publie {sorted(comptes)} / "
+                 f"{sorted(fichiers)} — corriger les JSON avant d'assembler")
+    print(f"  compte de tests vérifié contre le dépôt : {vrai_n} tests, "
+          f"{vrai_f} fichiers")
+
 # ── le contrôle de liens, témoin d'abord ─────────────────────────────────────
 def liens_casses(dossier):
     casses = []
