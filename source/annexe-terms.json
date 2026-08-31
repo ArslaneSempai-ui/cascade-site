@@ -7,7 +7,7 @@
     {
       "h2": "Thirty days, in writing",
       "html": [
-        "<p>The Evaluation Grant is in the licence file, not in a sales deck: <b>thirty days from first use</b>, on your organisation's own data, for its own internal evaluation, with the output shareable inside your organisation. Three things it forbids, in plain words: relying on the output in production, redistributing the software, publishing the output externally. The period extends <b>in writing only</b> — and anything beyond evaluation is a separate commercial licence.</p>"
+        "<p>The Evaluation Grant is in the licence file, not in a sales deck: <b>thirty days from first use</b>, on your organisation's own data, for its own internal evaluation, with the output shareable inside your organisation. Three things it forbids, in plain words: relying on the output in production, redistributing the software, publishing the output externally. The period is extended <b>only in writing</b> — and anything beyond evaluation is a separate commercial licence.</p>"
       ],
       "verif": {
         "t": "Read the grant",

@@ -8,7 +8,7 @@
       "h2": "&#8220;What if our fields are not your five?&#8221;",
       "html": [
         "<p>The fields come from <b>your file</b>. In the CSV you pass to the measuring command, every column beyond the first two is a field to extract, named by its header — nothing else to configure. The question put to the models is built from the column name, so a field this repository has never seen gets asked about without anyone writing code.</p>",
-        "<p>Your house rules join in as regexes and become <b>a tier measured like any other</b> — regexes only: your arbitrary rule code stays yours, and the tool says plainly it cannot see it. A filled&#8209;in questionnaire becomes the assumptions of a run.</p>"
+        "<p>Your house rules enter as regexes and become <b>a tier measured like any other</b> — regexes only: your arbitrary rule code stays yours, and the tool says plainly it cannot see it. A filled&#8209;in questionnaire becomes the assumptions of a run.</p>"
       ],
       "verif": {
         "t": "Try it on one file",
