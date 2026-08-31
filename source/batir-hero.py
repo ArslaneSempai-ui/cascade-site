@@ -224,7 +224,7 @@ HERO_CSS = """
   .marque b{font:700 14px/1 var(--sans);letter-spacing:.26em;color:var(--encre)}
   .sep-v{width:1px;align-self:stretch;background:var(--filet-clair);margin:.15rem 0}
   .desc{font:italic 400 15px/1.3 var(--texte);color:var(--demi)}
-  .tampon{margin-left:auto;border:1px solid var(--filet);padding:.34rem .7rem;
+  .tete .tampon{margin-left:auto;border:1px solid var(--filet);padding:.34rem .7rem;
           font:500 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;
           color:var(--pale)}
   .oeil{display:flex;align-items:center;gap:.9rem;text-transform:none;
@@ -394,6 +394,22 @@ HERO_CSS = """
     .fig-objet{display:none}
     .note-flux .nt-fig{display:inline;margin-left:.5rem}
     .inst{width:100%}
+    /* l'objet revient EN FLUX sous la bande — la règle commune l'envoyait en
+       absolute au fond de l'écran, derrière le pupitre (constat du 31/08) */
+    .plaque{position:static;width:min(58vw,300px);margin:1.1rem auto .3rem;
+            transform:none}
+    .js .ecran .plaque{transform:none}
+  }
+  @media (max-width:640px){
+    /* les drapeaux couvrent 60 % de l'axe à cette largeur : aucun créneau
+       libre pour l'étiquette d'écart — les drapeaux portent déjà les chiffres */
+    .ecart-l{display:none}
+    .tete{display:block}
+    .sep-v{display:none}
+    .desc{display:block;margin-top:.35rem}
+    .tete .tampon{display:block;margin:.6rem 0 0;text-align:center;
+            font-size:9px;letter-spacing:.09em;padding:.3rem .4rem;
+            white-space:nowrap}
   }
 """
 

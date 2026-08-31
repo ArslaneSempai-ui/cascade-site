@@ -303,6 +303,20 @@ CSS = """
   @media (prefers-reduced-motion:reduce){
     summary .cr,summary,.retour,.annexes a{transition:none}
   }
+  @media (max-width:640px){
+    .tete{display:block}
+    .sep-v{display:none}
+    .desc{display:block;margin-top:.35rem}
+    .tampon{display:block;margin:.6rem 0 0;text-align:center;
+            font-size:9px;letter-spacing:.09em;padding:.3rem .4rem;
+            white-space:nowrap}
+    /* l'œil en deux rangées : la rubrique, puis le retour — plus de trois
+       colonnes tassées */
+    .oeil{display:block}
+    .oeil::after{display:none}
+    .oeil .fno{margin-right:.9rem}
+    .retour{display:block;margin-top:.4rem}
+  }
   @media (max-width:1080px){
     /* la bande donne 100vw au titre : on lui rend la marge droite de la page,
        sinon le clip de la racine mange la fin des lignes (mesuré à 375) */

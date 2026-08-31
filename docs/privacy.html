@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-Qpy58PacPaakbG/a/x9VsTn2vb8Xxv85ksCavgJSceU='; script-src 'sha256-QivZaX6dmdcOV0nRpHw2yo/u7Nkvrajyj73I7pzzxBY='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-31VKR8/GDl1mctp9+5A7YkHw1mPRwVhHn8a4dqNGDR8='; script-src 'sha256-QivZaX6dmdcOV0nRpHw2yo/u7Nkvrajyj73I7pzzxBY='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade, privacy</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://arslanesempai-ui.github.io/cascade-site/privacy.html">
@@ -187,6 +187,20 @@
 
   @media (prefers-reduced-motion:reduce){
     summary .cr,summary,.retour,.annexes a{transition:none}
+  }
+  @media (max-width:640px){
+    .tete{display:block}
+    .sep-v{display:none}
+    .desc{display:block;margin-top:.35rem}
+    .tampon{display:block;margin:.6rem 0 0;text-align:center;
+            font-size:9px;letter-spacing:.09em;padding:.3rem .4rem;
+            white-space:nowrap}
+    /* l'œil en deux rangées : la rubrique, puis le retour — plus de trois
+       colonnes tassées */
+    .oeil{display:block}
+    .oeil::after{display:none}
+    .oeil .fno{margin-right:.9rem}
+    .retour{display:block;margin-top:.4rem}
   }
   @media (max-width:1080px){
     /* la bande donne 100vw au titre : on lui rend la marge droite de la page,
