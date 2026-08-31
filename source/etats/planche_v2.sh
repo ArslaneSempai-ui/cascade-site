@@ -1,7 +1,7 @@
 #!/bin/bash
 # Planche v2 : les six objets sur crème, rangée du haut ; références 3dicons en bas.
 set -e
-E="/private/tmp/claude-501/-Users-arslanechr-Downloads-atlas-final-en-fr/9eaa6456-ea12-48c5-bd77-6279f40c9def/scratchpad/maquette-cascade/etats"
+E="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$E"
 CREME="0xf2ede2"
 

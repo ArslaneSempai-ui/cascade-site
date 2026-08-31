@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Assemble le site hors du scratchpad, vers ~/Documents/cascade-site.
+"""Assemble le site : bâtit les pages, puis remplit docs/ et source/.
 
-Le scratchpad est éphémère ; ce script sort les DEUX choses qui comptent :
+Lancé depuis source/, il se reconnaît et ne recopie pas la chaîne sur
+elle-même. Ce qu'il produit :
   docs/    le site bâti, noms de production (index.html, security.html…),
            prêt pour n'importe quel hébergement statique ;
   source/  toute la chaîne de fabrication — bâtisseurs, contenus JSON, relevé,
