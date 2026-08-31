@@ -278,7 +278,10 @@ HERO_CSS = """
          color:var(--demi)}
   .cap-i b{font:600 10px/1.4 var(--sans);letter-spacing:.14em;
            text-transform:uppercase;color:var(--pale);margin-right:.5rem}
-  .porte{position:relative;height:158px}
+  /* MESURÉ le 31/08 au soir : le drapeau bas (96px + 77px de contenu) sortait
+     de la boîte de 15 px À TOUTES les largeurs — seul le blanc d'en dessous
+     masquait la collision ; à l'étroit, « to 83.3. » écrasait la note. */
+  .porte{position:relative;height:176px}
   .axe{position:absolute;left:0;right:0;top:78px;height:1.5px;background:var(--encre)}
   .grads{position:absolute;left:0;right:0;top:79.5px;height:5px;
          background:repeating-linear-gradient(90deg,var(--filet-clair) 0 1px,
@@ -367,7 +370,7 @@ HERO_CSS = """
   .ancre{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 
   @media (max-height:840px){
-    .porte{height:134px}
+    .porte{height:152px}
     .axe{top:62px}
     .grads{top:63.5px}
     .reps{top:69px}
@@ -396,11 +399,20 @@ HERO_CSS = """
     .inst{width:100%}
     /* l'objet revient EN FLUX sous la bande — la règle commune l'envoyait en
        absolute au fond de l'écran, derrière le pupitre (constat du 31/08) */
-    .plaque{position:static;width:min(58vw,300px);margin:1.1rem auto .3rem;
-            transform:none}
+    /* À DROITE, mordant sur la bande — pas centré dans le vide : la version
+       centrée était la composition téléphone étirée sur une fenêtre de bureau
+       non maximisée (constat d'Arslane, 31/08 au soir). `relative` et non
+       `static` : il faut un z-index pour peindre l'objet PAR-DESSUS le vert. */
+    /* `inset:auto` : le commun pose `right:-6vw` pour sa version absolue —
+       inerte sur static, ce décalage AGIT sur relative (38 px mesurés à 640) */
+    .plaque{position:relative;inset:auto;z-index:2;width:min(46vw,400px);
+            transform:none;
+            margin:calc(-1 * min(5vw,2.8rem)) clamp(1.2rem,3.4vw,3.2rem) .2rem auto}
     .js .ecran .plaque{transform:none}
   }
   @media (max-width:640px){
+    /* le téléphone : la pile centrée validée — l'objet quitte le bord droit */
+    .plaque{width:min(58vw,300px);margin:1.1rem auto .3rem}
     /* les drapeaux couvrent 60 % de l'axe à cette largeur : aucun créneau
        libre pour l'étiquette d'écart — les drapeaux portent déjà les chiffres */
     .ecart-l{display:none}

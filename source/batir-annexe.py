@@ -317,7 +317,21 @@ CSS = """
     .oeil .fno{margin-right:.9rem}
     .retour{display:block;margin-top:.4rem}
   }
-  @media (max-width:1080px){
+  /* ── 641-1080 : la fenêtre de bureau NON MAXIMISÉE ─────────────────────────
+     Le point de bascule téléphone était à 1080 : une fenêtre de 800 recevait la
+     mise en page téléphone agrandie — objet géant centré dans une bande gonflée
+     (constat d'Arslane, 31/08 au soir). Ici on MAINTIENT la composition du
+     large — objet dans la bande, à droite du titre, plus petit — contre les
+     règles téléphone du module commun, qui s'appliquent dès 1080. */
+  @media (min-width:641px) and (max-width:1080px){
+    h1{max-width:min(54vw,760px);
+       font:600 min(clamp(1.9rem,5.2vw,4.7rem),7.2vh)/1.06 var(--texte)}
+    .plaque{position:absolute;right:calc(50vw + clamp(1.2rem,3.4vw,3.2rem));
+            top:50%;transform:translateY(-50%);margin:0;
+            width:min(30vw,340px);height:min(26vh,290px)}
+    .oeil .fno{white-space:nowrap}
+  }
+  @media (max-width:640px){
     /* la bande donne 100vw au titre : on lui rend la marge droite de la page,
        sinon le clip de la racine mange la fin des lignes (mesuré à 375) */
     .haut{padding-right:calc(50vw + clamp(1.2rem,3.4vw,3.2rem))}
