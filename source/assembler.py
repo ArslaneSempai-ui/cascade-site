@@ -25,6 +25,11 @@ MAQ = pathlib.Path(__file__).parent
 SITE = pathlib.Path.home() / "Documents" / "cascade-site"
 DOCS = SITE / "docs"
 BASE_URL = "https://arslanesempai-ui.github.io/cascade-site/"
+# Le chemin sous lequel le site est servi se déduit de l'URL : « /cascade-site/ »
+# aujourd'hui, « / » le jour du domaine propre. Trois usages en dépendent (la
+# base de la 404, l'icône tactile, le contrôle de liens) — ils lisent tous ICI.
+from urllib.parse import urlparse
+PREFIXE = urlparse(BASE_URL).path
 
 PROD = {
     "HERO.html": "index.html",
@@ -98,7 +103,7 @@ def entete_prod(t, neuf):
     """Les métadonnées de production : canonique, couleur d'onglet, icône
     tactile, compléments de la carte de partage."""
     extra = (f'<link rel="canonical" href="{BASE_URL}{neuf}">\n'
-             f'<link rel="apple-touch-icon" href="/cascade-site/apple-touch-icon.png">\n'
+             f'<link rel="apple-touch-icon" href="{PREFIXE}apple-touch-icon.png">\n'
              f'<meta name="theme-color" content="#14251e">')
     t = t.replace('<meta name="viewport" content="width=device-width,initial-scale=1">',
                   '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
@@ -120,7 +125,7 @@ for vieux, neuf in PROD.items():
         # servie pour N'IMPORTE QUEL chemin manquant : ses liens relatifs
         # doivent se résoudre depuis la racine du site, pas depuis le chemin raté
         t = t.replace('<meta charset="utf-8">',
-                      '<meta charset="utf-8"><base href="/cascade-site/">', 1)
+                      f'<meta charset="utf-8"><base href="{PREFIXE}">', 1)
     (DOCS / neuf).write_text(csp(entete_prod(t, neuf)))
 
 # ── les ressources réellement référencées ────────────────────────────────────
@@ -239,10 +244,10 @@ def liens_casses(dossier):
             u = m.group(1).split("#")[0]
             if u.startswith(("http", "data:", "mailto:")) or not u:
                 continue
-            # racine-relatif sous le préfixe du site : /cascade-site/x → x,
+            # racine-relatif sous le préfixe du site : {PREFIXE}x → x,
             # et le préfixe nu est le répertoire — servi comme index.html
-            if u.startswith("/cascade-site/"):
-                u = u.removeprefix("/cascade-site/") or "index.html"
+            if u.startswith(PREFIXE):
+                u = u.removeprefix(PREFIXE) or "index.html"
             elif u.startswith("/"):
                 casses.append(f"{page.name} → {m.group(1)} (racine hors préfixe)")
                 continue
