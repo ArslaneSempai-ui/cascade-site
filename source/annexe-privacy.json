@@ -23,7 +23,7 @@
       "h2": "Where measurements live — and stay",
       "html": [
         "<p>Everything measured on your data lands in a folder <b>git ignores, deliberately</b> — the code says so in as many words — so no measurement can travel into a repository. The detailed attempt journals, which do hold extracted values, live under that same folder, and for client cases they exist <b>only on an explicit flag</b>: the default is no journal at all.</p>",
-        "<p>What a journal header records: CPU model, platform, load. What it never records: <b>no hostname, no username, no path</b>.</p>"
+        "<p>What a journal header records: CPU model, platform, load. What never enters it: <b>hostname, username, path</b>.</p>"
       ]
     },
     {
@@ -44,7 +44,7 @@
     {
       "h2": "A screen that keeps to itself",
       "html": [
-        "<p>The local screen listens on <b>this machine's loopback only</b>, and that is locked by a test which sweeps every server in the repository rather than reciting a list. Any write request carrying a foreign origin is <b>refused before it reaches the counter</b>. And the server keeps <b>no request log at all</b> — its only console output is the startup line and port errors; no body, no address, no access is written anywhere.</p>"
+        "<p>The local screen listens on <b>this machine's loopback only</b>, and that is locked by a test which sweeps every server in the repository rather than reciting a list. Any write request carrying a foreign origin is <b>refused before it reaches the handler</b>. And the server keeps <b>no request log at all</b> — its only console output is the startup line and port errors; no body, no address, no access is written anywhere.</p>"
       ],
       "verif": {
         "t": "Verify the screen",
@@ -59,7 +59,7 @@
       "h2": "One production dependency, swept",
       "html": [
         "<p>The tool has <b>one production dependency</b>, the model runtime library. A telemetry sweep across all of its installed packages finds hits only in a development tool's editor protocol — nothing in the production path. The library's single remote destination is the public weights host, used once on first run; the offline flag turns even that off by telling the library <b>never to reach the network</b>.</p>",
-        "<p>Declared honestly: native binaries cannot be read by a text sweep, so that corner is not verifiable by grep — its floor is the behavioural egress record above.</p>"
+        "<p>Declared plainly: native binaries cannot be read by a text sweep, so that corner is not verifiable by grep — its floor is the behavioural egress record above.</p>"
       ]
     },
     {

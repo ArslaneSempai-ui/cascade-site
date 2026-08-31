@@ -2,7 +2,7 @@
   "_": "Contenu de la page Accessibility. Les faits portent sur CE site : ratios de contraste calculés depuis les couleurs de la charte (script du 31 août 2026, pire paire 5,65:1 arrondie vers le bas), navigation :target sans script, details natifs, garde prefers-reduced-motion présente dans les deux bâtisseurs. La dernière section refuse de certifier ce qui n'a pas été audité — c'est le registre de la maison.",
   "objet": "rendus/etats/objet-accessibilite.webp",
   "titre": "Two ways in, one arrival. <span class=\"deux\">Measured, not promised.</span>",
-  "lede": "This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site's own stylesheet and structure — and each claim ends with the gesture that lets you check it, right now, on the page you are reading.",
+  "lede": "This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site's own stylesheet and structure — and wherever a gesture can check a claim right now, on the page you are reading, the gesture is here.",
   "sections": [
     {
       "h2": "The keyboard is a first-class door",

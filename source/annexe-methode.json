@@ -2,19 +2,19 @@
   "_": "Contenu de la page Method and Reproducibility. Chaque affirmation vient de la passe de vérification du 31 août 2026 (tasks/w7nrsoqna.output), chemins:lignes cités. Interdits par cette passe : appeler 64bdacf une « empreinte » (c'est un commit, réécrit hors de l'historique) ; citer les durées 16-60 % comme publiables ; présenter le palier humain comme une mesure.",
   "objet": "rendus/etats/objet-methode.webp",
   "titre": "One method, no secrets. <span class=\"deux\">Run it twice, compare.</span>",
-  "lede": "This page shows the whole method: what is measured, on which half of the corpus, how the routing is chosen, and how the record is frozen. Every claim lives in the source at a path your reviewers can open — and every step reruns on your machine, so the comparison is yours to make.",
+  "lede": "This page shows the whole method: what is measured, on which slice of the corpus, how the routing is chosen, and how the record is frozen. Every claim lives in the source at a path your reviewers can open — and every step reruns on your machine, so the comparison is yours to make.",
   "sections": [
     {
-      "h2": "Measured on a half the tuning never saw",
+      "h2": "Measured on a slice the tuning never saw",
       "html": [
-        "<p>The corpus is cut into three parts — training, dev, and held&#8209;out — and the published measurement reads <b>only the held&#8209;out half</b>, forced in code, not by discipline. The middle slice exists because of a real mistake: a generative prompt was once tuned while reading held&#8209;out scores. The leak was caught, repaired, and the split hardened so it cannot recur silently: <b>a test fails the suite if two halves share a document or a phrasing</b>.</p>",
-        "<p>One honest limit, stated by the repository itself: the corpus is authored by us. The held&#8209;out split defends against grading our own copy — it does not defend against unrealism. That is what measuring <b>your own cases</b> is for.</p>"
+        "<p>The corpus is cut into three parts — training, dev, and held&#8209;out — and the published measurement reads <b>only the held&#8209;out slice</b>, forced in code, not by discipline. The middle slice exists because of a real mistake: a generative prompt was once tuned while reading held&#8209;out scores. The leak was caught, repaired, and the split hardened so it cannot recur silently: <b>a test fails the suite if two slices share a document or a phrasing</b>.</p>",
+        "<p>One honest limit, stated by the repository itself: the corpus is authored by us. The held&#8209;out slice defends against grading our own copy — it does not defend against unrealism. That is what measuring <b>your own cases</b> is for.</p>"
       ],
       "verif": {
         "t": "Verify the split",
-        "p": "Run the suite. The split test walks the corpus and fails if any document or phrasing appears in two halves.",
+        "p": "Run the suite. The split test walks the corpus and fails if any document or phrasing appears in two slices.",
         "cmd": [
-          { "c": "npm test", "n": "fails if two halves share a document or a phrasing" }
+          { "c": "npm test", "n": "fails if two slices share a document or a phrasing" }
         ],
         "refs": "src/corpus.ts:164 &#183; src/cascade.test.ts:47"
       }
@@ -22,7 +22,7 @@
     {
       "h2": "Every routing, enumerated — with one honest asterisk",
       "html": [
-        "<p>Five fields, seven tiers per field: the optimiser walks <b>all 16,807 assignments exhaustively</b> — a recursive enumeration, no heuristic, no sampling. The count on this page is recalculated from the sources on every check, never typed in.</p>",
+        "<p>Five fields, seven tiers per field: the optimiser walks <b>all 16&#8239;807 assignments exhaustively</b> — a recursive enumeration, no heuristic, no sampling. The count on this page is recalculated from the sources on every check, never typed in.</p>",
         "<p>The asterisk: the seventh tier, <b>human review, is an assumption, not a measurement</b> — and the tool prints exactly that on every pass rather than letting the figure blend in with the measured six.</p>"
       ],
       "verif": {
@@ -52,7 +52,7 @@
     {
       "h2": "Intervals that refuse to flatter",
       "html": [
-        "<p>Every rate ships with a <b>Wilson interval at 95&#8202;%</b>. The repository admits, in writing, that the level is an inherited default rather than a weighed choice. The interval function <b>throws</b> on impossible input instead of returning a quiet NaN, and for two tiers graded on the same cases the repository prefers a paired McNemar test to comparing Wilson intervals, which it documents as too conservative for that job.</p>"
+        "<p>Every rate ships with a <b>Wilson interval at 95%</b>. The repository admits, in writing, that the level is an inherited default rather than a weighed choice. The interval function <b>throws</b> on impossible input instead of returning a quiet NaN, and for two tiers graded on the same cases the repository prefers a paired McNemar test to comparing Wilson intervals, which it documents as too conservative for that job.</p>"
       ],
       "verif": {
         "t": "Verify the arithmetic",
@@ -66,7 +66,7 @@
     {
       "h2": "The figures that were retired",
       "html": [
-        "<p>Not everything measured got published. On the constrained&#8209;output bench, <b>every duration moved by 16 to 60 per cent</b> between two passes on a memory&#8209;starved machine — so the durations were withdrawn, and in the data they were renamed so the defect travels with the number: the field is called <i>non&#8209;transportable, memory famine</i>. You cannot cite it without its qualifier.</p>",
+        "<p>Not everything measured got published. On the constrained&#8209;output bench, <b>every duration moved by 16 to 60 per cent</b> between two passes on a memory&#8209;starved machine — so the durations were withdrawn, and in the data they were renamed so the defect travels with the number: the field itself is called <code>msMedianeNonTransportableFamineMemoire</code> — non-transportable, memory starvation. You cannot cite it without its qualifier.</p>",
         "<p>The token counts from the same bench reproduce to the digit, and those <b>are</b> published. That is the line: what reproduces is shown, what does not is named and withheld.</p>"
       ],
       "verif": {
@@ -81,7 +81,7 @@
     {
       "h2": "Run it twice, compare",
       "html": [
-        "<p>The title is an instruction. The full measurement reruns with one command — it insists on an explicit flag because it downloads 1.26&#8202;GB of pinned weights on first run and takes about an hour — and freezes a fresh record you can set beside ours. Your own files run through <b>the same grader and the same intervals</b>. And two sealed passes compare case by case, because a rate that rose may simply have lost cases.</p>"
+        "<p>The title is an instruction. The full measurement reruns with one command — it insists on an explicit flag because it downloads 1.3 GB of pinned weights on first run — the measurement itself took 32 minutes on the published pass — and freezes a fresh record you can set beside ours. Your own files run through <b>the same grader and the same intervals</b>. And two sealed passes compare case by case, because a rate that rose may simply have lost cases.</p>"
       ],
       "verif": {
         "t": "Run it yourself",

@@ -319,7 +319,8 @@
          background:repeating-linear-gradient(90deg,var(--filet-clair) 0 1px,
                     transparent 1px 5%)}
   .reps{position:absolute;left:0;right:0;top:86px;height:14px;display:block}
-  .reps text{font:500 10px var(--sans);fill:var(--pale)}
+  .reps span{position:absolute;top:0;font:500 10px/1.4 var(--sans);color:var(--pale);
+             white-space:nowrap}
   .plage{position:absolute;top:72px;height:14px;background:rgba(35,84,63,.16)}
   .pt{position:absolute;top:78.75px;width:9px;height:9px;border-radius:50%;
       transform:translate(-50%,-50%)}
@@ -478,7 +479,7 @@
       <div class="porte">
         <span class="plage" style="left:41.75%;width:44.25%"></span>
         <span class="axe"></span><span class="grads"></span>
-        <svg class="reps" viewBox="0 0 660 14"><text x="0" y="11" text-anchor="start">60</text><text x="165" y="11" text-anchor="middle">70</text><text x="330" y="11" text-anchor="middle">80</text><text x="495" y="11" text-anchor="middle">90</text><text x="660" y="11" text-anchor="end">100</text></svg>
+        <div class="reps"><span style="left:0">60</span><span style="left:25.0%;transform:translateX(-50%)">70</span><span style="left:50.0%;transform:translateX(-50%)">80</span><span style="left:75.0%;transform:translateX(-50%)">90</span><span style="left:100%;transform:translateX(-100%)">100</span></div>
         <span class="wil" style="left:20.75%;width:37.5%"><i></i></span>
         <span class="pt a" style="left:86.0%"></span>
         <span class="pt b" style="left:41.75%"></span>
@@ -493,7 +494,7 @@
       <div class="porte">
         <span class="plage" style="left:27.0%;width:68.5%"></span>
         <span class="axe"></span><span class="grads"></span>
-        <svg class="reps" viewBox="0 0 660 14"><text x="0" y="11" text-anchor="start">0</text><text x="165" y="11" text-anchor="middle">50</text><text x="330" y="11" text-anchor="middle">100</text><text x="495" y="11" text-anchor="middle">150</text><text x="660" y="11" text-anchor="end">200</text></svg>
+        <div class="reps"><span style="left:0">0</span><span style="left:25.0%;transform:translateX(-50%)">50</span><span style="left:50.0%;transform:translateX(-50%)">100</span><span style="left:75.0%;transform:translateX(-50%)">150</span><span style="left:100%;transform:translateX(-100%)">200</span></div>
         
         <span class="pt a" style="left:95.5%"></span>
         <span class="pt b" style="left:27.0%"></span>
@@ -501,14 +502,14 @@
         <div class="drapeau d-a" style="left:95.5%;left:100%;transform:translateX(-100%);text-align:right">
           <span class="gv">$191</span><p>The published routing.</p></div>
         <div class="drapeau d-b" style="left:27.0%;">
-          <span class="gv de">$54</span><p>Aiming at the file: worse on no file, 3 gained, 0 lost. p&nbsp;=&nbsp;0.25, accuracy undecided.</p></div>
+          <span class="gv de">$54</span><p>The routing aimed at the file: no file gets worse, 3 gained, 0 lost. p&nbsp;=&nbsp;0.25, accuracy undecided.</p></div>
       </div>
     </div></div><div class="vue" data-e="03"><div class="inst">
       <span class="cap-i"><b>Figure 2</b>Precision, before and after silence</span>
       <div class="porte">
         <span class="plage" style="left:30.0%;width:32.3%"></span>
         <span class="axe"></span><span class="grads"></span>
-        <svg class="reps" viewBox="0 0 660 14"><text x="0" y="11" text-anchor="start">0</text><text x="165" y="11" text-anchor="middle">25</text><text x="330" y="11" text-anchor="middle">50</text><text x="495" y="11" text-anchor="middle">75</text><text x="660" y="11" text-anchor="end">100</text></svg>
+        <div class="reps"><span style="left:0">0</span><span style="left:25.0%;transform:translateX(-50%)">25</span><span style="left:50.0%;transform:translateX(-50%)">50</span><span style="left:75.0%;transform:translateX(-50%)">75</span><span style="left:100%;transform:translateX(-100%)">100</span></div>
         <span class="wil" style="left:48.8%;width:25.299999999999997%"><i></i></span>
         <span class="pt a" style="left:30.0%"></span>
         <span class="pt b" style="left:62.3%"></span>
@@ -523,7 +524,7 @@
       <div class="porte">
         <span class="plage" style="left:26.67%;width:73.33%"></span>
         <span class="axe"></span><span class="grads"></span>
-        <svg class="reps" viewBox="0 0 660 14"><text x="0" y="11" text-anchor="start">0</text><text x="220" y="11" text-anchor="middle">20</text><text x="440" y="11" text-anchor="middle">40</text><text x="660" y="11" text-anchor="end">60</text></svg>
+        <div class="reps"><span style="left:0">0</span><span style="left:33.33%;transform:translateX(-50%)">20</span><span style="left:66.67%;transform:translateX(-50%)">40</span><span style="left:100%;transform:translateX(-100%)">60</span></div>
         
         <span class="pt a" style="left:0.0%"></span>
         
@@ -538,7 +539,7 @@
       <div class="porte">
         <span class="plage" style="left:0.0%;width:100.0%"></span>
         <span class="axe"></span><span class="grads"></span>
-        <svg class="reps" viewBox="0 0 660 14"><text x="0" y="11" text-anchor="start">0</text><text x="660" y="11" text-anchor="end">16&#8239;807</text></svg>
+        <div class="reps"><span style="left:0">0</span><span style="left:100%;transform:translateX(-100%)">16&#8239;807</span></div>
         
         <span class="pt a" style="left:100.0%"></span>
         
@@ -549,13 +550,13 @@
           <span class="gv de">120 files &#183; 584 tests</span><p>Held out and frozen; the tests run on your machine.</p></div>
       </div>
     </div></div></div></div>
-  <div class="pile pile-note"><p class="note-flux vue la" data-e="01"><span class="nt-l">What this does not prove</span><b>Neither number is wrong:</b> they answer different questions, and only one of them is the question at your desk.<span class="nt-fig">Figure 1 &#8212; Five green cells mark the published routing, one per field.</span></p><p class="note-flux vue" data-e="02"><span class="nt-l">What this does not prove</span><b>The sample decides cost, not accuracy:</b> decidable is false, and both dollar figures rest on assumed prices.<span class="nt-fig">Figure 1 &#8212; One cell steps down: the name field moves from large to gen-4b. That is the only difference between the two routings.</span></p><p class="note-flux vue" data-e="03"><span class="nt-l">What this does not prove</span><b>Where the break-even sits is your decision, not ours:</b> we publish the curve, you place the point.<span class="nt-fig">Figure 1 &#8212; Where the rules reader returned 0%, it now returns nothing: the two red cells become gaps. Abstention, drawn.</span></p><p class="note-flux vue" data-e="04"><span class="nt-l">What this does not prove</span><b>Removing a measurement is a discipline, not a guarantee</b> about the figures we keep.<span class="nt-fig">Figure 1 &#8212; No cell is green: nothing here is held up as a result.</span></p><p class="note-flux vue" data-e="05"><span class="nt-l">What this does not prove</span><b>The corpus here is synthetic:</b> which is exactly why the real measurement runs on your records, on your machine.<span class="nt-fig">Figure 1 &#8212; Every cell is green: the full enumeration, one routing at a time.</span></p></div>
+  <div class="pile pile-note"><p class="note-flux vue la" data-e="01"><span class="nt-l">What this does not prove</span><b>Neither number is wrong:</b> they answer different questions, and only one of them is the question at your desk.<span class="nt-fig">Figure 1 &#8212; Five green cells mark the published routing, one per field.</span></p><p class="note-flux vue" data-e="02"><span class="nt-l">What this does not prove</span><b>The sample decides cost, not accuracy:</b> cheaper is decided, better is not — and both dollar figures rest on assumed prices.<span class="nt-fig">Figure 1 &#8212; One cell steps down: the name field moves from large to gen-4b. That is the only difference between the two routings.</span></p><p class="note-flux vue" data-e="03"><span class="nt-l">What this does not prove</span><b>Where the break-even sits is your decision, not ours:</b> we publish the curve, you place the point.<span class="nt-fig">Figure 1 &#8212; Where the rules reader returned 0%, it now returns nothing: the two red cells become gaps. Abstention, drawn.</span></p><p class="note-flux vue" data-e="04"><span class="nt-l">What this does not prove</span><b>Removing a measurement is a discipline, not a guarantee</b> about the figures we keep.<span class="nt-fig">Figure 1 &#8212; No cell is green: nothing here is held up as a result.</span></p><p class="note-flux vue" data-e="05"><span class="nt-l">What this does not prove</span><b>The corpus here is synthetic:</b> which is exactly why the real measurement runs on your records, on your machine.<span class="nt-fig">Figure 1 &#8212; Every cell is green: the full enumeration, one routing at a time.</span></p></div>
   <aside class="fig-objet"><div class="pile"><p class="vue la" data-e="01"><span class="no">Figure 1</span>Five green cells mark the published routing, one per field.</p><p class="vue" data-e="02"><span class="no">Figure 1</span>One cell steps down: the name field moves from large to gen-4b. That is the only difference between the two routings.</p><p class="vue" data-e="03"><span class="no">Figure 1</span>Where the rules reader returned 0%, it now returns nothing: the two red cells become gaps. Abstention, drawn.</p><p class="vue" data-e="04"><span class="no">Figure 1</span>No cell is green: nothing here is held up as a result.</p><p class="vue" data-e="05"><span class="no">Figure 1</span>Every cell is green: the full enumeration, one routing at a time.</p></div></aside>
   <div class="pupitre">
     <nav class="pup-nav" aria-label="Findings"><a class="b-lien la" href="#e01" aria-current="true"><span class="no">01</span><span class="ti">The gap</span><span class="qu">Which rate do you act on?</span></a><a class="b-lien" href="#e02"><span class="no">02</span><span class="ti">The cheaper routing</span><span class="qu">Can a cheaper reader hold?</span></a><a class="b-lien" href="#e03"><span class="no">03</span><span class="ti">Silence over a guess</span><span class="qu">Is a blank worth more than a wrong value?</span></a><a class="b-lien" href="#e04"><span class="no">04</span><span class="ti">What we withhold</span><span class="qu">What did we refuse to publish?</span></a><a class="b-lien" href="#e05"><span class="no">05</span><span class="ti">The engagement</span><span class="qu">What runs, and for how long?</span></a></nav>
     <div class="pied-nuit"><span>On your records, on your machine.
       <b>Nothing leaves the network.</b></span>
-      <nav class="annexes" aria-label="Appendices"><a class="b-lien" href="ANNEXE-METHODE.html">Method and reproducibility</a><a class="b-lien" href="ANNEXE-SECURITE.html">Security and data handling</a><a class="b-lien" href="ANNEXE-QUESTIONS.html">Questions</a><a class="b-lien" href="ANNEXE-TERMS.html">Terms of engagement</a><a class="b-lien" href="ANNEXE-PRIVACY.html">Privacy</a><a class="b-lien" href="ANNEXE-ACCESSIBILITE.html">Accessibility</a><a class="b-lien" href="CONTACT.html">Contact</a></nav></div>
+      <nav class="annexes" aria-label="Appendices"><a class="b-lien" href="ANNEXE-METHODE.html">Method and reproducibility</a><a class="b-lien" href="ANNEXE-SECURITE.html">Security and data handling</a><a class="b-lien" href="ANNEXE-QUESTIONS.html">Questions</a><a class="b-lien" href="ANNEXE-TERMS.html">Terms of engagement</a><a class="b-lien" href="ANNEXE-PRIVACY.html">Privacy</a><a class="b-lien" href="ANNEXE-ACCESSIBILITE.html">Accessibility</a><a class="b-lien" href="CONTACT.html">Contact</a><a class="b-lien" href="MENTIONS.html">Colophon</a></nav></div>
   </div>
 </div>
 <script>
@@ -578,6 +579,9 @@
   addEventListener("hashchange", () => montrer(lire()));
   montrer(lire());
 })();
-document.fonts.ready.then(() => requestAnimationFrame(() =>
-  requestAnimationFrame(() => document.body.classList.add("go"))));
+/* .go rallume la page ; un onglet caché ne sert AUCUN rAF (mesuré le 31/08 :
+   2 s, 0 rAF, page blanche) — le filet de 1500 ms garantit l'allumage même là. */
+const go = () => document.body.classList.add("go");
+document.fonts.ready.then(() => requestAnimationFrame(() => requestAnimationFrame(go)));
+setTimeout(go, 1500);
 </script>

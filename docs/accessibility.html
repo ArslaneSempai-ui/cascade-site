@@ -1,15 +1,22 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-9t6Jgn9laZzMgyorsXUE1gkENh6QovEpVPnZz4AydCU='; script-src 'sha256-QivZaX6dmdcOV0nRpHw2yo/u7Nkvrajyj73I7pzzxBY='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-Qpy58PacPaakbG/a/x9VsTn2vb8Xxv85ksCavgJSceU='; script-src 'sha256-QivZaX6dmdcOV0nRpHw2yo/u7Nkvrajyj73I7pzzxBY='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade, accessibility</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://arslanesempai-ui.github.io/cascade-site/accessibility.html">
+<link rel="apple-touch-icon" href="/cascade-site/apple-touch-icon.png">
+<meta name="theme-color" content="#14251e">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade, accessibility">
-<meta property="og:description" content="This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site&#x27;s own stylesheet and structure — and each claim ends with the gesture that lets you check it, right now, on the page you are reading.">
+<meta property="og:description" content="This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site&#x27;s own stylesheet and structure — and wherever a gesture can check a claim right now, on the page you are reading, the gesture is here.">
 <meta property="og:url" content="https://arslanesempai-ui.github.io/cascade-site/accessibility.html">
 <meta property="og:image" content="https://arslanesempai-ui.github.io/cascade-site/og.png">
+<meta property="og:site_name" content="Cascade">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site&#x27;s own stylesheet and structure — and each claim ends with the gesture that lets you check it, right now, on the page you are reading.">
+<meta name="description" content="This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site&#x27;s own stylesheet and structure — and wherever a gesture can check a claim right now, on the page you are reading, the gesture is here.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fontes/literata.css">
 <style>
@@ -182,9 +189,13 @@
     summary .cr,summary,.retour,.annexes a{transition:none}
   }
   @media (max-width:1080px){
-    .plaque{position:static;transform:none;width:min(96vw,460px);height:auto;
+    /* la bande donne 100vw au titre : on lui rend la marge droite de la page,
+       sinon le clip de la racine mange la fin des lignes (mesuré à 375) */
+    .haut{padding-right:calc(50vw + clamp(1.2rem,3.4vw,3.2rem))}
+    .plaque{position:static;transform:none;width:min(70vw,340px);height:auto;
             margin:1rem auto 0}
     .plaque img{height:auto}
+    .oeil .fno{white-space:nowrap}
     .socle-ombre,.fig-objet{display:none}
     h1{max-width:none}
     .sec-corps{padding-left:.2rem}
@@ -221,7 +232,7 @@
   <span class="socle-ombre"></span>
 
   <div class="doc">
-    <p class="lede">This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site's own stylesheet and structure — and each claim ends with the gesture that lets you check it, right now, on the page you are reading.</p>
+    <p class="lede">This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site's own stylesheet and structure — and wherever a gesture can check a claim right now, on the page you are reading, the gesture is here.</p>
     <details open><summary><span class="cr" aria-hidden="true">&#9656;</span>The keyboard is a first-class door</summary><div class="sec-corps"><p>Every finding on the main screen is a plain address — a link to an anchor. The whole instrument navigates by keyboard alone: <b>Tab reaches every control, Enter opens it</b>, and the browser's back button walks your trail backwards, because each state you visit is a real place in the address bar.</p><p>The one small script on that screen only synchronises the animation clock and the tab title. <b>Switch JavaScript off and every state still opens</b> — the navigation is the address, not a handler.</p><p><i>Try it now: press Tab until the findings rail takes focus, then Enter. Then press Back.</i></p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>Contrast, measured</summary><div class="sec-corps"><p>Computed from this site's own palette, not asserted: body ink on this paper measures <b>11.1:1</b>. The weakest text pairing anywhere on the site measures <b>5.6:1</b>. The accessibility floor for body text is 4.5:1 — every pairing here clears it with room to spare.</p><p>And colour never carries a meaning alone: wherever the green marks something — a shackle, a plateau, a signature — <b>a word or a shape carries the same meaning beside it</b>.</p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>Native parts, native semantics</summary><div class="sec-corps"><p>The sections of every appendix are <b>native disclosure elements</b> — the browser provides the keyboard behaviour and the screen&#8209;reader semantics, so there is no script of ours to get them wrong. Focus is always visible: every interactive element carries a <b>focus ring drawn in the site's own ink</b>, never suppressed.</p><p><i>Try it now: Tab through this very page — each section header announces itself and toggles with Enter or Space.</i></p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>Motion that asks permission</summary><div class="sec-corps"><p>Every transition on this site sits behind the reduced&#8209;motion media query. <b>When your system asks for less motion, the cascade holds still</b> — the same figures, the same states, without the movement.</p><p><i>Try it now: switch on your system's Reduce Motion setting and reload — the page arrives already settled.</i></p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>What this page does not claim</summary><div class="sec-corps"><p>These claims are mechanical — ratios computed, anchors counted, media queries present — so we make them. What we do not certify is the lived experience: this site has not been through an audit by a person who uses a screen reader daily, <b>and that is the only audit of that experience that counts</b>. If your team runs one and finds a fault, it will be fixed and this page will say it was.</p></div></details>
   </div>
 

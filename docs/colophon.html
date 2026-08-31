@@ -1,13 +1,20 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-9t6Jgn9laZzMgyorsXUE1gkENh6QovEpVPnZz4AydCU='; script-src 'none'; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-Qpy58PacPaakbG/a/x9VsTn2vb8Xxv85ksCavgJSceU='; script-src 'none'; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade, colophon and notices</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://arslanesempai-ui.github.io/cascade-site/colophon.html">
+<link rel="apple-touch-icon" href="/cascade-site/apple-touch-icon.png">
+<meta name="theme-color" content="#14251e">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade, colophon and notices">
 <meta property="og:description" content="Who publishes this, under which licences, served from where, and what this site does to its visitors — which is nothing. The one page of a sales site that is usually mumbled; here it follows the same rule as the rest: plain, sourced, short.">
 <meta property="og:url" content="https://arslanesempai-ui.github.io/cascade-site/colophon.html">
 <meta property="og:image" content="https://arslanesempai-ui.github.io/cascade-site/og.png">
+<meta property="og:site_name" content="Cascade">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Who publishes this, under which licences, served from where, and what this site does to its visitors — which is nothing. The one page of a sales site that is usually mumbled; here it follows the same rule as the rest: plain, sourced, short.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
@@ -182,9 +189,13 @@
     summary .cr,summary,.retour,.annexes a{transition:none}
   }
   @media (max-width:1080px){
-    .plaque{position:static;transform:none;width:min(96vw,460px);height:auto;
+    /* la bande donne 100vw au titre : on lui rend la marge droite de la page,
+       sinon le clip de la racine mange la fin des lignes (mesuré à 375) */
+    .haut{padding-right:calc(50vw + clamp(1.2rem,3.4vw,3.2rem))}
+    .plaque{position:static;transform:none;width:min(70vw,340px);height:auto;
             margin:1rem auto 0}
     .plaque img{height:auto}
+    .oeil .fno{white-space:nowrap}
     .socle-ombre,.fig-objet{display:none}
     h1{max-width:none}
     .sec-corps{padding-left:.2rem}

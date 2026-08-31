@@ -74,10 +74,10 @@ ETATS = [
         "wilson": None,
         "haut_d": (191, "$191", "The published routing."),
         "bas_d": (54, "$54",
-                  "Aiming at the file: worse on no file, 3 gained, 0 lost. "
-                  "p&nbsp;=&nbsp;0.25, accuracy undecided."),
-        "reserve": ("<b>The sample decides cost, not accuracy:</b> decidable is false, "
-                    "and both dollar figures rest on assumed prices."),
+                  "The routing aimed at the file: no file gets worse, 3 gained, "
+                  "0 lost. p&nbsp;=&nbsp;0.25, accuracy undecided."),
+        "reserve": ("<b>The sample decides cost, not accuracy:</b> cheaper is decided, "
+                    "better is not — and both dollar figures rest on assumed prices."),
         "fig": "One cell steps down: the name field moves from large to gen-4b. That "
                "is the only difference between the two routings.",
     },
@@ -154,13 +154,19 @@ def inst_html(e):
     xb = _pc(e["bas_d"][0], dom)
     pa, pb, plabel = e["plage"]
     xpa, xpb = _pc(pa, dom), _pc(pb, dom)
+    # Les repères en spans positionnés en pour cent, comme les points : un SVG
+    # est un élément REMPLACÉ — avec une hauteur fixée, son ratio de viewBox
+    # impose sa largeur (660 px) et il déborde sous 660 px de conteneur.
+    # Mesuré le 31/08 à 375 px : les repères 90 et 100 partaient dans le clip.
     reps = []
     n = len(e["reperes"])
     for i, v in enumerate(e["reperes"]):
-        x = _pc(v, dom) * 6.6
-        anc = "start" if i == 0 else ("end" if i == n - 1 else "middle")
+        x = _pc(v, dom)
+        anc = ("left:0" if i == 0 else
+               ("left:100%;transform:translateX(-100%)" if i == n - 1 else
+                f"left:{x}%;transform:translateX(-50%)"))
         lab = f"{v:,}".replace(",", "&#8239;")
-        reps.append(f'<text x="{x:.0f}" y="11" text-anchor="{anc}">{lab}</text>')
+        reps.append(f'<span style="{anc}">{lab}</span>')
     wil = ""
     if e["wilson"]:
         lo, hi = _pc(e["wilson"][0], dom), _pc(e["wilson"][1], dom)
@@ -189,7 +195,7 @@ def inst_html(e):
       <div class="porte">
         <span class="plage" style="left:{min(xpa, xpb)}%;width:{abs(xpb - xpa)}%"></span>
         <span class="axe"></span><span class="grads"></span>
-        <svg class="reps" viewBox="0 0 660 14">{"".join(reps)}</svg>
+        <div class="reps">{"".join(reps)}</div>
         {wil}
         <span class="pt a" style="left:{xa}%"></span>
         {pt_b}
@@ -278,7 +284,8 @@ HERO_CSS = """
          background:repeating-linear-gradient(90deg,var(--filet-clair) 0 1px,
                     transparent 1px 5%)}
   .reps{position:absolute;left:0;right:0;top:86px;height:14px;display:block}
-  .reps text{font:500 10px var(--sans);fill:var(--pale)}
+  .reps span{position:absolute;top:0;font:500 10px/1.4 var(--sans);color:var(--pale);
+             white-space:nowrap}
   .plage{position:absolute;top:72px;height:14px;background:rgba(35,84,63,.16)}
   .pt{position:absolute;top:78.75px;width:9px;height:9px;border-radius:50%;
       transform:translate(-50%,-50%)}
@@ -480,8 +487,11 @@ SCRIPT = """<script>
   addEventListener("hashchange", () => montrer(lire()));
   montrer(lire());
 })();
-document.fonts.ready.then(() => requestAnimationFrame(() =>
-  requestAnimationFrame(() => document.body.classList.add("go"))));
+/* .go rallume la page ; un onglet caché ne sert AUCUN rAF (mesuré le 31/08 :
+   2 s, 0 rAF, page blanche) — le filet de 1500 ms garantit l'allumage même là. */
+const go = () => document.body.classList.add("go");
+document.fonts.ready.then(() => requestAnimationFrame(() => requestAnimationFrame(go)));
+setTimeout(go, 1500);
 </script>"""
 
 (BASE / "HERO.html").write_text(f"""<!doctype html><html lang="en">
@@ -522,7 +532,8 @@ document.fonts.ready.then(() => requestAnimationFrame(() =>
                                "ANNEXE-QUESTIONS.html", "ANNEXE-TERMS.html",
                                "ANNEXE-PRIVACY.html", "ANNEXE-ACCESSIBILITE.html"],
                               bn.ANNEXES))
-    + '<a class="b-lien" href="CONTACT.html">Contact</a>' 
+    + '<a class="b-lien" href="CONTACT.html">Contact</a>'
+    + '<a class="b-lien" href="MENTIONS.html">Colophon</a>' 
     + """</nav></div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 {
   "_": "Contenu de la page Security and data handling. Chaque affirmation a été retrouvée dans ~/Documents/cascade par la passe de vérification du 31 août 2026 (chemins:lignes dans le rapport d'agent). Les trois phrases interdites par cette passe : « ~308 Mo de modèles », « les modèles ne sont jamais téléchargés », « l'outil n'écrit rien hors de son dossier de travail ».",
   "titre": "Your data stays where it belongs. <span class=\"deux\">Verify it anytime.</span>",
-  "lede": "This page names every place the tool touches: the one network call it makes, the two places it writes, the packages it ships, and what an audit cannot promise. Each claim below lives in the source, at a path your reviewers can open.",
+  "lede": "This page names every place the tool touches: the one network call it makes, the two places it writes, the packages it ships, and what an audit cannot promise. Where a claim lives in the source, its path is on this page.",
   "sections": [
     {
       "h2": "One network call, four guarded sites",
@@ -24,8 +24,8 @@
     {
       "h2": "The models are pinned, cached, and 1.3 GB",
       "html": [
-        "<p>Inference runs locally, on four sets of model weights, <b>pinned by revision and by SHA&#8209;256 per file</b>, cached on disk and verified before anything is written. Two honest nuances, because they matter to a bank:</p>",
-        "<ul><li>on the <b>first run</b>, the weights are fetched once from huggingface.co, 1.3 GB in total, and the tool says so before doing it. If your network policy forbids that, the weights can be <b>exported on one machine and imported on yours</b>, and nothing is ever fetched;</li><li>an offline mode exists that additionally forbids the model library any remote access. It is switched on by an environment variable: <b>opt&#8209;in, not the default</b>, and that setting itself is not covered by a test. What is tested is the pre&#8209;flight check that refuses to run on absent or altered weights.</li></ul>"
+        "<p>Inference runs locally, on four sets of model weights, <b>pinned by revision and by SHA&#8209;256 per file</b>, cached on disk and verified before anything is written. Two nuances, because they matter to a bank:</p>",
+        "<ul><li>on the <b>first run</b>, the weights are fetched once from huggingface.co, 1.3 GB in total, and the tool says so before doing it. If your network policy forbids that, the weights can be <b>exported on one machine and imported on yours</b>, and nothing is ever fetched;</li><li>an offline mode exists that additionally denies the model library any remote access. It is switched on by an environment variable: <b>opt&#8209;in, not the default</b>, and that setting itself is not covered by a test. What is tested is the pre&#8209;flight check that refuses to run on absent or altered weights.</li></ul>"
       ],
       "verif": {
         "t": "Verify the weights",
@@ -61,14 +61,14 @@
       "h2": "What it reads, and the two places it writes",
       "html": [
         "<p>The tool reads only the files you name by flag. <b>It never scans a disk.</b></p>",
-        "<p>It writes to exactly two places: its own records, under its repository root, in a folder that git ignores so nothing measured on your data can travel into a public repository; and <b>one report deposited beside the file you pointed it at</b>, named after that file. Before a record is written, your file paths are replaced by a placeholder, so system usernames never leave with a measurement.</p>"
+        "<p>It writes to exactly two places: its own records, under its repository root, in a folder that git ignores so nothing measured on your data can travel into a public repository; and <b>one report deposited beside the file you pointed it at</b>, named after that file. The one record that is versioned — the egress observation — has your file paths <b>replaced by a placeholder before it is written</b>, and a journal header records no machine name and no user name.</p>"
       ]
     },
     {
       "h2": "The dependency surface",
       "html": [
         "<p><b>One production dependency</b> and two development dependencies; 77 packages in the lockfile, each with a content hash, of which 51 install on a given machine (the rest are per&#8209;platform variants). Their licences are classified by a generator, not by hand: <b>50 permissive, 1 with obligations, 0 blocking, 0 undetermined</b>, re&#8209;checked on every test run. A CycloneDX software bill of materials ships with the tool.</p>",
-        "<p>The repository itself has no install&#8209;time script beyond wiring its own git hooks. Two transitive production packages do carry install scripts, which <code>npm ci --ignore-scripts</code> neutralises if your policy requires it.</p>"
+        "<p>The repository itself has no install&#8209;time script beyond wiring its own git hooks. Two transitive production packages do carry install scripts; on macOS and Windows they touch nothing beyond the npm registry, and on one platform &#8212; linux/x64 &#8212; one of them fetches optional GPU providers from a second registry at install time. <code>npm ci --ignore-scripts</code> neutralises both, and loses nothing on the documented CPU path.</p>"
       ],
       "verif": {
         "t": "Verify the counts",

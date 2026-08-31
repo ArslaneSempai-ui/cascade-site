@@ -1,2 +1,9 @@
 __pycache__/
 .DS_Store
+source/HERO.html
+source/ANNEXE-*.html
+source/CONTACT.html
+source/MENTIONS.html
+source/404.html
+source/PARCOURS.html
+source/U[0-9]-*.html

@@ -304,9 +304,13 @@ CSS = """
     summary .cr,summary,.retour,.annexes a{transition:none}
   }
   @media (max-width:1080px){
-    .plaque{position:static;transform:none;width:min(96vw,460px);height:auto;
+    /* la bande donne 100vw au titre : on lui rend la marge droite de la page,
+       sinon le clip de la racine mange la fin des lignes (mesuré à 375) */
+    .haut{padding-right:calc(50vw + clamp(1.2rem,3.4vw,3.2rem))}
+    .plaque{position:static;transform:none;width:min(70vw,340px);height:auto;
             margin:1rem auto 0}
     .plaque img{height:auto}
+    .oeil .fno{white-space:nowrap}
     .socle-ombre,.fig-objet{display:none}
     h1{max-width:none}
     .sec-corps{padding-left:.2rem}
