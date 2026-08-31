@@ -1,0 +1,83 @@
+#!/bin/sh
+#
+# ─── QUI A POUSSÉ, ET AVEC QUEL ACCORD ───
+#
+# Ce dépôt sert un site PUBLIC. Il est né le 31 août 2026 sans aucune garde de poussée,
+# et trois publications sont parties sans contrôle ni trace avant que quelqu'un s'en
+# aperçoive — en cherchant pourquoi la poussée de l'OUTIL avait échoué, elle. L'outil
+# avait sa garde depuis le 27 août ; le site, non. Une règle qui ne protège qu'un dépôt
+# sur deux protège surtout la mémoire de celui qui l'a écrite.
+#
+# Ce crochet fait deux choses, dans cet ordre : il écrit qui pousse, puis il demande
+# l'accord. La trace d'abord — si le refus venait en premier, une poussée passée en
+# force ne laisserait rien.
+
+JOURNAL="$HOME/Documents/rapports/poussees.log"
+mkdir -p "$(dirname "$JOURNAL")" 2>/dev/null
+{
+  DEPOT=$(basename "$(git rev-parse --show-toplevel 2>/dev/null)" 2>/dev/null)
+  TETE=$(git rev-parse --short HEAD 2>/dev/null)
+  CHAINE=""; P=$PPID; N=0
+  while [ -n "$P" ] && [ "$P" -gt 1 ] && [ $N -lt 6 ]; do
+    NOM=$(ps -o comm= -p "$P" 2>/dev/null | sed 's|.*/||')
+    [ -z "$NOM" ] && break
+    CHAINE="$CHAINE$NOM($P)<-"
+    P=$(ps -o ppid= -p "$P" 2>/dev/null | tr -d ' ')
+    N=$((N + 1))
+  done
+  TTY=$(tty 2>/dev/null)
+  case "$TTY" in "" | *"not a tty"*) TTY="aucun" ;; esac
+  printf '%s  %-16s HEAD=%-10s tty=%-12s %s\n' \
+    "$(date '+%Y-%m-%d %H:%M:%S')" "$DEPOT" "$TETE" "$TTY" "$CHAINE"
+} >> "$JOURNAL" 2>/dev/null
+
+# ─── RIEN DE LOCAL NE FRANCHIT CETTE LIGNE ───
+#
+# Le site vend le caviardage des chemins. Le 31 août, `git add -A` a quand même publié
+# un chemin de session avec le nom de l'utilisateur, dans un script de source/. Retirer
+# le fichier de HEAD ne le retire pas des objets : ce qui part ne revient pas. Le
+# contrôle porte donc sur ce qui PARTIRAIT, pas sur l'arbre de travail.
+while read -r ref_local sha_local ref_dist sha_dist; do
+  [ "$sha_local" = "0000000000000000000000000000000000000000" ] && continue
+  case "$sha_dist" in
+    0000000000000000000000000000000000000000) PORTEE="$sha_local" ;;
+    *) PORTEE="$sha_dist..$sha_local" ;;
+  esac
+  # UN DÉTECTEUR CONTIENT LES MOTIFS QU'IL CHERCHE, donc il se dénonce lui-même :
+  # à sa première poussée, ce crochet a refusé SON PROPRE fichier. Il est donc le
+  # seul exclu, nommément — et c'est aussi le seul fichier du dépôt qu'un humain
+  # doit relire à l'œil, puisque aucune machine ne le contrôle plus.
+  SALES=$(git grep -l -I -E '/Users/[a-z]|/private/tmp/claude-|scratchpad/' "$sha_local" -- \
+            ':!.githooks/pre-push' ':!*.png' ':!*.webp' ':!*.woff2' 2>/dev/null | head -5)
+  if [ -n "$SALES" ]; then
+    echo "" >&2
+    echo "  POUSSÉE REFUSÉE — un chemin local partirait dans ce dépôt public." >&2
+    echo "$SALES" | sed 's/^/    /' >&2
+    echo "" >&2
+    echo "  Ce site promet le caviardage des chemins ; il ne peut pas en publier." >&2
+    echo "  → corrigez le fichier, recommitez, repoussez." >&2
+    echo "  → git push --no-verify   passe outre, et publie. Il n'y a pas de retour." >&2
+    exit 1
+  fi
+done
+
+# ─── POUSSER DEMANDE L'ACCORD D'ARSLANE, À CHAQUE FOIS ───
+#
+# La même règle que sur l'outil, et pour la même raison : elle tenait dans la mémoire
+# d'une session, et une mémoire ne survit pas à la session suivante. Ce n'est pas un
+# verrou, c'est un ralentisseur qui force la décision à être explicite.
+if [ -z "$ACCORD_ARSLANE" ]; then
+  echo "" >&2
+  echo "  POUSSÉE REFUSÉE — publier demande l'accord d'Arslane, à chaque fois." >&2
+  echo "" >&2
+  echo "  Ce dépôt sert un site public. Ce qui part ne revient pas, et une permission" >&2
+  echo "  donnée une fois ne vaut pas pour la suivante." >&2
+  echo "" >&2
+  echo "  Commits en attente : $(git rev-list --count @{u}..HEAD 2>/dev/null || echo '?')" >&2
+  echo "" >&2
+  echo "  → quand l'accord est donné :   ACCORD_ARSLANE=oui git push" >&2
+  echo "  → git push --no-verify   passe outre, et publie sans accord." >&2
+  exit 1
+fi
+
+exit 0
