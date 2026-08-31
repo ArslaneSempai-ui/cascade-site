@@ -43,16 +43,17 @@
     {
       "h2": "The record is frozen by a fingerprint",
       "html": [
-        "<p>The published record carries a <b>content fingerprint</b> — a canonical SHA&#8209;256, and the reader <b>refuses</b> a record whose fingerprint is absent or no longer matches. Refuses, not warns: a hand&#8209;edited measurement fails loudly. The stamp in this site's masthead is that fingerprint — and because it is a plain SHA&#8209;256 of the content, <b>anyone can recompute it</b>: the seal is not our word, it is arithmetic you can run.</p>",
-        "<p>Two limits the sealing tool states about itself: the fingerprint covers everything in the file except the fingerprint key, and it proves nothing about what happened <b>before</b> sealing — the only gesture that produces a measurement is the measurement command. And one repair published rather than hidden: the git commit the reference record was measured at was later rewritten away by a history purge; the repository records the replacement commit and labels the mapping <b>&#8220;inferred, not recorded&#8221;</b>.</p>"
+        "<p>The published record carries a <b>content fingerprint</b> — a SHA&#8209;256 taken over the record in canonical form and truncated to sixteen hex characters, and the reader <b>refuses</b> a record whose fingerprint is absent or no longer matches. Refuses, not warns: a hand&#8209;edited measurement fails loudly. The stamp in this site's masthead is that fingerprint.</p>",
+        "<p>You do not have to take our word for it, and you should not hash the file by hand — <b>a plain checksum of the file will not match</b>, because the fingerprint is taken over a canonical form of the record, not over its bytes. The tool recomputes it in front of you instead, and prints what it finds.</p>",
+        "<p>Two limits the sealing tool states about itself: the fingerprint covers the whole record except fingerprint keys themselves, and it proves nothing about what happened <b>before</b> sealing — the only gesture that produces a measurement is the measurement command. And one repair published rather than hidden: the git commit the reference record was measured at was later rewritten away by a history purge; the repository records the replacement commit and labels the mapping <b>&#8220;inferred, not recorded&#8221;</b>.</p>"
       ],
       "verif": {
-        "t": "Verify the seal",
-        "p": "The reader refuses an altered record; the sealing command re-fingerprints only what is already on disk.",
+        "t": "Recompute the seal",
+        "p": "Point the sealing command at the sealed record shipped with the repository. It recomputes the fingerprint and prints it; on an untouched record it changes nothing.",
         "cmd": [
           {
-            "c": "npm run sceller",
-            "n": "re-seals the record; an edited file fails on next read"
+            "c": "npm run sceller -- profiles-2026-08-20-coeur-rendu.json",
+            "n": "already sealed, and the seal matches: 1151f5a1cfaae0c0"
           }
         ],
         "refs": "src/measure.ts:279 &#183; src/sceller.ts:12"

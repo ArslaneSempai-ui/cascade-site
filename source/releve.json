@@ -113,11 +113,12 @@
     "64": "fragment de l'empreinte du relevé",
     "256": "fragment de « SHA-256 », pas un compte",
     "1151": "fragment de l'empreinte du scellé 1151f5a1cfaae0c0",
-    "2026": "millésime des noms de rapports datés (2026-08-22)",
+    "2026": "millésime dans un nom de fichier daté (rapport, relevé scellé)",
     "08": "mois dans un nom de rapport daté",
     "22": "jour dans un nom de rapport daté",
     "-8": "segment « -08 » d'un nom de rapport daté, lu comme négatif par le parseur",
     "-22": "segment « -22 » d'un nom de rapport daté, lu comme négatif par le parseur",
-    "-16": "drapeau de la commande head -16 dans le terminal de vérification"
+    "-16": "drapeau de la commande head -16 dans le terminal de vérification",
+    "-20": "segment « -20 » du nom de fichier daté, lu comme négatif par le parseur"
   }
 }
