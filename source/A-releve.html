@@ -1,0 +1,144 @@
+<!doctype html>
+<meta charset="utf-8"><title>A — Le relevé</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23eeece6'/%3E%3C/svg%3E">
+<style>
+  /* A — LE RELEVÉ. L'écran EST la feuille de mesure : le tableau domine dès le premier
+     pixel, l'écart se lit comme un solde, et l'objet tient dans la marge comme la figure
+     d'une planche de catalogue. Densité immédiate, aucun appareil de réserve. */
+  :root{--papier:#eeece6;--clair:#f6f4ef;--encre:#14161a;--demi:#5f5a51;--pale:#7d7768;
+        --filet:#c9c2b0;--fin:#ddd7c8;--vert:#2f8a60;--rouge:#a8462f;--jeton:#7d838d;
+        --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+        --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+        --mono:ui-monospace,"SF Mono",Menlo,monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--papier);color:var(--encre);font:400 15px/1.5 var(--serif);
+       -webkit-font-smoothing:antialiased}
+  .feuille{max-width:74rem;margin:0 auto;padding:1.5rem clamp(1rem,3vw,2.4rem) 2.4rem}
+  .tete{display:flex;gap:1rem;align-items:baseline;border-bottom:2px solid var(--encre);
+        padding-bottom:.5rem;margin-bottom:1.2rem}
+  .tete b{font:600 13px/1 var(--sans);letter-spacing:.2em}
+  .tete span{font-size:14px;color:var(--demi)}
+  .tete .d{margin-left:auto;font:600 10px/1 var(--sans);letter-spacing:.13em;
+           text-transform:uppercase;color:var(--pale);white-space:nowrap}
+  .corps{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
+         gap:clamp(1.2rem,3vw,2.6rem);align-items:start}
+  @media(max-width:900px){.corps{grid-template-columns:1fr}}
+  h1{font:600 clamp(1.5rem,2.9vw,2.1rem)/1.1 var(--serif);letter-spacing:-.015em;
+     margin:0 0 .5rem;max-width:24ch;text-wrap:balance}
+  .sous{color:var(--demi);margin:0 0 1.1rem;max-width:44ch;font-size:16px}
+  table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:13.5px}
+  caption{text-align:left;font:600 10px/1 var(--sans);letter-spacing:.13em;
+          text-transform:uppercase;color:var(--pale);padding-bottom:.5rem}
+  th,td{padding:.36rem .2rem;text-align:right;border-bottom:1px solid var(--fin);
+        font-variant-numeric:tabular-nums}
+  thead th{font:600 9.5px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;
+           color:var(--pale);border-bottom-color:var(--filet);vertical-align:bottom}
+  th.g,td.g{text-align:left;font-family:var(--serif);font-size:14.5px}
+  tbody th{font-weight:400}
+  td.v{color:var(--vert);font-weight:600}
+  td.r{color:var(--rouge)}
+  td.x{color:var(--pale)}
+  tr.solde th,tr.solde td{border-top:1.5px solid var(--encre);border-bottom:none;
+    padding-top:.45rem;font-weight:600;font-size:15px}
+  /* `darken` plutôt que `multiply` : le fond du rendu est plus clair que la crème de la
+     page, donc il disparaît, et seules les ombres — plus sombres — restent. En multiply
+     le fond s'assombrissait et l'objet flottait dans un rectangle gris. */
+  .marge img{width:100%;display:block;mix-blend-mode:darken}
+  .marge figcaption{font:400 12px/1.45 var(--sans);color:var(--pale);margin-top:.4rem}
+  .solde{margin-top:.9rem;padding-top:.7rem;border-top:1.5px solid var(--encre)}
+  .solde table{font-size:13px}
+  .solde td,.solde th{border-bottom:none;padding:.22rem .2rem}
+  .bas{display:flex;gap:1.3rem;align-items:center;flex-wrap:wrap;margin-top:1.3rem;
+       padding-top:1rem;border-top:1px solid var(--filet)}
+  .bouton{background:var(--encre);color:var(--papier);text-decoration:none;
+          font:600 14px/1 var(--sans);padding:.9rem 1.3rem;border:1px solid var(--encre)}
+  .bouton:hover{background:transparent;color:var(--encre)}
+  .bouton:focus-visible{outline:2px solid var(--vert);outline-offset:3px}
+  /* 85,0 est le SEUL chiffre supposé affiché ici : l'opérateur humain n'a pas été
+     échantillonné champ par champ. La marque vit à CÔTÉ du chiffre — un renvoi en bas
+     de page, personne ne le lit au moment où il lit le chiffre. */
+  .marque{font:600 8.5px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;
+          color:var(--pale);border:1px solid var(--filet);padding:.12rem .22rem;
+          vertical-align:.14em;margin-left:.3rem}
+  .bas span{font-size:14px;color:var(--demi);max-width:42ch}
+  /* Sept lignes sur huit colonnes : lire en travers demande une règle. Le nom du lecteur
+     EST cette règle — cliqué ou tabulé, il retient sa ligne. Pas un ornement : sans lui on
+     suit du doigt sur l'écran. */
+  .sel{all:unset;cursor:pointer;text-decoration:underline;text-decoration-color:var(--filet);
+       text-underline-offset:3px;
+       /* La prise doit faire 24 px au doigt ; le padding sur une boîte en ligne agrandit
+          la cible sans toucher la hauteur de ligne, donc sans décaler le tableau. */
+       padding:.38rem .3rem;margin:0 -.3rem}
+  .sel:focus-visible{outline:2px solid var(--vert);outline-offset:2px}
+  tr.vu td,tr.vu th{background:#e3e0d5}
+  tr.vu .sel{text-decoration-color:var(--encre)}
+</style>
+<div class="feuille">
+  <div class="tete"><b>CASCADE</b><span>audit de routage — extraction KYC</span>
+    <span class="d">relevé 64bdacf · gelé</span></div>
+  <div class="corps">
+    <div>
+      <h1>Votre tableau de bord affiche 94 %. Vos dossiers sortent à 77 %.</h1>
+      <p class="sous">La moyenne de cinq champs n'est pas une proportion et ne porte aucun
+        intervalle. Le taux par dossier en porte un. Voici les deux, posés.</p>
+      <table>
+        <caption>Justesse par champ · 7 lecteurs · 1 000 extractions</caption>
+        <thead><tr><th class="g">Lecteur</th><th>/1 000</th><th>Nom</th><th>Naiss.</th>
+          <th>Doc n°</th><th>Pays</th><th>Adr.</th><th>Seul</th></tr></thead>
+        <tbody>
+          <tr><th class="g"><button class="sel" type="button">rules</button></th><td>gratuit</td><td class="r">0</td><td class="v">100</td>
+            <td>79,7</td><td class="v">100</td><td class="r">0</td><td>55,9</td></tr>
+          <tr><th class="g"><button class="sel" type="button">small</button></th><td>0,20 $</td><td>46,6</td><td>97,9</td><td>57,7</td>
+            <td>100</td><td>43,0</td><td>69,0</td></tr>
+          <tr><th class="g"><button class="sel" type="button">large</button></th><td>1,60 $</td><td class="v">96,6</td><td>100</td>
+            <td>64,4</td><td>100</td><td>32,8</td><td>78,8</td></tr>
+          <tr><th class="g"><button class="sel" type="button">0.6b</button></th><td>0,08 $</td><td>80,8</td><td>87,5</td><td>70,0</td>
+            <td>83,3</td><td>75,0</td><td>79,3</td></tr>
+          <tr><th class="g"><button class="sel" type="button">4b</button></th><td>0,26 $</td><td>89,2</td><td>99,2</td><td>79,2</td>
+            <td>100</td><td class="v">95,8</td><td>92,7</td></tr>
+          <tr><th class="g"><button class="sel" type="button">8b</button></th><td>0,40 $</td><td>91,7</td><td>100</td><td>83,3</td>
+            <td>100</td><td>82,5</td><td>91,5</td></tr>
+          <tr><th class="g" style="color:var(--pale)"><button class="sel" type="button">human</button></th><td class="x">587 $</td>
+            <td class="x">—</td><td class="x">—</td><td class="x">—</td><td class="x">—</td>
+            <td class="x">—</td><td class="x">85,0 <span class="marque">supposé</span></td></tr>
+          <tr class="solde"><th class="g">Moyenne des cinq champs</th><td colspan="6"></td>
+            <td>94,4 %</td></tr>
+          <tr class="solde"><th class="g">Dossiers complets — 92 sur 120</th>
+            <td colspan="6" style="text-align:right;color:var(--pale);font-size:12px">
+              intervalle de Wilson [68,3 – 83,3]</td><td>76,7 %</td></tr>
+        </tbody>
+      </table>
+      <div class="bas">
+        <a class="bouton" href="#">Faire mesurer votre chaîne</a>
+        <span>Nous mesurons sur <b>vos</b> enregistrements. Si aucun routage ne bat le vôtre,
+          le relevé le dit et vous ne payez pas.</span>
+      </div>
+    </div>
+    <figure class="marge" style="margin:0">
+      <img src="rendus/plaque.png" alt="Le relevé en relief : sept lecteurs sur cinq champs, chaque pile de jetons vaut la justesse mesurée. La rangée du fond est vide — l'opérateur humain n'a aucune valeur par champ.">
+      <figcaption>Chaque pile est une justesse mesurée, un jeton pour dix points. La rangée
+        du fond n'a pas de plaque : l'opérateur humain n'a jamais été échantillonné champ
+        par champ.</figcaption>
+      <div class="solde">
+        <table>
+          <caption>Ce que le routage visé change · mêmes 120 dossiers</caption>
+          <tbody>
+            <tr><th class="g">Routage publié</th><td>92 / 120</td><td>190,66 $</td></tr>
+            <tr><th class="g">Routage visé sur le dossier</th><td>95 / 120</td><td>54,31 $</td></tr>
+            <tr class="solde"><th class="g">Écart mesuré</th><td>+3 · −0</td><td>÷ 3,5</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </figure>
+  </div>
+</div>
+<script>
+/* Une ligne à la fois : deux lignes retenues ne comparent plus, elles décorent. */
+document.querySelector("tbody").addEventListener("click", (e) => {
+  const b = e.target.closest("button.sel"); if (!b) return;
+  const tr = b.closest("tr"), deja = tr.classList.contains("vu");
+  document.querySelectorAll("tr.vu").forEach((x) => x.classList.remove("vu"));
+  if (!deja) tr.classList.add("vu");
+});
+</script>

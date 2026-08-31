@@ -1,0 +1,85 @@
+{
+  "_": "Les trois pages de plomberie : contact, 404, colophon. Registre allégé — papier, colonne de lecture, filets fins, pas d'objet, pas de vente. Tout fait cité est public : l'éditeur vient de LICENSE:1 (« Copyright (c) 2026 Arslane Chaouche »), le canal vient de git remote (github.com/ArslaneSempai-ui/cascade-routing), la Literata est sous SIL OFL. Le canal privé est énoncé comme engagement (lettre de mission), jamais cité du dépôt privé.",
+  "pages": [
+    {
+      "html": "CONTACT.html",
+      "titre_onglet": "Cascade, contact",
+      "fno": "Contact",
+      "titre": "Bring your questions. <span class=\"deux\">Keep your records.</span>",
+      "lede": "The right first message names a figure, not a feeling — every number on this site carries a declared source, so a dispute can start precisely. And it attaches nothing: this tool exists so your documents never travel, and that starts here.",
+      "sections": [
+        {
+          "h2": "The channel is public — treat it so",
+          "html": [
+            "<p>Write to us through the repository: <b>github.com/ArslaneSempai&#8209;ui/cascade&#8209;routing</b>. An issue there reaches us — and an issue is public, so put nothing confidential in it: no client names, no records, no internal figures. A private channel is opened in the engagement letter, before signature, like every other term.</p>"
+          ]
+        },
+        {
+          "h2": "What to bring",
+          "html": [
+            "<p>The page you are on and the figure you dispute — each one here has a declared source, so we can meet at it. If you disagree with a measurement, better than an argument: the record is sealed and the command is public, so <b>bring your own rerun</b>. If you measured your own cases, bring the report the tool wrote beside your CSV — it contains rates and intervals, never the values from your documents.</p>"
+          ]
+        },
+        {
+          "h2": "What never to send",
+          "html": [
+            "<p><b>Your records. Not even a sample.</b> The tool exists so your documents never leave your machine; a sample attached to a public issue is published, and no apology deletes a clone. If your question needs your data, the answer is a command that runs where the data lives, and we will point you to it.</p>"
+          ]
+        },
+        {
+          "h2": "Before writing",
+          "html": [
+            "<p>Two shortcuts. On a fresh clone, <code>node src/premiere-reponse.mjs</code> prints the conclusion in under a second, with what would flip it. And the eight objections a bank's reviewers actually raise are already answered, mechanism by mechanism, in <b>Appendix C — Questions</b> below.</p>"
+          ]
+        }
+      ]
+    },
+    {
+      "html": "404.html",
+      "titre_onglet": "Cascade, not in the record",
+      "fno": "Not found",
+      "titre": "Not in the record. <span class=\"deux\">Nothing lives at this address.</span>",
+      "lede": "This page was never measured, never sealed, never published — the address is wrong, or the page has moved. Everything that exists is one link away: the findings on the main screen, and the six appendices in the footer below.",
+      "sections": []
+    },
+    {
+      "html": "MENTIONS.html",
+      "titre_onglet": "Cascade, colophon and notices",
+      "fno": "Colophon",
+      "titre": "The small print, printed large. <span class=\"deux\">Nothing hides in it.</span>",
+      "lede": "Who publishes this, under which licences, served from where, and what this site does to its visitors — which is nothing. The one page of a sales site that is usually mumbled; here it follows the same rule as the rest: plain, sourced, short.",
+      "sections": [
+        {
+          "h2": "Who publishes this",
+          "html": [
+            "<p>This site, and the tool it describes, are published by <b>Arslane Chaouche</b> — the licensor named in the first line of the licence file that ships with the tool.</p>"
+          ]
+        },
+        {
+          "h2": "Under which licences",
+          "html": [
+            "<p>The tool is licensed <b>PolyForm Noncommercial</b>, with a thirty&#8209;day Evaluation Grant written into the licence file — the full terms are in <b>Appendix D</b>. The text and figures of this site are by the same author. The typeface is <b>Literata</b>, by TypeTogether, under the SIL Open Font Licence, served from this site's own files. The objects on the appendix pages were modelled for this site by its author.</p>"
+          ]
+        },
+        {
+          "h2": "Where it is served",
+          "html": [
+            "<p>Static files, from <b>GitHub Pages</b>, out of the public repository. No server code of ours runs to show you this page.</p>"
+          ]
+        },
+        {
+          "h2": "What this site does to visitors: nothing",
+          "html": [
+            "<p><b>No cookies, no analytics, no tracking, no forms.</b> The scripts on this site do two things only: the main screen synchronises its animation clock and tab title, and the appendix pages open their sections when you print. Switch them off and everything still works. Every figure displayed carries a declared source — the full declaration file is public, beside this page: <a href=\"releve.json\"><b>releve.json</b></a> — and the seal in the masthead is the content fingerprint of the sealed record the figures come from.</p>"
+          ]
+        },
+        {
+          "h2": "When we are wrong",
+          "html": [
+            "<p>The tool publishes its own errors: a retraction file lists every published conclusion that turned out to be wrong, held open by a test. This site inherits the rule — a corrected figure is corrected in daylight, not swapped quietly.</p>"
+          ]
+        }
+      ]
+    }
+  ]
+}

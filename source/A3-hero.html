@@ -1,0 +1,226 @@
+<!doctype html>
+<meta charset="utf-8"><title>Cascade — the gap</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23e3ddcc'/%3E%3C/svg%3E">
+<style>
+  /* A³ — THE FIRST SCREEN, in English, built around one figure instead of a table.
+     What changed from A²:
+       · the three-row ledger and the seven-reader strip are gone. Both restated numbers the
+         eye had already read. One instrument now carries every figure, full width;
+       · that instrument is drawn to scale: the 17.7-point gap is a real distance, the Wilson
+         interval is a real span, and the number that has no interval shows the absence where
+         the other one shows its bracket. Absence has to occupy space or nobody reads it;
+       · the object is re-rendered with its frame repaired and a shadow-catcher floor, so it
+         carries its own contact shadow in the alpha and sits on the paper at any colour. */
+  :root{
+    --papier:#e3ddcc; --relief:#efeade; --creux:#d5cdb8;
+    --encre:#16181c; --demi:#4f4a41; --pale:#6c6656;
+    --filet:#b7ae96; --fin:#cdc4ae;
+    --vert:#2f8a60; --rouge:#a8462f;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  /* Le fond va sur <html> ET sur <body> : sans celui de <html>, celui de <body> est propagé
+     au canevas et un élément en mélange n'a plus de toile de fond. */
+  html{background:#ded7c4}
+  body{margin:0;color:var(--encre);font:400 16px/1.55 var(--serif);
+       -webkit-font-smoothing:antialiased;
+       background:
+         radial-gradient(58% 54% at 71% 30%, rgba(248,244,235,.55) 0%, rgba(248,244,235,0) 72%),
+         linear-gradient(172deg, #e9e3d3 0%, #e1dac8 52%, #d5cdb6 100%);
+       background-attachment:fixed}
+  .ecran{min-height:100vh;display:flex;flex-direction:column;max-width:94rem;margin:0 auto;
+         padding:1.3rem clamp(1.2rem,3.6vw,3.2rem) 1.1rem}
+
+  .tete{display:flex;gap:1.1rem;align-items:baseline;flex-wrap:wrap;
+        border-bottom:1.5px solid var(--encre);padding-bottom:.5rem}
+  .tete b{font:600 13px/1 var(--sans);letter-spacing:.22em}
+  .tete span{font-size:14.5px;color:var(--demi)}
+  .tete .d{margin-left:auto;font:600 10px/1 var(--sans);letter-spacing:.14em;
+           text-transform:uppercase;color:var(--pale)}
+
+  .haut{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
+        gap:clamp(1.4rem,4vw,3.6rem);align-items:center;padding:clamp(.6rem,2.4vh,1.8rem) 0}
+  @media(max-width:960px){.haut{grid-template-columns:1fr;padding-top:1.2rem}}
+
+  .oeil{font:600 10px/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+        color:var(--pale);display:block;margin-bottom:.8rem}
+  h1{font:600 clamp(2rem,3.7vw,3.2rem)/1.07 var(--serif);letter-spacing:-.023em;
+     margin:0 0 .85rem;max-width:17ch;text-wrap:balance}
+  .these{color:var(--demi);margin:0 0 1.5rem;max-width:42ch;font-size:17px}
+  .these b{color:var(--encre);font-weight:600}
+  .agir{display:flex;gap:1.1rem;align-items:center;flex-wrap:wrap}
+  .bouton{background:var(--encre);color:var(--relief);text-decoration:none;
+          font:600 15px/1 var(--sans);padding:.95rem 1.5rem;border:1px solid var(--encre)}
+  .bouton:hover{background:transparent;color:var(--encre)}
+  .bouton:focus-visible{outline:2px solid var(--vert);outline-offset:3px}
+  .agir p{margin:0;font:400 13.5px/1.45 var(--sans);color:var(--demi);max-width:36ch}
+
+  /* Le rendu porte son ombre dans l'alpha : pas de mélange, pas de rectangle, pas d'ombre
+     redessinée en CSS qui ne correspondrait pas à la lumière de la scène. */
+  .objet{margin:0;display:flex;justify-content:center}
+  .objet img{width:100%;max-width:720px;max-height:54vh;object-fit:contain;display:block}
+
+  /* ── l'instrument ──────────────────────────────────────────────────────────
+     Les deux chiffres sur un seul axe, à l'échelle. C'est le seul endroit de la page où
+     ils s'écrivent, pour qu'on les lise UNE fois — et l'écart de 17,7 points est une
+     distance qu'on mesure du doigt plutôt qu'une soustraction qu'on croit sur parole. */
+  .instrument{border-top:1.5px solid var(--encre);padding-top:.8rem}
+  .instrument figcaption{display:flex;gap:.9rem;align-items:baseline;flex-wrap:wrap;
+                         margin-bottom:.35rem}
+  .instrument .t{font:600 10px/1.4 var(--sans);letter-spacing:.13em;text-transform:uppercase;
+                 color:var(--pale)}
+  .instrument .n{font:400 13.5px/1.4 var(--sans);color:var(--demi)}
+  svg{width:100%;height:auto;display:block;overflow:visible}
+  .axe{stroke:var(--filet);stroke-width:1}
+  .grad{stroke:var(--filet);stroke-width:1}
+  .grad.maj{stroke:var(--pale)}
+  .ch{font:500 11px/1 var(--mono);fill:var(--pale)}
+  .lig{font:600 10px/1 var(--sans);letter-spacing:.13em;text-transform:uppercase}
+  .val{font:600 20px/1 var(--mono)}
+  .pt{font:500 11.5px/1 var(--mono);fill:var(--pale)}
+  .rem{font:400 12.5px/1 var(--sans);fill:var(--pale)}
+
+  .rangA{color:var(--pale)}  .rangB{color:var(--encre)}
+  .rangA .val,.rangA .lig{fill:var(--pale)}
+  .rangB .val,.rangB .lig{fill:var(--encre)}
+  .aig{stroke:currentColor;stroke-width:2.5;stroke-linecap:butt}
+  .rangA .aig{stroke:var(--pale)}  .rangB .aig{stroke:var(--encre)}
+  .barre{stroke:var(--encre);stroke-width:1.5;fill:none}
+  .lien{stroke:var(--rouge);stroke-width:1;stroke-dasharray:3 3}
+  .ecart{stroke:var(--rouge);stroke-width:1.2;fill:none}
+  .ecartT{font:600 12.5px/1 var(--mono);fill:var(--rouge)}
+  .creuxT{font:400 12px/1 var(--sans);fill:var(--pale);font-style:italic}
+
+  /* Une prise par rangée : la désigner éteint l'autre, ce qui est la seule façon de lire
+     un axe qui porte deux grandeurs sans les confondre. */
+  .prise{cursor:pointer}
+  .prise:focus-visible{outline:2px solid var(--vert);outline-offset:2px}
+  .g.efface{opacity:.28}
+  .g{transition:opacity .22s ease}
+
+  /* Un instrument qui se pose : les aiguilles partent de la graduation 50 et rejoignent leur
+     mesure. Le mouvement ne dit rien de faux — il montre la lecture qui vient d'être faite. */
+  @media (prefers-reduced-motion:no-preference){
+    .anim .g{animation:poser .9s cubic-bezier(.16,.84,.32,1) both}
+    .anim .gB{animation-delay:.12s}
+    .anim .objet img{animation:monter .8s cubic-bezier(.16,.84,.32,1) both}
+    @keyframes poser{from{opacity:0;transform:translateX(-46px)}to{opacity:1;transform:none}}
+    @keyframes monter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  }
+</style>
+<div class="ecran">
+  <div class="tete"><b>CASCADE</b><span>routing audit — KYC extraction</span>
+    <span class="d">report 64bdacf · measured once · frozen</span></div>
+
+  <div class="haut">
+    <div>
+      <span class="oeil">Finding — two rates over the same 120 files</span>
+      <h1>Your dashboard says 94%. Your case files go out at 77%.</h1>
+      <p class="these">Both figures are true, and they measure different things. Only one
+        counts a file as right when <b>all five fields are right together</b> — and that is
+        the one whose errors reach your review team.</p>
+      <div class="agir">
+        <a class="bouton" href="#">Have your routing measured</a>
+        <p>On your records, on your machine. Nothing leaves the network. If nothing comes out
+          cheaper without breaking a file, the report says so.</p>
+      </div>
+    </div>
+
+    <figure class="objet">
+      <img src="rendus/plaque-hero.png" alt="The measurement in relief: six rows of chip stacks on a plate, one stack per reader and per field, each chip worth ten points of measured accuracy. The seventh row has no tiles at all — the human operator was never sampled field by field.">
+    </figure>
+  </div>
+
+  <figure class="instrument">
+    <figcaption>
+      <span class="t">Both rates on one axis</span>
+      <span class="n">— and they do not count the same thing. Percent, 120 case files.</span>
+    </figcaption>
+    <svg viewBox="0 0 1000 178" role="img"
+         aria-label="Scale from 50 to 100 percent. The mean of five field rates sits at 94.4 percent and carries no interval. The per-file rate sits at 76.7 percent with a Wilson 95 percent interval from 68.3 to 83.3. The distance between the two is 17.7 points.">
+      <!-- la graduation, dessinée par le script depuis la même échelle que les aiguilles -->
+      <g id="grad"></g>
+      <line class="axe" x1="60" y1="32" x2="940" y2="32"></line>
+
+      <!-- rangée A : la moyenne des cinq champs. Là où l'autre rangée porte son intervalle,
+           celle-ci porte les mots qui disent pourquoi elle n'en a pas — l'absence occupe la
+           place qu'occuperait la mesure, sinon personne ne la lit. -->
+      <g class="g gA rangA prise" tabindex="0" role="button" data-rang="A"
+         aria-label="Mean of five field rates, 94.4 percent, no confidence interval">
+        <text class="lig" x="60" y="62">Mean of five field rates</text>
+        <line class="aig" x1="841.4" y1="46" x2="841.4" y2="70"></line>
+        <circle cx="841.4" cy="58" r="4.5" fill="currentColor"></circle>
+        <text class="val" x="828" y="65" text-anchor="end">94.4%</text>
+        <text class="creuxT" x="60" y="80">no interval — a mean of five rates is not a proportion</text>
+      </g>
+
+      <!-- l'écart, tiré d'une aiguille à l'autre : une distance qu'on mesure du doigt -->
+      <g class="g gE">
+        <line class="lien" x1="841.4" y1="70" x2="841.4" y2="104"></line>
+        <path class="ecart" d="M529.9 112 L529.9 104 L841.4 104 L841.4 98"></path>
+        <text class="ecartT" x="685.6" y="94" text-anchor="middle">17.7 points apart</text>
+      </g>
+
+      <!-- rangée B : le taux par dossier, avec l'intervalle qui le rend contestable -->
+      <g class="g gB rangB prise" tabindex="0" role="button" data-rang="B"
+         aria-label="Per-file rate, 76.7 percent, 92 of 120 files, Wilson 95 percent interval 68.3 to 83.3">
+        <text class="lig" x="60" y="149">Per-file rate · 92 of 120</text>
+        <path class="barre" d="M382.1 135 L382.1 163 M382.1 149 L646.1 149 M646.1 135 L646.1 163"></path>
+        <line class="aig" x1="529.9" y1="131" x2="529.9" y2="167"></line>
+        <circle cx="529.9" cy="149" r="5" fill="currentColor"></circle>
+        <text class="val" x="529.9" y="126" text-anchor="middle">76.7%</text>
+        <text class="pt" x="382.1" y="177" text-anchor="middle">68.3</text>
+        <text class="pt" x="646.1" y="177" text-anchor="middle">83.3</text>
+        <text class="rem" x="676" y="177">Wilson 95%</text>
+      </g>
+    </svg>
+  </figure>
+</div>
+<script>
+/* La graduation est dessinée, pas écrite à la main : cinquante à cent, un trait tous les
+   deux et demi, un trait long et un chiffre tous les dix. Écrite à la main, elle se
+   désaccorde de l'échelle dès qu'on déplace une borne — et c'est l'échelle qui ment. */
+const X = (v) => 60 + ((v - 50) / 50) * 880;
+const g = document.getElementById("grad");
+const ns = "http://www.w3.org/2000/svg";
+for (let v = 50; v <= 100 + 1e-9; v += 2.5) {
+  const maj = Math.abs(v % 10) < 1e-9;
+  const l = document.createElementNS(ns, "line");
+  l.setAttribute("class", "grad" + (maj ? " maj" : ""));
+  l.setAttribute("x1", X(v)); l.setAttribute("x2", X(v));
+  l.setAttribute("y1", maj ? 18 : 25); l.setAttribute("y2", 32);
+  g.appendChild(l);
+  if (maj) {
+    const t = document.createElementNS(ns, "text");
+    t.setAttribute("class", "ch"); t.setAttribute("x", X(v));
+    t.setAttribute("y", 12); t.setAttribute("text-anchor", "middle");
+    t.textContent = v === 100 ? "100%" : String(v);
+    g.appendChild(t);
+  }
+}
+
+/* Une rangée à la fois : les deux allumées, l'axe redevient un seul chiffre en deux
+   endroits, ce qui est exactement l'erreur que la page dénonce. */
+const rangs = [...document.querySelectorAll(".prise")];
+let retenu = null;
+const montrer = (r) => {
+  retenu = r;
+  for (const el of document.querySelectorAll(".g"))
+    el.classList.toggle("efface", r !== null && !el.classList.contains("g" + r) &&
+                                  !el.classList.contains("gE"));
+};
+for (const el of rangs) {
+  const bascule = () => montrer(retenu === el.dataset.rang ? null : el.dataset.rang);
+  el.addEventListener("click", bascule);
+  el.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); bascule(); }
+  });
+}
+
+/* L'animation ne se déclenche qu'une fois la graduation posée : sinon les aiguilles
+   glissent devant un axe vide et le geste ne veut plus rien dire. */
+requestAnimationFrame(() => document.body.classList.add("anim"));
+</script>

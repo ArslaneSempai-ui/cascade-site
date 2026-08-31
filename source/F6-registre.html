@@ -1,0 +1,41 @@
+<!doctype html>
+<meta charset="utf-8"><title>Figures F6</title>
+<link rel="stylesheet" href="fontes/literata.css">
+<style>
+  *{box-sizing:border-box}
+  html{background:#dbd7c5}
+  body{margin:0;padding:2.2rem 2.6rem;width:840px;color:#1b1d18;
+       font:400 16px/1.5 "Literata",Georgia,serif;-webkit-font-smoothing:antialiased;
+       background:linear-gradient(168deg,#e2ddcb,#dbd7c5 70%)}
+  :root{--encre:#1b1d18;--demi:#4a4739;--pale:#55523f;--filet:#9d9a83;
+        --filet-clair:#bab7a0;--vert:#23543f;
+        --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif}
+  .cap{font:600 11px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+       color:var(--pale)}
+
+  .reg{width:560px;border-top:1.5px solid var(--encre)}
+  .li{display:grid;grid-template-columns:9.5rem 1fr;align-items:baseline;
+      column-gap:1.6rem;padding:.65rem 0;border-bottom:1px solid var(--filet-clair)}
+  .gv{font:600 2.3rem/1 "Literata",Georgia,serif;letter-spacing:-.025em;
+      font-variant-numeric:tabular-nums;text-align:right}
+  .li.de .gv{color:var(--vert)}
+  .li p{margin:0;font:italic 400 14.5px/1.5 "Literata",Georgia,serif;color:var(--demi)}
+  .li p .int{font-style:normal;font:400 12px/1.4 var(--sans);color:var(--pale);
+             display:block;margin-top:.1rem}
+  .li.solde{border-bottom:none;border-top:1.5px solid var(--encre);margin-top:-1px}
+  .li.solde .gv{font-size:1.7rem}
+  .li.solde p{font-style:normal;font:600 11px/1.4 var(--sans);letter-spacing:.14em;
+              text-transform:uppercase;color:var(--pale)}
+</style>
+
+  <div class="reg">
+    <div class="li"><span class="gv">94.4%</span>
+      <p>Mean of five field rates, on the dashboard. Not a proportion, so no
+        interval exists.</p></div>
+    <div class="li de"><span class="gv">76.7%</span>
+      <p>All five fields right on the same file, 92 of 120.
+        <span class="int">Wilson 95%: 68.3 to 83.3</span></p></div>
+    <div class="li solde"><span class="gv">17.7</span>
+      <p>Points between the two, over the same files</p></div>
+  </div>
+

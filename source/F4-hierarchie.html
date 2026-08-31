@@ -1,0 +1,44 @@
+<!doctype html>
+<meta charset="utf-8"><title>Figures F4</title>
+<link rel="stylesheet" href="fontes/literata.css">
+<style>
+  *{box-sizing:border-box}
+  html{background:#dbd7c5}
+  body{margin:0;padding:2.2rem 2.6rem;width:840px;color:#1b1d18;
+       font:400 16px/1.5 "Literata",Georgia,serif;-webkit-font-smoothing:antialiased;
+       background:linear-gradient(168deg,#e2ddcb,#dbd7c5 70%)}
+  :root{--encre:#1b1d18;--demi:#4a4739;--pale:#55523f;--filet:#9d9a83;
+        --filet-clair:#bab7a0;--vert:#23543f;
+        --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif}
+  .cap{font:600 11px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+       color:var(--pale)}
+
+  .amorce{margin:0 0 .5rem;font:italic 400 16.5px/1.5 "Literata",Georgia,serif;
+          color:var(--demi)}
+  .amorce b{font-style:normal;font-weight:600;color:var(--encre);
+            font-variant-numeric:tabular-nums}
+  .grand{font:600 5.4rem/1 "Literata",Georgia,serif;letter-spacing:-.035em;
+         color:var(--vert);font-variant-numeric:tabular-nums;display:block}
+  .mou{width:340px;height:30px;display:block;margin-top:.5rem}
+  .mou line{stroke:#bab7a0}
+  .mou .br{stroke:#1b1d18;stroke-width:1.5;fill:none}
+  .mou .pt{fill:#23543f}
+  .mou text{font:500 10.5px var(--sans);fill:#55523f}
+  .dessous{margin:.6rem 0 0;font:400 13.5px/1.5 var(--sans);color:var(--demi);
+           max-width:44ch}
+  .dessous .cap{display:block;margin-top:.5rem}
+</style>
+
+  <p class="amorce">Your dashboard says <b>94.4%</b>, the mean of five field rates.
+    The number that gets filed is this one:</p>
+  <span class="grand">76.7%</span>
+  <svg class="mou" viewBox="0 0 340 30"><line x1="4" y1="13" x2="336" y2="13"></line>
+    <path class="br" d="M73 6 L73 20
+      M73 13 L197 13
+      M197 6 L197 20"></path>
+    <circle class="pt" cx="143" cy="13" r="3.4"></circle>
+    <text x="73" y="29" text-anchor="middle">68.3</text>
+    <text x="197" y="29" text-anchor="middle">83.3</text></svg>
+  <p class="dessous">All five fields right on the same file, 92 of 120 case files.
+    <span class="cap">17.7 points below the dashboard, over the same files</span></p>
+

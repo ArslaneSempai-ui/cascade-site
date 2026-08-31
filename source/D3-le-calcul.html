@@ -1,0 +1,143 @@
+<!doctype html>
+<meta charset="utf-8"><title>Cascade — two arithmetics</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23e3ddcc'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --papier:#e3ddcc; --relief:#efeade; --creux:#d5cdb8;
+    --encre:#16181c; --demi:#4f4a41; --pale:#6c6656;
+    --filet:#b7ae96; --fin:#cdc4ae;
+    --vert:#2f8a60; --rouge:#a8462f;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  /* Le fond va sur <html> ET sur <body> : sans celui de <html>, celui de <body> est propagé
+     au canevas, et un élément en mélange n'aurait plus de toile de fond. */
+  html{background:#ded7c4}
+  body{margin:0;color:var(--encre);font:400 16px/1.55 var(--serif);
+       -webkit-font-smoothing:antialiased;
+       background:
+         radial-gradient(58% 54% at 71% 30%, rgba(248,244,235,.55) 0%, rgba(248,244,235,0) 72%),
+         linear-gradient(172deg, #e9e3d3 0%, #e1dac8 52%, #d5cdb6 100%);
+       background-attachment:fixed}
+  .ecran{min-height:100vh;display:flex;flex-direction:column;max-width:94rem;margin:0 auto;
+         padding:1.3rem clamp(1.2rem,3.6vw,3.2rem) 1.2rem}
+  .tete{display:flex;gap:1.1rem;align-items:baseline;flex-wrap:wrap;
+        border-bottom:1.5px solid var(--encre);padding-bottom:.5rem}
+  .tete b{font:600 13px/1 var(--sans);letter-spacing:.22em}
+  .tete span{font-size:14.5px;color:var(--demi)}
+  .tete .d{margin-left:auto;font:600 10px/1 var(--sans);letter-spacing:.14em;
+           text-transform:uppercase;color:var(--pale)}
+  .oeil{font:600 10px/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+        color:var(--pale);display:block;margin-bottom:.75rem}
+  h1{font:600 clamp(1.9rem,3.5vw,3rem)/1.07 var(--serif);letter-spacing:-.023em;
+     margin:0 0 .8rem;max-width:18ch;text-wrap:balance}
+  .these{color:var(--demi);margin:0 0 1.4rem;max-width:42ch;font-size:16.5px}
+  .these b{color:var(--encre);font-weight:600}
+  .agir{display:flex;gap:1.1rem;align-items:center;flex-wrap:wrap}
+  .bouton{background:var(--encre);color:var(--relief);text-decoration:none;
+          font:600 15px/1 var(--sans);padding:.95rem 1.5rem;border:1px solid var(--encre)}
+  .bouton:hover{background:transparent;color:var(--encre)}
+  .bouton:focus-visible{outline:2px solid var(--vert);outline-offset:3px}
+  .agir p{margin:0;font:400 13.5px/1.45 var(--sans);color:var(--demi);max-width:34ch}
+  .n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .prise{all:unset;cursor:pointer;display:block}
+  .prise:focus-visible{outline:2px solid var(--vert);outline-offset:2px}
+
+  .haut{padding:1.3rem 0 .4rem}
+  .deux{flex:1;display:grid;grid-template-columns:1fr 1px 1fr;gap:clamp(1.2rem,3.4vw,3rem);
+        align-items:start;padding-bottom:.8rem}
+  @media(max-width:960px){.deux{grid-template-columns:1fr}.sep{display:none}}
+  .sep{background:var(--filet)}
+  .col h2{font:600 11px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+          color:var(--pale);margin:0 0 .1rem}
+  .col .op{font:400 14px/1.5 var(--sans);color:var(--demi);margin:0 0 1rem;max-width:38ch}
+  .champ{display:grid;grid-template-columns:9.5rem 3.6rem minmax(0,1fr);gap:.7rem;
+         align-items:center;padding:.3rem 0;width:100%;text-align:left;
+         transition:opacity .2s ease}
+  .col.choisi .champ:not(.vu){opacity:.34}
+  .champ.vu .b i{background:var(--encre)}
+  .champ.vu .q,.champ.vu .v{font-weight:600;color:var(--encre)}
+  .champ .q{font:400 14.5px/1.3 var(--serif)}
+  .champ .v{font:500 13.5px/1 var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+  .champ .b{height:9px;background:var(--creux)}
+  .champ .b i{display:block;height:100%;background:var(--pale)}
+  .somme{display:grid;grid-template-columns:9.5rem 3.6rem minmax(0,1fr);gap:.7rem;
+         align-items:center;border-top:1.5px solid var(--encre);margin-top:.5rem;
+         padding-top:.5rem}
+  .somme .q{font:600 15.5px/1.3 var(--serif)}
+  .somme .v{font:600 19px/1 var(--mono);text-align:right}
+  .somme .r{font:400 12.5px/1.4 var(--sans);color:var(--pale)}
+  /* Cent vingt dossiers, comptés. Le pourcentage n'apparaît qu'après le compte, jamais avant. */
+  .grille{display:grid;grid-template-columns:repeat(20,1fr);gap:3px;margin:.2rem 0 .8rem}
+  .grille i{display:block;aspect-ratio:1;background:var(--encre)}
+  .grille i.casse{background:transparent;box-shadow:inset 0 0 0 1px var(--rouge)}
+  .cpt{display:flex;gap:1.3rem;flex-wrap:wrap;font:400 13.5px/1.5 var(--sans);color:var(--demi)}
+  .cpt b{color:var(--encre)}
+  .cpt .k{color:var(--rouge)}
+  .bas{display:flex;gap:1.3rem;align-items:center;flex-wrap:wrap;
+       border-top:1px solid var(--filet);padding-top:.9rem}
+</style>
+<div class="ecran">
+  <div class="tete"><b>CASCADE</b><span>routing audit — KYC extraction</span><span class="d">report 64bdacf · measured once · frozen</span></div>
+  <div class="haut">
+    <span class="oeil">Two arithmetics over the same 120 files</span>
+    <h1>Your dashboard says 94%. Your case files go out at 77%.</h1>
+  </div>
+  <div class="deux">
+    <div class="col">
+      <h2>What the dashboard averages</h2>
+      <p class="op">Five field rates, measured one field at a time, then divided by five.
+        A mean of five rates is not a proportion, so it carries no interval.</p>
+      <button class="champ prise" type="button"><span class="q">Name</span><span class="v">96.6</span>
+        <span class="b"><i style="width:96.6%"></i></span></button>
+      <button class="champ prise" type="button"><span class="q">Date of birth</span><span class="v">100</span>
+        <span class="b"><i style="width:100%"></i></span></button>
+      <button class="champ prise" type="button"><span class="q">Document no.</span><span class="v">79.7</span>
+        <span class="b"><i style="width:79.7%"></i></span></button>
+      <button class="champ prise" type="button"><span class="q">Country</span><span class="v">100</span>
+        <span class="b"><i style="width:100%"></i></span></button>
+      <button class="champ prise" type="button"><span class="q">Address</span><span class="v">95.8</span>
+        <span class="b"><i style="width:95.8%"></i></span></button>
+      <div class="somme"><span class="q">Mean</span><span class="v">94.4%</span>
+        <span class="r">472.1 ÷ 5 — no confidence interval</span></div>
+    </div>
+    <div class="sep"></div>
+    <div class="col">
+      <h2>What the review desk counts</h2>
+      <p class="op">One mark per case file. A file counts only when all five fields are
+        right together — which is the unit that leaves the desk.</p>
+      <div class="grille" id="grille"></div>
+      <div class="cpt"><span><b>92</b> complete</span>
+        <span class="k"><b class="k">28</b> with at least one field wrong</span>
+        <span>120 files in the retained corpus</span></div>
+      <div class="somme"><span class="q">Per-file rate</span><span class="v">76.7%</span>
+        <span class="r">92 ÷ 120 — Wilson 95% [68.3 – 83.3]</span></div>
+    </div>
+  </div>
+  <div class="bas"><a class="bouton" href="#">Have your routing measured</a><p style="margin:0;font:400 13.5px/1.45 var(--sans);color:var(--demi);max-width:52ch">On your records, on your machine. Nothing leaves the network. If nothing comes out cheaper without breaking a file, the report says so.</p></div>
+</div>
+<script>
+/* La grille se dessine depuis les comptes, pas à la main : cent vingt cases écrites en dur
+   se désaccordent du chiffre dès qu'un dossier change de camp, et c'est la figure qui ment. */
+const COMPLETS = 92, TOTAL = 120;
+const g = document.getElementById("grille");
+for (let k = 0; k < TOTAL; k++) {
+  const i = document.createElement("i");
+  if (k >= COMPLETS) i.className = "casse";
+  g.appendChild(i);
+}
+
+/* Un champ retenu à la fois : c'est ce qui laisse voir lequel des cinq tire la moyenne
+   vers le bas, ce qu'une colonne de cinq barres également noires ne montre pas. */
+const col = document.querySelector(".col");
+col.addEventListener("click", (e) => {
+  const b = e.target.closest("button.champ"); if (!b) return;
+  const deja = b.classList.contains("vu");
+  col.querySelectorAll(".vu").forEach((x) => x.classList.remove("vu"));
+  if (!deja) b.classList.add("vu");
+  col.classList.toggle("choisi", !deja);
+});
+</script>

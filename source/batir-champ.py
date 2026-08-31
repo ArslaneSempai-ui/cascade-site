@@ -1,0 +1,324 @@
+#!/usr/bin/env python3
+"""Cinq fois « Field » — même composition, cinq typographies et cinq structures de titre.
+
+CE QUI EST DEMANDÉ, ET FAIT
+  · le champ de droite prend le VERT DE « NIGHT » — le même dégradé, à la virgule près, y
+    compris la lueur radiale qui décolle la plaque du fond ;
+  · la seconde partie du titre passe au vert, et ce vert est celui du champ éclairci pour
+    tenir sur le papier. MESURÉ, pas estimé : #23543f donne 7,19 contre 1 sur #efe9da, contre
+    6,14 pour l'olive précédent. J'avais d'abord écrit 7,4 et 5,2 — deux chiffres avancés
+    sans calcul, dans un fichier dont la règle est qu'aucun chiffre ne s'affiche sans sa
+    provenance. Ils sont maintenant sortis de la formule WCAG ;
+  · la structure du titre change d'une version à l'autre, et la police avec — parce que
+    « beau » se juge sur la lettre autant que sur la mise en page, et qu'on ne peut pas
+    trancher l'une sans l'autre.
+
+CE QUE J'AI AMÉLIORÉ EN PLUS, SANS QU'ON ME LE DEMANDE
+  · le papier de gauche était un aplat ; il reçoit un dégradé très faible, pour la même
+    raison qu'un fond uni lit comme du blanc ;
+  · la plaque déborde VRAIMENT sur la frontière au lieu de l'effleurer, et son ombre de
+    contact s'assombrit sur le vert — une ombre calibrée pour du papier disparaît sur un
+    fond sombre, et l'objet se remet à flotter ;
+  · le pied portait quatre éléments de même poids ; l'écart de 17,7 points passe en tête et
+    les deux taux le suivent, parce que c'est l'écart qui est la trouvaille, pas les taux ;
+  · les fontes sont locales. Une maquette qui dépend d'un CDN ne se capture pas deux fois
+    pareil, et un fond de secours qui s'installe silencieusement fait juger la mauvaise
+    lettre.
+
+LES POLICES, ET POURQUOI CELLES-LÀ
+  Instrument Serif — didone d'affiche, contraste très élevé : le registre « revue », cher.
+  Fraunces          — serif à l'optique variable, un peu gauche par dessin : chaleureux,
+                      artisanal, le contraire d'un rapport froid.
+  Newsreader        — serif de presse, italique franche : le registre journalistique.
+  Archivo           — grotesque étroit : registre technique, industriel. Aucune sérif.
+  EB Garamond       — old-style classique : le registre du document imprimé, sobre.
+"""
+import pathlib
+
+BASE = pathlib.Path(__file__).parent
+
+ALT = ("The measurement in relief: six rows of chip stacks on a plate, one stack per reader "
+       "and per field, each chip worth ten points of measured accuracy. The seventh row has "
+       "no tiles at all — the human operator was never sampled field by field.")
+
+COMMUN = """
+  :root{
+    --papier:#efe9da; --encre:#1b1d18; --demi:#4e4a3e; --pale:#6d6754; --filet:#b9b099;
+    /* Le vert du champ est celui de « Night », repris tel quel — pas un vert voisin. */
+    --nuit-a:#1b3229; --nuit-b:#14251e; --nuit-c:#0e1a15; --lueur:rgba(58,102,82,.55);
+    --vert-clair:#cfe0d4; --vert-titre:#23543f;
+    --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+    --montee:cubic-bezier(.16,.84,.32,1);
+  }
+  *{box-sizing:border-box}
+  html{background:#e6e0cf}
+  body{margin:0;color:var(--encre);font:400 16px/1.55 var(--texte);
+       -webkit-font-smoothing:antialiased;overflow-x:hidden;
+       background:linear-gradient(168deg,#f3eee1 0%,#ebe4d2 58%,#e2dac6 100%);
+       background-attachment:fixed}
+  /* Le débordement de l'objet est voulu ; c'est l'écran qui le coupe, à son bord. */
+  .ecran{min-height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden;
+         padding:1.3rem clamp(1.2rem,3.6vw,3.4rem) 1.1rem;max-width:100rem;margin:0 auto}
+
+  /* Le champ : le dégradé de « Night », repris tel quel. J'y avais ajouté un filet censé
+     déclarer la coupe ; il traçait en réalité une bande diagonale à travers TOUT le champ,
+     donc une rayure en travers de l'objet. Le contraste du vert sur le papier suffit à dire
+     que la coupe est voulue — l'ornement partait, il est parti. */
+  .champ{position:absolute;inset:0 0 4.6rem auto;width:64%;z-index:0;
+         background:
+           radial-gradient(58% 62% at 62% 26%, var(--lueur) 0%, rgba(58,102,82,0) 66%),
+           linear-gradient(163deg, var(--nuit-a) 0%, var(--nuit-b) 52%, var(--nuit-c) 100%);
+         clip-path:polygon(15% 0,100% 0,100% 100%,1% 100%)}
+
+  .tete{display:flex;gap:1.1rem;align-items:baseline;flex-wrap:wrap;padding-bottom:.5rem;
+        position:relative;z-index:4}
+  .tete b{font:600 13px/1 var(--sans);letter-spacing:.22em}
+  .tete span{font-size:14.5px;color:var(--demi)}
+  .tete .d{margin-left:auto;font:600 10px/1 var(--sans);letter-spacing:.14em;
+           text-transform:uppercase;color:var(--vert-clair)}
+
+  .plaque{position:absolute;margin:0;pointer-events:none;z-index:2;
+          right:-6vw;top:9vh;width:min(60vw,900px)}
+  .plaque img{width:100%;display:block}
+  /* Une ombre calibrée pour du papier disparaît sur un fond sombre : celle-ci est plus
+     dense et plus serrée, sinon la plaque se remet à flotter au-dessus du vert. */
+  .socle-ombre{position:absolute;z-index:1;right:0;top:54vh;width:min(42vw,640px);height:12vh;
+               border-radius:50%;pointer-events:none;
+               background:radial-gradient(closest-side,rgba(4,10,7,.62),rgba(4,10,7,0))}
+
+  .bloc{position:relative;z-index:3;display:flex;flex-direction:column;justify-content:center;
+        flex:1;padding:1rem 0;max-width:33rem}
+  .oeil{font:600 10px/1.4 var(--sans);letter-spacing:.17em;text-transform:uppercase;
+        color:var(--pale);display:block;margin-bottom:1rem}
+  h1{margin:0 0 1.1rem;text-wrap:balance}
+  .vert{color:var(--vert-titre)}
+  .sous{margin:0 0 1.7rem;max-width:34ch;font-size:17px;color:var(--demi)}
+  .sous .n{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--encre)}
+  .agir{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+  .bouton{text-decoration:none;font:600 15px/1 var(--sans);padding:1rem 1.6rem;
+          background:var(--encre);color:#f2ede0;border:1px solid var(--encre);
+          display:inline-block;transition:background .18s ease,color .18s ease}
+  .bouton:hover{background:transparent;color:var(--encre)}
+  .bouton:focus-visible{outline:2px solid var(--vert-titre);outline-offset:4px}
+  .agir p{margin:0;font:400 13.5px/1.45 var(--sans);color:var(--pale);max-width:28ch}
+
+  /* Le pied : l'écart en tête, les deux taux derrière. C'est l'écart qui est la trouvaille ;
+     les deux taux ne sont que ce dont il est fait. */
+  .pied{display:flex;gap:1.7rem;align-items:baseline;flex-wrap:wrap;padding:.85rem 0 .2rem;
+        position:relative;z-index:4;font:400 13.5px/1.5 var(--sans);color:var(--pale);
+        border-top:1px solid rgba(60,56,40,.24)}
+  .pied .prise{all:unset;cursor:pointer;white-space:nowrap;padding:.35rem .3rem;
+               margin:-.35rem -.3rem;border-bottom:1px dotted currentColor}
+  .pied .prise:focus-visible{outline:2px solid var(--vert-titre);outline-offset:2px}
+  .pied b{font:600 15.5px/1 var(--mono);font-variant-numeric:tabular-nums;color:var(--encre)}
+  .pied .cle b{color:var(--vert-titre)}
+  .pied dfn{display:none;font-style:normal;white-space:normal;font-size:12.5px;
+            margin-left:.45rem;color:var(--pale)}
+  .pied .prise[aria-expanded="true"] dfn{display:inline}
+
+  /* ── la séquence d'entrée : neuf temps décalés, chacun sous six cents millisecondes ── */
+  @media (prefers-reduced-motion:no-preference){
+    .ecran .champ{transform:translateX(3.5%);opacity:.86}
+    .ecran .plaque{opacity:0;transform:translate3d(26px,26px,0) scale(.985)}
+    .ecran .socle-ombre{opacity:0;transform:scaleX(.82)}
+    .ecran .ligne > i{display:block;transform:translateY(102%)}
+    .ecran .oeil,.ecran .sous,.ecran .agir,.ecran .pied,.ecran .tete{opacity:0}
+    .ecran .sous,.ecran .agir{transform:translateY(10px)}
+    .go .champ{transform:none;opacity:1;
+      transition:transform .56s var(--montee),opacity .4s ease}
+    .go .plaque{opacity:1;transform:none;
+      transition:opacity .5s var(--montee) .14s,transform .58s var(--montee) .14s}
+    .go .socle-ombre{opacity:1;transform:none;
+      transition:opacity .5s ease .24s,transform .56s var(--montee) .24s}
+    .go .tete{opacity:1;transition:opacity .4s ease .06s}
+    .go .oeil{opacity:1;transition:opacity .4s ease .32s}
+    .go .ligne > i{transform:none;transition:transform .52s var(--montee)}
+    .go .ligne:nth-of-type(1) > i{transition-delay:.38s}
+    .go .ligne:nth-of-type(2) > i{transition-delay:.46s}
+    .go .ligne:nth-of-type(3) > i{transition-delay:.54s}
+    .go .ligne:nth-of-type(4) > i{transition-delay:.62s}
+    .go .sous{opacity:1;transform:none;
+      transition:opacity .42s ease .64s,transform .48s var(--montee) .64s}
+    .go .agir{opacity:1;transform:none;
+      transition:opacity .42s ease .74s,transform .48s var(--montee) .74s}
+    .go .pied{opacity:1;transition:opacity .42s ease .84s}
+  }
+  /* Le masque a besoin de place sous la ligne de base, sinon il coupe les jambages ; la
+     marge négative reprend cette place pour que l'interligne ne bouge pas. */
+  .ligne{display:block;overflow:hidden;padding-bottom:.16em;margin-bottom:-.16em}
+  @media (prefers-reduced-motion:reduce){.ligne{overflow:visible}}
+"""
+
+SUIVI = """<script>
+/* Le curseur donne son poids à la pièce : elle se déplace de quelques pixels et son ombre
+   part EN SENS INVERSE, comme une vraie ombre portée quand on tourne autour d'un objet posé.
+   Le lissage est un rattrapage image par image — une transition CSS redémarrerait à chaque
+   mouvement de souris et produirait un retard élastique. */
+(() => {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const p = document.querySelector(".plaque"), o = document.querySelector(".socle-ombre");
+  if (!p) return;
+  let vx = 0, vy = 0, x = 0, y = 0, tourne = false;
+  addEventListener("pointermove", (e) => {
+    vx = (e.clientX / innerWidth - .5) * 2;
+    vy = (e.clientY / innerHeight - .5) * 2;
+    if (!tourne) { tourne = true; requestAnimationFrame(boucle); }
+  }, { passive: true });
+  function boucle() {
+    x += (vx - x) * .07; y += (vy - y) * .07;
+    p.style.transform = `translate3d(${(-x * 13).toFixed(2)}px,${(-y * 9).toFixed(2)}px,0)`;
+    if (o) o.style.transform = `translate3d(${(x * 9).toFixed(2)}px,${(y * 4).toFixed(2)}px,0)`;
+    if (Math.abs(vx - x) > 1e-3 || Math.abs(vy - y) > 1e-3) requestAnimationFrame(boucle);
+    else tourne = false;
+  }
+})();
+
+/* Une définition à la fois, repliée par défaut. */
+(() => {
+  const pied = document.querySelector(".pied");
+  pied.addEventListener("click", (e) => {
+    const b = e.target.closest("button.prise"); if (!b) return;
+    const ouvert = b.getAttribute("aria-expanded") === "true";
+    pied.querySelectorAll('[aria-expanded="true"]').forEach((x) =>
+      x.setAttribute("aria-expanded", "false"));
+    b.setAttribute("aria-expanded", ouvert ? "false" : "true");
+  });
+})();
+
+/* La séquence attend que les fontes soient posées : lancée avant, les premiers temps se
+   jouent sur la fonte de secours et le titre saute au milieu du mouvement. */
+document.fonts.ready.then(() => requestAnimationFrame(() =>
+  requestAnimationFrame(() => document.body.classList.add("go"))));
+</script>"""
+
+PIED = """  <div class="pied">
+    <button class="prise cle" type="button" aria-expanded="false"><b>17.7</b> points apart<dfn>
+      — the distance between a field-by-field average and a per-file rate, over the same
+      120 files.</dfn></button>
+    <button class="prise" type="button" aria-expanded="false"><b>94.4%</b> mean of five field
+      rates<dfn>— five fields measured one at a time, then divided by five. Not a proportion,
+      so no interval.</dfn></button>
+    <button class="prise" type="button" aria-expanded="false"><b>76.7%</b> per file · 92 of
+      120<dfn>— a file counts only when all five fields are right together. Wilson 95%
+      [68.3 – 83.3].</dfn></button>
+    <span style="white-space:normal">On your records, on your machine. Nothing leaves the
+      network.</span>
+  </div>"""
+
+
+def page(nom, titre, fonte, css, oeil, h1, sous):
+    (BASE / nom).write_text(f"""<!doctype html>
+<meta charset="utf-8"><title>{titre}</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%2314251e'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="fontes/{fonte}.css">
+<style>{COMMUN}{css}</style>
+<div class="ecran">
+  <span class="champ"></span>
+  <div class="tete"><b>CASCADE</b><span>routing audit — KYC extraction</span>
+    <span class="d">report 64bdacf · measured once · frozen</span></div>
+  <figure class="plaque"><img src="rendus/plaque-hero.png" alt="{ALT}"></figure>
+  <span class="socle-ombre"></span>
+  <div class="bloc">
+    <span class="oeil">{oeil}</span>
+    <h1>{h1}</h1>
+    <p class="sous">{sous}</p>
+    <div class="agir"><a class="bouton" href="#">Have your routing measured</a>
+      <p>If nothing comes out cheaper without breaking a file, the report says so.</p></div>
+  </div>
+{PIED}
+</div>
+{SUIVI}
+""")
+    print("  écrit :", nom)
+
+
+SOUS = ('<span class="n">94.4%</span> is the mean of five field rates. '
+        '<span class="n">76.7%</span> is the share of files where all five are right '
+        'together — 92 of 120.')
+
+# ── F1 · INSTRUMENT SERIF ─────────────────────────────────────────────────────
+# Didone d'affiche, contraste très élevé. Structure : constat, filet, contre-constat. Le
+# filet n'est pas un ornement — il sépare deux propositions qui ne sont pas de même nature.
+page("F1-instrument.html", "Cascade — Instrument Serif", "instrument", """
+  :root{--texte:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+  h1{font:400 clamp(2.6rem,5.4vw,5rem)/1.02 "Instrument Serif",Georgia,serif;
+     letter-spacing:-.012em}
+  h1 .barre{display:block;width:5.5rem;height:1px;background:var(--filet);
+            margin:.55rem 0 .5rem}
+  h1 .vert{font-style:italic}
+  .bloc{max-width:31rem}
+""", "Two rates, the same 120 case files",
+     '<span class="ligne"><i>Both numbers are true.</i></span>'
+     '<span class="barre"></span>'
+     '<span class="ligne"><i class="vert">Only one leaves your desk.</i></span>', SOUS)
+
+# ── F2 · FRAUNCES ─────────────────────────────────────────────────────────────
+# Serif à optique variable, un peu gauche par dessin. Structure : une seule phrase qui court
+# sur trois lignes, la proposition verte tombant en dernier comme une chute.
+page("F2-fraunces.html", "Cascade — Fraunces", "fraunces", """
+  :root{--texte:"Fraunces","Iowan Old Style",Georgia,serif}
+  h1{font:600 clamp(2.3rem,4.7vw,4.1rem)/1.08 "Fraunces",Georgia,serif;letter-spacing:-.022em;
+     font-variation-settings:"opsz" 120,"SOFT" 40,"WONK" 1}
+  h1 .vert{font-variation-settings:"opsz" 120,"SOFT" 60,"WONK" 1}
+  .sous{font-variation-settings:"opsz" 14}
+  .bloc{max-width:32rem}
+""", "Two rates, the same 120 case files",
+     '<span class="ligne"><i>Both numbers</i></span>'
+     '<span class="ligne"><i>are true —</i></span>'
+     '<span class="ligne"><i class="vert">only one leaves your desk.</i></span>', SOUS)
+
+# ── F3 · NEWSREADER ───────────────────────────────────────────────────────────
+# Serif de presse, italique franche. Structure INVERSÉE : la proposition verte passe en tête
+# et en grand, le constat devient sa mise en contexte. C'est la conclusion qui frappe.
+page("F3-newsreader.html", "Cascade — Newsreader", "newsreader", """
+  :root{--texte:"Newsreader",Georgia,serif}
+  h1{font:600 clamp(2.3rem,4.6vw,4.1rem)/1.06 "Newsreader",Georgia,serif;letter-spacing:-.022em;
+     font-variation-settings:"opsz" 60}
+  h1 .petit{display:block;font:400 clamp(1.05rem,1.7vw,1.35rem)/1.35 "Newsreader",Georgia,serif;
+            font-style:italic;color:var(--pale);letter-spacing:0;margin-bottom:.45rem;
+            font-variation-settings:"opsz" 18}
+  .bloc{max-width:31rem}
+""", "Two rates, the same 120 case files",
+     '<span class="ligne"><i class="petit">Both numbers are true.</i></span>'
+     '<span class="ligne"><i class="vert">Only one leaves</i></span>'
+     '<span class="ligne"><i class="vert">your desk.</i></span>', SOUS)
+
+# ── F4 · ARCHIVO ──────────────────────────────────────────────────────────────
+# Grotesque étroit, aucune sérif : registre technique. Structure : deux blocs en capitales
+# serrées, le second vert, avec l'écart posé en chiffre entre les deux.
+page("F4-archivo.html", "Cascade — Archivo", "archivo", """
+  :root{--texte:"Archivo",ui-sans-serif,system-ui,sans-serif}
+  h1{font:700 clamp(1.9rem,3.7vw,3.3rem)/1.04 "Archivo",ui-sans-serif,sans-serif;
+     letter-spacing:-.028em;text-transform:uppercase;
+     font-variation-settings:"wdth" 88}
+  h1 .ecart{display:flex;gap:.7rem;align-items:baseline;margin:.7rem 0 .55rem;
+            font:500 12px/1 "Archivo",sans-serif;letter-spacing:.13em;color:var(--pale);
+            text-transform:uppercase;font-variation-settings:"wdth" 100}
+  h1 .ecart b{font:700 22px/1 var(--mono);letter-spacing:-.03em;color:var(--vert-titre)}
+  .oeil{font-family:"Archivo",sans-serif}
+  .sous{font-size:16px}
+  .bloc{max-width:32rem}
+""", "Two rates, the same 120 case files",
+     '<span class="ligne"><i>Both numbers are true.</i></span>'
+     '<span class="ecart"><b>17.7</b> points between them</span>'
+     '<span class="ligne"><i class="vert">Only one leaves your desk.</i></span>', SOUS)
+
+# ── F5 · EB GARAMOND ──────────────────────────────────────────────────────────
+# Old-style classique : le registre du document imprimé. Structure en alinéa — la seconde
+# proposition rentre d'un cran, comme une réponse dans une marge.
+page("F5-garamond.html", "Cascade — EB Garamond", "garamond", """
+  :root{--texte:"EB Garamond",Georgia,serif}
+  h1{font:400 clamp(2.4rem,5vw,4.5rem)/1.08 "EB Garamond",Georgia,serif;letter-spacing:-.014em}
+  h1 .vert{display:block;padding-left:2.6rem;font-style:italic;position:relative}
+  h1 .vert::before{content:"";position:absolute;left:0;top:.62em;width:1.9rem;height:1px;
+                   background:var(--vert-titre);opacity:.6}
+  .oeil{letter-spacing:.2em}
+  .sous{font-size:18px}
+  .bloc{max-width:33rem}
+""", "Two rates, the same 120 case files",
+     '<span class="ligne"><i>Both numbers are true.</i></span>'
+     '<span class="ligne"><i class="vert">Only one leaves your desk.</i></span>', SOUS)
+
+print("\ncinq versions de « Field »")

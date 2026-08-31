@@ -1,0 +1,44 @@
+{
+  "_": "Contenu de la page Accessibility. Les faits portent sur CE site : ratios de contraste calculés depuis les couleurs de la charte (script du 31 août 2026, pire paire 5,65:1 arrondie vers le bas), navigation :target sans script, details natifs, garde prefers-reduced-motion présente dans les deux bâtisseurs. La dernière section refuse de certifier ce qui n'a pas été audité — c'est le registre de la maison.",
+  "objet": "rendus/etats/objet-accessibilite.webp",
+  "titre": "Two ways in, one arrival. <span class=\"deux\">Measured, not promised.</span>",
+  "lede": "This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site's own stylesheet and structure — and each claim ends with the gesture that lets you check it, right now, on the page you are reading.",
+  "sections": [
+    {
+      "h2": "The keyboard is a first-class door",
+      "html": [
+        "<p>Every finding on the main screen is a plain address — a link to an anchor. The whole instrument navigates by keyboard alone: <b>Tab reaches every control, Enter opens it</b>, and the browser's back button walks your trail backwards, because each state you visit is a real place in the address bar.</p>",
+        "<p>The one small script on that screen only synchronises the animation clock and the tab title. <b>Switch JavaScript off and every state still opens</b> — the navigation is the address, not a handler.</p>",
+        "<p><i>Try it now: press Tab until the findings rail takes focus, then Enter. Then press Back.</i></p>"
+      ]
+    },
+    {
+      "h2": "Contrast, measured",
+      "html": [
+        "<p>Computed from this site's own palette, not asserted: body ink on this paper measures <b>11.1:1</b>. The weakest text pairing anywhere on the site measures <b>5.6:1</b>. The accessibility floor for body text is 4.5:1 — every pairing here clears it with room to spare.</p>",
+        "<p>And colour never carries a meaning alone: wherever the green marks something — a shackle, a plateau, a signature — <b>a word or a shape carries the same meaning beside it</b>.</p>"
+      ]
+    },
+    {
+      "h2": "Native parts, native semantics",
+      "html": [
+        "<p>The sections of every appendix are <b>native disclosure elements</b> — the browser provides the keyboard behaviour and the screen&#8209;reader semantics, so there is no script of ours to get them wrong. Focus is always visible: every interactive element carries a <b>focus ring drawn in the site's own ink</b>, never suppressed.</p>",
+        "<p><i>Try it now: Tab through this very page — each section header announces itself and toggles with Enter or Space.</i></p>"
+      ]
+    },
+    {
+      "h2": "Motion that asks permission",
+      "html": [
+        "<p>Every transition on this site sits behind the reduced&#8209;motion media query. <b>When your system asks for less motion, the cascade holds still</b> — the same figures, the same states, without the movement.</p>",
+        "<p><i>Try it now: switch on your system's Reduce Motion setting and reload — the page arrives already settled.</i></p>"
+      ]
+    },
+    {
+      "h2": "What this page does not claim",
+      "html": [
+        "<p>These claims are mechanical — ratios computed, anchors counted, media queries present — so we make them. What we do not certify is the lived experience: this site has not been through an audit by a person who uses a screen reader daily, <b>and that is the only audit of that experience that counts</b>. If your team runs one and finds a fault, it will be fixed and this page will say it was.</p>"
+      ]
+    }
+  ],
+  "fig": ""
+}

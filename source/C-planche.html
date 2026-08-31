@@ -1,0 +1,148 @@
+<!doctype html>
+<meta charset="utf-8"><title>C — La planche</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23eeece6'/%3E%3C/svg%3E">
+<style>
+  /* C — LA PLANCHE. L'écran est la planche d'un instrument : l'objet occupe le cadre, six
+     repères numérotés désignent ce qu'on y lit, et la légende porte le chiffre mesuré de
+     chaque repère. La densité vient de la légende, pas d'un empilement de sections. */
+  :root{--papier:#eeece6;--encre:#14161a;--demi:#5f5a51;--pale:#8b8477;
+        --filet:#c9c2b0;--fin:#ded8ca;--vert:#2f8a60;--rouge:#a8462f;
+        --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+        --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+        --mono:ui-monospace,"SF Mono",Menlo,monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--papier);color:var(--encre);font:400 15px/1.5 var(--serif);
+       -webkit-font-smoothing:antialiased}
+  .planche{max-width:78rem;margin:0 auto;padding:1.2rem clamp(1rem,3vw,2.2rem) 1.8rem}
+  .cartouche{display:flex;gap:.9rem;align-items:baseline;flex-wrap:wrap;
+             border:1px solid var(--encre);border-width:1px 0;padding:.5rem 0;margin-bottom:1rem}
+  .cartouche b{font:600 13px/1 var(--sans);letter-spacing:.2em}
+  .cartouche .t{font:600 15px/1 var(--serif)}
+  .cartouche span{font-size:14px;color:var(--demi)}
+  .cartouche .r{margin-left:auto;font:600 10px/1 var(--sans);letter-spacing:.13em;
+                text-transform:uppercase;color:var(--pale)}
+  .corps{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+         gap:clamp(1.1rem,3vw,2.4rem);align-items:start}
+  @media(max-width:900px){.corps{grid-template-columns:1fr}}
+
+  .cadre{position:relative;border:1px solid var(--filet);padding:.5rem}
+  /* `darken` : le fond du rendu est plus clair que la crème, il disparaît ; seules les
+     ombres restent. En multiply, l'objet flottait dans un rectangle gris. */
+  .cadre img{width:100%;display:block;mix-blend-mode:darken}
+  .cadre .coin{position:absolute;width:9px;height:9px;border:1px solid var(--encre)}
+  .cadre .coin.a{top:-1px;left:-1px;border-width:1px 0 0 1px}
+  .cadre .coin.b{top:-1px;right:-1px;border-width:1px 1px 0 0}
+  .cadre .coin.c{bottom:-1px;left:-1px;border-width:0 0 1px 1px}
+  .cadre .coin.d{bottom:-1px;right:-1px;border-width:0 1px 1px 0}
+  .rep{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;
+       background:var(--papier);border:1px solid var(--encre);color:var(--encre);
+       font:600 11.5px/20px var(--sans);text-align:center;font-variant-numeric:tabular-nums}
+  .lgd{font-size:12px;color:var(--pale);font-family:var(--sans);margin-top:.4rem}
+
+  h1{font:600 clamp(1.35rem,2.5vw,1.9rem)/1.13 var(--serif);letter-spacing:-.015em;
+     margin:0 0 .45rem;max-width:23ch;text-wrap:balance}
+  .sous{color:var(--demi);margin:0 0 1rem;max-width:44ch;font-size:15.5px}
+  ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--filet)}
+  ol li{display:grid;grid-template-columns:1.55rem minmax(0,1fr) auto;gap:.55rem;
+        align-items:baseline;padding:.5rem 0;border-bottom:1px solid var(--fin)}
+  ol li .n{font:600 11.5px/1.35 var(--sans);color:var(--pale);
+           font-variant-numeric:tabular-nums}
+  ol li .d{font-size:14.5px;line-height:1.4}
+  ol li .d small{display:block;font:400 12.5px/1.4 var(--sans);color:var(--pale)}
+  ol li .c{font:600 14px/1.35 var(--mono);font-variant-numeric:tabular-nums;
+           white-space:nowrap;text-align:right}
+  .c.v{color:var(--vert)} .c.r{color:var(--rouge)} .c.x{color:var(--pale);font-weight:400}
+  /* Une planche numérotée dont les repères ne répondent pas oblige le lecteur à chercher
+     le « 4 » à l'œil sur l'objet. La ligne de légende EST la commande du repère : survolée,
+     cliquée ou tabulée, elle l'allume sur la plaque. */
+  .sel{all:unset;cursor:pointer;display:block}
+  .sel:focus-visible{outline:2px solid var(--vert);outline-offset:3px}
+  ol li.vu{background:#e3e0d5}
+  .rep{transition:transform .18s ease,background .18s ease,color .18s ease}
+  .rep.actif{background:var(--encre);color:var(--papier);transform:scale(1.35)}
+  @media(prefers-reduced-motion:reduce){.rep{transition:none}}
+  .pied{display:flex;gap:1.1rem;align-items:center;flex-wrap:wrap;margin-top:1rem;
+        padding-top:.9rem;border-top:1.5px solid var(--encre)}
+  .bouton{background:var(--encre);color:var(--papier);text-decoration:none;
+          font:600 14px/1 var(--sans);padding:.9rem 1.3rem;border:1px solid var(--encre)}
+  .bouton:hover{background:transparent;color:var(--encre)}
+  .bouton:focus-visible{outline:2px solid var(--vert);outline-offset:3px}
+  .pied p{margin:0;font:400 13.5px/1.45 var(--sans);color:var(--demi);max-width:34ch}
+</style>
+<div class="planche">
+  <div class="cartouche"><b>CASCADE</b><span class="t">Planche 1 — le relevé en relief</span>
+    <span>extraction KYC · 7 lecteurs · 120 dossiers</span>
+    <span class="r">réf. 64bdacf · mesuré une fois · gelé</span></div>
+
+  <div class="corps">
+    <figure class="cadre" style="margin:0">
+      <span class="coin a"></span></button><span class="coin b"></span>
+      <span class="coin c"></span></button><span class="coin d"></span>
+      <img src="rendus/plaque.png" alt="Planche : sept rangées de piles de jetons sur une plaque, une pile par lecteur et par champ, la hauteur valant la justesse mesurée.">
+      <span class="rep" data-rep="1" style="left:29%;top:11%">1</span>
+      <span class="rep" data-rep="2" style="left:13%;top:17%">2</span>
+      <span class="rep" data-rep="3" style="left:13%;top:38%">3</span>
+      <span class="rep" data-rep="4" style="left:84%;top:63%">4</span>
+      <span class="rep" data-rep="5" style="left:47%;top:84%">5</span>
+      <span class="rep" data-rep="6" style="left:4.5%;top:55%">6</span>
+      <figcaption class="lgd">Une pile par lecteur et par champ. Un jeton vaut dix points de
+        justesse mesurée ; la hauteur se compte, elle ne s'estime pas.</figcaption>
+    </figure>
+
+    <div>
+      <h1>Votre tableau de bord affiche 94 %. Vos dossiers sortent à 77 %.</h1>
+      <p class="sous">La moyenne des cinq champs et le taux par dossier ne mesurent pas la
+        même chose. Voici où l'écart se loge, repère par repère.</p>
+      <ol>
+        <li data-rep="1"><span class="n">1</span><button class="sel" type="button"><span class="d">Le pays, lu juste par cinq lecteurs sur six.
+          <small>La colonne la plus haute de la plaque — et celle qui gonfle la moyenne.</small>
+          </span></button><span class="c v">100 %</span></li>
+        <li data-rep="2"><span class="n">2</span><button class="sel" type="button"><span class="d">Le nom, invisible aux règles.
+          <small>Un jeton seul : la règle ne le trouve jamais, et sa moyenne s'en accommode.</small>
+          </span></button><span class="c r">0 %</span></li>
+        <li data-rep="3"><span class="n">3</span><button class="sel" type="button"><span class="d">Le même nom, lu par le grand modèle distant.
+          <small>1,60 $ pour mille extractions — le poste le plus cher de la chaîne.</small>
+          </span></button><span class="c v">96,6 %</span></li>
+        <li data-rep="4"><span class="n">4</span><button class="sel" type="button"><span class="d">L'adresse, meilleure en local qu'à distance.
+          <small>4b, sur votre machine, à 0,26 $ contre 1,60 $.</small>
+          </span></button><span class="c v">95,8 %</span></li>
+        <li data-rep="5"><span class="n">5</span><button class="sel" type="button"><span class="d">La date de naissance, plafonnée partout.
+          <small>Cinq lecteurs sur six la lisent à 97,9 % ou mieux : rien à gagner ici.</small>
+          </span></button><span class="c">100 %</span></li>
+        <li data-rep="6"><span class="n">6</span><button class="sel" type="button"><span class="d">La rangée sans plaque : l'opérateur humain.
+          <small>Jamais échantillonné champ par champ ; seul son taux par dossier existe.</small>
+          </span></button><span class="c x">non mesuré</span></li>
+      </ol>
+      <div class="pied">
+        <a class="bouton" href="#">Faire mesurer votre chaîne</a>
+        <p>Le routage visé complète <b>95 dossiers sur 120</b> pour <b>54,31 $</b>,
+          contre 92 et 190,66 $ aujourd'hui. Un seul champ change de lecteur.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+/* Un seul repère allumé : deux désignent tout, donc rien. Le survol suit la souris,
+   le clic et le clavier retiennent — sinon la planche est inutilisable sans souris. */
+const planche = document.querySelector("ol");
+const allume = (n) => {
+  document.querySelectorAll(".rep").forEach((r) =>
+    r.classList.toggle("actif", r.dataset.rep === n));
+  planche.querySelectorAll("li").forEach((l) =>
+    l.classList.toggle("vu", l.dataset.rep === n));
+};
+let retenu = null;
+planche.addEventListener("click", (e) => {
+  const li = e.target.closest("li"); if (!li) return;
+  retenu = retenu === li.dataset.rep ? null : li.dataset.rep;
+  allume(retenu);
+});
+planche.addEventListener("pointerover", (e) => {
+  const li = e.target.closest("li"); if (li) allume(li.dataset.rep);
+});
+planche.addEventListener("pointerleave", () => allume(retenu));
+planche.addEventListener("focusin", (e) => {
+  const li = e.target.closest("li"); if (li) allume(li.dataset.rep);
+});
+</script>

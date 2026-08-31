@@ -1,0 +1,126 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Essai A/B — le skill de design</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  /* Le cadre est un instrument d'observation, pas une proposition. Il est achromatique
+     et identique des deux côtés : une chrome teintée flatterait la page qui partage sa
+     teinte, et on croirait avoir jugé le design. */
+  :root{
+    --fond:#17181a; --cadre:#2a2c30; --encre:#e8e8ea; --sourdine:#8b8d93;
+    --filet:rgba(255,255,255,.16);
+    --large:1280px; --haut:900px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--fond); color:var(--encre);
+    font:15px/1.5 ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  header{
+    display:flex; align-items:baseline; gap:18px; flex-wrap:wrap;
+    padding:14px 20px; border-bottom:1px solid var(--filet); flex:0 0 auto;
+  }
+  h1{margin:0; font-size:15px; font-weight:600; letter-spacing:.01em}
+  .note{color:var(--sourdine); font-size:13px}
+  .cmd{margin-left:auto; display:flex; gap:8px}
+  button{
+    font:inherit; font-size:13px; color:var(--encre); background:transparent;
+    border:1px solid var(--filet); border-radius:5px; padding:5px 12px; cursor:pointer;
+  }
+  button:hover{background:rgba(255,255,255,.06)}
+  button[aria-pressed=true]{background:var(--encre); color:var(--fond); border-color:var(--encre)}
+  button:focus-visible{outline:2px solid #6ea8ff; outline-offset:2px}
+
+  /* main garde align-items:stretch — c'est la hauteur du panneau qui sert à calculer
+     l'échelle, et un panneau centré se réduit à son contenu : l'échelle tomberait à zéro
+     et les deux pages disparaîtraient. Le centrage se fait sur la boîte, plus bas. */
+  main{flex:1 1 auto; display:flex; gap:14px; padding:14px; min-height:0}
+  .panneau{
+    flex:1 1 0; min-width:0; display:flex; flex-direction:column; gap:8px;
+  }
+  body[data-vue="1"] .panneau[data-lot="avec"],
+  body[data-vue="2"] .panneau[data-lot="sans"]{display:none}
+  .etiquette{
+    display:flex; align-items:center; gap:10px; font-size:12px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--sourdine); flex:0 0 auto;
+    margin-top:auto;   /* avec le margin-bottom:auto de .boite, centre le couple */
+  }
+  .etiquette b{color:var(--encre); font-weight:600; letter-spacing:.04em; text-transform:none; font-size:13px}
+  .etiquette a{color:var(--sourdine); margin-left:auto; text-transform:none; letter-spacing:0}
+  /* La boîte : même dimension, même filet, des deux côtés. La page à l'intérieur est
+     rendue à sa vraie largeur de 1280 puis réduite — jamais rendue à l'étroit, sinon
+     on jugerait sa mise en page responsive au lieu de sa composition. */
+  /* La boîte épouse exactement un écran de page réduit — pas la hauteur disponible.
+     Sinon l'iframe est étirée bien au-delà de la page et chaque panneau se termine par
+     un grand vide qu'on prendrait pour un trou de composition de la page elle-même. */
+  .boite{
+    flex:0 0 auto; position:relative; overflow:hidden; align-self:flex-start;
+    /* Voir .etiquette : l'auto du haut et celui du bas centrent le COUPLE libellé+page.
+       Une marge auto sur la seule boîte centrerait la page et laisserait son libellé
+       collé en haut, à flotter au-dessus de rien. */
+    margin-bottom:auto;
+    border:1px solid var(--filet); border-radius:6px; background:var(--cadre);
+  }
+  .boite iframe{
+    position:absolute; top:0; left:0; border:0;
+    width:var(--large); height:var(--haut);
+    transform-origin:0 0;
+  }
+</style>
+
+<header>
+  <h1>Essai A/B — le skill de design</h1>
+  <span class="note">Même consigne, mêmes chiffres scellés. Une seule différence : le skill lu ou non.</span>
+  <div class="cmd">
+    <button id="b0" aria-pressed="true">Côte à côte</button>
+    <button id="b1" aria-pressed="false">Sans seul</button>
+    <button id="b2" aria-pressed="false">Avec seul</button>
+  </div>
+</header>
+
+<main>
+  <section class="panneau" data-lot="sans">
+    <div class="etiquette"><b>Sans le skill</b> <span>témoin</span>
+      <a href="hero-eval0-without-skill.html" target="_blank" rel="noopener">ouvrir en grand ↗</a></div>
+    <div class="boite"><iframe src="hero-eval0-without-skill.html" title="page produite sans le skill"></iframe></div>
+  </section>
+  <section class="panneau" data-lot="avec">
+    <div class="etiquette"><b>Avec le skill</b> <span>design-arslane</span>
+      <a href="hero-eval0-with-skill.html" target="_blank" rel="noopener">ouvrir en grand ↗</a></div>
+    <div class="boite"><iframe src="hero-eval0-with-skill.html" title="page produite avec le skill"></iframe></div>
+  </section>
+</main>
+
+<script>
+  /* L'échelle se recalcule sur la boîte réelle : en côte à côte chaque page a la moitié
+     de l'écran, seule elle a tout. Sans ce recalcul on garderait le facteur du côte à
+     côte en plein écran, et la page paraîtrait deux fois trop petite. */
+  const ajuster = () => {
+    for (const panneau of document.querySelectorAll(".panneau")) {
+      if (getComputedStyle(panneau).display === "none") continue;
+      const boite = panneau.querySelector(".boite");
+      const dispo = panneau.getBoundingClientRect();
+      const haut = dispo.height - panneau.querySelector(".etiquette").offsetHeight - 8;
+      if (dispo.width <= 0 || haut <= 0) continue;
+      /* L'échelle vient de la contrainte la plus serrée, puis la boîte prend
+         exactement les dimensions de l'écran de page réduit : aucun vide. */
+      const f = Math.min(dispo.width / 1280, haut / 900);
+      boite.style.width = 1280 * f + "px";
+      boite.style.height = 900 * f + "px";
+      boite.querySelector("iframe").style.transform = `scale(${f})`;
+    }
+  };
+  const vue = (v) => {
+    document.body.dataset.vue = v;
+    for (const i of [0, 1, 2])
+      document.getElementById("b" + i).setAttribute("aria-pressed", String(i === v));
+    requestAnimationFrame(ajuster);
+  };
+  for (const i of [0, 1, 2]) document.getElementById("b" + i).onclick = () => vue(i);
+  addEventListener("keydown", (e) => { if ("012".includes(e.key)) vue(+e.key); });
+  addEventListener("resize", ajuster);
+  vue(0);
+  addEventListener("load", ajuster);
+</script>

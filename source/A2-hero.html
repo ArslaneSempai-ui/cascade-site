@@ -1,0 +1,171 @@
+<!doctype html>
+<meta charset="utf-8"><title>Cascade — l'écart</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23e9e4d7'/%3E%3C/svg%3E">
+<style>
+  /* A² — LE RELEVÉ, en écran d'accueil. Même registre que A : filet d'en-tête, chiffres
+     tabulaires, solde souligné. Trois choses changent, et ce sont celles qu'il a demandées :
+       · le papier a une couleur — un dégradé chaud, pas du blanc d'écran ;
+       · la matrice de 56 chiffres quitte le premier écran ; il reste trois lignes de solde,
+         parce qu'un accueil se lit d'un coup d'œil et que 56 chiffres ne se lisent pas ;
+       · l'objet passe de vignette de marge à sujet, avec sa propre lumière.
+     Ce qui reste dense tient dans une seule bande, en bas, où ça ne gêne pas la lecture. */
+  :root{
+    --papier:#e3ddcc; --creux:#d5cdb8; --relief:#efeade;
+    --encre:#16181c; --demi:#514c42; --pale:#6e6858;
+    --filet:#bab19a; --fin:#cec6b1;
+    --jeton:#7d838d; --vert:#2f8a60; --rouge:#a8462f;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  /* Le fond n'est pas une couleur posée : deux dégradés superposés — une lumière tiède qui
+     tombe derrière l'objet, et le papier qui s'assombrit vers le bas. C'est ce qui fait la
+     différence entre « du blanc » et une feuille posée sur une table. */
+  /* Le fond va sur <html> ET sur <body>. Sans le fond de <html>, celui de <body> est
+     propagé au canevas, et un élément en `mix-blend-mode` n'a alors plus de toile de
+     fond avec quoi se mélanger : le rendu repeint son propre fond clair et un
+     rectangle réapparaît autour de l'objet. Le mélange a besoin d'une surface peinte,
+     pas d'une couleur de canevas. */
+  html{background:#e1dac8}
+  body{margin:0;color:var(--encre);font:400 16px/1.55 var(--serif);
+       -webkit-font-smoothing:antialiased;
+       background:
+         radial-gradient(62% 56% at 70% 33%, rgba(247,243,233,.5) 0%, rgba(247,243,233,0) 72%),
+         linear-gradient(174deg, #e8e2d2 0%, #e1dac8 54%, #d7cfb9 100%);
+       background-attachment:fixed}
+  .ecran{min-height:100vh;display:flex;flex-direction:column;max-width:92rem;margin:0 auto;
+         padding:1.4rem clamp(1.2rem,3.6vw,3.2rem) 1.4rem}
+
+  .tete{display:flex;gap:1.1rem;align-items:baseline;flex-wrap:wrap;
+        border-bottom:1.5px solid var(--encre);padding-bottom:.5rem}
+  .tete b{font:600 13px/1 var(--sans);letter-spacing:.22em}
+  .tete span{font-size:14.5px;color:var(--demi)}
+  .tete .d{margin-left:auto;font:600 10px/1 var(--sans);letter-spacing:.14em;
+           text-transform:uppercase;color:var(--pale)}
+
+  .haut{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);
+        gap:clamp(1.4rem,4vw,3.4rem);align-items:center;padding:clamp(.8rem,3vh,2rem) 0}
+  @media(max-width:940px){.haut{grid-template-columns:1fr;padding-top:1.4rem}}
+
+  .oeil{font:600 10px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+        color:var(--pale);display:block;margin-bottom:.7rem}
+  h1{font:600 clamp(1.95rem,3.5vw,3.05rem)/1.08 var(--serif);letter-spacing:-.022em;
+     margin:0 0 .75rem;max-width:18ch;text-wrap:balance}
+  .these{color:var(--demi);margin:0 0 1.5rem;max-width:40ch;font-size:17px}
+  .these b{color:var(--encre);font-weight:600}
+
+  /* Le solde : trois lignes, la troisième soulignée comme dans un livre de comptes. C'est
+     tout ce qui reste de la matrice au premier écran — le reste attend plus bas. */
+  .solde{width:100%;border-collapse:collapse;max-width:31rem;margin-bottom:1.5rem}
+  .solde th,.solde td{padding:.45rem 0;text-align:right;font-family:var(--mono);
+                      font-size:14.5px;font-variant-numeric:tabular-nums;
+                      white-space:nowrap;border-bottom:1px solid var(--fin)}
+  .solde td.n{width:6.5rem}
+  .solde .u{color:var(--pale);font-size:.72em;margin-left:.15em}
+  .solde th{text-align:left;font:400 15.5px/1.35 var(--serif)}
+  .solde .interv{color:var(--pale);font-size:12px;padding-left:1rem;white-space:nowrap}
+  .solde tr:last-child th,.solde tr:last-child td{border-bottom:none;
+    border-top:1.5px solid var(--encre);padding-top:.5rem}
+  .solde tr:last-child th{font-weight:600;font-size:16.5px}
+  .solde tr:last-child .n{font-size:19px;font-weight:600}
+
+  .agir{display:flex;gap:1.1rem;align-items:center;flex-wrap:wrap}
+  .bouton{background:var(--encre);color:var(--relief);text-decoration:none;
+          font:600 15px/1 var(--sans);padding:.95rem 1.5rem;border:1px solid var(--encre)}
+  .bouton:hover{background:transparent;color:var(--encre)}
+  .bouton:focus-visible{outline:2px solid var(--vert);outline-offset:3px}
+  .agir p{margin:0;font:400 14px/1.45 var(--sans);color:var(--demi);max-width:26ch}
+
+  /* L'objet : `darken` efface le fond clair du rendu, mais aussi son ombre douce. L'ombre
+     de contact est donc redessinée sous la plaque — sans elle l'objet flotte, et un objet
+     qui flotte n'a l'air de rien peser. */
+  .objet{margin:0;position:relative;display:flex;justify-content:center}
+  .objet::after{content:"";position:absolute;left:12%;right:12%;bottom:2%;height:7%;
+                border-radius:50%;background:radial-gradient(closest-side,
+                  rgba(58,48,32,.22), rgba(58,48,32,0) 100%);z-index:-1}
+  .objet img{width:100%;max-width:690px;max-height:70vh;object-fit:contain;display:block;
+             mix-blend-mode:darken}
+
+  /* La bande : la densité du relevé, rangée sur une seule ligne. Chaque lecteur est une
+     prise — cliqué ou tabulé, il retient sa colonne. */
+  .bande{border-top:1px solid var(--filet);padding-top:.85rem;
+         display:grid;grid-template-columns:9.5rem repeat(7,minmax(0,1fr));
+         gap:clamp(.5rem,1.4vw,1.3rem);align-items:end}
+  @media(max-width:940px){.bande{grid-template-columns:repeat(4,1fr);row-gap:1rem}}
+  .bande .titre{font:600 10px/1.5 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+                color:var(--pale);padding-bottom:.15rem}
+  .lect{all:unset;cursor:pointer;display:block;padding:.3rem .25rem;margin:-.3rem -.25rem}
+  .lect:focus-visible{outline:2px solid var(--vert);outline-offset:2px}
+  .lect .n{display:block;font:400 13.5px/1.3 var(--serif);color:var(--demi)}
+  .lect .v{display:block;font:600 17px/1.15 var(--mono);font-variant-numeric:tabular-nums;
+           margin:.1rem 0 .3rem}
+  .lect .j{display:block;height:5px;background:var(--jeton)}
+  .lect .j.h{background:var(--vert)}
+  .lect .j.b{background:var(--filet)}
+  .lect .m{font:600 8.5px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;
+           color:var(--pale);border:1px solid var(--filet);padding:.1rem .2rem;
+           margin-left:.25rem;vertical-align:.16em}
+  .vu .n,.vu .v{color:var(--encre)}
+  .vu .j{background:var(--encre)}
+  .lect:not(.vu) .v{color:var(--demi)}
+  .bande.choisi .lect:not(.vu){opacity:.45}
+</style>
+<div class="ecran">
+  <div class="tete"><b>CASCADE</b><span>audit de routage — extraction KYC</span>
+    <span class="d">relevé 64bdacf · mesuré une fois · gelé</span></div>
+
+  <div class="haut">
+    <div>
+      <span class="oeil">Ce que vos deux chiffres ne disent pas ensemble</span>
+      <h1>Votre tableau de bord affiche 94 %. Vos dossiers sortent à 77 %.</h1>
+      <p class="these">Les deux sont vrais. Un seul décrit le dossier qui part au
+        classement — <b>et c'est celui dont votre équipe voit revenir les erreurs.</b></p>
+
+      <table class="solde">
+        <tbody>
+          <tr><th scope="row">Moyenne des cinq champs</th>
+              <td class="n">94,4<span class="u">%</span></td><td class="interv">sans intervalle</td></tr>
+          <tr><th scope="row">Dossiers complets</th>
+              <td class="n">92 / 120</td><td class="interv">les cinq champs justes ensemble</td></tr>
+          <tr><th scope="row">Taux par dossier</th>
+              <td class="n">76,7<span class="u">%</span></td><td class="interv">Wilson [68,3 – 83,3]</td></tr>
+        </tbody>
+      </table>
+
+      <div class="agir">
+        <a class="bouton" href="#">Faire mesurer votre chaîne</a>
+        <p>Sur vos enregistrements, sur votre machine. Si rien ne bat votre routage,
+          le relevé le dit.</p>
+      </div>
+    </div>
+
+    <figure class="objet">
+      <img src="rendus/plaque.png" alt="Le relevé en relief : sept rangées de piles de jetons sur une plaque, une pile par lecteur et par champ, chaque jeton valant dix points de justesse mesurée.">
+    </figure>
+  </div>
+
+  <div class="bande">
+    <div class="titre">Justesse du lecteur seul</div>
+    <button class="lect" type="button"><span class="n">rules</span><span class="v">55,9</span><span class="j" style="width:55.9%"></span></button>
+    <button class="lect" type="button"><span class="n">small</span><span class="v">69,0</span><span class="j" style="width:69%"></span></button>
+    <button class="lect" type="button"><span class="n">large</span><span class="v">78,8</span><span class="j" style="width:78.8%"></span></button>
+    <button class="lect" type="button"><span class="n">0.6b</span><span class="v">79,3</span><span class="j" style="width:79.3%"></span></button>
+    <button class="lect" type="button"><span class="n">8b</span><span class="v">91,5</span><span class="j" style="width:91.5%"></span></button>
+    <button class="lect" type="button"><span class="n">4b</span><span class="v">92,7</span><span class="j h" style="width:92.7%"></span></button>
+    <button class="lect" type="button"><span class="n">humain<span class="m">supposé</span></span><span class="v">85,0</span><span class="j b" style="width:85%"></span></button>
+  </div>
+</div>
+<script>
+/* Un seul lecteur retenu : deux mis en avant ne comparent plus, ils décorent. Le reste
+   s'estompe pour que la comparaison se fasse contre le fond, pas contre six voisins. */
+const bande = document.querySelector(".bande");
+bande.addEventListener("click", (e) => {
+  const b = e.target.closest("button.lect"); if (!b) return;
+  const deja = b.classList.contains("vu");
+  bande.querySelectorAll(".vu").forEach((x) => x.classList.remove("vu"));
+  if (!deja) b.classList.add("vu");
+  bande.classList.toggle("choisi", !deja);
+});
+</script>

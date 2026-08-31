@@ -1,0 +1,220 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Les piles</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23eeece6'/%3E%3Crect x='4' y='10' width='8' height='2' rx='1' fill='%232f8a60'/%3E%3Crect x='4' y='6' width='8' height='2' rx='1' fill='%236a6f78'/%3E%3C/svg%3E">
+
+<style>
+  /* Palette reprise de l'objet rendu : papier chaud, jetons froids, plaque taupe.
+     Aucun noir — le plus sombre est un brun. */
+  :root{
+    --papier:#eeece6; --papier-clair:#f6f4ef;
+    --encre:#14161a; --demi:#5f5a51; --pale:#767166;
+    --plaque:#8a8378; --creux:#4a4239; --filet:#c9c2b0;
+    --jeton:#7d838d; --jeton-poli:#a9b1bd;
+    --retenu:#2f8a60; --retenu-poli:#3fa877;
+    --limite:#a8462f;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--papier);color:var(--encre);
+       font:400 17px/1.6 var(--serif);-webkit-font-smoothing:antialiased}
+  .page{max-width:60rem;margin:0 auto;padding:clamp(1.4rem,4vw,3rem)}
+  h1{font:600 clamp(1.6rem,3.2vw,2.3rem)/1.15 var(--serif);margin:0 0 .5rem;
+     letter-spacing:-.012em;text-wrap:balance;max-width:30ch}
+  .chapeau{color:var(--demi);max-width:46ch;margin:0 0 1.6rem}
+  .etiquette{font:600 10px/1 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--pale)}
+  .n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  hr{border:0;border-top:1px solid var(--filet);margin:1.6rem 0}
+
+  /* ── l'instrument ───────────────────────────────────────────────────────── */
+  .instrument{background:var(--papier-clair);border:1px solid var(--filet);
+              padding:1.1rem 1.2rem 1.3rem;margin:0 0 1.2rem}
+  .barre{display:flex;flex-wrap:wrap;gap:1.6rem;align-items:baseline;margin-bottom:.9rem}
+  .barre div{display:flex;flex-direction:column;gap:.15rem}
+  .v{font:600 1.45rem/1 var(--mono);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .defile{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  svg{display:block;min-width:34rem}
+  .cellule{cursor:pointer}
+  .cellule:focus-visible{outline:2px solid var(--encre);outline-offset:2px}
+  .cellule.morte{cursor:not-allowed}
+  .aide{color:var(--pale);font:400 13px/1.5 var(--sans);margin:.7rem 0 0}
+  .marque{display:inline-block;font:600 9px/1.5 var(--sans);letter-spacing:.12em;
+          text-transform:uppercase;border:1px solid var(--filet);padding:.05rem .34rem;
+          color:var(--demi);vertical-align:.12em}
+  .note{border-left:2px solid var(--limite);padding-left:.9rem;color:var(--demi);
+        max-width:52ch;margin:1.4rem 0 0}
+  .note b{color:var(--encre);font-weight:600}
+  footer{margin-top:2rem;padding-top:1.1rem;border-top:1px solid var(--filet);
+         color:var(--pale);font:400 13px/1.6 var(--sans)}
+  @media (prefers-reduced-motion:no-preference){
+    .jeton{transition:transform .16s ease, fill .16s ease}
+  }
+</style>
+
+<div class="page">
+  <p class="etiquette">Relevé <span class="n">64bdacf</span> · mesuré une fois · gelé</p>
+  <h1>Un lecteur par champ, pas un grand modèle partout.</h1>
+  <p class="chapeau">Chaque pile est une justesse mesurée : un jeton pour dix points, avec un
+    décrochement tous les cinq — pour qu'on puisse compter au lieu d'estimer.
+    <b>Cliquez une case pour envoyer ce champ à ce lecteur.</b></p>
+
+  <div class="instrument">
+    <div class="barre">
+      <div><span class="etiquette">Justesse</span><span class="v n" id="just">94,4 %</span></div>
+      <div><span class="etiquette">Par an</span><span class="v n" id="cout">191 $</span></div>
+      <div><span class="etiquette">Écart à l'achat habituel</span><span class="v n" id="ecart">+15,6 pts</span></div>
+      <div><span class="etiquette">Champ le plus faible</span><span class="v n" id="faible">doc n°</span></div>
+    </div>
+    <div class="defile"><svg id="grille" viewBox="0 0 760 400" role="img"
+      aria-label="Grille de sept lecteurs par cinq champs. Chaque case porte une pile de jetons dont le nombre est la justesse mesurée de ce lecteur sur ce champ. La ligne « humain » ne porte aucune valeur par champ : aucun échantillon n'a été tiré."></svg></div>
+    <p class="aide">La ligne <b>humain</b> n'a aucune valeur par champ — aucun échantillon n'a
+      été tiré. Ses cases ne sont donc pas cliquables : <b>on ne route pas vers ce qu'on n'a
+      pas mesuré.</b></p>
+  </div>
+
+  <p class="note"><b>Le point faible, dit avant que vous le trouviez.</b> Doc n° est le champ
+    le plus mal lu du routage retenu — <span class="n">79,7 %</span> par les règles écrites.
+    Il échoue en silence et non en devinant : <span class="n">203</span> champs laissés vides
+    pour <span class="n">1 000</span> dossiers, <b>zéro valeur inventée</b>. Un blanc se fait
+    relire ; un chiffre inventé part en production.</p>
+
+  <footer>
+    <b>16 807</b> routages énumérés · latence médiane <b>968 ms</b> sous un plafond de
+    <b>2 000 ms</b> <span class="marque">supposé</span> · coûts annuels à
+    <b>100 000</b> dossiers <span class="marque">supposé</span> ·
+    <b>32</b> chiffres retirés pendant l'audit, <b>11</b> avant publication.
+  </footer>
+</div>
+
+<script>
+/* ── LE RELEVÉ ────────────────────────────────────────────────────────────────
+   Tout ce qui suit est mesuré. `null` veut dire : jamais échantillonné. Une case
+   `null` n'est ni cliquable ni calculable — c'est la garantie mécanique qu'aucun
+   chiffre ne sera inventé pour garder la figure interactive. */
+const PALIERS = [
+  {n:"rules", lib:"règles écrites",     prix:0},
+  {n:"small", lib:"petit modèle",       prix:0.20},
+  {n:"large", lib:"grand modèle",       prix:1.60},
+  {n:"0.6b",  lib:"local 0,6 Md",       prix:0.08},
+  {n:"4b",    lib:"local 4 Md",         prix:0.26},
+  {n:"8b",    lib:"local 8 Md",         prix:0.40},
+  {n:"human", lib:"opérateur",          prix:587, suppose:true},
+];
+const CHAMPS = ["nom","naissance","doc n°","pays","adresse"];
+/* lignes = paliers, colonnes = champs */
+const VAL = [
+  [   0, 100, 79.7, 100,    0],
+  [46.6,97.9, 57.7, 100, 43.0],
+  [96.6, 100, 64.4, 100, 32.8],
+  [80.8,87.5, 70.0,83.3, 75.0],
+  [89.2,99.2, 79.2, 100, 95.8],
+  [91.7, 100, 83.3, 100, 82.5],
+  [null,null, null,null, null],   // aucun échantillon par champ
+];
+const OPTIMUM = [2,0,0,0,4];       // le routage retenu par l'audit
+const HABITUEL = 78.8, COUT_HABITUEL = 800, VOLUME = 100;   // milliers de dossiers/an
+
+let routage = OPTIMUM.slice();
+
+/* ── LE DESSIN ────────────────────────────────────────────────────────────────
+   Les coordonnées tombent sur le demi-pixel quand l'épaisseur du trait est impaire :
+   sans ça un trait d'un pixel s'étale sur deux et l'image paraît floue. */
+const G = document.getElementById("grille");
+const X0 = 118, Y0 = 34, CW = 122, CH = 50;
+const svgn = "http://www.w3.org/2000/svg";
+const el = (t, a) => { const e = document.createElementNS(svgn, t);
+  for (const k in a) e.setAttribute(k, a[k]); return e; };
+
+function dessiner() {
+  G.textContent = "";
+  /* en-têtes : ce sont EUX qui doivent surgir, pas les cases — trente-cinq nombres
+     sans trait distinctif imposent une recherche case par case. */
+  CHAMPS.forEach((c, j) => {
+    const t = el("text", {x: X0 + j*CW + CW/2, y: 22, "text-anchor":"middle",
+      "font-size":11, "font-family":"var(--sans)", "font-weight":600,
+      "letter-spacing":"0.1em", fill:"var(--pale)"});
+    t.textContent = c.toUpperCase(); G.appendChild(t);
+  });
+  PALIERS.forEach((p, i) => {
+    const y = Y0 + i*CH;
+    const t = el("text", {x: X0 - 12, y: y + CH/2 + 4, "text-anchor":"end",
+      "font-size":12, "font-family":"var(--mono)",
+      fill: p.suppose ? "var(--pale)" : "var(--encre)"});
+    t.textContent = p.n; G.appendChild(t);
+    const s = el("text", {x: X0 - 12, y: y + CH/2 + 16, "text-anchor":"end",
+      "font-size":9, "font-family":"var(--sans)", fill:"var(--pale)"});
+    s.textContent = p.lib; G.appendChild(s);
+    G.appendChild(el("line", {x1:X0-4.5, y1:y+CH-0.5, x2:X0+CHAMPS.length*CW-4.5,
+      y2:y+CH-0.5, stroke:"var(--filet)", "stroke-width":1}));
+
+    CHAMPS.forEach((_, j) => {
+      const v = VAL[i][j], x = X0 + j*CW;
+      const g = el("g", {class: "cellule" + (v === null ? " morte" : ""),
+        transform:`translate(${x} ${y})`});
+      /* Une zone de préhension explicite sur toute la case : sans elle, une case dont le
+         seul contenu visible est un mot court n'offre que 14 px de haut à cliquer, très en
+         dessous du minimum de 24. Le contrôle d'ergonomie l'a trouvé, pas moi. */
+      g.appendChild(el("rect", {x:4, y:4, width:CW-12, height:CH-10, fill:"transparent"}));
+      if (v === null) {
+        /* le trou : on voit le papier au travers, et il porte son mot */
+        g.appendChild(el("rect", {x:8, y:8, width:CW-20, height:CH-18, rx:2,
+          fill:"none", stroke:"var(--filet)", "stroke-width":1, "stroke-dasharray":"3 4"}));
+        const m = el("text", {x:(CW-4)/2, y:CH/2+4, "text-anchor":"middle",
+          "font-size":9, "font-family":"var(--sans)", "letter-spacing":".08em",
+          fill:"var(--pale)"});
+        m.textContent = "NON MESURÉ"; g.appendChild(m);
+        g.setAttribute("aria-label", `${p.n}, ${CHAMPS[j]} : non mesuré, aucun échantillon`);
+      } else {
+        const choisi = routage[j] === i;
+        const n = Math.max(0, Math.round(v / 10));
+        for (let k = 0; k < n; k++) {
+          /* Le pas des jetons est calculé pour que DIX jetons plus deux décrochements
+             tiennent avant le chiffre : 12 + 9×6,5 + 5 + 5 = 81, et le chiffre commence
+             à 88. Sans ce calcul les valeurs à trois chiffres passent sous les jetons —
+             une collision qu'aucune porte ne voit, parce qu'elle contrôle le débord de la
+             page et non les chevauchements à l'intérieur d'une figure. */
+          const grp = Math.floor(k / 5);
+          const cx = 11 + k*5.9 + grp*4.5;
+          const poli = (k % 5) === 4;
+          g.appendChild(el("rect", {class:"jeton", x:cx, y:14, width:5, height:CH-26, rx:1.5,
+            fill: choisi ? (poli ? "var(--retenu-poli)" : "var(--retenu)")
+                         : (poli ? "var(--jeton-poli)" : "var(--jeton)")}));
+        }
+        const t2 = el("text", {x:CW-10, y:CH/2+4, "text-anchor":"end", "font-size":11,
+          "font-family":"var(--mono)",
+          fill: choisi ? "var(--retenu)" : (v === 0 ? "var(--limite)" : "var(--demi)")});
+        t2.textContent = v === 0 ? "aveugle" : v.toFixed(1).replace(".", ",");
+        g.appendChild(t2);
+        g.setAttribute("tabindex", "0");
+        g.setAttribute("role", "button");
+        g.setAttribute("aria-label",
+          `${p.n} sur ${CHAMPS[j]} : ${v.toFixed(1)} %. ${choisi ? "Retenu." : "Cliquer pour router ce champ ici."}`);
+        const router = () => { routage[j] = i; dessiner(); recalculer(); };
+        g.addEventListener("click", router);
+        g.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); router(); }
+        });
+      }
+      G.appendChild(g);
+    });
+  });
+}
+
+function recalculer() {
+  const j = routage.reduce((s, p, f) => s + VAL[p][f], 0) / CHAMPS.length;
+  const c = routage.reduce((s, p) => s + PALIERS[p].prix, 0) * VOLUME;
+  document.getElementById("just").textContent  = j.toFixed(1).replace(".", ",") + " %";
+  document.getElementById("cout").textContent  = Math.round(c).toLocaleString("fr-FR") + " $";
+  const e = j - HABITUEL;
+  document.getElementById("ecart").textContent =
+    (e >= 0 ? "+" : "−") + Math.abs(e).toFixed(1).replace(".", ",") + " pts";
+  let pire = 0;
+  routage.forEach((p, f) => { if (VAL[p][f] < VAL[routage[pire]][pire]) pire = f; });
+  document.getElementById("faible").textContent = CHAMPS[pire];
+}
+
+dessiner(); recalculer();
+</script>

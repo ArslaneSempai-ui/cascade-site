@@ -1,0 +1,50 @@
+<!doctype html>
+<meta charset="utf-8"><title>Figures F3</title>
+<link rel="stylesheet" href="fontes/literata.css">
+<style>
+  *{box-sizing:border-box}
+  html{background:#dbd7c5}
+  body{margin:0;padding:2.2rem 2.6rem;width:840px;color:#1b1d18;
+       font:400 16px/1.5 "Literata",Georgia,serif;-webkit-font-smoothing:antialiased;
+       background:linear-gradient(168deg,#e2ddcb,#dbd7c5 70%)}
+  :root{--encre:#1b1d18;--demi:#4a4739;--pale:#55523f;--filet:#9d9a83;
+        --filet-clair:#bab7a0;--vert:#23543f;
+        --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif}
+  .cap{font:600 11px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+       color:var(--pale)}
+
+  .mir{display:grid;grid-template-columns:1fr 1fr;column-gap:3rem;width:620px}
+  .col{text-align:center;display:flex;flex-direction:column;align-items:center;gap:.4rem}
+  .gv{font:600 3rem/1 "Literata",Georgia,serif;letter-spacing:-.03em;
+      font-variant-numeric:tabular-nums}
+  .col.de .gv{color:var(--vert)}
+  .mou{width:200px;height:24px}
+  .mou line{stroke:#bab7a0}
+  .mou .br{stroke:#1b1d18;stroke-width:1.4;fill:none}
+  .mou .pt{fill:#23543f}
+  .mou text{font:500 10px var(--sans);fill:#55523f}
+  .mou .vide{font-style:italic;fill:#55523f}
+  .col p{margin:0;max-width:24ch;font:400 13px/1.5 var(--sans);color:var(--demi)}
+  .ecart{grid-column:1 / -1;text-align:center;margin-top:1.2rem}
+</style>
+
+  <div class="mir">
+    <div class="col"><span class="cap">On the dashboard</span>
+      <span class="gv">94.4%</span>
+      <svg class="mou" viewBox="0 0 200 24"><line x1="4" y1="11" x2="196" y2="11"></line>
+        <text class="vide" x="100" y="15" text-anchor="middle">no interval exists</text>
+        <circle class="pt" cx="169" cy="11" r="3" fill="#1b1d18"></circle></svg>
+      <p>Mean of five field rates, not a proportion.</p></div>
+    <div class="col de"><span class="cap">On your desk</span>
+      <span class="gv">76.7%</span>
+      <svg class="mou" viewBox="0 0 200 24"><line x1="4" y1="11" x2="196" y2="11"></line>
+        <path class="br" d="M44 5 L44 17
+          M44 11 L116 11
+          M116 5 L116 17"></path>
+        <circle class="pt" cx="84" cy="11" r="3"></circle>
+        <text x="44" y="23" text-anchor="middle">68.3</text>
+        <text x="116" y="23" text-anchor="middle">83.3</text></svg>
+      <p>All five fields right on the same file, 92 of 120.</p></div>
+    <span class="ecart cap">The gap over the same files: 17.7 points</span>
+  </div>
+

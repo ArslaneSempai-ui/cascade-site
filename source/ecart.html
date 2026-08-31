@@ -1,0 +1,158 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>L'écart</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23eeece6'/%3E%3Crect x='3' y='4' width='3' height='8' fill='%236a6f78'/%3E%3Crect x='10' y='8' width='3' height='4' fill='%23a8462f'/%3E%3C/svg%3E">
+
+<style>
+  :root{
+    --papier:#eeece6; --papier-clair:#f6f4ef;
+    --encre:#14161a; --demi:#5f5a51; --pale:#767166;
+    --filet:#c9c2b0; --filet-fin:#ddd7c8;
+    --jeton:#7d838d; --jeton-poli:#a9b1bd;
+    --retenu:#2f8a60; --limite:#a8462f;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--papier);color:var(--encre);
+       font:400 17px/1.62 var(--serif);-webkit-font-smoothing:antialiased}
+  .page{max-width:56rem;margin:0 auto;padding:0 clamp(1.2rem,4vw,3rem)}
+  .etiquette{font:600 10px/1 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--pale)}
+  .n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  h1{font:600 clamp(1.75rem,4vw,2.7rem)/1.1 var(--serif);margin:.4rem 0 .7rem;
+     letter-spacing:-.016em;text-wrap:balance;max-width:19ch}
+  h2{font:600 clamp(1.2rem,2.2vw,1.5rem)/1.18 var(--serif);margin:0 0 .45rem;letter-spacing:-.01em}
+  p{margin:0 0 .9rem;max-width:47ch}
+  .demi{color:var(--demi)}
+  header{display:flex;gap:1.1rem;align-items:baseline;flex-wrap:wrap;
+         padding:1.3rem 0 1rem;border-bottom:1px solid var(--filet)}
+  section{padding:2.4rem 0;border-bottom:1px solid var(--filet-fin)}
+  .marque{display:inline-block;font:600 9px/1.5 var(--sans);letter-spacing:.12em;
+          text-transform:uppercase;border:1px solid var(--filet);padding:.05rem .34rem;
+          color:var(--demi);vertical-align:.12em}
+
+  /* le registre : grandeurs à droite, solde en bas — la forme déjà déployée sur onze pages */
+  .registre{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:14px;
+            margin:.9rem 0 0;max-width:38rem}
+  .registre th,.registre td{padding:.42rem .1rem;text-align:right;
+                            border-bottom:1px solid var(--filet-fin);
+                            font-variant-numeric:tabular-nums}
+  .registre th{font:600 10px/1.3 var(--sans);letter-spacing:.1em;text-transform:uppercase;
+               color:var(--pale);vertical-align:bottom}
+  .registre th.g,.registre td.g{text-align:left;font-family:var(--serif);font-size:15px}
+  .registre tbody th{font-weight:400}
+  .registre tr.solde td,.registre tr.solde th{border-top:1.5px solid var(--encre);
+    border-bottom:none;padding-top:.5rem;font-weight:600}
+  .interv{color:var(--pale);font-size:12px}
+
+  figure{margin:1.3rem 0 0}
+  figcaption{color:var(--pale);font:400 13px/1.5 var(--sans);margin-top:.5rem;max-width:44ch}
+  .note{border-left:2px solid var(--limite);padding-left:.9rem;color:var(--demi);
+        max-width:50ch;margin:1.2rem 0 0}
+  .note b{color:var(--encre);font-weight:600}
+  .reserve{border-left:2px solid var(--filet);padding-left:.9rem;color:var(--pale);
+           font:400 14px/1.55 var(--sans);max-width:50ch;margin:1.2rem 0 0}
+  footer{margin:2rem 0 3.5rem;color:var(--pale);font:400 13px/1.6 var(--sans)}
+</style>
+
+<div class="page">
+  <header>
+    <b class="etiquette" style="font-size:12px;letter-spacing:.18em;color:var(--encre)">CASCADE</b>
+    <span class="demi" style="font-size:15px">audit de routage — extraction KYC</span>
+    <span class="etiquette" style="margin-left:auto">mesuré une fois · gelé</span>
+  </header>
+
+  <section>
+    <p class="etiquette">Ce que vos deux chiffres ne disent pas ensemble</p>
+    <h1>Votre tableau de bord affiche 94 %. Vos dossiers sortent à 77 %.</h1>
+    <p class="demi">Les deux sont vrais. Le premier est une moyenne des cinq champs pris
+      séparément. Le second est la part des dossiers dont <b>les cinq champs sont justes
+      ensemble</b> — l'unité qui part au classement, et la seule dont votre équipe voie
+      passer les erreurs.</p>
+
+    <table class="registre">
+      <caption class="etiquette" style="text-align:left;padding-bottom:.5rem">
+        Routage publié · 120 dossiers retenus</caption>
+      <tbody>
+        <tr><th class="g" scope="row">Moyenne des cinq champs</th>
+            <td>94,4 %</td><td class="interv">sans intervalle</td></tr>
+        <tr><th class="g" scope="row">Dossiers complets</th>
+            <td class="n">92 / 120</td><td class="interv">n = 120</td></tr>
+        <tr class="solde"><th class="g" scope="row">Taux par dossier</th>
+            <td>76,7 %</td><td class="interv">[68,3 – 83,3]</td></tr>
+      </tbody>
+    </table>
+
+    <p class="reserve">La moyenne de cinq taux n'est pas une proportion : elle ne porte
+      <b>aucun intervalle de confiance</b>, et ce banc refuse de lui en inventer un. Le taux
+      par dossier en porte un, calculé par la méthode de Wilson. C'est la seule des deux
+      lignes qu'on peut contester chiffres en main — et c'est pour ça qu'on la publie.</p>
+  </section>
+
+  <section>
+    <p class="etiquette">Ce que ça change</p>
+    <h2>Le même travail pour 54 $ au lieu de 191.</h2>
+    <p class="demi">Un seul champ change de lecteur — le nom passe du grand modèle distant à
+      un modèle local. Sur les mêmes 120 dossiers, cette configuration en complète
+      <b>trois de plus</b> et n'en casse <b>aucun</b>.</p>
+
+    <table class="registre">
+      <tbody>
+        <tr><th class="g" scope="row">Routage publié</th>
+            <td class="n">92 / 120</td><td class="n">190,66 $</td></tr>
+        <tr><th class="g" scope="row">Routage visé sur le dossier</th>
+            <td class="n">95 / 120</td><td class="n">54,31 $</td></tr>
+        <tr class="solde"><th class="g" scope="row">Écart</th>
+            <td class="n">+3 dossiers</td><td class="n">÷ 3,5</td></tr>
+      </tbody>
+    </table>
+
+    <p class="note"><b>Et nous ne dirons pas « mieux ».</b> Trois gains, zéro régression,
+      trois paires discordantes : <span class="n">p = 0,25</span>. À cent vingt dossiers,
+      l'échantillon <b>ne peut pas trancher</b> sur le taux. Ce qu'on affirme est donc plus
+      étroit et vérifiable : <b>pire sur aucun dossier, et trois fois et demie moins cher.</b>
+      Un fournisseur qui vous dirait « mieux » sur trois paires vous vendrait un test qu'il
+      n'a pas fait.</p>
+  </section>
+
+  <section>
+    <p class="etiquette">Le levier que le routage ne donne pas</p>
+    <h2>Se taire plutôt que livrer une valeur douteuse.</h2>
+    <p class="demi">Sur le corpus difficile — <span class="n">30</span> documents,
+      <span class="n">150</span> champs — une abstention parfaite retire
+      <b><span class="n">106</span> valeurs fausses</b> sans sacrifier <b>une seule</b> valeur
+      juste. Les <span class="n">44</span> valeurs livrées le sont alors à
+      <span class="n">100</span> % de précision.</p>
+    <p class="demi">Une valeur fausse entre au dossier <b>sans bruit</b>. Un blanc se voit et
+      se fait relire. L'abstention n'améliore pas la justesse : elle échange de l'erreur
+      invisible contre du trou visible.</p>
+
+    <p class="note"><b>Ce que vaut ce levier, c'est vous qui le fixez.</b> Notre mesure place
+      le coût d'une valeur fausse et celui d'un blanc <b>à égalité</b> — et à ce réglage
+      l'abstention ne rapporte rien, par construction. Le gain dépend entièrement du rapport
+      entre les deux, un chiffre qui appartient à votre chaîne de contrôle et que
+      <b>nous ne savons pas fixer à votre place</b>. L'audit vous donne la courbe ; le point
+      sur la courbe est le vôtre.</p>
+  </section>
+
+  <section style="border-bottom:none">
+    <p class="etiquette">Ce que nous ne publions pas</p>
+    <h2>Les durées de cette machine ne sortent pas d'ici.</h2>
+    <p class="demi">Deux passes du même banc s'accordent au chiffre près sur les comptes et
+      divergent de <b>16 à 60 %</b> sur les médianes de durée — machine en famine mémoire.
+      Les comptes de jetons se reproduisent ailleurs ; les millisecondes, non. Elles portent
+      donc ce nom-là dans nos fichiers, et elles ne figurent sur aucune page.</p>
+    <p class="reserve">Le taux par dossier a été calculé le <span class="n">24 août 2026</span>
+      sur un arbre de travail <b>non commité</b>. Le banc le note lui-même. Il sera refait sur
+      un arbre propre avant toute remise — cette page porte la réserve plutôt que de
+      l'attendre.</p>
+  </section>
+
+  <footer>
+    <b>16 807</b> routages énumérés, un par un · <b>32</b> chiffres retirés pendant l'audit,
+    <b>11</b> avant publication · les coûts annuels supposent <b>100 000</b> dossiers
+    <span class="marque">supposé</span> et se recalculent sur votre volume.
+  </footer>
+</div>

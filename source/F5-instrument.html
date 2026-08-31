@@ -1,0 +1,66 @@
+<!doctype html>
+<meta charset="utf-8"><title>Figures F5</title>
+<link rel="stylesheet" href="fontes/literata.css">
+<style>
+  *{box-sizing:border-box}
+  html{background:#dbd7c5}
+  body{margin:0;padding:2.2rem 2.6rem;width:840px;color:#1b1d18;
+       font:400 16px/1.5 "Literata",Georgia,serif;-webkit-font-smoothing:antialiased;
+       background:linear-gradient(168deg,#e2ddcb,#dbd7c5 70%)}
+  :root{--encre:#1b1d18;--demi:#4a4739;--pale:#55523f;--filet:#9d9a83;
+        --filet-clair:#bab7a0;--vert:#23543f;
+        --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif}
+  .cap{font:600 11px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+       color:var(--pale)}
+
+  .inst{width:660px}
+  .inst .cap{display:block;margin-bottom:2.6rem}
+  .porte{position:relative;height:168px}
+  .axe{position:absolute;left:0;right:0;top:78px;height:1.5px;background:var(--encre)}
+  .grads{position:absolute;left:0;right:0;top:79.5px;height:5px;
+         background:repeating-linear-gradient(90deg,#bab7a0 0 1px,transparent 1px 5%)}
+  .reps{position:absolute;left:0;right:0;top:86px;height:14px;display:block}
+  .reps text{font:500 10px var(--sans);fill:var(--pale)}
+  .plage{position:absolute;top:72px;height:14px;background:rgba(35,84,63,.16)}
+  .pt{position:absolute;top:78.75px;width:9px;height:9px;border-radius:50%;
+      transform:translate(-50%,-50%)}
+  .pt.a{background:var(--encre)}
+  .pt.b{background:var(--vert)}
+  .wil{position:absolute;top:72px;height:13px;border-left:1.5px solid var(--vert);
+       border-right:1.5px solid var(--vert)}
+  .wil i{position:absolute;left:0;right:0;top:6px;height:1.5px;background:var(--vert);
+         display:block}
+  .drapeau{position:absolute;transform:translateX(-50%);text-align:center;width:190px}
+  .drapeau .gv{font:600 1.9rem/1 "Literata",Georgia,serif;letter-spacing:-.02em;
+               font-variant-numeric:tabular-nums;display:block}
+  .drapeau p{margin:.15rem 0 0;font:400 12px/1.4 var(--sans);color:var(--demi)}
+  .d-a{top:0;width:170px}
+  .d-b{top:104px}
+  .d-b .gv{color:var(--vert)}
+  .ecart-l{position:absolute;top:58px;transform:translateX(-50%);
+           font:600 10.5px/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;
+           color:var(--vert)}
+</style>
+
+  <div class="inst"><span class="cap">The two rates, on the same drawn scale</span>
+    <div class="porte">
+      <span class="plage" style="left:41.75%;width:44.25%"></span>
+      <span class="axe"></span><span class="grads"></span>
+      <svg class="reps" viewBox="0 0 660 14">
+        <text x="0" y="11">60</text>
+        <text x="165" y="11" text-anchor="middle">70</text>
+        <text x="330" y="11" text-anchor="middle">80</text>
+        <text x="495" y="11" text-anchor="middle">90</text>
+        <text x="660" y="11" text-anchor="end">100</text></svg>
+      <span class="wil" style="left:20.75%;width:37.5%"><i></i></span>
+      <span class="pt a" style="left:86.0%"></span>
+      <span class="pt b" style="left:41.75%"></span>
+      <span class="ecart-l" style="left:63.875%">17.7 points</span>
+      <div class="drapeau d-a" style="left:86.0%"><span class="gv">94.4%</span>
+        <p>The dashboard mean, no interval.</p></div>
+      <div class="drapeau d-b" style="left:41.75%"><span class="gv">76.7%</span>
+        <p>On your desk: all five fields right on the same file, 92 of 120.
+           Wilson 95%: 68.3 to 83.3.</p></div>
+    </div>
+  </div>
+

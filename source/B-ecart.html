@@ -1,0 +1,188 @@
+<!doctype html>
+<meta charset="utf-8"><title>B — L'écart</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23eeece6'/%3E%3C/svg%3E">
+<style>
+  /* B — L'ÉCART. Un seul argument, à taille d'affiche : les deux chiffres se font face et
+     l'espace entre eux porte sa mesure. L'objet tient la moitié droite ; la preuve est une
+     bande compacte en bas, pour que l'écran soit dense sans devenir bavard. */
+  :root{--papier:#eeece6;--encre:#14161a;--demi:#5f5a51;--pale:#8b8477;
+        --filet:#c9c2b0;--vert:#2f8a60;--rouge:#a8462f;--jeton:#7d838d;
+        --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+        --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+        --mono:ui-monospace,"SF Mono",Menlo,monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--papier);color:var(--encre);font:400 16px/1.55 var(--serif);
+       -webkit-font-smoothing:antialiased}
+  .ecran{min-height:100vh;display:flex;flex-direction:column;max-width:94rem;margin:0 auto;
+         padding:1.3rem clamp(1.1rem,3.4vw,3rem) 1.5rem}
+
+  .tete{display:flex;gap:1rem;align-items:baseline;flex-wrap:wrap;
+        border-bottom:1px solid var(--filet);padding-bottom:.55rem}
+  .tete b{font:600 13px/1 var(--sans);letter-spacing:.2em}
+  .tete span{font-size:15px;color:var(--demi)}
+  .tete .d{margin-left:auto;font:600 10px/1 var(--sans);letter-spacing:.13em;
+           text-transform:uppercase;color:var(--pale)}
+
+  /* Le haut : l'argument à gauche, l'objet à droite. Deux colonnes réelles plutôt qu'un
+     élément posé en absolu — la colonne ne peut pas passer sous le texte quand il grandit. */
+  .haut{display:grid;grid-template-columns:minmax(0,1.16fr) minmax(0,1fr);
+        gap:clamp(1rem,3vw,2.6rem);align-items:center;
+        padding:clamp(1rem,3.5vh,2.4rem) 0 clamp(.8rem,2.5vh,1.6rem)}
+  /* La hauteur de l'objet est bornée en vh, pas déduite de la colonne : sinon une colonne
+     large le fait dépasser le premier écran, et l'argument disparaît sous le pli. */
+  .objet{margin:0;display:flex;justify-content:flex-end}
+  .objet img{max-height:50vh;width:auto;max-width:100%;display:block;mix-blend-mode:darken;
+    /* Le fond du rendu s'efface en `darken`, mais son vignettage laisse un bord de
+       rectangle visible sur la crème. Deux dégradés croisés estompent les quatre côtés :
+       l'objet se pose sur le papier au lieu d'être collé dans une fenêtre. */
+    -webkit-mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent),
+                       linear-gradient(to bottom,transparent,#000 6%,#000 94%,transparent);
+    -webkit-mask-composite:source-in;mask-composite:intersect}
+
+  /* Les deux chiffres partagent leurs rangées — étiquette, chiffre, note — pour que leurs
+     lignes de base coïncident. Alignés bloc à bloc, ils se décalent dès qu'une note est
+     plus longue que l'autre, et la confrontation se défait. */
+  .duel{display:grid;grid-template-columns:auto auto auto;justify-content:start;
+        column-gap:clamp(.7rem,2vw,1.6rem);row-gap:.3rem;align-items:end}
+  .q{font:600 10.5px/1.35 var(--sans);letter-spacing:.1em;text-transform:uppercase;
+     color:var(--pale);max-width:22ch;align-self:end}
+  .c{font:600 clamp(3rem,7.4vw,6.4rem)/.84 var(--serif);letter-spacing:-.045em;
+     font-variant-numeric:tabular-nums;white-space:nowrap;align-self:baseline}
+  .c i{font-style:normal;font-size:.3em;letter-spacing:0;margin-left:.05em}
+  .s{font:400 13.5px/1.42 var(--sans);color:var(--demi);max-width:24ch;align-self:start;
+     padding-top:.35rem}
+  .moy{color:var(--pale)}
+  .entre{text-align:center;align-self:center;padding:0 .2rem}
+  .entre .t{font:600 clamp(1.05rem,2vw,1.55rem)/1 var(--mono);color:var(--rouge);
+            font-variant-numeric:tabular-nums;white-space:nowrap}
+  .entre .l{display:block;height:1px;background:var(--rouge);margin:.4rem 0 .28rem}
+  .entre .u{font:600 9.5px/1.3 var(--sans);letter-spacing:.1em;text-transform:uppercase;
+            color:var(--rouge)}
+  h1{font:400 clamp(1.02rem,1.55vw,1.35rem)/1.36 var(--serif);margin:1.5rem 0 0;max-width:40ch;
+     color:var(--demi)}
+  h1 b{color:var(--encre);font-weight:600}
+
+  .preuve{margin-top:auto;padding-top:1.2rem;border-top:1px solid var(--filet);display:grid;
+          grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(0,auto);
+          gap:clamp(1rem,3vw,2.4rem);align-items:end}
+  @media(max-width:900px){.haut,.preuve{grid-template-columns:1fr}}
+  .bandeau{font:600 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+           color:var(--pale);margin-bottom:.5rem}
+  table{border-collapse:collapse;font-family:var(--mono);font-size:12.5px;width:100%}
+  td,th{padding:.17rem .35rem .17rem 0;text-align:right;font-variant-numeric:tabular-nums;
+        white-space:nowrap}
+  th.g,td.g{text-align:left;font-family:var(--serif);font-size:14px}
+  tbody th{font-weight:400}
+  .barre{display:block;height:8px;background:var(--jeton)}
+  .barre.h{background:var(--vert)}
+  .barre.x{background:var(--filet)}
+  td.b{width:99%;padding-right:0}
+  tr.k th,tr.k td{border-top:1.4px solid var(--encre);padding-top:.34rem;font-weight:600;
+                  font-size:13.5px}
+  /* La bande du bas n'est pas un décor : sept barres se comparent deux à deux, et le nom
+     du lecteur est la prise qui retient la sienne. Cliquée ou tabulée. */
+  .sel{all:unset;cursor:pointer;text-decoration:underline;text-decoration-color:var(--filet);
+       text-underline-offset:3px;
+       /* La prise doit faire 24 px au doigt ; le padding sur une boîte en ligne agrandit
+          la cible sans toucher la hauteur de ligne, donc sans décaler le tableau. */
+       padding:.38rem .3rem;margin:0 -.3rem}
+  .sel:focus-visible{outline:2px solid var(--vert);outline-offset:2px}
+  tr.vu .barre{background:var(--encre)}
+  tr.vu td,tr.vu th{color:var(--encre);font-weight:600}
+  tr.vu .sel{text-decoration-color:var(--encre)}
+  /* 85,0 est le SEUL chiffre supposé affiché ici : l'opérateur humain n'a pas été
+     échantillonné champ par champ. La marque vit à CÔTÉ du chiffre — un renvoi en bas
+     de page, personne ne le lit au moment où il lit le chiffre. */
+  .marque{font:600 8.5px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;
+          color:var(--pale);border:1px solid var(--filet);padding:.12rem .22rem;
+          vertical-align:.14em;margin-left:.3rem}
+  .agir{display:flex;flex-direction:column;gap:.55rem;align-items:flex-start}
+  .bouton{background:var(--encre);color:var(--papier);text-decoration:none;
+          font:600 15px/1 var(--sans);padding:.85rem 1.4rem;border:1px solid var(--encre);
+          white-space:nowrap}
+  .bouton:hover{background:transparent;color:var(--encre)}
+  .bouton:focus-visible{outline:2px solid var(--vert);outline-offset:3px}
+  .agir p{margin:0;font:400 13px/1.45 var(--sans);color:var(--demi);max-width:29ch}
+</style>
+<div class="ecran">
+  <div class="tete"><b>CASCADE</b><span>audit de routage — extraction KYC</span>
+    <span class="d">120 dossiers · mesuré une fois · gelé</span></div>
+
+  <div class="haut">
+    <div>
+      <div class="duel">
+        <div class="q">Ce que votre tableau de bord affiche</div>
+        <div></div>
+        <div class="q">Ce que vos dossiers font vraiment</div>
+
+        <div class="c moy">94,4<i>%</i></div>
+        <div class="entre">
+          <div class="t">17,7</div><span class="l"></span><div class="u">points d'écart</div>
+        </div>
+        <div class="c">76,7<i>%</i></div>
+
+        <div class="s">Moyenne de cinq champs pris séparément. Aucun intervalle.</div>
+        <div></div>
+        <div class="s">92 dossiers sur 120 dont les cinq champs sont justes ensemble.
+          Wilson [68,3 – 83,3].</div>
+      </div>
+      <h1>Les deux chiffres sont vrais. Un seul décrit l'unité qui part au classement —
+        <b>et c'est celui que votre équipe voit revenir en erreur.</b></h1>
+    </div>
+    <figure class="objet">
+      <img src="rendus/plaque-b.png" alt="Sept rangées de piles de jetons sur une plaque : la justesse mesurée de chaque lecteur sur chaque champ, un jeton pour dix points.">
+    </figure>
+  </div>
+
+  <div class="preuve">
+    <div>
+      <div class="bandeau">Justesse par dossier · 7 lecteurs</div>
+      <table>
+        <tbody>
+          <tr><th class="g"><button class="sel" type="button">rules</button></th><td>55,9</td>
+            <td class="b"><span class="barre" style="width:55.9%"></span></td></tr>
+          <tr><th class="g"><button class="sel" type="button">small</button></th><td>69,0</td>
+            <td class="b"><span class="barre" style="width:69%"></span></td></tr>
+          <tr><th class="g"><button class="sel" type="button">large</button></th><td>78,8</td>
+            <td class="b"><span class="barre" style="width:78.8%"></span></td></tr>
+          <tr><th class="g"><button class="sel" type="button">0.6b</button></th><td>79,3</td>
+            <td class="b"><span class="barre" style="width:79.3%"></span></td></tr>
+          <tr><th class="g"><button class="sel" type="button">8b</button></th><td>91,5</td>
+            <td class="b"><span class="barre" style="width:91.5%"></span></td></tr>
+          <tr><th class="g"><button class="sel" type="button">4b</button></th><td>92,7</td>
+            <td class="b"><span class="barre h" style="width:92.7%"></span></td></tr>
+          <tr><th class="g" style="color:var(--pale)"><button class="sel" type="button">humain</button></th><td>85,0<span class="marque">supposé</span></td>
+            <td class="b"><span class="barre x" style="width:85%"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="bandeau">Le même travail, moins cher</div>
+      <table>
+        <tbody>
+          <tr><th class="g">Routage publié</th><td>92 / 120</td><td>190,66 $</td></tr>
+          <tr><th class="g">Routage visé sur le dossier</th><td>95 / 120</td><td>54,31 $</td></tr>
+          <tr class="k"><th class="g">Écart mesuré</th><td>+3 · −0</td><td>÷ 3,5</td></tr>
+        </tbody>
+      </table>
+      <p style="margin:.5rem 0 0;font:400 13px/1.45 var(--sans);color:var(--demi);max-width:36ch">
+        Trois dossiers complétés de plus, aucun cassé, pour trois fois et demie moins cher.
+        Un seul champ change de lecteur.</p>
+    </div>
+    <div class="agir">
+      <a class="bouton" href="#">Faire mesurer votre chaîne</a>
+      <p>Sur vos enregistrements, sur votre machine. Si rien ne bat votre routage,
+        le relevé le dit.</p>
+    </div>
+  </div>
+</div>
+<script>
+/* Une seule barre retenue : deux ne comparent plus, elles décorent. */
+document.querySelector(".preuve tbody").addEventListener("click", (e) => {
+  const b = e.target.closest("button.sel"); if (!b) return;
+  const tr = b.closest("tr"), deja = tr.classList.contains("vu");
+  document.querySelectorAll("tr.vu").forEach((x) => x.classList.remove("vu"));
+  if (!deja) tr.classList.add("vu");
+});
+</script>

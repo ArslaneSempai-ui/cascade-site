@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cascade — routing, measured</title>
+<!-- MAQUETTE JETABLE — hors dépôt. Tous les chiffres sont les chiffres publiés de
+     cascade-routing au 28/08/2026 ; la géométrie de la pièce 3D est illustrative et
+     le dit. Le définitif passera par les générateurs et la couche partagée. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<script>
+/* L'entrée ne s'anime que si l'onglet est regardé ET que le visiteur accepte le mouvement.
+   Posé dans <head> pour que la classe précède le premier rendu. */
+if (document.visibilityState === "visible" && !matchMedia("(prefers-reduced-motion: reduce)").matches){
+  document.documentElement.classList.add("anime");
+}
+/* Affordances de VÉRIFICATION (capture en onglet caché, qui ne peint que le premier rendu) :
+   ?planche = le héros cesse d'occuper l'écran ; ?y=N = le premier rendu est décalé de N px. */
+const q = new URLSearchParams(location.search);
+if (q.has("planche")) document.documentElement.classList.add("planche");
+if (q.has("y")) document.documentElement.style.setProperty("--y-coupe", q.get("y") + "px");
+</script>
+<style>
+  :root{
+    --fond:#0A0D13; --panneau:#101521; --panneau2:#151B29;
+    --filet:#232B3D; --filet2:#2E3850;
+    --encre:#E8EAF2; --encre2:#9AA3BC; --encre3:#7A84A0;
+    --ambre:#E9B44C; --ambre-vif:#FFD37A; --ambre-fonce:#8A6A2B;
+    --refus:#E0755B;
+    --disp:'Archivo',system-ui,-apple-system,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,'SF Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} *,*::before,*::after{animation:none!important;transition:none!important} }
+  .planche .heros{min-height:auto; padding-top:2.5rem; padding-bottom:2.5rem}
+  body{margin-top:calc(-1 * var(--y-coupe, 0px));
+    background:var(--fond); color:var(--encre);
+    font-family:var(--disp); font-weight:340; font-size:17px; line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--ambre); color:#141005}
+  :focus-visible{outline:2px solid var(--ambre); outline-offset:3px; border-radius:2px}
+  ::-webkit-scrollbar{width:11px;height:11px}
+  ::-webkit-scrollbar-thumb{background:var(--filet2);border-radius:6px;border:3px solid var(--fond)}
+  ::-webkit-scrollbar-track{background:var(--fond)}
+  a{color:var(--ambre-vif); text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px; text-decoration-color:var(--ambre-fonce)}
+  a:hover{text-decoration-color:var(--ambre-vif)}
+
+  .num{font-family:var(--mono); font-variant-numeric:tabular-nums; letter-spacing:-.01em}
+
+  /* ── bandeau d'instrument ─────────────────────────────── */
+  header.bande{
+    position:sticky; top:0; z-index:40;
+    display:flex; align-items:center; gap:1.5rem;
+    padding:.65rem clamp(1.2rem,4vw,3.2rem);
+    background:color-mix(in srgb, var(--fond) 82%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--filet);
+    font-size:.78rem; letter-spacing:.06em;
+  }
+  .bande .nom{font-weight:800; font-stretch:118%; letter-spacing:.14em; color:var(--encre)}
+  .bande .nom b{color:var(--ambre); font-weight:800}
+  .bande nav{display:flex; gap:1.4rem; margin-left:auto}
+  .bande nav a{color:var(--encre2); text-decoration:none; letter-spacing:.05em; white-space:nowrap}
+  .bande nav a:hover{color:var(--encre)}
+  .bande .sceau{font-family:var(--mono); font-size:.72rem; color:var(--encre3); border:1px solid var(--filet); padding:.22rem .6rem; border-radius:2px; white-space:nowrap}
+  .bande .sceau em{color:var(--encre2); font-style:normal}
+
+  /* ── héros ─────────────────────────────────────────────── */
+  .heros{
+    display:grid; grid-template-columns:minmax(0,46fr) minmax(0,54fr);
+    min-height:calc(100vh - 46px); align-items:center;
+    padding:0 clamp(1.2rem,4vw,3.2rem);
+    max-width:1520px; margin:0 auto; gap:clamp(1rem,3vw,3rem);
+  }
+  .heros .txt{padding:3.5rem 0}
+  h1{
+    font-weight:860; font-stretch:112%;
+    font-size:clamp(2.5rem,5.4vw,4.7rem);
+    line-height:1.02; letter-spacing:-.025em; text-wrap:balance;
+  }
+  h1 .ambre{color:var(--ambre)}
+  .heros .sous{margin-top:1.4rem; max-width:34rem; color:var(--encre2); font-size:1.02rem}
+  .heros .sous b{color:var(--encre); font-weight:600}
+
+  .mesure{
+    margin-top:2.6rem; display:flex; align-items:stretch; gap:2.2rem; flex-wrap:wrap;
+  }
+  .mesure .bloc{position:relative; padding-left:1.1rem}
+  .mesure .bloc::before{content:""; position:absolute; left:0; top:.35rem; bottom:.4rem; width:3px; background:var(--ambre)}
+  .mesure .bloc.mort::before{background:var(--filet2)}
+  .mesure .val{font-family:var(--mono); font-weight:600; font-size:clamp(2rem,3.6vw,3.1rem); line-height:1; font-variant-numeric:tabular-nums; color:var(--encre)}
+  .mesure .bloc.mort .val{color:var(--encre3); text-decoration:line-through; text-decoration-color:var(--refus); text-decoration-thickness:2px}
+  .mesure .leg{margin-top:.5rem; font-size:.82rem; color:var(--encre2); max-width:13rem; line-height:1.45}
+  .mesure .leg b{color:var(--ambre-vif); font-weight:600}
+
+  .actions{margin-top:2.4rem; display:flex; gap:1rem; align-items:center; flex-wrap:wrap}
+  .btn{
+    font:600 .92rem var(--disp); letter-spacing:.03em;
+    background:var(--ambre); color:#151005; border:none; cursor:pointer;
+    padding:.85rem 1.5rem; border-radius:3px;
+    box-shadow:0 6px 24px -8px rgba(233,180,76,.45);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover{background:var(--ambre-vif); box-shadow:0 8px 30px -8px rgba(233,180,76,.6)}
+  .btn:active{transform:translateY(1px)}
+  .btn-ghost{
+    font:500 .92rem var(--disp); color:var(--encre2); background:none;
+    border:1px solid var(--filet2); padding:.85rem 1.5rem; border-radius:3px; cursor:pointer;
+  }
+  .btn-ghost:hover{color:var(--encre); border-color:var(--encre3)}
+
+  .scene{position:relative; align-self:stretch; display:flex; align-items:center; min-height:420px}
+  .scene canvas{width:100%; height:auto; display:block}
+  .scene .legende{
+    position:absolute; left:8%; bottom:2%; right:8%;
+    font-size:.78rem; color:var(--encre3); line-height:1.5; max-width:30rem;
+  }
+  .scene .legende b{color:var(--encre2); font-weight:600}
+
+  /* entrée orchestrée — L'ÉTAT PAR DÉFAUT EST VISIBLE. L'animation ne s'applique que
+     lorsque html porte .anime, posé par un script de tête uniquement quand l'onglet est
+     réellement regardé. Sans JS, onglet caché, impression : la page est entière. */
+  @keyframes lever{from{opacity:0; transform:translateY(22px)}to{opacity:1; transform:none}}
+  .anime .lv{animation:lever .8s cubic-bezier(.16,1,.3,1) backwards}
+  .anime .lv1{animation-delay:.05s}.anime .lv2{animation-delay:.22s}.anime .lv3{animation-delay:.42s}
+  .anime .lv4{animation-delay:.62s}.anime .lv5{animation-delay:.85s}
+
+  /* révélation au défilement — même principe : n'existe que sous .anime */
+  .anime .rev{opacity:0; transform:translateY(26px); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1)}
+  .anime .rev.vu{opacity:1; transform:none}
+
+  /* ── relevés ───────────────────────────────────────────── */
+  section.releve{
+    border-top:1px solid var(--filet);
+    padding:clamp(3.4rem,7vh,5.5rem) clamp(1.2rem,4vw,3.2rem);
+    max-width:1520px; margin:0 auto;
+  }
+  h2{
+    font-weight:800; font-stretch:110%;
+    font-size:clamp(1.55rem,2.6vw,2.3rem); line-height:1.12;
+    letter-spacing:-.02em; text-wrap:balance; max-width:44rem;
+  }
+  .chapeau{margin-top:.9rem; color:var(--encre2); max-width:40rem; font-size:.98rem}
+  .chapeau b{color:var(--encre); font-weight:600}
+
+  /* la table-commande */
+  .table-cadre{margin-top:2.6rem; overflow-x:auto; border:1px solid var(--filet); border-radius:4px; background:var(--panneau)}
+  table.routage{border-collapse:collapse; width:100%; min-width:860px}
+  .routage th, .routage td{padding:0; border:1px solid var(--filet)}
+  .routage thead th{
+    background:var(--panneau2); padding:.7rem .8rem; text-align:left;
+    font:600 .74rem var(--disp); letter-spacing:.08em; color:var(--encre2); vertical-align:top;
+  }
+  .routage thead .prix{display:block; margin-top:.25rem; font:400 .72rem var(--mono); color:var(--encre3)}
+  .routage tbody th{
+    background:var(--panneau2); padding:.7rem .9rem; text-align:left;
+    font:500 .88rem var(--disp); color:var(--encre); white-space:nowrap;
+  }
+  .cellule{
+    position:relative; display:block; width:100%; height:100%; min-height:52px;
+    background:none; border:none; cursor:pointer; padding:.55rem .8rem .7rem; text-align:left;
+    font-family:var(--mono);
+  }
+  .cellule:hover{background:color-mix(in srgb, var(--ambre) 7%, transparent)}
+  .cellule .pc{font-size:.86rem; font-weight:600; color:var(--encre); font-variant-numeric:tabular-nums}
+  .cellule .barre{margin-top:.4rem; height:4px; background:var(--filet); border-radius:2px; overflow:hidden}
+  .cellule .barre i{display:block; height:100%; background:var(--encre3)}
+  td.optimum .cellule{box-shadow:inset 0 0 0 2px var(--ambre)}
+  td.optimum .cellule::after{
+    content:"OPT"; position:absolute; top:.45rem; right:.55rem;
+    font:600 .58rem var(--mono); letter-spacing:.1em; color:var(--ambre);
+  }
+  td.optimum .barre i{background:var(--ambre)}
+  td.pris .cellule{background:repeating-linear-gradient(-45deg, transparent 0 5px, color-mix(in srgb, var(--encre2) 14%, transparent) 5px 7px)}
+  td.pris .cellule::before{
+    content:"YOURS"; position:absolute; bottom:.35rem; right:.55rem;
+    font:600 .58rem var(--mono); letter-spacing:.1em; color:var(--encre2);
+  }
+  .table-note{margin-top:.9rem; font-size:.8rem; color:var(--encre3); max-width:46rem}
+
+  /* panneau de lecture du routage */
+  .lecture{
+    margin-top:1.6rem; display:flex; gap:2.4rem; align-items:center; flex-wrap:wrap;
+    border:1px solid var(--filet); border-radius:4px; background:var(--panneau); padding:1.1rem 1.4rem;
+  }
+  .lecture .paire{display:flex; align-items:baseline; gap:.6rem}
+  .lecture .k{font:500 .78rem var(--disp); letter-spacing:.05em; color:var(--encre2)}
+  .lecture .v{font:600 1.5rem var(--mono); font-variant-numeric:tabular-nums; color:var(--encre)}
+  .lecture .v.acc{color:var(--ambre-vif)}
+  .lecture .verdict{margin-left:auto; font-size:.85rem; color:var(--encre2); max-width:22rem}
+  .lecture .verdict b{color:var(--encre)}
+
+  /* barres mono-palier */
+  .monotier{margin-top:2.4rem; display:grid; gap:.55rem; max-width:56rem}
+  .ligne-b{display:grid; grid-template-columns:7.5rem 1fr 11.5rem; gap:1rem; align-items:center}
+  .ligne-b .nomt{font:500 .86rem var(--disp); color:var(--encre2); text-align:right}
+  .ligne-b .rail{position:relative; height:26px; background:var(--panneau); border:1px solid var(--filet); border-radius:2px}
+  .ligne-b .rail i{position:absolute; inset:3px auto 3px 3px; background:var(--encre3); border-radius:1px}
+  .ligne-b.gagnant .rail i{background:var(--ambre)}
+  .ligne-b.gagnant .nomt{color:var(--encre); font-weight:600}
+  .ligne-b.mix .rail i{background:repeating-linear-gradient(-45deg, var(--ambre) 0 6px, var(--ambre-vif) 6px 9px)}
+  .ligne-b .chif{font:600 .84rem var(--mono); font-variant-numeric:tabular-nums; color:var(--encre2); white-space:nowrap}
+  .ligne-b .chif b{color:var(--encre)}
+  .ligne-b .rail .cass{position:absolute; right:38%; top:-4px; bottom:-4px; width:10px; background:var(--fond);
+    border-left:2px solid var(--filet2); border-right:2px solid var(--filet2); transform:skewX(-18deg)}
+  /* L'axe reprend la grille des lignes — un `grid-column:2` nu créerait une seconde
+     colonne implicite que les barres rempliraient (payé : les 7 paliers sur 2 colonnes). */
+  .axe-x{display:grid; grid-template-columns:7.5rem 1fr 11.5rem; gap:1rem; margin-top:.2rem}
+  .axe-x .gradu{grid-column:2; display:flex; justify-content:space-between; font:400 .68rem var(--mono); color:var(--encre3); padding:0 3px}
+
+  /* abstention */
+  .abst{margin-top:2.6rem; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:3rem; align-items:center}
+  .abst .grand{font-family:var(--mono); font-weight:600; font-size:clamp(3.4rem,7vw,6rem); line-height:1; color:var(--ambre); font-variant-numeric:tabular-nums}
+  .abst .grand small{display:block; margin-top:.6rem; max-width:17em; font-size:.3em; line-height:1.4; color:var(--encre2); font-weight:400; font-family:var(--disp)}
+  .abst .expl{color:var(--encre2); max-width:30rem}
+  .abst .expl b{color:var(--encre)}
+  .oppose{display:grid; gap:.7rem}
+  .oppose .rangee{display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:2px}
+  .oppose .cote{position:relative; height:30px}
+  .oppose .cote i{position:absolute; top:3px; bottom:3px; border-radius:1px}
+  .oppose .cote.g{border-right:2px solid var(--filet2)}
+  .oppose .g i{right:0; background:repeating-linear-gradient(-45deg, var(--refus) 0 5px, transparent 5px 8px); border:1px solid var(--refus)}
+  .oppose .d i{left:0; background:var(--ambre)}
+  .oppose .etiq{font:500 .78rem var(--mono); color:var(--encre2); padding:0 .4rem; white-space:nowrap}
+  .oppose .etiq.g{text-align:right; border-right:2px solid var(--filet2)}
+  .oppose-cadre{position:relative; border:1px solid var(--filet); border-radius:4px; background:var(--panneau); padding:1.4rem 1.2rem}
+  .oppose-titre{display:flex; justify-content:space-between; font:600 .72rem var(--disp); letter-spacing:.08em; color:var(--encre3); margin-bottom:1rem}
+
+  /* latence */
+  .latence{margin-top:2.4rem; display:flex; gap:3rem; flex-wrap:wrap; align-items:flex-end}
+  .latence .prixfantome{font-family:var(--mono); font-weight:600; font-size:clamp(3rem,6vw,5rem); line-height:1; color:var(--encre)}
+  .latence .prixfantome b{color:var(--ambre)}
+  .latence p{max-width:32rem; color:var(--encre2)}
+  .latence p b{color:var(--encre)}
+
+  /* cadrans */
+  /* Trois colonnes pleines : six cadrans font toujours des rangées entières. */
+  .cadrans{margin-top:2.4rem; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--filet); border:1px solid var(--filet); border-radius:4px; overflow:hidden}
+  @media (max-width:900px){ .cadrans{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:560px){ .cadrans{grid-template-columns:1fr} }
+  .cadran{background:var(--panneau); padding:1.1rem 1.2rem}
+  .cadran label{display:block; font:500 .78rem var(--disp); letter-spacing:.03em; color:var(--encre2); margin-bottom:.7rem}
+  .cadran .val{font:600 1.05rem var(--mono); color:var(--encre); font-variant-numeric:tabular-nums}
+  .cadran input[type=range]{width:100%; margin-top:.6rem; accent-color:var(--ambre); cursor:grab}
+  .cadran input[type=range]:active{cursor:grabbing}
+  .cadran .borne{display:flex; justify-content:space-between; font:400 .66rem var(--mono); color:var(--encre3); margin-top:.25rem}
+  .cadrans-note{margin-top:1rem; font-size:.82rem; color:var(--encre3); max-width:46rem}
+
+  /* provenance */
+  footer.prov{
+    border-top:1px solid var(--filet); margin-top:2rem;
+    padding:3rem clamp(1.2rem,4vw,3.2rem) 4rem;
+    max-width:1520px; margin-inline:auto;
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:2.5rem;
+    font-size:.85rem; color:var(--encre2);
+  }
+  .prov h3{font:700 .78rem var(--disp); letter-spacing:.1em; color:var(--encre); margin-bottom:.7rem}
+  .prov ul{list-style:none}
+  .prov li{padding:.28rem 0; border-bottom:1px dashed var(--filet)}
+  .prov li b{color:var(--encre); font-weight:600}
+  .prov .sceau-final{font-family:var(--mono); font-size:.75rem; color:var(--encre3); line-height:1.8}
+  .prov .sceau-final b{color:var(--ambre); font-weight:600}
+
+  /* ── mobile ────────────────────────────────────────────── */
+  @media (max-width:900px){
+    /* minmax(0,1fr), pas 1fr nu : le minimum automatique d'une piste laisserait le canvas
+       imposer ses 880 px intrinsèques et la page déborderait à droite (payé sur ce mobile). */
+    .heros{grid-template-columns:minmax(0,1fr); min-height:auto; padding-top:1rem}
+    .heros .txt{padding:2rem 0 0}
+    .scene{min-height:auto; order:-1; margin-top:.5rem; display:block}
+    .scene canvas{max-width:100%; height:auto}
+    .scene .legende{position:static; margin-top:.6rem; max-width:none}
+    .mesure{gap:1.4rem}
+    .abst{grid-template-columns:1fr; gap:1.6rem}
+    .ligne-b{grid-template-columns:5.2rem 1fr; grid-template-rows:auto auto}
+    .ligne-b .chif{grid-column:2; text-align:right}
+    .axe-x{grid-template-columns:5.2rem 1fr}
+    .bande nav{display:none}
+    .lecture .verdict{margin-left:0}
+  }
+  @media (max-width:700px){
+    .bande .sceau{display:none}
+  }
+  @media (max-width:560px){
+    .actions{flex-direction:column; align-items:stretch}
+    .actions .btn, .actions .btn-ghost{width:100%; text-align:center}
+  }
+</style>
+</head>
+<body>
+
+<header class="bande lv lv1">
+  <span class="nom">CASCADE<b>&nbsp;·</b>&nbsp;ROUTING, MEASURED</span>
+  <nav aria-label="Sections">
+    <a href="#table">The table</a><a href="#mono">One tier</a><a href="#abstention">Abstention</a><a href="#latence">Latency</a><a href="#hypotheses">Assumptions</a>
+  </nav>
+  <span class="sceau">7 tiers · 16,807 routings · <em>582 checks green</em></span>
+</header>
+
+<main>
+  <!-- ══ HÉROS ══ -->
+  <div class="heros">
+    <div class="txt">
+      <h1 class="lv lv2">Where should the <span class="ambre">next dollar</span> go?</h1>
+      <p class="sous lv lv3">Five fields, seven tiers — from a regular expression to a human — <b>measured on held-out records, then frozen</b>. Nothing here runs on a server, and no model is called: you are reading the measurement, and you can take it apart.</p>
+      <div class="mesure lv lv4">
+        <div class="bloc">
+          <div class="val num" id="cptAcc">94.4&hairsp;%</div>
+          <div class="leg">accuracy of the <b>measured routing</b>, for <span class="num">$191</span> a year</div>
+        </div>
+        <div class="bloc mort">
+          <div class="val num">$800</div>
+          <div class="leg">what one big model costs for <span class="num">78.8&hairsp;%</span> — <b>4.2× dearer, and worse</b></div>
+        </div>
+      </div>
+      <div class="actions lv lv5">
+        <button class="btn" id="btnOpt">Take the model's assignment</button>
+        <button class="btn-ghost" onclick="document.getElementById('table').scrollIntoView()">Route it yourself</button>
+      </div>
+    </div>
+    <div class="scene lv lv3">
+      <canvas id="c3d" width="880" height="640" role="img" aria-label="A translucent vessel whose height is the latency ceiling. A document descends, its five fields split off and route to tier columns; tiers too slow for the ceiling overflow the vessel."></canvas>
+      <p class="legende"><b>The vessel is your latency ceiling.</b> A document descends; its five fields route each to a tier and come back as stacked blocks. Tiers too slow for the ceiling overflow the vessel — hatched. <em style="color:var(--encre3)">Geometry illustrative in this mockup; heights will be the measured latencies.</em></p>
+    </div>
+  </div>
+
+  <!-- ══ LA TABLE-COMMANDE ══ -->
+  <section class="releve rev" id="table">
+    <h2>Every cell is a measured pair. Take one, and the price moves.</h2>
+    <p class="chapeau">How often each tier gets each field right, on <b>1,000 held-out records</b> (120 for the generative tiers). The <b style="color:var(--ambre)">amber outline</b> is what the optimiser takes ; the <b>hatched cell</b> is yours.</p>
+    <div class="table-cadre">
+      <table class="routage" aria-label="Accuracy of each tier on each field">
+        <thead><tr>
+          <th scope="col">FIELD</th>
+          <th scope="col">RULES<span class="prix">free</span></th>
+          <th scope="col">SMALL<span class="prix">$0.20 / 1k</span></th>
+          <th scope="col">LARGE<span class="prix">$1.60 / 1k</span></th>
+          <th scope="col">GEN-0.6B<span class="prix">$0.08 / 1k</span></th>
+          <th scope="col">GEN-4B<span class="prix">$0.26 / 1k</span></th>
+          <th scope="col">GEN-8B<span class="prix">$0.40 / 1k</span></th>
+          <th scope="col">HUMAN<span class="prix">$587 / 1k</span></th>
+        </tr></thead>
+        <tbody id="corps"></tbody>
+      </table>
+    </div>
+    <div class="lecture">
+      <div class="paire"><span class="k">YOUR ROUTING</span> <span class="v acc num" id="lecAcc">78.8 %</span></div>
+      <div class="paire"><span class="k">A YEAR</span> <span class="v num" id="lecPrix">$800</span></div>
+      <p class="verdict" id="lecVerdict"><b>The model would route it differently.</b> Its assignment reaches 94.4 % for $191 — press the button, watch which three fields move.</p>
+    </div>
+    <p class="table-note">In the shipped page every cell recomputes the price live, exactly as today. In this mockup, the two states shown are the two published routings — no figure is invented.</p>
+  </section>
+
+  <!-- ══ MONO-PALIER ══ -->
+  <section class="releve rev" id="mono">
+    <h2>One tier for everything loses to mixing. All seven, priced.</h2>
+    <p class="chapeau">The ordinary move is to send everything through one tier. Every one of those routings is beaten — <b>three of the five fields are carried by regexes that cost nothing</b>.</p>
+    <div class="monotier" role="img" aria-label="Accuracy and yearly price if every field goes to the same tier; mixing beats all seven">
+      <div class="ligne-b"><span class="nomt">Rules</span><span class="rail"><i style="width:55.9%"></i></span><span class="chif"><b>55.9 %</b> · $0</span></div>
+      <div class="ligne-b"><span class="nomt">Small model</span><span class="rail"><i style="width:69%"></i></span><span class="chif"><b>69.0 %</b> · $100</span></div>
+      <div class="ligne-b"><span class="nomt">Large model</span><span class="rail"><i style="width:78.8%"></i></span><span class="chif"><b>78.8 %</b> · $800</span></div>
+      <div class="ligne-b"><span class="nomt">gen-0.6b</span><span class="rail"><i style="width:79.3%"></i></span><span class="chif"><b>79.3 %</b> · $39</span></div>
+      <div class="ligne-b gagnant"><span class="nomt">gen-4b</span><span class="rail"><i style="width:92.7%"></i></span><span class="chif"><b>92.7 %</b> · $131 — best single</span></div>
+      <div class="ligne-b"><span class="nomt">gen-8b</span><span class="rail"><i style="width:91.5%"></i></span><span class="chif"><b>91.5 %</b> · $199</span></div>
+      <div class="ligne-b"><span class="nomt">Human</span><span class="rail"><i style="width:85%"></i><span class="cass" title="axis broken"></span></span><span class="chif"><b>85.0 %</b> · $293,561</span></div>
+      <div class="ligne-b mix"><span class="nomt" style="color:var(--ambre-vif)">MIXING</span><span class="rail"><i style="width:94.4%"></i></span><span class="chif"><b style="color:var(--ambre-vif)">94.4 %</b> · $191</span></div>
+      <div class="axe-x"><span class="gradu"><span>0 %</span><span>50 %</span><span>100 %</span></span></div>
+    </div>
+  </section>
+
+  <!-- ══ ABSTENTION ══ -->
+  <section class="releve rev" id="abstention">
+    <h2>Refusing to answer pays 26× sooner than re-routing.</h2>
+    <p class="chapeau">Measured on the hard corpus — 30 deliberately difficult documents, 150 values — where abstention is worth measuring.</p>
+    <div class="abst">
+      <div>
+        <div class="grand num">×26 <small>sooner than moving a field to another tier</small></div>
+        <p class="expl" style="margin-top:1.4rem">At one signal, the trade is <b>7.1 wrong values removed for every correct one lost</b>, and precision goes from 30 % to 62.3 %. Whether that is worth 0.8 hours of review per hundred values is your arithmetic — it depends on what a misfiled record costs you.</p>
+      </div>
+      <div class="oppose-cadre">
+        <div class="oppose-titre"><span>◂ WRONG VALUES REMOVED</span><span>CORRECT LOST ▸</span></div>
+        <div class="oppose" role="img" aria-label="At one signal, 7.1 wrong values are removed for every correct one lost">
+          <div class="rangee"><span class="cote g"><i style="width:88%"></i></span><span class="cote d"><i style="width:12%"></i></span></div>
+          <div class="rangee"><span class="etiq g">7.1 removed</span><span class="etiq">1 lost</span></div>
+        </div>
+        <p style="margin-top:1rem; font-size:.8rem; color:var(--encre3)">Hatched = removed errors ; solid amber = the price paid. The ratio carries no unit and does not depend on the corpus choice.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ LATENCE ══ -->
+  <section class="releve rev" id="latence">
+    <h2>Your latency promise has a price. Nobody writes it on an invoice.</h2>
+    <div class="latence">
+      <div class="prixfantome num">$<b>124</b></div>
+      <p>Lift the latency ceiling entirely, and the cheapest routing that is statistically indistinguishable in accuracy costs <b class="num">$67</b> instead of <b class="num">$191</b> — it just takes <b class="num">2,021 ms</b> per document. The money budget never binds at all: <b>the constraint you actually pay for is time</b>, and this page is the only place that prices it.</p>
+    </div>
+  </section>
+
+  <!-- ══ HYPOTHÈSES ══ -->
+  <section class="releve rev" id="hypotheses">
+    <h2>The assumptions are yours to break.</h2>
+    <p class="chapeau">The accuracies and latencies are <b>measured</b>. Everything below is not — no human was available to measure, and no price is a fact. Change them, and the answer may change: that is what they are for.</p>
+    <div class="cadrans">
+      <div class="cadran"><label for="d1">Human accuracy</label><span class="val">85 %</span><input id="d1" type="range" min="50" max="100" value="85" aria-label="Human accuracy, percent"><span class="borne"><span>50</span><span>100</span></span></div>
+      <div class="cadran"><label for="d2">Human seconds per field</label><span class="val">45 s</span><input id="d2" type="range" min="5" max="180" value="45" aria-label="Human seconds per field"><span class="borne"><span>5</span><span>180</span></span></div>
+      <div class="cadran"><label for="d3">Loaded cost per analyst</label><span class="val">$95,000 / yr</span><input id="d3" type="range" min="40000" max="250000" value="95000" step="5000" aria-label="Loaded cost per analyst"><span class="borne"><span>40k</span><span>250k</span></span></div>
+      <div class="cadran"><label for="d4">Records a year</label><span class="val">500,000</span><input id="d4" type="range" min="10000" max="5000000" value="500000" step="10000" aria-label="Records a year"><span class="borne"><span>10k</span><span>5M</span></span></div>
+      <div class="cadran"><label for="d5">Budget ($/yr)</label><span class="val">$200</span><input id="d5" type="range" min="0" max="1000" value="200" step="10" aria-label="Yearly budget in dollars"><span class="borne"><span>0</span><span>1,000</span></span></div>
+      <div class="cadran"><label for="d6">Latency budget</label><span class="val">— ms</span><input id="d6" type="range" min="100" max="3000" value="800" step="50" aria-label="Latency budget in milliseconds"><span class="borne"><span>100</span><span>3,000</span></span></div>
+    </div>
+    <p class="cadrans-note">In this mockup the dials move but recompute nothing — the shipped page recomputes the whole answer on every gesture, as it does today. The values shown are the page's current defaults ; the latency dial shows none because today's page does not publish one.</p>
+  </section>
+</main>
+
+<!-- ══ PROVENANCE ══ -->
+<footer class="prov rev">
+  <div>
+    <h3>MEASURED</h3>
+    <ul>
+      <li><b>Accuracy of each tier × field</b> — held-out, frozen</li>
+      <li><b>Latency of each tier</b> — pinned revisions</li>
+      <li><b>The abstention trade</b> — hard corpus, sealed</li>
+    </ul>
+  </div>
+  <div>
+    <h3>ASSUMED</h3>
+    <ul>
+      <li><b>The human tier</b> — none was available to measure</li>
+      <li><b>Prices, volume, budget</b> — yours to set</li>
+    </ul>
+  </div>
+  <div>
+    <h3>THE SEAL</h3>
+    <p class="sceau-final">Everything runs locally, and that is <b>enforced rather than promised</b> — a run pointed at any other host refuses to start. 582 checks green · CodeQL 0 open · 0 secrets across the swept history.<br><a href="https://github.com/ArslaneSempai-ui/cascade-routing">Source and method</a></p>
+  </div>
+</footer>
+
+<script>
+/* ── Table : les deux routages publiés ─────────────────────── */
+const CHAMPS = [
+  ["name",          [0,47,97,81,89,92,85]],
+  ["date of birth", [100,98,100,88,99,100,85]],
+  ["document no.",  [80,58,64,70,79,83,85]],
+  ["country",       [100,100,100,83,100,100,85]],
+  ["address",       [0,43,33,75,96,83,85]],
+];
+/* index de palier : 0 rules · 1 small · 2 large · 3 g06 · 4 g4b · 5 g8b · 6 human */
+const VOTRE   = [2,2,2,2,2];        /* tout au grand modèle — l'état montré aujourd'hui */
+const OPTIMAL = [2,0,5,0,4];        /* l'assignation du modèle (name→large, dob/country→rules, doc→gen-8b, address→gen-4b) */
+let etat = "votre";
+const corps = document.getElementById("corps");
+function rendreTable(){
+  corps.innerHTML = "";
+  CHAMPS.forEach(([nom, accs], li) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<th scope="row">${nom}</th>`;
+    accs.forEach((a, ci) => {
+      const td = document.createElement("td");
+      if (OPTIMAL[li] === ci) td.classList.add("optimum");
+      const prisIdx = etat === "votre" ? VOTRE[li] : OPTIMAL[li];
+      if (prisIdx === ci) td.classList.add("pris");
+      td.innerHTML = `<button class="cellule" aria-label="${nom} via tier ${ci}: ${a} percent">
+        <span class="pc">${a}&hairsp;%</span><span class="barre"><i style="width:${a}%"></i></span></button>`;
+      td.querySelector("button").addEventListener("click", basculer);
+      tr.appendChild(td);
+    });
+    corps.appendChild(tr);
+  });
+}
+function basculer(){
+  etat = etat === "votre" ? "optimal" : "votre";
+  rendreTable();
+  const acc = document.getElementById("lecAcc"), prix = document.getElementById("lecPrix"),
+        verdict = document.getElementById("lecVerdict");
+  if (etat === "optimal"){
+    acc.textContent = "94.4 %"; prix.textContent = "$191";
+    verdict.innerHTML = "<b>This is the model's assignment.</b> Three fields moved — and the mean rose while the price fell. Press again to compare.";
+  } else {
+    acc.textContent = "78.8 %"; prix.textContent = "$800";
+    verdict.innerHTML = "<b>The model would route it differently.</b> Its assignment reaches 94.4 % for $191 — press the button, watch which three fields move.";
+  }
+}
+document.getElementById("btnOpt").addEventListener("click", () => {
+  basculer();
+  document.getElementById("table").scrollIntoView({behavior:"smooth"});
+});
+rendreTable();
+
+/* ── Révélations au défilement ─────────────────────────────── */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("vu"); io.unobserve(e.target);} }), {threshold:.12});
+document.querySelectorAll(".rev").forEach(el => io.observe(el));
+
+/* ── La pièce 3D, esquissée : le vase-plafond ──────────────── */
+const cv = document.getElementById("c3d"), cx = cv.getContext("2d");
+const REDUIT = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const AMBRE = "#E9B44C", VIF = "#FFD37A", ENCRE = "#3A4460", ENCRE2 = "#232B3D", REFUS = "#E0755B";
+/* 7 socles : [nom, hauteur (illustrative), sous-plafond?] — plafond à H=1 */
+const SOCLES = [
+  ["rules", .12, true], ["small", .3, true], ["0.6b", .38, true],
+  ["4b", .55, true], ["large", .72, true], ["8b", 1.28, false], ["human", 1.85, false],
+];
+const PLAFOND = 1;
+let angle = -0.5, t = 0;
+function P(x, y, z){ /* axonométrie : y = hauteur */
+  const ca = Math.cos(angle), sa = Math.sin(angle);
+  const X = x*ca - z*sa, Z = x*sa + z*ca;
+  return [440 + X*150, 470 - y*210 - Z*52];
+}
+function seg(a, b, couleur, w, alpha){
+  cx.strokeStyle = couleur; cx.lineWidth = w||1; cx.globalAlpha = alpha??1;
+  cx.beginPath(); cx.moveTo(...a); cx.lineTo(...b); cx.stroke(); cx.globalAlpha = 1;
+}
+function boite(cxm, czm, demiL, h0, h1, couleur, w, alpha){
+  const c = [[-1,-1],[1,-1],[1,1],[-1,1]].map(([dx,dz]) => [cxm+dx*demiL, czm+dz*demiL]);
+  const bas = c.map(([x,z]) => P(x, h0, z)), haut = c.map(([x,z]) => P(x, h1, z));
+  for (let i=0;i<4;i++){
+    seg(bas[i], bas[(i+1)%4], couleur, w, alpha);
+    seg(haut[i], haut[(i+1)%4], couleur, w, alpha);
+    seg(bas[i], haut[i], couleur, w, alpha);
+  }
+}
+function dessiner(){
+  cx.clearRect(0,0,880,640);
+  /* sol : grille fine (l'instrument sous la figure) */
+  for (let g=-1.6; g<=1.61; g+=.4){
+    seg(P(g,0,-1.6), P(g,0,1.6), ENCRE2, 1, .7);
+    seg(P(-1.6,0,g), P(1.6,0,g), ENCRE2, 1, .7);
+  }
+  /* les 7 socles en anneau */
+  const N = SOCLES.length;
+  SOCLES.forEach(([nom, h, ok], i) => {
+    const a = (i/N)*Math.PI*2 + .35, R = 1.05;
+    const sx = Math.cos(a)*R, sz = Math.sin(a)*R;
+    boite(sx, sz, .16, 0, Math.min(h, PLAFOND), ok?ENCRE:ENCRE, 1.4, .95);
+    if (!ok){ /* la part au-dessus du plafond : hors du vase, en refus */
+      boite(sx, sz, .16, PLAFOND, h, REFUS, 1.4, .9);
+      const [tx, ty] = P(sx, h + .13, sz);
+      cx.fillStyle = REFUS; cx.font = "600 11px 'IBM Plex Mono'"; cx.textAlign = "center";
+      cx.fillText("OVER", tx, ty);
+    }
+    const [lx, ly] = P(sx, -0.12, sz);
+    cx.fillStyle = "#5E6883"; cx.font = "500 11px 'IBM Plex Mono'"; cx.textAlign = "center";
+    cx.fillText(nom, lx, ly+10);
+  });
+  /* le vase = le plafond : volume translucide */
+  boite(0, 0, 1.45, 0, PLAFOND, AMBRE, 1.6, .8);
+  const coins = [[-1.45,-1.45],[1.45,-1.45],[1.45,1.45],[-1.45,1.45]].map(([x,z])=>P(x,PLAFOND,z));
+  cx.globalAlpha = .07; cx.fillStyle = AMBRE;
+  cx.beginPath(); cx.moveTo(...coins[0]); coins.slice(1).forEach(p=>cx.lineTo(...p)); cx.closePath(); cx.fill();
+  cx.globalAlpha = 1;
+  const [cxx, cyy] = P(1.45, PLAFOND, -1.45);
+  cx.fillStyle = VIF; cx.font = "600 11px 'IBM Plex Mono'"; cx.textAlign = "left";
+  cx.fillText("LATENCY CEILING", cxx+8, cyy-6);
+  /* le document qui descend, ses 5 champs qui filent */
+  const cycle = (t % 9) / 9;
+  if (cycle < .3){ /* descente */
+    const y = 2.1 - (cycle/.3)*0.7;
+    boite(0, 0, .3, y, y+.02, VIF, 2, 1);
+    for (let f=0; f<5; f++) seg(P(-.22+.11*f, y+.01, -.28), P(-.22+.11*f, y+.01, .28), AMBRE, 1.5, .9);
+  } else if (cycle < .75){ /* les champs filent vers leur socle */
+    const pr = (cycle-.3)/.45;
+    [4,0,5,0,3].forEach((cible, f) => { /* large, rules, 8b, rules, 4b — l'assignation */
+      const a0 = (cible/N)*Math.PI*2 + .35;
+      const dx = Math.cos(a0)*1.05, dz = Math.sin(a0)*1.05;
+      const px = (-.22+.11*f)*(1-pr) + dx*pr, pz = 0*(1-pr) + dz*pr;
+      const py = 1.4*(1-pr) + (Math.min(SOCLES[cible][1], PLAFOND)+.06)*pr;
+      boite(px, pz, .05, py, py+.05, cible===5?REFUS:VIF, 1.6, 1);
+    });
+  } else { /* empilés */
+    [4,0,5,0,3].forEach((cible, f) => {
+      const a0 = (cible/N)*Math.PI*2 + .35;
+      const dx = Math.cos(a0)*1.05, dz = Math.sin(a0)*1.05;
+      const base = Math.min(SOCLES[cible][1], PLAFOND) + .06 + (f%2)*.08;
+      boite(dx, dz, .05, base, base+.05, cible===5?REFUS:VIF, 1.6, 1);
+    });
+  }
+}
+function boucle(){
+  if (!REDUIT){ angle += .0022; t += 1/60; }
+  dessiner();
+  if (!REDUIT) requestAnimationFrame(boucle);
+}
+if (REDUIT){ t = 8; dessiner(); } else boucle();
+</script>
+</body>
+</html>

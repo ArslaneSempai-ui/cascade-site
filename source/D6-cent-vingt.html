@@ -1,0 +1,125 @@
+<!doctype html>
+<meta charset="utf-8"><title>Cascade — 28 files</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23e3ddcc'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --papier:#e3ddcc; --relief:#efeade; --creux:#d5cdb8;
+    --encre:#16181c; --demi:#4f4a41; --pale:#6c6656;
+    --filet:#b7ae96; --fin:#cdc4ae;
+    --vert:#2f8a60; --rouge:#a8462f;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  /* Le fond va sur <html> ET sur <body> : sans celui de <html>, celui de <body> est propagé
+     au canevas, et un élément en mélange n'aurait plus de toile de fond. */
+  html{background:#ded7c4}
+  body{margin:0;color:var(--encre);font:400 16px/1.55 var(--serif);
+       -webkit-font-smoothing:antialiased;
+       background:
+         radial-gradient(58% 54% at 71% 30%, rgba(248,244,235,.55) 0%, rgba(248,244,235,0) 72%),
+         linear-gradient(172deg, #e9e3d3 0%, #e1dac8 52%, #d5cdb6 100%);
+       background-attachment:fixed}
+  .ecran{min-height:100vh;display:flex;flex-direction:column;max-width:94rem;margin:0 auto;
+         padding:1.3rem clamp(1.2rem,3.6vw,3.2rem) 1.2rem}
+  .tete{display:flex;gap:1.1rem;align-items:baseline;flex-wrap:wrap;
+        border-bottom:1.5px solid var(--encre);padding-bottom:.5rem}
+  .tete b{font:600 13px/1 var(--sans);letter-spacing:.22em}
+  .tete span{font-size:14.5px;color:var(--demi)}
+  .tete .d{margin-left:auto;font:600 10px/1 var(--sans);letter-spacing:.14em;
+           text-transform:uppercase;color:var(--pale)}
+  .oeil{font:600 10px/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+        color:var(--pale);display:block;margin-bottom:.75rem}
+  h1{font:600 clamp(1.9rem,3.5vw,3rem)/1.07 var(--serif);letter-spacing:-.023em;
+     margin:0 0 .8rem;max-width:18ch;text-wrap:balance}
+  .these{color:var(--demi);margin:0 0 1.4rem;max-width:42ch;font-size:16.5px}
+  .these b{color:var(--encre);font-weight:600}
+  .agir{display:flex;gap:1.1rem;align-items:center;flex-wrap:wrap}
+  .bouton{background:var(--encre);color:var(--relief);text-decoration:none;
+          font:600 15px/1 var(--sans);padding:.95rem 1.5rem;border:1px solid var(--encre)}
+  .bouton:hover{background:transparent;color:var(--encre)}
+  .bouton:focus-visible{outline:2px solid var(--vert);outline-offset:3px}
+  .agir p{margin:0;font:400 13.5px/1.45 var(--sans);color:var(--demi);max-width:34ch}
+  .n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .prise{all:unset;cursor:pointer;display:block}
+  .prise:focus-visible{outline:2px solid var(--vert);outline-offset:2px}
+
+  .haut{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);
+        gap:clamp(1.4rem,4vw,3.4rem);align-items:center;flex:1;padding:1.4rem 0 .8rem}
+  @media(max-width:1000px){.haut{grid-template-columns:1fr}}
+  /* Douze colonnes de dix : on lit « dix » d'un coup d'œil, et au-delà de quatre unités
+     personne ne compte — les rangées de dix sont ce qui rend vingt-huit comptable. */
+  .champ{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(5px,.7vw,10px)}
+  .champ i{display:block;aspect-ratio:1;background:var(--encre);border-radius:1px}
+  .champ i.casse{background:transparent;box-shadow:inset 0 0 0 1.5px var(--rouge);
+                 position:relative}
+  .champ i.casse::after{content:"";position:absolute;inset:22%;
+                        background:linear-gradient(45deg,transparent 44%,var(--rouge) 44%,
+                          var(--rouge) 56%,transparent 56%)}
+  .cles{display:flex;gap:1.6rem;flex-wrap:wrap;margin-top:.9rem;
+        font:400 13.5px/1.5 var(--sans);color:var(--demi);align-items:center}
+  .cles span{display:flex;gap:.45rem;align-items:center}
+  .cles u{width:13px;height:13px;background:var(--encre);border-radius:1px;
+          text-decoration:none;display:block}
+  .cles u.k{background:transparent;box-shadow:inset 0 0 0 1.5px var(--rouge)}
+  .cles b{color:var(--encre);font-family:var(--mono);font-size:15px}
+  .cles .prise{display:flex;gap:.45rem;align-items:center;padding:.3rem .35rem;
+               margin:-.3rem -.35rem;cursor:pointer}
+  .cles .prise:focus-visible{outline:2px solid var(--vert);outline-offset:2px}
+  .champ i{transition:opacity .2s ease}
+  .champ.q-ok i.casse,.champ.q-casse i:not(.casse){opacity:.16}
+  .taux{display:flex;gap:1.8rem;align-items:baseline;flex-wrap:wrap;margin:0 0 1.3rem}
+  .taux div span{display:block;font:600 10px/1.4 var(--sans);letter-spacing:.12em;
+                 text-transform:uppercase;color:var(--pale)}
+  .taux div b{font:600 34px/1 var(--mono);letter-spacing:-.02em}
+  .taux .moy b{color:var(--pale)}
+  .taux .rem{font:400 12.5px/1.4 var(--sans);color:var(--pale);max-width:15ch}
+</style>
+<div class="ecran">
+  <div class="tete"><b>CASCADE</b><span>routing audit — KYC extraction</span><span class="d">report 64bdacf · measured once · frozen</span></div>
+  <div class="haut">
+    <div>
+      <span class="oeil">28 of 120 files went out with a field wrong</span>
+      <h1>Your dashboard says 94%. Your case files go out at 77%.</h1>
+      <p class="these">Both figures are true, and they measure different things. Only one counts a file as right when <b>all five fields are right together</b> — and that is the one whose errors reach your review team.</p>
+      <div class="taux">
+        <div class="moy"><span>Mean of five field rates</span><b>94.4%</b></div>
+        <div><span>Per-file rate</span><b>76.7%</b></div>
+        <div class="rem">Wilson 95% [68.3 – 83.3] on the per-file rate. The mean carries none.</div>
+      </div>
+      <div class="agir"><a class="bouton" href="#">Have your routing measured</a><p>On your records, on your machine. Nothing leaves the network. If nothing comes out cheaper without breaking a file, the report says so.</p></div>
+    </div>
+    <div>
+      <div class="champ" id="champ"></div>
+      <div class="cles">
+        <button class="prise" type="button" data-q="ok"><u></u><b>92</b> complete — all five fields right</button>
+        <button class="prise" type="button" data-q="casse"><u class="k"></u><b>28</b> with at least one field wrong</button>
+        <span>120 files, retained corpus</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+/* Les cases sont dessinées depuis les comptes : cent vingt carrés écrits à la main se
+   désaccordent du chiffre au premier changement, et c'est alors la figure qui ment. */
+const COMPLETS = 92, TOTAL = 120;
+const c = document.getElementById("champ");
+for (let k = 0; k < TOTAL; k++) {
+  const i = document.createElement("i");
+  if (k >= COMPLETS) i.className = "casse";
+  c.appendChild(i);
+}
+
+/* La légende commande le champ : isoler les vingt-huit les rend comptables, ce qu'un
+   pourcentage ne permet jamais. */
+const cles = document.querySelector(".cles");
+let q = null;
+cles.addEventListener("click", (e) => {
+  const b = e.target.closest("button.prise"); if (!b) return;
+  q = q === b.dataset.q ? null : b.dataset.q;
+  c.classList.toggle("q-ok", q === "ok");
+  c.classList.toggle("q-casse", q === "casse");
+});
+</script>

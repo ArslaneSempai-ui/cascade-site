@@ -1,0 +1,106 @@
+<!doctype html>
+<meta charset="utf-8"><title>Cascade — annotated</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23e3ddcc'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --papier:#e3ddcc; --relief:#efeade; --creux:#d5cdb8;
+    --encre:#16181c; --demi:#4f4a41; --pale:#6c6656;
+    --filet:#b7ae96; --fin:#cdc4ae;
+    --vert:#2f8a60; --rouge:#a8462f;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  /* Le fond va sur <html> ET sur <body> : sans celui de <html>, celui de <body> est propagé
+     au canevas, et un élément en mélange n'aurait plus de toile de fond. */
+  html{background:#ded7c4}
+  body{margin:0;color:var(--encre);font:400 16px/1.55 var(--serif);
+       -webkit-font-smoothing:antialiased;
+       background:
+         radial-gradient(58% 54% at 71% 30%, rgba(248,244,235,.55) 0%, rgba(248,244,235,0) 72%),
+         linear-gradient(172deg, #e9e3d3 0%, #e1dac8 52%, #d5cdb6 100%);
+       background-attachment:fixed}
+  .ecran{min-height:100vh;display:flex;flex-direction:column;max-width:94rem;margin:0 auto;
+         padding:1.3rem clamp(1.2rem,3.6vw,3.2rem) 1.2rem}
+  .tete{display:flex;gap:1.1rem;align-items:baseline;flex-wrap:wrap;
+        border-bottom:1.5px solid var(--encre);padding-bottom:.5rem}
+  .tete b{font:600 13px/1 var(--sans);letter-spacing:.22em}
+  .tete span{font-size:14.5px;color:var(--demi)}
+  .tete .d{margin-left:auto;font:600 10px/1 var(--sans);letter-spacing:.14em;
+           text-transform:uppercase;color:var(--pale)}
+  .oeil{font:600 10px/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase;
+        color:var(--pale);display:block;margin-bottom:.75rem}
+  h1{font:600 clamp(1.9rem,3.5vw,3rem)/1.07 var(--serif);letter-spacing:-.023em;
+     margin:0 0 .8rem;max-width:18ch;text-wrap:balance}
+  .these{color:var(--demi);margin:0 0 1.4rem;max-width:42ch;font-size:16.5px}
+  .these b{color:var(--encre);font-weight:600}
+  .agir{display:flex;gap:1.1rem;align-items:center;flex-wrap:wrap}
+  .bouton{background:var(--encre);color:var(--relief);text-decoration:none;
+          font:600 15px/1 var(--sans);padding:.95rem 1.5rem;border:1px solid var(--encre)}
+  .bouton:hover{background:transparent;color:var(--encre)}
+  .bouton:focus-visible{outline:2px solid var(--vert);outline-offset:3px}
+  .agir p{margin:0;font:400 13.5px/1.45 var(--sans);color:var(--demi);max-width:34ch}
+  .n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .prise{all:unset;cursor:pointer;display:block}
+  .prise:focus-visible{outline:2px solid var(--vert);outline-offset:2px}
+
+  .scene{flex:1;position:relative;display:grid;
+         grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);
+         gap:clamp(1rem,3vw,2.6rem);align-items:center;padding:1.4rem 0 .6rem}
+  @media(max-width:960px){.scene{grid-template-columns:1fr}}
+  .plaque{position:relative;margin:0}
+  .plaque img{width:100%;max-width:760px;max-height:66vh;object-fit:contain;display:block;
+              margin-left:auto}
+  /* Les repères sont posés en pour-cent de la figure : ils suivent l'image quand elle se
+     redimensionne, au lieu de glisser à côté de ce qu'ils désignent. */
+  .rep{position:absolute;font:600 10px/1.4 var(--sans);letter-spacing:.12em;
+       text-transform:uppercase;color:var(--pale);white-space:nowrap}
+  .rep b{display:block;font:600 30px/1 var(--mono);letter-spacing:-.02em;margin-top:.15rem}
+  .rep i{display:block;font:400 12px/1.4 var(--sans);font-style:normal;max-width:23ch;
+         white-space:normal;margin-top:.2rem}
+  .rep.efface{opacity:.3}
+  .rep{transition:opacity .2s ease}
+  .rep.haut{color:var(--pale)}
+  .rep.bas b{color:var(--encre)}
+  .fil{position:absolute;border-left:1px solid var(--filet)}
+  .fil.h{border-left:none;border-top:1px solid var(--filet)}
+  .socle{display:flex;gap:1.4rem;align-items:baseline;flex-wrap:wrap;
+         border-top:1px solid var(--filet);padding-top:.7rem;
+         font:400 13.5px/1.5 var(--sans);color:var(--demi)}
+</style>
+<div class="ecran">
+  <div class="tete"><b>CASCADE</b><span>routing audit — KYC extraction</span><span class="d">report 64bdacf · measured once · frozen</span></div>
+  <div class="scene">
+    <div>
+      <span class="oeil">Finding — two rates over the same 120 files</span>
+      <h1>Your dashboard says 94%. Your case files go out at 77%.</h1>
+      <p class="these">Both figures are true, and they measure different things. Only one counts a file as right when <b>all five fields are right together</b> — and that is the one whose errors reach your review team.</p>
+      <div class="agir"><a class="bouton" href="#">Have your routing measured</a><p>On your records, on your machine. Nothing leaves the network. If nothing comes out cheaper without breaking a file, the report says so.</p></div>
+    </div>
+    <figure class="plaque">
+      <img src="rendus/plaque-hero.png" alt="The measurement in relief: six rows of chip stacks on a plate, one stack per reader and per field, each chip worth ten points of measured accuracy. The seventh row has no tiles at all — the human operator was never sampled field by field.">
+      <span class="fil" style="left:31%;top:6%;height:13%"></span>
+      <button class="rep haut prise" type="button" data-rep="A" style="left:16%;top:0">Green tiles — the routing in production
+        <b>94.4%</b><i>the mean of its five field rates, one field at a time</i></button>
+      <span class="fil h" style="left:62%;top:84%;width:22%"></span>
+      <button class="rep bas prise" type="button" data-rep="B" style="left:62%;top:86%">All five together, one file
+        <b>76.7%</b><i>92 of 120 · Wilson 95% [68.3 – 83.3]</i></button>
+    </figure>
+  </div>
+  <div class="socle"><span class="n" style="color:var(--encre);font-weight:600">17.7 points</span>
+    <span>separate what the dashboard reports from what the review desk receives.
+      The plate holds one stack per reader and per field; the empty channel is the human
+      operator, who was never sampled field by field.</span></div>
+</div>
+<script>
+/* Un repère à la fois : les deux allumés, la photographie porte deux affirmations que rien
+   ne sépare, et c'est exactement la confusion que la page dénonce. */
+const reps = [...document.querySelectorAll(".rep")];
+let vu = null;
+for (const r of reps) r.addEventListener("click", () => {
+  vu = vu === r.dataset.rep ? null : r.dataset.rep;
+  for (const x of reps) x.classList.toggle("efface", vu !== null && x.dataset.rep !== vu);
+});
+</script>

@@ -1,0 +1,385 @@
+<!doctype html>
+<meta charset="utf-8"><title>Cascade, diagonal field</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%2314251e'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="fontes/literata.css">
+<!-- Synchrone, avant le style : c'est ce qui AUTORISE l'animation. Sans JavaScript la
+     classe n'existe pas, rien n'est masqué, et la page reste entière. -->
+<script>document.documentElement.classList.add("js")</script>
+<style>
+  :root{
+    --papier:#dbd7c5; --papier-haut:#e2ddcb; --papier-bas:#cdccb9;
+    --encre:#1b1d18; --demi:#4a4739;
+    /* MESURÉ : #55523f donne 4,85 contre le papier le plus sombre, là où le précédent
+       #67634f tombait à 3,72 et portait les deux phrases les plus persuasives. */
+    --pale:#55523f; --filet:#9d9a83; --filet-clair:#bab7a0;
+    --nuit-a:#1b3229; --nuit-b:#14251e; --nuit-c:#0e1a15;
+    /* MESURÉ : #57b184 donne 6,82 contre le vert le plus sombre, contre 4,06 pour le
+       précédent #3f8f66, qui échouait AA sur la phrase verte du titre. */
+    --sur-vert:#e4ecdf; --sur-vert-pale:#a9bdaf; --vert-titre:#23543f; --vert-vif:#57b184;
+    --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+    --texte:"Literata",Georgia,serif;
+    --montee:cubic-bezier(.16,.84,.32,1);
+  }
+  *{box-sizing:border-box}
+  html{background:var(--papier)}
+  body{margin:0;color:var(--encre);font:400 16px/1.55 var(--texte);
+       -webkit-font-smoothing:antialiased;overflow-x:hidden;
+       background:linear-gradient(168deg,var(--papier-haut) 0%,var(--papier) 54%,
+                  var(--papier-bas) 100%)}
+  /* `100dvh` et non `100vh` : sous Safari mobile, la barre d'adresse qui se rétracte fait
+     sauter toute la mise en page d'un écran calé sur `vh`. */
+  .ecran{min-height:100dvh;display:flex;flex-direction:column;position:relative;
+         overflow:hidden;padding:1.25rem clamp(1.2rem,3.4vw,3.2rem) 1rem;
+         max-width:104rem;margin:0 auto}
+
+  .champ{position:absolute;z-index:0;
+         background:linear-gradient(163deg,var(--nuit-a) 0%,var(--nuit-b) 54%,var(--nuit-c) 100%)}
+
+  .tete{display:flex;gap:1.1rem;align-items:baseline;flex-wrap:wrap;padding-bottom:.5rem;
+        position:relative;z-index:5}
+  .tete b{font:600 13px/1 var(--sans);letter-spacing:.2em}
+  .tete span{font-size:15px;color:var(--demi)}
+  .tete .d{margin-left:auto;font:600 11px/1 var(--sans);letter-spacing:.12em;
+           text-transform:uppercase;color:var(--pale)}
+
+  .plaque{position:absolute;margin:0;z-index:2}
+  .plaque img{width:100%;display:block;opacity:0;transition:opacity .11s linear}
+  .plaque img:not(:first-child){position:absolute;inset:0}
+  .plaque img.vu{opacity:1}
+  @media (prefers-reduced-motion:reduce){.plaque img{transition:none}}
+  /* L'objet occupait la moitié de l'écran et ne portait aucune part de l'argument. Sa
+     septième rangée est vide parce que l'opérateur humain n'a jamais été échantillonné
+     champ par champ : c'est une constatation d'audit, elle se lit maintenant. */
+  .plaque figcaption{position:absolute;left:6%;right:6%;bottom:-2.5rem;
+                     font:400 12px/1.45 var(--sans);color:var(--sur-vert-pale);
+                     max-width:46ch}
+  .socle-ombre{position:absolute;z-index:1;border-radius:50%;pointer-events:none;
+               background:radial-gradient(closest-side,rgba(4,10,7,.55),rgba(4,10,7,0))}
+
+  .bloc{position:relative;z-index:3;display:flex;flex-direction:column;justify-content:center;
+        flex:1;padding:1rem 0}
+  .oeil{font:600 11px/1.4 var(--sans);letter-spacing:.15em;text-transform:uppercase;
+        color:var(--pale);display:block;margin-bottom:.9rem}
+  h1{margin:0 0 .95rem;text-wrap:balance;letter-spacing:-.021em;
+     font:600 clamp(1.85rem,3.5vw,3rem)/1.14 var(--texte);font-variation-settings:"opsz" 48}
+  h1 .deux{color:var(--vert-titre)}
+  /* Le `<i>` est une enveloppe d'ANIMATION, pas une emphase : sans cette remise à zéro,
+     six titres sortent en italique synthétiquement graissé. */
+  .ligne > i{font-style:normal}
+  .sous{margin:0 0 1.4rem;max-width:38ch;font-size:16px;color:var(--demi)}
+
+  .agir{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;margin-top:1.4rem}
+  .bouton{text-decoration:none;font:600 15px/1 var(--sans);padding:1rem 1.6rem;
+          background:var(--encre);color:#f4f0e4;border:1px solid var(--encre);
+          display:inline-block;transition:transform .16s var(--montee),box-shadow .16s ease}
+  /* Le survol rendait le bouton TRANSPARENT, donc moins visible qu'au repos. À l'envers.
+     Il se soulève maintenant, et s'enfonce au clic. */
+  .bouton:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(20,37,30,.28)}
+  .bouton:active{transform:translateY(1px);box-shadow:none}
+  /* Un anneau d'une seule couleur ne survit pas aux deux fonds : mesuré, le vert du titre
+     tombe à 1,84 contre le vert sombre. Deux anneaux concentriques, un clair un sombre,
+     et l'un des deux ressort toujours. */
+  .bouton:focus-visible,.prise:focus-visible,.sel:focus-visible,.rg-g:focus-visible,
+  .lg:focus-visible{outline:none;
+    box-shadow:0 0 0 2px var(--papier-haut),0 0 0 4.5px var(--nuit-b)}
+  /* La phrase de falsifiabilité était en 13,5 px dans la couleur la plus pâle, en légende
+     du bouton. C'est la meilleure phrase de la page pour un sceptique : elle passe à la
+     taille et à la couleur du texte courant, À CÔTÉ du bouton. */
+  .promesse{margin:0;font:400 15px/1.45 var(--texte);color:var(--demi);max-width:29ch}
+
+  .pied{display:flex;gap:1.2rem;align-items:baseline;flex-wrap:wrap;padding:.8rem 0 .1rem;
+        position:relative;z-index:5;font:400 15px/1.5 var(--sans);color:var(--pale);
+        border-top:1px solid var(--filet-clair)}
+  .pied b{color:var(--demi);font-weight:600}
+
+  /* ── LES CHIFFRES : socle commun aux six traitements ───────────────────────
+     ÉCHELLE TYPOGRAPHIQUE. Il y avait sept tailles de petit texte entre 11 et 18 px, un
+     rapport de 1,45 du plus petit au plus grand : ce n'est pas une échelle, c'est du
+     bruit, et rien n'y dit ce qui compte. Trois marches, et chacune a un emploi :
+     11 px l'étiquette en capitales, 12 px la note, 15 px le texte courant. */
+  .n{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .prise{all:unset;cursor:pointer;display:block}
+  dfn{font-style:normal}
+  /* L'état « retenu » était une teinte à 9 % d'opacité, sous le seuil de perception. Il
+     porte maintenant un fond franc et un filet épais. */
+  .vu-x{background:rgba(35,84,63,.16);box-shadow:inset 3px 0 0 var(--vert-titre)}
+
+  /* A · LE RELEVÉ QUI SOLDE. La différence n'est pas un troisième chiffre posé à côté des
+     deux autres : elle est ce qu'ils font ensemble, et un livre de comptes sait dire ça
+     depuis six siècles. */
+  .solde{width:100%;max-width:34rem;border-collapse:collapse}
+  .solde th{text-align:left;font:400 15px/1.35 var(--texte);padding:.1rem 0;
+            border-bottom:1px solid var(--filet-clair)}
+  .solde td{text-align:right;padding:.5rem 0 .5rem 1rem;border-bottom:1px solid var(--filet-clair);
+            font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums;
+            white-space:nowrap}
+  .solde td.r{color:var(--pale);font-size:12px;font-family:var(--sans);white-space:normal}
+  .solde tr:last-child th,.solde tr:last-child td{border-bottom:none;
+    border-top:1.6px solid var(--encre);padding-top:.55rem;font-weight:600}
+  .solde tr:last-child th{font-size:15px}
+  .solde tr:last-child td:not(.r){font-size:18px;color:var(--vert-titre)}
+  /* La prise doit faire 44 px au doigt : le padding l'agrandit sans toucher la hauteur de
+     ligne, donc sans décaler le relevé. */
+  .sel{all:unset;cursor:pointer;display:block;padding:.62rem .3rem;margin:0 -.3rem;
+       border-bottom:1px dotted var(--filet)}
+
+  /* B · LA RÉGLETTE. L'écart cesse d'être un nombre et devient une DISTANCE, et l'absence
+     d'intervalle occupe la place où l'autre a le sien. */
+  .reglette{width:100%;max-width:620px}
+  .reglette svg{width:100%;height:auto;display:block;overflow:visible}
+  .rg-axe{stroke:var(--filet);stroke-width:1}
+  .rg-t{stroke:var(--filet)} .rg-t.maj{stroke:var(--pale)}
+  .rg-ch{font:500 11px/1 var(--mono);fill:var(--pale)}
+  /* Même encre, même graisse pour les deux taux : griser 94,4 contredisait le titre. */
+  .rg-val{font:600 17px/1 var(--mono);fill:var(--encre)}
+  .rg-lab{font:400 12px/1 var(--sans);fill:var(--pale)}
+  .rg-aig{stroke:var(--encre);stroke-width:2.2}
+  .rg-int{stroke:var(--encre);stroke-width:1.4;fill:none}
+  .rg-ec{stroke:var(--vert-titre);stroke-width:1.2;fill:none}
+  .rg-ect{font:600 12.5px/1 var(--mono);fill:var(--vert-titre)}
+  .rg-g{cursor:pointer}
+  .rg-g rect{fill:transparent}
+  .rg-g[aria-pressed="true"] rect{fill:rgba(35,84,63,.16)}
+  .efface{opacity:.32;transition:opacity .2s ease}
+
+  /* C · LES CENT VINGT MARQUES. Un pourcentage ne se compte pas ; vingt-huit dossiers, si. */
+  .marques{max-width:35rem}
+  .grille{display:grid;grid-template-columns:repeat(20,1fr);gap:4px;margin-bottom:.7rem}
+  .grille i{display:block;aspect-ratio:1;background:var(--encre);border-radius:1px;
+            transition:opacity .2s ease}
+  .grille i.k{background:transparent;box-shadow:inset 0 0 0 1.4px var(--vert-titre)}
+  .grille.q-ok i.k,.grille.q-k i:not(.k){opacity:.15}
+  .cles{display:flex;gap:1.2rem;flex-wrap:wrap;font:400 15px/1.5 var(--sans);
+        color:var(--pale)}
+  .lg{all:unset;cursor:pointer;display:flex;gap:.45rem;align-items:baseline;
+      padding:.62rem .35rem;margin:-.4rem -.35rem}
+  .cles u{width:12px;height:12px;background:var(--encre);border-radius:1px;
+          text-decoration:none;display:block;transform:translateY(1px);flex:none}
+  .cles u.k{background:transparent;box-shadow:inset 0 0 0 1.4px var(--vert-titre)}
+  .cles b{font:600 15px/1 var(--mono);color:var(--encre)}
+
+  /* D · LA FICHE. Ça ne ressemble pas à un site, ça ressemble à ce qu'ils recevront. */
+  .fiche{max-width:33rem;border:1px solid var(--filet);background:rgba(255,252,244,.42)}
+  .fiche .cart{display:flex;gap:.7rem;align-items:baseline;border-bottom:1px solid var(--filet);
+               padding:.45rem .85rem;font:600 11px/1.4 var(--sans);letter-spacing:.12em;
+               text-transform:uppercase;color:var(--pale)}
+  .fiche .cart em{margin-left:auto;font-style:normal;font-family:var(--mono);letter-spacing:0}
+  .fiche dl{margin:0;padding:.2rem .85rem .5rem}
+  .fiche .l{display:grid;grid-template-columns:1fr auto;gap:.6rem;align-items:baseline;
+            padding:.62rem .3rem;margin:0 -.3rem;border-bottom:1px dotted var(--filet-clair);
+            width:calc(100% + .6rem);text-align:left}
+  .fiche .l:last-child{border-bottom:none}
+  .fiche dt{font:400 15px/1.4 var(--texte)}
+  .fiche dt small{display:block;font:400 12px/1.4 var(--sans);color:var(--pale)}
+  .fiche dd{margin:0;font:600 17px/1 var(--mono);font-variant-numeric:tabular-nums}
+  .fiche .cle dd{color:var(--vert-titre)}
+
+  /* E · DEUX CHIFFRES ET UNE ACCOLADE. */
+  .accolade{display:grid;grid-template-columns:auto 13px auto;grid-template-rows:auto auto;
+            gap:.35rem .95rem;align-items:center;max-width:34rem}
+  .accolade .f{grid-column:1;padding:.55rem .3rem;margin:0 -.3rem;text-align:left;width:100%}
+  .accolade .f.a{grid-row:1} .accolade .f.b{grid-row:2}
+  .accolade .f b{display:block;font:600 clamp(1.7rem,2.6vw,2.3rem)/1 var(--mono);
+                 letter-spacing:-.03em}
+  .accolade .f i{display:block;font:400 12px/1.4 var(--sans);font-style:normal;
+                 color:var(--pale);margin-top:.25rem}
+  .accolade .br{grid-column:2;grid-row:1/3;border-left:1.4px solid var(--vert-titre);
+                border-top:1.4px solid var(--vert-titre);border-bottom:1.4px solid var(--vert-titre);
+                border-radius:3px 0 0 3px;height:100%;width:11px}
+  .accolade .et{grid-column:3;grid-row:1/3;align-self:center;color:var(--vert-titre)}
+  .accolade .et b{display:block;font:600 1.35rem/1 var(--mono);letter-spacing:-.02em}
+  .accolade .et i{display:block;font:400 12px/1.4 var(--sans);font-style:normal;
+                  color:var(--pale);margin-top:.2rem}
+
+  /* F · LE TABLEAU DE RAPPORT. */
+  .tab{width:100%;max-width:37rem;border-collapse:collapse}
+  .tab caption{text-align:left;font:600 11px/1.4 var(--sans);letter-spacing:.12em;
+               text-transform:uppercase;color:var(--pale);padding-bottom:.45rem}
+  .tab thead th{font:600 11px/1.3 var(--sans);letter-spacing:.08em;text-transform:uppercase;
+                color:var(--pale);text-align:right;padding:0 0 .35rem 1rem;
+                border-bottom:1.4px solid var(--encre)}
+  .tab thead th:first-child{text-align:left;padding-left:0}
+  .tab td{padding:.5rem 0 .5rem 1rem;text-align:right;
+          border-bottom:1px solid var(--filet-clair);font-family:var(--mono);font-size:15px;
+          font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tab tbody th{padding:.1rem 0;text-align:left;border-bottom:1px solid var(--filet-clair);
+                font:400 15px/1.4 var(--texte)}
+  .tab td.r{color:var(--pale);font-family:var(--sans);font-size:12px;white-space:normal}
+  .tab tr.cle td:not(.r){color:var(--vert-titre);font-weight:600}
+
+  /* ── LA SÉQUENCE D'ENTRÉE ────────────────────────────────────────────────────
+     Tout est gardé derrière `.js`, posée par un script SYNCHRONE dans l'en-tête. Sans
+     JavaScript, rien n'est masqué : le contenu est l'état par défaut, jamais le mouvement. */
+  @media (prefers-reduced-motion:no-preference){
+    .js .ecran .champ{transform:translateX(3%);opacity:.86}
+    .js .ecran .plaque{opacity:0;transform:translate3d(24px,24px,0) scale(.986)}
+    .js .ecran .socle-ombre{opacity:0;transform:scaleX(.82)}
+    .js .ecran .ligne > i{display:block;transform:translateY(102%)}
+    .js .ecran .oeil,.js .ecran .sous,.js .ecran .chiffres,.js .ecran .agir,
+    .js .ecran .pied,.js .ecran .tete{opacity:0}
+    .js .ecran .sous,.js .ecran .chiffres,.js .ecran .agir{transform:translateY(10px)}
+    .js .go .champ{transform:none;opacity:1;
+      transition:transform .56s var(--montee),opacity .4s ease}
+    .js .go .plaque{opacity:1;transform:none;
+      transition:opacity .5s var(--montee) .14s,transform .58s var(--montee) .14s}
+    .js .go .socle-ombre{opacity:1;transform:none;
+      transition:opacity .5s ease .24s,transform .56s var(--montee) .24s}
+    .js .go .tete{opacity:1;transition:opacity .4s ease .06s}
+    .js .go .oeil{opacity:1;transition:opacity .4s ease .32s}
+    .js .go .ligne > i{transform:none;transition:transform .52s var(--montee)}
+    .js .go .ligne:nth-of-type(1) > i{transition-delay:.38s}
+    .js .go .ligne:nth-of-type(2) > i{transition-delay:.48s}
+    .js .go .sous{opacity:1;transform:none;
+      transition:opacity .42s ease .60s,transform .48s var(--montee) .60s}
+    .js .go .chiffres{opacity:1;transform:none;
+      transition:opacity .42s ease .70s,transform .48s var(--montee) .70s}
+    .js .go .agir{opacity:1;transform:none;
+      transition:opacity .42s ease .80s,transform .48s var(--montee) .80s}
+    .js .go .pied{opacity:1;transition:opacity .42s ease .88s}
+  }
+  .ligne{display:block;overflow:hidden;padding-bottom:.16em;margin-bottom:-.16em}
+  @media (prefers-reduced-motion:reduce){.ligne{overflow:visible}}
+
+  /* ── LE POINT DE RUPTURE ─────────────────────────────────────────────────────
+     Il n'y en avait AUCUN. Sous 1200 px, une seule loi pour les six : le champ redevient
+     une bande basse, l'objet vit dedans, le texte tient le papier. Aucune géométrie de
+     fond ne traverse un bloc de texte. */
+  @media (max-width:1200px){
+    .ecran{padding-bottom:0}
+    .champ{inset:auto 0 0 0 !important;width:100% !important;height:46vh !important;
+           clip-path:none !important;transform:none !important;border:none !important}
+    .plaque{left:auto !important;right:-6vw !important;top:auto !important;
+            bottom:1.5vh !important;width:min(96vw,560px) !important}
+    .plaque figcaption{position:static;margin-top:.5rem}
+    .socle-ombre{display:none}
+    .bloc{max-width:none !important;padding:1rem 0 48vh !important;justify-content:flex-start}
+    .oeil{color:var(--pale) !important}
+    h1{color:var(--encre) !important} h1 .deux{color:var(--vert-titre) !important}
+    .sous{color:var(--demi) !important;max-width:44ch}
+    .promesse{color:var(--demi) !important}
+    .bouton{background:var(--encre) !important;color:#f4f0e4 !important;
+            border-color:var(--encre) !important}
+    .tete b,.tete span{color:var(--encre) !important}
+    .tete .d{color:var(--pale) !important}
+    .pied{display:none}
+    .couture,.folio{display:none}
+    .chiffres{position:static !important;bottom:auto !important}
+    .agir{position:static !important;bottom:auto !important;left:auto !important}
+    .grille{grid-template-columns:repeat(12,1fr)}
+    .accolade .f b{font-size:1.7rem}
+  }
+  @media (max-width:560px){
+    .champ{height:38vh !important}
+    .bloc{padding-bottom:40vh !important}
+    .solde,.tab,.fiche,.reglette,.marques,.accolade{max-width:none}
+    .accolade{grid-template-columns:auto 13px}
+    .accolade .et{grid-column:1/3;grid-row:3;align-self:start;padding-top:.4rem}
+  }
+
+  .champ{inset:0 0 4.9rem auto;width:59%;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%)}
+  .plaque{right:-5vw;top:7vh;width:min(58vw,880px)}
+  .socle-ombre{right:0;top:52vh;width:min(40vw,620px);height:12vh}
+  .bloc{max-width:36rem}
+</style>
+<div class="ecran">
+  <span class="champ"></span>
+  <div class="tete"><b>CASCADE</b><span>routing audit, KYC extraction</span>
+    <span class="d">report 64bdacf, measured once and frozen</span></div>
+  <figure class="plaque">
+      <img src="rendus/arc/p0.webp" alt="" aria-hidden="true">
+      <img src="rendus/arc/p1.webp" alt="" aria-hidden="true">
+      <img src="rendus/arc/p2.webp" alt="" aria-hidden="true">
+      <img src="rendus/arc/p3.webp" alt="" aria-hidden="true">
+      <img src="rendus/arc/p4.webp" class="vu" alt="Six rows of chip stacks on a plate, one stack per reader and per field, each chip worth ten points of measured accuracy. The seventh row has no tiles at all: the human operator was never sampled field by field.">
+      <img src="rendus/arc/p5.webp" alt="" aria-hidden="true">
+      <img src="rendus/arc/p6.webp" alt="" aria-hidden="true">
+      <img src="rendus/arc/p7.webp" alt="" aria-hidden="true">
+      <img src="rendus/arc/p8.webp" alt="" aria-hidden="true">
+    <figcaption>One stack per reader and per field. The empty row is the human operator, never sampled field by field.</figcaption>
+  </figure>
+  <span class="socle-ombre"></span>
+  <div class="bloc">
+    <span class="oeil">Two rates, one desk</span>
+    <h1><span class="ligne"><i>Both numbers are true.</i></span><span class="ligne"><i class="deux">Only one leaves your desk.</i></span></h1>
+    <p class="sous">94.4% is the number on your dashboard. 76.7% is the one on your desk: the share of files where all five fields are right together, 92 of 120.</p>
+    <div class="chiffres">
+      <table class="solde">
+        <tbody>
+          <tr><th><button class="sel" type="button" data-prise="a" aria-pressed="false">Mean of five field rates</button></th>
+              <td>94.4%</td><td class="r">no interval</td></tr>
+          <tr><th><button class="sel" type="button" data-prise="b" aria-pressed="false">Per-file rate, 92 of 120</button></th>
+              <td>76.7%</td><td class="r">Wilson 95% [68.3 to 83.3]</td></tr>
+          <tr><th>Difference</th><td>17.7</td><td class="r">points</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="agir"><a class="bouton" href="#">Have your routing measured</a><p class="promesse">If nothing comes out cheaper without breaking a file, the report says so.</p></div>
+  </div>
+  <div class="pied"><span>On your records, on your machine. <b>Nothing leaves the network.</b></span><span>One measurement, frozen, delivered as a report you can contest line by line.</span></div>
+</div>
+<script>
+/* ── LA PIÈCE TOURNE. Neuf poses rendues, le curseur en choisit une. */
+(() => {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const p = document.querySelector(".plaque"), o = document.querySelector(".socle-ombre");
+  const poses = [...p.querySelectorAll("img")];
+  let vx = 0, vy = 0, x = 0, y = 0, tourne = false, pose = 4;
+  addEventListener("pointermove", (e) => {
+    vx = (e.clientX / innerWidth - .5) * 2;
+    vy = (e.clientY / innerHeight - .5) * 2;
+    if (!tourne) { tourne = true; requestAnimationFrame(boucle); }
+  }, { passive: true });
+  function boucle() {
+    /* Rattrapage image par image : une transition CSS redémarrerait à chaque mouvement de
+       souris et rendrait un retard élastique. */
+    x += (vx - x) * .07; y += (vy - y) * .07;
+    const k = Math.min(8, Math.max(0, Math.round((x + 1) / 2 * 8)));
+    if (k !== pose) { poses[pose].classList.remove("vu"); poses[k].classList.add("vu"); pose = k; }
+    p.style.transform = `translate3d(0,${(-y * 7).toFixed(2)}px,0)`;
+    if (o) o.style.transform = `translate3d(${(x * 10).toFixed(2)}px,${(y * 3).toFixed(2)}px,0)`;
+    if (Math.abs(vx - x) > 1e-3 || Math.abs(vy - y) > 1e-3) requestAnimationFrame(boucle);
+    else tourne = false;
+  }
+})();
+
+/* ── LES PRISES. Elles étaient focalisables mais INACTIONNABLES : le gestionnaire n'écoutait
+   que `click`, jamais `keydown`. Entrée et Espace ne faisaient rien, sur des éléments qui
+   s'annoncent « bouton ». Les `<g>` d'un SVG ne reçoivent pas de `click` synthétique au
+   clavier : il faut poser l'écoute à la main. */
+(() => {
+  const z = document.querySelector(".chiffres");
+  if (!z) return;
+  const basculer = (b) => {
+    const deja = b.getAttribute("aria-pressed") === "true";
+    z.querySelectorAll('[aria-pressed="true"]').forEach((x) => x.setAttribute("aria-pressed", "false"));
+    z.querySelectorAll(".vu-x").forEach((x) => x.classList.remove("vu-x"));
+    z.querySelectorAll(".efface").forEach((x) => x.classList.remove("efface"));
+    const g = z.querySelector(".grille");
+    if (g) g.classList.remove("q-ok", "q-k");
+    if (deja) return;
+    b.setAttribute("aria-pressed", "true");
+    const quoi = b.dataset.prise;
+    if (!b.closest("svg")) (b.closest("tr") || b).classList.add("vu-x");
+    if (g && (quoi === "ok" || quoi === "k")) g.classList.add(quoi === "ok" ? "q-ok" : "q-k");
+    if (quoi === "A" || quoi === "B")
+      z.querySelectorAll(quoi === "A" ? ".rg-b" : ".rg-a")
+       .forEach((x) => x.classList.add("efface"));
+  };
+  z.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-prise]"); if (b) basculer(b);
+  });
+  z.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const b = e.target.closest("[data-prise]"); if (!b) return;
+    e.preventDefault(); basculer(b);
+  });
+})();
+
+/* La séquence attend les fontes : lancée avant, ses premiers temps se jouent sur une fonte
+   de secours et le titre saute au milieu du mouvement. */
+document.fonts.ready.then(() => requestAnimationFrame(() =>
+  requestAnimationFrame(() => document.body.classList.add("go"))));
+</script>
+
