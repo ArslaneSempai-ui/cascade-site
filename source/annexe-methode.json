@@ -37,7 +37,7 @@
             "n": "prints the optimal routing, human tier flagged as assumed"
           }
         ],
-        "refs": "src/optimise.ts:379 &#183; src/readme.ts:790"
+        "refs": "src/optimise.ts:379 &#183; src/readme.ts:827"
       }
     },
     {
@@ -56,7 +56,7 @@
             "n": "already sealed, and the seal matches: 1151f5a1cfaae0c0"
           }
         ],
-        "refs": "src/measure.ts:279 &#183; src/sceller.ts:12"
+        "refs": "src/measure.ts:298 &#183; src/sceller.ts:12"
       }
     },
     {
@@ -116,7 +116,7 @@
             "n": "compares two sealed passes case by case"
           }
         ],
-        "refs": "src/measure.ts:941 &#183; src/your-cases.ts:1185"
+        "refs": "src/measure.ts:960 &#183; src/your-cases.ts:1185"
       }
     }
   ],

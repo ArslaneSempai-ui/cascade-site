@@ -61,7 +61,7 @@
             "n": "serves on localhost only, no request log"
           }
         ],
-        "refs": "src/server.ts:702 &#183; src/server.ts:504"
+        "refs": "src/server.ts:728 &#183; src/server.ts:530"
       }
     },
     {

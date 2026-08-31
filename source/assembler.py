@@ -190,6 +190,47 @@ else:
     print(f"  compte de tests vérifié contre le dépôt : {vrai_n} tests, "
           f"{vrai_f} fichiers")
 
+# ── la garde des citations : « Where it lives » doit encore dire vrai ────────
+# Le site invite un relecteur bancaire à OUVRIR chaque chemin. Une citation qui
+# a glissé de vingt lignes le fait tomber sur autre chose, et c'est pire qu'une
+# absence de citation. Mesuré le 31/08 : le durcissement de l'outil a déplacé 7
+# des 38 citations — un contrôle de bornes serait passé, elles pointaient toutes
+# dans un fichier de la bonne taille. On vérifie donc le CONTENU de la ligne.
+ANCRES = MAQ / "ancres-citations.json"
+OUTIL = pathlib.Path.home() / "Documents" / "cascade"
+citees = set()
+for page in DOCS.glob("*.html"):
+    citees |= set(re.findall(r"[A-Za-z0-9_./-]+\.(?:ts|mjs|json|md|js):\d+",
+                             page.read_text()))
+if not ANCRES.exists():
+    print(f"  ! citations NON VÉRIFIÉES : {ANCRES.name} absent — {len(citees)} citées")
+elif not OUTIL.exists():
+    print(f"  ! citations NON VÉRIFIÉES : {OUTIL} absent — {len(citees)} citées")
+else:
+    import json as _json
+    ancres = _json.loads(ANCRES.read_text())["ancres"]
+    fautes = []
+    for c in sorted(citees):
+        if c not in ancres:
+            fautes.append(f"{c} — aucune ancre déclarée"); continue
+        chemin, n = c.rsplit(":", 1)
+        f = OUTIL / chemin
+        if not f.exists():
+            fautes.append(f"{c} — fichier absent de l'outil"); continue
+        lignes = f.read_text(errors="replace").splitlines()
+        n = int(n)
+        if n > len(lignes):
+            fautes.append(f"{c} — au-delà de la fin ({len(lignes)} lignes)"); continue
+        if lignes[n - 1].strip() != ancres[c]:
+            ou = [i + 1 for i, x in enumerate(lignes) if x.strip() == ancres[c]]
+            fautes.append(f"{c} — la ligne a changé"
+                          + (f", le contenu est en {chemin}:{ou[0]}" if len(ou) == 1
+                             else ", contenu introuvable"))
+    if fautes:
+        sys.exit("CITATIONS QUI NE DISENT PLUS VRAI :\n  " + "\n  ".join(fautes)
+                 + "\n  corriger les JSON, puis régénérer ancres-citations.json")
+    print(f"  citations vérifiées ligne à ligne contre l'outil : {len(citees)}")
+
 # ── le contrôle de liens, témoin d'abord ─────────────────────────────────────
 def liens_casses(dossier):
     casses = []
