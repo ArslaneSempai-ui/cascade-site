@@ -86,9 +86,10 @@ PAGES = [
 LETTRES = "ABCDEF"
 
 # ── la production : adresses publiées et carte de partage ────────────────────
-# L'URL de base est celle où docs/ est déjà servi aujourd'hui (GitHub Pages du
-# dépôt public) ; si l'hébergement change un jour, c'est LA constante à changer.
-BASE_URL = "https://arslanesempai-ui.github.io/cascade-routing/"
+# L'URL de base est le dépôt Pages DÉDIÉ du site (choix du 31/08 : ne pas
+# toucher au docs/ généré de cascade-routing) ; si l'hébergement change un
+# jour, c'est LA constante à changer — ici, dans batir-hero.py et assembler.py.
+BASE_URL = "https://arslanesempai-ui.github.io/cascade-site/"
 PROD = {
     "HERO.html": "index.html",
     "ANNEXE-METHODE.html": "method.html",

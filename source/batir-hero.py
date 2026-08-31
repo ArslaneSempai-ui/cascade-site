@@ -490,8 +490,8 @@ document.fonts.ready.then(() => requestAnimationFrame(() =>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade — routing audit, KYC extraction">
 <meta property="og:description" content="A routing audit for KYC extraction: measured on sealed records, rerun on your machine. On your records, on your machine — nothing leaves the network.">
-<meta property="og:url" content="https://arslanesempai-ui.github.io/cascade-routing/index.html">
-<meta property="og:image" content="https://arslanesempai-ui.github.io/cascade-routing/og.png">
+<meta property="og:url" content="https://arslanesempai-ui.github.io/cascade-site/index.html">
+<meta property="og:image" content="https://arslanesempai-ui.github.io/cascade-site/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="A routing audit for KYC extraction: measured on sealed records, rerun on your machine. On your records, on your machine — nothing leaves the network.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">

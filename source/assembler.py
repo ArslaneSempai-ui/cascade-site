@@ -23,7 +23,7 @@ import sys
 MAQ = pathlib.Path(__file__).parent
 SITE = pathlib.Path.home() / "Documents" / "cascade-site"
 DOCS = SITE / "docs"
-BASE_URL = "https://arslanesempai-ui.github.io/cascade-routing/"
+BASE_URL = "https://arslanesempai-ui.github.io/cascade-site/"
 
 PROD = {
     "HERO.html": "index.html",
@@ -43,6 +43,42 @@ if DOCS.exists():
     shutil.rmtree(DOCS)
 DOCS.mkdir(parents=True)
 
+def csp(t):
+    """La politique de sécurité de contenu, par empreintes : seuls NOS styles
+    et NOS scripts, hachés sur leur contenu final, ont le droit de tourner.
+    Tout le reste — connexions, cadres, formulaires, scripts étrangers — est
+    refusé. GitHub Pages ne pose pas d'en-têtes ; la balise meta porte tout ce
+    qu'une meta peut porter (frame-ancestors, lui, exige un en-tête)."""
+    import base64
+    import hashlib
+
+    def h(s):
+        e = base64.b64encode(hashlib.sha256(s.encode()).digest()).decode()
+        return f"'sha256-{e}'"
+
+    styles = re.findall(r"<style>(.*?)</style>", t, re.S)
+    scripts = re.findall(r"<script>(.*?)</script>", t, re.S)
+    style_src = "'self' " + " ".join(h(s) for s in styles)
+    # les attributs style="…" (les drapeaux de l'instrument du héros) ne sont
+    # pas couverts par les hachés d'éléments : CSP3 les admet un par un via
+    # 'unsafe-hashes' — chaque VALEUR d'attribut est hachée, rien d'autre ne passe
+    attributs = sorted(set(re.findall(r'style="([^"]*)"', t)))
+    if attributs:
+        style_src += " 'unsafe-hashes' " + " ".join(h(a) for a in attributs)
+    script_src = " ".join(h(s) for s in scripts) if scripts else "'none'"
+    regle = ("default-src 'none'; "
+             f"style-src {style_src}; "
+             f"script-src {script_src}; "
+             "font-src 'self'; img-src 'self' data:; "
+             "base-uri 'self'; "
+             "form-action 'none'; connect-src 'none'")
+    return t.replace(
+        '<meta charset="utf-8">',
+        f'<meta charset="utf-8">\n'
+        f'<meta http-equiv="Content-Security-Policy" content="{regle}">\n'
+        f'<meta name="referrer" content="no-referrer">', 1)
+
+
 for vieux, neuf in PROD.items():
     t = (MAQ / vieux).read_text()
     for v, n in PROD.items():
@@ -51,8 +87,8 @@ for vieux, neuf in PROD.items():
         # servie pour N'IMPORTE QUEL chemin manquant : ses liens relatifs
         # doivent se résoudre depuis la racine du site, pas depuis le chemin raté
         t = t.replace('<meta charset="utf-8">',
-                      f'<meta charset="utf-8"><base href="{BASE_URL}">', 1)
-    (DOCS / neuf).write_text(t)
+                      '<meta charset="utf-8"><base href="/cascade-site/">', 1)
+    (DOCS / neuf).write_text(csp(t))
 
 # ── les ressources réellement référencées ────────────────────────────────────
 refs = set()
@@ -74,16 +110,33 @@ shutil.copy(MAQ / "releve.json", DOCS / "releve.json")
 shutil.copy(MAQ / "og.png", DOCS / "og.png")
 (DOCS / ".nojekyll").write_text("")
 
+# ── robots et plan du site : la porte d'entrée des indexeurs ─────────────────
+(DOCS / "robots.txt").write_text(
+    f"User-agent: *\nAllow: /\nSitemap: {BASE_URL}sitemap.xml\n")
+publiques = [n for n in PROD.values() if n != "404.html"]
+(DOCS / "sitemap.xml").write_text(
+    '<?xml version="1.0" encoding="UTF-8"?>\n'
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    + "".join(f"  <url><loc>{BASE_URL}{n}</loc></url>\n" for n in publiques)
+    + "</urlset>\n")
+
 # ── le contrôle de liens, témoin d'abord ─────────────────────────────────────
 def liens_casses(dossier):
     casses = []
     for page in sorted(dossier.glob("*.html")):
         for m in re.finditer(r'(?:href|src)="([^"]+)"', page.read_text()):
-            u = m.group(1)
-            if u.startswith(("http", "#", "data:", "mailto:")):
+            u = m.group(1).split("#")[0]
+            if u.startswith(("http", "data:", "mailto:")) or not u:
                 continue
-            if not (dossier / u.split("#")[0]).exists():
-                casses.append(f"{page.name} → {u}")
+            # racine-relatif sous le préfixe du site : /cascade-site/x → x,
+            # et le préfixe nu est le répertoire — servi comme index.html
+            if u.startswith("/cascade-site/"):
+                u = u.removeprefix("/cascade-site/") or "index.html"
+            elif u.startswith("/"):
+                casses.append(f"{page.name} → {m.group(1)} (racine hors préfixe)")
+                continue
+            if not (dossier / u).exists():
+                casses.append(f"{page.name} → {m.group(1)}")
     return casses
 
 temoin = DOCS / "zz-temoin.html"
