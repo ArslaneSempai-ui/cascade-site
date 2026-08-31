@@ -89,7 +89,7 @@ LETTRES = "ABCDEF"
 # L'URL de base est le dépôt Pages DÉDIÉ du site (choix du 31/08 : ne pas
 # toucher au docs/ généré de cascade-routing) ; si l'hébergement change un
 # jour, c'est LA constante à changer — ici, dans batir-hero.py et assembler.py.
-BASE_URL = "https://arslanesempai-ui.github.io/cascade-site/"
+BASE_URL = "https://cascade-routing.com/"
 PROD = {
     "HERO.html": "index.html",
     "ANNEXE-METHODE.html": "method.html",

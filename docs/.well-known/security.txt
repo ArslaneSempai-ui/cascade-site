@@ -2,4 +2,4 @@ Contact: https://github.com/ArslaneSempai-ui/cascade-site/issues
 Contact: https://github.com/ArslaneSempai-ui/cascade-routing/issues
 Expires: 2027-08-31T00:00:00.000Z
 Preferred-Languages: en, fr
-Canonical: https://arslanesempai-ui.github.io/cascade-site/.well-known/security.txt
+Canonical: https://cascade-routing.com/.well-known/security.txt

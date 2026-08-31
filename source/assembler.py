@@ -24,7 +24,7 @@ import sys
 MAQ = pathlib.Path(__file__).parent
 SITE = pathlib.Path.home() / "Documents" / "cascade-site"
 DOCS = SITE / "docs"
-BASE_URL = "https://arslanesempai-ui.github.io/cascade-site/"
+BASE_URL = "https://cascade-routing.com/"
 # Le chemin sous lequel le site est servi se déduit de l'URL : « /cascade-site/ »
 # aujourd'hui, « / » le jour du domaine propre. Trois usages en dépendent (la
 # base de la 404, l'icône tactile, le contrôle de liens) — ils lisent tous ICI.
@@ -147,6 +147,13 @@ for w in (MAQ / "rendus" / "etats").glob("objet-*.webp"):
 shutil.copy(MAQ / "releve.json", DOCS / "releve.json")
 shutil.copy(MAQ / "og.png", DOCS / "og.png")
 (DOCS / ".nojekyll").write_text("")
+
+# Le fichier CNAME : c'est LUI qui déclare le domaine propre à GitHub Pages, et
+# docs/ est régénéré à chaque assemblage — s'il n'était pas émis ici, la
+# première reconstruction après la bascule ferait tomber le domaine.
+HOTE = urlparse(BASE_URL).hostname
+if not HOTE.endswith(".github.io"):
+    (DOCS / "CNAME").write_text(HOTE + "\n")
 
 # ── robots, plan du site, security.txt : les portes d'entrée normées ─────────
 (DOCS / "robots.txt").write_text(
