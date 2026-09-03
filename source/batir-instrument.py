@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
-"""L'INSTRUMENT EN DIRECT : composer un routage, ou laisser le budget décider.
+"""L'INSTRUMENT EN DIRECT, direction TERMINALE, choisie le 3 septembre.
 
-CE QUE CETTE PAGE EST
-Une table palier x champ où chaque cellule est un bouton : cliquer compose un
-routage, le panneau lit son coût et sa justesse en direct. Un curseur de budget
-rejoue l'énumération des 16 807 routages, avec le départage exact de l'outil
-(justesse maximale, à égalité le coût moindre). Deux préréglages : le routage
-publié, le routage visé fichier.
+L'instrument parle comme l'outil : un terminal qui écrit tes lectures. Trois
+commandes le structurent : `compose --live` (cliquer les cellules, lire coût et
+justesse), `optimise --budget` (le curseur rejoue l'énumération des 16 807
+routages avec le départage exact de l'outil), `verify --sealed` (la page refait
+le témoin de l'extracteur à l'ouverture, sous les yeux du visiteur). Le robot
+de la dernière scène du film veille à côté.
 
 D'OÙ VIENNENT LES CHIFFRES
 De instrument-donnees.json, émis par extraire-instrument.mjs : les briques sont
 calculées par le code de l'outil lui-même (pricePerThousandExtractions aux
 latences gelées du relevé de référence), jamais recopiées. L'extracteur refuse
-d'émettre si la recomposition du routage publié ne reproduit pas le landing ;
-et la page refait ce témoin À L'OUVERTURE, sous les yeux du visiteur.
+d'émettre si la recomposition du routage publié ne reproduit pas le landing.
 
 CE QUE LA PAGE NE FAIT PAS
 Elle ne touche pas aux documents du visiteur : rien n'entre, rien ne sort
@@ -27,7 +26,6 @@ import sys
 
 BASE = pathlib.Path(__file__).parent
 
-# ── les briques, calculées par l'outil à l'instant de la bâtisse ─────────────
 r = subprocess.run(["node", str(BASE / "extraire-instrument.mjs")],
                    capture_output=True, text=True)
 if r.returncode != 0:
@@ -71,11 +69,12 @@ CSS = '''
     scrollbar-color:var(--vert-titre) var(--nuit-c)}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{background:var(--nuit-b);color:var(--sur-vert);font-family:var(--texte);line-height:1.55}
+  img{max-width:100%;display:block}
   ::selection{background:var(--vert-vif);color:var(--nuit-c)}
   a{text-underline-offset:4px;color:inherit}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
   :focus-visible{outline:3px solid var(--vert-vif);outline-offset:3px;border-radius:2px}
-  .colonne{max-width:1180px;margin:0 auto;padding:0 48px}
+  .colonne{max-width:1240px;margin:0 auto;padding:0 48px}
 
   .barre{position:absolute;inset:0 0 auto 0;z-index:40;display:flex;align-items:center;gap:28px;
     padding:14px 32px}
@@ -84,34 +83,59 @@ CSS = '''
   .barre nav a{font-size:14.5px;text-decoration:none;color:var(--sur-vert-pale);padding:13px 6px}
   .barre nav a:hover{color:var(--sur-vert);text-decoration:underline;
     text-decoration-color:var(--vert-vif);text-decoration-thickness:1.5px}
+  .barre nav a[aria-current]{color:var(--sur-vert)}
   .sceau{font-family:var(--mono);font-size:11px;color:var(--sur-vert-pale);letter-spacing:.04em}
 
-  /* ── l'en-tête de l'instrument ── */
-  .tete{padding:150px 0 40px;
-    background:radial-gradient(120% 100% at 50% -20%,var(--nuit-a),var(--nuit-b) 60%)}
+  .tete{padding:140px 0 36px;
+    background:radial-gradient(120% 100% at 50% -20%,#0f231b,var(--nuit-b) 70%)}
   .h1{font-size:clamp(36px,4.6vw,62px);font-weight:600;letter-spacing:-.02em;line-height:1.05;
     text-wrap:balance}
-  .lede{font-size:clamp(15px,1.25vw,18px);color:var(--sur-vert-pale);max-width:72ch;
+  .lede{font-size:clamp(15px,1.25vw,18px);color:var(--sur-vert-pale);max-width:74ch;
     line-height:1.6;margin-top:18px;text-wrap:balance}
   .lede b{color:var(--sur-vert)}
 
-  /* ── l'instrument : la table à gauche, le pupitre de lecture à droite ── */
-  .instrument{padding:34px 0 40px}
-  .poste{display:flex;gap:28px;align-items:flex-start}
-  .table-zone{flex:1;min-width:0}
-  .t-scroll{overflow-x:auto;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.5);
-    border:1px solid color-mix(in srgb,var(--vert-vif) 26%,transparent)}
-  .routage{width:100%;border-collapse:collapse;background:color-mix(in srgb,var(--nuit-a) 72%,var(--nuit-b));
+  /* ── le poste : le terminal, le robot à côté ── */
+  .poste{display:flex;gap:0;align-items:flex-end;padding:10px 0 64px}
+  .terminal{flex:1;min-width:0;background:color-mix(in srgb,var(--nuit-c) 92%,#000);
+    border:1px solid color-mix(in srgb,var(--vert-vif) 24%,transparent);border-radius:12px;
+    box-shadow:0 40px 100px rgba(0,0,0,.6);overflow:hidden}
+  .tm-barre{display:flex;align-items:center;gap:8px;padding:10px 16px;
+    background:color-mix(in srgb,var(--nuit-b) 80%,#000);
+    border-bottom:1px solid color-mix(in srgb,var(--sur-vert-pale) 12%,transparent)}
+  .tm-barre i{width:10px;height:10px;border-radius:50%;
+    background:color-mix(in srgb,var(--sur-vert-pale) 30%,transparent)}
+  .tm-barre i:first-child{background:color-mix(in srgb,var(--vert-vif) 70%,transparent)}
+  .tm-titre{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--sur-vert-pale);
+    margin-left:8px}
+  .tm-corps{padding:18px 22px 20px;font-family:var(--mono);font-size:12.5px;line-height:1.7}
+  .tm-l{color:var(--sur-vert-pale)}
+  .tm-l .ps{color:var(--vert-vif)}
+  .tm-sortie{margin:10px 0 14px;color:var(--sur-vert)}
+  .tm-sortie b{color:var(--vert-clair);font-weight:500}
+  .tm-preuve{color:var(--sur-vert-pale);margin-top:10px}
+  .tm-preuve .ok{color:var(--vert-vif)}
+  .tm-preuve .ko{color:#d96b4a}
+  .regl{font-family:var(--texte);font-size:13.5px;font-weight:600;background:none;
+    border:1px solid color-mix(in srgb,var(--vert-vif) 40%,transparent);
+    border-radius:8px;padding:8px 13px;cursor:pointer;color:var(--vert-clair);
+    transition:background .2s,color .2s,border-color .2s}
+  .regl:hover{border-color:var(--vert-vif)}
+  .regl.actif{background:var(--vert-vif);color:var(--nuit-c);border-color:var(--vert-vif)}
+  .tm-regl{display:flex;gap:10px;margin:12px 0 4px;flex-wrap:wrap}
+
+  .terminal .t-scroll{overflow-x:auto;border:0;
+    border-top:1px solid color-mix(in srgb,var(--sur-vert-pale) 12%,transparent);
+    border-bottom:1px solid color-mix(in srgb,var(--sur-vert-pale) 12%,transparent)}
+  .routage{width:100%;border-collapse:collapse;background:transparent;
     color:var(--sur-vert);font-family:var(--mono);font-size:13px;min-width:640px}
-  .routage th{padding:12px 10px;text-align:center;font-size:11px;letter-spacing:.1em;
+  .routage th{padding:11px 10px;text-align:center;font-size:11px;letter-spacing:.1em;
     text-transform:uppercase;color:var(--sur-vert-pale);
-    border:1px solid color-mix(in srgb,var(--sur-vert-pale) 14%,transparent)}
-  .routage tbody th{text-align:left;padding-left:14px}
-  .routage td{padding:0;border:1px solid color-mix(in srgb,var(--sur-vert-pale) 14%,transparent)}
+    border:1px solid color-mix(in srgb,var(--sur-vert-pale) 12%,transparent)}
+  .routage tbody th{text-align:left;padding-left:16px}
+  .routage td{padding:0;border:1px solid color-mix(in srgb,var(--sur-vert-pale) 12%,transparent)}
   .cell{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;
-    width:100%;min-height:56px;padding:8px 10px;background:none;border:0;cursor:pointer;
-    font-family:var(--mono);color:var(--sur-vert);
-    transition:background .16s,box-shadow .16s}
+    width:100%;min-height:54px;padding:7px 10px;background:none;border:0;cursor:pointer;
+    font-family:var(--mono);color:var(--sur-vert);transition:background .16s,box-shadow .16s}
   .cell:hover{background:color-mix(in srgb,var(--vert-vif) 12%,transparent);
     box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--vert-vif) 55%,transparent)}
   .cell[aria-pressed="true"]{background:color-mix(in srgb,var(--vert-vif) 18%,transparent);
@@ -122,54 +146,18 @@ CSS = '''
     letter-spacing:.04em}
   .cell[aria-pressed="true"] .c-prix{color:var(--vert-clair)}
 
-  /* le pupitre de lecture */
-  .pupitre{width:280px;flex:none;position:sticky;top:24px;display:flex;flex-direction:column;gap:0;
-    background:linear-gradient(180deg,color-mix(in srgb,var(--nuit-b) 96%,transparent),
-      color-mix(in srgb,var(--nuit-a) 92%,transparent));
-    border:1px solid color-mix(in srgb,var(--vert-vif) 42%,transparent);border-radius:12px;
-    padding:16px 22px 18px;box-shadow:0 18px 50px rgba(14,26,21,.32)}
-  .p-t{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--sur-vert-pale);border-bottom:1px solid color-mix(in srgb,var(--sur-vert-pale) 25%,transparent);
-    padding-bottom:8px;margin-bottom:14px}
-  .p-chiffre{font-weight:600;font-size:clamp(30px,3vw,44px);letter-spacing:-.01em;
-    font-variant-numeric:lining-nums tabular-nums;color:var(--vert-clair);
-    text-shadow:0 0 18px color-mix(in srgb,var(--vert-vif) 45%,transparent)}
-  .p-chiffre small{font-size:.5em;font-weight:400;color:var(--sur-vert-pale);white-space:nowrap}
-  .p-leg{font-size:12.5px;color:var(--sur-vert-pale);line-height:1.5;margin:2px 0 14px}
-  .p-just{font-weight:600;font-size:clamp(24px,2.2vw,32px);color:var(--sur-vert);
-    font-variant-numeric:lining-nums tabular-nums}
-  .p-delta{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;margin-top:12px;
-    color:var(--sur-vert-pale)}
-  .p-delta b{color:var(--vert-clair);font-weight:500;white-space:nowrap}
-  .p-regl{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
-  .regl{font-family:var(--texte);font-size:13px;font-weight:600;color:var(--sur-vert);
-    background:none;border:1px solid color-mix(in srgb,var(--vert-vif) 40%,transparent);
-    border-radius:8px;padding:8px 12px;cursor:pointer;
-    transition:background .2s,color .2s,border-color .2s}
-  .regl:hover{border-color:var(--vert-vif)}
-  .regl.actif{background:var(--vert-vif);color:var(--nuit-c);border-color:var(--vert-vif)}
-
-  /* ── le curseur de budget ── */
-  .budget{padding:40px 0 30px}
-  .b-carte{background:color-mix(in srgb,var(--nuit-a) 55%,transparent);
-    border:1px solid color-mix(in srgb,var(--vert-vif) 26%,transparent);border-radius:14px;
-    padding:26px 30px}
-  .b-t{font-size:clamp(20px,2vw,27px);font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
-  .b-note{font-size:13.5px;color:var(--sur-vert-pale);margin-bottom:20px}
-  .b-ligne{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
-  .b-curseur{flex:1;min-width:260px}
-  input[type=range]{width:100%;accent-color:var(--vert-vif);height:32px}
+  .b-ligne{display:flex;gap:26px;align-items:center;flex-wrap:wrap;margin-top:8px}
+  .b-curseur{flex:1;min-width:280px}
+  input[type=range]{width:100%;accent-color:var(--vert-vif);height:30px}
   .b-grad{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;
     color:var(--sur-vert-pale);letter-spacing:.04em;margin-top:2px}
-  .b-lecture{font-family:var(--mono);font-size:12.5px;color:var(--sur-vert-pale);min-width:270px}
+  .b-lecture{font-family:var(--mono);font-size:12.5px;color:var(--sur-vert-pale);min-width:280px}
   .b-lecture b{color:var(--vert-clair);font-weight:500;font-size:15px}
   .b-lecture .b-rout{display:block;margin-top:6px;line-height:1.6}
 
-  /* ── l'auto-preuve ── */
-  .preuve{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--sur-vert-pale);
-    padding:8px 0 46px}
-  .preuve .ok{color:var(--vert-vif)}
-  .preuve .ko{color:#d96b4a}
+  .robot{width:260px;flex:none;margin-left:16px}
+  .robot img{width:100%;border-radius:12px;
+    box-shadow:0 30px 70px rgba(0,0,0,.5)}
 
   /* ── les réserves, sur papier ── */
   .reserves{background:var(--papier);color:var(--encre);padding:64px 0 70px}
@@ -196,12 +184,14 @@ CSS = '''
     .colonne{padding:0 22px}
     .barre{padding:12px 18px;gap:14px}
     .barre nav{display:none}
-    .poste{flex-direction:column}
-    .pupitre{position:static;width:100%}
-    .tete{padding-top:110px}
+    .poste{flex-direction:column;align-items:stretch}
+    .robot{width:200px;margin:18px auto 0}
+    .tete{padding-top:100px}
   }
   html:not(.js) .cell{cursor:default}
-  html:not(.js) .pupitre,html:not(.js) .budget,html:not(.js) .preuve{display:none}
+  html:not(.js) .tm-regl,html:not(.js) .b-ligne,html:not(.js) .tm-sortie,
+  html:not(.js) .tm-l{display:none}
+  html:not(.js) .tm-preuve{display:block}
   @media (prefers-reduced-motion:reduce){
     *{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 '''
@@ -209,40 +199,37 @@ CSS = '''
 JS = '''
   const D = DONNEES;
   const F = D.fields, T = D.tiers;
+  const $ = (s) => document.querySelector(s);
   const cells = new Map();
   document.querySelectorAll(".cell").forEach((c) => cells.set(c.dataset.f + "/" + c.dataset.t, c));
-  const $ = (s) => document.querySelector(s);
   const fmtC = (c) => { const v = c * 100;
     return v >= 995 ? "$" + Math.round(v).toLocaleString("en-US")
          : v >= 99.5 ? "$" + v.toFixed(0) : "$" + v.toFixed(1); };
-
   let routage = { ...D.publie.routage };
-  function lire(r) {
-    const cout = F.reduce((s, f) => s + D.price[r[f]][f], 0);
-    const just = F.reduce((s, f) => s + D.acc[r[f]][f], 0) / F.length;
-    return { cout, just };
-  }
+  const lire = (r) => ({
+    cout: F.reduce((s, f) => s + D.price[r[f]][f], 0),
+    just: F.reduce((s, f) => s + D.acc[r[f]][f], 0) / F.length });
   function peindre() {
     for (const [cle, c] of cells) {
       const [f, t] = cle.split("/");
       c.setAttribute("aria-pressed", routage[f] === t ? "true" : "false");
     }
     const { cout, just } = lire(routage);
-    $("#p-cout").innerHTML = fmtC(cout) + "<small> /100k docs</small>";
-    $("#p-just").textContent = just.toFixed(1) + "%";
     const { cout: cp, just: jp } = lire(D.publie.routage);
+    $("#tm-rout").textContent = F.map((f) => f + ":" + routage[f]).join("  ");
+    $("#tm-cout").textContent = fmtC(cout);
+    $("#tm-just").textContent = just.toFixed(1) + "%";
     const dc = (cout - cp) * 100, dj = just - jp;
-    $("#p-delta").innerHTML = "vs published: <b>" + (dc >= 0 ? "+" : "&#8722;") + "$"
-      + Math.abs(dc).toFixed(dc && Math.abs(dc) < 99.5 ? 1 : 0) + "</b> &#183; <b>"
-      + (dj >= 0 ? "+" : "&#8722;") + Math.abs(dj).toFixed(1) + "&nbsp;pt</b>";
+    $("#tm-delta").innerHTML = "vs published  "
+      + (dc >= 0 ? "+" : "&#8722;") + "$" + Math.abs(dc).toFixed(Math.abs(dc) < 99.5 ? 1 : 0)
+      + " &#183; " + (dj >= 0 ? "+" : "&#8722;") + Math.abs(dj).toFixed(1) + "&nbsp;pt";
     const memePub = F.every((f) => routage[f] === D.publie.routage[f]);
     const memeVise = F.every((f) => routage[f] === D.vise.routage[f]);
     $("#r-pub").classList.toggle("actif", memePub);
     $("#r-vise").classList.toggle("actif", memeVise);
   }
   cells.forEach((c) => c.addEventListener("click", () => {
-    routage[c.dataset.f] = c.dataset.t; peindre();
-  }));
+    routage[c.dataset.f] = c.dataset.t; peindre(); }));
   $("#r-pub").addEventListener("click", () => { routage = { ...D.publie.routage }; peindre(); });
   $("#r-vise").addEventListener("click", () => { routage = { ...D.vise.routage }; peindre(); });
 
@@ -256,38 +243,33 @@ JS = '''
     };
     marche(0, {}, 0, 0);
     pts.sort((a, b) => a.cout - b.cout || b.just - a.just);
-    const front = [];
-    let meilleure = -1;
-    for (const p of pts) if (p.just > meilleure) { front.push(p); meilleure = p.just; }
+    const front = []; let m = -1;
+    for (const p of pts) if (p.just > m) { front.push(p); m = p.just; }
     return front;
   })();
-  $("#b-compte").textContent = frontiere.length;
   const curseur = $("#b-curseur");
-  function sousBudget() {
-    const budget = Math.pow(10, parseFloat(curseur.value)) / 100;  /* $/100k -> /1000 docs */
+  curseur.addEventListener("input", () => {
+    const budget = Math.pow(10, parseFloat(curseur.value)) / 100;
     let best = null;
     for (const p of frontiere) { if (p.cout <= budget) best = p; else break; }
-    if (!best) {
-      $("#b-lecture").innerHTML = "under <b>" + fmtC(budget) + "</b>: no routing fits &#183; even rules-only costs more";
-      return;
-    }
-    $("#b-lecture").innerHTML = "under <b>" + fmtC(budget) + "</b>: best routing reads <b>"
-      + best.just.toFixed(1) + "%</b> for <b>" + fmtC(best.cout) + "</b>"
+    const sortie = $("#b-lecture");
+    if (!best) { sortie.innerHTML = "under <b>" + fmtC(budget) + "</b>: nothing fits"; return; }
+    sortie.innerHTML = "under <b>" + fmtC(budget) + "</b>: best reads <b>" + best.just.toFixed(1)
+      + "%</b> for <b>" + fmtC(best.cout) + "</b>"
       + '<span class="b-rout">' + F.map((f) => f + " &#8594; " + best.r[f]).join(" &#183; ") + "</span>";
     routage = { ...best.r }; peindre();
-  }
-  curseur.addEventListener("input", sousBudget);
+  });
 
-  /* l'auto-preuve : la page refait le témoin de l'extracteur, sous les yeux du visiteur */
+  /* verify --sealed : la page refait le témoin de l'extracteur, sous les yeux du visiteur */
   (() => {
     const { cout, just } = lire(D.publie.routage);
     const okC = Math.abs(cout - D.publie.cout) <= 1e-4;
     const okJ = Math.abs(just - D.publie.justesse) <= 0.05;
-    const el = $("#preuve");
+    const el = $("#tm-preuve");
     if (okC && okJ) {
-      el.innerHTML = 'self-check at load <span class="ok">passed</span>: these bricks recompose the published routing at '
-        + fmtC(cout) + " /100k and " + just.toFixed(1) + "%, as sealed on " + D.provenance.landingMeasuredAt.slice(0, 10)
-        + " (commit " + D.provenance.commit + ")";
+      el.innerHTML = 'self-check <span class="ok">passed</span>: these bricks recompose the published routing at '
+        + fmtC(cout) + " /100k and " + just.toFixed(1) + "%, as sealed on "
+        + D.provenance.landingMeasuredAt.slice(0, 10) + " (commit " + D.provenance.commit + ")";
     } else {
       el.innerHTML = 'self-check <span class="ko">FAILED</span>: this page no longer reproduces the sealed routing; do not trust its figures';
     }
@@ -313,6 +295,8 @@ PAGE = f'''<!doctype html><html lang="en">
 <header class="barre">
   <a class="marque" href="HERO.html">CASCADE</a>
   <nav aria-label="Site">
+    <a href="INSTRUMENT.html" aria-current="page">Instrument</a>
+    <a href="ENGAGEMENT.html">Engagement</a>
     <a href="ANNEXE-METHODE.html">Method</a>
     <a href="ANNEXE-SECURITE.html">Security</a>
     <a href="ANNEXE-QUESTIONS.html">Questions</a>
@@ -324,46 +308,43 @@ PAGE = f'''<!doctype html><html lang="en">
 <main>
 <section class="tete"><div class="colonne">
   <h1 class="h1">Take the instrument. It answers live.</h1>
-  <p class="lede">One tier per field: click any cell and read what your routing would cost, and how much
-    it would get right. Or slide the budget and let the enumeration decide, the way the tool does:
-    <b>highest accuracy first, cheaper on a tie</b>. Every brick below is the tool's own arithmetic
-    at the frozen latencies, and the page re-proves it on load.</p>
+  <p class="lede">One tier per field: click any cell, read what your routing costs and how much it gets
+    right. Or slide the budget and let the enumeration decide, the way the tool does:
+    <b>highest accuracy first, cheaper on a tie</b>.</p>
 </div></section>
 
-<section class="instrument"><div class="colonne">
+<section aria-label="The live instrument"><div class="colonne">
   <div class="poste">
-    <div class="table-zone">{table_html()}
-      <p class="preuve" id="preuve">self-check requires JavaScript; the figures above are still the sealed readings.</p>
-    </div>
-    <aside class="pupitre" aria-label="Your routing, read live">
-      <p class="p-t">your routing</p>
-      <span class="p-chiffre" id="p-cout">$191<small> /100k docs</small></span>
-      <p class="p-leg">what it costs to run, on the assumed prices</p>
-      <span class="p-just" id="p-just">94.4%</span>
-      <p class="p-leg">per-field mean accuracy; fields are measured on separate samples, so this mean carries no interval</p>
-      <p class="p-delta" id="p-delta">vs published: +$0 &#183; +0.0 pt</p>
-      <div class="p-regl">
-        <button class="regl actif" id="r-pub">published &#183; $191</button>
-        <button class="regl" id="r-vise">file-aimed &#183; $54</button>
+    <div class="terminal">
+      <div class="tm-barre"><i></i><i></i><i></i><span class="tm-titre">cascade &#183; live instrument</span></div>
+      <div class="tm-corps">
+        <p class="tm-l"><span class="ps">$</span> cascade compose --live</p>
+        <p class="tm-sortie">your routing &#160;<span id="tm-rout">name:large&#160;&#160;birth:rules&#160;&#160;document:rules&#160;&#160;country:rules&#160;&#160;address:gen-4b</span><br>
+          cost &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<b id="tm-cout">$191</b> /100k docs &#183; assumed prices<br>
+          accuracy &#160;&#160;&#160;&#160;<b id="tm-just">94.4%</b> per-field mean &#183; no interval<br>
+          <span id="tm-delta" class="tm-l">vs published  +$0 &#183; +0.0&nbsp;pt</span></p>
+        <div class="tm-regl">
+          <button class="regl actif" id="r-pub">published &#183; $191</button>
+          <button class="regl" id="r-vise">file-aimed &#183; $54</button>
+        </div>
       </div>
-    </aside>
-  </div>
-</div></section>
-
-<section class="budget"><div class="colonne">
-  <div class="b-carte">
-    <p class="b-t">Or let the budget decide.</p>
-    <p class="b-note">All 16,807 assignments of seven readers over five fields, enumerated in your
-      browser; <span id="b-compte">&#8230;</span> of them sit on the frontier where no cheaper routing
-      reads better.</p>
-    <div class="b-ligne">
-      <div class="b-curseur">
-        <label class="sr" for="b-curseur">Budget, dollars per hundred thousand documents, logarithmic</label>
-        <input type="range" id="b-curseur" min="0" max="5" step="0.01" value="2.3">
-        <div class="b-grad" aria-hidden="true"><span>$1</span><span>$10</span><span>$100</span><span>$1k</span><span>$10k</span><span>$100k</span></div>
+      {table_html()}
+      <div class="tm-corps">
+        <p class="tm-l"><span class="ps">$</span> cascade optimise --budget</p>
+        <div class="b-ligne">
+          <div class="b-curseur">
+            <label class="sr" for="b-curseur">Budget, dollars per hundred thousand documents, logarithmic</label>
+            <input type="range" id="b-curseur" min="0" max="5" step="0.01" value="2.3">
+            <div class="b-grad" aria-hidden="true"><span>$1</span><span>$10</span><span>$100</span><span>$1k</span><span>$10k</span><span>$100k</span></div>
+          </div>
+          <p class="b-lecture" id="b-lecture">slide to read the best routing under your budget</p>
+        </div>
+        <p class="tm-l" style="margin-top:14px"><span class="ps">$</span> cascade verify --sealed</p>
+        <p class="tm-preuve" id="tm-preuve">self-check requires JavaScript; the figures above are still the sealed readings.</p>
       </div>
-      <p class="b-lecture" id="b-lecture">slide to read the best routing under your budget</p>
     </div>
+    <div class="robot"><img src="rendus/robot-p5.jpg"
+      alt="The Cascade robot on the night ground of the film's last scene, watching the terminal"></div>
   </div>
 </div></section>
 </main>

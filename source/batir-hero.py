@@ -215,6 +215,7 @@ def menus_html():
       <h2 class="h2">The appendices your reviewers will ask for.</h2>
       <div class="grille">{tuiles}</div>
       <div class="rangee-fine">
+        <a class="lien-fin" href="ENGAGEMENT.html">The engagement, in figures <span aria-hidden="true">&#8594;</span></a>
         <a class="lien-fin" href="CONTACT.html">Contact <span aria-hidden="true">&#8594;</span></a>
         <a class="lien-fin" href="MENTIONS.html">Colophon <span aria-hidden="true">&#8594;</span></a>
         <a class="lien-fin" href="{DEPOT_URL}">The repository, public <span aria-hidden="true">&#8594;</span></a>
@@ -579,6 +580,8 @@ PAGE = f'''<!doctype html><html lang="en">
 <header class="barre sur-nuit">
   <a class="marque" href="index.html">CASCADE</a>
   <nav aria-label="Site">
+    <a href="INSTRUMENT.html">Instrument</a>
+    <a href="ENGAGEMENT.html">Engagement</a>
     <a href="ANNEXE-METHODE.html">Method</a>
     <a href="ANNEXE-SECURITE.html">Security</a>
     <a href="ANNEXE-QUESTIONS.html">Questions</a>

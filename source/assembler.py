@@ -34,6 +34,7 @@ PREFIXE = urlparse(BASE_URL).path
 PROD = {
     "HERO.html": "index.html",
     "INSTRUMENT.html": "instrument.html",
+    "ENGAGEMENT.html": "engagement.html",
     "ANNEXE-METHODE.html": "method.html",
     "ANNEXE-SECURITE.html": "security.html",
     "ANNEXE-QUESTIONS.html": "questions.html",
@@ -50,7 +51,8 @@ PROD = {
 # ses entrées détruisait docs/ puis plantait, puisque source/ ne portait pas
 # les pages bâties. Ordre tenu : bâtir, vérifier, seulement ensuite effacer.
 import subprocess
-for batisseur in ("batir-hero.py", "batir-instrument.py", "batir-annexe.py"):
+for batisseur in ("batir-hero.py", "batir-instrument.py", "batir-offre.py",
+                  "batir-annexe.py", "batir-404.py"):
     subprocess.run([sys.executable, str(MAQ / batisseur)], check=True,
                    cwd=str(MAQ), capture_output=True)
 manquants = [v for v in PROD if not (MAQ / v).exists()]
@@ -154,6 +156,8 @@ shutil.copy(MAQ / "fontes" / "roboto-mono.woff2", DOCS / "fontes" / "roboto-mono
 for w in (MAQ / "rendus" / "etats").glob("objet-*.webp"):
     shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
 shutil.copy(MAQ / "rendus" / "affiche-film.jpg", DOCS / "rendus" / "affiche-film.jpg")
+for rb in ("robot-p1.jpg", "robot-p5.jpg", "robot-p6.jpg"):
+    shutil.copy(MAQ / "rendus" / rb, DOCS / "rendus" / rb)
 shutil.copy(MAQ / "releve.json", DOCS / "releve.json")
 shutil.copy(MAQ / "og.png", DOCS / "og.png")
 (DOCS / ".nojekyll").write_text("")

@@ -1,17 +1,18 @@
-<!doctype html><html lang="en">
-<meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-/1XuoNhOQd52hd5Syl0RV909FB0vJk7Y2Z7Hr/kNfWk='; script-src 'none'; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
-<meta name="referrer" content="no-referrer"><base href="/"><title>Cascade, nothing measured here</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="canonical" href="https://cascade-routing.com/404.html">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="theme-color" content="#14251e">
-<meta name="robots" content="noindex">
-<meta name="description" content="This address was never measured, never sealed, never published.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="fontes/literata.css">
-<link rel="stylesheet" href="fontes/roboto-mono.css">
-<style>
+#!/usr/bin/env python3
+"""LA 404 DESSINÉE : le petit robot, calme, et rien à mesurer ici.
+
+Elle tourne APRÈS batir-annexe dans l'assembleur et remplace sa 404 de
+plomberie : même phrase d'honnêteté (rien ici n'a été mesuré, scellé ni
+publié), mais l'écran appartient au monde du site : nuit, le robot de la fin
+du film en petit, trois portes de sortie. L'assembleur lui pose le <base>
+pour que ses liens se résolvent depuis la racine quel que soit le chemin raté.
+"""
+import pathlib
+
+BASE = pathlib.Path(__file__).parent
+SCEAU = "1151f5a1cfaae0c0"
+
+CSS = '''
   :root{--nuit-a:#1b3229;--nuit-b:#14251e;--nuit-c:#0e1a15;--sur-vert:#e4ecdf;
     --sur-vert-pale:#a9bdaf;--vert-vif:#57b184;--vert-clair:#a5f7cb;
     --texte:"Literata",Georgia,serif;--mono:"Roboto Mono",ui-monospace,Menlo,monospace;
@@ -38,7 +39,17 @@
   .porte:hover{background:var(--vert-vif);color:var(--nuit-c);border-color:var(--vert-vif)}
   .sceau{margin-top:26px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;
     color:color-mix(in srgb,var(--sur-vert-pale) 70%,transparent)}
-</style>
+'''
+
+PAGE = f'''<!doctype html><html lang="en">
+<meta charset="utf-8"><title>Cascade, nothing measured here</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="description" content="This address was never measured, never sealed, never published.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="fontes/literata.css">
+<link rel="stylesheet" href="fontes/roboto-mono.css">
+<style>{CSS}</style>
 <span class="code">404</span>
 <div class="robot"><img src="rendus/robot-p6.jpg"
   alt="The small Cascade robot, alone on the night ground, with nothing to present"></div>
@@ -46,8 +57,13 @@
 <p>Whatever this address promised was never measured, never sealed, never published:
   the address is wrong, or the page has moved.</p>
 <nav class="portes" aria-label="Ways out">
-  <a class="porte" href="index.html">The question &#8594;</a>
-  <a class="porte" href="instrument.html">The instrument &#8594;</a>
-  <a class="porte" href="contact.html">Say a figure is missing &#8594;</a>
+  <a class="porte" href="HERO.html">The question &#8594;</a>
+  <a class="porte" href="INSTRUMENT.html">The instrument &#8594;</a>
+  <a class="porte" href="CONTACT.html">Say a figure is missing &#8594;</a>
 </nav>
-<span class="sceau">seal 1151f5a1cfaae0c0 &#183; measured, then frozen</span>
+<span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>
+'''
+
+assert "—" not in PAGE
+(BASE / "404.html").write_text(PAGE, encoding="utf-8")
+print(f"404.html {len(PAGE) / 1e3:.0f} ko")
