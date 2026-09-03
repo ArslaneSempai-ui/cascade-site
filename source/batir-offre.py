@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""L'OFFRE : ce qu'un engagement achète, dans l'ordre voulu.
+"""L'OFFRE, direction E1 choisie le 4 septembre : les colonnes de nuit.
 
-Trois marches, et l'ordre est un argument : l'évaluation d'abord (gratuite,
-trente jours, chez eux), la campagne scellée ensuite (prix fixe), la licence
-annuelle au-dessus. Rien ici ne demande de confiance avant la mesure.
+Trois colonnes aux filets fins, sans cartes, chaque montant en corps d'affiche
+(les références collectées avant de dessiner : Linear pour les colonnes,
+Vercel pour les prix géants, rangées dans le skill design-arslane). L'ordre
+est l'argument : l'évaluation d'abord, la campagne, la licence au-dessus.
 
 CHAQUE CHIFFRE EST SOURCÉ : l'évaluation vient de LICENCES.md du dépôt public,
 la campagne et la licence de LICENCE-COMMERCIALE.md (décisions des 25 et
@@ -27,87 +28,85 @@ CSS = '''
     --montee:cubic-bezier(.16,.84,.32,1)}
   *{box-sizing:border-box;margin:0}
   html{scroll-behavior:smooth;caret-color:var(--vert-vif);
-    scrollbar-color:var(--vert-titre) var(--papier-bas)}
+    scrollbar-color:var(--vert-titre) var(--nuit-c)}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{background:var(--papier);color:var(--encre);font-family:var(--texte);line-height:1.6}
-  ::selection{background:var(--vert-titre);color:var(--sur-vert)}
+  body{background:var(--nuit-b);color:var(--sur-vert);font-family:var(--texte);line-height:1.6}
+  ::selection{background:var(--vert-vif);color:var(--nuit-c)}
   a{text-underline-offset:4px;color:inherit}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
   :focus-visible{outline:3px solid var(--vert-vif);outline-offset:3px;border-radius:2px}
   .colonne{max-width:1180px;margin:0 auto;padding:0 48px}
 
   .barre{position:absolute;inset:0 0 auto 0;z-index:40;display:flex;align-items:center;gap:28px;
-    padding:14px 32px;background:color-mix(in srgb,var(--papier-haut) 88%,transparent);
-    box-shadow:0 1px 0 color-mix(in srgb,var(--filet) 55%,transparent)}
-  .marque{font-weight:700;font-size:19px;letter-spacing:.01em;text-decoration:none}
+    padding:14px 32px}
+  .marque{font-weight:700;font-size:19px;letter-spacing:.01em;text-decoration:none;color:var(--sur-vert)}
   .barre nav{display:flex;gap:16px;margin-left:auto}
-  .barre nav a{font-size:14.5px;text-decoration:none;color:var(--demi);padding:13px 6px}
-  .barre nav a:hover{color:var(--encre);text-decoration:underline;
+  .barre nav a{font-size:14.5px;text-decoration:none;color:var(--sur-vert-pale);padding:13px 6px}
+  .barre nav a:hover{color:var(--sur-vert);text-decoration:underline;
     text-decoration-color:var(--vert-vif);text-decoration-thickness:1.5px}
-  .barre nav a[aria-current]{color:var(--encre)}
-  .sceau{font-family:var(--mono);font-size:11px;color:var(--pale);letter-spacing:.04em}
+  .barre nav a[aria-current]{color:var(--sur-vert)}
+  .sceau{font-family:var(--mono);font-size:11px;color:var(--sur-vert-pale);letter-spacing:.04em}
 
-  .tete{padding:150px 0 30px}
+  .tete{padding:150px 0 20px;
+    background:radial-gradient(120% 100% at 50% -20%,#0f231b,var(--nuit-b) 70%)}
   .h1{font-size:clamp(38px,5vw,66px);font-weight:600;letter-spacing:-.02em;line-height:1.04;
     text-wrap:balance}
-  .lede{font-size:clamp(15px,1.3vw,18.5px);color:var(--demi);max-width:72ch;line-height:1.65;
-    margin-top:18px;text-wrap:balance}
-  .lede b{color:var(--encre)}
+  .lede{font-size:clamp(15px,1.3vw,18.5px);color:var(--sur-vert-pale);max-width:72ch;
+    line-height:1.65;margin-top:18px;text-wrap:balance}
+  .lede b{color:var(--sur-vert)}
 
-  /* ── les trois marches ── */
-  .marches{padding:26px 0 30px}
-  .grille{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
-  .marche{display:flex;flex-direction:column;background:var(--papier-haut);
-    border:1px solid color-mix(in srgb,var(--filet) 55%,transparent);border-radius:14px;
-    padding:22px 24px 20px;transition:transform .2s var(--montee),border-color .2s}
-  .marche:hover{transform:translateY(-2px);border-color:var(--vert-titre)}
-  .marche.haute{background:linear-gradient(180deg,var(--nuit-a),var(--nuit-b));
-    color:var(--sur-vert);border-color:color-mix(in srgb,var(--vert-vif) 40%,transparent)}
-  .m-t{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--vert-titre);border-bottom:1px solid color-mix(in srgb,var(--filet) 45%,transparent);
-    padding-bottom:9px;margin-bottom:14px}
-  .haute .m-t{color:var(--vert-clair);
-    border-bottom-color:color-mix(in srgb,var(--sur-vert-pale) 25%,transparent)}
-  .m-prix{font-weight:600;font-size:clamp(34px,3.4vw,48px);letter-spacing:-.015em;
-    font-variant-numeric:lining-nums tabular-nums;line-height:1.05}
-  .m-prix small{font-size:.4em;font-weight:400;color:var(--pale);white-space:nowrap}
-  .haute .m-prix{color:var(--vert-clair);
-    text-shadow:0 0 22px color-mix(in srgb,var(--vert-vif) 40%,transparent)}
-  .haute .m-prix small{color:var(--sur-vert-pale)}
-  .m-corps{font-size:14.5px;color:var(--demi);line-height:1.6;margin:12px 0 16px;flex:1}
-  .m-corps b{color:var(--encre)}
-  .haute .m-corps{color:var(--sur-vert-pale)}
-  .haute .m-corps b{color:var(--sur-vert)}
-  .m-fin{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--pale);
-    line-height:1.7;border-top:1px solid color-mix(in srgb,var(--filet) 40%,transparent);
-    padding-top:10px}
-  .haute .m-fin{color:var(--sur-vert-pale);
-    border-top-color:color-mix(in srgb,var(--sur-vert-pale) 22%,transparent)}
+  /* ── les trois colonnes aux filets ── */
+  .cols{display:grid;grid-template-columns:1fr 1fr 1fr;margin:54px 0 10px}
+  .col{padding:8px 34px 10px;border-left:1px solid color-mix(in srgb,var(--sur-vert-pale) 18%,transparent)}
+  .col:first-child{border-left:0;padding-left:0}
+  .c-t{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--sur-vert-pale)}
+  .c-prix{font-weight:600;font-size:clamp(40px,4.4vw,64px);letter-spacing:-.02em;line-height:1.05;
+    margin:14px 0 4px;font-variant-numeric:lining-nums tabular-nums}
+  .c-prix small{font-size:.32em;font-weight:400;color:var(--sur-vert-pale);letter-spacing:0;white-space:nowrap}
+  .col.haute .c-prix{color:var(--vert-clair);
+    text-shadow:0 0 26px color-mix(in srgb,var(--vert-vif) 40%,transparent)}
+  .c-qui{font-size:14px;color:var(--sur-vert-pale);min-height:3em;line-height:1.55;
+    border-bottom:1px solid color-mix(in srgb,var(--sur-vert-pale) 18%,transparent);
+    padding-bottom:16px;margin-bottom:16px}
+  .c-plus{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:color-mix(in srgb,var(--sur-vert-pale) 70%,transparent);margin-bottom:8px}
+  .c-liste{list-style:none;padding:0;display:flex;flex-direction:column;gap:9px;
+    font-size:13.5px;color:var(--sur-vert-pale);min-height:196px}
+  .c-liste li{padding-left:22px;position:relative;line-height:1.5}
+  .c-liste li::before{content:"";position:absolute;left:0;top:.5em;width:12px;height:7px;
+    border-left:2px solid var(--vert-vif);border-bottom:2px solid var(--vert-vif);
+    transform:rotate(-45deg)}
+  .c-liste b{color:var(--sur-vert)}
+  .cta{display:inline-flex;align-items:baseline;gap:12px;text-decoration:none;margin-top:22px;
+    font-family:var(--texte);font-size:16px;font-weight:600;padding:13px 24px;border-radius:10px;
+    color:var(--vert-clair);border:1px solid color-mix(in srgb,var(--vert-vif) 45%,transparent);
+    transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
+  .cta .fl{font-family:var(--sans);transition:transform .2s var(--montee)}
+  .cta:hover{background:var(--vert-vif);color:var(--nuit-c);border-color:var(--vert-vif)}
+  .cta:hover .fl{transform:translateX(4px)}
+  .col.haute .cta{background:var(--vert-vif);color:var(--nuit-c);border-color:var(--vert-vif)}
+  .col.haute .cta:hover{box-shadow:0 14px 36px color-mix(in srgb,var(--vert-vif) 32%,transparent)}
+  .c-fin{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;
+    color:color-mix(in srgb,var(--sur-vert-pale) 70%,transparent);margin-top:14px;line-height:1.7}
 
   /* ── le chemin d'achat ── */
-  .chemin{padding:44px 0 30px}
+  .chemin{padding:54px 0 30px}
   .h2{font-size:clamp(26px,2.8vw,38px);font-weight:600;letter-spacing:-.015em;
     line-height:1.1;text-wrap:balance;margin-bottom:22px}
   .pas{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-  .p-un{border-top:3px solid var(--vert-titre);padding-top:12px}
-  .p-no{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--vert-titre)}
+  .p-un{border-top:3px solid var(--vert-vif);padding-top:12px}
+  .p-no{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--vert-vif)}
   .p-t{display:block;font-size:18px;font-weight:600;margin:4px 0 6px}
-  .p-d{font-size:13.5px;color:var(--demi);line-height:1.55}
-  .p-d a{color:var(--vert-titre);font-weight:600}
+  .p-d{font-size:13.5px;color:var(--sur-vert-pale);line-height:1.55}
+  .p-d a{color:var(--vert-clair);font-weight:600}
 
   /* ── le refus, puis l'appel ── */
-  .refus{padding:34px 0 70px}
-  .refus-carte{border:1px solid color-mix(in srgb,var(--filet) 55%,transparent);border-radius:12px;
-    padding:20px 24px;display:flex;gap:24px;align-items:baseline;flex-wrap:wrap}
-  .refus-carte p{flex:1;min-width:320px;font-size:14.5px;color:var(--demi);line-height:1.6}
-  .refus-carte b{color:var(--encre)}
-  .ouvrir{display:inline-flex;align-items:baseline;gap:12px;background:var(--vert-titre);
-    color:var(--sur-vert);text-decoration:none;font-family:var(--texte);font-size:17px;font-weight:600;
-    padding:14px 26px;border-radius:10px;border:1px solid var(--vert-titre);
-    transition:background .2s,color .2s,box-shadow .2s}
-  .ouvrir .fl{font-family:var(--sans);transition:transform .2s var(--montee)}
-  .ouvrir:hover{box-shadow:0 14px 36px color-mix(in srgb,var(--vert-titre) 35%,transparent)}
-  .ouvrir:hover .fl{transform:translateX(4px)}
+  .refus{padding:34px 0 80px}
+  .refus-carte{border:1px solid color-mix(in srgb,var(--sur-vert-pale) 22%,transparent);
+    border-radius:12px;padding:20px 24px;display:flex;gap:24px;align-items:baseline;flex-wrap:wrap}
+  .refus-carte p{flex:1;min-width:320px;font-size:14.5px;color:var(--sur-vert-pale);line-height:1.6}
+  .refus-carte b{color:var(--sur-vert)}
 
   .pied{background:var(--nuit-c);color:var(--sur-vert);padding:52px 0}
   .pied .colonne{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:baseline}
@@ -120,7 +119,11 @@ CSS = '''
     .barre{padding:12px 18px;gap:14px}
     .barre nav{display:none}
     .tete{padding-top:100px}
-    .grille{grid-template-columns:1fr}
+    .cols{grid-template-columns:1fr}
+    .col{border-left:0;padding:22px 0;
+      border-top:1px solid color-mix(in srgb,var(--sur-vert-pale) 18%,transparent)}
+    .col:first-child{border-top:0}
+    .c-liste{min-height:0}
     .pas{grid-template-columns:1fr 1fr}
   }
   @media (prefers-reduced-motion:reduce){
@@ -163,32 +166,48 @@ PAGE = f'''<!doctype html><html lang="en">
     for trust before measurement.</p>
 </div></section>
 
-<section class="marches" aria-label="The three steps"><div class="colonne">
-  <div class="grille">
-    <div class="marche">
-      <p class="m-t">1 &#183; the evaluation</p>
-      <span class="m-prix">$0<small> &#183; 30 days</small></span>
-      <p class="m-corps">Run the whole tool <b>on your own records, on your machine</b>, and decide.
-        The counter starts at first use, not at download. Results stay internal and do not go to
-        production. No signature, no call, and no document leaves your network.</p>
-      <p class="m-fin">granted in the public licence itself &#183; from first use</p>
+<section aria-label="The three steps"><div class="colonne">
+  <div class="cols">
+    <div class="col">
+      <p class="c-t">the evaluation</p>
+      <p class="c-prix">$0<small> &#183; 30 days</small></p>
+      <p class="c-qui">For deciding. Your records, your machine, nothing to sign.</p>
+      <ul class="c-liste">
+        <li>The whole tool, <b>on your own records</b></li>
+        <li>Counter starts at first use, not download</li>
+        <li>Results stay internal, no production</li>
+        <li>No document leaves your network</li>
+      </ul>
+      <a class="cta" href="{DEPOT_URL}">Clone and run <span class="fl" aria-hidden="true">&#8594;</span></a>
+      <p class="c-fin">granted in the public licence itself</p>
     </div>
-    <div class="marche">
-      <p class="m-t">2 &#183; the campaign</p>
-      <span class="m-prix">$12,000<small> fixed</small></span>
-      <p class="m-corps">One measurement campaign on your own documents: <b>which tier suffices for
-        each field</b>, with intervals, refusals under twenty observations, and a sealed, signed
-        report your audit team can verify without us. We never access your data: the tool runs at
-        your desk, the deliverable is the report.</p>
-      <p class="m-fin">one campaign &#183; one sealed deliverable &#183; no access to your data</p>
+    <div class="col">
+      <p class="c-t">the campaign</p>
+      <p class="c-prix">$12,000<small> fixed</small></p>
+      <p class="c-qui">For the file your reviewers will open. One campaign, one deliverable.</p>
+      <p class="c-plus">everything in the evaluation, plus</p>
+      <ul class="c-liste">
+        <li><b>Which tier suffices</b>, field by field</li>
+        <li>Intervals, refusals under twenty observations</li>
+        <li>A <b>sealed, signed report</b> your audit team verifies without us</li>
+        <li>We never access your data</li>
+      </ul>
+      <a class="cta" href="CONTACT.html">Start with a message <span class="fl" aria-hidden="true">&#8594;</span></a>
+      <p class="c-fin">one campaign &#183; one sealed deliverable</p>
     </div>
-    <div class="marche haute">
-      <p class="m-t">3 &#183; the licence</p>
-      <span class="m-prix">$30,000<small> a year</small></span>
-      <p class="m-corps">The commercial licence: run the instrument for your own business, with the
-        <b>licensed component that is not published</b>, and updates included for every paid term.
-        One legal entity signs; affiliates are named, not assumed.</p>
-      <p class="m-fin">30% on signature &#183; balance net 60 &#183; renewal capped at the lower of CPI&#8209;U and 5%</p>
+    <div class="col haute">
+      <p class="c-t">the licence</p>
+      <p class="c-prix">$30,000<small> a year</small></p>
+      <p class="c-qui">For running it as yours. Commercial use, updates included.</p>
+      <p class="c-plus">everything in the campaign, plus</p>
+      <ul class="c-liste">
+        <li>Commercial use for your own business</li>
+        <li>The <b>licensed component</b>, not published</li>
+        <li>Updates included for every paid term</li>
+        <li>One legal entity signs; affiliates named, not assumed</li>
+      </ul>
+      <a class="cta" href="CONTACT.html">Talk terms <span class="fl" aria-hidden="true">&#8594;</span></a>
+      <p class="c-fin">30% on signature &#183; net 60 &#183; renewal capped at the lower of CPI&#8209;U and 5%</p>
     </div>
   </div>
 </div></section>
@@ -217,7 +236,7 @@ PAGE = f'''<!doctype html><html lang="en">
       words, nothing more; the burden stays on the measurement. External publication of engagement
       results is excluded from day one. The full terms are on
       <a href="ANNEXE-TERMS.html">the terms page</a>, in the same words the paper uses.</p>
-    <a class="ouvrir" href="CONTACT.html">Start with a message <span class="fl" aria-hidden="true">&#8594;</span></a>
+    <a class="cta" href="CONTACT.html">Start with a message <span class="fl" aria-hidden="true">&#8594;</span></a>
   </div>
 </div></section>
 </main>

@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-/1XuoNhOQd52hd5Syl0RV909FB0vJk7Y2Z7Hr/kNfWk='; script-src 'none'; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-UvVvozBQlmJPuLfxg1fmmg4rsXayaIlDrmW2hgwp2Zc='; script-src 'none'; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><base href="/"><title>Cascade, nothing measured here</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/404.html">
@@ -26,8 +26,12 @@
   a{color:inherit;text-underline-offset:4px}
   :focus-visible{outline:3px solid var(--vert-vif);outline-offset:3px;border-radius:2px}
   .code{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--vert-vif)}
-  .robot{width:min(300px,60vw);margin:10px 0 4px}
-  .robot img{width:100%;border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  /* la scène : le robot DEVANT la case blanche, son bas s'arrête où le blanc finit */
+  .scene{position:relative;width:min(430px,72vw);padding-top:154px;margin:0 0 6px}
+  .case{position:relative;z-index:1;width:100%;height:190px;background:#e9e4d3;border-radius:16px;
+    box-shadow:0 34px 90px rgba(0,0,0,.55),inset 0 0 0 1px rgba(27,29,24,.08)}
+  .scene img{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:82%;z-index:2;
+    filter:drop-shadow(0 18px 36px rgba(0,0,0,.45))}
   h1{font-size:clamp(28px,4.4vw,46px);font-weight:600;letter-spacing:-.02em;line-height:1.08;
     text-wrap:balance;max-width:18ch}
   p{font-size:15.5px;color:var(--sur-vert-pale);max-width:52ch;text-wrap:balance}
@@ -40,8 +44,11 @@
     color:color-mix(in srgb,var(--sur-vert-pale) 70%,transparent)}
 </style>
 <span class="code">404</span>
-<div class="robot"><img src="rendus/robot-p6.jpg"
-  alt="The small Cascade robot, alone on the night ground, with nothing to present"></div>
+<div class="scene">
+  <div class="case" aria-hidden="true"></div>
+  <img src="rendus/robot-agrippe.webp"
+    alt="The Cascade robot in front of the blank record card, arms out, with nothing to present">
+</div>
 <h1>Nothing measured here.</h1>
 <p>Whatever this address promised was never measured, never sealed, never published:
   the address is wrong, or the page has moved.</p>

@@ -86,25 +86,39 @@ CSS = '''
   .barre nav a[aria-current]{color:var(--sur-vert)}
   .sceau{font-family:var(--mono);font-size:11px;color:var(--sur-vert-pale);letter-spacing:.04em}
 
-  .tete{padding:140px 0 36px;
+  .tete{padding:192px 0 30px;
     background:radial-gradient(120% 100% at 50% -20%,#0f231b,var(--nuit-b) 70%)}
   .h1{font-size:clamp(36px,4.6vw,62px);font-weight:600;letter-spacing:-.02em;line-height:1.05;
-    text-wrap:balance}
-  .lede{font-size:clamp(15px,1.25vw,18px);color:var(--sur-vert-pale);max-width:74ch;
-    line-height:1.6;margin-top:18px;text-wrap:balance}
+    text-wrap:balance;max-width:16ch}
+  .lede{font-size:clamp(15px,1.25vw,18px);color:var(--sur-vert-pale);max-width:50ch;
+    line-height:1.6;margin-top:16px;text-wrap:balance}
   .lede b{color:var(--sur-vert)}
 
-  /* ── le poste : le terminal, le robot à côté ── */
-  .poste{display:flex;gap:0;align-items:flex-end;padding:10px 0 64px}
-  .terminal{flex:1;min-width:0;background:color-mix(in srgb,var(--nuit-c) 92%,#000);
-    border:1px solid color-mix(in srgb,var(--vert-vif) 24%,transparent);border-radius:12px;
-    box-shadow:0 40px 100px rgba(0,0,0,.6);overflow:hidden}
-  .tm-barre{display:flex;align-items:center;gap:8px;padding:10px 16px;
-    background:color-mix(in srgb,var(--nuit-b) 80%,#000);
-    border-bottom:1px solid color-mix(in srgb,var(--sur-vert-pale) 12%,transparent)}
+  /* ── le poste : le robot penché derrière le bord du terminal, coupé net ── */
+  .poste{position:relative;padding:44px 0 64px}
+  .dessus{position:relative;width:min(100%,1020px);margin:0 auto}
+  .rb{position:absolute;right:30px;top:-312px;width:340px;z-index:2;pointer-events:none;
+    filter:drop-shadow(0 26px 44px rgba(0,0,0,.55))}
+  .terminal{position:relative;z-index:3;
+    background:linear-gradient(180deg,color-mix(in srgb,var(--nuit-b) 55%,#000),color-mix(in srgb,var(--nuit-c) 92%,#000) 120px);
+    border:1px solid color-mix(in srgb,var(--vert-vif) 30%,transparent);border-radius:14px;
+    box-shadow:0 60px 140px rgba(0,0,0,.7),0 0 0 1px rgba(0,0,0,.4),
+      inset 0 1px 0 color-mix(in srgb,var(--vert-clair) 22%,transparent);overflow:hidden}
+  .terminal::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:14px;
+    background:repeating-linear-gradient(to bottom,rgba(165,247,203,.016) 0 1px,transparent 1px 3px)}
+  .caret{display:inline-block;width:7px;height:14px;vertical-align:-2px;background:var(--vert-clair);
+    margin-left:6px;animation:caret 1.1s steps(1) infinite}
+  @keyframes caret{50%{opacity:0}}
+  .t-page-halo{position:absolute;left:50%;top:52%;width:min(1100px,92vw);height:min(700px,70vw);
+    transform:translate(-50%,-50%);pointer-events:none;
+    background:radial-gradient(50% 50% at 50% 50%,color-mix(in srgb,var(--vert-vif) 12%,transparent),transparent 70%)}
+  .tm-barre{display:flex;align-items:center;gap:8px;padding:11px 16px;
+    background:linear-gradient(180deg,color-mix(in srgb,var(--nuit-a) 55%,#000),color-mix(in srgb,var(--nuit-b) 75%,#000));
+    border-bottom:1px solid color-mix(in srgb,var(--sur-vert-pale) 14%,transparent)}
   .tm-barre i{width:10px;height:10px;border-radius:50%;
     background:color-mix(in srgb,var(--sur-vert-pale) 30%,transparent)}
-  .tm-barre i:first-child{background:color-mix(in srgb,var(--vert-vif) 70%,transparent)}
+  .tm-barre i:first-child{background:var(--vert-vif);
+    box-shadow:0 0 8px color-mix(in srgb,var(--vert-vif) 70%,transparent)}
   .tm-titre{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--sur-vert-pale);
     margin-left:8px}
   .tm-corps{padding:18px 22px 20px;font-family:var(--mono);font-size:12.5px;line-height:1.7}
@@ -155,10 +169,6 @@ CSS = '''
   .b-lecture b{color:var(--vert-clair);font-weight:500;font-size:15px}
   .b-lecture .b-rout{display:block;margin-top:6px;line-height:1.6}
 
-  .robot{width:260px;flex:none;margin-left:16px}
-  .robot img{width:100%;border-radius:12px;
-    box-shadow:0 30px 70px rgba(0,0,0,.5)}
-
   /* ── les réserves, sur papier ── */
   .reserves{background:var(--papier);color:var(--encre);padding:64px 0 70px}
   .reserves h2{font-size:clamp(22px,2.4vw,32px);font-weight:600;letter-spacing:-.015em;
@@ -184,9 +194,9 @@ CSS = '''
     .colonne{padding:0 22px}
     .barre{padding:12px 18px;gap:14px}
     .barre nav{display:none}
-    .poste{flex-direction:column;align-items:stretch}
-    .robot{width:200px;margin:18px auto 0}
-    .tete{padding-top:100px}
+    .rb{display:none}
+    .poste{padding-top:10px}
+    .tete{padding-top:110px}
   }
   html:not(.js) .cell{cursor:default}
   html:not(.js) .tm-regl,html:not(.js) .b-ligne,html:not(.js) .tm-sortie,
@@ -315,10 +325,14 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section aria-label="The live instrument"><div class="colonne">
   <div class="poste">
+    <span class="t-page-halo" aria-hidden="true"></span>
+    <div class="dessus">
+    <img class="rb" src="rendus/robot-penche.webp"
+      alt="The Cascade robot leaning over the terminal from behind its frame">
     <div class="terminal">
       <div class="tm-barre"><i></i><i></i><i></i><span class="tm-titre">cascade &#183; live instrument</span></div>
       <div class="tm-corps">
-        <p class="tm-l"><span class="ps">$</span> cascade compose --live</p>
+        <p class="tm-l"><span class="ps">$</span> cascade compose --live<span class="caret" aria-hidden="true"></span></p>
         <p class="tm-sortie">your routing &#160;<span id="tm-rout">name:large&#160;&#160;birth:rules&#160;&#160;document:rules&#160;&#160;country:rules&#160;&#160;address:gen-4b</span><br>
           cost &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<b id="tm-cout">$191</b> /100k docs &#183; assumed prices<br>
           accuracy &#160;&#160;&#160;&#160;<b id="tm-just">94.4%</b> per-field mean &#183; no interval<br>
@@ -343,8 +357,7 @@ PAGE = f'''<!doctype html><html lang="en">
         <p class="tm-preuve" id="tm-preuve">self-check requires JavaScript; the figures above are still the sealed readings.</p>
       </div>
     </div>
-    <div class="robot"><img src="rendus/robot-p5.jpg"
-      alt="The Cascade robot on the night ground of the film's last scene, watching the terminal"></div>
+    </div>
   </div>
 </div></section>
 </main>

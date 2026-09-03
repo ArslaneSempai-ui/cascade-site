@@ -156,7 +156,7 @@ shutil.copy(MAQ / "fontes" / "roboto-mono.woff2", DOCS / "fontes" / "roboto-mono
 for w in (MAQ / "rendus" / "etats").glob("objet-*.webp"):
     shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
 shutil.copy(MAQ / "rendus" / "affiche-film.jpg", DOCS / "rendus" / "affiche-film.jpg")
-for rb in ("robot-p1.jpg", "robot-p5.jpg", "robot-p6.jpg"):
+for rb in ("robot-penche.webp", "robot-agrippe.webp"):
     shutil.copy(MAQ / "rendus" / rb, DOCS / "rendus" / rb)
 shutil.copy(MAQ / "releve.json", DOCS / "releve.json")
 shutil.copy(MAQ / "og.png", DOCS / "og.png")
