@@ -25,7 +25,7 @@
     {
       "h2": "Where measurements live, and stay",
       "html": [
-        "<p>Everything measured on your data lands in a folder <b>git ignores, deliberately</b> (the code says so in as many words), so no measurement can travel into a repository. The detailed attempt journals, which do hold extracted values, live under that same folder, and for client cases they exist <b>only on an explicit flag</b>: the default is no journal at all.</p>",
+        "<p>Everything measured on your data lands in a folder <b>git ignores, deliberately</b> (the code says so in as many words), so no measurement can travel into a repository. The detailed attempt journals, which do hold extracted values, live under that same folder, and for client cases they exist <b>only on an explicit flag</b>: the default is no journal at all. The tool also writes exactly one local marker: the date of its own first use, in a file you can read (<code>~/.cascade/premiere-utilisation.json</code>), so the thirty&#8209;day evaluation clause can tell you where you stand. It is one date, it declares itself, and it is never transmitted.</p>",
         "<p>What a journal header records: CPU model, platform, load. What never enters it: <b>hostname, username, path</b>.</p>"
       ]
     },
