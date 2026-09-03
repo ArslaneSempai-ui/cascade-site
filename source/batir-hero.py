@@ -632,7 +632,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="instrument"><div class="colonne">
   <h2 class="h2">Take a cell, read what your routing costs.</h2>
   {table_html()}
-  <div class="ouvrir-ligne"><a class="ouvrir" href="{DEPOT_URL}">Open the live instrument <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+  <div class="ouvrir-ligne"><a class="ouvrir" href="INSTRUMENT.html">Open the live instrument <span class="fl" aria-hidden="true">&#8594;</span></a></div>
 </div></section>
 
 {menus_html()}

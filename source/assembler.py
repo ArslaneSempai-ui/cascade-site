@@ -33,6 +33,7 @@ PREFIXE = urlparse(BASE_URL).path
 
 PROD = {
     "HERO.html": "index.html",
+    "INSTRUMENT.html": "instrument.html",
     "ANNEXE-METHODE.html": "method.html",
     "ANNEXE-SECURITE.html": "security.html",
     "ANNEXE-QUESTIONS.html": "questions.html",
@@ -49,7 +50,7 @@ PROD = {
 # ses entrées détruisait docs/ puis plantait, puisque source/ ne portait pas
 # les pages bâties. Ordre tenu : bâtir, vérifier, seulement ensuite effacer.
 import subprocess
-for batisseur in ("batir-hero.py", "batir-annexe.py"):
+for batisseur in ("batir-hero.py", "batir-instrument.py", "batir-annexe.py"):
     subprocess.run([sys.executable, str(MAQ / batisseur)], check=True,
                    cwd=str(MAQ), capture_output=True)
 manquants = [v for v in PROD if not (MAQ / v).exists()]
