@@ -3,13 +3,13 @@
 
 CE QU'ARSLANE A DEMANDÉ LE 31 AOÛT (à valider sur UNE page : Sécurité)
   · le titre sur une bande verte, comme l'écran héros ;
-  · un design 3D propre à la page, en rapport avec elle — ici la forme ANNEAUX :
+  · un design 3D propre à la page, en rapport avec elle : ici la forme ANNEAUX :
     des boucles fermées ; chaque appel réseau de l'outil revient à sa machine, et
     c'est précisément ce que cette page prouve. Le vocabulaire des couleurs ne
     bouge pas : aucun « retenu » sur une annexe, rien n'y est mis en avant ;
-  · les titres de sections en liste OUVRABLE, les paragraphes dessous — des
+  · les titres de sections en liste OUVRABLE, les paragraphes dessous : des
     <details> natifs : l'adresse et le clavier marchent sans script ;
-  · la configuration minimum pour faire tourner l'outil, là où c'est logique —
+  · la configuration minimum pour faire tourner l'outil, là où c'est logique :
     ici : la même équipe demande « qu'est-ce qui sort » et « que faut-il pour
     que ça tourne ». Uniquement du vérifié.
 
@@ -71,7 +71,7 @@ PAGES = [
         "titre_onglet": "Cascade, privacy",
         "objet": "rendus/etats/objet-privacy.webp",
         "alt": "A folder ajar: cream paper showing inside, a green tab on "
-               "the cover — nothing leaves it.",
+               "the cover: nothing leaves it.",
     },
     {
         "nav": "Accessibility",
@@ -88,7 +88,7 @@ LETTRES = "ABCDEF"
 # ── la production : adresses publiées et carte de partage ────────────────────
 # L'URL de base est le dépôt Pages DÉDIÉ du site (choix du 31/08 : ne pas
 # toucher au docs/ généré de cascade-routing) ; si l'hébergement change un
-# jour, c'est LA constante à changer — ici, dans batir-hero.py et assembler.py.
+# jour, c'est LA constante à changer : ici, dans batir-hero.py et assembler.py.
 BASE_URL = "https://cascade-routing.com/"
 PROD = {
     "HERO.html": "index.html",
@@ -195,8 +195,8 @@ CSS = """
 
   /* ── l'objet de la page : DANS la bande, centré sur elle ─────────────────── */
   /* Une seule règle pour les six pages (demande d'Arslane, 31 août) : la même
-     boîte pour tous — l'image s'y loge en gardant ses proportions, un portrait
-     ne sort plus géant — et le centre de l'objet est le centre de la bande,
+     boîte pour tous : l'image s'y loge en gardant ses proportions, un portrait
+     ne sort plus géant : et le centre de l'objet est le centre de la bande,
      le débord est le même en haut et en bas. */
   /* la bande déborde de 50vw de chaque côté : le right se compte depuis là */
   .plaque{position:absolute;right:calc(50vw + clamp(3rem,9vw,10rem));top:50%;
@@ -249,8 +249,8 @@ CSS = """
   code{font:400 13.5px/1.5 var(--mono);background:rgba(27,29,24,.055);
        padding:.06rem .3rem}
 
-  /* le moyen de vérifier : les commandes dans un petit écran de terminal —
-     actionnables telles quelles — et les références de source EN DESSOUS, parce
+  /* le moyen de vérifier : les commandes dans un petit écran de terminal :
+     actionnables telles quelles : et les références de source EN DESSOUS, parce
      qu'un chemin de fichier ne se tape pas dans un shell. */
   .ap{margin:1rem 0 0;border-left:2px solid var(--vert-titre);padding:.15rem 0 .15rem .9rem}
   .ap-t{font:600 10px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;
@@ -310,7 +310,7 @@ CSS = """
     .tampon{display:block;margin:.6rem 0 0;text-align:center;
             font-size:9px;letter-spacing:.09em;padding:.3rem .4rem;
             white-space:nowrap}
-    /* l'œil en deux rangées : la rubrique, puis le retour — plus de trois
+    /* l'œil en deux rangées : la rubrique, puis le retour : plus de trois
        colonnes tassées */
     .oeil{display:block}
     .oeil::after{display:none}
@@ -319,9 +319,9 @@ CSS = """
   }
   /* ── 641-1080 : la fenêtre de bureau NON MAXIMISÉE ─────────────────────────
      Le point de bascule téléphone était à 1080 : une fenêtre de 800 recevait la
-     mise en page téléphone agrandie — objet géant centré dans une bande gonflée
+     mise en page téléphone agrandie : objet géant centré dans une bande gonflée
      (constat d'Arslane, 31/08 au soir). Ici on MAINTIENT la composition du
-     large — objet dans la bande, à droite du titre, plus petit — contre les
+     large : objet dans la bande, à droite du titre, plus petit : contre les
      règles téléphone du module commun, qui s'appliquent dès 1080. */
   @media (min-width:641px) and (max-width:1080px){
     h1{max-width:min(54vw,760px);
@@ -336,7 +336,7 @@ CSS = """
        sinon le clip de la racine mange la fin des lignes (mesuré à 375) */
     .haut{padding-right:calc(50vw + clamp(1.2rem,3.4vw,3.2rem))}
     /* la même boîte à deux dimensions qu'au desktop : un portrait (le cadenas)
-       ne domine plus les paysages — constat d'Arslane sur la planche mobile */
+       ne domine plus les paysages : constat d'Arslane sur la planche mobile */
     .plaque{position:static;transform:none;width:min(70vw,340px);
             height:min(30vh,240px);margin:1rem auto 0}
     .oeil .fno{white-space:nowrap}
@@ -432,7 +432,7 @@ for lettre, page in zip(LETTRES, PAGES):
 """ + SCRIPT_IMPRESSION + "\n", encoding="utf-8")
     print(f"  {page['html']}")
 
-# ── la plomberie : contact, 404, colophon — colonne simple, sans objet ───────
+# ── la plomberie : contact, 404, colophon : colonne simple, sans objet ───────
 PLOMBERIE = json.loads((BASE / "plomberie.json").read_text())
 for page in PLOMBERIE["pages"]:
     nav = nav_annexes(page["html"])

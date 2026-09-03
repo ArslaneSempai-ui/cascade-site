@@ -1,5 +1,5 @@
 {
-  "_": "Contenu de la page Terms of Engagement. Faits de la passe du 31 août 2026 (tasks/w7nrsoqna.output). Interdits par cette passe : citer entre guillemets une clause « a report can conclude change nothing » (n'existe pas mot pour mot — les trois équivalents citables sont utilisés à la place) ; citer la propriété du rapport comme un fait de dépôt (tranchée le 28/08 mais documentée dans le dépôt privé : à énoncer comme engagement, sans citation).",
+  "_": "Contenu de la page Terms of Engagement. Faits de la passe du 31 août 2026 (tasks/w7nrsoqna.output). Interdits par cette passe : citer entre guillemets une clause « a report can conclude change nothing » (n'existe pas mot pour mot : les trois équivalents citables sont utilisés à la place) ; citer la propriété du rapport comme un fait de dépôt (tranchée le 28/08 mais documentée dans le dépôt privé : à énoncer comme engagement, sans citation).",
   "objet": "rendus/etats/objet-terms.webp",
   "titre": "Plain terms, hard commitments. <span class=\"deux\">Including the one where we lose.</span>",
   "lede": "The terms below are short because they are real: a thirty-day grant written into the licence file, a public licence anyone can read, a deliverable anyone can verify, and a commitment that the answer may go against us. Where a term lives in the source, its path is on this page.",
@@ -7,7 +7,7 @@
     {
       "h2": "Thirty days, in writing",
       "html": [
-        "<p>The Evaluation Grant is in the licence file, not in a sales deck: <b>thirty days from first use</b>, on your organisation's own data, for its own internal evaluation, with the output shareable inside your organisation. Three things it forbids, in plain words: relying on the output in production, redistributing the software, publishing the output externally. The period is extended <b>only in writing</b> — and anything beyond evaluation is a separate commercial licence.</p>"
+        "<p>The Evaluation Grant is in the licence file, not in a sales deck: <b>thirty days from first use</b>, on your organisation's own data, for its own internal evaluation, with the output shareable inside your organisation. Three things it forbids, in plain words: relying on the output in production, redistributing the software, publishing the output externally. The period is extended <b>only in writing</b>, and anything beyond evaluation is a separate commercial licence.</p>"
       ],
       "verif": {
         "t": "Read the grant",
@@ -21,14 +21,14 @@
     {
       "h2": "Three tiers, one of them paid",
       "html": [
-        "<p>The public licence is <b>PolyForm Noncommercial</b>: anyone, with no time limit, may read, study, fork and use the tool noncommercially. An evaluating organisation gets the thirty days above. A client gets a negotiated commercial licence — the public licence says of itself that <b>it is not what a client buys</b>.</p>",
-        "<p>Two honest notes: it is not an OSI&#8209;approved licence, which some organisations exclude by policy — a brake on spontaneous adoption, not on a negotiated engagement; and like all such licences it ships <b>without warranty</b>, with a 32&#8209;day cure period after written notice of a violation.</p>"
+        "<p>The public licence is <b>PolyForm Noncommercial</b>: anyone, with no time limit, may read, study, fork and use the tool noncommercially. An evaluating organisation gets the thirty days above. A client gets a negotiated commercial licence: the public licence says of itself that <b>it is not what a client buys</b>.</p>",
+        "<p>Two honest notes: it is not an OSI&#8209;approved licence, which some organisations exclude by policy: a brake on spontaneous adoption, not on a negotiated engagement; and like all such licences it ships <b>without warranty</b>, with a 32&#8209;day cure period after written notice of a violation.</p>"
       ]
     },
     {
       "h2": "The commitment where we lose",
       "html": [
-        "<p>The engagement can end with the recommendation to keep what you have — and the machinery for that outcome is in the public source, not in our goodwill. Under <b>20 observations</b> the tool refuses to recommend anything. The validation dossier states, in its own words, that it <b>does not certify anything</b> — it assembles what a reviewer needs and the decision is the committee's. The recommendation itself prints <b>what would flip it</b>, in figures. And on the corpus we measured, 3 of the 5 fields are already carried by regexes at zero cost: the cheapest possible answer sits in the headline, not in the fine print.</p>"
+        "<p>The engagement can end with the recommendation to keep what you have, and the machinery for that outcome is in the public source, not in our goodwill. Under <b>20 observations</b> the tool refuses to recommend anything. The validation dossier states, in its own words, that it <b>does not certify anything</b>: it assembles what a reviewer needs and the decision is the committee's. The recommendation itself prints <b>what would flip it</b>, in figures. And on the corpus we measured, 3 of the 5 fields are already carried by regexes at zero cost: the cheapest possible answer sits in the headline, not in the fine print.</p>"
       ],
       "verif": {
         "t": "See the losing answer",
@@ -42,8 +42,8 @@
     {
       "h2": "What you hand us, what you get back",
       "html": [
-        "<p>You supply one CSV — an id, a text, one column per field — and, if you wish, a filled questionnaire. Everything in the questionnaire is optional: <b>what stays empty keeps this repository's default, and the report says so</b> — a missing figure never becomes an invented one. Nothing in this path makes a network call; your file never leaves your machine.</p>",
-        "<p>You get back a measured report beside your own CSV — rates per field with intervals, refusing to quote a rate under 20 observations — and, under an audit engagement, a <b>signed report</b>: anyone, including a reviewer who does not trust us, verifies it against the public key that ships in the repository. The verification proves origin and integrity; about the correctness of the figures it proves, in its own words, nothing — that burden stays on the measurement.</p>"
+        "<p>You supply one CSV (an id, a text, one column per field) and, if you wish, a filled questionnaire. Everything in the questionnaire is optional: <b>what stays empty keeps this repository's default, and the report says so</b>: a missing figure never becomes an invented one. Nothing in this path makes a network call; your file never leaves your machine.</p>",
+        "<p>You get back a measured report beside your own CSV: rates per field with intervals, refusing to quote a rate under 20 observations, and, under an audit engagement, a <b>signed report</b>: anyone, including a reviewer who does not trust us, verifies it against the public key that ships in the repository. The verification proves origin and integrity; about the correctness of the figures it proves, in its own words, nothing; that burden stays on the measurement.</p>"
       ],
       "verif": {
         "t": "Verify a deliverable",
@@ -57,8 +57,8 @@
     {
       "h2": "Settled before signature",
       "html": [
-        "<p>The remaining terms of a paid engagement — payment, confidentiality, audit rights, change of control, precedence, and the rights in the produced report — are settled in the engagement letter, <b>written before signature, not negotiated after delivery</b>. They are business terms, so this page states their existence rather than quoting them; the letter is the document your counsel receives.</p>",
-        "<p>One rule from the public licence already binds the evaluation period: the output of an evaluation run is <b>internal to your organisation</b> — external publication is excluded from day one.</p>"
+        "<p>The remaining terms of a paid engagement (payment, confidentiality, audit rights, change of control, precedence, and the rights in the produced report) are settled in the engagement letter, <b>written before signature, not negotiated after delivery</b>. They are business terms, so this page states their existence rather than quoting them; the letter is the document your counsel receives.</p>",
+        "<p>One rule from the public licence already binds the evaluation period: the output of an evaluation run is <b>internal to your organisation</b>: external publication is excluded from day one.</p>"
       ]
     }
   ],

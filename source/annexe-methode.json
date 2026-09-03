@@ -2,13 +2,13 @@
   "_": "Contenu de la page Method and Reproducibility. Chaque affirmation vient de la passe de vérification du 31 août 2026 (tasks/w7nrsoqna.output), chemins:lignes cités. Interdits par cette passe : appeler 64bdacf une « empreinte » (c'est un commit, réécrit hors de l'historique) ; citer les durées 16-60 % comme publiables ; présenter le palier humain comme une mesure.",
   "objet": "rendus/etats/objet-methode.webp",
   "titre": "One method, no secrets. <span class=\"deux\">Run it twice, compare.</span>",
-  "lede": "This page shows the whole method: what is measured, on which slice of the corpus, how the routing is chosen, and how the record is frozen. Every claim lives in the source at a path your reviewers can open — and every step reruns on your machine, so the comparison is yours to make.",
+  "lede": "This page shows the whole method: what is measured, on which slice of the corpus, how the routing is chosen, and how the record is frozen. Every claim lives in the source at a path your reviewers can open, and every step reruns on your machine, so the comparison is yours to make.",
   "sections": [
     {
       "h2": "Measured on a slice the tuning never saw",
       "html": [
-        "<p>The corpus is cut into three parts — training, dev, and held&#8209;out — and the published measurement reads <b>only the held&#8209;out slice</b>, forced in code, not by discipline. The middle slice exists because of a real mistake: a generative prompt was once tuned while reading held&#8209;out scores. The leak was caught, repaired, and the split hardened so it cannot recur silently: <b>a test fails the suite if two slices share a document or a phrasing</b>.</p>",
-        "<p>One honest limit, stated by the repository itself: the corpus is authored by us. The held&#8209;out slice defends against grading our own copy — it does not defend against unrealism. That is what measuring <b>your own cases</b> is for.</p>"
+        "<p>The corpus is cut into three parts (training, dev, and held&#8209;out), and the published measurement reads <b>only the held&#8209;out slice</b>, forced in code, not by discipline. The middle slice exists because of a real mistake: a generative prompt was once tuned while reading held&#8209;out scores. The leak was caught, repaired, and the split hardened so it cannot recur silently: <b>a test fails the suite if two slices share a document or a phrasing</b>.</p>",
+        "<p>One honest limit, stated by the repository itself: the corpus is authored by us. The held&#8209;out slice defends against grading our own copy; it does not defend against unrealism. That is what measuring <b>your own cases</b> is for.</p>"
       ],
       "verif": {
         "t": "Verify the split",
@@ -23,10 +23,10 @@
       }
     },
     {
-      "h2": "Every routing, enumerated — with one honest asterisk",
+      "h2": "Every routing, enumerated, with one honest asterisk",
       "html": [
-        "<p>Five fields, seven tiers per field: the optimiser walks <b>all 16&#8239;807 assignments exhaustively</b> — a recursive enumeration, no heuristic, no sampling. The count on this page is recalculated from the sources on every check, never typed in.</p>",
-        "<p>The asterisk: the seventh tier, <b>human review, is an assumption, not a measurement</b> — and the tool prints exactly that on every pass rather than letting the figure blend in with the measured six.</p>"
+        "<p>Five fields, seven tiers per field: the optimiser walks <b>all 16&#8239;807 assignments exhaustively</b>: a recursive enumeration, no heuristic, no sampling. The count on this page is recalculated from the sources on every check, never typed in.</p>",
+        "<p>The asterisk: the seventh tier, <b>human review, is an assumption, not a measurement</b>, and the tool prints exactly that on every pass rather than letting the figure blend in with the measured six.</p>"
       ],
       "verif": {
         "t": "Verify the enumeration",
@@ -43,9 +43,9 @@
     {
       "h2": "The record is frozen by a fingerprint",
       "html": [
-        "<p>The published record carries a <b>content fingerprint</b> — a SHA&#8209;256 taken over the record in canonical form and truncated to sixteen hex characters, and the reader <b>refuses</b> a record whose fingerprint is absent or no longer matches. Refuses, not warns: a hand&#8209;edited measurement fails loudly. The stamp in this site's masthead is that fingerprint.</p>",
-        "<p>You do not have to take our word for it, and you should not hash the file by hand — <b>a plain checksum of the file will not match</b>, because the fingerprint is taken over a canonical form of the record, not over its bytes. The tool recomputes it in front of you instead, and prints what it finds.</p>",
-        "<p>Two limits the sealing tool states about itself: the fingerprint covers the whole record except fingerprint keys themselves, and it proves nothing about what happened <b>before</b> sealing — the only gesture that produces a measurement is the measurement command. And one repair published rather than hidden: the git commit the reference record was measured at was later rewritten away by a history purge; the repository records the replacement commit and labels the mapping <b>&#8220;inferred, not recorded&#8221;</b>.</p>"
+        "<p>The published record carries a <b>content fingerprint</b>: a SHA&#8209;256 taken over the record in canonical form and truncated to sixteen hex characters, and the reader <b>refuses</b> a record whose fingerprint is absent or no longer matches. Refuses, not warns: a hand&#8209;edited measurement fails loudly. The stamp in this site's masthead is that fingerprint.</p>",
+        "<p>You do not have to take our word for it, and you should not hash the file by hand: <b>a plain checksum of the file will not match</b>, because the fingerprint is taken over a canonical form of the record, not over its bytes. The tool recomputes it in front of you instead, and prints what it finds.</p>",
+        "<p>Two limits the sealing tool states about itself: the fingerprint covers the whole record except fingerprint keys themselves, and it proves nothing about what happened <b>before</b> sealing; the only gesture that produces a measurement is the measurement command. And one repair published rather than hidden: the git commit the reference record was measured at was later rewritten away by a history purge; the repository records the replacement commit and labels the mapping <b>&#8220;inferred, not recorded&#8221;</b>.</p>"
       ],
       "verif": {
         "t": "Recompute the seal",
@@ -79,7 +79,7 @@
     {
       "h2": "The figures that were retired",
       "html": [
-        "<p>Not everything measured got published. On the constrained&#8209;output bench, <b>every duration moved by 16 to 60 per cent</b> between two passes on a memory&#8209;starved machine — so the durations were withdrawn, and in the data they were renamed so the defect travels with the number: the field itself is called <code>msMedianeNonTransportableFamineMemoire</code> — non-transportable, memory starvation. You cannot cite it without its qualifier.</p>",
+        "<p>Not everything measured got published. On the constrained&#8209;output bench, <b>every duration moved by 16 to 60 per cent</b> between two passes on a memory&#8209;starved machine, so the durations were withdrawn, and in the data they were renamed so the defect travels with the number: the field itself is called <code>msMedianeNonTransportableFamineMemoire</code>: non-transportable, memory starvation. You cannot cite it without its qualifier.</p>",
         "<p>The token counts from the same bench reproduce to the digit, and those <b>are</b> published. That is the line: what reproduces is shown, what does not is named and withheld.</p>"
       ],
       "verif": {
@@ -97,7 +97,7 @@
     {
       "h2": "Run it twice, compare",
       "html": [
-        "<p>The title is an instruction. The full measurement reruns with one command — it insists on an explicit flag because it downloads 1.3 GB of pinned weights on first run — the measurement itself took 32 minutes on the published pass — and freezes a fresh record you can set beside ours. Your own files run through <b>the same grader and the same intervals</b>. And two sealed passes compare case by case, because a rate that rose may simply have lost cases.</p>"
+        "<p>The title is an instruction. The full measurement reruns with one command; it insists on an explicit flag because it downloads 1.3 GB of pinned weights on first run (the measurement itself took 32 minutes on the published pass), and freezes a fresh record you can set beside ours. Your own files run through <b>the same grader and the same intervals</b>. And two sealed passes compare case by case, because a rate that rose may simply have lost cases.</p>"
       ],
       "verif": {
         "t": "Run it yourself",
@@ -109,7 +109,7 @@
           },
           {
             "c": "npm run measure:yours -- --cases=your-file.csv",
-            "n": "your cases, same grader, same intervals — nothing leaves your machine"
+            "n": "your cases, same grader, same intervals: nothing leaves your machine"
           },
           {
             "c": "npm run diff",

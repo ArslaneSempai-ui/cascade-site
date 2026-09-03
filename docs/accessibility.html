@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-mEhdEZPXyzGJYZ9EjjmletmaBcNmylXNgV0/I0nZVtw='; script-src 'sha256-QivZaX6dmdcOV0nRpHw2yo/u7Nkvrajyj73I7pzzxBY='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-4rKx9qlG5ZZlyjdBX2kVybiV/SIviGVRQTmXWyzMw4M='; script-src 'sha256-QivZaX6dmdcOV0nRpHw2yo/u7Nkvrajyj73I7pzzxBY='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade, accessibility</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/accessibility.html">
@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#14251e">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade, accessibility">
-<meta property="og:description" content="This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site&#x27;s own stylesheet and structure — and wherever a gesture can check a claim right now, on the page you are reading, the gesture is here.">
+<meta property="og:description" content="This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site&#x27;s own stylesheet and structure, and wherever a gesture can check a claim right now, on the page you are reading, the gesture is here.">
 <meta property="og:url" content="https://cascade-routing.com/accessibility.html">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
 <meta property="og:site_name" content="Cascade">
@@ -16,7 +16,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site&#x27;s own stylesheet and structure — and wherever a gesture can check a claim right now, on the page you are reading, the gesture is here.">
+<meta name="description" content="This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site&#x27;s own stylesheet and structure, and wherever a gesture can check a claim right now, on the page you are reading, the gesture is here.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fontes/literata.css">
 <style>
@@ -80,8 +80,8 @@
 
   /* ── l'objet de la page : DANS la bande, centré sur elle ─────────────────── */
   /* Une seule règle pour les six pages (demande d'Arslane, 31 août) : la même
-     boîte pour tous — l'image s'y loge en gardant ses proportions, un portrait
-     ne sort plus géant — et le centre de l'objet est le centre de la bande,
+     boîte pour tous : l'image s'y loge en gardant ses proportions, un portrait
+     ne sort plus géant : et le centre de l'objet est le centre de la bande,
      le débord est le même en haut et en bas. */
   /* la bande déborde de 50vw de chaque côté : le right se compte depuis là */
   .plaque{position:absolute;right:calc(50vw + clamp(3rem,9vw,10rem));top:50%;
@@ -134,8 +134,8 @@
   code{font:400 13.5px/1.5 var(--mono);background:rgba(27,29,24,.055);
        padding:.06rem .3rem}
 
-  /* le moyen de vérifier : les commandes dans un petit écran de terminal —
-     actionnables telles quelles — et les références de source EN DESSOUS, parce
+  /* le moyen de vérifier : les commandes dans un petit écran de terminal :
+     actionnables telles quelles : et les références de source EN DESSOUS, parce
      qu'un chemin de fichier ne se tape pas dans un shell. */
   .ap{margin:1rem 0 0;border-left:2px solid var(--vert-titre);padding:.15rem 0 .15rem .9rem}
   .ap-t{font:600 10px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;
@@ -195,7 +195,7 @@
     .tampon{display:block;margin:.6rem 0 0;text-align:center;
             font-size:9px;letter-spacing:.09em;padding:.3rem .4rem;
             white-space:nowrap}
-    /* l'œil en deux rangées : la rubrique, puis le retour — plus de trois
+    /* l'œil en deux rangées : la rubrique, puis le retour : plus de trois
        colonnes tassées */
     .oeil{display:block}
     .oeil::after{display:none}
@@ -204,9 +204,9 @@
   }
   /* ── 641-1080 : la fenêtre de bureau NON MAXIMISÉE ─────────────────────────
      Le point de bascule téléphone était à 1080 : une fenêtre de 800 recevait la
-     mise en page téléphone agrandie — objet géant centré dans une bande gonflée
+     mise en page téléphone agrandie : objet géant centré dans une bande gonflée
      (constat d'Arslane, 31/08 au soir). Ici on MAINTIENT la composition du
-     large — objet dans la bande, à droite du titre, plus petit — contre les
+     large : objet dans la bande, à droite du titre, plus petit : contre les
      règles téléphone du module commun, qui s'appliquent dès 1080. */
   @media (min-width:641px) and (max-width:1080px){
     h1{max-width:min(54vw,760px);
@@ -221,7 +221,7 @@
        sinon le clip de la racine mange la fin des lignes (mesuré à 375) */
     .haut{padding-right:calc(50vw + clamp(1.2rem,3.4vw,3.2rem))}
     /* la même boîte à deux dimensions qu'au desktop : un portrait (le cadenas)
-       ne domine plus les paysages — constat d'Arslane sur la planche mobile */
+       ne domine plus les paysages : constat d'Arslane sur la planche mobile */
     .plaque{position:static;transform:none;width:min(70vw,340px);
             height:min(30vh,240px);margin:1rem auto 0}
     .oeil .fno{white-space:nowrap}
@@ -261,8 +261,8 @@
   <span class="socle-ombre"></span>
 
   <div class="doc">
-    <p class="lede">This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site's own stylesheet and structure — and wherever a gesture can check a claim right now, on the page you are reading, the gesture is here.</p>
-    <details open><summary><span class="cr" aria-hidden="true">&#9656;</span>The keyboard is a first-class door</summary><div class="sec-corps"><p>Every finding on the main screen is a plain address — a link to an anchor. The whole instrument navigates by keyboard alone: <b>Tab reaches every control, Enter opens it</b>, and the browser's back button walks your trail backwards, because each state you visit is a real place in the address bar.</p><p>The one small script on that screen only synchronises the animation clock and the tab title. <b>Switch JavaScript off and every state still opens</b> — the navigation is the address, not a handler.</p><p><i>Try it now: press Tab until the findings rail takes focus, then Enter. Then press Back.</i></p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>Contrast, measured</summary><div class="sec-corps"><p>Computed from this site's own palette, not asserted: body ink on this paper measures <b>11.1:1</b>. The weakest text pairing anywhere on the site measures <b>5.6:1</b>. The accessibility floor for body text is 4.5:1 — every pairing here clears it with room to spare.</p><p>And colour never carries a meaning alone: wherever the green marks something — a shackle, a plateau, a signature — <b>a word or a shape carries the same meaning beside it</b>.</p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>Native parts, native semantics</summary><div class="sec-corps"><p>The sections of every appendix are <b>native disclosure elements</b> — the browser provides the keyboard behaviour and the screen&#8209;reader semantics, so there is no script of ours to get them wrong. Focus is always visible: every interactive element carries a <b>focus ring drawn in the site's own ink</b>, never suppressed.</p><p><i>Try it now: Tab through this very page — each section header announces itself and toggles with Enter or Space.</i></p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>Motion that asks permission</summary><div class="sec-corps"><p>Every transition on this site sits behind the reduced&#8209;motion media query. <b>When your system asks for less motion, the cascade holds still</b> — the same figures, the same states, without the movement.</p><p><i>Try it now: switch on your system's Reduce Motion setting and reload — the page arrives already settled.</i></p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>What this page does not claim</summary><div class="sec-corps"><p>These claims are mechanical — ratios computed, anchors counted, media queries present — so we make them. What we do not certify is the lived experience: this site has not been through an audit by a person who uses a screen reader daily, <b>and that is the only audit of that experience that counts</b>. If your team runs one and finds a fault, it will be fixed and this page will say it was.</p></div></details>
+    <p class="lede">This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site's own stylesheet and structure, and wherever a gesture can check a claim right now, on the page you are reading, the gesture is here.</p>
+    <details open><summary><span class="cr" aria-hidden="true">&#9656;</span>The keyboard is a first-class door</summary><div class="sec-corps"><p>Every finding on the main screen is a plain address: a link to an anchor. The whole instrument navigates by keyboard alone: <b>Tab reaches every control, Enter opens it</b>, and the browser's back button walks your trail backwards, because each state you visit is a real place in the address bar.</p><p>The one small script on that screen only synchronises the animation clock and the tab title. <b>Switch JavaScript off and every state still opens</b>: the navigation is the address, not a handler.</p><p><i>Try it now: press Tab until the findings rail takes focus, then Enter. Then press Back.</i></p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>Contrast, measured</summary><div class="sec-corps"><p>Computed from this site's own palette, not asserted: body ink on this paper measures <b>11.1:1</b>. The weakest text pairing anywhere on the site measures <b>5.6:1</b>. The accessibility floor for body text is 4.5:1; every pairing here clears it with room to spare.</p><p>And colour never carries a meaning alone: wherever the green marks something (a shackle, a plateau, a signature), <b>a word or a shape carries the same meaning beside it</b>.</p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>Native parts, native semantics</summary><div class="sec-corps"><p>The sections of every appendix are <b>native disclosure elements</b>: the browser provides the keyboard behaviour and the screen&#8209;reader semantics, so there is no script of ours to get them wrong. Focus is always visible: every interactive element carries a <b>focus ring drawn in the site's own ink</b>, never suppressed.</p><p><i>Try it now: Tab through this very page: each section header announces itself and toggles with Enter or Space.</i></p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>Motion that asks permission</summary><div class="sec-corps"><p>Every transition on this site sits behind the reduced&#8209;motion media query. <b>When your system asks for less motion, the cascade holds still</b>: the same figures, the same states, without the movement.</p><p><i>Try it now: switch on your system's Reduce Motion setting and reload: the page arrives already settled.</i></p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>What this page does not claim</summary><div class="sec-corps"><p>These claims are mechanical (ratios computed, anchors counted, media queries present), so we make them. What we do not certify is the lived experience: this site has not been through an audit by a person who uses a screen reader daily, <b>and that is the only audit of that experience that counts</b>. If your team runs one and finds a fault, it will be fixed and this page will say it was.</p></div></details>
   </div>
 
   <div class="pied">

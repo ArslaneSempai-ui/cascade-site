@@ -128,6 +128,12 @@ for vieux, neuf in PROD.items():
                       f'<meta charset="utf-8"><base href="{PREFIXE}">', 1)
     (DOCS / neuf).write_text(csp(entete_prod(t, neuf)))
 
+# ── le refus du cadratin : décision du 3 septembre, aucune page ne le porte ──
+fautives = [p.name for p in sorted(DOCS.glob("*.html"))
+            if any(m in p.read_text() for m in ("\u2014", "&#8212;", "&mdash;"))]
+if fautives:
+    sys.exit(f"CADRATIN dans les pages bâties : {fautives} : réécrire la source, pas la page")
+
 # ── les ressources réellement référencées ────────────────────────────────────
 refs = set()
 for page in DOCS.glob("*.html"):
@@ -141,9 +147,12 @@ for page in DOCS.glob("*.html"):
 shutil.copy(MAQ / "fontes" / "literata.css", DOCS / "fontes" / "literata.css")
 for w in (MAQ / "fontes").glob("literata-*.woff2"):
     shutil.copy(w, DOCS / "fontes" / w.name)
+shutil.copy(MAQ / "fontes" / "roboto-mono.css", DOCS / "fontes" / "roboto-mono.css")
+shutil.copy(MAQ / "fontes" / "roboto-mono.woff2", DOCS / "fontes" / "roboto-mono.woff2")
 (DOCS / "rendus" / "etats").mkdir(parents=True)
 for w in (MAQ / "rendus" / "etats").glob("objet-*.webp"):
     shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
+shutil.copy(MAQ / "rendus" / "affiche-film.jpg", DOCS / "rendus" / "affiche-film.jpg")
 shutil.copy(MAQ / "releve.json", DOCS / "releve.json")
 shutil.copy(MAQ / "og.png", DOCS / "og.png")
 (DOCS / ".nojekyll").write_text("")
