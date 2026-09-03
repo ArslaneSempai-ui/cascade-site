@@ -131,7 +131,7 @@ CSS = '''
 '''
 
 PAGE = f'''<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade, the engagement</title>
+<meta charset="utf-8"><title>Cascade, engagement and pricing</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade: what an engagement buys">

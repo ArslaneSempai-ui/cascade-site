@@ -402,9 +402,36 @@ def section(sec, ouvert=False):
 TETE_COMMUNE = ('<meta charset="utf-8">'
                 '<meta name="viewport" content="width=device-width,initial-scale=1">')
 
+
+def _texte(fragment):
+    """Le texte nu d'un fragment : balises retirées, entités résolues."""
+    import html as _h
+    import re as _re
+    return " ".join(_h.unescape(_re.sub(r"<[^>]+>", "", fragment)).split())
+
+
+def faq_ld(sections):
+    """La FAQ lisible par les moteurs, générée des MÊMES sections que la page :
+    une seule source, donc pas de dérive possible entre ce que lit un visiteur
+    et ce que lit un moteur (assembler.py compare quand même, question par
+    question). Les réponses sont le texte des paragraphes, sans le bloc de
+    vérification (une commande shell n'est pas une réponse) ; les guillemets
+    typographiques des titres restent dans la page, pas dans la question nue."""
+    import json as _json
+    entrees = []
+    for sec in sections:
+        q = _texte(sec["h2"]).strip("“” ")
+        r = " ".join(_texte(p) for p in sec["html"])
+        entrees.append({"@type": "Question", "name": q,
+                        "acceptedAnswer": {"@type": "Answer", "text": r}})
+    bloc = _json.dumps({"@context": "https://schema.org", "@type": "FAQPage",
+                        "mainEntity": entrees}, ensure_ascii=True)
+    return f'\n<script type="application/ld+json">{bloc}</script>'
+
 for lettre, page in zip(LETTRES, PAGES):
     faits = json.loads((BASE / page["json"]).read_text())
     sections = "".join(section(x, i == 0) for i, x in enumerate(faits["sections"]))
+    donnees = faq_ld(faits["sections"]) if page["html"] == "ANNEXE-QUESTIONS.html" else ""
 
     (BASE / page["html"]).write_text(f"""<!doctype html><html lang="en">
 <meta charset="utf-8"><title>{page["titre_onglet"]}</title>
@@ -412,7 +439,7 @@ for lettre, page in zip(LETTRES, PAGES):
 {og(page["titre_onglet"], faits["lede"], page["html"])}
 <link rel="icon" href="{FAVICON}">
 <link rel="stylesheet" href="fontes/literata.css">
-<link rel="stylesheet" href="fontes/roboto-mono.css">
+<link rel="stylesheet" href="fontes/roboto-mono.css">{donnees}
 <script>document.documentElement.classList.add("js")</script>
 <style>{CSS}</style>
 {barre_html(page["html"])}

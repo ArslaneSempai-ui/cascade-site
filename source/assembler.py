@@ -105,7 +105,10 @@ def csp(t):
 def entete_prod(t, neuf):
     """Les métadonnées de production : canonique, couleur d'onglet, icône
     tactile, compléments de la carte de partage."""
-    extra = (f'<link rel="canonical" href="{BASE_URL}{neuf}">\n'
+    # la racine et /index.html sont la même page : une seule adresse canonique,
+    # la racine, sinon les moteurs comptent deux pages et partagent leur poids
+    adresse = BASE_URL if neuf == "index.html" else BASE_URL + neuf
+    extra = (f'<link rel="canonical" href="{adresse}">\n'
              f'<link rel="apple-touch-icon" href="{PREFIXE}apple-touch-icon.png">\n'
              f'<meta name="theme-color" content="#14251e">')
     t = t.replace('<meta name="viewport" content="width=device-width,initial-scale=1">',
@@ -136,6 +139,68 @@ fautives = [p.name for p in sorted(DOCS.glob("*.html"))
             if any(m in p.read_text() for m in ("\u2014", "&#8212;", "&mdash;"))]
 if fautives:
     sys.exit(f"CADRATIN dans les pages bâties : {fautives} : réécrire la source, pas la page")
+
+# ── les données structurées : lisibles, exactes, sans mensonge SEO ───────────
+# Trois refus : un bloc ld+json qui ne parse pas ; une clé de notation
+# (aggregateRating, review…) qui n'aurait aucune mesure derrière elle ; un prix
+# autre que le 0 du grant d'évaluation (les prix payants vivent en clair sur la
+# page engagement, jamais dans le balisage). Et la couture source → moteur :
+# la FAQ émise est comparée à SA SOURCE (annexe-questions.json), question par
+# question, même normalisation que l'émission.
+import html as _html
+import json as _json
+
+def _nu(fragment):
+    return " ".join(_html.unescape(re.sub(r"<[^>]+>", "", fragment)).split())
+
+def _cles(o):
+    if isinstance(o, dict):
+        yield from o
+        for v in o.values():
+            yield from _cles(v)
+    elif isinstance(o, list):
+        for v in o:
+            yield from _cles(v)
+
+INTERDITES = {"aggregateRating", "review", "ratingValue", "reviewCount",
+              "bestRating", "worstRating"}
+blocs_vus = {}
+for page in sorted(DOCS.glob("*.html")):
+    for brut in re.findall(r'<script type="application/ld\+json">(.*?)</script>',
+                           page.read_text(), re.S):
+        try:
+            donnees = _json.loads(brut)
+        except ValueError as e:
+            sys.exit(f"JSON-LD invalide dans {page.name} : {e}")
+        mauvaises = INTERDITES & set(_cles(donnees))
+        if mauvaises:
+            sys.exit(f"JSON-LD de {page.name} : {sorted(mauvaises)} : "
+                     "aucune mesure derrière : retirer")
+        for prix in re.findall(r'"price"\s*:\s*"?([^",}]*)', brut):
+            if prix.strip() != "0":
+                sys.exit(f"JSON-LD de {page.name} : price={prix} : les prix "
+                         "vivent en clair sur la page engagement, pas ici")
+        blocs_vus.setdefault(page.name, []).append(donnees)
+
+noeuds_index = blocs_vus.get("index.html", [{}])[0].get("@graph", [])
+types_index = {n.get("@type") for n in noeuds_index}
+if not {"Organization", "SoftwareApplication"} <= types_index:
+    sys.exit(f"index.html : Organization + SoftwareApplication attendus dans le "
+             f"@graph, vu {sorted(t for t in types_index if t)}")
+
+source_q = _json.loads((MAQ / "annexe-questions.json").read_text())
+attendues = [_nu(s["h2"]).strip("“” ") for s in source_q["sections"]]
+faq = next((b for b in blocs_vus.get("questions.html", [])
+            if b.get("@type") == "FAQPage"), None)
+if faq is None:
+    sys.exit("questions.html : FAQPage absent des données structurées")
+publiees = [e["name"] for e in faq.get("mainEntity", [])]
+if publiees != attendues:
+    sys.exit("FAQPage : les questions émises ne recomposent pas la source : "
+             f"{sorted(set(attendues) ^ set(publiees))}")
+print(f"  données structurées : "
+      f"{sum(len(v) for v in blocs_vus.values())} blocs valides sur "
+      f"{len(blocs_vus)} pages ; FAQ recomposée : {len(publiees)} questions")
 
 # ── les ressources réellement référencées ────────────────────────────────────
 refs = set()
@@ -185,7 +250,8 @@ publiques = [n for n in PROD.values() if n != "404.html"]
 (DOCS / "sitemap.xml").write_text(
     '<?xml version="1.0" encoding="UTF-8"?>\n'
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    + "".join(f"  <url><loc>{BASE_URL}{n}</loc></url>\n" for n in publiques)
+    + "".join(f"  <url><loc>{BASE_URL}{'' if n == 'index.html' else n}</loc></url>\n"
+              for n in publiques)
     + "</urlset>\n")
 
 # ── la garde de dérive : le compte de tests que le site PUBLIE ───────────────

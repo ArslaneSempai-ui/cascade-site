@@ -562,19 +562,49 @@ JS = '''
 
 scenes = "".join(scene_html(i, s) for i, s in enumerate(SCENES))
 
+# ── les données structurées : ce que les moteurs lisent, RIEN d'inventé ──────
+# La description est la meta description, mot pour mot : une seule voix.
+# L'offre à 0 est la seule vraie : le grant d'évaluation de trente jours,
+# écrit dans la licence publique. Aucune note, aucun avis, aucun prix payant
+# ici : les prix de l'engagement vivent sur leur page, en clair (assembler.py
+# porte les refus). L'OS reprend le README de l'outil : macOS ou Linux ;
+# Windows non testé, donc non affirmé.
+DONNEES_STRUCTUREES = json.dumps({
+    "@context": "https://schema.org",
+    "@graph": [
+        {"@type": "Organization", "@id": "https://cascade-routing.com/#org",
+         "name": "Cascade", "url": "https://cascade-routing.com/",
+         "logo": "https://cascade-routing.com/og.png",
+         "email": "contact@cascade-routing.com"},
+        {"@type": "SoftwareApplication", "name": "Cascade",
+         "url": "https://cascade-routing.com/",
+         "applicationCategory": "DeveloperApplication",
+         "operatingSystem": "macOS, Linux (Node 24+)",
+         "downloadUrl": "https://github.com/ArslaneSempai-ui/cascade-routing",
+         "description": "A routing audit for KYC extraction: measured on sealed "
+                        "records, rerun on your machine. On your records, on "
+                        "your machine: nothing leaves the network.",
+         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
+                    "description": "Thirty-day evaluation on your own records, "
+                                   "granted in the public licence."},
+         "publisher": {"@id": "https://cascade-routing.com/#org"}},
+    ],
+}, ensure_ascii=True)
+
 PAGE = f'''<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade, the routing audit</title>
+<meta charset="utf-8"><title>Cascade, the routing audit for KYC extraction</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade: routing audit, KYC extraction">
 <meta property="og:description" content="A routing audit for KYC extraction: measured on sealed records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
-<meta property="og:url" content="https://cascade-routing.com/index.html">
+<meta property="og:url" content="https://cascade-routing.com/">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="A routing audit for KYC extraction: measured on sealed records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">
+<script type="application/ld+json">{DONNEES_STRUCTUREES}</script>
 <script>document.documentElement.classList.add("js")</script>
 <style>{CSS}</style>
 <header class="barre sur-nuit">
