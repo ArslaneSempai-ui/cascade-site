@@ -19,13 +19,13 @@
             "n": "your fields, your rules, measured as tiers"
           }
         ],
-        "refs": "src/your-cases.ts:18 &#183; src/your-cases.ts:313"
+        "refs": "src/your-cases.ts:18 &#183; src/your-cases.ts:334"
       }
     },
     {
       "h2": "&#8220;Which models run, and which call out?&#8221;",
       "html": [
-        "<p>Four encoder models run <b>inside the process</b>, pinned by revision; three generative models run through a <b>local Ollama</b>, pinned by digest — and the generative models are optional: without them, four tiers are measured instead of seven. The only network call on the measurement path is the generative host, and it is <b>verified local immediately before every call</b>; pointing it at a remote machine makes the tool refuse to start unless an explicit override flag is typed by hand.</p>",
+        "<p>Two extractive encoder models run <b>inside the process</b>, pinned by revision, plus two embedding models for classification; three generative models run through a <b>local Ollama</b>, pinned by digest, and they are optional. On your own file, <code>measure:yours</code> measures the two extractive tiers by default, your regexes as a free tier when you pass <code>--rules</code>, and the three generative tiers when you pass <code>--llm</code> — up to six measured tiers; the human tier is an assumption, never a measurement. The only network call on the measurement path is the generative host, and it is <b>verified local immediately before every call</b>; pointing it at a remote machine makes the tool refuse to start unless an explicit override flag is typed by hand.</p>",
         "<p>The watching is published too: an egress run observed <b>0 connections over 21 samples</b> during a whole pass on client cases. Its own file states the limit — sampling is a floor, not a kernel capture.</p>"
       ],
       "verif": {
@@ -37,14 +37,14 @@
             "n": "observes the pass; the committed record shows 0 connections"
           }
         ],
-        "refs": "src/tiers.ts:523 &#183; egress.json:12"
+        "refs": "src/tiers.ts:556 &#183; egress.json:12"
       }
     },
     {
       "h2": "&#8220;Do we need a connection?&#8221;",
       "html": [
-        "<p>Almost only once. The first measurement downloads 1.3 GB of pinned model weights from huggingface.co and says so before doing it. After that, one small call remains, <b>measured and admitted</b>: the model library asks huggingface.co for a public metadata file each time the extractors load — upstream behaviour, nothing of yours in it, and the offline flag turns it into a named refusal. The test suite downloads nothing, and the public benchmark is the one command that fetches a dataset: it comes down, <b>nothing of yours goes up</b>.</p>",
-        "<p>Closed network: the weights export to a USB drive on one machine and import on yours, <b>every file checked against its SHA&#8209;256 and pinned revision before anything is written</b>. One honest stop sign: because of the metadata call above, the encoder tiers cannot yet run fully air&#8209;gapped — under the offline flag the tool <b>refuses loudly, cause named</b>, rather than breaking mid&#8209;run.</p>"
+        "<p>Almost only once. The first measurement downloads 1.3 GB of pinned model weights from huggingface.co and says so before doing it. After that, nothing: the one call that remained — a tokenizer configuration the model library asked for at revision <code>main</code> on every load — is served from the cache, because the loader places the pinned file under the key the library reads. The test suite downloads nothing, and the public benchmark is the one command that fetches a dataset: it comes down, <b>nothing of yours goes up</b>.</p>",
+        "<p>Closed network: the weights export to a USB drive on one machine and import on yours, <b>every file checked against its SHA&#8209;256 and pinned revision before anything is written</b>, tokenizer configuration included. Under the offline flag the encoder tiers run fully air&#8209;gapped — measured, and held by the suite; a missing model is a <b>named refusal before anything is attempted</b>, never a break mid&#8209;run.</p>"
       ],
       "verif": {
         "t": "Cross the air gap",
@@ -59,7 +59,7 @@
             "n": "verifies hash and revision before writing"
           }
         ],
-        "refs": "README.md:98 &#183; README.md:109"
+        "refs": "README.md:100 &#183; README.md:111"
       }
     },
     {
@@ -77,7 +77,7 @@
             "n": "fails if a client value reaches the returned file"
           }
         ],
-        "refs": "src/cascade.test.ts:3508 &#183; src/your-cases.ts:1193"
+        "refs": "src/cascade.test.ts:3510 &#183; src/your-cases.ts:1463"
       }
     },
     {
@@ -102,7 +102,7 @@
             "n": "the conclusion, from the sealed records, no install"
           }
         ],
-        "refs": "src/premiere-reponse.mjs:10 &#183; README.md:150"
+        "refs": "src/premiere-reponse.mjs:10 &#183; README.md:161"
       }
     },
     {
@@ -115,7 +115,7 @@
     {
       "h2": "&#8220;Why should we believe these figures?&#8221;",
       "html": [
-        "<p>Because they are <b>recomputed, sealed, signed — and retracted when wrong</b>. The test suite first checks that the README, the landing record and the dossier still match the code, then runs <b>596 tests across 66 files, counted from the sources</b>. The security and licence documents are generated, marked as such, and fail the suite when they drift. Measurement records carry a fingerprint, and a hand&#8209;edited one is refused. Reports are signed; the public key lives in the repository and a bundled script verifies any report without trusting us.</p>",
+        "<p>Because they are <b>recomputed, sealed, signed — and retracted when wrong</b>. The test suite first checks that the README, the landing record and the dossier still match the code, then runs <b>618 tests across 69 files, counted from the sources</b>. The security and licence documents are generated, marked as such, and fail the suite when they drift. Measurement records carry a fingerprint, and a hand&#8209;edited one is refused. Reports are signed; the public key lives in the repository and a bundled script verifies any report without trusting us — and an example report, issued on cascade's own held-out corpus with that key, ships in the repository as <code>rapport-exemple.html</code>, so the verification can be tried before anything is bought.</p>",
         "<p>The uncomfortable parts are published too: a retraction file lists <b>every published conclusion that turned out to be wrong</b>, and the secret sweep across 633 commits reports 0 undeclared secrets reachable from HEAD — zero among the 20 forms the sweep looks for, which is what a sweep can honestly say.</p>"
       ],
       "verif": {
@@ -131,7 +131,7 @@
             "n": "recomputes every published figure against the sources"
           }
         ],
-        "refs": "src/verifier-rapport.mjs:13 &#183; README.md:129"
+        "refs": "src/verifier-rapport.mjs:13 &#183; README.md:139"
       }
     }
   ],
