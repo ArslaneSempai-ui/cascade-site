@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
-"""L'annexe, version 2 : le haut du héros, les sections en liste ouvrable.
+"""L'annexe, version 3 : le chrome du nouveau monde, le corps ouvrable conservé.
 
-CE QU'ARSLANE A DEMANDÉ LE 31 AOÛT (à valider sur UNE page : Sécurité)
-  · le titre sur une bande verte, comme l'écran héros ;
-  · un design 3D propre à la page, en rapport avec elle : ici la forme ANNEAUX :
-    des boucles fermées ; chaque appel réseau de l'outil revient à sa machine, et
-    c'est précisément ce que cette page prouve. Le vocabulaire des couleurs ne
-    bouge pas : aucun « retenu » sur une annexe, rien n'y est mis en avant ;
-  · les titres de sections en liste OUVRABLE, les paragraphes dessous : des
-    <details> natifs : l'adresse et le clavier marchent sans script ;
-  · la configuration minimum pour faire tourner l'outil, là où c'est logique :
-    ici : la même équipe demande « qu'est-ce qui sort » et « que faut-il pour
-    que ça tourne ». Uniquement du vérifié.
+CE QUI EST GARDÉ DE LA VERSION 2 (validée par Arslane le 31 août)
+  · les titres de sections en liste OUVRABLE (<details> natifs) ;
+  · le moyen de vérifier DANS chaque section, en petit terminal actionnable ;
+  · l'objet 3D propre à chaque page, dans la tête ;
+  · la lecture en deux colonnes au large.
 
-Le moyen de vérifier vit maintenant DANS chaque section ouverte, en fin de
-propos, puisque la marge ne peut plus s'aligner sur des sections repliées.
+CE QUI CHANGE (harmonisation du 4 septembre, appliquée aux 8 pages)
+  · la palette et les fontes sont CELLES du héros (Literata + Roboto Mono) :
+    les deux mondes avaient dérivé de quelques teintes ;
+  · la manchette tete/tampon/œil disparaît : la barre FIXE des pages
+    principales la remplace (marque, nav, sceau ; nuit en haut, parchemin
+    posé après 40 px de défilement, exactement comme l'index) ;
+  · la bande verte au tiers de page devient la TÊTE de page : nuit dès le
+    premier pixel, « Appendix X » en mono vert, le titre à gauche, l'objet
+    à droite — le squelette de la page instrument ;
+  · le pied devient celui des pages principales (bande nuit, promesse,
+    sceau), augmenté du rang des huit annexes.
 """
 import importlib.util
 import json
@@ -24,6 +27,8 @@ BASE = pathlib.Path(__file__).parent
 spec = importlib.util.spec_from_file_location("bn", BASE / "batir-nav.py")
 bn = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(bn)
+
+SCEAU = "1151f5a1cfaae0c0"
 
 # ── les six annexes : une lettre, une source, un objet, une sortie ───────────
 # L'ordre suit bn.ANNEXES ; la lettre d'appendice en découle (A-F).
@@ -124,8 +129,15 @@ def og(titre, description, fichier):
             f'<meta name="description" content="{d}">')
 
 
-SCRIPT_IMPRESSION = """<script>
-/* l'impression ouvre les sections, puis les referme comme elles étaient */
+# la barre se pose sur le parchemin après 40 px, comme sur l'index ; et
+# l'impression ouvre les sections, puis les referme comme elles étaient
+SCRIPT = """<script>
+const barre = document.querySelector(".barre");
+const poser = () => {
+  barre.classList.toggle("posee", scrollY > 40);
+  barre.classList.toggle("sur-nuit", scrollY <= 40);
+};
+addEventListener("scroll", poser, {passive: true}); poser();
 addEventListener("beforeprint", () => {
   for (const d of document.querySelectorAll("details")) {
     d.dataset.avant = d.open ? "1" : ""; d.open = true; }});
@@ -135,101 +147,83 @@ addEventListener("afterprint", () => {
 </script>"""
 
 CSS = """
-  *{box-sizing:border-box}
-  :root{
-    --papier:#d8d1b6;--papier-haut:#e3dcc2;--papier-bas:#cbc4aa;
-    --encre:#1b1d18;--demi:#4a4739;--pale:#4f4c3a;--filet:#9d9a83;
-    --filet-clair:#b3ac91;--vert-titre:#23543f;--vert-vif:#57b184;
-    --nuit-a:#1b3229;--nuit-b:#14251e;--nuit-c:#122019;
-    --sur-vert:#e4ecdf;--sur-vert-pale:#a9bdaf;
+  :root{--papier:#dbd7c5;--papier-haut:#e2ddcb;--papier-bas:#cdccb9;--encre:#1b1d18;
+    --demi:#4a4739;--pale:#55523f;--filet:#9d9a83;--filet-clair:#bab7a0;
+    --nuit-a:#1b3229;--nuit-b:#14251e;--nuit-c:#0e1a15;--sur-vert:#e4ecdf;--sur-vert-pale:#a9bdaf;
+    --vert-titre:#23543f;--vert-vif:#57b184;--vert-clair:#a5f7cb;
+    --texte:"Literata",Georgia,serif;--mono:"Roboto Mono",ui-monospace,Menlo,monospace;
     --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
-    --mono:ui-monospace,"SF Mono",Menlo,monospace;
-    --texte:"Literata",Georgia,serif;
     --montee:cubic-bezier(.16,.84,.32,1)}
-  html{background:var(--papier);overflow-x:clip}
-  body{margin:0;color:var(--encre);font:400 16px/1.6 var(--texte);
-       -webkit-font-smoothing:antialiased;overflow-x:hidden;
-       background:linear-gradient(168deg,var(--papier-haut) 0%,var(--papier) 54%,
-                  var(--papier-bas) 100%)}
-  .page{max-width:104rem;margin:0 auto;position:relative;
-        padding:clamp(.8rem,1.6vh,1.25rem) clamp(1.2rem,3.4vw,3.2rem) 2.2rem}
+  *{box-sizing:border-box;margin:0}
+  html{scroll-behavior:smooth;overflow-x:clip;caret-color:var(--vert-vif);
+    scrollbar-color:var(--vert-titre) var(--papier-bas)}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{background:var(--papier);color:var(--encre);font-family:var(--texte);line-height:1.55}
+  img{max-width:100%;display:block}
+  ::selection{background:var(--vert-titre);color:var(--sur-vert)}
+  a{text-underline-offset:4px;color:inherit}
+  :focus-visible{outline:3px solid var(--vert-vif);outline-offset:3px;border-radius:2px}
+  .colonne{max-width:1180px;margin:0 auto;padding:0 48px}
 
-  /* ── la manchette du héros, à l'identique ─────────────────────────────────── */
-  .tete{display:flex;gap:1rem;align-items:baseline;flex-wrap:wrap}
-  .marque{display:inline-flex;gap:.55rem;align-items:center}
-  .marque a{all:unset;cursor:pointer;display:inline-flex;gap:.55rem;
-            align-items:center;padding:.25rem .3rem;margin:-.25rem -.3rem}
-  .marque a:focus-visible{outline:none;
-    box-shadow:0 0 0 2px var(--papier-haut),0 0 0 4.5px var(--nuit-b)}
-  .carre{width:12px;height:12px;flex:none;
-         background:linear-gradient(135deg,var(--nuit-a) 0 62%,var(--vert-titre) 62%)}
-  .marque b{font:700 14px/1 var(--sans);letter-spacing:.26em;color:var(--encre)}
-  .sep-v{width:1px;align-self:stretch;background:var(--filet-clair);margin:.15rem 0}
-  .desc{font:italic 400 15px/1.3 var(--texte);color:var(--demi)}
-  .tampon{margin-left:auto;border:1px solid var(--filet);padding:.34rem .7rem;
-          font:500 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;
-          color:var(--pale)}
-  .oeil{display:flex;align-items:center;gap:.9rem;margin-top:clamp(.6rem,2vh,1.5rem)}
-  .oeil .fno{font:600 11px/1.4 var(--sans);letter-spacing:.14em;
-             text-transform:uppercase;color:var(--vert-titre)}
-  .oeil .fti{font:600 11px/1.4 var(--sans);letter-spacing:.15em;
-             text-transform:uppercase;color:var(--pale)}
-  .oeil::after{content:"";flex:1;height:1px;background:var(--filet-clair)}
-  .retour{all:unset;cursor:pointer;font:400 13px/1.4 var(--sans);color:var(--pale);
-          padding:.3rem .4rem;margin:-.3rem -.4rem}
-  .retour:hover{color:var(--encre)}
-  .retour:focus-visible{outline:none;
-    box-shadow:0 0 0 2px var(--papier-haut),0 0 0 4.5px var(--nuit-b)}
+  /* ── la barre : celle des pages principales, à l'identique ──────────────── */
+  .barre{position:fixed;inset:0 0 auto 0;z-index:40;display:flex;align-items:center;gap:28px;
+    padding:14px 32px;transition:background .3s,box-shadow .3s}
+  .barre.posee{background:color-mix(in srgb,var(--papier-haut) 88%,transparent);
+    backdrop-filter:blur(10px);box-shadow:0 1px 0 color-mix(in srgb,var(--filet) 55%,transparent)}
+  .barre.sur-nuit .marque{color:var(--sur-vert)}
+  .barre.sur-nuit nav a{color:var(--sur-vert-pale)}
+  .barre.sur-nuit nav a:hover{color:var(--sur-vert)}
+  .barre.sur-nuit .sceau{color:var(--sur-vert-pale)}
+  .marque{font-weight:700;font-size:19px;letter-spacing:.01em;text-decoration:none;
+    padding:10px 0;color:var(--encre)}
+  .barre nav{display:flex;gap:16px;margin-left:auto}
+  .barre nav a{font-size:14.5px;text-decoration:none;color:var(--demi);padding:13px 6px}
+  .barre nav a:hover{color:var(--encre);text-decoration:underline;
+    text-decoration-color:var(--vert-vif);text-decoration-thickness:1.5px}
+  .barre nav a[aria-current]{font-weight:600}
+  .sceau{font-family:var(--mono);font-size:11px;color:var(--pale);letter-spacing:.04em}
+  html:not(.js) .barre{position:absolute}
+  html:not(.js) .barre .marque{color:var(--sur-vert)}
+  html:not(.js) .barre nav a{color:var(--sur-vert-pale)}
+  html:not(.js) .barre .sceau{color:var(--sur-vert-pale)}
 
-  /* ── la bande verte du héros, le titre à l'encre centrée ─────────────────── */
-  .haut{position:relative;z-index:1;margin:clamp(.8rem,2vh,1.4rem) -50vw 0;width:200vw;
-        padding:clamp(1.1rem,2.6vh,2rem) 50vw;
-        display:flex;flex-direction:column;justify-content:center;
-        background:linear-gradient(163deg,var(--nuit-a) 0%,var(--nuit-b) 54%,
-                   var(--nuit-c) 100%)}
-  h1{margin:-0.155em 0 0.155em;position:relative;z-index:3;
-     max-width:min(48vw,760px);letter-spacing:-.026em;
-     font:600 min(clamp(1.9rem,5.2vw,4.2rem),7.2vh)/1.06 var(--texte);
-     font-variation-settings:"opsz" 72;color:var(--sur-vert)}
+  /* ── la tête : nuit dès le premier pixel, titre à gauche, objet à droite ── */
+  .tete-nuit{position:relative;padding:132px 0 48px;color:var(--sur-vert);
+    background:radial-gradient(120% 100% at 50% -20%,#0f231b,var(--nuit-b) 70%)}
+  .tete-nuit .colonne{display:grid;grid-template-columns:minmax(0,1fr) auto;
+    gap:18px 40px;align-items:center}
+  .ariane{grid-column:1/-1;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  .ariane .fno{font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--vert-vif)}
+  .ariane .fti{font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--sur-vert-pale)}
+  .retour{margin-left:auto;font-family:var(--mono);font-size:12px;
+    text-decoration:none;color:var(--sur-vert-pale);padding:4px 0}
+  .retour:hover{color:var(--sur-vert);text-decoration:underline;
+    text-decoration-color:var(--vert-vif)}
+  h1{font-size:clamp(32px,4.2vw,56px);font-weight:600;letter-spacing:-.02em;
+    line-height:1.06;text-wrap:balance;max-width:21ch}
   h1 .deux{color:var(--vert-vif)}
+  .plaque{margin:0;width:min(24vw,300px);height:min(24vh,230px)}
+  .plaque img{width:100%;height:100%;object-fit:contain;
+    filter:drop-shadow(0 18px 34px rgba(0,0,0,.45))}
 
-  /* ── l'objet de la page : DANS la bande, centré sur elle ─────────────────── */
-  /* Une seule règle pour les six pages (demande d'Arslane, 31 août) : la même
-     boîte pour tous : l'image s'y loge en gardant ses proportions, un portrait
-     ne sort plus géant : et le centre de l'objet est le centre de la bande,
-     le débord est le même en haut et en bas. */
-  /* la bande déborde de 50vw de chaque côté : le right se compte depuis là */
-  .plaque{position:absolute;right:calc(50vw + clamp(3rem,9vw,10rem));top:50%;
-          transform:translateY(-50%);margin:0;z-index:2;
-          width:min(26vw,420px);height:min(30vh,320px)}
-  .plaque img{width:100%;height:100%;object-fit:contain;display:block}
-  .socle-ombre{display:none}
-  .fig-objet{position:absolute;z-index:4;right:clamp(4rem,11vw,12rem);
-             width:min(24%,19rem);
-             top:calc(clamp(3.6rem,7vh,6rem) + 1.203 * min(20vw,290px) + 1rem);
-             border-top:1px solid var(--filet-clair);padding-top:.45rem}
-  .fig-objet p{margin:0;font:400 12px/1.5 var(--sans);color:var(--pale)}
-  .fig-objet .no{font:600 10px/1.4 var(--sans);letter-spacing:.14em;
-                 text-transform:uppercase;color:var(--demi);margin-right:.45rem}
-
-  /* ── le document : la liste ouvrable ──────────────────────────────────────── */
-  .doc{max-width:none;margin-top:clamp(1.4rem,3.4vh,2.6rem)}
-  /* l'objet ne descend plus sous la bande : le chapeau court jusqu'à droite */
-  .lede{margin:0 0 1.6rem;font:italic 400 16.5px/1.55 var(--texte);color:var(--demi)}
+  /* ── le document : la liste ouvrable, telle que validée ─────────────────── */
+  .doc{padding:38px 0 8px}
+  .lede{margin:0 0 26px;font-style:italic;font-size:17px;line-height:1.55;
+    color:var(--demi);max-width:88ch}
   details{border-top:1px solid var(--filet-clair)}
   details:last-of-type{border-bottom:1px solid var(--filet-clair)}
   summary{cursor:pointer;list-style:none;display:flex;gap:.8rem;align-items:baseline;
-          padding:.95rem .2rem .95rem 0;
-          font:600 11.5px/1.4 var(--sans);letter-spacing:.14em;
-          text-transform:uppercase;color:var(--pale);
-          transition:color .16s ease}
+    padding:.95rem .2rem .95rem 0;
+    font:500 11.5px/1.4 var(--mono);letter-spacing:.13em;
+    text-transform:uppercase;color:var(--pale);
+    transition:color .16s ease}
   summary::-webkit-details-marker{display:none}
   summary .cr{font:400 14px/1 var(--sans);color:var(--filet);flex:none;
-              transition:transform .2s var(--montee),color .16s ease;width:1em}
+    transition:transform .2s var(--montee),color .16s ease;width:1em}
   summary:hover{color:var(--encre)}
   summary:hover .cr{color:var(--encre)}
-  summary:focus-visible{outline:none;
-    box-shadow:0 0 0 2px var(--papier-haut),0 0 0 4.5px var(--nuit-b)}
   details[open] summary{color:var(--encre)}
   details[open] summary .cr{transform:rotate(90deg);color:var(--vert-titre)}
   .sec-corps{padding:0 0 1.4rem 1.8rem;max-width:148ch}
@@ -245,120 +239,143 @@ CSS = """
   ul{margin:.2rem 0 .8rem;padding:0;list-style:none;font-size:15.5px;line-height:1.65}
   li{padding-left:1.1rem;position:relative;margin-bottom:.25rem}
   li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:1.5px;
-             background:var(--filet)}
+    background:var(--filet)}
   code{font:400 13.5px/1.5 var(--mono);background:rgba(27,29,24,.055);
-       padding:.06rem .3rem}
+    padding:.06rem .3rem}
 
   /* le moyen de vérifier : les commandes dans un petit écran de terminal :
      actionnables telles quelles : et les références de source EN DESSOUS, parce
      qu'un chemin de fichier ne se tape pas dans un shell. */
   .ap{margin:1rem 0 0;border-left:2px solid var(--vert-titre);padding:.15rem 0 .15rem .9rem}
-  .ap-t{font:600 10px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;
-        color:var(--vert-titre);display:block;margin-bottom:.3rem}
+  .ap-t{font:500 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--vert-titre);display:block;margin-bottom:.3rem}
   .ap p{margin:0 0 .5rem;font:italic 400 13.5px/1.5 var(--texte);
-        color:var(--demi)!important;font-size:13.5px!important}
+    color:var(--demi)!important;font-size:13.5px!important}
   .term{max-width:44ch;background:linear-gradient(163deg,var(--nuit-a),var(--nuit-b));
-        box-shadow:0 6px 18px rgba(20,37,30,.22)}
+    border:1px solid color-mix(in srgb,var(--vert-vif) 22%,transparent);
+    border-radius:8px;overflow:hidden;box-shadow:0 6px 18px rgba(20,37,30,.22)}
   .term-bar{display:flex;gap:.32rem;align-items:center;padding:.42rem .6rem;
-            background:rgba(0,0,0,.28)}
-  .term-bar i{width:7px;height:7px;background:var(--sur-vert-pale);opacity:.45}
-  .term-bar span{margin-left:auto;font:600 9px/1 var(--sans);letter-spacing:.14em;
-                 text-transform:uppercase;color:var(--sur-vert-pale)}
+    background:rgba(0,0,0,.28)}
+  .term-bar i{width:7px;height:7px;border-radius:50%;background:var(--sur-vert-pale);opacity:.45}
+  .term-bar span{margin-left:auto;font:500 9px/1 var(--mono);letter-spacing:.14em;
+    text-transform:uppercase;color:var(--sur-vert-pale)}
   .term-corps{padding:.65rem .8rem .75rem;font:400 12.5px/1.75 var(--mono);
-              color:var(--sur-vert)}
-  .term-corps .cmd{display:block;white-space:pre-wrap;overflow-wrap:break-word}
+    color:var(--sur-vert)}
+  .term-corps .cmd{display:block;white-space:pre-wrap;overflow-wrap:break-word;
+    background:none;padding:0}
   /* l'invite est un ::before : elle ne part pas dans le presse-papier */
   .term-corps .cmd::before{content:"$ ";color:var(--vert-vif);font-weight:600}
   .term-corps .sortie{display:block;color:var(--sur-vert-pale);opacity:.9}
   .term-corps .sortie::before{content:"# "}
   .ap p.refs{margin:.5rem 0 0;font:400 11.5px/1.5 var(--mono)!important;
-             font-style:normal!important;color:var(--pale)!important}
-  .refs b{font:600 9.5px/1.5 var(--sans);letter-spacing:.13em;
-          text-transform:uppercase;color:var(--pale);margin-right:.5rem}
+    font-style:normal!important;color:var(--pale)!important}
+  .refs b{font:600 9.5px/1.5 var(--mono);letter-spacing:.13em;
+    text-transform:uppercase;color:var(--pale);margin-right:.5rem}
 
   /* ── la plomberie : colonne de lecture simple, filets fins, pas d'objet ──── */
-  .pl-doc{max-width:78ch;margin-top:clamp(1.4rem,3.4vh,2.6rem)}
+  .pl-doc{max-width:78ch;padding:38px 0 8px}
   .pl-doc .lede{max-width:none}
   .pl-sec{border-top:1px solid var(--filet-clair);padding:1rem 0 1.3rem}
   .pl-sec:last-of-type{border-bottom:1px solid var(--filet-clair)}
-  .pl-sec h2{margin:0 0 .55rem;font:600 11.5px/1.4 var(--sans);
-             letter-spacing:.14em;text-transform:uppercase;color:var(--pale)}
+  .pl-sec h2{margin:0 0 .55rem;font:500 11.5px/1.4 var(--mono);
+    letter-spacing:.13em;text-transform:uppercase;color:var(--pale)}
   .pl-sec p{margin:0 0 .8rem;font-size:15.5px;line-height:1.65;color:var(--encre)}
   .pl-sec p:last-child{margin-bottom:0}
   .pl-sec b{font-weight:600}
 
-  .pied{display:flex;gap:.6rem 2rem;align-items:baseline;flex-wrap:wrap;
-        margin-top:2.2rem;border-top:1px solid var(--filet-clair);
-        padding-top:.7rem;font:400 13px/1.5 var(--sans);color:var(--pale)}
-  .pied b{color:var(--encre);font-weight:600}
-  .annexes{display:flex;gap:clamp(.7rem,1.4vw,1.25rem);flex-wrap:wrap;margin-left:auto}
-  .annexes a{all:unset;cursor:pointer;padding:.35rem .2rem;margin:-.35rem -.2rem;
-             color:var(--pale)}
-  .annexes a:hover{color:var(--encre)}
-  .annexes a[aria-current="true"]{color:var(--encre);font-weight:600;
-    box-shadow:0 1.5px 0 var(--vert-titre)}
-  .annexes a:focus-visible{outline:none;
-    box-shadow:0 0 0 2px var(--papier-haut),0 0 0 4.5px var(--nuit-b)}
+  /* ── le pied : celui des pages principales, plus le rang des annexes ────── */
+  .pied{background:var(--nuit-c);color:var(--sur-vert);padding:44px 0;margin-top:56px}
+  .pied .colonne{display:flex;flex-direction:column;gap:18px}
+  .pied-h{display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;
+    align-items:baseline}
+  .pied-p{font-size:clamp(17px,1.8vw,23px);font-weight:600}
+  .pied-p em{font-style:italic;color:var(--vert-clair)}
+  .pied .sceau{color:var(--sur-vert-pale)}
+  .annexes{display:flex;gap:4px 18px;flex-wrap:wrap;
+    border-top:1px solid color-mix(in srgb,var(--sur-vert-pale) 22%,transparent);
+    padding-top:16px}
+  .annexes a{font-size:13.5px;text-decoration:none;color:var(--sur-vert-pale);
+    padding:6px 2px}
+  .annexes a:hover{color:var(--sur-vert);text-decoration:underline;
+    text-decoration-color:var(--vert-vif)}
+  .annexes a[aria-current="true"]{color:var(--sur-vert);font-weight:600;
+    box-shadow:0 1.5px 0 var(--vert-vif)}
 
   @media (prefers-reduced-motion:reduce){
-    summary .cr,summary,.retour,.annexes a{transition:none}
-  }
-  @media (max-width:640px){
-    .tete{display:block}
-    .sep-v{display:none}
-    .desc{display:block;margin-top:.35rem}
-    .tampon{display:block;margin:.6rem 0 0;text-align:center;
-            font-size:9px;letter-spacing:.09em;padding:.3rem .4rem;
-            white-space:nowrap}
-    /* l'œil en deux rangées : la rubrique, puis le retour : plus de trois
-       colonnes tassées */
-    .oeil{display:block}
-    .oeil::after{display:none}
-    .oeil .fno{margin-right:.9rem}
-    .retour{display:block;margin-top:.4rem}
+    summary .cr,summary,.barre{transition:none}
   }
   /* ── 641-1080 : la fenêtre de bureau NON MAXIMISÉE ─────────────────────────
-     Le point de bascule téléphone était à 1080 : une fenêtre de 800 recevait la
-     mise en page téléphone agrandie : objet géant centré dans une bande gonflée
-     (constat d'Arslane, 31/08 au soir). Ici on MAINTIENT la composition du
-     large : objet dans la bande, à droite du titre, plus petit : contre les
-     règles téléphone du module commun, qui s'appliquent dès 1080. */
+     On MAINTIENT la composition du large : l'objet reste à droite du titre,
+     plus petit (constat d'Arslane, 31/08 : la mise en page téléphone agrandie
+     donnait un objet géant dans une bande gonflée). */
+  @media (max-width:1080px){
+    .barre{padding:12px 18px;gap:14px}
+    .barre nav{display:none}
+    .tete-nuit{padding-top:104px}
+    .colonne{padding:0 26px}
+  }
   @media (min-width:641px) and (max-width:1080px){
-    h1{max-width:min(54vw,760px);
-       font:600 min(clamp(1.9rem,5.2vw,4.7rem),7.2vh)/1.06 var(--texte)}
-    .plaque{position:absolute;right:calc(50vw + clamp(1.2rem,3.4vw,3.2rem));
-            top:50%;transform:translateY(-50%);margin:0;
-            width:min(30vw,340px);height:min(26vh,290px)}
-    .oeil .fno{white-space:nowrap}
+    .plaque{width:min(28vw,260px);height:min(22vh,200px)}
   }
   @media (max-width:640px){
-    /* la bande donne 100vw au titre : on lui rend la marge droite de la page,
-       sinon le clip de la racine mange la fin des lignes (mesuré à 375) */
-    .haut{padding-right:calc(50vw + clamp(1.2rem,3.4vw,3.2rem))}
-    /* la même boîte à deux dimensions qu'au desktop : un portrait (le cadenas)
-       ne domine plus les paysages : constat d'Arslane sur la planche mobile */
-    .plaque{position:static;transform:none;width:min(70vw,340px);
-            height:min(30vh,240px);margin:1rem auto 0}
-    .oeil .fno{white-space:nowrap}
-    .socle-ombre,.fig-objet{display:none}
+    .tete-nuit .colonne{display:block}
+    .plaque{width:min(62vw,300px);height:min(26vh,190px);margin:20px auto 0}
     h1{max-width:none}
+    .retour{margin-left:0}
     .sec-corps{padding-left:.2rem}
+    .colonne{padding:0 22px}
   }
 
   /* ── l'impression : le mémo qu'un comité fait circuler ───────────────────── */
   @media print{
-    body{background:#fff}
-    .haut{background:none;margin:.4rem 0 0;width:auto;padding:.4rem 0}
+    body{background:#fff;color:#1b1d18}
+    .barre,.plaque,.retour,.annexes{display:none}
+    .tete-nuit{background:none;color:#1b1d18;padding:12px 0 4px}
     h1{color:#1b1d18;max-width:none;font-size:26pt}
     h1 .deux{color:#23543f}
-    .plaque,.retour,.annexes,.oeil::after{display:none}
-    .pied{border-top:1px solid #999}
+    .ariane .fno{color:#23543f}
+    .ariane .fti{color:#55523f}
+    .pied{background:none;color:#1b1d18;margin-top:20px;padding:10px 0;
+      border-top:1px solid #999}
+    .pied-p em{color:#23543f}
+    .pied .sceau{color:#55523f}
     .sec-corps{columns:1;max-width:none}
     details,.pl-sec{break-inside:avoid}
     .term{box-shadow:none}
     summary .cr{display:none}
   }
 """
+
+# la nav du haut : celle des pages principales, avec la page courante marquée
+def barre_html(courante):
+    liens = [("INSTRUMENT.html", "Instrument"), ("ENGAGEMENT.html", "Engagement"),
+             ("ANNEXE-METHODE.html", "Method"), ("ANNEXE-SECURITE.html", "Security"),
+             ("ANNEXE-QUESTIONS.html", "Questions"), ("CONTACT.html", "Contact")]
+    nav = "".join(
+        f'<a href="{h}"' + (' aria-current="page"' if h == courante else "")
+        + f'>{n}</a>' for h, n in liens)
+    return (f'<header class="barre sur-nuit">\n'
+            f'  <a class="marque" href="HERO.html">CASCADE</a>\n'
+            f'  <nav aria-label="Site">{nav}</nav>\n'
+            f'  <span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>\n'
+            f'</header>')
+
+
+def pied_html(courante):
+    """Le pied commun : la promesse, le sceau, puis le rang des annexes."""
+    liens = [(p["html"], p["nav"]) for p in PAGES]
+    liens += [("CONTACT.html", "Contact"), ("MENTIONS.html", "Colophon")]
+    rang = "".join(
+        f'<a href="{h}"' + (' aria-current="true"' if h == courante else "")
+        + f'>{n}</a>' for h, n in liens)
+    return (f'<footer class="pied"><div class="colonne">\n'
+            f'  <div class="pied-h">\n'
+            f'    <p class="pied-p">On your records, on your machine. '
+            f'<em>Nothing leaves the network.</em></p>\n'
+            f'    <span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>\n'
+            f'  </div>\n'
+            f'  <nav class="annexes" aria-label="Appendices">{rang}</nav>\n'
+            f'</div></footer>')
 
 
 def section(sec, ouvert=False):
@@ -382,18 +399,11 @@ def section(sec, ouvert=False):
             f'</summary><div class="sec-corps">{corps}{ap}</div></details>')
 
 
-def nav_annexes(courante):
-    """Le pied commun : les six annexes, puis le contact et le colophon."""
-    liens = [(p["html"], p["nav"]) for p in PAGES]
-    liens += [("CONTACT.html", "Contact"), ("MENTIONS.html", "Colophon")]
-    return "".join(
-        f'<a href="{h}"' + (' aria-current="true"' if h == courante else "")
-        + f'>{n}</a>' for h, n in liens)
-
+TETE_COMMUNE = ('<meta charset="utf-8">'
+                '<meta name="viewport" content="width=device-width,initial-scale=1">')
 
 for lettre, page in zip(LETTRES, PAGES):
     faits = json.loads((BASE / page["json"]).read_text())
-    nav = nav_annexes(page["html"])
     sections = "".join(section(x, i == 0) for i, x in enumerate(faits["sections"]))
 
     (BASE / page["html"]).write_text(f"""<!doctype html><html lang="en">
@@ -402,40 +412,35 @@ for lettre, page in zip(LETTRES, PAGES):
 {og(page["titre_onglet"], faits["lede"], page["html"])}
 <link rel="icon" href="{FAVICON}">
 <link rel="stylesheet" href="fontes/literata.css">
+<link rel="stylesheet" href="fontes/roboto-mono.css">
+<script>document.documentElement.classList.add("js")</script>
 <style>{CSS}</style>
-<div class="page">
-  <div class="tete">
-    <span class="marque"><a href="HERO.html">
-      <i class="carre" aria-hidden="true"></i><b>CASCADE</b></a></span>
-    <span class="sep-v" aria-hidden="true"></span>
-    <span class="desc">Routing audit, KYC extraction</span>
-    <span class="tampon">Seal 1151f5a1cfaae0c0 &#183; measured, then frozen</span></div>
-  <div class="oeil"><span class="fno">Appendix {lettre}</span>
+{barre_html(page["html"])}
+
+<main>
+<section class="tete-nuit"><div class="colonne">
+  <div class="ariane">
+    <span class="fno">Appendix {lettre}</span>
     <span class="fti">{page["nav"]}</span>
-    <a class="retour" href="HERO.html">&#8592; Back to the findings</a></div>
-
-  <div class="haut"><h1>{faits["titre"]}</h1>
-    <figure class="plaque"><img src="{page["objet"]}"
-      alt="{page["alt"]}"></figure></div>
-  <span class="socle-ombre"></span>
-
-  <div class="doc">
-    <p class="lede">{faits["lede"]}</p>
-    {sections}
+    <a class="retour" href="HERO.html">&#8592; Back to the findings</a>
   </div>
+  <h1>{faits["titre"]}</h1>
+  <figure class="plaque"><img src="{page["objet"]}" alt="{page["alt"]}"></figure>
+</div></section>
 
-  <div class="pied">
-    <span>On your records, on your machine. <b>Nothing leaves the network.</b></span>
-    <nav class="annexes" aria-label="Appendices">{nav}</nav>
-  </div>
-</div>
-""" + SCRIPT_IMPRESSION + "\n", encoding="utf-8")
+<div class="colonne"><div class="doc">
+  <p class="lede">{faits["lede"]}</p>
+  {sections}
+</div></div>
+</main>
+
+{pied_html(page["html"])}
+""" + SCRIPT + "\n", encoding="utf-8")
     print(f"  {page['html']}")
 
-# ── la plomberie : contact, 404, colophon : colonne simple, sans objet ───────
+# ── la plomberie : contact et colophon : colonne simple, sans objet ──────────
 PLOMBERIE = json.loads((BASE / "plomberie.json").read_text())
 for page in PLOMBERIE["pages"]:
-    nav = nav_annexes(page["html"])
     sections = "".join(
         f'<div class="pl-sec"><h2>{s["h2"]}</h2>{"".join(s["html"])}</div>'
         for s in page["sections"])
@@ -446,28 +451,26 @@ for page in PLOMBERIE["pages"]:
 {og(page["titre_onglet"], page["lede"], page["html"])}
 <link rel="icon" href="{FAVICON}">
 <link rel="stylesheet" href="fontes/literata.css">
+<link rel="stylesheet" href="fontes/roboto-mono.css">
+<script>document.documentElement.classList.add("js")</script>
 <style>{CSS}</style>
-<div class="page">
-  <div class="tete">
-    <span class="marque"><a href="HERO.html">
-      <i class="carre" aria-hidden="true"></i><b>CASCADE</b></a></span>
-    <span class="sep-v" aria-hidden="true"></span>
-    <span class="desc">Routing audit, KYC extraction</span>
-    <span class="tampon">Seal 1151f5a1cfaae0c0 &#183; measured, then frozen</span></div>
-  <div class="oeil"><span class="fno">{page["fno"]}</span>
-    <a class="retour" href="HERO.html">&#8592; Back to the findings</a></div>
+{barre_html(page["html"])}
 
-  <div class="haut"><h1>{page["titre"]}</h1></div>
-
-  <div class="pl-doc">
-    <p class="lede">{page["lede"]}</p>
-    {sections}
+<main>
+<section class="tete-nuit"><div class="colonne">
+  <div class="ariane">
+    <span class="fno">{page["fno"]}</span>
+    <a class="retour" href="HERO.html">&#8592; Back to the findings</a>
   </div>
+  <h1>{page["titre"]}</h1>
+</div></section>
 
-  <div class="pied">
-    <span>On your records, on your machine. <b>Nothing leaves the network.</b></span>
-    <nav class="annexes" aria-label="Appendices">{nav}</nav>
-  </div>
-</div>
-""", encoding="utf-8")
+<div class="colonne"><div class="pl-doc">
+  <p class="lede">{page["lede"]}</p>
+  {sections}
+</div></div>
+</main>
+
+{pied_html(page["html"])}
+""" + SCRIPT + "\n", encoding="utf-8")
     print(f"  {page['html']}")

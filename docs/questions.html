@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-4rKx9qlG5ZZlyjdBX2kVybiV/SIviGVRQTmXWyzMw4M='; script-src 'sha256-QivZaX6dmdcOV0nRpHw2yo/u7Nkvrajyj73I7pzzxBY='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-n5wUVOaQQNMXk166Kly/tg1qNElA6tvVP07c8vO9KC0='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-TH6Arr8Qvl1YyH0FPJrv9WemQy3KXu1Vnl79rSlIYqc='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade, questions</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/questions.html">
@@ -19,102 +19,86 @@
 <meta name="description" content="Eight objections, the ones a bank&#x27;s reviewers actually raise. Each answer below is not a promise: it is a mechanism in the source: where it lives, its path is on this page, and where a mechanism has a limit, the limit is here too.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fontes/literata.css">
+<link rel="stylesheet" href="fontes/roboto-mono.css">
+<script>document.documentElement.classList.add("js")</script>
 <style>
-  *{box-sizing:border-box}
-  :root{
-    --papier:#d8d1b6;--papier-haut:#e3dcc2;--papier-bas:#cbc4aa;
-    --encre:#1b1d18;--demi:#4a4739;--pale:#4f4c3a;--filet:#9d9a83;
-    --filet-clair:#b3ac91;--vert-titre:#23543f;--vert-vif:#57b184;
-    --nuit-a:#1b3229;--nuit-b:#14251e;--nuit-c:#122019;
-    --sur-vert:#e4ecdf;--sur-vert-pale:#a9bdaf;
+  :root{--papier:#dbd7c5;--papier-haut:#e2ddcb;--papier-bas:#cdccb9;--encre:#1b1d18;
+    --demi:#4a4739;--pale:#55523f;--filet:#9d9a83;--filet-clair:#bab7a0;
+    --nuit-a:#1b3229;--nuit-b:#14251e;--nuit-c:#0e1a15;--sur-vert:#e4ecdf;--sur-vert-pale:#a9bdaf;
+    --vert-titre:#23543f;--vert-vif:#57b184;--vert-clair:#a5f7cb;
+    --texte:"Literata",Georgia,serif;--mono:"Roboto Mono",ui-monospace,Menlo,monospace;
     --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
-    --mono:ui-monospace,"SF Mono",Menlo,monospace;
-    --texte:"Literata",Georgia,serif;
     --montee:cubic-bezier(.16,.84,.32,1)}
-  html{background:var(--papier);overflow-x:clip}
-  body{margin:0;color:var(--encre);font:400 16px/1.6 var(--texte);
-       -webkit-font-smoothing:antialiased;overflow-x:hidden;
-       background:linear-gradient(168deg,var(--papier-haut) 0%,var(--papier) 54%,
-                  var(--papier-bas) 100%)}
-  .page{max-width:104rem;margin:0 auto;position:relative;
-        padding:clamp(.8rem,1.6vh,1.25rem) clamp(1.2rem,3.4vw,3.2rem) 2.2rem}
+  *{box-sizing:border-box;margin:0}
+  html{scroll-behavior:smooth;overflow-x:clip;caret-color:var(--vert-vif);
+    scrollbar-color:var(--vert-titre) var(--papier-bas)}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{background:var(--papier);color:var(--encre);font-family:var(--texte);line-height:1.55}
+  img{max-width:100%;display:block}
+  ::selection{background:var(--vert-titre);color:var(--sur-vert)}
+  a{text-underline-offset:4px;color:inherit}
+  :focus-visible{outline:3px solid var(--vert-vif);outline-offset:3px;border-radius:2px}
+  .colonne{max-width:1180px;margin:0 auto;padding:0 48px}
 
-  /* ── la manchette du héros, à l'identique ─────────────────────────────────── */
-  .tete{display:flex;gap:1rem;align-items:baseline;flex-wrap:wrap}
-  .marque{display:inline-flex;gap:.55rem;align-items:center}
-  .marque a{all:unset;cursor:pointer;display:inline-flex;gap:.55rem;
-            align-items:center;padding:.25rem .3rem;margin:-.25rem -.3rem}
-  .marque a:focus-visible{outline:none;
-    box-shadow:0 0 0 2px var(--papier-haut),0 0 0 4.5px var(--nuit-b)}
-  .carre{width:12px;height:12px;flex:none;
-         background:linear-gradient(135deg,var(--nuit-a) 0 62%,var(--vert-titre) 62%)}
-  .marque b{font:700 14px/1 var(--sans);letter-spacing:.26em;color:var(--encre)}
-  .sep-v{width:1px;align-self:stretch;background:var(--filet-clair);margin:.15rem 0}
-  .desc{font:italic 400 15px/1.3 var(--texte);color:var(--demi)}
-  .tampon{margin-left:auto;border:1px solid var(--filet);padding:.34rem .7rem;
-          font:500 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;
-          color:var(--pale)}
-  .oeil{display:flex;align-items:center;gap:.9rem;margin-top:clamp(.6rem,2vh,1.5rem)}
-  .oeil .fno{font:600 11px/1.4 var(--sans);letter-spacing:.14em;
-             text-transform:uppercase;color:var(--vert-titre)}
-  .oeil .fti{font:600 11px/1.4 var(--sans);letter-spacing:.15em;
-             text-transform:uppercase;color:var(--pale)}
-  .oeil::after{content:"";flex:1;height:1px;background:var(--filet-clair)}
-  .retour{all:unset;cursor:pointer;font:400 13px/1.4 var(--sans);color:var(--pale);
-          padding:.3rem .4rem;margin:-.3rem -.4rem}
-  .retour:hover{color:var(--encre)}
-  .retour:focus-visible{outline:none;
-    box-shadow:0 0 0 2px var(--papier-haut),0 0 0 4.5px var(--nuit-b)}
+  /* ── la barre : celle des pages principales, à l'identique ──────────────── */
+  .barre{position:fixed;inset:0 0 auto 0;z-index:40;display:flex;align-items:center;gap:28px;
+    padding:14px 32px;transition:background .3s,box-shadow .3s}
+  .barre.posee{background:color-mix(in srgb,var(--papier-haut) 88%,transparent);
+    backdrop-filter:blur(10px);box-shadow:0 1px 0 color-mix(in srgb,var(--filet) 55%,transparent)}
+  .barre.sur-nuit .marque{color:var(--sur-vert)}
+  .barre.sur-nuit nav a{color:var(--sur-vert-pale)}
+  .barre.sur-nuit nav a:hover{color:var(--sur-vert)}
+  .barre.sur-nuit .sceau{color:var(--sur-vert-pale)}
+  .marque{font-weight:700;font-size:19px;letter-spacing:.01em;text-decoration:none;
+    padding:10px 0;color:var(--encre)}
+  .barre nav{display:flex;gap:16px;margin-left:auto}
+  .barre nav a{font-size:14.5px;text-decoration:none;color:var(--demi);padding:13px 6px}
+  .barre nav a:hover{color:var(--encre);text-decoration:underline;
+    text-decoration-color:var(--vert-vif);text-decoration-thickness:1.5px}
+  .barre nav a[aria-current]{font-weight:600}
+  .sceau{font-family:var(--mono);font-size:11px;color:var(--pale);letter-spacing:.04em}
+  html:not(.js) .barre{position:absolute}
+  html:not(.js) .barre .marque{color:var(--sur-vert)}
+  html:not(.js) .barre nav a{color:var(--sur-vert-pale)}
+  html:not(.js) .barre .sceau{color:var(--sur-vert-pale)}
 
-  /* ── la bande verte du héros, le titre à l'encre centrée ─────────────────── */
-  .haut{position:relative;z-index:1;margin:clamp(.8rem,2vh,1.4rem) -50vw 0;width:200vw;
-        padding:clamp(1.1rem,2.6vh,2rem) 50vw;
-        display:flex;flex-direction:column;justify-content:center;
-        background:linear-gradient(163deg,var(--nuit-a) 0%,var(--nuit-b) 54%,
-                   var(--nuit-c) 100%)}
-  h1{margin:-0.155em 0 0.155em;position:relative;z-index:3;
-     max-width:min(48vw,760px);letter-spacing:-.026em;
-     font:600 min(clamp(1.9rem,5.2vw,4.2rem),7.2vh)/1.06 var(--texte);
-     font-variation-settings:"opsz" 72;color:var(--sur-vert)}
+  /* ── la tête : nuit dès le premier pixel, titre à gauche, objet à droite ── */
+  .tete-nuit{position:relative;padding:132px 0 48px;color:var(--sur-vert);
+    background:radial-gradient(120% 100% at 50% -20%,#0f231b,var(--nuit-b) 70%)}
+  .tete-nuit .colonne{display:grid;grid-template-columns:minmax(0,1fr) auto;
+    gap:18px 40px;align-items:center}
+  .ariane{grid-column:1/-1;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  .ariane .fno{font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--vert-vif)}
+  .ariane .fti{font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--sur-vert-pale)}
+  .retour{margin-left:auto;font-family:var(--mono);font-size:12px;
+    text-decoration:none;color:var(--sur-vert-pale);padding:4px 0}
+  .retour:hover{color:var(--sur-vert);text-decoration:underline;
+    text-decoration-color:var(--vert-vif)}
+  h1{font-size:clamp(32px,4.2vw,56px);font-weight:600;letter-spacing:-.02em;
+    line-height:1.06;text-wrap:balance;max-width:21ch}
   h1 .deux{color:var(--vert-vif)}
+  .plaque{margin:0;width:min(24vw,300px);height:min(24vh,230px)}
+  .plaque img{width:100%;height:100%;object-fit:contain;
+    filter:drop-shadow(0 18px 34px rgba(0,0,0,.45))}
 
-  /* ── l'objet de la page : DANS la bande, centré sur elle ─────────────────── */
-  /* Une seule règle pour les six pages (demande d'Arslane, 31 août) : la même
-     boîte pour tous : l'image s'y loge en gardant ses proportions, un portrait
-     ne sort plus géant : et le centre de l'objet est le centre de la bande,
-     le débord est le même en haut et en bas. */
-  /* la bande déborde de 50vw de chaque côté : le right se compte depuis là */
-  .plaque{position:absolute;right:calc(50vw + clamp(3rem,9vw,10rem));top:50%;
-          transform:translateY(-50%);margin:0;z-index:2;
-          width:min(26vw,420px);height:min(30vh,320px)}
-  .plaque img{width:100%;height:100%;object-fit:contain;display:block}
-  .socle-ombre{display:none}
-  .fig-objet{position:absolute;z-index:4;right:clamp(4rem,11vw,12rem);
-             width:min(24%,19rem);
-             top:calc(clamp(3.6rem,7vh,6rem) + 1.203 * min(20vw,290px) + 1rem);
-             border-top:1px solid var(--filet-clair);padding-top:.45rem}
-  .fig-objet p{margin:0;font:400 12px/1.5 var(--sans);color:var(--pale)}
-  .fig-objet .no{font:600 10px/1.4 var(--sans);letter-spacing:.14em;
-                 text-transform:uppercase;color:var(--demi);margin-right:.45rem}
-
-  /* ── le document : la liste ouvrable ──────────────────────────────────────── */
-  .doc{max-width:none;margin-top:clamp(1.4rem,3.4vh,2.6rem)}
-  /* l'objet ne descend plus sous la bande : le chapeau court jusqu'à droite */
-  .lede{margin:0 0 1.6rem;font:italic 400 16.5px/1.55 var(--texte);color:var(--demi)}
+  /* ── le document : la liste ouvrable, telle que validée ─────────────────── */
+  .doc{padding:38px 0 8px}
+  .lede{margin:0 0 26px;font-style:italic;font-size:17px;line-height:1.55;
+    color:var(--demi);max-width:88ch}
   details{border-top:1px solid var(--filet-clair)}
   details:last-of-type{border-bottom:1px solid var(--filet-clair)}
   summary{cursor:pointer;list-style:none;display:flex;gap:.8rem;align-items:baseline;
-          padding:.95rem .2rem .95rem 0;
-          font:600 11.5px/1.4 var(--sans);letter-spacing:.14em;
-          text-transform:uppercase;color:var(--pale);
-          transition:color .16s ease}
+    padding:.95rem .2rem .95rem 0;
+    font:500 11.5px/1.4 var(--mono);letter-spacing:.13em;
+    text-transform:uppercase;color:var(--pale);
+    transition:color .16s ease}
   summary::-webkit-details-marker{display:none}
   summary .cr{font:400 14px/1 var(--sans);color:var(--filet);flex:none;
-              transition:transform .2s var(--montee),color .16s ease;width:1em}
+    transition:transform .2s var(--montee),color .16s ease;width:1em}
   summary:hover{color:var(--encre)}
   summary:hover .cr{color:var(--encre)}
-  summary:focus-visible{outline:none;
-    box-shadow:0 0 0 2px var(--papier-haut),0 0 0 4.5px var(--nuit-b)}
   details[open] summary{color:var(--encre)}
   details[open] summary .cr{transform:rotate(90deg);color:var(--vert-titre)}
   .sec-corps{padding:0 0 1.4rem 1.8rem;max-width:148ch}
@@ -130,148 +114,149 @@
   ul{margin:.2rem 0 .8rem;padding:0;list-style:none;font-size:15.5px;line-height:1.65}
   li{padding-left:1.1rem;position:relative;margin-bottom:.25rem}
   li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:1.5px;
-             background:var(--filet)}
+    background:var(--filet)}
   code{font:400 13.5px/1.5 var(--mono);background:rgba(27,29,24,.055);
-       padding:.06rem .3rem}
+    padding:.06rem .3rem}
 
   /* le moyen de vérifier : les commandes dans un petit écran de terminal :
      actionnables telles quelles : et les références de source EN DESSOUS, parce
      qu'un chemin de fichier ne se tape pas dans un shell. */
   .ap{margin:1rem 0 0;border-left:2px solid var(--vert-titre);padding:.15rem 0 .15rem .9rem}
-  .ap-t{font:600 10px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;
-        color:var(--vert-titre);display:block;margin-bottom:.3rem}
+  .ap-t{font:500 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--vert-titre);display:block;margin-bottom:.3rem}
   .ap p{margin:0 0 .5rem;font:italic 400 13.5px/1.5 var(--texte);
-        color:var(--demi)!important;font-size:13.5px!important}
+    color:var(--demi)!important;font-size:13.5px!important}
   .term{max-width:44ch;background:linear-gradient(163deg,var(--nuit-a),var(--nuit-b));
-        box-shadow:0 6px 18px rgba(20,37,30,.22)}
+    border:1px solid color-mix(in srgb,var(--vert-vif) 22%,transparent);
+    border-radius:8px;overflow:hidden;box-shadow:0 6px 18px rgba(20,37,30,.22)}
   .term-bar{display:flex;gap:.32rem;align-items:center;padding:.42rem .6rem;
-            background:rgba(0,0,0,.28)}
-  .term-bar i{width:7px;height:7px;background:var(--sur-vert-pale);opacity:.45}
-  .term-bar span{margin-left:auto;font:600 9px/1 var(--sans);letter-spacing:.14em;
-                 text-transform:uppercase;color:var(--sur-vert-pale)}
+    background:rgba(0,0,0,.28)}
+  .term-bar i{width:7px;height:7px;border-radius:50%;background:var(--sur-vert-pale);opacity:.45}
+  .term-bar span{margin-left:auto;font:500 9px/1 var(--mono);letter-spacing:.14em;
+    text-transform:uppercase;color:var(--sur-vert-pale)}
   .term-corps{padding:.65rem .8rem .75rem;font:400 12.5px/1.75 var(--mono);
-              color:var(--sur-vert)}
-  .term-corps .cmd{display:block;white-space:pre-wrap;overflow-wrap:break-word}
+    color:var(--sur-vert)}
+  .term-corps .cmd{display:block;white-space:pre-wrap;overflow-wrap:break-word;
+    background:none;padding:0}
   /* l'invite est un ::before : elle ne part pas dans le presse-papier */
   .term-corps .cmd::before{content:"$ ";color:var(--vert-vif);font-weight:600}
   .term-corps .sortie{display:block;color:var(--sur-vert-pale);opacity:.9}
   .term-corps .sortie::before{content:"# "}
   .ap p.refs{margin:.5rem 0 0;font:400 11.5px/1.5 var(--mono)!important;
-             font-style:normal!important;color:var(--pale)!important}
-  .refs b{font:600 9.5px/1.5 var(--sans);letter-spacing:.13em;
-          text-transform:uppercase;color:var(--pale);margin-right:.5rem}
+    font-style:normal!important;color:var(--pale)!important}
+  .refs b{font:600 9.5px/1.5 var(--mono);letter-spacing:.13em;
+    text-transform:uppercase;color:var(--pale);margin-right:.5rem}
 
   /* ── la plomberie : colonne de lecture simple, filets fins, pas d'objet ──── */
-  .pl-doc{max-width:78ch;margin-top:clamp(1.4rem,3.4vh,2.6rem)}
+  .pl-doc{max-width:78ch;padding:38px 0 8px}
   .pl-doc .lede{max-width:none}
   .pl-sec{border-top:1px solid var(--filet-clair);padding:1rem 0 1.3rem}
   .pl-sec:last-of-type{border-bottom:1px solid var(--filet-clair)}
-  .pl-sec h2{margin:0 0 .55rem;font:600 11.5px/1.4 var(--sans);
-             letter-spacing:.14em;text-transform:uppercase;color:var(--pale)}
+  .pl-sec h2{margin:0 0 .55rem;font:500 11.5px/1.4 var(--mono);
+    letter-spacing:.13em;text-transform:uppercase;color:var(--pale)}
   .pl-sec p{margin:0 0 .8rem;font-size:15.5px;line-height:1.65;color:var(--encre)}
   .pl-sec p:last-child{margin-bottom:0}
   .pl-sec b{font-weight:600}
 
-  .pied{display:flex;gap:.6rem 2rem;align-items:baseline;flex-wrap:wrap;
-        margin-top:2.2rem;border-top:1px solid var(--filet-clair);
-        padding-top:.7rem;font:400 13px/1.5 var(--sans);color:var(--pale)}
-  .pied b{color:var(--encre);font-weight:600}
-  .annexes{display:flex;gap:clamp(.7rem,1.4vw,1.25rem);flex-wrap:wrap;margin-left:auto}
-  .annexes a{all:unset;cursor:pointer;padding:.35rem .2rem;margin:-.35rem -.2rem;
-             color:var(--pale)}
-  .annexes a:hover{color:var(--encre)}
-  .annexes a[aria-current="true"]{color:var(--encre);font-weight:600;
-    box-shadow:0 1.5px 0 var(--vert-titre)}
-  .annexes a:focus-visible{outline:none;
-    box-shadow:0 0 0 2px var(--papier-haut),0 0 0 4.5px var(--nuit-b)}
+  /* ── le pied : celui des pages principales, plus le rang des annexes ────── */
+  .pied{background:var(--nuit-c);color:var(--sur-vert);padding:44px 0;margin-top:56px}
+  .pied .colonne{display:flex;flex-direction:column;gap:18px}
+  .pied-h{display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;
+    align-items:baseline}
+  .pied-p{font-size:clamp(17px,1.8vw,23px);font-weight:600}
+  .pied-p em{font-style:italic;color:var(--vert-clair)}
+  .pied .sceau{color:var(--sur-vert-pale)}
+  .annexes{display:flex;gap:4px 18px;flex-wrap:wrap;
+    border-top:1px solid color-mix(in srgb,var(--sur-vert-pale) 22%,transparent);
+    padding-top:16px}
+  .annexes a{font-size:13.5px;text-decoration:none;color:var(--sur-vert-pale);
+    padding:6px 2px}
+  .annexes a:hover{color:var(--sur-vert);text-decoration:underline;
+    text-decoration-color:var(--vert-vif)}
+  .annexes a[aria-current="true"]{color:var(--sur-vert);font-weight:600;
+    box-shadow:0 1.5px 0 var(--vert-vif)}
 
   @media (prefers-reduced-motion:reduce){
-    summary .cr,summary,.retour,.annexes a{transition:none}
-  }
-  @media (max-width:640px){
-    .tete{display:block}
-    .sep-v{display:none}
-    .desc{display:block;margin-top:.35rem}
-    .tampon{display:block;margin:.6rem 0 0;text-align:center;
-            font-size:9px;letter-spacing:.09em;padding:.3rem .4rem;
-            white-space:nowrap}
-    /* l'œil en deux rangées : la rubrique, puis le retour : plus de trois
-       colonnes tassées */
-    .oeil{display:block}
-    .oeil::after{display:none}
-    .oeil .fno{margin-right:.9rem}
-    .retour{display:block;margin-top:.4rem}
+    summary .cr,summary,.barre{transition:none}
   }
   /* ── 641-1080 : la fenêtre de bureau NON MAXIMISÉE ─────────────────────────
-     Le point de bascule téléphone était à 1080 : une fenêtre de 800 recevait la
-     mise en page téléphone agrandie : objet géant centré dans une bande gonflée
-     (constat d'Arslane, 31/08 au soir). Ici on MAINTIENT la composition du
-     large : objet dans la bande, à droite du titre, plus petit : contre les
-     règles téléphone du module commun, qui s'appliquent dès 1080. */
+     On MAINTIENT la composition du large : l'objet reste à droite du titre,
+     plus petit (constat d'Arslane, 31/08 : la mise en page téléphone agrandie
+     donnait un objet géant dans une bande gonflée). */
+  @media (max-width:1080px){
+    .barre{padding:12px 18px;gap:14px}
+    .barre nav{display:none}
+    .tete-nuit{padding-top:104px}
+    .colonne{padding:0 26px}
+  }
   @media (min-width:641px) and (max-width:1080px){
-    h1{max-width:min(54vw,760px);
-       font:600 min(clamp(1.9rem,5.2vw,4.7rem),7.2vh)/1.06 var(--texte)}
-    .plaque{position:absolute;right:calc(50vw + clamp(1.2rem,3.4vw,3.2rem));
-            top:50%;transform:translateY(-50%);margin:0;
-            width:min(30vw,340px);height:min(26vh,290px)}
-    .oeil .fno{white-space:nowrap}
+    .plaque{width:min(28vw,260px);height:min(22vh,200px)}
   }
   @media (max-width:640px){
-    /* la bande donne 100vw au titre : on lui rend la marge droite de la page,
-       sinon le clip de la racine mange la fin des lignes (mesuré à 375) */
-    .haut{padding-right:calc(50vw + clamp(1.2rem,3.4vw,3.2rem))}
-    /* la même boîte à deux dimensions qu'au desktop : un portrait (le cadenas)
-       ne domine plus les paysages : constat d'Arslane sur la planche mobile */
-    .plaque{position:static;transform:none;width:min(70vw,340px);
-            height:min(30vh,240px);margin:1rem auto 0}
-    .oeil .fno{white-space:nowrap}
-    .socle-ombre,.fig-objet{display:none}
+    .tete-nuit .colonne{display:block}
+    .plaque{width:min(62vw,300px);height:min(26vh,190px);margin:20px auto 0}
     h1{max-width:none}
+    .retour{margin-left:0}
     .sec-corps{padding-left:.2rem}
+    .colonne{padding:0 22px}
   }
 
   /* ── l'impression : le mémo qu'un comité fait circuler ───────────────────── */
   @media print{
-    body{background:#fff}
-    .haut{background:none;margin:.4rem 0 0;width:auto;padding:.4rem 0}
+    body{background:#fff;color:#1b1d18}
+    .barre,.plaque,.retour,.annexes{display:none}
+    .tete-nuit{background:none;color:#1b1d18;padding:12px 0 4px}
     h1{color:#1b1d18;max-width:none;font-size:26pt}
     h1 .deux{color:#23543f}
-    .plaque,.retour,.annexes,.oeil::after{display:none}
-    .pied{border-top:1px solid #999}
+    .ariane .fno{color:#23543f}
+    .ariane .fti{color:#55523f}
+    .pied{background:none;color:#1b1d18;margin-top:20px;padding:10px 0;
+      border-top:1px solid #999}
+    .pied-p em{color:#23543f}
+    .pied .sceau{color:#55523f}
     .sec-corps{columns:1;max-width:none}
     details,.pl-sec{break-inside:avoid}
     .term{box-shadow:none}
     summary .cr{display:none}
   }
 </style>
-<div class="page">
-  <div class="tete">
-    <span class="marque"><a href="index.html">
-      <i class="carre" aria-hidden="true"></i><b>CASCADE</b></a></span>
-    <span class="sep-v" aria-hidden="true"></span>
-    <span class="desc">Routing audit, KYC extraction</span>
-    <span class="tampon">Seal 1151f5a1cfaae0c0 &#183; measured, then frozen</span></div>
-  <div class="oeil"><span class="fno">Appendix C</span>
+<header class="barre sur-nuit">
+  <a class="marque" href="index.html">CASCADE</a>
+  <nav aria-label="Site"><a href="instrument.html">Instrument</a><a href="engagement.html">Engagement</a><a href="method.html">Method</a><a href="security.html">Security</a><a href="questions.html" aria-current="page">Questions</a><a href="contact.html">Contact</a></nav>
+  <span class="sceau">seal 1151f5a1cfaae0c0 &#183; measured, then frozen</span>
+</header>
+
+<main>
+<section class="tete-nuit"><div class="colonne">
+  <div class="ariane">
+    <span class="fno">Appendix C</span>
     <span class="fti">Questions</span>
-    <a class="retour" href="index.html">&#8592; Back to the findings</a></div>
-
-  <div class="haut"><h1>Your compliance team wrote this page. <span class="deux">We just answered it.</span></h1>
-    <figure class="plaque"><img src="rendus/etats/objet-questions.webp"
-      alt="A matte aluminium key lying across the frame; its bow is a fat green ring."></figure></div>
-  <span class="socle-ombre"></span>
-
-  <div class="doc">
-    <p class="lede">Eight objections, the ones a bank's reviewers actually raise. Each answer below is not a promise: it is a mechanism in the source: where it lives, its path is on this page, and where a mechanism has a limit, the limit is here too.</p>
-    <details open><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;What if our fields are not your five?&#8221;</summary><div class="sec-corps"><p>The fields come from <b>your file</b>. In the CSV you pass to the measuring command, every column beyond the first two is a field to extract, named by its header, nothing else to configure. The question put to the models is built from the column name, so a field this repository has never seen gets asked about without anyone writing code.</p><p>Your house rules enter as regexes and become <b>a tier measured like any other</b>. Regexes only: your arbitrary rule code stays yours, and the tool says plainly it cannot see it. A filled&#8209;in questionnaire becomes the assumptions of a run.</p><div class="ap"><span class="ap-t">Try it on one file</span><p>One CSV, one flag. Add your regexes as a free tier with a second flag.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">npm run measure:yours -- --cases=your-file.csv --rules=rules.json</code><span class="sortie">your fields, your rules, measured as tiers</span></div></div><p class="refs"><b>Where it lives</b>src/your-cases.ts:18 &#183; src/your-cases.ts:334</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;Which models run, and which call out?&#8221;</summary><div class="sec-corps"><p>Two extractive encoder models run <b>inside the process</b>, pinned by revision, plus two embedding models for classification; three generative models run through a <b>local Ollama</b>, pinned by digest, and they are optional. On your own file, <code>measure:yours</code> measures the two extractive tiers by default, your regexes as a free tier when you pass <code>--rules</code>, and the three generative tiers when you pass <code>--llm</code>: up to six measured tiers; the human tier is an assumption, never a measurement. The only network call on the measurement path is the generative host, and it is <b>verified local immediately before every call</b>; pointing it at a remote machine makes the tool refuse to start unless an explicit override flag is typed by hand.</p><p>The watching is published too: an egress run observed <b>0 connections over 21 samples</b> during a whole pass on client cases. Its own file states the limit: sampling is a floor, not a kernel capture.</p><div class="ap"><span class="ap-t">Watch it run</span><p>The egress command samples open connections during a pass and publishes hosts and verdict.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">npm run egress</code><span class="sortie">observes the pass; the committed record shows 0 connections</span></div></div><p class="refs"><b>Where it lives</b>src/tiers.ts:556 &#183; egress.json:12</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;Do we need a connection?&#8221;</summary><div class="sec-corps"><p>Almost only once. The first measurement downloads 1.3 GB of pinned model weights from huggingface.co and says so before doing it. After that, nothing: the one call that remained, a tokenizer configuration the model library asked for at revision <code>main</code> on every load, is served from the cache, because the loader places the pinned file under the key the library reads. The test suite downloads nothing, and the public benchmark is the one command that fetches a dataset: it comes down, <b>nothing of yours goes up</b>.</p><p>Closed network: the weights export to a USB drive on one machine and import on yours, <b>every file checked against its SHA&#8209;256 and pinned revision before anything is written</b>, tokenizer configuration included. Under the offline flag the encoder tiers run fully air&#8209;gapped: measured, and held by the suite; a missing model is a <b>named refusal before anything is attempted</b>, never a break mid&#8209;run.</p><div class="ap"><span class="ap-t">Cross the air gap</span><p>Export on a connected machine, import on the closed one; the offline flag seals it.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">npm run poids -- --export /media/usb/cascade-weights</code><span class="sortie">packs the pinned weights for transport</span><code class="cmd">npm run poids -- --import /media/usb/cascade-weights</code><span class="sortie">verifies hash and revision before writing</span></div></div><p class="refs"><b>Where it lives</b>README.md:100 &#183; README.md:111</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;Who sees our records?&#8221;</summary><div class="sec-corps"><p>Nobody. Measurements on your data live in a folder git ignores, so nothing measured can travel into a repository. The file the tool hands back contains <b>aggregates only</b>, and a test holds it: the suite runs the tool on sentinel values and <b>fails if any of them appears in the output</b>.</p><p>The reverse direction holds too: when your own chain is graded, the outcomes file carries <b>verdicts, never the values</b>.</p><div class="ap"><span class="ap-t">Verify the witness</span><p>The sentinel test is in the suite: plant values, run the tool, fail if one leaks into the output.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">npm test</code><span class="sortie">fails if a client value reaches the returned file</span></div></div><p class="refs"><b>Where it lives</b>src/cascade.test.ts:3510 &#183; src/your-cases.ts:1463</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;What if the answer is: change nothing?&#8221;</summary><div class="sec-corps"><p>Then the report says so. Your current chain enters the record <b>as a tier</b>, ranked with the others, and when it wins, the output prints that it wins outright on this sample. Under 20 observations the tool <b>refuses to recommend anything at all</b> rather than dress up noise as advice.</p><p>The repository leans into this: its own README says the answer is rarely &#8220;buy the bigger model&#8221;, the validation dossier has a mandatory <i>What gets worse</i> section, and on the measured corpus <b>3 of the 5 fields are already carried by regexes at zero cost</b>. The cheapest recommendation is on the table from the first line.</p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;How long, and what lands on our machines?&#8221;</summary><div class="sec-corps"><p>The evaluation grant runs <b>30 days</b> on your own data, internally. What installs: Node 24 or newer on macOS or Linux (Windows is not claimed), then about 400 MB of packages and 1.3 GB of weights on first measurement. The published pass took <b>32 minutes of measurement</b> on the machine named in the sealed record. The generative tier is 8 GB more, and optional.</p><p>And before installing anything at all: one script with zero dependencies reads the sealed records on a fresh clone and prints the conclusion <b>in under a second</b>.</p><div class="ap"><span class="ap-t">The one-second version</span><p>On a fresh clone, before npm install, the first answer is already reproducible.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">node src/premiere-reponse.mjs</code><span class="sortie">the conclusion, from the sealed records, no install</span></div></div><p class="refs"><b>Where it lives</b>src/premiere-reponse.mjs:10 &#183; README.md:161</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;What happens to the tool after the engagement?&#8221;</summary><div class="sec-corps"><p>Three tiers, one of them paid. Anyone, with no time limit, may read, study, fork and use the code noncommercially. An evaluating organisation runs it 30 days on its own data. Commercial use is a separately negotiated licence: the public licence, in its own words, <b>is not what a client buys</b>. Stated plainly: it is not an OSI&#8209;approved licence, and some organisations exclude such licences from spontaneous adoption by policy; that has no effect on a negotiated engagement.</p><p>The dependency surface after you fork: <b>50 permissive packages, 1 with obligations, 0 blocking</b>; the one obligation only bites the day the tool ships as a sealed binary, which it does not.</p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;Why should we believe these figures?&#8221;</summary><div class="sec-corps"><p>Because they are <b>recomputed, sealed, signed, and retracted when wrong</b>. The test suite first checks that the README, the landing record and the dossier still match the code, then runs <b>626 tests across 70 files, counted from the sources</b>. The security and licence documents are generated, marked as such, and fail the suite when they drift. Measurement records carry a fingerprint, and a hand&#8209;edited one is refused. Reports are signed; the public key lives in the repository and a bundled script verifies any report without trusting us, and an example report, issued on cascade's own held-out corpus with that key, ships in the repository as <code>rapport-exemple.html</code>, so the verification can be tried before anything is bought.</p><p>The uncomfortable parts are published too: a retraction file lists <b>every published conclusion that turned out to be wrong</b>, and the secret sweep across 633 commits reports 0 undeclared secrets reachable from HEAD: zero among the 20 forms the sweep looks for, which is what a sweep can honestly say.</p><div class="ap"><span class="ap-t">Verify a report</span><p>Any signed report checks against the repository's public key, by your audit team, not by us.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">node src/verifier-rapport.mjs rapport.html</code><span class="sortie">proves origin and integrity, and nothing about correctness</span><code class="cmd">npm test</code><span class="sortie">recomputes every published figure against the sources</span></div></div><p class="refs"><b>Where it lives</b>src/verifier-rapport.mjs:13 &#183; README.md:139</p></div></div></details>
+    <a class="retour" href="index.html">&#8592; Back to the findings</a>
   </div>
+  <h1>Your compliance team wrote this page. <span class="deux">We just answered it.</span></h1>
+  <figure class="plaque"><img src="rendus/etats/objet-questions.webp" alt="A matte aluminium key lying across the frame; its bow is a fat green ring."></figure>
+</div></section>
 
-  <div class="pied">
-    <span>On your records, on your machine. <b>Nothing leaves the network.</b></span>
-    <nav class="annexes" aria-label="Appendices"><a href="method.html">Method and reproducibility</a><a href="security.html">Security and data handling</a><a href="questions.html" aria-current="true">Questions</a><a href="terms.html">Terms of engagement</a><a href="privacy.html">Privacy</a><a href="accessibility.html">Accessibility</a><a href="contact.html">Contact</a><a href="colophon.html">Colophon</a></nav>
+<div class="colonne"><div class="doc">
+  <p class="lede">Eight objections, the ones a bank's reviewers actually raise. Each answer below is not a promise: it is a mechanism in the source: where it lives, its path is on this page, and where a mechanism has a limit, the limit is here too.</p>
+  <details open><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;What if our fields are not your five?&#8221;</summary><div class="sec-corps"><p>The fields come from <b>your file</b>. In the CSV you pass to the measuring command, every column beyond the first two is a field to extract, named by its header, nothing else to configure. The question put to the models is built from the column name, so a field this repository has never seen gets asked about without anyone writing code.</p><p>Your house rules enter as regexes and become <b>a tier measured like any other</b>. Regexes only: your arbitrary rule code stays yours, and the tool says plainly it cannot see it. A filled&#8209;in questionnaire becomes the assumptions of a run.</p><div class="ap"><span class="ap-t">Try it on one file</span><p>One CSV, one flag. Add your regexes as a free tier with a second flag.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">npm run measure:yours -- --cases=your-file.csv --rules=rules.json</code><span class="sortie">your fields, your rules, measured as tiers</span></div></div><p class="refs"><b>Where it lives</b>src/your-cases.ts:18 &#183; src/your-cases.ts:334</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;Which models run, and which call out?&#8221;</summary><div class="sec-corps"><p>Two extractive encoder models run <b>inside the process</b>, pinned by revision, plus two embedding models for classification; three generative models run through a <b>local Ollama</b>, pinned by digest, and they are optional. On your own file, <code>measure:yours</code> measures the two extractive tiers by default, your regexes as a free tier when you pass <code>--rules</code>, and the three generative tiers when you pass <code>--llm</code>: up to six measured tiers; the human tier is an assumption, never a measurement. The only network call on the measurement path is the generative host, and it is <b>verified local immediately before every call</b>; pointing it at a remote machine makes the tool refuse to start unless an explicit override flag is typed by hand.</p><p>The watching is published too: an egress run observed <b>0 connections over 21 samples</b> during a whole pass on client cases. Its own file states the limit: sampling is a floor, not a kernel capture.</p><div class="ap"><span class="ap-t">Watch it run</span><p>The egress command samples open connections during a pass and publishes hosts and verdict.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">npm run egress</code><span class="sortie">observes the pass; the committed record shows 0 connections</span></div></div><p class="refs"><b>Where it lives</b>src/tiers.ts:556 &#183; egress.json:12</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;Do we need a connection?&#8221;</summary><div class="sec-corps"><p>Almost only once. The first measurement downloads 1.3 GB of pinned model weights from huggingface.co and says so before doing it. After that, nothing: the one call that remained, a tokenizer configuration the model library asked for at revision <code>main</code> on every load, is served from the cache, because the loader places the pinned file under the key the library reads. The test suite downloads nothing, and the public benchmark is the one command that fetches a dataset: it comes down, <b>nothing of yours goes up</b>.</p><p>Closed network: the weights export to a USB drive on one machine and import on yours, <b>every file checked against its SHA&#8209;256 and pinned revision before anything is written</b>, tokenizer configuration included. Under the offline flag the encoder tiers run fully air&#8209;gapped: measured, and held by the suite; a missing model is a <b>named refusal before anything is attempted</b>, never a break mid&#8209;run.</p><div class="ap"><span class="ap-t">Cross the air gap</span><p>Export on a connected machine, import on the closed one; the offline flag seals it.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">npm run poids -- --export /media/usb/cascade-weights</code><span class="sortie">packs the pinned weights for transport</span><code class="cmd">npm run poids -- --import /media/usb/cascade-weights</code><span class="sortie">verifies hash and revision before writing</span></div></div><p class="refs"><b>Where it lives</b>README.md:100 &#183; README.md:111</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;Who sees our records?&#8221;</summary><div class="sec-corps"><p>Nobody. Measurements on your data live in a folder git ignores, so nothing measured can travel into a repository. The file the tool hands back contains <b>aggregates only</b>, and a test holds it: the suite runs the tool on sentinel values and <b>fails if any of them appears in the output</b>.</p><p>The reverse direction holds too: when your own chain is graded, the outcomes file carries <b>verdicts, never the values</b>.</p><div class="ap"><span class="ap-t">Verify the witness</span><p>The sentinel test is in the suite: plant values, run the tool, fail if one leaks into the output.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">npm test</code><span class="sortie">fails if a client value reaches the returned file</span></div></div><p class="refs"><b>Where it lives</b>src/cascade.test.ts:3510 &#183; src/your-cases.ts:1463</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;What if the answer is: change nothing?&#8221;</summary><div class="sec-corps"><p>Then the report says so. Your current chain enters the record <b>as a tier</b>, ranked with the others, and when it wins, the output prints that it wins outright on this sample. Under 20 observations the tool <b>refuses to recommend anything at all</b> rather than dress up noise as advice.</p><p>The repository leans into this: its own README says the answer is rarely &#8220;buy the bigger model&#8221;, the validation dossier has a mandatory <i>What gets worse</i> section, and on the measured corpus <b>3 of the 5 fields are already carried by regexes at zero cost</b>. The cheapest recommendation is on the table from the first line.</p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;How long, and what lands on our machines?&#8221;</summary><div class="sec-corps"><p>The evaluation grant runs <b>30 days</b> on your own data, internally. What installs: Node 24 or newer on macOS or Linux (Windows is not claimed), then about 400 MB of packages and 1.3 GB of weights on first measurement. The published pass took <b>32 minutes of measurement</b> on the machine named in the sealed record. The generative tier is 8 GB more, and optional.</p><p>And before installing anything at all: one script with zero dependencies reads the sealed records on a fresh clone and prints the conclusion <b>in under a second</b>.</p><div class="ap"><span class="ap-t">The one-second version</span><p>On a fresh clone, before npm install, the first answer is already reproducible.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">node src/premiere-reponse.mjs</code><span class="sortie">the conclusion, from the sealed records, no install</span></div></div><p class="refs"><b>Where it lives</b>src/premiere-reponse.mjs:10 &#183; README.md:161</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;What happens to the tool after the engagement?&#8221;</summary><div class="sec-corps"><p>Three tiers, one of them paid. Anyone, with no time limit, may read, study, fork and use the code noncommercially. An evaluating organisation runs it 30 days on its own data. Commercial use is a separately negotiated licence: the public licence, in its own words, <b>is not what a client buys</b>. Stated plainly: it is not an OSI&#8209;approved licence, and some organisations exclude such licences from spontaneous adoption by policy; that has no effect on a negotiated engagement.</p><p>The dependency surface after you fork: <b>50 permissive packages, 1 with obligations, 0 blocking</b>; the one obligation only bites the day the tool ships as a sealed binary, which it does not.</p></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>&#8220;Why should we believe these figures?&#8221;</summary><div class="sec-corps"><p>Because they are <b>recomputed, sealed, signed, and retracted when wrong</b>. The test suite first checks that the README, the landing record and the dossier still match the code, then runs <b>626 tests across 70 files, counted from the sources</b>. The security and licence documents are generated, marked as such, and fail the suite when they drift. Measurement records carry a fingerprint, and a hand&#8209;edited one is refused. Reports are signed; the public key lives in the repository and a bundled script verifies any report without trusting us, and an example report, issued on cascade's own held-out corpus with that key, ships in the repository as <code>rapport-exemple.html</code>, so the verification can be tried before anything is bought.</p><p>The uncomfortable parts are published too: a retraction file lists <b>every published conclusion that turned out to be wrong</b>, and the secret sweep across 633 commits reports 0 undeclared secrets reachable from HEAD: zero among the 20 forms the sweep looks for, which is what a sweep can honestly say.</p><div class="ap"><span class="ap-t">Verify a report</span><p>Any signed report checks against the repository's public key, by your audit team, not by us.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">node src/verifier-rapport.mjs rapport.html</code><span class="sortie">proves origin and integrity, and nothing about correctness</span><code class="cmd">npm test</code><span class="sortie">recomputes every published figure against the sources</span></div></div><p class="refs"><b>Where it lives</b>src/verifier-rapport.mjs:13 &#183; README.md:139</p></div></div></details>
+</div></div>
+</main>
+
+<footer class="pied"><div class="colonne">
+  <div class="pied-h">
+    <p class="pied-p">On your records, on your machine. <em>Nothing leaves the network.</em></p>
+    <span class="sceau">seal 1151f5a1cfaae0c0 &#183; measured, then frozen</span>
   </div>
-</div>
+  <nav class="annexes" aria-label="Appendices"><a href="method.html">Method and reproducibility</a><a href="security.html">Security and data handling</a><a href="questions.html" aria-current="true">Questions</a><a href="terms.html">Terms of engagement</a><a href="privacy.html">Privacy</a><a href="accessibility.html">Accessibility</a><a href="contact.html">Contact</a><a href="colophon.html">Colophon</a></nav>
+</div></footer>
 <script>
-/* l'impression ouvre les sections, puis les referme comme elles étaient */
+const barre = document.querySelector(".barre");
+const poser = () => {
+  barre.classList.toggle("posee", scrollY > 40);
+  barre.classList.toggle("sur-nuit", scrollY <= 40);
+};
+addEventListener("scroll", poser, {passive: true}); poser();
 addEventListener("beforeprint", () => {
   for (const d of document.querySelectorAll("details")) {
     d.dataset.avant = d.open ? "1" : ""; d.open = true; }});
