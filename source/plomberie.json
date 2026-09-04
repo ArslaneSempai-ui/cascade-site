@@ -3,7 +3,7 @@
   "pages": [
     {
       "html": "CONTACT.html",
-      "titre_onglet": "Cascade, contact",
+      "titre_onglet": "Cascade &#183; contact",
       "fno": "Contact",
       "titre": "Bring your questions. <span class=\"deux\">Keep your records.</span>",
       "lede": "The right first message names a figure, not a feeling: every number on this site carries a declared source, so a dispute can start precisely. And it attaches nothing: this tool exists so your documents never travel, and that starts here.",
@@ -44,7 +44,7 @@
     },
     {
       "html": "MENTIONS.html",
-      "titre_onglet": "Cascade, colophon and notices",
+      "titre_onglet": "Cascade &#183; colophon",
       "fno": "Colophon",
       "titre": "The small print, printed large. <span class=\"deux\">Nothing hides in it.</span>",
       "lede": "Who publishes this, under which licences, served from where, and what this site does to its visitors, which is nothing. The one page of a sales site that is usually mumbled; here it follows the same rule as the rest: plain, sourced, short.",

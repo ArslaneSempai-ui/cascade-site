@@ -288,7 +288,7 @@ JS = '''
 '''
 
 PAGE = f'''<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade, the live routing instrument</title>
+<meta charset="utf-8"><title>Cascade &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade: the live instrument">

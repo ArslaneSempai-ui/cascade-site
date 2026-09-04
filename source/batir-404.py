@@ -46,7 +46,7 @@ CSS = '''
 '''
 
 PAGE = f'''<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade, nothing measured here</title>
+<meta charset="utf-8"><title>Cascade &#183; nothing measured here</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
 <meta name="description" content="This address was never measured, never sealed, never published.">

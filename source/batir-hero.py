@@ -109,8 +109,8 @@ SCENES = [
 ]
 
 LEGS = [
-    ("The mean the dashboard shows.",
-     "A file with all five fields right. The number a desk lives with."),
+    ("The dashboard mean.",
+     "All five fields, correct. The number the desk works from."),
     ("What the published routing costs, per 100,000 documents.",
      "The routing aimed at the file. No file comes out worse."),
     ("When every value is delivered, right or wrong.",
@@ -284,7 +284,7 @@ CSS = '''
   .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;gap:26px;padding:120px 24px 90px;position:relative;color:var(--sur-vert);
     background:radial-gradient(130% 105% at 50% -18%,var(--nuit-a),var(--nuit-b) 50%,var(--nuit-c))}
-  .hero .lede{color:var(--sur-vert-pale);margin-top:32px}
+  .hero .lede{color:var(--sur-vert-pale);margin-top:32px;max-width:87ch;text-wrap:wrap}
   .hero .lede b{color:var(--sur-vert)}
   .hero .commande{margin-top:34px;background:color-mix(in srgb,var(--nuit-a) 52%,transparent);
     border-color:color-mix(in srgb,var(--vert-vif) 34%,transparent);
@@ -592,7 +592,7 @@ DONNEES_STRUCTUREES = json.dumps({
 }, ensure_ascii=True)
 
 PAGE = f'''<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade, the routing audit for KYC extraction</title>
+<meta charset="utf-8"><title>Cascade &#183; KYC routing audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade: routing audit, KYC extraction">
@@ -623,9 +623,9 @@ PAGE = f'''<!doctype html><html lang="en">
 <main>
 <section class="hero">
   <h1 class="h1 entree">Where should the next dollar&nbsp;go?</h1>
-  <p class="lede entree">Seven tiers, from a regular expression to a human, measured on your own
-    records. The answer is rarely <b>&ldquo;buy the bigger model&rdquo;</b>, and every figure
-    here can be verified without us.</p>
+  <p class="lede entree">Seven tiers, from a regular expression to a human, measured on your own records.<br>
+    The answer is rarely &ldquo;buy the bigger model&rdquo;, and every figure
+    <b>can be verified by you</b>.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
     <code class="ln">node src/premiere-reponse.mjs</code>

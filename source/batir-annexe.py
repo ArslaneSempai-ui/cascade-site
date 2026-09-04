@@ -37,7 +37,7 @@ PAGES = [
         "nav": "Method and reproducibility",
         "json": "annexe-methode.json",
         "html": "ANNEXE-METHODE.html",
-        "titre_onglet": "Cascade, method and reproducibility",
+        "titre_onglet": "Cascade &#183; method",
         "objet": "rendus/etats/objet-methode.webp",
         "alt": "A matte aluminium balance with two pans at exactly the same "
                "height; the right pan is the site's deep green.",
@@ -46,7 +46,7 @@ PAGES = [
         "nav": "Security and data handling",
         "json": "annexe-securite.json",
         "html": "ANNEXE-SECURITE.html",
-        "titre_onglet": "Cascade, security and data handling",
+        "titre_onglet": "Cascade &#183; security",
         "objet": "rendus/etats/objet-securite.webp",
         "alt": "A matte aluminium padlock; its shackle, closed, is the same "
                "deep green as the site's accents.",
@@ -55,7 +55,7 @@ PAGES = [
         "nav": "Questions",
         "json": "annexe-questions.json",
         "html": "ANNEXE-QUESTIONS.html",
-        "titre_onglet": "Cascade, questions",
+        "titre_onglet": "Cascade &#183; questions",
         "objet": "rendus/etats/objet-questions.webp",
         "alt": "A matte aluminium key lying across the frame; its bow is a "
                "fat green ring.",
@@ -64,7 +64,7 @@ PAGES = [
         "nav": "Terms of engagement",
         "json": "annexe-terms.json",
         "html": "ANNEXE-TERMS.html",
-        "titre_onglet": "Cascade, terms of engagement",
+        "titre_onglet": "Cascade &#183; terms",
         "objet": "rendus/etats/objet-terms.webp",
         "alt": "A thick page with three lines of text, a green signature "
                "stroke, and a pen resting with its tip at the stroke's end.",
@@ -73,7 +73,7 @@ PAGES = [
         "nav": "Privacy",
         "json": "annexe-privacy.json",
         "html": "ANNEXE-PRIVACY.html",
-        "titre_onglet": "Cascade, privacy",
+        "titre_onglet": "Cascade &#183; privacy",
         "objet": "rendus/etats/objet-privacy.webp",
         "alt": "A folder ajar: cream paper showing inside, a green tab on "
                "the cover: nothing leaves it.",
@@ -82,7 +82,7 @@ PAGES = [
         "nav": "Accessibility",
         "json": "annexe-accessibilite.json",
         "html": "ANNEXE-ACCESSIBILITE.html",
-        "titre_onglet": "Cascade, accessibility",
+        "titre_onglet": "Cascade &#183; accessibility",
         "objet": "rendus/etats/objet-accessibilite.webp",
         "alt": "A summit with two slopes: a green ramp rising on the left, "
                "grey steps on the right, arriving at the same platform.",

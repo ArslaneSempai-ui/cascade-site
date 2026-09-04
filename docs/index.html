@@ -1,7 +1,7 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-3+erNSxku4yce/7Gc+4rPntIAuN78zR9+NZbgAYwt80=' 'unsafe-hashes' 'sha256-4dAYCiM2+x8dnife7aUc5dtX16zAJ9Tj35AAYSTQ790=' 'sha256-Utvqpkxqw8XoKvSytPg2q+7TVoGln4i0HR2WJUSBR3Q=' 'sha256-SQ09KnCyRbY3ZkSklpQuYnG0nAkc2n1fpQbVL0Aqc7k=' 'sha256-da/7kqGZ+jX9UQeZiJZweQoomCEWZYpdGysS19xqFHo=' 'sha256-ihdzwgRNw4/2z4pLiRqPeZRMuo+VkMObqIB7AibatFg=' 'sha256-d9uvB55/Sqt8fOSOE43Kvx2tGsNOInc/etIWHgCnzyo=' 'sha256-gkW+5EMDqwIbbfOPIggIAb5xQVJHXe4Hu+JMJOXDpl0=' 'sha256-TGnN8GydzvirxBkZ3v5zg+oYrm0wjQ81OG12/CdHiRc=' 'sha256-GqubTBW2hzcjF2m5zQ8nFaMc5RWyijiJ7GYjezwC2ws=' 'sha256-lrx/NdMYtHJ/Coa8QuZzkFfytc+TVKNED7XQc27+ifY='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-rH5+3nrYLEHRM77Jf8BPebLFY+FUkR1qRRTFfiMx6ME='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
-<meta name="referrer" content="no-referrer"><title>Cascade, the routing audit for KYC extraction</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-4BunZ+zJxKJZUGc5vqrO3W+SZFcqcYVCBu6G5PHNP8U=' 'unsafe-hashes' 'sha256-4dAYCiM2+x8dnife7aUc5dtX16zAJ9Tj35AAYSTQ790=' 'sha256-Utvqpkxqw8XoKvSytPg2q+7TVoGln4i0HR2WJUSBR3Q=' 'sha256-SQ09KnCyRbY3ZkSklpQuYnG0nAkc2n1fpQbVL0Aqc7k=' 'sha256-da/7kqGZ+jX9UQeZiJZweQoomCEWZYpdGysS19xqFHo=' 'sha256-ihdzwgRNw4/2z4pLiRqPeZRMuo+VkMObqIB7AibatFg=' 'sha256-d9uvB55/Sqt8fOSOE43Kvx2tGsNOInc/etIWHgCnzyo=' 'sha256-gkW+5EMDqwIbbfOPIggIAb5xQVJHXe4Hu+JMJOXDpl0=' 'sha256-TGnN8GydzvirxBkZ3v5zg+oYrm0wjQ81OG12/CdHiRc=' 'sha256-GqubTBW2hzcjF2m5zQ8nFaMc5RWyijiJ7GYjezwC2ws=' 'sha256-lrx/NdMYtHJ/Coa8QuZzkFfytc+TVKNED7XQc27+ifY='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-rH5+3nrYLEHRM77Jf8BPebLFY+FUkR1qRRTFfiMx6ME='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta name="referrer" content="no-referrer"><title>Cascade &#183; KYC routing audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -68,7 +68,7 @@
   .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;gap:26px;padding:120px 24px 90px;position:relative;color:var(--sur-vert);
     background:radial-gradient(130% 105% at 50% -18%,var(--nuit-a),var(--nuit-b) 50%,var(--nuit-c))}
-  .hero .lede{color:var(--sur-vert-pale);margin-top:32px}
+  .hero .lede{color:var(--sur-vert-pale);margin-top:32px;max-width:87ch;text-wrap:wrap}
   .hero .lede b{color:var(--sur-vert)}
   .hero .commande{margin-top:34px;background:color-mix(in srgb,var(--nuit-a) 52%,transparent);
     border-color:color-mix(in srgb,var(--vert-vif) 34%,transparent);
@@ -336,9 +336,9 @@
 <main>
 <section class="hero">
   <h1 class="h1 entree">Where should the next dollar&nbsp;go?</h1>
-  <p class="lede entree">Seven tiers, from a regular expression to a human, measured on your own
-    records. The answer is rarely <b>&ldquo;buy the bigger model&rdquo;</b>, and every figure
-    here can be verified without us.</p>
+  <p class="lede entree">Seven tiers, from a regular expression to a human, measured on your own records.<br>
+    The answer is rarely &ldquo;buy the bigger model&rdquo;, and every figure
+    <b>can be verified by you</b>.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone https://github.com/ArslaneSempai-ui/cascade-routing</code>
     <code class="ln">node src/premiere-reponse.mjs</code>
@@ -375,8 +375,8 @@
         <figcaption class="fiche-t"><span>finding 01</span><span class="ft-cote">17.7 points apart</span></figcaption>
         <p class="fiche-phrase">Both numbers are true. Only one leaves your desk.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">94.4<small>%</small></span><span class="leg">The mean the dashboard shows.</span></div>
-          <div class="val"><span class="chiffre vert-v">76.7<small>%</small></span><span class="leg">A file with all five fields right. The number a desk lives with.</span></div>
+          <div class="val"><span class="chiffre pale-v">94.4<small>%</small></span><span class="leg">The dashboard mean.</span></div>
+          <div class="val"><span class="chiffre vert-v">76.7<small>%</small></span><span class="leg">All five fields, correct. The number the desk works from.</span></div>
         </div>
       </figure>
     </div>
