@@ -175,6 +175,25 @@ CSS = '''
     margin-bottom:14px}
   .reserves p{font-size:15px;color:var(--demi);line-height:1.65;max-width:76ch;margin-bottom:10px}
   .reserves b{color:var(--encre)}
+  /* le terminal des trois commandes : le composant « run it yourself » des
+     annexes, posé sur le parchemin ; l'invite $ vit en ::before, elle ne part
+     pas dans le presse-papier */
+  .vos{margin-top:26px}
+  .vos-t{font:500 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--vert-titre);display:block;margin-bottom:8px}
+  .term{max-width:62ch;background:linear-gradient(163deg,var(--nuit-a),var(--nuit-b));
+    border:1px solid color-mix(in srgb,var(--vert-vif) 22%,transparent);
+    border-radius:8px;overflow:hidden;box-shadow:0 6px 18px rgba(20,37,30,.22)}
+  .term-bar{display:flex;gap:.32rem;align-items:center;padding:.42rem .6rem;
+    background:rgba(0,0,0,.28)}
+  .term-bar i{width:7px;height:7px;border-radius:50%;background:var(--sur-vert-pale);opacity:.45}
+  .term-bar span{margin-left:auto;font:500 9px/1 var(--mono);letter-spacing:.14em;
+    text-transform:uppercase;color:var(--sur-vert-pale)}
+  .term-corps{padding:.7rem .9rem .8rem;font:400 12.5px/1.8 var(--mono);color:var(--sur-vert)}
+  .term-corps .cmd{display:block;white-space:pre-wrap;overflow-wrap:break-word}
+  .term-corps .cmd::before{content:"$ ";color:var(--vert-vif);font-weight:600}
+  .term-corps .sortie{display:block;color:var(--sur-vert-pale);opacity:.9}
+  .term-corps .sortie::before{content:"# "}
   .ouvrir-ligne{display:flex;justify-content:flex-end;margin-top:26px}
   .ouvrir{display:inline-flex;align-items:baseline;gap:12px;background:transparent;
     color:var(--vert-titre);text-decoration:none;font-family:var(--texte);font-size:17px;font-weight:600;
@@ -372,7 +391,18 @@ PAGE = f'''<!doctype html><html lang="en">
     field, declared in the tool's own source. It is the only displayed figure that was not measured.</p>
   <p><b>Your documents never touch this page:</b> nothing is uploaded, nothing is fetched, and the
     page's security policy refuses every network call. These are our sealed readings; your records may
-    disagree, and there is one honest way to find out.</p>
+    disagree, and there is one honest way to find out: the tool clones next to your files and
+    measures them there. Your CSV stays where it is; the report lands beside it.</p>
+  <div class="vos" role="group" aria-label="The three commands that measure your own records">
+    <span class="vos-t">The three commands, exactly as they run</span>
+    <div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div>
+    <div class="term-corps">
+      <code class="cmd">git clone {DEPOT_URL}</code>
+      <code class="cmd">npm ci --ignore-scripts</code>
+      <code class="cmd">npm run measure:yours -- --cases=your-file.csv</code>
+      <span class="sortie">nothing leaves your machine; cut the network and it still runs</span>
+    </div></div>
+  </div>
   <div class="ouvrir-ligne"><a class="ouvrir" href="{DEPOT_URL}">Run it on your records <span class="fl" aria-hidden="true">&#8594;</span></a></div>
 </div></section>
 
