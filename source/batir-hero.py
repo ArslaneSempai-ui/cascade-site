@@ -921,9 +921,11 @@ def batir_screening():
     tuiles_rouges = [
         ("Method &amp; what is measured", "What the frontier reads, and what it refuses.", "ANNEXE-SCREENING-METHODE.html", lien(RUBIS, "rendus/etats/objet-screening-methode.webp")),
         ("Security &amp; data handling", "The lists, the seal, and what never leaves.", "ANNEXE-SCREENING-SECURITE.html", lien(RUBIS, "rendus/etats/objet-screening-securite.webp")),
-        ("Terms of engagement", "What the grant allows, for how long, and what a client buys.", lien(RUBIS, "ANNEXE-TERMS.html"), lien(RUBIS, "rendus/etats/objet-terms.webp")),
-        ("Privacy", "No data is collected. Written down, and verifiable.", lien(RUBIS, "ANNEXE-PRIVACY.html"), lien(RUBIS, "rendus/etats/objet-privacy.webp")),
-        ("Accessibility", "Usable by keyboard, by screen reader, and with motion turned off.", lien(RUBIS, "ANNEXE-ACCESSIBILITE.html"), lien(RUBIS, "rendus/etats/objet-accessibilite.webp")),
+        # les pages de la maison, mais l'icône est celle de la page ROUGE : le même objet,
+        # l'accent rubis (Arslane, 6/09 : « sur les icônes 3D de la partie rouge »)
+        ("Terms of engagement", "What the grant allows, for how long, and what a client buys.", lien(RUBIS, "ANNEXE-TERMS.html"), lien(RUBIS, "rendus/etats/objet-screening-terms.webp")),
+        ("Privacy", "No data is collected. Written down, and verifiable.", lien(RUBIS, "ANNEXE-PRIVACY.html"), lien(RUBIS, "rendus/etats/objet-screening-privacy.webp")),
+        ("Accessibility", "Usable by keyboard, by screen reader, and with motion turned off.", lien(RUBIS, "ANNEXE-ACCESSIBILITE.html"), lien(RUBIS, "rendus/etats/objet-screening-accessibilite.webp")),
     ]
     tuiles_html = "".join(f"""
       <a class="tuile" href="{href}">
