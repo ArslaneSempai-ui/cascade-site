@@ -44,7 +44,7 @@
       "phrase": "The tool's rule asks the lower bound of measured recall to reach 90. On 42 written cases no cell of any scenario gets there alone: the best bound stops at 84, the next at 75. That is the honest headline, and the reason the sweep is worth running on your history.",
       "a": "84.2<small>%</small>",
       "leg_a": "the highest lower bound any single cell reaches: amount at 0.50, recall interval [84&#8211;99]",
-      "b": "75.2<small>%</small>",
+      "b": "75<small>%</small>",
       "leg_b": "the next best bound: peer at 0.50, recall interval [75&#8211;95]",
       "cote": "the floor stays unmet",
       "source": {
