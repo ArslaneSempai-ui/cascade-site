@@ -535,9 +535,9 @@ CSS = '''
     transition:transform .4s var(--montee),border-color .3s,box-shadow .4s var(--montee)}
   .ouvrir::before{content:"";position:absolute;inset:0;z-index:0;opacity:0;transition:opacity .4s;
     background:radial-gradient(460px 280px at var(--mx,18%) var(--my,50%),
-      color-mix(in srgb,var(--vert-vif) 34%,transparent),transparent 70%)}
+      color-mix(in srgb,var(--vert-vif) 16%,transparent),transparent 70%)}
   .ouvrir::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-    background:linear-gradient(105deg,transparent 42%,color-mix(in srgb,var(--sur-vert) 9%,transparent) 50%,transparent 58%);
+    background:linear-gradient(105deg,transparent 42%,color-mix(in srgb,var(--sur-vert) 5%,transparent) 50%,transparent 58%);
     transform:translateX(-130%)}
   .ouvrir>*{position:relative;z-index:1}
   .ouvrir-eti{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
@@ -548,13 +548,15 @@ CSS = '''
     font-family:var(--sans);font-size:34px;line-height:1;color:var(--vert-clair);
     border:1px solid color-mix(in srgb,var(--vert-vif) 50%,transparent);
     transition:transform .4s var(--montee),background .3s,color .3s,border-color .3s}
-  .ouvrir:hover,.ouvrir:focus-visible{transform:translateY(-3px);border-color:var(--vert-vif);
-    box-shadow:0 28px 70px color-mix(in srgb,var(--vert-vif) 26%,transparent),
-      inset 0 0 0 1px color-mix(in srgb,var(--vert-vif) 30%,transparent)}
+  /* sobre (Arslane, 7/09 : « c'est moche, plus sobre pour toutes les couleurs ») : pas de
+     disque plein ni de flèche qui tourne ; l'anneau s'éclaire, la flèche glisse, c'est tout */
+  .ouvrir:hover,.ouvrir:focus-visible{transform:translateY(-2px);
+    border-color:color-mix(in srgb,var(--vert-vif) 70%,transparent);
+    box-shadow:0 22px 56px color-mix(in srgb,var(--vert-vif) 14%,transparent)}
   .ouvrir:hover::before,.ouvrir:focus-visible::before{opacity:1}
   .ouvrir:hover::after{transform:translateX(130%);transition:transform 1.1s var(--montee)}
-  .ouvrir:hover .fl,.ouvrir:focus-visible .fl{transform:translateX(10px) rotate(-8deg);
-    background:var(--vert-vif);color:var(--nuit-c);border-color:var(--vert-vif)}
+  .ouvrir:hover .fl,.ouvrir:focus-visible .fl{transform:translateX(8px);
+    border-color:var(--vert-vif);background:color-mix(in srgb,var(--vert-vif) 12%,transparent)}
   @media (max-width:700px){.ouvrir{gap:16px;padding:20px 20px 20px 22px}.ouvrir .fl{width:52px;height:52px;font-size:26px}
     .ouvrir-s{display:none}}
 

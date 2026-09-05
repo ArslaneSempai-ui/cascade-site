@@ -22,7 +22,7 @@ import bpy      # noqa: E402
 import galet    # noqa: E402
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--outil", required=True, choices=["routing", "screening"])
+ap.add_argument("--outil", required=True, choices=["routing", "screening", "monitoring"])
 ap.add_argument("--sortie", default="/tmp/robots")
 ap.add_argument("--large", type=int, default=1400)
 ap.add_argument("--taa", type=int, default=64)
@@ -49,6 +49,13 @@ if args.outil == "screening":
     g.ANT_BSDF.inputs["Metallic"].default_value = 0.35
     teinter_bsdf(g.M_VERT.node_tree.nodes["Principled BSDF"], "#8e1626")
     yeux = "#f3e7e2"
+elif args.outil == "monitoring":
+    # la pierre lapis : boule bleu profond polie, mains assorties, yeux blanc chaud
+    teinter_bsdf(g.ANT_BSDF, "#16346f", emission=0.12)
+    g.ANT_BSDF.inputs["Roughness"].default_value = 0.18
+    g.ANT_BSDF.inputs["Metallic"].default_value = 0.35
+    teinter_bsdf(g.M_VERT.node_tree.nodes["Principled BSDF"], "#1d4189")
+    yeux = "#f0f2ea"
 else:
     yeux = "#bff0d6"
 for oeil in g.YEUX:
@@ -80,6 +87,9 @@ POSES = {
     # le rubis est curieux : penché en avant, la tête inclinée sur le côté (roulis), le
     # regard vers nous, la main gauche qui présente, la droite posée en retrait
     "screening": dict(corps=(9, 0, 6), tete=(5, 13, -8), bg=(8, 72, 0), bd=(2, -22, 0), dard=0.0),
+    # le lapis montre : le bras droit tendu vers le haut et l'avant, la tête qui suit du regard,
+    # le corps à peine cambré, la main gauche au repos
+    "monitoring": dict(corps=(-3, -1, 4), tete=(-7, 0, -9), bg=(0, 8, 0), bd=(-20, -108, 0), dard=-3.0),
 }
 poser(**POSES[args.outil])
 os.makedirs(args.sortie, exist_ok=True)
