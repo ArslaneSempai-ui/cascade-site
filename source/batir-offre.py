@@ -203,7 +203,8 @@ PAGE = f'''<!doctype html><html lang="en">
       <p class="c-plus">everything in the campaign, plus</p>
       <ul class="c-liste">
         <li>Commercial use for your own business</li>
-        <li>The same licence covers <b>every Cascade tool</b>: Routing, Screening and Monitoring, one paper</li>
+        <li>The same licence covers <b>every Cascade tool</b>: Routing, Screening, Monitoring, Scoring, one paper</li>
+        <li>And the <b>Dossier</b>: the cross-tool piece your regulator reads, sealed, verified without us</li>
         <li>The <b>licensed component</b>, not published</li>
         <li>Updates included for every paid term</li>
         <li><b>Recertify</b> on fresh records, re-sealed, on the rhythm you declare</li>
@@ -221,7 +222,7 @@ PAGE = f'''<!doctype html><html lang="en">
     <div class="p-un"><span class="p-no">01</span><span class="p-t">Write</span>
       <p class="p-d"><a href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a>,
         or open an issue on the public repository. Name the figure you care about,
-        and the tool it lives in: <b>Routing</b>, <b>Screening</b> or <b>Monitoring</b>.</p></div>
+        and the tool it lives in: <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b> or <b>Scoring</b>.</p></div>
     <div class="p-un"><span class="p-no">02</span><span class="p-t">Evaluate</span>
       <p class="p-d">Thirty days on your records, at your desk. Nothing to install on our side,
         because there is no our side.</p></div>
