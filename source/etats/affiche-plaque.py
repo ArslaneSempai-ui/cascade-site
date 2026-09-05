@@ -23,7 +23,7 @@ import galet          # noqa: E402
 import mathutils as mu  # noqa: E402
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--accent", default="rubis", choices=["rubis", "vert", "lapis"])
+ap.add_argument("--accent", default="rubis", choices=["rubis", "vert", "lapis", "amethyste", "onyx"])
 ap.add_argument("--sortie", default="/tmp/affiche/plaque.png")
 ap.add_argument("--apercu", action="store_true")
 args = ap.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
@@ -80,6 +80,18 @@ elif args.accent == "lapis":
     g.ANT_BSDF.inputs["Metallic"].default_value = 0.35
     teinter_bsdf(g.M_VERT.node_tree.nodes["Principled BSDF"], "#1d4189")
     yeux = "#a9c6ff"
+elif args.accent == "amethyste":
+    teinter_bsdf(g.ANT_BSDF, "#4a2a86", emission=0.12)
+    g.ANT_BSDF.inputs["Roughness"].default_value = 0.18
+    g.ANT_BSDF.inputs["Metallic"].default_value = 0.35
+    teinter_bsdf(g.M_VERT.node_tree.nodes["Principled BSDF"], "#6a3fb5")
+    yeux = "#d9c6ff"
+elif args.accent == "onyx":
+    teinter_bsdf(g.ANT_BSDF, "#141418", emission=0.06)
+    g.ANT_BSDF.inputs["Roughness"].default_value = 0.14
+    g.ANT_BSDF.inputs["Metallic"].default_value = 0.4
+    teinter_bsdf(g.M_VERT.node_tree.nodes["Principled BSDF"], "#2a2a31")
+    yeux = "#efe9d8"
 else:
     yeux = "#3fe087"
 for oeil in g.YEUX:

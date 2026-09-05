@@ -22,7 +22,7 @@ import bpy      # noqa: E402
 import galet    # noqa: E402
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--outil", required=True, choices=["routing", "screening", "monitoring"])
+ap.add_argument("--outil", required=True, choices=["routing", "screening", "monitoring", "scoring", "dossier"])
 ap.add_argument("--pose", default=None, choices=[None, "penche"],
                 help="penche : la pose de l'instrument (derrière le terminal), même pour toutes les couleurs")
 ap.add_argument("--sortie", default="/tmp/robots")
@@ -58,6 +58,20 @@ elif args.outil == "monitoring":
     g.ANT_BSDF.inputs["Metallic"].default_value = 0.35
     teinter_bsdf(g.M_VERT.node_tree.nodes["Principled BSDF"], "#1d4189")
     yeux = "#f0f2ea"
+elif args.outil == "scoring":
+    # l'améthyste : violet profond poli, mains assorties, yeux blanc chaud
+    teinter_bsdf(g.ANT_BSDF, "#4a2a86", emission=0.12)
+    g.ANT_BSDF.inputs["Roughness"].default_value = 0.18
+    g.ANT_BSDF.inputs["Metallic"].default_value = 0.35
+    teinter_bsdf(g.M_VERT.node_tree.nodes["Principled BSDF"], "#6a3fb5")
+    yeux = "#f3eefa"
+elif args.outil == "dossier":
+    # l'onyx : noir poli, presque sans émission, mains anthracite, yeux ivoire
+    teinter_bsdf(g.ANT_BSDF, "#141418", emission=0.06)
+    g.ANT_BSDF.inputs["Roughness"].default_value = 0.14
+    g.ANT_BSDF.inputs["Metallic"].default_value = 0.4
+    teinter_bsdf(g.M_VERT.node_tree.nodes["Principled BSDF"], "#2a2a31")
+    yeux = "#efe9d8"
 else:
     yeux = "#bff0d6"
 for oeil in g.YEUX:
@@ -92,6 +106,11 @@ POSES = {
     # le lapis montre : le bras droit tendu vers le haut et l'avant, la tête qui suit du regard,
     # le corps à peine cambré, la main gauche au repos
     "monitoring": dict(corps=(-3, -1, 4), tete=(-7, 0, -9), bg=(0, 8, 0), bd=(-20, -108, 0), dard=-3.0),
+    # l'améthyste pèse : les deux bras un peu levés, paumes ouvertes à mi-hauteur, la tête droite
+    # qui regarde l'une des deux mains : il compare
+    "scoring": dict(corps=(4, 2, -6), tete=(2, 6, 10), bg=(-6, 58, 0), bd=(-6, -48, 0), dard=2.0),
+    # l'onyx tient : bras croisés bas devant lui, la tête légèrement baissée, un gardien calme
+    "dossier": dict(corps=(6, 0, 0), tete=(9, 0, 0), bg=(18, 30, 0), bd=(18, -30, 0), dard=0.0),
 }
 # la pose « penché » de l'instrument (poses-rubis.py), la même pour toutes les couleurs
 PENCHE = dict(corps=(16, 0, 0), tete=(22, 0, 0), bg=(-55, -14, 0), bd=(-55, 14, 0))
