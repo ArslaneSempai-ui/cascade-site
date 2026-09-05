@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-YlBxN6qaOOGbt5ZIrJxUTzElto+glMnkjYkTSn/8VgE=' 'unsafe-hashes' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-pSLuSXNp+lviHfpnB6Rhfw3mdP31f0bG3Qn+VYm1k7U=' 'sha256-IrCnJrfcAZS7cSdeeaahtOcm42vGnT9CUd8UyKMs6TA=' 'sha256-jTKkg7EqYLPyZ1VJSyVP9ZynRTtQ2St7KxSHJW9uDYs=' 'sha256-U6d5WVAdjkRV8TmpGXKN4Nm9BMv+FajpU7SN6X1gcuk=' 'sha256-461dEfMeQvojW4w3+hQdcJVGwO/liLqt0M9233YJIxA=' 'sha256-UVzQi1a64n0vbzx7eRQzIlmAQU6a4ukemptD1ZMz8b8=' 'sha256-YlmmoIxwgoNwZNZPRH0iNltIDQ5RRpC6TOdZxUQdvrM=' 'sha256-L6RLrBDPleDGNHf5rZ13Bn/0iEtb9GIeG4oCBMWH11M=' 'sha256-3JLlobUmPOrfKpBkJ4lgFpyl+lyi8PNjZJh9iySS7ro='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-rH5+3nrYLEHRM77Jf8BPebLFY+FUkR1qRRTFfiMx6ME='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-rZ63ohukFnwucmL7wswe/uDgIVbgXfer4U5NKr7+5Ww=' 'unsafe-hashes' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-pSLuSXNp+lviHfpnB6Rhfw3mdP31f0bG3Qn+VYm1k7U=' 'sha256-IrCnJrfcAZS7cSdeeaahtOcm42vGnT9CUd8UyKMs6TA=' 'sha256-jTKkg7EqYLPyZ1VJSyVP9ZynRTtQ2St7KxSHJW9uDYs=' 'sha256-U6d5WVAdjkRV8TmpGXKN4Nm9BMv+FajpU7SN6X1gcuk=' 'sha256-461dEfMeQvojW4w3+hQdcJVGwO/liLqt0M9233YJIxA=' 'sha256-UVzQi1a64n0vbzx7eRQzIlmAQU6a4ukemptD1ZMz8b8=' 'sha256-YlmmoIxwgoNwZNZPRH0iNltIDQ5RRpC6TOdZxUQdvrM=' 'sha256-L6RLrBDPleDGNHf5rZ13Bn/0iEtb9GIeG4oCBMWH11M=' 'sha256-3JLlobUmPOrfKpBkJ4lgFpyl+lyi8PNjZJh9iySS7ro='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-rH5+3nrYLEHRM77Jf8BPebLFY+FUkR1qRRTFfiMx6ME='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Screening &#183; sanctions screening audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/screening/">
@@ -225,6 +225,24 @@
   .film-note{display:flex;justify-content:flex-end;gap:16px;flex-wrap:wrap;margin-top:16px;
     font-size:14px;color:var(--sur-vert-pale)}
   .film-note .ou{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  /* l'affiche composée : la place du film d'un outil AVANT que sa vidéo existe
+     (Arslane, 6/09 : « une partie pour mettre une vidéo sur toutes les couleurs »).
+     Le robot penché de l'outil, sa question, sa nuit ; le jour venu, l'affiche
+     rendue remplace la composition, le lecteur et la note ne bougent pas. */
+  .lecteur .affiche{display:block;aspect-ratio:16/9;position:relative;overflow:hidden;
+    background:radial-gradient(120% 120% at 82% 105%,var(--nuit-a),var(--nuit-c) 70%)}
+  .lecteur .affiche img{position:absolute;right:5%;bottom:-9%;width:34%;height:auto;
+    filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))}
+  .affiche .af-t{position:absolute;left:6%;top:14%;max-width:54%;color:var(--sur-vert)}
+  .affiche .af-eti{display:block;font-family:var(--mono);font-size:clamp(10px,1vw,13px);
+    letter-spacing:.2em;text-transform:uppercase;color:var(--vert-vif);margin-bottom:.9em}
+  .affiche .af-q{display:block;font-size:clamp(20px,3.3vw,48px);font-weight:600;line-height:1.05;
+    letter-spacing:-.02em;text-wrap:balance}
+  /* sur l'affiche composée le bouton quitte le centre (il couvrait la question au
+     téléphone, relu sur capture 375) : en bas à gauche, dans l'air sous le titre */
+  .lecteur .affiche~.jouer{inset:auto auto 9% 6%;margin:0}
+  @media (max-width:700px){.lecteur .affiche~.jouer{width:56px;height:56px}
+    .lecteur .affiche~.jouer svg{width:18px;height:20px;margin-left:4px}}
 
   /* la couture : une bande de papier au double filet entre les deux blocs nuit */
   .couture{background:var(--papier);padding:56px 0}
@@ -475,6 +493,21 @@
     </div>
   </div>
 </section>
+
+<section class="film"><div class="colonne">
+  <h2 class="h2">Cascade Screening, on film.</h2>
+  <p class="film-duree">The five findings, explained</p>
+  <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film of Cascade Screening, opens on YouTube">
+    <span class="affiche" role="img" aria-label="The Screening robot, leaning in, beside the question the film answers">
+      <span class="af-t"><span class="af-eti">Cascade &#183; Screening</span><span class="af-q">Which matcher suffices, at which threshold?</span></span>
+      <img src="../rendus/robot-rubis-penche.webp" alt="">
+    </span>
+    <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
+  </a>
+  <div class="film-note">
+    <span class="ou">hosted on YouTube &#183; link pending upload</span>
+  </div>
+</div></section>
 
 <div class="couture" aria-hidden="true"><div class="colonne">
   <span class="filet"></span>

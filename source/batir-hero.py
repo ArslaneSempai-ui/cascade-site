@@ -442,6 +442,24 @@ CSS = '''
   .film-note{display:flex;justify-content:flex-end;gap:16px;flex-wrap:wrap;margin-top:16px;
     font-size:14px;color:var(--sur-vert-pale)}
   .film-note .ou{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  /* l'affiche composée : la place du film d'un outil AVANT que sa vidéo existe
+     (Arslane, 6/09 : « une partie pour mettre une vidéo sur toutes les couleurs »).
+     Le robot penché de l'outil, sa question, sa nuit ; le jour venu, l'affiche
+     rendue remplace la composition, le lecteur et la note ne bougent pas. */
+  .lecteur .affiche{display:block;aspect-ratio:16/9;position:relative;overflow:hidden;
+    background:radial-gradient(120% 120% at 82% 105%,var(--nuit-a),var(--nuit-c) 70%)}
+  .lecteur .affiche img{position:absolute;right:5%;bottom:-9%;width:34%;height:auto;
+    filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))}
+  .affiche .af-t{position:absolute;left:6%;top:14%;max-width:54%;color:var(--sur-vert)}
+  .affiche .af-eti{display:block;font-family:var(--mono);font-size:clamp(10px,1vw,13px);
+    letter-spacing:.2em;text-transform:uppercase;color:var(--vert-vif);margin-bottom:.9em}
+  .affiche .af-q{display:block;font-size:clamp(20px,3.3vw,48px);font-weight:600;line-height:1.05;
+    letter-spacing:-.02em;text-wrap:balance}
+  /* sur l'affiche composée le bouton quitte le centre (il couvrait la question au
+     téléphone, relu sur capture 375) : en bas à gauche, dans l'air sous le titre */
+  .lecteur .affiche~.jouer{inset:auto auto 9% 6%;margin:0}
+  @media (max-width:700px){.lecteur .affiche~.jouer{width:56px;height:56px}
+    .lecteur .affiche~.jouer svg{width:18px;height:20px;margin-left:4px}}
 
   /* la couture : une bande de papier au double filet entre les deux blocs nuit */
   .couture{background:var(--papier);padding:56px 0}
@@ -658,6 +676,30 @@ def choix_outils(outil):
     return (f'<section class="rideau" id="tools" aria-label="The instruments">'
             f'\n  <span class="rideau-titre">Cascade &#183; {n} instruments, one method</span>'
             f'{pans}\n</section>')
+
+
+def film_html(outil):
+    """LA PLACE DU FILM d'un outil, la même sur chaque couleur : le titre, le lecteur,
+    la note « hosted on YouTube · link pending upload » tant que la vidéo n'est pas
+    en ligne. Sans vidéo rendue, l'affiche est COMPOSÉE (nuit de l'outil, robot
+    penché, question) : aucune durée n'est affichée, parce qu'aucune n'est mesurée ;
+    le vert, dont le film existe, garde son affiche rendue et ses 57 secondes."""
+    return f"""
+<section class="film"><div class="colonne">
+  <h2 class="h2">Cascade {outil["nom"]}, on film.</h2>
+  <p class="film-duree">The five findings, explained</p>
+  <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film of Cascade {outil["nom"]}, opens on YouTube">
+    <span class="affiche" role="img" aria-label="The {outil["nom"]} robot, leaning in, beside the question the film answers">
+      <span class="af-t"><span class="af-eti">Cascade &#183; {outil["nom"]}</span><span class="af-q">{outil["question"]}</span></span>
+      <img src="{lien(outil, 'rendus/' + outil['robots'][0])}" alt="">
+    </span>
+    <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
+  </a>
+  <div class="film-note">
+    <span class="ou">hosted on YouTube &#183; link pending upload</span>
+  </div>
+</div></section>
+"""
 
 
 PAGE = f'''<!doctype html><html lang="en">
@@ -938,7 +980,7 @@ def batir_screening():
     </div>
   </div>
 </section>
-
+{film_html(RUBIS)}
 <div class="couture" aria-hidden="true"><div class="colonne">
   <span class="filet"></span>
   <span class="sceau-c">measured, then frozen &#183; seal {SCEAU_R}</span>

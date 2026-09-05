@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-curVe/oRL5kpsaBAR1gtrVx+wAAv4R9qnTuWZUHrkoA=' 'unsafe-hashes' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-4dAYCiM2+x8dnife7aUc5dtX16zAJ9Tj35AAYSTQ790=' 'sha256-Utvqpkxqw8XoKvSytPg2q+7TVoGln4i0HR2WJUSBR3Q=' 'sha256-SQ09KnCyRbY3ZkSklpQuYnG0nAkc2n1fpQbVL0Aqc7k=' 'sha256-da/7kqGZ+jX9UQeZiJZweQoomCEWZYpdGysS19xqFHo=' 'sha256-ihdzwgRNw4/2z4pLiRqPeZRMuo+VkMObqIB7AibatFg=' 'sha256-d9uvB55/Sqt8fOSOE43Kvx2tGsNOInc/etIWHgCnzyo=' 'sha256-gkW+5EMDqwIbbfOPIggIAb5xQVJHXe4Hu+JMJOXDpl0=' 'sha256-TGnN8GydzvirxBkZ3v5zg+oYrm0wjQ81OG12/CdHiRc=' 'sha256-GqubTBW2hzcjF2m5zQ8nFaMc5RWyijiJ7GYjezwC2ws=' 'sha256-lrx/NdMYtHJ/Coa8QuZzkFfytc+TVKNED7XQc27+ifY='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-rH5+3nrYLEHRM77Jf8BPebLFY+FUkR1qRRTFfiMx6ME='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-whXvTmsVPObu7+1NfU20lK0cFIBfKo5f1K7CuOprdMA=' 'unsafe-hashes' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-4dAYCiM2+x8dnife7aUc5dtX16zAJ9Tj35AAYSTQ790=' 'sha256-Utvqpkxqw8XoKvSytPg2q+7TVoGln4i0HR2WJUSBR3Q=' 'sha256-SQ09KnCyRbY3ZkSklpQuYnG0nAkc2n1fpQbVL0Aqc7k=' 'sha256-da/7kqGZ+jX9UQeZiJZweQoomCEWZYpdGysS19xqFHo=' 'sha256-ihdzwgRNw4/2z4pLiRqPeZRMuo+VkMObqIB7AibatFg=' 'sha256-d9uvB55/Sqt8fOSOE43Kvx2tGsNOInc/etIWHgCnzyo=' 'sha256-gkW+5EMDqwIbbfOPIggIAb5xQVJHXe4Hu+JMJOXDpl0=' 'sha256-TGnN8GydzvirxBkZ3v5zg+oYrm0wjQ81OG12/CdHiRc=' 'sha256-GqubTBW2hzcjF2m5zQ8nFaMc5RWyijiJ7GYjezwC2ws=' 'sha256-lrx/NdMYtHJ/Coa8QuZzkFfytc+TVKNED7XQc27+ifY='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-rH5+3nrYLEHRM77Jf8BPebLFY+FUkR1qRRTFfiMx6ME='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; KYC routing audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/">
@@ -225,6 +225,24 @@
   .film-note{display:flex;justify-content:flex-end;gap:16px;flex-wrap:wrap;margin-top:16px;
     font-size:14px;color:var(--sur-vert-pale)}
   .film-note .ou{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  /* l'affiche composée : la place du film d'un outil AVANT que sa vidéo existe
+     (Arslane, 6/09 : « une partie pour mettre une vidéo sur toutes les couleurs »).
+     Le robot penché de l'outil, sa question, sa nuit ; le jour venu, l'affiche
+     rendue remplace la composition, le lecteur et la note ne bougent pas. */
+  .lecteur .affiche{display:block;aspect-ratio:16/9;position:relative;overflow:hidden;
+    background:radial-gradient(120% 120% at 82% 105%,var(--nuit-a),var(--nuit-c) 70%)}
+  .lecteur .affiche img{position:absolute;right:5%;bottom:-9%;width:34%;height:auto;
+    filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))}
+  .affiche .af-t{position:absolute;left:6%;top:14%;max-width:54%;color:var(--sur-vert)}
+  .affiche .af-eti{display:block;font-family:var(--mono);font-size:clamp(10px,1vw,13px);
+    letter-spacing:.2em;text-transform:uppercase;color:var(--vert-vif);margin-bottom:.9em}
+  .affiche .af-q{display:block;font-size:clamp(20px,3.3vw,48px);font-weight:600;line-height:1.05;
+    letter-spacing:-.02em;text-wrap:balance}
+  /* sur l'affiche composée le bouton quitte le centre (il couvrait la question au
+     téléphone, relu sur capture 375) : en bas à gauche, dans l'air sous le titre */
+  .lecteur .affiche~.jouer{inset:auto auto 9% 6%;margin:0}
+  @media (max-width:700px){.lecteur .affiche~.jouer{width:56px;height:56px}
+    .lecteur .affiche~.jouer svg{width:18px;height:20px;margin-left:4px}}
 
   /* la couture : une bande de papier au double filet entre les deux blocs nuit */
   .couture{background:var(--papier);padding:56px 0}

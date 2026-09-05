@@ -70,6 +70,8 @@ def table_html():
 CSS = '''
   :root{--nuit-a:#33191f;--nuit-b:#241217;--nuit-c:#180b0f;
     --sur:#efe0e2;--sur-pale:#c0a6ab;
+    --papier:#dbd7c5;--papier-haut:#e2ddcb;--encre:#1b1d18;--demi:#4a4739;--pale:#55523f;
+    --filet-clair:#bab7a0;
     --accent-titre:#7a1f2e;--accent-vif:#d64a5c;--accent-clair:#ffc2c9;
     --texte:"Literata",Georgia,serif;--mono:"Roboto Mono",ui-monospace,Menlo,monospace;
     --montee:cubic-bezier(.16,.84,.32,1)}
@@ -168,21 +170,34 @@ CSS = '''
   .b-lecture{min-height:44px}
   .b-rout{display:block;margin-top:6px;font-size:12px;color:var(--sur-pale)}
 
-  .basse{padding:26px 0 90px}
-  .basse h2{font-size:clamp(22px,2.4vw,30px);font-weight:600;letter-spacing:-.01em;margin:38px 0 10px}
-  .basse p{color:var(--sur-pale);max-width:64ch;margin:8px 0}
-  .basse p b{color:var(--sur)}
-  .basse ul{color:var(--sur-pale);max-width:64ch;margin:8px 0 8px 20px;padding:0}
-  .basse li{margin:6px 0}
-  .basse li b{color:var(--sur)}
-  .clone{margin-top:18px;background:color-mix(in srgb,var(--nuit-c) 92%,#000);
-    border:1px solid color-mix(in srgb,var(--accent-vif) 25%,transparent);border-radius:12px;
-    padding:18px 22px;font-family:var(--mono);font-size:13px;line-height:1.9;overflow-x:auto}
-  .clone .ps{color:var(--accent-vif)}
+  /* le bas de page : le PARCHEMIN de la maison, comme l'instrument vert (Arslane,
+     6/09 : « trop de rouge : la partie what this rests on doit être en crème et rouge,
+     le petit terminal peut rester rouge ») ; la nuit rubis reste au héros et au poste */
+  .basse{background:var(--papier);color:var(--encre);padding:64px 0 70px}
+  .basse h2{font-size:clamp(22px,2.4vw,32px);font-weight:600;letter-spacing:-.015em;
+    margin:0 0 14px;color:var(--encre)}
+  .basse h2+ul,.basse h2+p{margin-top:0}
+  .basse ul+h2,.basse p+h2,.basse div+h2{margin-top:40px}
+  .basse p{font-size:15px;color:var(--demi);max-width:76ch;line-height:1.65;margin:8px 0}
+  .basse p b{color:var(--encre)}
+  .basse ul{color:var(--demi);max-width:76ch;margin:8px 0;padding:0;list-style:none;font-size:15px;line-height:1.65}
+  .basse li{margin:0 0 .5rem;padding-left:1.1rem;position:relative}
+  .basse li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:1.5px;background:var(--accent-titre)}
+  .basse li b{color:var(--encre)}
+  .clone-t{font:500 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent-titre);display:block;margin:22px 0 8px}
+  /* le terminal des trois commandes reste en nuit rubis, posé sur le parchemin */
+  .clone{max-width:62ch;background:linear-gradient(163deg,var(--nuit-a),var(--nuit-b));
+    border:1px solid color-mix(in srgb,var(--accent-vif) 30%,transparent);border-radius:8px;
+    padding:14px 18px 16px;font-family:var(--mono);font-size:12.5px;line-height:1.85;overflow-x:auto;
+    color:var(--sur);box-shadow:0 6px 18px rgba(36,18,23,.22)}
+  .clone .ps{color:var(--accent-vif);font-weight:600}
   .clone .note{color:var(--sur-pale);font-size:12px}
-  .pied{padding:26px 0 60px;border-top:1px solid color-mix(in srgb,var(--sur-pale) 14%,transparent);
-    color:var(--sur-pale);font-size:13px}
-  .pied a{color:inherit}
+  .pied{background:var(--nuit-c);color:var(--sur);padding:52px 0}
+  .pied .colonne{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:baseline}
+  .pied-p{font-size:clamp(17px,1.8vw,23px);font-weight:600;margin:0}
+  .pied-p em{font-style:italic;color:var(--accent-clair)}
+  .pied .sceau{color:var(--sur-pale)}
 
   /* la barre se replie comme celle du vert : sous 1080 la nav disparaît, le sceau
      garde sa place ; mesuré au banc des tailles : nav et sceau débordaient à 320-500 */
@@ -296,6 +311,13 @@ JS = '''
 '''
 
 ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
+# la phrase suit l'état du registre : des parenthèses vides « () » se sont affichées
+# le soir où le septième palier est arrivé (relu sur capture)
+PHRASE_ABSENTS = (
+    f"a matcher absent from tonight&#8217;s registry ({ABSENTS}) is a named row, never a guessed column"
+    if ABSENTS else
+    "every matcher of the registry is present tonight; an absent one would be a named row, "
+    "never a guessed column")
 
 PAGE = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade Screening &#183; live instrument</title>
@@ -391,13 +413,13 @@ PAGE = f'''<!doctype html><html lang="en">
       <li><b>Your data.</b> This page cannot read it: no network requests leave it
         (connect-src &#8216;none&#8217;), no third-party resource is loaded, and there is no input
         field to paste a name into.</li>
-      <li><b>Bare rates.</b> Every cell carries its n and its 95&nbsp;% interval; a matcher absent
-        from tonight&#8217;s registry ({ABSENTS}) is a named row, never a guessed column.</li>
+      <li><b>Bare rates.</b> Every cell carries its n and its 95&nbsp;% interval; {PHRASE_ABSENTS}.</li>
     </ul>
     <h2>Measure your own alert history</h2>
     <p>The instrument shows our record. Yours is measured at home, by the tool, and nothing
-      about your file leaves your machine:</p>
-    <div class="clone">
+      about your file leaves your machine.</p>
+    <span class="clone-t">The three commands, exactly as they run</span>
+    <div class="clone" role="group" aria-label="The three commands that measure your own alert history">
       <div><span class="ps">$</span> git clone {DEPOT_URL}.git</div>
       <div><span class="ps">$</span> npm ci --ignore-scripts</div>
       <div><span class="ps">$</span> npm run measure:yours -- --alerts=your-alerts.csv</div>
@@ -408,8 +430,8 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <footer class="pied">
   <div class="colonne">
-    Cascade &#183; Screening &#8212; every figure above is read from the sealed public record,
-    never typed. <a href="{DEPOT_URL}">Repository</a>.
+    <p class="pied-p">On your records, on your machine. <em>Nothing of yours goes up.</em></p>
+    <span class="sceau">seal {D["provenance"]["empreinte"]} &#183; measured, then frozen &#183; <a href="{DEPOT_URL}">repository</a></span>
   </div>
 </footer>
 
