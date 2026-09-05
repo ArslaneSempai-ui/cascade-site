@@ -1,5 +1,5 @@
 {
-  "_": "The five findings of the lapis (Monitoring) hero, in the exact keys of findings-screening.json. Provenance: every figure in a/b/cote is a cell of ~/Documents/cascade-monitoring/releve-public.json at seal `sceau`; the builder refuses to build if the record on disk no longer matches. Each figure keeps its cell address in `source` ({table, palier, seuil, mesure} or {table, compte}); the optional `champ` names which field of the Rate is displayed when it is not `taux` (finding 03 displays lower bounds: champ = 'bas'). Builders may ignore `source`; reviewers and guards re-derive every number from it. The tool's rule behind finding 03 is the same as the whole suite: Wilson lower bound of recall at or above 0.90, then the fewest false alerts. Twin attributions in the phrases are measured, not assumed: at 0.50 the seven false alerts of `amount` are all one-off purchases, and `velocity` trips on payroll, seasonal trade and savings transfers. `annotations` are provisional fractions of the cascading-basins tray (anchor x, anchor y, label x, label y, text): the basins are not rendered yet, and the labels are to be reread against the rendered object before they ship.",
+  "_": "The five findings of the lapis (Monitoring) hero, in the exact keys of findings-screening.json. Provenance: every figure in a/b/cote is a cell of ~/Documents/cascade-monitoring/releve-public.json at seal `sceau`; the builder refuses to build if the record on disk no longer matches. Each figure keeps its cell address in `source` ({table, palier, seuil, mesure} or {table, compte}); the optional `champ` names which field of the Rate is displayed when it is not `taux` (finding 03 displays lower bounds: champ = 'bas'). Builders may ignore `source`; reviewers and guards re-derive every number from it. The tool's rule behind finding 03 is the same as the whole suite: Wilson lower bound of recall at or above 0.90, then the fewest false alerts. Twin attributions in the phrases are measured, not assumed: at 0.50 the seven false alerts of `amount` are all one-off purchases, and `velocity` trips on payroll, seasonal trade and savings transfers. `annotations` are provisional fractions of the cascading-basins tray (anchor x, anchor y, label x, label y, text): positions and texts were reread against the delivered renders (parchemin-01..05, the rack chosen by Arslane): states 2 and 3 are steep side views, so the missed-diodes detail was replaced by what those frames actually show, the bars against the brass line. Every label is 60 characters or fewer, per the builder's rule.",
   "sceau": "692d499018e53e07",
   "findings": [
     {
@@ -12,12 +12,34 @@
       "leg_b": "false alerts on the 42 benign twins, interval [8&#8211;31]: all of them one-off purchases",
       "cote": "one twin in six alarms",
       "source": {
-        "a": { "table": "authored", "palier": "amount", "seuil": "0.50", "mesure": "rappel" },
-        "b": { "table": "authored", "palier": "amount", "seuil": "0.50", "mesure": "fauxPositifs" }
+        "a": {
+          "table": "authored",
+          "palier": "amount",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        },
+        "b": {
+          "table": "authored",
+          "palier": "amount",
+          "seuil": "0.50",
+          "mesure": "fauxPositifs"
+        }
       },
       "annotations": [
-        [0.50, 0.14, 0.16, 0.06, "the first basin: one number, one spillway"],
-        [0.76, 0.30, 0.88, 0.20, "the explained purchase spills with the suspects"]
+        [
+          0.19,
+          0.36,
+          0.08,
+          0.15,
+          "one number, one blade: its bar stops under the brass line"
+        ],
+        [
+          0.235,
+          0.52,
+          0.1,
+          0.74,
+          "seven amber diodes, all the same explained purchase"
+        ]
       ]
     },
     {
@@ -30,12 +52,34 @@
       "leg_b": "false alerts at the same threshold, interval [36&#8211;64]: payroll, season and savings, measured",
       "cote": "half the twins alarm",
       "source": {
-        "a": { "table": "authored", "palier": "velocity", "seuil": "0.50", "mesure": "rappel" },
-        "b": { "table": "authored", "palier": "velocity", "seuil": "0.50", "mesure": "fauxPositifs" }
+        "a": {
+          "table": "authored",
+          "palier": "velocity",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        },
+        "b": {
+          "table": "authored",
+          "palier": "velocity",
+          "seuil": "0.50",
+          "mesure": "fauxPositifs"
+        }
       },
       "annotations": [
-        [0.38, 0.40, 0.12, 0.32, "the counting basin overflows on payday"],
-        [0.68, 0.58, 0.86, 0.48, "structuring drips under it, uncounted"]
+        [
+          0.375,
+          0.42,
+          0.13,
+          0.2,
+          "the counting blade: most archetypes pass under it, unlit"
+        ],
+        [
+          0.405,
+          0.52,
+          0.14,
+          0.78,
+          "half the amber row burns: payday, season, savings"
+        ]
       ]
     },
     {
@@ -48,12 +92,36 @@
       "leg_b": "the next best bound: peer at 0.50, recall interval [75&#8211;95]",
       "cote": "the floor stays unmet",
       "source": {
-        "a": { "table": "authored", "palier": "amount", "seuil": "0.50", "mesure": "rappel", "champ": "bas" },
-        "b": { "table": "authored", "palier": "peer", "seuil": "0.50", "mesure": "rappel", "champ": "bas" }
+        "a": {
+          "table": "authored",
+          "palier": "amount",
+          "seuil": "0.50",
+          "mesure": "rappel",
+          "champ": "bas"
+        },
+        "b": {
+          "table": "authored",
+          "palier": "peer",
+          "seuil": "0.50",
+          "mesure": "rappel",
+          "champ": "bas"
+        }
       },
       "annotations": [
-        [0.50, 0.50, 0.14, 0.42, "no spillway sits low enough on its own"],
-        [0.74, 0.70, 0.88, 0.80, "what one basin misses, another must catch"]
+        [
+          0.52,
+          0.52,
+          0.79,
+          0.22,
+          "the brass line at ninety: no bar reaches it alone"
+        ],
+        [
+          0.315,
+          0.31,
+          0.1,
+          0.52,
+          "the tallest bar is amount's, and it stops short"
+        ]
       ]
     },
     {
@@ -66,12 +134,34 @@
       "leg_b": "the same cell on 126 generated variants, interval [97&#8211;100]: kept apart precisely because it flatters",
       "cote": "never blended",
       "source": {
-        "a": { "table": "authored", "palier": "amount", "seuil": "0.50", "mesure": "rappel" },
-        "b": { "table": "synthetic", "palier": "amount", "seuil": "0.50", "mesure": "rappel" }
+        "a": {
+          "table": "authored",
+          "palier": "amount",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        },
+        "b": {
+          "table": "synthetic",
+          "palier": "amount",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        }
       },
       "annotations": [
-        [0.34, 0.46, 0.10, 0.56, "written cases: the measured half"],
-        [0.66, 0.46, 0.88, 0.56, "generated variants: labelled, apart"]
+        [
+          0.3,
+          0.35,
+          0.11,
+          0.09,
+          "the same blade twice: written cases, then variants"
+        ],
+        [
+          0.595,
+          0.38,
+          0.83,
+          0.11,
+          "only the variants' bar crosses the line: kept apart"
+        ]
       ]
     },
     {
@@ -84,12 +174,30 @@
       "leg_b": "generated suspicious variants behind the synthetic half, natures preserved by construction",
       "cote": "yours replace both",
       "source": {
-        "a": { "table": "authored", "compte": "nSuspicious" },
-        "b": { "table": "synthetic", "compte": "nSuspicious" }
+        "a": {
+          "table": "authored",
+          "compte": "nSuspicious"
+        },
+        "b": {
+          "table": "synthetic",
+          "compte": "nSuspicious"
+        }
       },
       "annotations": [
-        [0.50, 0.26, 0.16, 0.16, "our basins end where your export begins"],
-        [0.64, 0.76, 0.86, 0.86, "measure:yours, two files, at your desk"]
+        [
+          0.805,
+          0.52,
+          0.6,
+          0.18,
+          "the eighth blade is yours: unlit until measured"
+        ],
+        [
+          0.82,
+          0.6,
+          0.68,
+          0.82,
+          "an ivory card, two files, your own alert history"
+        ]
       ]
     }
   ]
