@@ -28,7 +28,7 @@
     "523": "ligne de exigerHoteLocal dans src/tiers.ts — retrouvée par la passe du 31/08",
     "69": "fichiers de tests — README.md:145, même garde",
     "129": "ligne du test de refus dans src/poids.test.ts — retrouvée par la passe du 31/08",
-    "24": "version minimale de Node — package.json:53, engines",
+    "24": "version minimale de Node — package.json:55, engines",
     "295": "ligne du défaut OLLAMA boucle locale dans src/tiers.ts — passe du 31/08",
     "164": "ligne du type Split dans src/corpus.ts — passe du 31/08",
     "47": "ligne du test de partage entre moitiés, src/cascade.test.ts — passe du 31/08",

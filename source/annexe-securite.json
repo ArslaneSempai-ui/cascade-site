@@ -54,7 +54,7 @@
             "n": "yours, against the declared minimum"
           }
         ],
-        "refs": "package.json:53 &#183; src/tiers.ts:295"
+        "refs": "package.json:55 &#183; src/tiers.ts:295"
       }
     },
     {
@@ -97,7 +97,7 @@
       "html": [
         "<p>The tool also <b>watches itself run</b>, sampling open connections during a measurement, and publishes what it saw. That record carries its own stated limit: sampling can show presence, <b>never absence</b>. The guarantee on this page is the guarded code path and the test that patrols it, not the observation.</p>",
         "<p>One more thing a seal cannot promise: <b>permanence</b>. A sealed record proves what was measured on that day's cases; it says nothing about next quarter's. <code>recertify</code> remeasures on fresh records, flags drift in the input, returns a verdict per field, holds or moved, and re&#8209;seals the report: on the rhythm you declare, every ninety days by default.</p>",
-        "<p>And the figures here are guarded the same way as everywhere on this site: <b>626 tests across 70 files</b>, a sentence generated from the sources and re&#8209;checked on every test run, so it cannot silently rot.</p>"
+        "<p>And the figures here are guarded the same way as everywhere on this site: <b>648 tests across 72 files</b>, a sentence generated from the sources and re&#8209;checked on every test run, so it cannot silently rot.</p>"
       ],
       "verif": {
         "t": "Measure the drift",

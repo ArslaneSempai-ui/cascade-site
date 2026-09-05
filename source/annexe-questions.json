@@ -59,7 +59,7 @@
             "n": "verifies hash and revision before writing"
           }
         ],
-        "refs": "README.md:100 &#183; README.md:111"
+        "refs": "README.md:102 &#183; README.md:113"
       }
     },
     {
@@ -102,7 +102,7 @@
             "n": "the conclusion, from the sealed records, no install"
           }
         ],
-        "refs": "src/premiere-reponse.mjs:10 &#183; README.md:161"
+        "refs": "src/premiere-reponse.mjs:10 &#183; README.md:163"
       }
     },
     {
@@ -115,7 +115,7 @@
     {
       "h2": "&#8220;Why should we believe these figures?&#8221;",
       "html": [
-        "<p>Because they are <b>recomputed, sealed, signed, and retracted when wrong</b>. The test suite first checks that the README, the landing record and the dossier still match the code, then runs <b>626 tests across 70 files, counted from the sources</b>. The security and licence documents are generated, marked as such, and fail the suite when they drift. Measurement records carry a fingerprint, and a hand&#8209;edited one is refused. Reports are signed; the public key lives in the repository and a bundled script verifies any report without trusting us, and an example report, issued on cascade's own held-out corpus with that key, ships in the repository as <code>rapport-exemple.html</code>, so the verification can be tried before anything is bought.</p>",
+        "<p>Because they are <b>recomputed, sealed, signed, and retracted when wrong</b>. The test suite first checks that the README, the landing record and the dossier still match the code, then runs <b>648 tests across 72 files, counted from the sources</b>. The security and licence documents are generated, marked as such, and fail the suite when they drift. Measurement records carry a fingerprint, and a hand&#8209;edited one is refused. Reports are signed; the public key lives in the repository and a bundled script verifies any report without trusting us, and an example report, issued on cascade's own held-out corpus with that key, ships in the repository as <code>rapport-exemple.html</code>, so the verification can be tried before anything is bought.</p>",
         "<p>The uncomfortable parts are published too: a retraction file lists <b>every published conclusion that turned out to be wrong</b>, and the secret sweep across 633 commits reports 0 undeclared secrets reachable from HEAD: zero among the 20 forms the sweep looks for, which is what a sweep can honestly say.</p>"
       ],
       "verif": {
@@ -131,7 +131,7 @@
             "n": "recomputes every published figure against the sources"
           }
         ],
-        "refs": "src/verifier-rapport.mjs:13 &#183; README.md:139"
+        "refs": "src/verifier-rapport.mjs:13 &#183; README.md:141"
       }
     }
   ],
