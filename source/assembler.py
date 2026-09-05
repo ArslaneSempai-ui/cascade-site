@@ -31,6 +31,17 @@ BASE_URL = "https://cascade-routing.com/"
 from urllib.parse import urlparse
 PREFIXE = urlparse(BASE_URL).path
 
+# Le sous-dossier de l'outil rouge : ces pages s'émettent QUAND leurs sources
+# existent (les lots S2/S3 les écrivent) ; absentes, l'assembleur le DIT et
+# continue : le vert ne dépend pas du rouge. Présentes, toutes les gardes
+# s'appliquent, plus une : un commentaire « placeholder » refuse la production.
+PROD_SCREENING = {
+    "HERO-SCREENING.html": "screening/index.html",
+    "INSTRUMENT-SCREENING.html": "screening/instrument.html",
+    "ANNEXE-SCREENING-METHODE.html": "screening/method.html",
+    "ANNEXE-SCREENING-SECURITE.html": "screening/security.html",
+}
+
 PROD = {
     "HERO.html": "index.html",
     "INSTRUMENT.html": "instrument.html",
@@ -108,6 +119,8 @@ def entete_prod(t, neuf):
     # la racine et /index.html sont la même page : une seule adresse canonique,
     # la racine, sinon les moteurs comptent deux pages et partagent leur poids
     adresse = BASE_URL if neuf == "index.html" else BASE_URL + neuf
+    if neuf.endswith("/index.html"):
+        adresse = BASE_URL + neuf.removesuffix("index.html")
     extra = (f'<link rel="canonical" href="{adresse}">\n'
              f'<link rel="apple-touch-icon" href="{PREFIXE}apple-touch-icon.png">\n'
              f'<meta name="theme-color" content="#14251e">')
@@ -123,10 +136,28 @@ def entete_prod(t, neuf):
     return t
 
 
-for vieux, neuf in PROD.items():
-    t = (MAQ / vieux).read_text()
+SCREENING_EMISES = {v: n for v, n in PROD_SCREENING.items() if (MAQ / v).exists()}
+for v in PROD_SCREENING:
+    if v not in SCREENING_EMISES:
+        print(f"  screening : {v} absent (lot S2/S3) : non émis, dit ici")
+
+
+def renommer_liens(t, page_screening):
+    """Les noms SOURCE deviennent les noms de production. Dans une page du
+    sous-dossier, une sœur rouge se lie par son nom NU (même dossier) ; depuis
+    la racine, par son chemin complet. Les noms rouges se remplacent d'abord :
+    plus longs, ils contiennent des fragments qui ressemblent aux verts."""
+    for v, n in SCREENING_EMISES.items():
+        t = t.replace(v, n.removeprefix("screening/") if page_screening else n)
     for v, n in PROD.items():
         t = t.replace(v, n)
+    return t
+
+
+for vieux, neuf in {**PROD, **SCREENING_EMISES}.items():
+    t = (MAQ / vieux).read_text()
+    t = renommer_liens(t, neuf.startswith("screening/"))
+    (DOCS / neuf).parent.mkdir(parents=True, exist_ok=True)
     if neuf == "404.html":
         # servie pour N'IMPORTE QUEL chemin manquant : ses liens relatifs
         # doivent se résoudre depuis la racine du site, pas depuis le chemin raté
@@ -134,8 +165,29 @@ for vieux, neuf in PROD.items():
                       f'<meta charset="utf-8"><base href="{PREFIXE}">', 1)
     (DOCS / neuf).write_text(csp(entete_prod(t, neuf)))
 
+# ── le refus du « placeholder » en production, témoin d'abord ────────────────
+# Une page rouge bâtie sur le plateau vert porte un commentaire « placeholder » ;
+# la production la refuse : un brouillon qui ressemble à une page finie se
+# publie par accident, jamais par décision.
+# Le MARQUEUR « <!-- placeholder: » et jamais le mot nu : la prose légitime du
+# site dit « replaced by a placeholder » (Security, Privacy), et une garde qui
+# rougit sur la prose se fait retirer : première passe rouge, mesurée ce soir.
+def _pages_placeholder(dossier):
+    return [str(p.relative_to(dossier)) for p in sorted(dossier.rglob("*.html"))
+            if "<!-- placeholder:" in p.read_text()]
+
+_tp = DOCS / "zz-temoin-placeholder.html"
+_tp.write_text("<!-- placeholder: temoin -->")
+if not _pages_placeholder(DOCS):
+    sys.exit("GARDE CASSÉE : le témoin « placeholder » planté n'a pas été vu")
+_tp.unlink()
+brouillons = _pages_placeholder(DOCS)
+if brouillons:
+    sys.exit(f"PLACEHOLDER en production : {brouillons} : la page attend ses vrais "
+             "rendus (tamis-0*.webp) : elle ne part pas comme ça")
+
 # ── le refus du cadratin : décision du 3 septembre, aucune page ne le porte ──
-fautives = [p.name for p in sorted(DOCS.glob("*.html"))
+fautives = [str(p.relative_to(DOCS)) for p in sorted(DOCS.rglob("*.html"))
             if any(m in p.read_text() for m in ("\u2014", "&#8212;", "&mdash;"))]
 if fautives:
     sys.exit(f"CADRATIN dans les pages bâties : {fautives} : réécrire la source, pas la page")
@@ -165,7 +217,7 @@ def _cles(o):
 INTERDITES = {"aggregateRating", "review", "ratingValue", "reviewCount",
               "bestRating", "worstRating"}
 blocs_vus = {}
-for page in sorted(DOCS.glob("*.html")):
+for page in sorted(DOCS.rglob("*.html")):
     for brut in re.findall(r'<script type="application/ld\+json">(.*?)</script>',
                            page.read_text(), re.S):
         try:
@@ -180,7 +232,7 @@ for page in sorted(DOCS.glob("*.html")):
             if prix.strip() != "0":
                 sys.exit(f"JSON-LD de {page.name} : price={prix} : les prix "
                          "vivent en clair sur la page engagement, pas ici")
-        blocs_vus.setdefault(page.name, []).append(donnees)
+        blocs_vus.setdefault(str(page.relative_to(DOCS)), []).append(donnees)
 
 noeuds_index = blocs_vus.get("index.html", [{}])[0].get("@graph", [])
 types_index = {n.get("@type") for n in noeuds_index}
@@ -198,18 +250,27 @@ publiees = [e["name"] for e in faq.get("mainEntity", [])]
 if publiees != attendues:
     sys.exit("FAQPage : les questions émises ne recomposent pas la source : "
              f"{sorted(set(attendues) ^ set(publiees))}")
+
+# le héros rouge, quand il est émis, porte le même socle de graphe que le vert
+if "screening/index.html" in blocs_vus:
+    types_r = {noeud.get("@type")
+               for noeud in blocs_vus["screening/index.html"][0].get("@graph", [])}
+    if not {"Organization", "SoftwareApplication"} <= types_r:
+        sys.exit(f"screening/index.html : Organization + SoftwareApplication attendus, "
+                 f"vu {sorted(x for x in types_r if x)}")
 print(f"  données structurées : "
       f"{sum(len(v) for v in blocs_vus.values())} blocs valides sur "
       f"{len(blocs_vus)} pages ; FAQ recomposée : {len(publiees)} questions")
 
 # ── les ressources réellement référencées ────────────────────────────────────
 refs = set()
-for page in DOCS.glob("*.html"):
+for page in DOCS.rglob("*.html"):
     for m in re.finditer(r'(?:href|src)="([^"]+)"', page.read_text()):
         u = m.group(1)
         if u.startswith(("http", "#", "data:", "mailto:")):
             continue
-        refs.add(u.split("#")[0])
+        refs.add(str((page.parent / u.split("#")[0]).resolve().relative_to(DOCS.resolve()))
+                 if not u.startswith("/") else u.split("#")[0])
 
 (DOCS / "fontes").mkdir()
 shutil.copy(MAQ / "fontes" / "literata.css", DOCS / "fontes" / "literata.css")
@@ -223,6 +284,11 @@ for w in (MAQ / "rendus" / "etats").glob("objet-*.webp"):
 shutil.copy(MAQ / "rendus" / "affiche-film.jpg", DOCS / "rendus" / "affiche-film.jpg")
 for rb in ("robot-penche.webp", "robot-agrippe.webp"):
     shutil.copy(MAQ / "rendus" / rb, DOCS / "rendus" / rb)
+if SCREENING_EMISES:
+    for rb in ("robot-rubis-penche.webp", "robot-rubis-agrippe.webp"):
+        shutil.copy(MAQ / "rendus" / rb, DOCS / "rendus" / rb)
+    for w in (MAQ / "rendus" / "etats").glob("tamis-*.webp"):
+        shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
 shutil.copy(MAQ / "releve.json", DOCS / "releve.json")
 shutil.copy(MAQ / "og.png", DOCS / "og.png")
 (DOCS / ".nojekyll").write_text("")
@@ -246,11 +312,12 @@ if not HOTE.endswith(".github.io"):
     "Preferred-Languages: en, fr\n"
     f"Canonical: {BASE_URL}.well-known/security.txt\n")
 shutil.copy(MAQ / "apple-touch-icon.png", DOCS / "apple-touch-icon.png")
-publiques = [n for n in PROD.values() if n != "404.html"]
+publiques = ([n for n in PROD.values() if n != "404.html"]
+             + [n for n in SCREENING_EMISES.values()])
 (DOCS / "sitemap.xml").write_text(
     '<?xml version="1.0" encoding="UTF-8"?>\n'
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    + "".join(f"  <url><loc>{BASE_URL}{'' if n == 'index.html' else n}</loc></url>\n"
+    + "".join(f"  <url><loc>{BASE_URL}{'' if n == 'index.html' else n.removesuffix('index.html') if n.endswith('/index.html') else n}</loc></url>\n"
               for n in publiques)
     + "</urlset>\n")
 
@@ -260,28 +327,37 @@ publiques = [n for n in PROD.values() if n != "404.html"]
 # « cannot silently rot ». La règle vérifiable devient donc un refus.
 # Elle dit AUSSI quand elle n'a pas pu regarder : un silence se lirait comme un
 # accord, et c'est exactement le vert vide qu'on cherche à éviter.
-DEPOT = pathlib.Path.home() / "Documents" / "cascade" / "README.md"
-publie = set()
-for page in DOCS.glob("*.html"):
-    publie |= set(re.findall(r"(\d+) tests(?: across (\d+) files)?",
-                             page.read_text()))
-comptes = {n for n, _ in publie}
-fichiers = {f for _, f in publie if f}
-if not DEPOT.exists():
-    print(f"  ! compte de tests NON VÉRIFIÉ : {DEPOT} absent — "
-          f"le site publie {sorted(comptes)} tests / {sorted(fichiers)} fichiers")
-else:
-    m = re.search(r"\*\*(\d+) tests\*\* across (\d+) files", DEPOT.read_text())
+# Chaque OUTIL est vérifié contre SON dépôt : le compte du rouge sur une page
+# rouge, celui du vert sur une page verte. Croiser les deux ferait rougir un
+# site juste : les deux dépôts n'ont pas le même compte, et c'est normal.
+def verifier_comptes(pages, depot, etiquette):
+    publie = set()
+    for page in pages:
+        publie |= set(re.findall(r"(\d+) tests(?: across (\d+) files)?",
+                                 page.read_text()))
+    if not publie:
+        return
+    comptes = {n for n, _ in publie}
+    fichiers = {f for _, f in publie if f}
+    if not depot.exists():
+        print(f"  ! compte de tests {etiquette} NON VÉRIFIÉ : {depot} absent — "
+              f"le site publie {sorted(comptes)} / {sorted(fichiers)}")
+        return
+    m = re.search(r"\*\*(\d+) tests\*\*(?: across (\d+) files)?", depot.read_text())
     if not m:
-        sys.exit(f"la phrase des tests est introuvable dans {DEPOT} — "
+        sys.exit(f"la phrase des tests est introuvable dans {depot} — "
                  f"garde cassée, son silence ne vaut rien")
     vrai_n, vrai_f = m.group(1), m.group(2)
-    if comptes - {vrai_n} or fichiers - {vrai_f}:
-        sys.exit(f"DÉRIVE DU COMPTE DE TESTS : le dépôt dit {vrai_n} tests / "
-                 f"{vrai_f} fichiers, le site publie {sorted(comptes)} / "
-                 f"{sorted(fichiers)} — corriger les JSON avant d'assembler")
-    print(f"  compte de tests vérifié contre le dépôt : {vrai_n} tests, "
-          f"{vrai_f} fichiers")
+    if comptes - {vrai_n} or (vrai_f and fichiers - {vrai_f}):
+        sys.exit(f"DÉRIVE DU COMPTE DE TESTS ({etiquette}) : le dépôt dit {vrai_n} / "
+                 f"{vrai_f}, le site publie {sorted(comptes)} / {sorted(fichiers)} "
+                 f"— corriger les JSON avant d'assembler")
+    print(f"  compte de tests {etiquette} vérifié : {vrai_n} tests")
+
+verifier_comptes(sorted(DOCS.glob("*.html")),
+                 pathlib.Path.home() / "Documents" / "cascade" / "README.md", "routing")
+verifier_comptes(sorted((DOCS / "screening").glob("*.html")) if (DOCS / "screening").exists() else [],
+                 pathlib.Path.home() / "Documents" / "cascade-screening" / "README.md", "screening")
 
 # ── la garde des citations : « Where it lives » doit encore dire vrai ────────
 # Le site invite un relecteur bancaire à OUVRIR chaque chemin. Une citation qui
@@ -295,6 +371,14 @@ citees = set()
 for page in DOCS.glob("*.html"):
     citees |= set(re.findall(r"[A-Za-z0-9_./-]+\.(?:ts|mjs|json|md|js):\d+",
                              page.read_text()))
+citees_rouges = set()
+if (DOCS / "screening").exists():
+    for page in (DOCS / "screening").glob("*.html"):
+        citees_rouges |= set(re.findall(r"[A-Za-z0-9_./-]+\.(?:ts|mjs|json|md|js):\d+",
+                                        page.read_text()))
+    if citees_rouges and not (MAQ / "ancres-citations-screening.json").exists():
+        print(f"  ! citations du rouge NON VÉRIFIÉES : ancres-citations-screening.json "
+              f"absent (lot S3) — {len(citees_rouges)} citées")
 if not ANCRES.exists():
     print(f"  ! citations NON VÉRIFIÉES : {ANCRES.name} absent — {len(citees)} citées")
 elif not OUTIL.exists():
@@ -327,20 +411,29 @@ else:
 # ── le contrôle de liens, témoin d'abord ─────────────────────────────────────
 def liens_casses(dossier):
     casses = []
-    for page in sorted(dossier.glob("*.html")):
+    for page in sorted(dossier.rglob("*.html")):
         for m in re.finditer(r'(?:href|src)="([^"]+)"', page.read_text()):
             u = m.group(1).split("#")[0]
             if u.startswith(("http", "data:", "mailto:")) or not u:
                 continue
-            # racine-relatif sous le préfixe du site : {PREFIXE}x → x,
-            # et le préfixe nu est le répertoire — servi comme index.html
+            # racine-relatif sous le préfixe du site : {PREFIXE}x → x ; sinon
+            # RELATIF AU RÉPERTOIRE DE LA PAGE (../x depuis screening/), et un
+            # répertoire se sert comme son index.html
             if u.startswith(PREFIXE):
-                u = u.removeprefix(PREFIXE) or "index.html"
+                cible = dossier / (u.removeprefix(PREFIXE) or "index.html")
             elif u.startswith("/"):
-                casses.append(f"{page.name} → {m.group(1)} (racine hors préfixe)")
+                casses.append(f"{page.relative_to(dossier)} → {m.group(1)} (racine hors préfixe)")
                 continue
-            if not (dossier / u).exists():
-                casses.append(f"{page.name} → {m.group(1)}")
+            else:
+                cible = (page.parent / u).resolve()
+                d = dossier.resolve()
+                if d != cible and d not in cible.parents:
+                    casses.append(f"{page.relative_to(dossier)} → {m.group(1)} (sort du site)")
+                    continue
+            if cible.is_dir():
+                cible = cible / "index.html"
+            if not cible.exists():
+                casses.append(f"{page.relative_to(dossier)} → {m.group(1)}")
     return casses
 
 temoin = DOCS / "zz-temoin.html"

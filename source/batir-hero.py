@@ -683,3 +683,260 @@ PAGE = f'''<!doctype html><html lang="en">
 assert "—" not in PAGE, "un cadratin s'est glissé dans la page"
 (BASE / "HERO.html").write_text(PAGE, encoding="utf-8")
 print("HERO.html", f"{len(PAGE) / 1e3:.0f} ko")
+
+
+# ═════════════════════════ LE CATALOGUE : bâtir(outil) ═════════════════════════
+# Le vert ci-dessus reste émis tel quel, à l'octet : c'est la contrainte du lot
+# S1 (« la paramétrisation ne doit rien bouger »). Le rubis se bâtit ICI, par la
+# même structure d'écrans, avec les paramètres de source/outil.py et les textes
+# du lot S3 (findings-screening.json). Une page rouge sans ses données ne se
+# bâtit pas : l'absence est DITE, jamais improvisée.
+from outil import OUTILS, PALETTE_VERTE, PALETTE_RUBIS, lire_releve_scelle, lien
+
+RUBIS = OUTILS["screening"]
+FINDINGS_SCREENING = BASE / "findings-screening.json"
+
+
+def _tamis_dispo():
+    """Les cinq états du plateau rouge, fournis par le chef. Tant qu'ils manquent,
+    la page se bâtit sur l'image verte AVEC un commentaire « placeholder » que
+    l'assembleur refuse en production : la garde d'abord, l'image ensuite."""
+    return all((BASE / "rendus" / "etats" / f"tamis-0{i}.webp").exists() for i in range(1, 6))
+
+
+def _image_etat(i):
+    """Le chemin est relatif à la PAGE, qui vit dans le sous-dossier : lien()
+    porte le ../ — le contrôle de liens de l'assembleur a attrapé la version
+    nue à la première passe, c'est son travail."""
+    if _tamis_dispo():
+        return lien(RUBIS, f"rendus/etats/tamis-0{i}.webp"), ""
+    return (lien(RUBIS, f"rendus/etats/objet-0{i}.webp"),
+            f"<!-- placeholder: tamis-0{i}.webp pending, green plateau shown -->")
+
+
+def _scene_screening(i, f):
+    """La scène rouge : même squelette que scene_html, données du lot S3."""
+    lignes, etiquettes = "", ""
+    for (ax, ay, lx, ly, txt) in f.get("annotations", []):
+        x1, y1 = MX + lx * IW, ly * IH
+        x2, y2 = MX + ax * IW, ay * IH
+        lignes += (f'<line x1="{x1:.0f}" y1="{y1:.0f}" x2="{x2:.0f}" y2="{y2:.0f}" pathLength="1"/>'
+                   f'<circle cx="{x2:.0f}" cy="{y2:.0f}" r="4"/>')
+        etiquettes += f'<span class="ap-eti" style="left:{x1 / 14.20:.1f}%;top:{y1 / 10.0:.1f}%">{txt}</span>'
+    appels = f'<svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true">{lignes}</svg>{etiquettes}'
+    img, marque = _image_etat(i + 1)
+    return f"""
+    <div class="scene{' actif' if i == 0 else ''}" id="scene-{i}" data-i="{i}">{marque}
+      <img class="objet" src="{img}"
+        alt="The sieve tower, state {f['num']}: {f['titre']}">
+      {appels}
+      <figure class="fiche">
+        <figcaption class="fiche-t"><span>finding {f['num']}</span><span class="ft-cote">{f['cote']}</span></figcaption>
+        <p class="fiche-phrase">{f['phrase']}</p>
+        <div class="paire">
+          <div class="val"><span class="chiffre pale-v">{f['a']}</span><span class="leg">{f['leg_a']}</span></div>
+          <div class="val"><span class="chiffre vert-v">{f['b']}</span><span class="leg">{f['leg_b']}</span></div>
+        </div>
+      </figure>
+    </div>"""
+
+
+def _rail_screening(findings):
+    items = "".join(
+        f"""<li><button class="jalon{' actif' if i == 0 else ''}" data-i="{i}" aria-label="Go to finding {f['num']}: {f['titre']}">
+        <img class="j-vig" src="{_image_etat(i + 1)[0]}" alt="">
+        <span class="j-num">{f['num']}</span><span class="j-corps"><span class="j-titre">{f['titre']}</span>
+        <span class="j-cote">{f['cote']}</span></span></button></li>""" for i, f in enumerate(findings))
+    return f'<nav class="rail" aria-label="Findings"><span class="jauge" aria-hidden="true"><i></i></span><ul>{items}</ul></nav>'
+
+
+def choix_outils(outil):
+    """L'emplacement du CHOIX DES OUTILS sur le héros de marque. La forme finale
+    vient des maquettes d'Arslane (fonction fournie par le chef) ; en attendant,
+    deux liens sobres. Le VERT rend vide tant que cette fonction n'est pas
+    arrivée : la contrainte à l'octet du lot S1 interdit d'y toucher avant, et le
+    rouge n'est de toute façon pas encore servi. Une ligne à changer ici le jour
+    venu, pour les deux pages à la fois."""
+    if outil["id"] == "routing":
+        return ""
+    return ('<nav class="choix-outils entree" aria-label="Tools">'
+            '<a href="../HERO.html">Routing</a>'
+            '<span aria-current="page">Screening</span></nav>')
+
+
+def batir_screening():
+    if not FINDINGS_SCREENING.exists():
+        print("HERO-SCREENING.html non bâti : findings-screening.json absent (lot S3) : "
+              "l'absence est dite, rien n'est improvisé")
+        return False
+    RELEVE = lire_releve_scelle(RUBIS["releve"])
+    SCEAU_R = RELEVE["empreinte"]
+    _f = json.loads(FINDINGS_SCREENING.read_text())
+    if _f.get("sceau") != SCEAU_R:
+        sys.exit(f"findings-screening.json cite le scellé {_f.get('sceau')} mais le relevé "
+                 f"public porte {SCEAU_R} : les textes ont dérivé du relevé, lot S3 à resceller")
+    FINDINGS = _f["findings"]
+    if len(FINDINGS) != 5:
+        sys.exit(f"findings-screening.json porte {len(FINDINGS)} findings : la séquence en veut 5")
+
+    _m = re.search(r"\*\*(\d+) tests\*\* across (\d+) files",
+                   (RUBIS["outil_chemin"] / "README.md").read_text())
+    if not _m:
+        sys.exit("le compte de tests est introuvable dans le README de cascade-screening")
+    n_tests_r = _m.group(1)
+
+    css_r = CSS.replace(PALETTE_VERTE, PALETTE_RUBIS)
+    assert css_r != CSS, "la palette verte n'a pas été trouvée dans le CSS : l'alias rubis n'a rien remplacé"
+    # Le style du choix d'outils vit UNIQUEMENT côté rubis tant que le vert est
+    # tenu à l'octet : le jour de la fonction du chef, il monte dans le CSS commun.
+    css_r += """
+  .choix-outils{display:flex;gap:18px;align-items:center;font-family:var(--mono);font-size:12px;
+    letter-spacing:.14em;text-transform:uppercase}
+  .choix-outils a{color:var(--sur-vert-pale);text-decoration:none;padding:6px 2px}
+  .choix-outils a:hover{color:var(--sur-vert);text-decoration:underline;
+    text-decoration-color:var(--vert-vif)}
+  .choix-outils [aria-current]{color:var(--vert-clair);border-bottom:2px solid var(--vert-vif);
+    padding:6px 2px 4px}
+"""
+    p = RUBIS["prefixe_racine"]
+
+    donnees = json.dumps({
+        "@context": "https://schema.org",
+        "@graph": [
+            {"@type": "Organization", "@id": "https://cascade-routing.com/#org",
+             "name": "Cascade", "url": "https://cascade-routing.com/",
+             "logo": "https://cascade-routing.com/og.png",
+             "email": "contact@cascade-routing.com"},
+            {"@type": "SoftwareApplication", "name": "Cascade Screening",
+             "url": "https://cascade-routing.com/screening/",
+             "applicationCategory": "DeveloperApplication",
+             "operatingSystem": "macOS, Linux (Node 24+)",
+             "downloadUrl": RUBIS["depot"],
+             "description": "A sanctions-screening audit: which name matcher suffices, "
+                            "at which threshold, measured on your own alert history. "
+                            "Nothing of yours goes up.",
+             "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
+                        "description": "Thirty-day evaluation on your own alert history, "
+                                       "granted in the public licence."},
+             "publisher": {"@id": "https://cascade-routing.com/#org"}},
+        ],
+    }, ensure_ascii=True)
+
+    scenes_r = "".join(_scene_screening(i, f) for i, f in enumerate(FINDINGS))
+    tuiles_rouges = [
+        ("Method &amp; what is measured", "What the frontier reads, and what it refuses.", "ANNEXE-SCREENING-METHODE.html", lien(RUBIS, "rendus/etats/objet-methode.webp")),
+        ("Security &amp; data handling", "The lists, the seal, and what never leaves.", "ANNEXE-SCREENING-SECURITE.html", lien(RUBIS, "rendus/etats/objet-securite.webp")),
+        ("Terms of engagement", "What the grant allows, for how long, and what a client buys.", lien(RUBIS, "ANNEXE-TERMS.html"), lien(RUBIS, "rendus/etats/objet-terms.webp")),
+        ("Privacy", "No data is collected. Written down, and verifiable.", lien(RUBIS, "ANNEXE-PRIVACY.html"), lien(RUBIS, "rendus/etats/objet-privacy.webp")),
+        ("Accessibility", "Usable by keyboard, by screen reader, and with motion turned off.", lien(RUBIS, "ANNEXE-ACCESSIBILITE.html"), lien(RUBIS, "rendus/etats/objet-accessibilite.webp")),
+    ]
+    tuiles_html = "".join(f"""
+      <a class="tuile" href="{href}">
+        <span class="tuile-img"><img src="{img}" alt=""></span>
+        <span class="tuile-corps"><span class="tuile-t">{titre}</span>
+        <span class="tuile-d">{desc}</span></span>
+        <span class="tuile-fl" aria-hidden="true">&#8594;</span>
+      </a>""" for titre, desc, href, img in tuiles_rouges)
+
+    page = f"""<!doctype html><html lang="en">
+<meta charset="utf-8"><title>Cascade Screening &#183; sanctions screening audit</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cascade Screening: which matcher suffices, at which threshold">
+<meta property="og:description" content="A sanctions-screening audit: which name matcher suffices, at which threshold, measured on your own alert history. Nothing of yours goes up.">
+<meta property="og:url" content="https://cascade-routing.com/screening/">
+<meta property="og:image" content="https://cascade-routing.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="A sanctions-screening audit: which name matcher suffices, at which threshold, measured on your own alert history. Nothing of yours goes up.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='{RUBIS["favicon_accent"]}'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="{p}fontes/literata.css">
+<link rel="stylesheet" href="{p}fontes/roboto-mono.css">
+<script type="application/ld+json">{donnees}</script>
+<script>document.documentElement.classList.add("js")</script>
+<style>{css_r}</style>
+<header class="barre sur-nuit">
+  <a class="marque" href="{lien(RUBIS, 'HERO.html')}">CASCADE</a>
+  <nav aria-label="Site">
+    <a href="INSTRUMENT-SCREENING.html">Instrument</a>
+    <a href="{lien(RUBIS, 'ENGAGEMENT.html')}">Pricing</a>
+    <a href="ANNEXE-SCREENING-METHODE.html">Method</a>
+    <a href="ANNEXE-SCREENING-SECURITE.html">Security</a>
+    <a href="{lien(RUBIS, 'CONTACT.html')}">Contact</a>
+  </nav>
+  <span class="sceau">seal {SCEAU_R} &#183; measured, then frozen</span>
+</header>
+
+<main>
+<section class="hero">
+  {choix_outils(RUBIS)}
+  <h1 class="h1 entree">{RUBIS["question"]}</h1>
+  <p class="lede entree">Six name matchers, from strict equality to character n&#8209;grams, swept across fifty&#8209;one thresholds.<br>
+    Recall and false alerts carry their intervals, and every figure
+    <b>can be verified by you</b>.</p>
+  <div class="commande entree" role="group" aria-label="The measurement on your own alert history">
+    <code class="ln">git clone {RUBIS["depot"]}</code>
+    <code class="ln">npm ci --ignore-scripts</code>
+    <code class="ln">npm run measure:yours -- --alerts=your-alerts.csv</code>
+    <span class="note">Your alert history, measured on your machine. Nothing of yours goes up.</span>
+  </div>
+  <div class="cue" aria-hidden="true"><span>scroll</span><span class="fil"></span></div>
+</section>
+
+<section class="sequence" aria-label="The five findings">
+  <div class="colle">
+    {_rail_screening(FINDINGS)}
+    <div class="theatre">
+      <div class="scenes">{scenes_r}</div>
+    </div>
+  </div>
+</section>
+
+<div class="couture" aria-hidden="true"><div class="colonne">
+  <span class="filet"></span>
+  <span class="sceau-c">measured, then frozen &#183; seal {SCEAU_R}</span>
+  <span class="filet"></span>
+</div></div>
+
+<section class="instrument"><div class="colonne">
+  <h2 class="h2">Pick any cell, read what your threshold costs.</h2>
+  <p class="t-note">The full grid: every matcher at every threshold, recall and false alerts with
+    their intervals, read live from the sealed public record.</p>
+  <div class="ouvrir-ligne"><a class="ouvrir" href="INSTRUMENT-SCREENING.html">Open the live instrument <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+</div></section>
+
+<section class="menus"><div class="colonne">
+  <h2 class="h2">The appendices your reviewers will ask for.</h2>
+  <div class="grille">{tuiles_html}</div>
+  <div class="rangee-fine">
+    <a class="lien-fin" href="{lien(RUBIS, 'ENGAGEMENT.html')}">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="{lien(RUBIS, 'CONTACT.html')}">Contact <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="{lien(RUBIS, 'MENTIONS.html')}">The fine print <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="{RUBIS["depot"]}">The repository, public <span aria-hidden="true">&#8594;</span></a>
+  </div></div></section>
+</main>
+
+<footer class="pied"><div class="colonne">
+  <p class="pied-p">On your records, on your machine. <em>Nothing of yours goes up.</em></p>
+  <span class="sceau">{n_tests_r} tests &#183; seal {SCEAU_R}</span>
+</div></footer>
+
+<script>{JS}</script>
+"""
+    assert "\u2014" not in page, "un cadratin s'est glissé dans la page rouge"
+    (BASE / "HERO-SCREENING.html").write_text(page, encoding="utf-8")
+    etat = "états tamis" if _tamis_dispo() else "PLACEHOLDERS (plateau vert) : refusé en prod"
+    print("HERO-SCREENING.html", f"{len(page) / 1e3:.0f} ko", "·", etat)
+    return True
+
+
+def batir(outil_id):
+    """Le point d'entrée du catalogue : « routing » est déjà émis à l'import
+    (le chemin historique, à l'octet) ; « screening » s'émet ici."""
+    if outil_id == "routing":
+        return True
+    if outil_id == "screening":
+        return batir_screening()
+    sys.exit(f"outil inconnu : {outil_id}")
+
+
+batir("screening")
