@@ -325,7 +325,7 @@ PAGE = f'''<!doctype html><html lang="en">
   <a class="marque" href="HERO.html">CASCADE</a>
   <nav aria-label="Site">
     <a href="INSTRUMENT.html" aria-current="page">Instrument</a>
-    <a href="ENGAGEMENT.html">Engagement</a>
+    <a href="ENGAGEMENT.html">Pricing</a>
     <a href="ANNEXE-METHODE.html">Method</a>
     <a href="ANNEXE-SECURITE.html">Security</a>
     <a href="ANNEXE-QUESTIONS.html">Questions</a>
@@ -336,9 +336,9 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <main>
 <section class="tete"><div class="colonne">
-  <h1 class="h1">Take the instrument. It answers live.</h1>
-  <p class="lede">One tier per field: click any cell, read what your routing costs and how much it gets
-    right. Or slide the budget and let the enumeration decide, the way the tool does:
+  <h1 class="h1">Test the instrument. It answers live.</h1>
+  <p class="lede">One tier per field. Click any cell to see what your routing costs and how often it
+    gets it right. Or set your budget and let the enumeration choose, the way the tool does:
     <b>highest accuracy first, cheaper on a tie</b>.</p>
 </div></section>
 
@@ -383,16 +383,17 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section class="reserves"><div class="colonne">
   <h2>What this instrument rests on, and what it refuses.</h2>
-  <p><b>The prices are assumed, and say so:</b> the small and large tiers are billed at assumed
-    per-call rates, the generative tiers at their frozen measured latency times an assumed machine
-    cost, the human tier at an assumed pace and salary. Change the assumptions and the dollars move;
-    the accuracies do not.</p>
-  <p><b>The human column is an assumption, never a measurement:</b> {D["humanAccuracy"]:.0f}% on every
-    field, declared in the tool's own source. It is the only displayed figure that was not measured.</p>
-  <p><b>Your documents never touch this page:</b> nothing is uploaded, nothing is fetched, and the
-    page's security policy refuses every network call. These are our sealed readings; your records may
-    disagree, and there is one honest way to find out: the tool clones next to your files and
-    measures them there. Your CSV stays where it is; the report lands beside it.</p>
+  <p><b>The prices are assumed, and say so.</b> The small and large tiers use assumed per-call
+    rates. The generative tiers use their measured latency against an assumed machine cost. The
+    human tier uses an assumed pace and salary. <b>Change the assumptions and the dollars move.
+    The accuracies do not.</b></p>
+  <p><b>The human column is the one exception: an assumption, not a measurement.</b>
+    {D["humanAccuracy"]:.0f}% on every field, declared in the tool's own source. Every other
+    accuracy shown here was measured.</p>
+  <p><b>Your documents never touch this page.</b> Nothing is uploaded, nothing is fetched, and the
+    page's security policy refuses every network call.</p>
+  <p><b>These are our sealed readings. Now test them against yours.</b> The tool clones next to
+    your files and measures them there: your CSV stays where it is, the report lands beside it.</p>
   <div class="vos" role="group" aria-label="The three commands that measure your own records">
     <span class="vos-t">The three commands, exactly as they run</span>
     <div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div>

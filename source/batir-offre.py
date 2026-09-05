@@ -104,7 +104,7 @@ CSS = '''
   /* ── le refus, puis l'appel ── */
   .refus{padding:34px 0 80px}
   .refus-carte{border:1px solid color-mix(in srgb,var(--sur-vert-pale) 22%,transparent);
-    border-radius:12px;padding:20px 24px;display:flex;gap:24px;align-items:baseline;flex-wrap:wrap}
+    border-radius:12px;padding:20px 24px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
   .refus-carte p{flex:1;min-width:320px;font-size:14.5px;color:var(--sur-vert-pale);line-height:1.6}
   .refus-carte b{color:var(--sur-vert)}
 
@@ -149,7 +149,7 @@ PAGE = f'''<!doctype html><html lang="en">
   <a class="marque" href="HERO.html">CASCADE</a>
   <nav aria-label="Site">
     <a href="INSTRUMENT.html">Instrument</a>
-    <a href="ENGAGEMENT.html" aria-current="page">Engagement</a>
+    <a href="ENGAGEMENT.html" aria-current="page">Pricing</a>
     <a href="ANNEXE-METHODE.html">Method</a>
     <a href="ANNEXE-SECURITE.html">Security</a>
     <a href="ANNEXE-QUESTIONS.html">Questions</a>
@@ -161,9 +161,9 @@ PAGE = f'''<!doctype html><html lang="en">
 <main>
 <section class="tete"><div class="colonne">
   <h1 class="h1">What an engagement buys.</h1>
-  <p class="lede">Three steps, and the order is the argument: <b>try it free on your own records</b>,
-    then buy one sealed campaign, then license the instrument for the year. Nothing here asks
-    for trust before measurement.</p>
+  <p class="lede"><b>Proof before commitment.</b><br>Test the instrument free on your own records.
+    Run one sealed campaign when you are ready. Then license it for the year, when the results
+    make the case.</p>
 </div></section>
 
 <section aria-label="The three steps"><div class="colonne">
@@ -236,7 +236,7 @@ PAGE = f'''<!doctype html><html lang="en">
       words, nothing more; the burden stays on the measurement. External publication of engagement
       results is excluded from day one. The full terms are on
       <a href="ANNEXE-TERMS.html">the terms page</a>, in the same words the paper uses.</p>
-    <a class="cta" href="CONTACT.html">Start with a message <span class="fl" aria-hidden="true">&#8594;</span></a>
+    <a class="cta" href="CONTACT.html">Contact us <span class="fl" aria-hidden="true">&#8594;</span></a>
   </div>
 </div></section>
 </main>

@@ -195,11 +195,11 @@ def rail_html():
 
 MENUS = [
     ("methode", "Method &amp; reproducibility", "One method, no secrets. Run it twice, compare.", "ANNEXE-METHODE.html"),
-    ("securite", "Security &amp; data handling", "Every place the tool touches, checked rather than described.", "ANNEXE-SECURITE.html"),
+    ("securite", "Security &amp; data handling", "Every place the tool touches.", "ANNEXE-SECURITE.html"),
     ("questions", "Questions", "Eight objections a bank's reviewers actually raise.", "ANNEXE-QUESTIONS.html"),
     ("terms", "Terms of engagement", "What the grant allows, for how long, and what a client buys.", "ANNEXE-TERMS.html"),
-    ("privacy", "Privacy", "What is collected: nothing. Written down, verifiable.", "ANNEXE-PRIVACY.html"),
-    ("accessibilite", "Accessibility", "The page holds without a mouse, without motion, without sight.", "ANNEXE-ACCESSIBILITE.html"),
+    ("privacy", "Privacy", "No data is collected. Written down, and verifiable.", "ANNEXE-PRIVACY.html"),
+    ("accessibilite", "Accessibility", "Usable by keyboard, by screen reader, and with motion turned off.", "ANNEXE-ACCESSIBILITE.html"),
 ]
 
 
@@ -215,9 +215,9 @@ def menus_html():
       <h2 class="h2">The appendices your reviewers will ask for.</h2>
       <div class="grille">{tuiles}</div>
       <div class="rangee-fine">
-        <a class="lien-fin" href="ENGAGEMENT.html">The engagement, in figures <span aria-hidden="true">&#8594;</span></a>
+        <a class="lien-fin" href="ENGAGEMENT.html">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>
         <a class="lien-fin" href="CONTACT.html">Contact <span aria-hidden="true">&#8594;</span></a>
-        <a class="lien-fin" href="MENTIONS.html">Colophon <span aria-hidden="true">&#8594;</span></a>
+        <a class="lien-fin" href="MENTIONS.html">The fine print <span aria-hidden="true">&#8594;</span></a>
         <a class="lien-fin" href="{DEPOT_URL}">The repository, public <span aria-hidden="true">&#8594;</span></a>
       </div></div></section>'''
 
@@ -282,7 +282,7 @@ CSS = '''
 
   /* le héros */
   .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;gap:26px;padding:120px 24px 90px;position:relative;color:var(--sur-vert);
+    text-align:center;gap:26px;padding:120px 24px 130px;position:relative;color:var(--sur-vert);
     background:radial-gradient(130% 105% at 50% -18%,var(--nuit-a),var(--nuit-b) 50%,var(--nuit-c))}
   .hero .lede{color:var(--sur-vert-pale);margin-top:32px;max-width:87ch;text-wrap:wrap}
   .hero .lede b{color:var(--sur-vert)}
@@ -611,7 +611,7 @@ PAGE = f'''<!doctype html><html lang="en">
   <a class="marque" href="index.html">CASCADE</a>
   <nav aria-label="Site">
     <a href="INSTRUMENT.html">Instrument</a>
-    <a href="ENGAGEMENT.html">Engagement</a>
+    <a href="ENGAGEMENT.html">Pricing</a>
     <a href="ANNEXE-METHODE.html">Method</a>
     <a href="ANNEXE-SECURITE.html">Security</a>
     <a href="ANNEXE-QUESTIONS.html">Questions</a>
@@ -644,8 +644,8 @@ PAGE = f'''<!doctype html><html lang="en">
 </section>
 
 <section class="film"><div class="colonne">
-  <h2 class="h2">Cascade, introduced by its robot.</h2>
-  <p class="film-duree">57 seconds &#183; the five findings, told out loud</p>
+  <h2 class="h2">Cascade, in 57 seconds.</h2>
+  <p class="film-duree">The five findings, explained</p>
   <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film: 57 seconds, opens on YouTube">
     <img src="rendus/affiche-film.jpg" alt="The Cascade robot, palms up, projecting the two rates: the dashboard 94.4%, your desk 76.7%">
     <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
@@ -663,7 +663,7 @@ PAGE = f'''<!doctype html><html lang="en">
 </div></div>
 
 <section class="instrument"><div class="colonne">
-  <h2 class="h2">Take a cell, read what your routing costs.</h2>
+  <h2 class="h2">Pick any cell, read what your routing costs.</h2>
   {table_html()}
   <div class="ouvrir-ligne"><a class="ouvrir" href="INSTRUMENT.html">Open the live instrument <span class="fl" aria-hidden="true">&#8594;</span></a></div>
 </div></section>

@@ -348,7 +348,7 @@ CSS = """
 
 # la nav du haut : celle des pages principales, avec la page courante marquée
 def barre_html(courante):
-    liens = [("INSTRUMENT.html", "Instrument"), ("ENGAGEMENT.html", "Engagement"),
+    liens = [("INSTRUMENT.html", "Instrument"), ("ENGAGEMENT.html", "Pricing"),
              ("ANNEXE-METHODE.html", "Method"), ("ANNEXE-SECURITE.html", "Security"),
              ("ANNEXE-QUESTIONS.html", "Questions"), ("CONTACT.html", "Contact")]
     nav = "".join(
@@ -364,7 +364,7 @@ def barre_html(courante):
 def pied_html(courante):
     """Le pied commun : la promesse, le sceau, puis le rang des annexes."""
     liens = [(p["html"], p["nav"]) for p in PAGES]
-    liens += [("CONTACT.html", "Contact"), ("MENTIONS.html", "Colophon")]
+    liens += [("CONTACT.html", "Contact"), ("MENTIONS.html", "The fine print")]
     rang = "".join(
         f'<a href="{h}"' + (' aria-current="true"' if h == courante else "")
         + f'>{n}</a>' for h, n in liens)
