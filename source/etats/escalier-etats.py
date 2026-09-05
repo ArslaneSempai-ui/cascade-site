@@ -50,6 +50,7 @@ ap.add_argument("--fond", default="ombre", choices=["papier", "ombre"])
 ap.add_argument("--azimut", type=float, default=-58.0)
 ap.add_argument("--elevation", type=float, default=34.0)
 ap.add_argument("--demo", action="store_true")
+ap.add_argument("--releve", default=None, help="le relevé scellé à lire ; défaut : OUTILS['dossier']['releve'] (outil.py)")
 args = ap.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
 
 APERCU = args.qualite == "apercu"
@@ -67,8 +68,21 @@ if args.demo:
     RYTHME, STALE = 90, 2
     print("[escalier] DEMO : jeu déclaré, aucune valeur mesurée ; interdit sur le site", flush=True)
 else:
-    R = lire_releve_scelle(os.path.expanduser(str(OUTILS["dossier"]["releve"])))
-    QUESTIONS = [dict(q=q, etat=int(v["etat"]), jours=v.get("joursDepuis")) for q, v in R["questions"].items()]
+    chemin_releve = args.releve or (OUTILS["dossier"]["releve"] if "dossier" in OUTILS else
+                                    os.path.join(os.path.expanduser("~"), "Documents", "cascade-dossier", "releve-public.json"))
+    R = lire_releve_scelle(os.path.expanduser(str(chemin_releve)))
+    # le relevé du Dossier (lot D2) écrit l'état atteint par son NOM : « none » quand aucun
+    # contrôle ne tient, sinon le plus haut tenu sans trou ; une question sans rapport n'a
+    # pas d'état du tout. L'escalier compte les marches : none = 0, present = 1, … consistent = 5.
+    ETATS = ["none"] + CONTROLES
+    QUESTIONS = []
+    for q, v in R["questions"].items():
+        nom = v.get("etat", "none") if v.get("present") else "none"
+        if nom not in ETATS:
+            sys.exit(f"état inconnu dans le relevé pour {q} : {nom!r} (attendu : {ETATS})")
+        QUESTIONS.append(dict(q=q, etat=ETATS.index(nom), jours=v.get("joursDepuis")))
+    ORDRE = ["routing", "screening", "monitoring", "scoring"]        # l'ordre de la chaîne, pas celui du JSON
+    QUESTIONS.sort(key=lambda d: ORDRE.index(d["q"]) if d["q"] in ORDRE else 99)
     RYTHME, STALE = int(R["reglages"]["rythmeJours"]), float(R["reglages"]["staleApres"])
 for qd in QUESTIONS:
     if qd["q"] not in COULEURS:

@@ -63,6 +63,7 @@ ap.add_argument("--seuil", default="0.50")
 ap.add_argument("--frontiere", default="none", help="palier:seuil retenu par la règle ; « none » = aucune cellule ne tient")
 ap.add_argument("--accents", default="geography,tenure", help="les facteurs des états 1 et 2 (findings 01 et 02)")
 ap.add_argument("--demo", action="store_true", help="jeu déclaré, pour construire l'objet avant le relevé ; jamais pour le site")
+ap.add_argument("--releve", default=None, help="le relevé scellé à lire ; défaut : OUTILS['scoring']['releve'] (outil.py)")
 args = ap.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
 
 APERCU = args.qualite == "apercu"
@@ -81,7 +82,8 @@ if args.demo:
     PLANCHER = 0.90
     print("[rayonnage] DEMO : jeu déclaré, aucune valeur mesurée ; interdit sur le site", flush=True)
 else:
-    RELEVE = lire_releve_scelle(os.path.expanduser(str(OUTILS["scoring"]["releve"])))
+    chemin_releve = args.releve or (OUTILS["scoring"]["releve"] if "scoring" in OUTILS else os.path.join(DEPOT, "releve-public.json"))
+    RELEVE = lire_releve_scelle(os.path.expanduser(str(chemin_releve)))
     AUTH, SYNT = RELEVE["authored"], RELEVE["synthetic"]
     PALIERS = RELEVE["paliers"]["presents"]
 
@@ -165,14 +167,16 @@ def pile(nom, x, retenus, faux, M, e=E, demi=False, tiree=0.0, largeur=PAS - 0.1
     la hauteur se compare à la tablette du plancher ; DERRIÈRE les ivoire (fausses alertes),
     qui partent du même plateau : une fausse alerte ne fait jamais « monter » un facteur."""
     rnd = random.Random(graine)
+    la, lf = largeur * 0.56, largeur * 0.38          # côte à côte dans la travée : améthyste à gauche, ivoire à droite
+    xa, xf = x - largeur / 2 + la / 2, x + largeur / 2 - lf / 2
     z = Z_PLATEAU
     for k in range(retenus):
         mat = M["amethyste_demi"] if demi else (M["amethyste_poli"] if k % 4 == 0 else M["amethyste"])
-        boite(f"{nom}_a_{k}", (largeur, P * 0.42, e * 0.9), (x + rnd.uniform(-0.008, 0.008), -P * 0.2 - tiree, z + e / 2), mat, 0.003)
+        boite(f"{nom}_a_{k}", (la, P - 0.14, e * 0.9), (xa + rnd.uniform(-0.006, 0.006), 0.02 - tiree, z + e / 2), mat, 0.003)
         z += e
     z2 = Z_PLATEAU
     for k in range(faux):
-        boite(f"{nom}_f_{k}", (largeur - 0.04, P * 0.36, e * 0.9), (x + rnd.uniform(-0.008, 0.008), P * 0.24, z2 + e / 2),
+        boite(f"{nom}_f_{k}", (lf, P - 0.2, e * 0.9), (xf + rnd.uniform(-0.006, 0.006), 0.0, z2 + e / 2),
               M["ivoire_demi"] if demi else M["ivoire"], 0.003)
         z2 += e
     return max(z, z2)
