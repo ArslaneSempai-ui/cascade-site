@@ -859,6 +859,21 @@ PAGE = f'''<!doctype html><html lang="en">
   </div>
 </section>
 
+<section class="instrument"><div class="colonne">
+  <h2 class="h2">Pick any cell, read what your routing costs.</h2>
+  {table_html()}
+  <div class="ouvrir-ligne"><a class="ouvrir" href="INSTRUMENT.html">
+    <span><span class="ouvrir-eti">Cascade &#183; Routing</span><span class="ouvrir-t">Open the live instrument</span>
+    <span class="ouvrir-s">Every field at every tier, accuracy and cost read live from the sealed record, and a budget slider that chooses the way the tool does.</span></span>
+    <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+</div></section>
+
+<div class="couture" aria-hidden="true"><div class="colonne">
+  <span class="filet"></span>
+  <span class="sceau-c">measured, then frozen &#183; seal {SCEAU}</span>
+  <span class="filet"></span>
+</div></div>
+
 <section class="film"><div class="colonne">
   <h2 class="h2">Cascade, in 57 seconds.</h2>
   <p class="film-duree">The five findings, explained</p>
@@ -870,21 +885,6 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="film-note">
     <span class="ou">hosted on YouTube &#183; link pending upload</span>
   </div>
-</div></section>
-
-<div class="couture" aria-hidden="true"><div class="colonne">
-  <span class="filet"></span>
-  <span class="sceau-c">measured, then frozen &#183; seal {SCEAU}</span>
-  <span class="filet"></span>
-</div></div>
-
-<section class="instrument"><div class="colonne">
-  <h2 class="h2">Pick any cell, read what your routing costs.</h2>
-  {table_html()}
-  <div class="ouvrir-ligne"><a class="ouvrir" href="INSTRUMENT.html">
-    <span><span class="ouvrir-eti">Cascade &#183; Routing</span><span class="ouvrir-t">Open the live instrument</span>
-    <span class="ouvrir-s">Every field at every tier, accuracy and cost read live from the sealed record, and a budget slider that chooses the way the tool does.</span></span>
-    <span class="fl" aria-hidden="true">&#8594;</span></a></div>
 </div></section>
 
 {menus_html()}
@@ -1182,13 +1182,6 @@ def batir_screening():
     </div>
   </div>
 </section>
-{film_html(RUBIS)}
-<div class="couture" aria-hidden="true"><div class="colonne">
-  <span class="filet"></span>
-  <span class="sceau-c">measured, then frozen &#183; seal {SCEAU_R}</span>
-  <span class="filet"></span>
-</div></div>
-
 <section class="instrument"><div class="colonne">
   <h2 class="h2">Pick any cell, read what your threshold costs.</h2>
   <p class="t-note">The full grid: every matcher at every threshold, recall and false alerts with
@@ -1199,6 +1192,12 @@ def batir_screening():
     <span class="fl" aria-hidden="true">&#8594;</span></a></div>
 </div></section>
 
+<div class="couture" aria-hidden="true"><div class="colonne">
+  <span class="filet"></span>
+  <span class="sceau-c">measured, then frozen &#183; seal {SCEAU_R}</span>
+  <span class="filet"></span>
+</div></div>
+{film_html(RUBIS)}
 <section class="menus"><div class="colonne">
   <h2 class="h2">The appendices your reviewers will ask for.</h2>
   <div class="grille">{tuiles_html}</div>
