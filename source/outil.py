@@ -77,6 +77,12 @@ PALETTE_VERTE = "--vert-titre:#23543f;--vert-vif:#57b184;--vert-clair:#a5f7cb;"
 PALETTE_RUBIS = ("--accent-titre:#7a1f2e;--accent-vif:#d64a5c;--accent-clair:#ffc2c9;"
                  "--vert-titre:var(--accent-titre);--vert-vif:var(--accent-vif);"
                  "--vert-clair:var(--accent-clair);")
+# LA NUIT suit l'outil aussi (Arslane, 6/09 : « pourquoi le terminal à droite n'est
+# pas rouge aussi ? ») : sur la page rouge, le héros, le panneau des findings, la
+# section instrument et le pied sont une nuit rubis, la même que l'instrument rouge
+# et que le pan du rideau ; le parchemin, lui, reste celui de la maison.
+NUIT_VERTE = "--nuit-a:#1b3229;--nuit-b:#14251e;--nuit-c:#0e1a15;--sur-vert:#e4ecdf;--sur-vert-pale:#a9bdaf;"
+NUIT_RUBIS = "--nuit-a:#33191f;--nuit-b:#241217;--nuit-c:#180b0f;--sur-vert:#efe0e2;--sur-vert-pale:#c0a6ab;"
 
 OUTILS = {
     "routing": {
@@ -119,7 +125,7 @@ OUTILS = {
         "pitch": "Six matchers, from strict equality to character n&#8209;grams, measured on your own alert history.",
         "robot_rideau": "robot-rubis-agrippe.webp",
         "vif": "#d64a5c",
-        "nuit": ("#3a1a20", "#24121a", "#170c0e"),
+        "nuit": ("#33191f", "#241217", "#180b0f"),      # la nuit rubis de NUIT_RUBIS
     },
 }
 

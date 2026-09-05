@@ -510,7 +510,7 @@ for page in PLOMBERIE["pages"]:
 # L'objet 3D de chaque annexe rouge est le même objet que le vert, rendu par
 # etats/objets_v2.py avec --accent "#a3182b" (la pierre polie du robot rouge) :
 # seule la couleur de l'idée change avec l'outil, le monde reste celui de la maison.
-from outil import OUTILS, PALETTE_VERTE, PALETTE_RUBIS, lire_releve_scelle, lien
+from outil import OUTILS, PALETTE_VERTE, PALETTE_RUBIS, NUIT_VERTE, NUIT_RUBIS, lire_releve_scelle, lien
 
 RUBIS = OUTILS["screening"]
 PAGES_ROUGES = [
@@ -573,8 +573,10 @@ def batir_annexes_rouges():
     sceau_r = lire_releve_scelle(RUBIS["releve"])["empreinte"]
     css_r = CSS.replace(PALETTE_VERTE, PALETTE_RUBIS)
     assert css_r != CSS, "la palette verte n'a pas été trouvée dans le CSS des annexes"
-    # la nuit de la tête et les teintes d'impression sont écrites en dur côté vert
-    css_r = css_r.replace("#0f231b", "#2a1219").replace("#23543f", "#7a1f2e")
+    css_n = css_r.replace(NUIT_VERTE, NUIT_RUBIS)
+    assert css_n != css_r, "la nuit verte n'a pas été trouvée dans le CSS des annexes"
+    # le premier ton de la tête et les teintes d'impression sont écrits en dur côté vert
+    css_r = css_n.replace("#0f231b", "#2a1219").replace("#23543f", "#7a1f2e")
     favicon_r = FAVICON.replace("%2323543f", RUBIS["favicon_accent"])
     for lettre, page in zip("AB", PAGES_ROUGES):
         PROD[page["html"]] = page["prod"]

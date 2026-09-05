@@ -626,7 +626,7 @@ DONNEES_STRUCTUREES = json.dumps({
     ],
 }, ensure_ascii=True)
 
-from outil import OUTILS, PALETTE_VERTE, PALETTE_RUBIS, lire_releve_scelle, lien
+from outil import OUTILS, PALETTE_VERTE, PALETTE_RUBIS, NUIT_VERTE, NUIT_RUBIS, lire_releve_scelle, lien
 
 NOMBRES = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
 
@@ -842,6 +842,9 @@ def batir_screening():
 
     css_r = CSS.replace(PALETTE_VERTE, PALETTE_RUBIS)
     assert css_r != CSS, "la palette verte n'a pas été trouvée dans le CSS : l'alias rubis n'a rien remplacé"
+    css_n = css_r.replace(NUIT_VERTE, NUIT_RUBIS)
+    assert css_n != css_r, "la nuit verte n'a pas été trouvée dans le CSS : la page rouge garderait une nuit verte"
+    css_r = css_n
     p = RUBIS["prefixe_racine"]
 
     donnees = json.dumps({

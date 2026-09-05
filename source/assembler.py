@@ -121,9 +121,11 @@ def entete_prod(t, neuf):
     adresse = BASE_URL if neuf == "index.html" else BASE_URL + neuf
     if neuf.endswith("/index.html"):
         adresse = BASE_URL + neuf.removesuffix("index.html")
+    # la couleur d'onglet suit la nuit de l'outil : rubis sous screening/
+    theme = "#241217" if neuf.startswith("screening/") else "#14251e"
     extra = (f'<link rel="canonical" href="{adresse}">\n'
              f'<link rel="apple-touch-icon" href="{PREFIXE}apple-touch-icon.png">\n'
-             f'<meta name="theme-color" content="#14251e">')
+             f'<meta name="theme-color" content="{theme}">')
     t = t.replace('<meta name="viewport" content="width=device-width,initial-scale=1">',
                   '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
                   + extra, 1)
