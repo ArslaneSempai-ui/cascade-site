@@ -1,0 +1,97 @@
+{
+  "_": "The five findings of the onyx (Dossier) hero, in the house keys. NOT READY TO BUILD: pret=false until lot D2 seals the onyx public record. What is final here: titles, phrases, cotes, legends' WORDING, and the control addresses in `source`, which follow the contract's own measures (couverture, sceaux, signatures, fraicheur, coherence: CONTRAT-OUTIL-DOSSIER §2), not a guessed record shape. What is deliberately empty: `sceau` and every displayed figure (a/b), to be filled FROM the sealed record the day D2 delivers it, then re-checked with the hardened citation script; typing them now would be figures without cells, the exact thing the house refuses. Legends carry [n] markers where the record's counts will land. `annotations` are provisional fractions: the onyx tray is not rendered; texts will be reread against the delivered renders before shipping, as with the rack.",
+  "pret": false,
+  "sceau": "",
+  "findings": [
+    {
+      "num": "01",
+      "titre": "Four questions, one piece.",
+      "phrase": "Each tool leaves a sealed report at your desk: the reader, the matcher, the scenario, the factor. A reviewer does not want four files. The Dossier reads them all and answers as one piece: what was measured, when, under which seal, against which declared rhythm.",
+      "a": "",
+      "leg_a": "questions of the chain covered by a sealed report, of the four the suite asks",
+      "b": "",
+      "leg_b": "reports whose seal verifies against their own content",
+      "cote": "the keystone piece",
+      "source": {
+        "a": { "controle": "couverture" },
+        "b": { "controle": "sceaux" }
+      },
+      "annotations": [
+        [0.5, 0.3, 0.15, 0.12, ""],
+        [0.7, 0.6, 0.85, 0.75, ""]
+      ]
+    },
+    {
+      "num": "02",
+      "titre": "A seal is checked, not trusted.",
+      "phrase": "Every report carries the house fingerprint, and the Dossier recomputes each one before believing anything else about it. A retouched figure fails loudly, by name, before it can reach a reviewer.",
+      "a": "",
+      "leg_a": "seals recomputed and matching, on the reports read",
+      "b": "",
+      "leg_b": "public records cited by those reports whose house signature verifies",
+      "cote": "arithmetic, not our word",
+      "source": {
+        "a": { "controle": "sceaux" },
+        "b": { "controle": "signatures" }
+      },
+      "annotations": [
+        [0.4, 0.4, 0.12, 0.25, ""],
+        [0.65, 0.5, 0.85, 0.35, ""]
+      ]
+    },
+    {
+      "num": "03",
+      "titre": "A measurement ages. The Dossier says by how much.",
+      "phrase": "Fresh, due, or stale: every measurement is dated against the rhythm you declare, ninety days by default and said as a declaration. An expired decision that still routes your files is exactly what a reviewer is paid to find; the Dossier finds it first.",
+      "a": "",
+      "leg_a": "measurements fresh under the declared rhythm, of the reports read",
+      "b": "",
+      "leg_b": "measurements due or stale at the day of this Dossier, named one by one",
+      "cote": "age, declared and counted",
+      "source": {
+        "a": { "controle": "fraicheur", "etat": "fresh" },
+        "b": { "controle": "fraicheur", "etat": "due-ou-stale" }
+      },
+      "annotations": [
+        [0.5, 0.45, 0.14, 0.3, ""],
+        [0.75, 0.65, 0.87, 0.8, ""]
+      ]
+    },
+    {
+      "num": "04",
+      "titre": "One dataset, one seal: incoherence is named.",
+      "phrase": "The same dataset cannot carry two seals, and a report from an unknown tool version is named rather than guessed. Coherence across the four reports is a check the Dossier runs, not a sentence it writes.",
+      "a": "",
+      "leg_a": "coherence checks passed across the reports read",
+      "b": "",
+      "leg_b": "incoherences found and named, of the checks run",
+      "cote": "checked across tools",
+      "source": {
+        "a": { "controle": "coherence", "etat": "passes" },
+        "b": { "controle": "coherence", "etat": "nommees" }
+      },
+      "annotations": [
+        [0.45, 0.5, 0.12, 0.4, ""],
+        [0.7, 0.55, 0.85, 0.42, ""]
+      ]
+    },
+    {
+      "num": "05",
+      "titre": "Your reviewer verifies it without us.",
+      "phrase": "The Dossier is written next to your files, sealed with the same fingerprint the whole suite uses, and the verification command ships with it. Nothing leaves your machine, and nothing about the verdict requires our word.",
+      "a": "",
+      "leg_a": "public records of the suite the Dossier's own measure runs on",
+      "b": "",
+      "leg_b": "network calls the tool is allowed to make, held by an empty allowlist and a test",
+      "cote": "verifiable, alone",
+      "source": {
+        "a": { "controle": "couverture", "portee": "mesure-publique" },
+        "b": { "controle": "reseau" }
+      },
+      "annotations": [
+        [0.5, 0.35, 0.15, 0.2, ""],
+        [0.7, 0.7, 0.85, 0.85, ""]
+      ]
+    }
+  ]
+}
