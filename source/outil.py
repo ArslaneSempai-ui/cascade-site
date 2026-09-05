@@ -91,6 +91,15 @@ OUTILS = {
         "releve": _MAISON / "cascade" / "landing.json",     # pas de scellé : garde d'absence seule (historique)
         "outil_chemin": _MAISON / "cascade",
         "depot": "https://github.com/ArslaneSempai-ui/cascade-routing",
+        # le rideau (deuxième écran) : ce que le pan de CET outil dit de lui, sur
+        # TOUTE page ; ses teintes vivent ici parce que la page rubis aliase la
+        # palette et que le pan vert doit y rester vert
+        "page_hero": "HERO.html",
+        "etiquette": "Routing &#183; extraction",
+        "pitch": "Seven tiers, from a regular expression to a human, measured on sealed records.",
+        "robot_rideau": "robot-agrippe.webp",
+        "vif": "#57b184",
+        "nuit": ("#1b3229", "#14251e", "#0e1a15"),
     },
     "screening": {
         "id": "screening",
@@ -104,6 +113,12 @@ OUTILS = {
         "releve": _MAISON / "cascade-screening" / "releve-public.json",  # scellé, vérifié par lire_releve_scelle
         "outil_chemin": _MAISON / "cascade-screening",
         "depot": "https://github.com/ArslaneSempai-ui/cascade-screening",
+        "page_hero": "HERO-SCREENING.html",
+        "etiquette": "Screening &#183; name matching",
+        "pitch": "Six matchers, from strict equality to character n&#8209;grams, measured on your own alert history.",
+        "robot_rideau": "robot-rubis-agrippe.webp",
+        "vif": "#d64a5c",
+        "nuit": ("#3a1a20", "#24121a", "#170c0e"),
     },
 }
 

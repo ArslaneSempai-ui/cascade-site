@@ -318,6 +318,30 @@ CSS = '''
   @media (prefers-reduced-motion:reduce){.entree{animation:none;opacity:1;transform:none}
     .cue .fil::after{animation:none;top:0}}
 
+  /* le rideau : le deuxième écran, un pan par outil dans SES couleurs (posées en
+     variables sur le pan, pas dans la palette de la page), le courant marqué */
+  .rideau{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));
+    position:relative;color:var(--sur-vert)}
+  .rideau-titre{position:absolute;top:84px;left:0;right:0;z-index:2;text-align:center;padding:0 24px;
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--sur-vert-pale)}
+  .pan{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    gap:16px;min-height:100vh;padding:130px 40px 80px;text-decoration:none;color:inherit;outline-offset:-6px;
+    background:radial-gradient(120% 100% at 50% -10%,var(--pan-a),var(--pan-b) 55%,var(--pan-c))}
+  .pan img{height:clamp(150px,24vh,230px);width:auto;filter:drop-shadow(0 20px 36px rgba(0,0,0,.55));
+    transition:transform .35s var(--montee)}
+  .pan .p-eti{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--pan-vif)}
+  .pan .p-h{font-size:clamp(28px,3.4vw,50px);font-weight:600;line-height:1.05;letter-spacing:-.02em;
+    text-wrap:balance;max-width:14ch;display:flex;align-items:center;justify-content:center;min-height:3.2em}
+  .pan .p-d{font-size:15px;color:var(--sur-vert-pale);max-width:38ch;line-height:1.5}
+  .pan .p-ouvrir{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    margin-top:8px;padding:10px 16px;border-radius:8px;transition:background .2s,color .2s;
+    border:1px solid color-mix(in srgb,var(--sur-vert) 30%,transparent)}
+  a.pan:hover .p-ouvrir,a.pan:focus-visible .p-ouvrir{background:var(--sur-vert);color:var(--nuit-c)}
+  a.pan:hover img{transform:translateY(-6px)}
+  .pan[aria-current] .p-ouvrir{border-style:dashed;color:var(--sur-vert-pale)}
+
   /* la séquence : rail-filmstrip, plateau annoté, fiche colonne */
   .sequence{height:560vh;position:relative}
   .colle{position:sticky;top:0;height:100vh;display:flex;align-items:center;gap:min(4vw,56px);
@@ -496,6 +520,13 @@ CSS = '''
     .colonne{padding:0 22px}
     .barre{padding:12px 18px;gap:14px}
     .barre nav{display:none}
+    .pan{min-height:62vh;padding:130px 24px 56px}
+  }
+  /* sous 700 px les pans s'empilent : seul le premier laisse la place au titre */
+  @media (max-width:700px){
+    .rideau{grid-template-columns:1fr}
+    .pan{padding-top:84px}
+    .rideau-titre+.pan{padding-top:124px}
     .grille{grid-template-columns:1fr}
     .couture .sceau-c{white-space:normal;text-align:center}
   }
@@ -592,6 +623,40 @@ DONNEES_STRUCTUREES = json.dumps({
     ],
 }, ensure_ascii=True)
 
+from outil import OUTILS, PALETTE_VERTE, PALETTE_RUBIS, lire_releve_scelle, lien
+
+NOMBRES = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
+
+
+def choix_outils(outil):
+    """LE RIDEAU : le deuxième écran des héros, tranché par Arslane le 6/09 sur une
+    planche de trois formes. Un pan par outil de la table, chacun dans SES couleurs
+    (posées en variables sur le pan : la page rubis aliase la palette, et le pan
+    vert doit y rester vert), avec son robot, sa question et « Open X ». Le pan de
+    l'outil courant est marqué aria-current et n'est pas un lien. Cliquer un autre
+    pan mène à SA page, ancrée sur son propre rideau (#tools) : le lecteur retombe
+    au même endroit et tout ce qui défile dessous a changé d'outil, sans script.
+    Grille auto-fit : un troisième robot prendra sa place sans qu'on touche ici."""
+    pans = ""
+    for o in OUTILS.values():
+        style = (f'--pan-vif:{o["vif"]};--pan-a:{o["nuit"][0]};'
+                 f'--pan-b:{o["nuit"][1]};--pan-c:{o["nuit"][2]}')
+        corps = (f'<span class="p-eti">{o["etiquette"]}</span>'
+                 f'<img src="{lien(outil, "rendus/" + o["robot_rideau"])}" alt="">'
+                 f'<span class="p-h">{o["question"]}</span>'
+                 f'<span class="p-d">{o["pitch"]}</span>')
+        if o["id"] == outil["id"]:
+            pans += (f'\n  <div class="pan" style="{style}" aria-current="page">{corps}'
+                     f'<span class="p-ouvrir">You are here &#183; {o["nom"]}</span></div>')
+        else:
+            pans += (f'\n  <a class="pan" style="{style}" href="{lien(outil, o["page_hero"])}#tools">{corps}'
+                     f'<span class="p-ouvrir">Open {o["nom"]} <span aria-hidden="true">&#8594;</span></span></a>')
+    n = NOMBRES.get(len(OUTILS), str(len(OUTILS)))
+    return (f'<section class="rideau" id="tools" aria-label="The instruments">'
+            f'\n  <span class="rideau-titre">Cascade &#183; {n} instruments, one method</span>'
+            f'{pans}\n</section>')
+
+
 PAGE = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade &#183; KYC routing audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -634,6 +699,8 @@ PAGE = f'''<!doctype html><html lang="en">
   </div>
   <div class="cue" aria-hidden="true"><span>scroll</span><span class="fil"></span></div>
 </section>
+
+{choix_outils(OUTILS["routing"])}
 
 <section class="sequence" aria-label="The five findings">
   <div class="colle">
@@ -686,12 +753,11 @@ print("HERO.html", f"{len(PAGE) / 1e3:.0f} ko")
 
 
 # ═════════════════════════ LE CATALOGUE : bâtir(outil) ═════════════════════════
-# Le vert ci-dessus reste émis tel quel, à l'octet : c'est la contrainte du lot
-# S1 (« la paramétrisation ne doit rien bouger »). Le rubis se bâtit ICI, par la
-# même structure d'écrans, avec les paramètres de source/outil.py et les textes
-# du lot S3 (findings-screening.json). Une page rouge sans ses données ne se
-# bâtit pas : l'absence est DITE, jamais improvisée.
-from outil import OUTILS, PALETTE_VERTE, PALETTE_RUBIS, lire_releve_scelle, lien
+# Le vert ci-dessus est la page historique ; depuis la décision du rideau (6/09)
+# il porte le deuxième écran comme le rubis, par la même fonction choix_outils.
+# Le rubis se bâtit ICI, par la même structure d'écrans, avec les paramètres de
+# source/outil.py et les textes du lot S3 (findings-screening.json). Une page
+# rouge sans ses données ne se bâtit pas : l'absence est DITE, jamais improvisée.
 
 RUBIS = OUTILS["screening"]
 FINDINGS_SCREENING = BASE / "findings-screening.json"
@@ -750,20 +816,6 @@ def _rail_screening(findings):
     return f'<nav class="rail" aria-label="Findings"><span class="jauge" aria-hidden="true"><i></i></span><ul>{items}</ul></nav>'
 
 
-def choix_outils(outil):
-    """L'emplacement du CHOIX DES OUTILS sur le héros de marque. La forme finale
-    vient des maquettes d'Arslane (fonction fournie par le chef) ; en attendant,
-    deux liens sobres. Le VERT rend vide tant que cette fonction n'est pas
-    arrivée : la contrainte à l'octet du lot S1 interdit d'y toucher avant, et le
-    rouge n'est de toute façon pas encore servi. Une ligne à changer ici le jour
-    venu, pour les deux pages à la fois."""
-    if outil["id"] == "routing":
-        return ""
-    return ('<nav class="choix-outils entree" aria-label="Tools">'
-            '<a href="../HERO.html">Routing</a>'
-            '<span aria-current="page">Screening</span></nav>')
-
-
 def batir_screening():
     if not FINDINGS_SCREENING.exists():
         print("HERO-SCREENING.html non bâti : findings-screening.json absent (lot S3) : "
@@ -787,17 +839,6 @@ def batir_screening():
 
     css_r = CSS.replace(PALETTE_VERTE, PALETTE_RUBIS)
     assert css_r != CSS, "la palette verte n'a pas été trouvée dans le CSS : l'alias rubis n'a rien remplacé"
-    # Le style du choix d'outils vit UNIQUEMENT côté rubis tant que le vert est
-    # tenu à l'octet : le jour de la fonction du chef, il monte dans le CSS commun.
-    css_r += """
-  .choix-outils{display:flex;gap:18px;align-items:center;font-family:var(--mono);font-size:12px;
-    letter-spacing:.14em;text-transform:uppercase}
-  .choix-outils a{color:var(--sur-vert-pale);text-decoration:none;padding:6px 2px}
-  .choix-outils a:hover{color:var(--sur-vert);text-decoration:underline;
-    text-decoration-color:var(--vert-vif)}
-  .choix-outils [aria-current]{color:var(--vert-clair);border-bottom:2px solid var(--vert-vif);
-    padding:6px 2px 4px}
-"""
     p = RUBIS["prefixe_racine"]
 
     donnees = json.dumps({
@@ -868,7 +909,6 @@ def batir_screening():
 
 <main>
 <section class="hero">
-  {choix_outils(RUBIS)}
   <h1 class="h1 entree">{RUBIS["question"]}</h1>
   <p class="lede entree">Six name matchers, from strict equality to character n&#8209;grams, swept across fifty&#8209;one thresholds.<br>
     Recall and false alerts carry their intervals, and every figure
@@ -881,6 +921,8 @@ def batir_screening():
   </div>
   <div class="cue" aria-hidden="true"><span>scroll</span><span class="fil"></span></div>
 </section>
+
+{choix_outils(RUBIS)}
 
 <section class="sequence" aria-label="The five findings">
   <div class="colle">

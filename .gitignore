@@ -1,6 +1,7 @@
 __pycache__/
 .DS_Store
 source/HERO.html
+source/HERO-SCREENING.html
 source/INSTRUMENT.html
 source/ENGAGEMENT.html
 source/instrument-donnees.json
