@@ -85,7 +85,8 @@ def table_html():
       <caption class="sr">Accuracy of each tier on each field, measured on held-out records</caption>
       <thead><tr><th scope="col">field</th>{tetes}</tr></thead><tbody>{lignes}</tbody></table></div>
       <p class="t-note">Measured on {N_SOCLE:,} held-out records for rules, small, large; {N_GEN} for the
-      generative tiers. *The human tier is assumed at {qte(HUMAIN)}%, never measured. Green cells mark the
+      generative tiers. *The human tier is assumed at {qte(HUMAIN)}% until you measure it:
+      <code>npm run measure:humans</code> grades your own reviewers. Green cells mark the
       published routing.</p>'''
 
 

@@ -26,7 +26,8 @@
       "h2": "Every routing, enumerated, with one honest asterisk",
       "html": [
         "<p>Five fields, seven tiers per field: the optimiser walks <b>all 16&#8239;807 assignments exhaustively</b>: a recursive enumeration, no heuristic, no sampling. The count on this page is recalculated from the sources on every check, never typed in.</p>",
-        "<p>The asterisk: the seventh tier, <b>human review, is an assumption, not a measurement</b>, and the tool prints exactly that on every pass rather than letting the figure blend in with the measured six.</p>"
+        "<p>The asterisk: the seventh tier, <b>human review, is an assumption, not a measurement</b>, and the tool prints exactly that on every pass rather than letting the figure blend in with the measured six.</p>",
+        "<p>The assumption holds only until you measure it: <code>measure:humans</code> grades your own reviewers on your own records, accuracy per field with intervals, agreement between reviewers, seconds per record. Pass the sealed result to <code>optimise</code> with <code>--humans</code> and the optimiser reads the measurement instead.</p>"
       ],
       "verif": {
         "t": "Verify the enumeration",
@@ -35,6 +36,10 @@
           {
             "c": "npm run optimise",
             "n": "prints the optimal routing, human tier flagged as assumed"
+          },
+          {
+            "c": "npm run measure:humans -- --cases=your-file.csv",
+            "n": "your reviewers, measured: accuracy per field, agreement, seconds per record"
           }
         ],
         "refs": "src/optimise.ts:379 &#183; src/readme.ts:840"
@@ -97,11 +102,12 @@
     {
       "h2": "Run it twice, compare",
       "html": [
-        "<p>The title is an instruction. The full measurement reruns with one command; it insists on an explicit flag because it downloads 1.3 GB of pinned weights on first run (the measurement itself took 32 minutes on the published pass), and freezes a fresh record you can set beside ours. Your own files run through <b>the same grader and the same intervals</b>. And two sealed passes compare case by case, because a rate that rose may simply have lost cases.</p>"
+        "<p>The title is an instruction. The full measurement reruns with one command; it insists on an explicit flag because it downloads 1.3 GB of pinned weights on first run (the measurement itself took 32 minutes on the published pass), and freezes a fresh record you can set beside ours. Your own files run through <b>the same grader and the same intervals</b>. And two sealed passes compare case by case, because a rate that rose may simply have lost cases.</p>",
+        "<p>And the loop has a rhythm: <code>recertify</code> reruns your measurement on fresh records against the sealed baseline, checks the input for drift, returns a verdict per field, holds or moved, and re&#8209;seals the report. You declare the rhythm; the default is quarterly.</p>"
       ],
       "verif": {
         "t": "Run it yourself",
-        "p": "The three commands below are the whole loop: remeasure, measure yours, compare.",
+        "p": "The four commands below are the whole loop: remeasure, measure yours, compare, recertify.",
         "cmd": [
           {
             "c": "MESURE_VOULUE=1 npm run measure",
@@ -114,6 +120,10 @@
           {
             "c": "npm run diff",
             "n": "compares two sealed passes case by case"
+          },
+          {
+            "c": "npm run recertify -- --cases=fresh.csv --baseline=your-file-measured.json",
+            "n": "fresh records against the sealed baseline: verdict per field, report re-sealed"
           }
         ],
         "refs": "src/measure.ts:963 &#183; src/your-cases.ts:1455"

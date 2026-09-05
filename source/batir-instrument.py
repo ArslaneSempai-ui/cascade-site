@@ -387,9 +387,12 @@ PAGE = f'''<!doctype html><html lang="en">
     rates. The generative tiers use their measured latency against an assumed machine cost. The
     human tier uses an assumed pace and salary. <b>Change the assumptions and the dollars move.
     The accuracies do not.</b></p>
-  <p><b>The human column is the one exception: an assumption, not a measurement.</b>
+  <p><b>The human column is the one exception: an assumption until you measure it.</b>
     {D["humanAccuracy"]:.0f}% on every field, declared in the tool's own source. Every other
-    accuracy shown here was measured.</p>
+    accuracy shown here was measured. <code>npm run measure:humans -- --cases=your-file.csv</code>
+    grades your own reviewers: accuracy per field with intervals, agreement between reviewers,
+    seconds per record. Pass the sealed result to <code>optimise</code> with <code>--humans</code>
+    and the optimiser reads your measurement instead of the assumption.</p>
   <p><b>Your documents never touch this page.</b> Nothing is uploaded, nothing is fetched, and the
     page's security policy refuses every network call.</p>
   <p><b>These are our sealed readings. Now test them against yours.</b> The tool clones next to

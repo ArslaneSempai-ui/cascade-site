@@ -204,6 +204,7 @@ PAGE = f'''<!doctype html><html lang="en">
         <li>Commercial use for your own business</li>
         <li>The <b>licensed component</b>, not published</li>
         <li>Updates included for every paid term</li>
+        <li><b>Recertify</b> on fresh records, re-sealed, on the rhythm you declare</li>
         <li>One legal entity signs; affiliates named, not assumed</li>
       </ul>
       <a class="cta" href="CONTACT.html">Talk terms <span class="fl" aria-hidden="true">&#8594;</span></a>
