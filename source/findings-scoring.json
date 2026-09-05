@@ -1,0 +1,204 @@
+{
+  "_": "The five findings of the amethyst (Scoring) hero, in the house keys. Provenance: every figure in a/b is a cell of ~/Documents/cascade-scoring/releve-public.json at seal `sceau`; addresses in `source` ({table, palier, seuil, mesure}, optional `champ` naming which Rate field is displayed, or {table, compte}); re-verified mechanically at the displayed precision. Finding 01 states a deliberate design fact the record proves: geography scores zero on both sides because every written dossier resides in ordinary Union countries and no official country list was copied into the data, so risk lives in declared fields, not passports. Finding 04 shows the amethyst's reversal: here the generated variants are HARSHER than the written dossiers on the best factor, which is exactly why separation is a rule and not a convenience. `annotations` are provisional fractions of the shelving tray (eight bays, registry order, amethyst pile = recall bound, ivory pile = false alerts, brass shelf = floor): texts and fractions were measured against the delivered frames (rayonnage-reel/parchemin-01..05). One answer for the re-render: state 2 lights the tenure bay, but finding 02 is about PRODUCT: light bay three (the labels already anchor it, so they hold as-is once the light moves). State 4 keeps its own framing, the two-bay close-up.",
+  "sceau": "f51ff169dbc4fd15",
+  "findings": [
+    {
+      "num": "01",
+      "titre": "Geography sees nothing here. On purpose.",
+      "phrase": "Every written dossier resides in an ordinary Union country, because no official country list was copied into the data. The geography factor therefore scores zero on both sides, and that blindness is the finding: risk lives in declared facts, not in passports.",
+      "a": "0<small>%</small>",
+      "leg_a": "recall of the geography factor on the 42 written escalated dossiers, interval [0&#8211;8]",
+      "b": "0<small>%</small>",
+      "leg_b": "false alerts on the 42 maintained twins, interval [0&#8211;8]: nothing to alarm on either",
+      "cote": "blind by design, said",
+      "source": {
+        "a": {
+          "table": "authored",
+          "palier": "geography",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        },
+        "b": {
+          "table": "authored",
+          "palier": "geography",
+          "seuil": "0.50",
+          "mesure": "fauxPositifs"
+        }
+      },
+      "annotations": [
+        [
+          0.145,
+          0.45,
+          0.06,
+          0.2,
+          "the empty bay: geography sees nothing in this book"
+        ],
+        [
+          0.15,
+          0.55,
+          0.06,
+          0.72,
+          "every dossier lives in ordinary countries: no list"
+        ]
+      ]
+    },
+    {
+      "num": "02",
+      "titre": "Products carry the strongest signal. And its cost.",
+      "phrase": "Score nothing but the products a client holds and most escalated dossiers trip it: correspondent accounts, private banking, crypto rails. So does a quarter of the honest book, and every one of those reviews is analyst time.",
+      "a": "92.9<small>%</small>",
+      "leg_a": "recall of the product factor at 0.50, interval [81&#8211;98], 42 written escalated dossiers",
+      "b": "23.8<small>%</small>",
+      "leg_b": "false alerts on the 42 maintained twins, interval [13&#8211;39]: the price of the signal",
+      "cote": "one twin in four alarms",
+      "source": {
+        "a": {
+          "table": "authored",
+          "palier": "product",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        },
+        "b": {
+          "table": "authored",
+          "palier": "product",
+          "seuil": "0.50",
+          "mesure": "fauxPositifs"
+        }
+      },
+      "annotations": [
+        [
+          0.315,
+          0.38,
+          0.08,
+          0.14,
+          "the tallest pile: products carry the signal"
+        ],
+        [
+          0.365,
+          0.5,
+          0.08,
+          0.7,
+          "and its ivory shadow: one twin in four reviewed"
+        ]
+      ]
+    },
+    {
+      "num": "03",
+      "titre": "No single factor holds the floor.",
+      "phrase": "The tool's rule asks the lower bound of measured recall to reach 90. On 42 written dossiers no factor gets there alone: the best bound stops at 81, and the cleanest one, behaviour without a single false alert, sees only half. That is the case for scoring on more than one factor, measured.",
+      "a": "81<small>%</small>",
+      "leg_a": "the highest lower bound any factor reaches: product at 0.50, recall interval [81&#8211;98]",
+      "b": "52<small>%</small>",
+      "leg_b": "the cleanest factor's bound: behaviour at 0.50, zero false alerts, interval [52&#8211;79]",
+      "cote": "the floor stays unmet",
+      "source": {
+        "a": {
+          "table": "authored",
+          "palier": "product",
+          "seuil": "0.50",
+          "mesure": "rappel",
+          "champ": "bas"
+        },
+        "b": {
+          "table": "authored",
+          "palier": "behaviour",
+          "seuil": "0.50",
+          "mesure": "rappel",
+          "champ": "bas"
+        }
+      },
+      "annotations": [
+        [
+          0.32,
+          0.3,
+          0.6,
+          0.12,
+          "the brass shelf at ninety: no pile reaches it"
+        ],
+        [
+          0.615,
+          0.42,
+          0.78,
+          0.82,
+          "behaviour: clean, not one ivory box, half seen"
+        ]
+      ]
+    },
+    {
+      "num": "04",
+      "titre": "Written and generated, kept apart. Both ways.",
+      "phrase": "The same cell, two provenances, and here the generated variants are the harsher half: the best factor drops ten points of recall on them. Separation is not a way to hide a flattering number. It is a rule, and it holds whichever side it favours.",
+      "a": "92.9<small>%</small>",
+      "leg_a": "recall at product 0.50 on the 42 written escalated dossiers, interval [81&#8211;98]",
+      "b": "79.4<small>%</small>",
+      "leg_b": "the same cell on 126 generated variants, interval [71&#8211;86]: harsher, and still kept apart",
+      "cote": "a rule, not a convenience",
+      "source": {
+        "a": {
+          "table": "authored",
+          "palier": "product",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        },
+        "b": {
+          "table": "synthetic",
+          "palier": "product",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        }
+      },
+      "annotations": [
+        [
+          0.4,
+          0.45,
+          0.1,
+          0.2,
+          "written dossiers: the bound stops under the shelf"
+        ],
+        [
+          0.55,
+          0.47,
+          0.8,
+          0.2,
+          "the variants do worse, and still stay apart"
+        ]
+      ]
+    },
+    {
+      "num": "05",
+      "titre": "Your book, your factors.",
+      "phrase": "Every dossier behind these findings is ours: written twin by twin, or generated under a seed. Two files from your own systems, reviews and customers, replay the whole grid on your machine. Nothing leaves it, and the report lands next to your files.",
+      "a": "42",
+      "leg_a": "written escalated dossiers behind the measured half, seven per declared nature",
+      "b": "126",
+      "leg_b": "generated escalated variants behind the synthetic half, natures preserved by construction",
+      "cote": "yours replace both",
+      "source": {
+        "a": {
+          "table": "authored",
+          "compte": "nEscalated"
+        },
+        "b": {
+          "table": "synthetic",
+          "compte": "nEscalated"
+        }
+      },
+      "annotations": [
+        [
+          0.795,
+          0.58,
+          0.66,
+          0.14,
+          "an ivory archive box: your book goes here"
+        ],
+        [
+          0.8,
+          0.68,
+          0.8,
+          0.84,
+          "two files replay the grid; nothing leaves"
+        ]
+      ]
+    }
+  ]
+}

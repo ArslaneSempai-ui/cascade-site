@@ -1,0 +1,77 @@
+{
+  "_": "Method page of the amethyst tool (Scoring). Same shape as the house annexes. Every refs points at a real line of ~/Documents/cascade-scoring at main d3c3d89; the citation guard must know the fourth repository. The object render does not exist yet (the shelving; look-dev).",
+  "objet": "rendus/etats/objet-scoring-methode.webp",
+  "titre": "Seven factors, declared tables. <span class=\"deux\">Written twins, one grid.</span>",
+  "lede": "This page shows what the scoring numbers are made of: which dossiers, which factors, which declared tables, and where each figure refuses to be quoted. No real person exists in the public record, and no official risk list was copied into it: that refusal is enforced by a test, not by discipline.",
+  "sections": [
+    {
+      "h2": "Written dossiers, twin by twin",
+      "html": [
+        "<p>The measured half rests on dossiers <b>we wrote and we declare</b>: six escalated archetypes and, deliberately, their six maintained twins: a family company with every ownership layer named against the shell that hides them, a neighbourhood shop whose turnover sits on its declaration against the counter that outruns it, a salaried account at ratio one against the firm at ratio five, a foreign student at stipend scale against the remote newcomer at several times his declaration. What separates each twin is <b>in the fields</b>, history and ratios, never only in the label, and a test pins all six pairs structurally.</p>",
+        "<p>No official country list was copied, and a test makes the refusal structural: suspects and twins <b>share their countries of residence</b>, so no code can quietly become a list. The geography factor scores zero on this book, on both sides, and the page above says so as a finding rather than hiding it.</p>"
+      ],
+      "verif": {
+        "t": "Verify the dossiers",
+        "p": "The suite revalidates every written dossier, the six twin pairs, and the country-sharing rule.",
+        "cmd": [
+          {
+            "c": "npm test",
+            "n": "84 dossiers revalidated, twin invariants and the no-list rule pinned"
+          }
+        ],
+        "refs": "src/dossiers-etiquetes.test.ts:65 &#183; src/synthetic.ts:29 &#183; src/synthetic.ts:50"
+      }
+    },
+    {
+      "h2": "Every table is declared, and declared as an assumption",
+      "html": [
+        "<p>A scoring factor needs tables: which activities weigh what, which products, which channels. Every table in this tool is written in one file with <b>provenance, unit and bounds</b>, and every one carries the same one-word status: assumed. That is the thesis of the amethyst: the tables your vendor calls calibration are declarations, and the only way to know what they are worth is to measure them against your own dispositioned reviews.</p>"
+      ],
+      "verif": {
+        "t": "Verify the declarations",
+        "p": "The tables file carries value, provenance and bounds for every assumption.",
+        "cmd": [
+          {
+            "c": "npm test",
+            "n": "the assumptions cases pin provenance and bounds"
+          }
+        ],
+        "refs": "src/assumptions.ts:81 &#183; src/assumptions.ts:113"
+      }
+    },
+    {
+      "h2": "Generated variants, apart whichever side they favour",
+      "html": [
+        "<p>The synthetic half is generated from the written dossiers under an explicit seed, natures preserved by construction: linked factors keep the observed-over-declared ratios, cash shares stay on their side of the line, ownership layers keep their floor, the remote newcomer stays new. On this tool the generated half is <b>harsher</b> than the written one on the best factor, and it stays apart exactly as it would if it flattered: separation is a rule, not a convenience, and the page shows both numbers side by side.</p>"
+      ],
+      "verif": {
+        "t": "Verify the separation",
+        "p": "Open the record: the two blocks carry their provenance in the data itself.",
+        "cmd": [
+          {
+            "c": "python3 -c \"import json; d=json.load(open('releve-public.json')); print(d['authored']['provenance'][:24], '/', d['synthetic']['provenance'][:22])\"",
+            "n": "prints the two provenance declarations: written by hand, seeded variants"
+          }
+        ],
+        "refs": "src/synthetic.ts:29 &#183; src/measure.ts:71"
+      }
+    },
+    {
+      "h2": "Wilson everywhere, scores bounded, refusals where n is small",
+      "html": [
+        "<p>Every rate travels with its Wilson interval at 95 percent and its n; below twenty observations a rate is noted rather than quoted, and recall on your own book is refused outright under five confirmed escalations. A factor's score lives in [0, 1] and a value outside it is an error named with the factor and the dossier, never a silent rounding. The threshold grid is shared and inclusive, so the strictest cell still means something for a factor that answers exactly one.</p>"
+      ],
+      "verif": {
+        "t": "Verify the refusals",
+        "p": "The bounds and refusals live in code, and the suite exercises them.",
+        "cmd": [
+          {
+            "c": "npm test",
+            "n": "interval, score-bound and refusal cases run with the rest"
+          }
+        ],
+        "refs": "src/interval.ts:102 &#183; src/facteur.ts:55 &#183; src/facteur.ts:56"
+      }
+    }
+  ]
+}
