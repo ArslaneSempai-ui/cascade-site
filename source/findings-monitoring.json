@@ -1,0 +1,96 @@
+{
+  "_": "The five findings of the lapis (Monitoring) hero, in the exact keys of findings-screening.json. Provenance: every figure in a/b/cote is a cell of ~/Documents/cascade-monitoring/releve-public.json at seal `sceau`; the builder refuses to build if the record on disk no longer matches. Each figure keeps its cell address in `source` ({table, palier, seuil, mesure} or {table, compte}); the optional `champ` names which field of the Rate is displayed when it is not `taux` (finding 03 displays lower bounds: champ = 'bas'). Builders may ignore `source`; reviewers and guards re-derive every number from it. The tool's rule behind finding 03 is the same as the whole suite: Wilson lower bound of recall at or above 0.90, then the fewest false alerts. Twin attributions in the phrases are measured, not assumed: at 0.50 the seven false alerts of `amount` are all one-off purchases, and `velocity` trips on payroll, seasonal trade and savings transfers. `annotations` are provisional fractions of the cascading-basins tray (anchor x, anchor y, label x, label y, text): the basins are not rendered yet, and the labels are to be reread against the rendered object before they ship.",
+  "sceau": "692d499018e53e07",
+  "findings": [
+    {
+      "num": "01",
+      "titre": "The naked amount catches nearly everything.",
+      "phrase": "Score nothing but the biggest amount in the window and almost every archetype trips it. So does the family purchase the history explains: every one of its false alerts is the same benign twin, the one-off purchase.",
+      "a": "95.2<small>%</small>",
+      "leg_a": "recall of the amount scenario at 0.50, interval [84&#8211;99], 42 written suspicious cases",
+      "b": "16.7<small>%</small>",
+      "leg_b": "false alerts on the 42 benign twins, interval [8&#8211;31]: all of them one-off purchases",
+      "cote": "one twin in six alarms",
+      "source": {
+        "a": { "table": "authored", "palier": "amount", "seuil": "0.50", "mesure": "rappel" },
+        "b": { "table": "authored", "palier": "amount", "seuil": "0.50", "mesure": "fauxPositifs" }
+      },
+      "annotations": [
+        [0.50, 0.14, 0.16, 0.06, "the first basin: one number, one spillway"],
+        [0.76, 0.30, 0.88, 0.20, "the explained purchase spills with the suspects"]
+      ]
+    },
+    {
+      "num": "02",
+      "titre": "A busy account is not a signal.",
+      "phrase": "Count transactions and payroll looks like laundering: the twins velocity trips on are the salary account, the market season and the monthly savings, while most true archetypes pass under it quietly.",
+      "a": "28.6<small>%</small>",
+      "leg_a": "recall of the velocity scenario at 0.50, interval [17&#8211;44]: most archetypes are not busy",
+      "b": "50<small>%</small>",
+      "leg_b": "false alerts at the same threshold, interval [36&#8211;64]: payroll, season and savings, measured",
+      "cote": "half the twins alarm",
+      "source": {
+        "a": { "table": "authored", "palier": "velocity", "seuil": "0.50", "mesure": "rappel" },
+        "b": { "table": "authored", "palier": "velocity", "seuil": "0.50", "mesure": "fauxPositifs" }
+      },
+      "annotations": [
+        [0.38, 0.40, 0.12, 0.32, "the counting basin overflows on payday"],
+        [0.68, 0.58, 0.86, 0.48, "structuring drips under it, uncounted"]
+      ]
+    },
+    {
+      "num": "03",
+      "titre": "No single scenario holds the floor.",
+      "phrase": "The tool's rule asks the lower bound of measured recall to reach 90. On 42 written cases no cell of any scenario gets there alone: the best bound stops at 84, the next at 75. That is the honest headline, and the reason the sweep is worth running on your history.",
+      "a": "84.2<small>%</small>",
+      "leg_a": "the highest lower bound any single cell reaches: amount at 0.50, recall interval [84&#8211;99]",
+      "b": "75.2<small>%</small>",
+      "leg_b": "the next best bound: peer at 0.50, recall interval [75&#8211;95]",
+      "cote": "the floor stays unmet",
+      "source": {
+        "a": { "table": "authored", "palier": "amount", "seuil": "0.50", "mesure": "rappel", "champ": "bas" },
+        "b": { "table": "authored", "palier": "peer", "seuil": "0.50", "mesure": "rappel", "champ": "bas" }
+      },
+      "annotations": [
+        [0.50, 0.50, 0.14, 0.42, "no spillway sits low enough on its own"],
+        [0.74, 0.70, 0.88, 0.80, "what one basin misses, another must catch"]
+      ]
+    },
+    {
+      "num": "04",
+      "titre": "Written and generated, kept apart.",
+      "phrase": "The same cell, two provenances. On generated variants the amount scenario scores a perfect recall; on the written cases it does not. Blended, the synthetic half would round the record's own doubt away. It is measured apart, labelled synthetic, and stays apart.",
+      "a": "95.2<small>%</small>",
+      "leg_a": "recall at amount 0.50 on the 42 written suspicious cases, interval [84&#8211;99]",
+      "b": "100<small>%</small>",
+      "leg_b": "the same cell on 126 generated variants, interval [97&#8211;100]: kept apart precisely because it flatters",
+      "cote": "never blended",
+      "source": {
+        "a": { "table": "authored", "palier": "amount", "seuil": "0.50", "mesure": "rappel" },
+        "b": { "table": "synthetic", "palier": "amount", "seuil": "0.50", "mesure": "rappel" }
+      },
+      "annotations": [
+        [0.34, 0.46, 0.10, 0.56, "written cases: the measured half"],
+        [0.66, 0.46, 0.88, 0.56, "generated variants: labelled, apart"]
+      ]
+    },
+    {
+      "num": "05",
+      "titre": "Your history, your scenarios.",
+      "phrase": "Every case behind these findings is ours: written twin by twin, or generated under a seed. Two files from your own systems, alerts and transactions, replay the whole grid on your machine. Nothing leaves it, and the report lands next to your files.",
+      "a": "42",
+      "leg_a": "written suspicious cases behind the measured half, seven per declared nature",
+      "b": "126",
+      "leg_b": "generated suspicious variants behind the synthetic half, natures preserved by construction",
+      "cote": "yours replace both",
+      "source": {
+        "a": { "table": "authored", "compte": "nSuspicious" },
+        "b": { "table": "synthetic", "compte": "nSuspicious" }
+      },
+      "annotations": [
+        [0.50, 0.26, 0.16, 0.16, "our basins end where your export begins"],
+        [0.64, 0.76, 0.86, 0.86, "measure:yours, two files, at your desk"]
+      ]
+    }
+  ]
+}
