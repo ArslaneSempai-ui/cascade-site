@@ -756,6 +756,7 @@ DONNEES_STRUCTUREES = json.dumps({
 }, ensure_ascii=True)
 
 from outil import (OUTILS, PALETTE_VERTE, PALETTE_RUBIS, PALETTE_LAPIS, PALETTE_ONYX,
+                   PALETTE_AMETHYSTE, NUIT_AMETHYSTE,
                    NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, NUIT_ONYX,
                    lire_releve_scelle, lien, manques, ETATS_PREFIXE, ICONES_PREFIXE)
 
@@ -1186,6 +1187,42 @@ SPECS = {
         table_note_unites='Measured on the {nMatch} written suspicious cases and {nDifferent} benign\n      look&#8209;alikes',
         pied="On your records, on your machine. <em>Nothing of yours goes up.</em>",
     ),
+    "scoring": dict(
+        lot="A-L5-textes",
+        etats=ETATS_PREFIXE["scoring"],
+        alt_plateau="The shelving of weights",
+        palette=PALETTE_AMETHYSTE, nuit=NUIT_AMETHYSTE,
+        titre="Cascade Scoring &#183; customer risk rating audit",
+        og_titre="Cascade Scoring: which risk factor suffices, at which threshold",
+        description="A customer risk-rating audit: which risk factor suffices, at which threshold, "
+                    "measured on your own periodic-review outcomes. Nothing of yours goes up.",
+        app="Cascade Scoring",
+        app_desc="A customer risk-rating audit: which risk factor suffices, "
+                 "at which threshold, measured on your own periodic-review outcomes. "
+                 "Nothing of yours goes up.",
+        offre="Thirty-day evaluation on your own review outcomes, granted in the public licence.",
+        lede="Seven risk factors, from a country list to the deviation from the declared profile, swept across "
+             "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
+             "and every figure\n    <b>can be verified by you</b>.",
+        aria_commande="The measurement on your own periodic-review outcomes",
+        commandes=["npm ci --ignore-scripts",
+                   "npm run measure:yours -- --customers=your-customers.csv --reviews=your-reviews.csv"],
+        note_commande="Your review outcomes, measured on your machine. Nothing of yours goes up.",
+        instrument_h2="Pick any cell, read what your threshold costs.",
+        instrument_page="INSTRUMENT-SCORING.html",
+        instrument_eti="Cascade &#183; Scoring",
+        instrument_sub="Every risk factor at every threshold, recall and false alerts with their intervals, "
+                       "live from the sealed record, and the tool's own selection rule under your recall floor.",
+        annexe_methode=("Method &amp; what is measured", "What the frontier reads, and what it refuses.",
+                        "ANNEXE-SCORING-METHODE.html"),
+        annexe_securite=("Security &amp; data handling", "The declared tables, the seal, and what never leaves.",
+                         "ANNEXE-SCORING-SECURITE.html"),
+        icone_prefixe=ICONES_PREFIXE["scoring"],
+        table_ligne="factor",
+        table_caption="Recall over false alerts of each risk factor at each threshold, on the written files",
+        table_note_unites='Measured on the {nMatch} written escalated files and {nDifferent} maintained\n      look&#8209;alikes',
+        pied="On your records, on your machine. <em>Nothing of yours goes up.</em>",
+    ),
     "dossier": dict(
         lot="D3",
         etats=ETATS_PREFIXE["dossier"],
@@ -1201,8 +1238,8 @@ SPECS = {
                  "seals, signatures, freshness and coherence, verified on your "
                  "machine. Nothing of yours goes up.",
         offre="Thirty-day evaluation on your own sealed reports, granted in the public licence.",
-        lede="Four questions&#8201;&#8212;&#8201;the reader, the matcher, the scenario, the factor&#8201;"
-             "&#8212;&#8201;five controls each.<br>\n    The Dossier reads the sealed reports and answers "
+        lede="Four questions (the reader, the matcher, the scenario, the factor), "
+             "five controls each.<br>\n    The Dossier reads the sealed reports and answers "
              "as one piece, and every line\n    <b>can be verified by you</b>.",
         aria_commande="The dossier over your own sealed reports",
         commandes=["npm ci --ignore-scripts",
@@ -1313,8 +1350,9 @@ def _table_outil(spec, releve, findings):
             cells += (f"<td class='cell{choisi}'><span>{c['rappel']['taux'] * 100:.0f}<small>%</small></span>"
                       f"<br><small>{c['fauxPositifs']['taux'] * 100:.0f}% fa</small></td>")
         lignes += f"<tr><th scope='row'>{p}</th>{cells}</tr>"
-    unites = spec["table_note_unites"].format(nMatch=auth.get("nMatch", auth.get("nSuspicious")),
-                                             nDifferent=auth.get("nDifferent", auth.get("nBenign")))
+    unites = spec["table_note_unites"].format(
+        nMatch=auth.get("nMatch", auth.get("nSuspicious", auth.get("nEscalated"))),
+        nDifferent=auth.get("nDifferent", auth.get("nBenign", auth.get("nMaintained"))))
     champ_cite = (findings[2].get("source", {}).get("a") or {}).get("champ", "taux")
     if palier_f and champ_cite == "taux":
         frontiere = (f"The ruby cell is the tool&#8217;s frontier under its\n      default rule, {palier_f} at {seuil_f}.")
@@ -1546,4 +1584,5 @@ def batir(outil_id):
 
 batir("screening")
 batir("monitoring")
+batir("scoring")
 batir("dossier")

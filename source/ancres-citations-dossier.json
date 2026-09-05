@@ -1,0 +1,17 @@
+{
+  "_": "Pour chaque « Where it lives » des pages dossier : le contenu EXACT de la ligne visée dans ~/Documents/cascade-dossier. La garde de assembler.py refuse de bâtir si une citation ne pointe plus dessus. Régénérer avec ancrer-citations.py APRÈS un changement volontaire de l'outil, jamais pour faire taire la garde.",
+  "ancres": {
+    "src/controles/fresh.ts:22": "let etat: \"fresh\" | \"due\" | \"stale\";",
+    "src/controles/fresh.ts:5": "* `due` sous `staleApres` rythmes, `stale` au-delà — le contrôle ne tient QUE `fresh`,",
+    "src/controles/index.ts:15": "export function registre(): Registre {",
+    "src/controles/index.ts:24": "export function absents(r: Registre = registre()): ControleId[] {",
+    "src/dossier.ts:9": "* (sceaux, dates, signature, règle : jamais une valeur client) ; les cinq contrôles jugent",
+    "src/empreinte.ts:26": "export function empreinteDuReleve(releve: unknown): string {",
+    "src/empreinte.ts:31": "export function scelleIntact(releve: Record<string, unknown>): boolean {",
+    "src/frontiere.test.ts:22": "const AUTORISES: Record<string, string> = {",
+    "src/frontiere.test.ts:43": "test(\"aucun module ne touche le réseau\", () => {",
+    "src/measure.ts:68": "export function mesurePublique(reglages: Reglages): {",
+    "src/measure.ts:73": "reglages: Reglages;",
+    "src/sceller.ts:42": "console.log(`  ${cible}\\n  already sealed, and the seal matches: ${apres}. Nothing to do.`);"
+  }
+}

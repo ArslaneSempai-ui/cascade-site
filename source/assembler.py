@@ -82,7 +82,8 @@ PROD = {
 # les pages bâties. Ordre tenu : bâtir, vérifier, seulement ensuite effacer.
 import subprocess
 for batisseur in ("batir-hero.py", "batir-instrument.py", "batir-instrument-screening.py",
-                  "batir-instrument-monitoring.py",
+                  "batir-instrument-monitoring.py", "batir-instrument-scoring.py",
+                  "batir-instrument-dossier.py",
                   "batir-offre.py", "batir-annexe.py", "batir-404.py"):
     subprocess.run([sys.executable, str(MAQ / batisseur)], check=True,
                    cwd=str(MAQ), capture_output=True)
