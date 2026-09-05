@@ -1,0 +1,91 @@
+{
+  "_": "The five findings of the red (Screening) sequence. FORMAT PROPOSAL v1 for lot S1: the messaging bridge was paused, so the keys could not be asked first; adapt freely, the substance is in the cells. RULE (architecture §3): every figure is a CELL of ~/Documents/cascade-screening/releve-public.json designated by address, never typed here. A `cellule` address {table, palier, seuil, mesure} reads releve[table].tables[palier][seuil][mesure] and finds {succes, n, taux, bas, haut}: the builder prints taux with [bas, haut] and n, in the record's own numbers. A `compte` address {table, compte} reads releve[table][compte] (an integer). Threshold keys are strings, two decimals ('0.60'). `exigence` is the declared recall floor finding e03 depends on: chosen, not measured, and said so on the fiche. Every sentence: short, to 'you', measured rather than promised, no em dash.",
+  "releve": "cascade-screening/releve-public.json",
+  "exigence": {
+    "rappel": 0.95,
+    "provenance": "chosen",
+    "phrase": "the recall floor declared for finding e03: a declaration, not a measurement"
+  },
+  "findings": [
+    {
+      "id": "e01",
+      "titre": "Exact never alarms. It also never finds.",
+      "phrase": "Exact match after normalisation raises almost no false alert, and that safety is the trap: it catches barely a fifth of the true hits your reviewers already confirmed.",
+      "chiffres": [
+        {
+          "cellule": { "table": "authored", "palier": "exact", "seuil": "0.50", "mesure": "rappel" },
+          "legende": "recall on the written match pairs, any threshold: exact is flat"
+        },
+        {
+          "cellule": { "table": "authored", "palier": "exact", "seuil": "0.50", "mesure": "fauxPositifs" },
+          "legende": "false alerts on the written non-match pairs"
+        }
+      ],
+      "cote": "What this does not prove: that your data behaves like our written pairs. It says what a strict matcher costs in missed hits, on pairs we declare."
+    },
+    {
+      "id": "e02",
+      "titre": "Loose matching finds everyone. And everyone else.",
+      "phrase": "Drop the threshold and nothing escapes: every true hit is caught. So is most of everything unrelated, and every false alert is analyst time you pay for.",
+      "chiffres": [
+        {
+          "cellule": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.50", "mesure": "rappel" },
+          "legende": "recall at the loosest threshold of the sweep"
+        },
+        {
+          "cellule": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.50", "mesure": "fauxPositifs" },
+          "legende": "false alerts at the same threshold: the price of catching everyone"
+        }
+      ],
+      "cote": "What this does not prove: that a looser matcher is wrong. It prices the trade, on our pairs; your history prices it on yours."
+    },
+    {
+      "id": "e03",
+      "titre": "The frontier lives in the middle.",
+      "phrase": "Hold recall at the declared floor and sweep every tier and threshold: the grid settles here. Even at the frontier, most alerts are still false. Certainty is paid in analyst hours, and this cell says exactly how many alerts buy it.",
+      "chiffres": [
+        {
+          "cellule": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "rappel" },
+          "legende": "recall of the cell the sweep retains under the declared floor"
+        },
+        {
+          "cellule": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "fauxPositifs" },
+          "legende": "false alerts at that same cell: the cost of the floor"
+        }
+      ],
+      "cote": "The floor is declared, not measured: change it and the frontier moves. What this does not prove: that this cell is your frontier. It is ours, on written pairs, under our declaration."
+    },
+    {
+      "id": "e04",
+      "titre": "Synthetic is declared. And never merged.",
+      "phrase": "The same cell, two provenances. On fabricated variants the false-alert rate reads far friendlier than on written pairs: blended, the synthetic half would flatter the tool. It is measured apart, labelled synthetic, and stays apart.",
+      "chiffres": [
+        {
+          "cellule": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "fauxPositifs" },
+          "legende": "false alerts at the frontier cell, measured on written pairs"
+        },
+        {
+          "cellule": { "table": "synthetic", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "fauxPositifs" },
+          "legende": "the same cell on fabricated variants: kept apart precisely because it flatters"
+        }
+      ],
+      "cote": "What the synthetic half does prove: which families of deformation each tier catches, variant by labelled variant. What it never becomes: part of a measured rate."
+    },
+    {
+      "id": "e05",
+      "titre": "Your history, your frontier.",
+      "phrase": "Every pair behind these findings is ours: written and declared, or fabricated and labelled. One command replays the whole sweep on your own alert history, on your machine. Nothing leaves it, and the report lands next to your file.",
+      "chiffres": [
+        {
+          "compte": { "table": "authored", "compte": "nMatch" },
+          "legende": "written match pairs behind the measured half, declared nature by nature"
+        },
+        {
+          "compte": { "table": "synthetic", "compte": "nMatch" },
+          "legende": "fabricated variants behind the synthetic half, labelled and kept apart"
+        }
+      ],
+      "cote": "What this does not prove: anything about your alerts yet. That is the point: npm run measure:yours -- --alerts=your-export.csv answers with your numbers, and we never see them."
+    }
+  ]
+}
