@@ -254,6 +254,13 @@ def manques(outil_id, base):
                 # voir AVANT, sinon les deux divergent exactement comme bassins/rack
                 m.append(f"findings-{outil_id}.json (sceau {f['sceau']} : le relevé porte "
                          f"{lire_releve_scelle(o['releve'])['empreinte']}, à re-dériver)")
+        # les SOURCES des deux annexes comptent parmi les pièces : le 9/09, le pan
+        # scoring s'est montré sur quatre pages pendant que la porte d'émission disait
+        # « il manque ANNEXE-SCORING-*.html » — six liens morts ; la même définition
+        # de « prêt » doit couvrir TOUT ce que le bloc émet
+        for piece in (f"annexe-{outil_id}-methode.json", f"annexe-{outil_id}-securite.json"):
+            if not (base / piece).exists():
+                m.append(piece)
     if not (base / "rendus" / o["robot_rideau"]).exists():
         m.append(f"rendus/{o['robot_rideau']}")
     prefixe = ETATS_PREFIXE[outil_id]

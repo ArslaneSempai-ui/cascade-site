@@ -182,6 +182,15 @@ EMISES_EN_BLOC = {}
 for _oid, _prod, _lots in EN_BLOC:
     _absentes = [v for v in _prod if not (MAQ / v).exists()]
     _mq = _manques(_oid, MAQ)
+    if _absentes and not _mq:
+        # manques() est vide : le rideau MONTRE le pan de cet outil sur toutes les
+        # pages — et une page de production manque quand même. C'est toujours un
+        # bâtisseur non enregistré (PAGES_* de batir-annexe, liste des bâtisseurs
+        # ci-dessus, SPECS du héros) : publier ferait des liens morts, et l'a fait
+        # (six vers HERO-SCORING le 9/09). Refus nommé, plus une absence dite.
+        sys.exit(f"DIVERGENCE {_oid} : manques() est vide (le pan se montre) mais "
+                 f"{_absentes} manquent à l'émission : un bâtisseur n'est pas "
+                 "enregistré : l'enregistrer, pas publier")
     if _absentes or _mq:
         if _absentes:
             print(f"  {_oid} : non émis en bloc, il manque {_absentes} (lots {_lots})")
