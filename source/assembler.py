@@ -330,11 +330,14 @@ for rb in (MAQ / "rendus").glob("robot-*.webp"):          # les robots de toutes
     shutil.copy(rb, DOCS / "rendus" / rb.name)
 # les robots de toutes les couleurs partent déjà par le glob ci-dessus (le rideau
 # les montre sur toutes les pages) ; seuls les ÉTATS du plateau bleu sont conditionnels
+# le PRÉFIXE des états vit dans outil.py seul (ETATS_PREFIXE) : le 8/09, « bassins » ici
+# quand le héros disait « rack » a publié cinq liens morts, attrapés par le contrôle
+from outil import ETATS_PREFIXE  # noqa: E402
 if MONITORING_EMISES:
-    for w in (MAQ / "rendus" / "etats").glob("bassins-*.webp"):
+    for w in (MAQ / "rendus" / "etats").glob(f"{ETATS_PREFIXE['monitoring']}-*.webp"):
         shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
 if SCREENING_EMISES:
-    for w in (MAQ / "rendus" / "etats").glob("tamis-*.webp"):
+    for w in (MAQ / "rendus" / "etats").glob(f"{ETATS_PREFIXE['screening']}-*.webp"):
         shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
 shutil.copy(MAQ / "releve.json", DOCS / "releve.json")
 shutil.copy(MAQ / "og.png", DOCS / "og.png")

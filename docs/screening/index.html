@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-Reh9Y1FtdFGm3JWVKddn0HzeZxDFe9d9gbJg35S29g0=' 'unsafe-hashes' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-pSLuSXNp+lviHfpnB6Rhfw3mdP31f0bG3Qn+VYm1k7U=' 'sha256-IrCnJrfcAZS7cSdeeaahtOcm42vGnT9CUd8UyKMs6TA=' 'sha256-jTKkg7EqYLPyZ1VJSyVP9ZynRTtQ2St7KxSHJW9uDYs=' 'sha256-U6d5WVAdjkRV8TmpGXKN4Nm9BMv+FajpU7SN6X1gcuk=' 'sha256-461dEfMeQvojW4w3+hQdcJVGwO/liLqt0M9233YJIxA=' 'sha256-UVzQi1a64n0vbzx7eRQzIlmAQU6a4ukemptD1ZMz8b8=' 'sha256-YlmmoIxwgoNwZNZPRH0iNltIDQ5RRpC6TOdZxUQdvrM=' 'sha256-L6RLrBDPleDGNHf5rZ13Bn/0iEtb9GIeG4oCBMWH11M=' 'sha256-3JLlobUmPOrfKpBkJ4lgFpyl+lyi8PNjZJh9iySS7ro='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-+c9OIIf3a/MlOgV31/mIGgYHsEh169DqCjo4btkWXFw='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-nM+ZsFL+GfYGPqyFZXXxVtkC5MhB0J6xAkFXwesDltA=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-pSLuSXNp+lviHfpnB6Rhfw3mdP31f0bG3Qn+VYm1k7U=' 'sha256-IrCnJrfcAZS7cSdeeaahtOcm42vGnT9CUd8UyKMs6TA=' 'sha256-jTKkg7EqYLPyZ1VJSyVP9ZynRTtQ2St7KxSHJW9uDYs=' 'sha256-U6d5WVAdjkRV8TmpGXKN4Nm9BMv+FajpU7SN6X1gcuk=' 'sha256-461dEfMeQvojW4w3+hQdcJVGwO/liLqt0M9233YJIxA=' 'sha256-UVzQi1a64n0vbzx7eRQzIlmAQU6a4ukemptD1ZMz8b8=' 'sha256-YlmmoIxwgoNwZNZPRH0iNltIDQ5RRpC6TOdZxUQdvrM=' 'sha256-L6RLrBDPleDGNHf5rZ13Bn/0iEtb9GIeG4oCBMWH11M=' 'sha256-3JLlobUmPOrfKpBkJ4lgFpyl+lyi8PNjZJh9iySS7ro='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-+c9OIIf3a/MlOgV31/mIGgYHsEh169DqCjo4btkWXFw='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Screening &#183; sanctions screening audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/screening/">
@@ -83,7 +83,10 @@
   .commande{background:var(--nuit-b);color:var(--sur-vert);border:1px solid color-mix(in srgb,var(--vert-vif) 40%,transparent);
     border-radius:10px;padding:18px 26px;text-align:left;font-family:var(--mono);font-size:12.5px;
     box-shadow:0 24px 60px rgba(14,26,21,.28);max-width:min(92vw,680px)}
-  .commande .ln{white-space:nowrap;overflow-x:auto;display:block;padding:2px 0}
+  /* une commande longue se REPLIE au lieu de glisser sous un ascenseur invisible : la
+     troisième ligne du bleu (deux fichiers) dépassait la boîte à 1440 sans aucun indice ;
+     les commandes courtes du vert et du rouge tiennent sur leur ligne, rien ne bouge pour elles */
+  .commande .ln{white-space:normal;overflow-wrap:anywhere;display:block;padding:2px 0}
   .commande .ln::before{content:"$ ";color:var(--vert-vif)}
   .commande .note{display:block;margin-top:8px;font-size:11px;color:var(--sur-vert-pale);text-align:center;
     font-family:var(--sans);letter-spacing:.02em}
@@ -461,9 +464,10 @@
 </section>
 
 <section class="rideau" id="tools" aria-label="The instruments">
-  <span class="rideau-titre">Cascade &#183; two instruments, one method</span>
+  <span class="rideau-titre">Cascade &#183; three instruments, one method</span>
   <a class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" href="../routing/index.html#tools"><span class="p-eti">Routing &#183; extraction</span><img src="../rendus/robot-salut.webp" alt=""><span class="p-h">Where should the next dollar&nbsp;go?</span><span class="p-d">Seven tiers, from a regular expression to a human, measured on sealed records.</span><span class="p-ouvrir">Open Routing <span aria-hidden="true">&#8594;</span></span></a>
-  <div class="pan cote-d" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" aria-current="page"><span class="p-eti">Screening &#183; name matching</span><img src="../rendus/robot-rubis-curieux.webp" alt=""><span class="p-h">Which matcher suffices, at which threshold?</span><span class="p-d">Seven matchers, from strict equality to a multilingual embedding, measured on your own alert history.</span><span class="p-ouvrir">You are here &#183; Screening</span></div>
+  <div class="pan cote-g" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" aria-current="page"><span class="p-eti">Screening &#183; name matching</span><img src="../rendus/robot-rubis-curieux.webp" alt=""><span class="p-h">Which matcher suffices, at which threshold?</span><span class="p-d">Seven matchers, from strict equality to a multilingual embedding, measured on your own alert history.</span><span class="p-ouvrir">You are here &#183; Screening</span></div>
+  <a class="pan cote-d" style="--pan-vif:#4f8ae0;--pan-a:#16213a;--pan-b:#101a30;--pan-c:#0a111f" href="../monitoring/index.html#tools"><span class="p-eti">Monitoring &#183; transactions</span><img src="../rendus/robot-lapis-montre.webp" alt=""><span class="p-h">Which scenario suffices, at which threshold?</span><span class="p-d">Seven scenarios, from a bare amount to a peer profile, measured on your own dispositioned alerts.</span><span class="p-ouvrir">Open Monitoring <span aria-hidden="true">&#8594;</span></span></a>
 </section>
 
 <section class="sequence" aria-label="The five findings">
