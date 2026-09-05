@@ -72,7 +72,7 @@ writeFileSync(join(ICI, "instrument-donnees.json"), JSON.stringify({
     profil: RELEVE_DE_REFERENCE,
     landingMeasuredAt: landing.generatedFrom.measuredAt,
     commit: landing.generatedFrom.commit,
-    note: "prices computed by the tool's own pricePerThousandExtractions at the frozen per-field latencies; accuracies from landing.json; human tier assumed, never measured",
+    note: "prices computed by the tool's own pricePerThousandExtractions at the frozen per-field latencies; accuracies from landing.json; human tier assumed until measured with measure:humans",
   },
   fields: FIELDS,
   tiers: TIERS,
