@@ -23,7 +23,7 @@ import galet          # noqa: E402
 import mathutils as mu  # noqa: E402
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--accent", default="rubis", choices=["rubis", "vert"])
+ap.add_argument("--accent", default="rubis", choices=["rubis", "vert", "lapis"])
 ap.add_argument("--sortie", default="/tmp/affiche/plaque.png")
 ap.add_argument("--apercu", action="store_true")
 args = ap.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
@@ -73,6 +73,13 @@ if args.accent == "rubis":
     g.ANT_BSDF.inputs["Metallic"].default_value = 0.35
     teinter_bsdf(g.M_VERT.node_tree.nodes["Principled BSDF"], "#8e1626")
     yeux = "#ffb3bd"          # il PROJETTE : les yeux prennent la couleur de l'outil (film : #3fe087)
+elif args.accent == "lapis":
+    # la pierre lapis du robot du rideau (robots-rideau.py) : mêmes hex, même poli
+    teinter_bsdf(g.ANT_BSDF, "#16346f", emission=0.12)
+    g.ANT_BSDF.inputs["Roughness"].default_value = 0.18
+    g.ANT_BSDF.inputs["Metallic"].default_value = 0.35
+    teinter_bsdf(g.M_VERT.node_tree.nodes["Principled BSDF"], "#1d4189")
+    yeux = "#a9c6ff"
 else:
     yeux = "#3fe087"
 for oeil in g.YEUX:

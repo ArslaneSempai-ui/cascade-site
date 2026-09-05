@@ -23,6 +23,8 @@ import galet    # noqa: E402
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--outil", required=True, choices=["routing", "screening", "monitoring"])
+ap.add_argument("--pose", default=None, choices=[None, "penche"],
+                help="penche : la pose de l'instrument (derrière le terminal), même pour toutes les couleurs")
 ap.add_argument("--sortie", default="/tmp/robots")
 ap.add_argument("--large", type=int, default=1400)
 ap.add_argument("--taa", type=int, default=64)
@@ -91,8 +93,10 @@ POSES = {
     # le corps à peine cambré, la main gauche au repos
     "monitoring": dict(corps=(-3, -1, 4), tete=(-7, 0, -9), bg=(0, 8, 0), bd=(-20, -108, 0), dard=-3.0),
 }
-poser(**POSES[args.outil])
+# la pose « penché » de l'instrument (poses-rubis.py), la même pour toutes les couleurs
+PENCHE = dict(corps=(16, 0, 0), tete=(22, 0, 0), bg=(-55, -14, 0), bd=(-55, 14, 0))
+poser(**(PENCHE if args.pose == "penche" else POSES[args.outil]))
 os.makedirs(args.sortie, exist_ok=True)
-sc.render.filepath = os.path.join(args.sortie, f"robot-{args.outil}.png")
+sc.render.filepath = os.path.join(args.sortie, f"robot-{args.outil}{'-penche' if args.pose else ''}.png")
 bpy.ops.render.render(write_still=True)
 print(f"robot {args.outil} : {sc.render.filepath}")

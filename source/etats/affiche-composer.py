@@ -36,9 +36,23 @@ cell_a, cell_b = src["a"], src["b"]
 def lire(c):
     return R[c["table"]]["tables"][c["palier"]][c["seuil"]][c["mesure"]]
 a, b = lire(cell_a), lire(cell_b)
-pc = lambda x: f"{x['taux'] * 100:.1f}".rstrip("0").rstrip(".")
-chiffre_a, chiffre_b = pc(a), pc(b)
+# le CHAMP affiché suit la fiche : `taux` par défaut ; le bleu (finding 03) montre des
+# bornes basses (champ "bas"), parce qu'aucune cellule n'y tient le plancher
+champ_a, champ_b = cell_a.get("champ", "taux"), cell_b.get("champ", "taux")
+pc = lambda x, champ: f"{x[champ] * 100:.1f}".rstrip("0").rstrip(".")
+chiffre_a, chiffre_b = pc(a, champ_a), pc(b, champ_b)
 palier, seuil = cell_a["palier"], cell_a["seuil"]
+palier_b, seuil_b = cell_b["palier"], cell_b["seuil"]
+ETIQUETTE = {("rappel", "taux"): "recall, at the frontier",
+             ("fauxPositifs", "taux"): "false alerts, same cell",
+             ("rappel", "bas"): "recall, lower bound",
+             ("fauxPositifs", "bas"): "false alerts, lower bound"}
+etiquette_a, etiquette_b = ETIQUETTE[(cell_a["mesure"], champ_a)], ETIQUETTE[(cell_b["mesure"], champ_b)]
+# la seconde paume nomme SA cellule quand ce n'est pas la même (le bleu compare deux
+# scénarios) ; sur la même cellule (le rouge), la ligne reste celle déjà publiée
+meme_cellule = (palier, seuil) == (palier_b, seuil_b)
+sous_b = (f"wilson [{b['bas'] * 100:.0f}&#8211;{b['haut'] * 100:.0f}] &#183; n={b['n']}" if meme_cellule else
+          f"{palier_b} &#183; threshold {seuil_b} &#183; wilson [{b['bas'] * 100:.0f}&#8211;{b['haut'] * 100:.0f}]")
 
 # la capture native (Chrome headless, CDP) vit dans la chaîne : etats/capturer-cdp.mjs ;
 # les fontes de la maison sont servies depuis source/fontes par le serveur de source/
@@ -78,14 +92,14 @@ html = f"""<!doctype html><html lang="en"><meta charset="utf-8"><title>affiche {
   <div class="faisceau" style="left:{FAISCEAU['g']['x']}%;top:{FAISCEAU['g']['y']}%;height:{FAISCEAU['g']['h']}%"></div>
   <div class="faisceau" style="left:{FAISCEAU['d']['x']}%;top:{FAISCEAU['d']['y']}%;height:{FAISCEAU['d']['h']}%"></div>
   <div class="holo" style="left:{POS['g']['x']}%;top:{POS['g']['y']}%">
-    <span class="l">recall, at the frontier</span>
+    <span class="l">{etiquette_a}</span>
     <span class="n">{chiffre_a}<small>%</small></span>
     <span class="s">{palier} &#183; threshold {seuil} &#183; n={a['n']}</span>
   </div>
   <div class="holo" style="left:{POS['d']['x']}%;top:{POS['d']['y']}%">
-    <span class="l">false alerts, same cell</span>
+    <span class="l">{etiquette_b}</span>
     <span class="n">{chiffre_b}<small>%</small></span>
-    <span class="s">wilson [{b['bas'] * 100:.0f}&#8211;{b['haut'] * 100:.0f}] &#183; n={b['n']}</span>
+    <span class="s">{sous_b}</span>
   </div>
 </div>
 </html>"""
@@ -100,5 +114,5 @@ subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(brut),
                 "-vf", "scale=1280:720:flags=lanczos,noise=alls=5:allf=u", "-q:v", "3", str(dst)],
                check=True)
 plaque_web.unlink()
-print(f"{dst} : {chiffre_a} % recall / {chiffre_b} % false alerts at {palier}@{seuil}, "
-      f"seal {R['empreinte']} ({dst.stat().st_size} o)")
+print(f"{dst} : {chiffre_a} % ({etiquette_a}, {palier}@{seuil}) / {chiffre_b} % ({etiquette_b}, "
+      f"{palier_b}@{seuil_b}), seal {R['empreinte']} ({dst.stat().st_size} o)")
