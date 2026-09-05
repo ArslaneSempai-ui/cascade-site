@@ -96,7 +96,8 @@ LETTRES = "ABCDEF"
 # jour, c'est LA constante à changer : ici, dans batir-hero.py et assembler.py.
 BASE_URL = "https://cascade-routing.com/"
 PROD = {
-    "HERO.html": "index.html",
+    "ACCUEIL.html": "index.html",
+    "HERO.html": "routing/index.html",
     "ANNEXE-METHODE.html": "method.html",
     "ANNEXE-SECURITE.html": "security.html",
     "ANNEXE-QUESTIONS.html": "questions.html",
@@ -355,7 +356,7 @@ def barre_html(courante):
         f'<a href="{h}"' + (' aria-current="page"' if h == courante else "")
         + f'>{n}</a>' for h, n in liens)
     return (f'<header class="barre sur-nuit">\n'
-            f'  <a class="marque" href="HERO.html">CASCADE</a>\n'
+            f'  <a class="marque" href="ACCUEIL.html">CASCADE</a>\n'
             f'  <nav aria-label="Site">{nav}</nav>\n'
             f'  <span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>\n'
             f'</header>')
@@ -539,7 +540,7 @@ def barre_rouge(courante, sceau):
         f'<a href="{h}"' + (' aria-current="page"' if h == courante else "")
         + f'>{n}</a>' for h, n in liens)
     return (f'<header class="barre sur-nuit">\n'
-            f'  <a class="marque" href="{lien(RUBIS, "HERO.html")}">CASCADE</a>\n'
+            f'  <a class="marque" href="{lien(RUBIS, "ACCUEIL.html")}">CASCADE</a>\n'
             f'  <nav aria-label="Site">{nav}</nav>\n'
             f'  <span class="sceau">seal {sceau} &#183; measured, then frozen</span>\n'
             f'</header>')

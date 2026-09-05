@@ -64,7 +64,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <p>Whatever this address promised was never measured, never sealed, never published:
   the address is wrong, or the page has moved.</p>
 <nav class="portes" aria-label="Ways out">
-  <a class="porte" href="HERO.html">The question &#8594;</a>
+  <a class="porte" href="ACCUEIL.html">The question &#8594;</a>
   <a class="porte" href="INSTRUMENT.html">The instrument &#8594;</a>
   <a class="porte" href="CONTACT.html">Say a figure is missing &#8594;</a>
 </nav>

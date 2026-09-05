@@ -43,7 +43,8 @@ PROD_SCREENING = {
 }
 
 PROD = {
-    "HERO.html": "index.html",
+    "ACCUEIL.html": "index.html",           # la page de la MARQUE (décision A, 6/09)
+    "HERO.html": "routing/index.html",      # l'outil vert, sous son dossier comme le rouge
     "INSTRUMENT.html": "instrument.html",
     "ENGAGEMENT.html": "engagement.html",
     "ANNEXE-METHODE.html": "method.html",
@@ -253,6 +254,12 @@ if publiees != attendues:
     sys.exit("FAQPage : les questions émises ne recomposent pas la source : "
              f"{sorted(set(attendues) ^ set(publiees))}")
 
+# le héros vert, sous routing/, porte le même socle de graphe que la racine
+types_v = {noeud.get("@type")
+           for noeud in blocs_vus.get("routing/index.html", [{}])[0].get("@graph", [])}
+if not {"Organization", "SoftwareApplication"} <= types_v:
+    sys.exit(f"routing/index.html : Organization + SoftwareApplication attendus, "
+             f"vu {sorted(x for x in types_v if x)}")
 # le héros rouge, quand il est émis, porte le même socle de graphe que le vert
 if "screening/index.html" in blocs_vus:
     types_r = {noeud.get("@type")
@@ -357,7 +364,7 @@ def verifier_comptes(pages, depot, etiquette):
                  f"— corriger les JSON avant d'assembler")
     print(f"  compte de tests {etiquette} vérifié : {vrai_n} tests")
 
-verifier_comptes(sorted(DOCS.glob("*.html")),
+verifier_comptes(sorted(DOCS.glob("*.html")) + sorted((DOCS / "routing").glob("*.html")),
                  pathlib.Path.home() / "Documents" / "cascade" / "README.md", "routing")
 verifier_comptes(sorted((DOCS / "screening").glob("*.html")) if (DOCS / "screening").exists() else [],
                  pathlib.Path.home() / "Documents" / "cascade-screening" / "README.md", "screening")
@@ -407,7 +414,8 @@ def verifier_citations(pages, ancres_fichier, outil, etiquette):
                  + f"\n  corriger les JSON, puis régénérer {ancres_fichier.name} (ancrer-citations.py)")
     print(f"  citations {etiquette} vérifiées ligne à ligne contre l'outil : {len(citees)}")
 
-verifier_citations(sorted(DOCS.glob("*.html")), MAQ / "ancres-citations.json",
+verifier_citations(sorted(DOCS.glob("*.html")) + sorted((DOCS / "routing").glob("*.html")),
+                   MAQ / "ancres-citations.json",
                    pathlib.Path.home() / "Documents" / "cascade", "routing")
 verifier_citations(sorted((DOCS / "screening").glob("*.html")) if (DOCS / "screening").exists() else [],
                    MAQ / "ancres-citations-screening.json",

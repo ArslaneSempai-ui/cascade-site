@@ -22,7 +22,7 @@ from outil import OUTILS  # noqa: E402
 
 CITATION = re.compile(r"[A-Za-z0-9_./-]+\.(?:ts|mjs|json|md|js):\d+")
 PAGES = {
-    "routing": ["HERO.html", "INSTRUMENT.html", "ENGAGEMENT.html", "ANNEXE-METHODE.html",
+    "routing": ["ACCUEIL.html", "HERO.html", "INSTRUMENT.html", "ENGAGEMENT.html", "ANNEXE-METHODE.html",
                 "ANNEXE-SECURITE.html", "ANNEXE-QUESTIONS.html", "ANNEXE-TERMS.html",
                 "ANNEXE-PRIVACY.html", "ANNEXE-ACCESSIBILITE.html", "CONTACT.html", "MENTIONS.html"],
     "screening": ["HERO-SCREENING.html", "INSTRUMENT-SCREENING.html",

@@ -88,8 +88,10 @@ OUTILS = {
     "routing": {
         "id": "routing",
         "nom": "Routing",
-        "sous_dossier": "",             # la racine du site
-        "prefixe_racine": "",           # depuis ses pages, la racine est ici
+        # depuis le 6/09 (décision A d'Arslane), la racine est la page de la MARQUE ;
+        # Routing vit sous routing/ comme Screening sous screening/
+        "sous_dossier": "routing/",
+        "prefixe_racine": "../",
         "question": "Where should the next dollar&nbsp;go?",
         "palette": PALETTE_VERTE,
         "favicon_accent": "%2323543f",

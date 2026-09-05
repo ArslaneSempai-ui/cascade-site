@@ -291,6 +291,8 @@ CSS = '''
     border-color:color-mix(in srgb,var(--vert-vif) 34%,transparent);
     box-shadow:0 26px 70px rgba(0,0,0,.5)}
   .hero .cue{color:var(--sur-vert-pale)}
+  .marque-h{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--sur-vert-pale)}
   .h1{font-size:clamp(44px,7vw,92px);font-weight:600;letter-spacing:-.02em;line-height:1.02;
     text-wrap:balance;max-width:14ch}
   .lede{font-size:clamp(16px,1.35vw,19px);color:var(--demi);max-width:78ch;line-height:1.6;text-wrap:balance}
@@ -341,6 +343,20 @@ CSS = '''
   a.pan:hover .p-ouvrir,a.pan:focus-visible .p-ouvrir{background:var(--sur-vert);color:var(--nuit-c)}
   a.pan:hover img{transform:translateY(-6px)}
   .pan[aria-current] .p-ouvrir{border-style:dashed;color:var(--sur-vert-pale)}
+  /* l'entrée et l'ouverture du rideau (Arslane, 6/09 : « le slide de l'écran 1 à 2
+     n'a rien de spécial ») : les pans arrivent des deux côtés quand le rideau
+     entre dans la vue, et s'écartent au clic avant d'ouvrir l'outil ; sans script,
+     rien ne bouge et les pans sont des liens */
+  .rideau{overflow:hidden;background:var(--ouverture,var(--papier))}   /* derrière les pans : la nuit de l'outil qu'on ouvre */
+  .pan{transition:transform .8s var(--montee),opacity .8s var(--montee)}
+  .rideau .p-h,.rideau img,.rideau .p-d,.rideau .p-ouvrir,.rideau .p-eti{transition:transform .9s var(--montee),opacity .9s}
+  html.js .rideau:not(.vu) .cote-g{transform:translateX(-18%);opacity:0}
+  html.js .rideau:not(.vu) .cote-d{transform:translateX(18%);opacity:0}
+  html.js .rideau:not(.vu) .pan img{transform:translateY(28px);opacity:0}
+  html.js .rideau.vu .pan img{transition-delay:.25s}
+  .rideau.ouvre .cote-g{transform:translateX(-102%)}
+  .rideau.ouvre .cote-d{transform:translateX(102%)}
+  .rideau.ouvre .rideau-titre{opacity:0;transition:opacity .3s}
 
   /* la séquence : rail-filmstrip, plateau annoté, fiche colonne */
   .sequence{height:560vh;position:relative}
@@ -585,6 +601,28 @@ JS = '''
   addEventListener("scroll", poserBarre, {passive: true});
   poserBarre();
 
+  // le rideau : les pans entrent quand il arrive dans la vue ; au clic sur un pan,
+  // le rideau s'écarte puis l'outil s'ouvre sur sa page (mouvement réduit : lien nu)
+  const rideau = document.querySelector(".rideau");
+  if (rideau) {
+    if (!reduit && "IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entrees) => {
+        if (entrees.some((e) => e.isIntersecting)) { rideau.classList.add("vu"); io.disconnect(); }
+      }, {threshold: 0.18});
+      io.observe(rideau);
+    } else {
+      rideau.classList.add("vu");
+    }
+    rideau.querySelectorAll("a.pan").forEach((pan) => pan.addEventListener("click", (ev) => {
+      if (reduit || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0) return;
+      ev.preventDefault();
+      // le rideau s'écarte sur la nuit de l'outil choisi : la page qui suit commence dans cette nuit
+      rideau.style.setProperty("--ouverture", getComputedStyle(pan).getPropertyValue("--pan-b"));
+      rideau.classList.add("ouvre");
+      setTimeout(() => { location.href = pan.href; }, 620);
+    }));
+  }
+
   const seq = document.querySelector(".sequence");
   const scenes = [...document.querySelectorAll(".scene")];
   const jalons = [...document.querySelectorAll(".jalon")];
@@ -629,8 +667,8 @@ DONNEES_STRUCTUREES = json.dumps({
          "name": "Cascade", "url": "https://cascade-routing.com/",
          "logo": "https://cascade-routing.com/og.png",
          "email": "contact@cascade-routing.com"},
-        {"@type": "SoftwareApplication", "name": "Cascade",
-         "url": "https://cascade-routing.com/",
+        {"@type": "SoftwareApplication", "name": "Cascade Routing",
+         "url": "https://cascade-routing.com/routing/",
          "applicationCategory": "DeveloperApplication",
          "operatingSystem": "macOS, Linux (Node 24+)",
          "downloadUrl": "https://github.com/ArslaneSempai-ui/cascade-routing",
@@ -650,27 +688,33 @@ NOMBRES = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
 
 
 def choix_outils(outil):
-    """LE RIDEAU : le deuxième écran des héros, tranché par Arslane le 6/09 sur une
-    planche de trois formes. Un pan par outil de la table, chacun dans SES couleurs
-    (posées en variables sur le pan : la page rubis aliase la palette, et le pan
-    vert doit y rester vert), avec son robot, sa question et « Open X ». Le pan de
-    l'outil courant est marqué aria-current et n'est pas un lien. Cliquer un autre
-    pan mène à SA page, ancrée sur son propre rideau (#tools) : le lecteur retombe
-    au même endroit et tout ce qui défile dessous a changé d'outil, sans script.
-    Grille auto-fit : un troisième robot prendra sa place sans qu'on touche ici."""
+    """LE RIDEAU : le deuxième écran, tranché par Arslane le 6/09 sur une planche de
+    trois formes, puis précisé le même soir (décision A) : sur la page de la MARQUE
+    (outil=None) les pans sont tous FERMÉS, aucun n'est « ouvert d'office » ; sur la
+    page d'un outil, son pan est marqué aria-current. Un pan par outil de la table,
+    chacun dans SES couleurs (posées en variables sur le pan : la page rubis aliase
+    la palette, et le pan vert doit y rester vert), avec son robot, sa question et
+    « Open X ». Cliquer un pan mène à SA page, ancrée sur son propre rideau (#tools).
+    Le script (JS) ajoute l'entrée des pans au défilement et l'ouverture du rideau au
+    clic ; sans script, ce sont des liens. Grille auto-fit : un troisième robot
+    prendra sa place sans qu'on touche ici. Les classes cote-g / cote-d disent de
+    quel côté un pan glisse : la première moitié à gauche, la seconde à droite."""
     pans = ""
-    for o in OUTILS.values():
+    outils = list(OUTILS.values())
+    for i, o in enumerate(outils):
+        cote = "cote-g" if i < len(outils) / 2 else "cote-d"
         style = (f'--pan-vif:{o["vif"]};--pan-a:{o["nuit"][0]};'
                  f'--pan-b:{o["nuit"][1]};--pan-c:{o["nuit"][2]}')
+        prefixe = outil["prefixe_racine"] if outil else ""
         corps = (f'<span class="p-eti">{o["etiquette"]}</span>'
-                 f'<img src="{lien(outil, "rendus/" + o["robot_rideau"])}" alt="">'
+                 f'<img src="{prefixe}rendus/{o["robot_rideau"]}" alt="">'
                  f'<span class="p-h">{o["question"]}</span>'
                  f'<span class="p-d">{o["pitch"]}</span>')
-        if o["id"] == outil["id"]:
-            pans += (f'\n  <div class="pan" style="{style}" aria-current="page">{corps}'
+        if outil is not None and o["id"] == outil["id"]:
+            pans += (f'\n  <div class="pan {cote}" style="{style}" aria-current="page">{corps}'
                      f'<span class="p-ouvrir">You are here &#183; {o["nom"]}</span></div>')
         else:
-            pans += (f'\n  <a class="pan" style="{style}" href="{lien(outil, o["page_hero"])}#tools">{corps}'
+            pans += (f'\n  <a class="pan {cote}" style="{style}" href="{prefixe}{o["page_hero"]}#tools">{corps}'
                      f'<span class="p-ouvrir">Open {o["nom"]} <span aria-hidden="true">&#8594;</span></span></a>')
     n = NOMBRES.get(len(OUTILS), str(len(OUTILS)))
     return (f'<section class="rideau" id="tools" aria-label="The instruments">'
@@ -714,7 +758,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade: routing audit, KYC extraction">
 <meta property="og:description" content="A routing audit for KYC extraction: measured on sealed records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
-<meta property="og:url" content="https://cascade-routing.com/">
+<meta property="og:url" content="https://cascade-routing.com/routing/">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="A routing audit for KYC extraction: measured on sealed records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
@@ -725,7 +769,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <script>document.documentElement.classList.add("js")</script>
 <style>{CSS}</style>
 <header class="barre sur-nuit">
-  <a class="marque" href="index.html">CASCADE</a>
+  <a class="marque" href="ACCUEIL.html">CASCADE</a>
   <nav aria-label="Site">
     <a href="INSTRUMENT.html">Instrument</a>
     <a href="ENGAGEMENT.html">Pricing</a>
@@ -798,9 +842,103 @@ PAGE = f'''<!doctype html><html lang="en">
 <script>{JS}</script>
 '''
 
+# Routing vit sous routing/ (décision A du 6/09) : chaque lien relatif de la page
+# sort du sous-dossier par ../ ; ceux qui le portent déjà (le rideau, via la table)
+# ne le reçoivent pas deux fois ; les absolus, les ancres et les data: sont laissés
+PAGE = re.sub(r'(href|src)="(?!(?:https?:|#|data:|mailto:|\.\./))([^"]+)"', r'\1="../\2"', PAGE)
 assert "—" not in PAGE, "un cadratin s'est glissé dans la page"
 (BASE / "HERO.html").write_text(PAGE, encoding="utf-8")
 print("HERO.html", f"{len(PAGE) / 1e3:.0f} ko")
+
+
+def batir_accueil():
+    """LA PAGE DE LA MARQUE, à la racine (décision A d'Arslane, 6/09) : un héros court
+    qui pose la question commune aux instruments, puis le rideau à pans FERMÉS, puis
+    les portes de la maison et le pied. Aucun chiffre : les chiffres vivent chez les
+    outils, chacun sous son sceau."""
+    n = NOMBRES.get(len(OUTILS), str(len(OUTILS)))
+    graphe = [{"@type": "Organization", "@id": "https://cascade-routing.com/#org",
+               "name": "Cascade", "url": "https://cascade-routing.com/",
+               "logo": "https://cascade-routing.com/og.png",
+               "email": "contact@cascade-routing.com"}]
+    for o in OUTILS.values():
+        graphe.append({"@type": "SoftwareApplication", "name": f"Cascade {o['nom']}",
+                       "url": f"https://cascade-routing.com/{o['sous_dossier']}",
+                       "applicationCategory": "DeveloperApplication",
+                       "operatingSystem": "macOS, Linux (Node 24+)",
+                       "downloadUrl": o["depot"],
+                       "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
+                                  "description": "Thirty-day evaluation on your own records, "
+                                                 "granted in the public licence."},
+                       "publisher": {"@id": "https://cascade-routing.com/#org"}})
+    donnees = json.dumps({"@context": "https://schema.org", "@graph": graphe}, ensure_ascii=True)
+    description = ("Cascade: instruments for compliance decisions, one method. Every tier "
+                   "measured on sealed records, the frontier read with its interval, rerun on "
+                   "your own machine. Nothing of yours goes up.")
+    page = f'''<!doctype html><html lang="en">
+<meta charset="utf-8"><title>Cascade &#183; measured instruments for compliance</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cascade: {n} instruments, one method">
+<meta property="og:description" content="{description}">
+<meta property="og:url" content="https://cascade-routing.com/">
+<meta property="og:image" content="https://cascade-routing.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="{description}">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="fontes/literata.css">
+<link rel="stylesheet" href="fontes/roboto-mono.css">
+<script type="application/ld+json">{donnees}</script>
+<script>document.documentElement.classList.add("js")</script>
+<style>{CSS}</style>
+<header class="barre sur-nuit">
+  <a class="marque" href="ACCUEIL.html">CASCADE</a>
+  <nav aria-label="Site">
+    <a href="HERO.html">Routing</a>
+    <a href="HERO-SCREENING.html">Screening</a>
+    <a href="ENGAGEMENT.html">Pricing</a>
+    <a href="CONTACT.html">Contact</a>
+  </nav>
+  <span class="sceau">measured, then frozen</span>
+</header>
+
+<main>
+<section class="hero">
+  <span class="marque-h entree">Cascade &#183; {n} instruments, one method</span>
+  <h1 class="h1 entree">Which tier suffices?</h1>
+  <p class="lede entree">Instruments for compliance decisions, and one method behind all of them:
+    every tier is measured on sealed records, the frontier is read with its interval,
+    and the whole sweep reruns on your own machine. <b>Nothing of yours goes up.</b></p>
+  <div class="cue" aria-hidden="true"><span>choose</span><span class="fil"></span></div>
+</section>
+
+{choix_outils(None)}
+
+<section class="menus"><div class="colonne">
+  <h2 class="h2">The house, in common.</h2>
+  <div class="rangee-fine">
+    <a class="lien-fin" href="ENGAGEMENT.html">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="ANNEXE-TERMS.html">Terms of engagement <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="ANNEXE-PRIVACY.html">Privacy <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="ANNEXE-ACCESSIBILITE.html">Accessibility <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="CONTACT.html">Contact <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="MENTIONS.html">The fine print <span aria-hidden="true">&#8594;</span></a>
+  </div></div></section>
+</main>
+
+<footer class="pied"><div class="colonne">
+  <p class="pied-p">On your records, on your machine. <em>Nothing leaves the network.</em></p>
+  <span class="sceau">measured, then frozen</span>
+</div></footer>
+
+<script>{JS}</script>
+'''
+    assert "—" not in page, "un cadratin s'est glissé dans la page de la marque"
+    (BASE / "ACCUEIL.html").write_text(page, encoding="utf-8")
+    print("ACCUEIL.html", f"{len(page) / 1e3:.0f} ko")
+
+
+batir_accueil()
 
 
 # ═════════════════════════ LE CATALOGUE : bâtir(outil) ═════════════════════════
@@ -952,7 +1090,7 @@ def batir_screening():
 <script>document.documentElement.classList.add("js")</script>
 <style>{css_r}</style>
 <header class="barre sur-nuit">
-  <a class="marque" href="{lien(RUBIS, 'HERO.html')}">CASCADE</a>
+  <a class="marque" href="{lien(RUBIS, 'ACCUEIL.html')}">CASCADE</a>
   <nav aria-label="Site">
     <a href="INSTRUMENT-SCREENING.html">Instrument</a>
     <a href="{lien(RUBIS, 'ENGAGEMENT.html')}">Pricing</a>

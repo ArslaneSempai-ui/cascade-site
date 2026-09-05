@@ -146,7 +146,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <script>document.documentElement.classList.add("js")</script>
 <style>{CSS}</style>
 <header class="barre">
-  <a class="marque" href="HERO.html">CASCADE</a>
+  <a class="marque" href="ACCUEIL.html">CASCADE</a>
   <nav aria-label="Site">
     <a href="INSTRUMENT.html">Instrument</a>
     <a href="ENGAGEMENT.html" aria-current="page">Pricing</a>
