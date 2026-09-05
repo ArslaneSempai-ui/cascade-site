@@ -1,0 +1,60 @@
+{
+  "_": "Security page of the onyx tool (Dossier). Same shape as the house annexes. Every refs points at a real line of ~/Documents/cascade-dossier at main 74a3a2f. The object render does not exist yet (look-dev).",
+  "objet": "rendus/etats/objet-dossier-securite.webp",
+  "titre": "It reads seals and dates. <span class=\"deux\">Never a value.</span>",
+  "lede": "The Dossier is the piece your regulator reads, so its own discipline is the strictest of the suite: it reads seals, dates, versions and verdicts from the other tools' reports, never a value of yours, and it touches no network at all.",
+  "sections": [
+    {
+      "h2": "The network allowlist is empty, and a test walks every file",
+      "html": [
+        "<p>Like the blue and the amethyst, the Dossier downloads <b>nothing</b>: the allowlist of modules that may touch the network is empty, and a structural test walks every source file for network sites and fails the suite if one appears. The detector proves it can see a planted call before its zero is believed.</p>"
+      ],
+      "verif": {
+        "t": "Verify the frontier",
+        "p": "Run the suite; the walk fails if any file gains a network site.",
+        "cmd": [
+          {
+            "c": "npm test",
+            "n": "fails if any module touches the network; the allowlist is empty"
+          }
+        ],
+        "refs": "src/frontiere.test.ts:22 &#183; src/frontiere.test.ts:43"
+      }
+    },
+    {
+      "h2": "What crosses into the Dossier, and what never does",
+      "html": [
+        "<p>The Dossier reads the other tools' sealed reports: seals, dates, versions, rule settings, verdict counts. It never reads, stores or reprints a client value: <b>no name, no amount, no account, no country of yours</b> exists in any report of the suite in the first place, and the Dossier cites reports by their fingerprints and their verdicts, by review identifiers only.</p>",
+        "<p>The piece it writes lands next to your files and nowhere else, sealed with the same fingerprint arithmetic as every record of the suite, and the verification command ships on the page that announces it.</p>"
+      ],
+      "verif": {
+        "t": "Verify on the record itself",
+        "p": "The public record holds verdicts, seals, dates and counts; search it for anything else.",
+        "cmd": [
+          {
+            "c": "python3 -c \"import json; d=json.load(open('releve-public.json')); print(sorted(d), '/', sorted(d['questions']))\"",
+            "n": "prints the record's whole surface: controls, coverage, questions, settings, seal"
+          }
+        ],
+        "refs": "src/dossier.ts:9 &#183; src/empreinte.ts:26 &#183; src/empreinte.ts:31"
+      }
+    },
+    {
+      "h2": "Nothing is called valid unverified",
+      "html": [
+        "<p>A signature that cannot be checked is not treated as informally fine: the control fails and the verdict says why, one refusal per report. On day one that produced a suite-wide zero on signatures, printed on the public page. The sentence a reviewer should remember is the tool's own: <b>nothing is called valid unverified</b>.</p>"
+      ],
+      "verif": {
+        "t": "Verify a refusal",
+        "p": "Read any signed verdict in the public record: it carries its reason.",
+        "cmd": [
+          {
+            "c": "python3 -c \"import json; q=json.load(open('releve-public.json'))['questions']['screening']; print([v['detail'] for v in q['verdicts'] if v['controle']=='signed'][0])\"",
+            "n": "prints the refusal, in the tool's own words"
+          }
+        ],
+        "refs": "src/controles/index.ts:15 &#183; src/controles/fresh.ts:5"
+      }
+    }
+  ]
+}

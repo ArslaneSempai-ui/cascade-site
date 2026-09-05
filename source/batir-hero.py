@@ -1055,43 +1055,27 @@ LAPIS = OUTILS["monitoring"]
 # quatrième copie de la fonction (la divergence des copies est la maladie que le
 # catalogue existe pour fermer). Le rubis garde ses textes À L'OCTET : témoin cmp.
 def _refaire_dossier(releve, src, o):
-    """Les chiffres de l'onyx, refaits depuis le relevé scellé du Dossier. Les adresses
-    des fiches parlent le vocabulaire du CONTRAT (couverture, sceaux, signatures,
-    fraicheur, coherence, reseau : CONTRAT-OUTIL-DOSSIER §2) ; le relevé parle celui du
-    registre du lecteur (sealed, signed, fresh, consistent). La traduction vit ICI, une
-    fois : une adresse inconnue est un refus nommé, jamais un zéro silencieux."""
-    qs = [q for q in releve["questions"].values() if q.get("present")]
-
-    def tenu(controle, valeur=True):
-        return sum(1 for q in qs for v in q.get("verdicts", [])
-                   if v["controle"] == controle and v["tenu"] is valeur)
-
-    c = src["controle"]
-    if c == "couverture":
-        # la couverture de la chaîne — et la « portée mesure-publique » de la fiche 05
-        # est la MÊME grandeur : les relevés publics que la mesure du Dossier lit
-        n, sur = releve["couverture"]["n"], releve["couverture"]["sur"]
-        return [f"{n} / {sur}", f"{n}/{sur}", f"{n} of {sur}", str(n)]
-    if c == "sceaux":
-        return [str(tenu("sealed"))]
-    if c == "signatures":
-        return [str(tenu("signed"))]
-    if c == "fraicheur":
-        return [str(tenu("fresh") if src.get("etat") == "fresh" else tenu("fresh", False))]
-    if c == "coherence":
-        return [str(tenu("consistent") if src.get("etat") == "passes" else tenu("consistent", False))]
-    if c == "reseau":
-        # le compte des téléchargeurs AUTORISES de l'outil : la liste que son test
-        # réseau (frontiere.test.ts) tient vide — COMPTÉE dans sa source, pas recopiée,
-        # pour que le jour où un téléchargeur légitime y entre, la fiche 05 rougisse
-        src_test = (o["outil_chemin"] / "src" / "frontiere.test.ts").read_text()
-        bloc = re.search(r"const AUTORISES[^=]*=\s*\{(.*?)\n\};", src_test, re.S)
-        if not bloc:
-            sys.exit("frontiere.test.ts de cascade-dossier : le bloc AUTORISES est introuvable ; "
-                     "la fiche 05 cite un compte qui ne se refait plus")
-        return [str(len(re.findall(r'"[^"]+"\s*:', bloc.group(1))))]
-    sys.exit(f"findings-dossier.json : adresse de contrôle inconnue « {c} » ; "
-             "les adresses du contrat sont couverture, sceaux, signatures, fraicheur, coherence, reseau")
+    """Les chiffres de l'onyx, refaits depuis le relevé scellé du Dossier, dans la
+    grammaire d'adresses que findings-dossier.json déclare lui-même (lot D3, d950517) :
+    {cle, champ} lit releve[cle][champ] (mesure "longueur" en prend la taille) ;
+    {compte-verdicts: {controle, tenu}} compte les verdicts de ce contrôle et de ce
+    tenu à travers les questions ; {compte-questions: {etat}} compte les questions à
+    cet état. Une adresse inconnue est un refus nommé, jamais un zéro silencieux."""
+    if "cle" in src:
+        v = releve[src["cle"]][src["champ"]]
+        if src.get("mesure") == "longueur":
+            v = len(v)
+        return [str(v)]
+    if "compte-verdicts" in src:
+        c = src["compte-verdicts"]
+        return [str(sum(1 for q in releve["questions"].values()
+                        for verd in q.get("verdicts") or []
+                        if verd["controle"] == c["controle"] and verd["tenu"] is c["tenu"]))]
+    if "compte-questions" in src:
+        e = src["compte-questions"]
+        return [str(sum(1 for q in releve["questions"].values() if q.get("etat") == e["etat"]))]
+    sys.exit(f"findings-dossier.json : adresse inconnue {src} ; la grammaire du fichier "
+             "connaît cle/champ, compte-verdicts et compte-questions")
 
 
 def _table_dossier(spec, releve, findings):
@@ -1352,11 +1336,16 @@ def _table_outil(spec, releve, findings):
 
 
 def batir_outil_catalogue(o, spec):
-    findings_chemin = BASE / f"findings-{o['id']}.json"
-    if not findings_chemin.exists():
-        print(f"{o['page_hero']} non bâti : findings-{o['id']}.json absent (lot {spec['lot']}) : "
-              "l'absence est dite, rien n'est improvisé")
+    # UNE définition de « prêt » : manques(), la même que le rideau et l'assembleur.
+    # Elle couvre l'absence, le pret:false et la dérive de sceau (un relevé re-scellé
+    # après la dérivation des textes) : toutes des absences DITES, pas des pannes —
+    # le 9/09, la dérive post-A-L4 faisait sys.exit ici et cassait l'assemblage entier
+    m = manques(o["id"], BASE)
+    if any(f"findings-{o['id']}.json" in x for x in m):
+        print(f"{o['page_hero']} non bâti : {[x for x in m if 'findings' in x][0]} "
+              f"(lot {spec['lot']}) : l'absence est dite, rien n'est improvisé")
         return False
+    findings_chemin = BASE / f"findings-{o['id']}.json"
     RELEVE = lire_releve_scelle(o["releve"])
     SCEAU_O = RELEVE["empreinte"]
     _f = json.loads(findings_chemin.read_text())

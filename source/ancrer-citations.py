@@ -29,9 +29,14 @@ PAGES = {
                   "ANNEXE-SCREENING-METHODE.html", "ANNEXE-SCREENING-SECURITE.html"],
     "monitoring": ["HERO-MONITORING.html", "INSTRUMENT-MONITORING.html",
                    "ANNEXE-MONITORING-METHODE.html", "ANNEXE-MONITORING-SECURITE.html"],
+    "scoring": ["HERO-SCORING.html", "INSTRUMENT-SCORING.html",
+                "ANNEXE-SCORING-METHODE.html", "ANNEXE-SCORING-SECURITE.html"],
+    "dossier": ["HERO-DOSSIER.html", "INSTRUMENT-DOSSIER.html",
+                "ANNEXE-DOSSIER-METHODE.html", "ANNEXE-DOSSIER-SECURITE.html"],
 }
 SORTIE = {"routing": "ancres-citations.json", "screening": "ancres-citations-screening.json",
-          "monitoring": "ancres-citations-monitoring.json"}
+          "monitoring": "ancres-citations-monitoring.json", "scoring": "ancres-citations-scoring.json",
+          "dossier": "ancres-citations-dossier.json"}
 
 outil_id = sys.argv[1] if len(sys.argv) > 1 else ""
 if outil_id not in PAGES:

@@ -242,11 +242,18 @@ def manques(outil_id, base):
             # (le lot des textes refuse de deviner les chiffres) : il compte comme absent,
             # en le disant — sinon le rideau montrerait un pan dont le héros refuse de se bâtir
             try:
-                pret = json.loads(chemin_f.read_text()).get("pret", True)
+                f = json.loads(chemin_f.read_text())
             except ValueError:
-                pret = False
-            if not pret:
+                f = {"pret": False}
+            if not f.get("pret", True):
                 m.append(f"findings-{outil_id}.json (pret: false : les chiffres attendent leur sceau)")
+            elif "sceau" in f and f["sceau"] != lire_releve_scelle(o["releve"])["empreinte"]:
+                # le relevé a été re-scellé depuis que les textes ont dérivé leurs chiffres
+                # (une re-mesure post-A-L4, par exemple) : le héros refuserait de se bâtir,
+                # et le rideau montrerait un pan mort — LA définition de « prêt » doit le
+                # voir AVANT, sinon les deux divergent exactement comme bassins/rack
+                m.append(f"findings-{outil_id}.json (sceau {f['sceau']} : le relevé porte "
+                         f"{lire_releve_scelle(o['releve'])['empreinte']}, à re-dériver)")
     if not (base / "rendus" / o["robot_rideau"]).exists():
         m.append(f"rendus/{o['robot_rideau']}")
     prefixe = ETATS_PREFIXE[outil_id]

@@ -1,96 +1,199 @@
 {
-  "_": "The five findings of the onyx (Dossier) hero, in the house keys. NOT READY TO BUILD: pret=false until lot D2 seals the onyx public record. What is final here: titles, phrases, cotes, legends' WORDING, and the control addresses in `source`, which follow the contract's own measures (couverture, sceaux, signatures, fraicheur, coherence: CONTRAT-OUTIL-DOSSIER §2), not a guessed record shape. What is deliberately empty: `sceau` and every displayed figure (a/b), to be filled FROM the sealed record the day D2 delivers it, then re-checked with the hardened citation script; typing them now would be figures without cells, the exact thing the house refuses. Legends carry [n] markers where the record's counts will land. `annotations` are provisional fractions: the onyx tray is not rendered; texts will be reread against the delivered renders before shipping, as with the rack.",
-  "pret": false,
-  "sceau": "",
+  "_": "The five findings of the onyx (Dossier) hero, filled from the sealed record ~/Documents/cascade-dossier/releve-public.json at seal `sceau`. Address grammar in `source`, resolved against that record: {cle, champ} reads releve[cle][champ]; {compte-verdicts: {controle, tenu}} counts verdicts with that controle and tenu across questions[*].verdicts; {compte-questions: {etat}} counts questions with that etat. Every displayed figure was derived from the record at writing time and re-verified mechanically (hardened citation script, displayed-precision rule). The figures tell the record's own day-one truth: coverage 3 of 4 with the fourth named missing, two seals recomputed, zero signatures verifiable yet and the Dossier says so, one report present that cannot even state its measurement day. `annotations` were measured and written against the five delivered renders (escalier-reel/parchemin-01..05): each label describes what its own frame shows. Note for the merge: the themes of states 3 (empty SIGNED step) and 4 (freshness rings) sit one step off findings 03 (freshness) and 04 (coherence); the labels follow the frames, and the pairing is the chef's call at re-render time.",
+  "pret": true,
+  "sceau": "2497928ec273023c",
   "findings": [
     {
       "num": "01",
       "titre": "Four questions, one piece.",
-      "phrase": "Each tool leaves a sealed report at your desk: the reader, the matcher, the scenario, the factor. A reviewer does not want four files. The Dossier reads them all and answers as one piece: what was measured, when, under which seal, against which declared rhythm.",
-      "a": "",
-      "leg_a": "questions of the chain covered by a sealed report, of the four the suite asks",
-      "b": "",
-      "leg_b": "reports whose seal verifies against their own content",
+      "phrase": "Each tool leaves a sealed report at your desk. A reviewer does not want four files: the Dossier reads them all and answers as one piece, and on day one it says three of the four questions have a report, naming the fourth as missing rather than hiding it.",
+      "a": "3",
+      "leg_a": "questions of the chain with a report present, of the 4 the suite asks: the missing one is named",
+      "b": "2",
+      "leg_b": "reports whose seal recomputes and matches, of the 3 read",
       "cote": "the keystone piece",
       "source": {
-        "a": { "controle": "couverture" },
-        "b": { "controle": "sceaux" }
+        "a": {
+          "cle": "couverture",
+          "champ": "n"
+        },
+        "b": {
+          "compte-verdicts": {
+            "controle": "sealed",
+            "tenu": true
+          }
+        }
       },
       "annotations": [
-        [0.5, 0.3, 0.15, 0.12, ""],
-        [0.7, 0.6, 0.85, 0.75, ""]
+        [
+          0.42,
+          0.52,
+          0.1,
+          0.16,
+          "two stones climbed today; the stair says how far"
+        ],
+        [
+          0.3,
+          0.62,
+          0.08,
+          0.78,
+          "two remain at the foot, and the piece names both"
+        ]
       ]
     },
     {
       "num": "02",
       "titre": "A seal is checked, not trusted.",
-      "phrase": "Every report carries the house fingerprint, and the Dossier recomputes each one before believing anything else about it. A retouched figure fails loudly, by name, before it can reach a reviewer.",
-      "a": "",
+      "phrase": "A seal is recomputed before anything else is believed, and a signature is verified, never assumed. Today the Dossier finds two seals that match, and zero verifiable signatures across the suite: it prints the zero instead of waving it through, because nothing is called valid unverified.",
+      "a": "2",
       "leg_a": "seals recomputed and matching, on the reports read",
-      "b": "",
-      "leg_b": "public records cited by those reports whose house signature verifies",
-      "cote": "arithmetic, not our word",
+      "b": "0",
+      "leg_b": "public-record signatures verifiable today, and the Dossier says so, one refusal per report",
+      "cote": "zero, said aloud",
       "source": {
-        "a": { "controle": "sceaux" },
-        "b": { "controle": "signatures" }
+        "a": {
+          "compte-verdicts": {
+            "controle": "sealed",
+            "tenu": true
+          }
+        },
+        "b": {
+          "compte-verdicts": {
+            "controle": "signed",
+            "tenu": true
+          }
+        }
       },
       "annotations": [
-        [0.4, 0.4, 0.12, 0.25, ""],
-        [0.65, 0.5, 0.85, 0.35, ""]
+        [
+          0.42,
+          0.5,
+          0.1,
+          0.17,
+          "the sealed step: both fingerprints recomputed here"
+        ],
+        [
+          0.685,
+          0.47,
+          0.84,
+          0.7,
+          "four house seals at the lectern, none verifiable yet"
+        ]
       ]
     },
     {
       "num": "03",
       "titre": "A measurement ages. The Dossier says by how much.",
-      "phrase": "Fresh, due, or stale: every measurement is dated against the rhythm you declare, ninety days by default and said as a declaration. An expired decision that still routes your files is exactly what a reviewer is paid to find; the Dossier finds it first.",
-      "a": "",
-      "leg_a": "measurements fresh under the declared rhythm, of the reports read",
-      "b": "",
-      "leg_b": "measurements due or stale at the day of this Dossier, named one by one",
-      "cote": "age, declared and counted",
+      "phrase": "Fresh, due, or stale: every measurement is dated against the rhythm you declare. And a report that cannot even state its measurement day is named for exactly that: age you cannot judge is not age zero.",
+      "a": "2",
+      "leg_a": "measurements fresh under the declared rhythm at the day of this Dossier",
+      "b": "1",
+      "leg_b": "report whose freshness cannot be judged at all: it carries no measurement day",
+      "cote": "age, counted or refused",
       "source": {
-        "a": { "controle": "fraicheur", "etat": "fresh" },
-        "b": { "controle": "fraicheur", "etat": "due-ou-stale" }
+        "a": {
+          "compte-verdicts": {
+            "controle": "fresh",
+            "tenu": true
+          }
+        },
+        "b": {
+          "compte-verdicts": {
+            "controle": "fresh",
+            "tenu": false
+          }
+        }
       },
       "annotations": [
-        [0.5, 0.45, 0.14, 0.3, ""],
-        [0.75, 0.65, 0.87, 0.8, ""]
+        [
+          0.45,
+          0.46,
+          0.1,
+          0.16,
+          "the signed step stands empty; the zero is printed"
+        ],
+        [
+          0.41,
+          0.53,
+          0.09,
+          0.77,
+          "the stones wait below: sealed, dated, not yet signed"
+        ]
       ]
     },
     {
       "num": "04",
       "titre": "One dataset, one seal: incoherence is named.",
-      "phrase": "The same dataset cannot carry two seals, and a report from an unknown tool version is named rather than guessed. Coherence across the four reports is a check the Dossier runs, not a sentence it writes.",
-      "a": "",
-      "leg_a": "coherence checks passed across the reports read",
-      "b": "",
-      "leg_b": "incoherences found and named, of the checks run",
+      "phrase": "The same dataset cannot carry two seals, and a report from an unknown tool version is named rather than guessed. Coherence is a check the Dossier runs across everything it reads, and its verdicts say what there was to cross-check, not more.",
+      "a": "3",
+      "leg_a": "coherence checks passed, each report alone on its question so far, and the verdict says so",
+      "b": "5",
+      "leg_b": "controls the Dossier runs on every report: present, sealed, signed, fresh, consistent",
       "cote": "checked across tools",
       "source": {
-        "a": { "controle": "coherence", "etat": "passes" },
-        "b": { "controle": "coherence", "etat": "nommees" }
+        "a": {
+          "compte-verdicts": {
+            "controle": "consistent",
+            "tenu": true
+          }
+        },
+        "b": {
+          "cle": "controles",
+          "champ": "presents",
+          "mesure": "longueur"
+        }
       },
       "annotations": [
-        [0.45, 0.5, 0.12, 0.4, ""],
-        [0.7, 0.55, 0.85, 0.42, ""]
+        [
+          0.395,
+          0.5,
+          0.1,
+          0.16,
+          "brass rings: measured zero days ago, in rhythm"
+        ],
+        [
+          0.265,
+          0.585,
+          0.08,
+          0.77,
+          "no ring at the foot: an age nobody can compute"
+        ]
       ]
     },
     {
       "num": "05",
       "titre": "Your reviewer verifies it without us.",
-      "phrase": "The Dossier is written next to your files, sealed with the same fingerprint the whole suite uses, and the verification command ships with it. Nothing leaves your machine, and nothing about the verdict requires our word.",
-      "a": "",
-      "leg_a": "public records of the suite the Dossier's own measure runs on",
-      "b": "",
-      "leg_b": "network calls the tool is allowed to make, held by an empty allowlist and a test",
+      "phrase": "The Dossier is written next to your files, sealed with the same fingerprint the whole suite uses, and it judges freshness against a rhythm you declare, named in the record as a declaration. Nothing leaves your machine, and nothing about the verdict requires our word.",
+      "a": "4",
+      "leg_a": "questions the piece answers as one, for the whole chain",
+      "b": "90",
+      "leg_b": "days of the declared review rhythm it judges freshness against: an assumption, named",
       "cote": "verifiable, alone",
       "source": {
-        "a": { "controle": "couverture", "portee": "mesure-publique" },
-        "b": { "controle": "reseau" }
+        "a": {
+          "cle": "couverture",
+          "champ": "sur"
+        },
+        "b": {
+          "cle": "reglages",
+          "champ": "rythmeJours"
+        }
       },
       "annotations": [
-        [0.5, 0.35, 0.15, 0.2, ""],
-        [0.7, 0.7, 0.85, 0.85, ""]
+        [
+          0.34,
+          0.645,
+          0.09,
+          0.8,
+          "the ivory stone is yours, at the foot for now"
+        ],
+        [
+          0.685,
+          0.47,
+          0.84,
+          0.7,
+          "the lectern: the piece your reviewer verifies alone"
+        ]
       ]
     }
   ]
