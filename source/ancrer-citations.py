@@ -63,9 +63,12 @@ if fautes:
     sys.exit("CITATIONS QUI NE DÉSIGNENT RIEN (corriger les JSON, pas les ancres) :\n  "
              + "\n  ".join(fautes))
 
+# le dépôt s'écrit relatif à la maison (~) : le site promet le caviardage des chemins
+# locaux et sa garde de poussée refuse un /Users/… dans un fichier publié
+depot_public = "~/" + str(depot.relative_to(pathlib.Path.home()))
 (ICI / SORTIE[outil_id]).write_text(json.dumps({
     "_": (f"Pour chaque « Where it lives » des pages {outil_id} : le contenu EXACT de la "
-          f"ligne visée dans {depot}. La garde de assembler.py refuse de bâtir si une "
+          f"ligne visée dans {depot_public}. La garde de assembler.py refuse de bâtir si une "
           "citation ne pointe plus dessus. Régénérer avec ancrer-citations.py APRÈS un "
           "changement volontaire de l'outil, jamais pour faire taire la garde."),
     "ancres": ancres,

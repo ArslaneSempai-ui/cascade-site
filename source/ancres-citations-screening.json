@@ -1,5 +1,5 @@
 {
-  "_": "Pour chaque « Where it lives » des pages screening : le contenu EXACT de la ligne visée dans /Users/arslanechr/Documents/cascade-screening. La garde de assembler.py refuse de bâtir si une citation ne pointe plus dessus. Régénérer avec ancrer-citations.py APRÈS un changement volontaire de l'outil, jamais pour faire taire la garde.",
+  "_": "Pour chaque « Where it lives » des pages screening : le contenu EXACT de la ligne visée dans ~/Documents/cascade-screening. La garde de assembler.py refuse de bâtir si une citation ne pointe plus dessus. Régénérer avec ancrer-citations.py APRÈS un changement volontaire de l'outil, jamais pour faire taire la garde.",
   "ancres": {
     "src/frontiere.test.ts:20": "const AUTORISES: Record<string, string> = {",
     "src/frontiere.test.ts:41": "test(\"aucun module ne touche le réseau, hors le téléchargeur de listes\", () => {",

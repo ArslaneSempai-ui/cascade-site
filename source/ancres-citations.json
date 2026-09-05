@@ -1,5 +1,5 @@
 {
-  "_": "Pour chaque « Where it lives » des pages routing : le contenu EXACT de la ligne visée dans /Users/arslanechr/Documents/cascade. La garde de assembler.py refuse de bâtir si une citation ne pointe plus dessus. Régénérer avec ancrer-citations.py APRÈS un changement volontaire de l'outil, jamais pour faire taire la garde.",
+  "_": "Pour chaque « Where it lives » des pages routing : le contenu EXACT de la ligne visée dans ~/Documents/cascade. La garde de assembler.py refuse de bâtir si une citation ne pointe plus dessus. Régénérer avec ancrer-citations.py APRÈS un changement volontaire de l'outil, jamais pour faire taire la garde.",
   "ancres": {
     "README.md:102": "Every file is checked against its SHA-256 and against the revision this repository pins,",
     "README.md:113": "Under that flag the library is told not to reach the network at all. If a model is missing it",
