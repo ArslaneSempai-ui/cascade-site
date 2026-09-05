@@ -83,6 +83,10 @@ PALETTE_RUBIS = ("--accent-titre:#7a1f2e;--accent-vif:#d64a5c;--accent-clair:#ff
 # et que le pan du rideau ; le parchemin, lui, reste celui de la maison.
 NUIT_VERTE = "--nuit-a:#1b3229;--nuit-b:#14251e;--nuit-c:#0e1a15;--sur-vert:#e4ecdf;--sur-vert-pale:#a9bdaf;"
 NUIT_RUBIS = "--nuit-a:#33191f;--nuit-b:#241217;--nuit-c:#180b0f;--sur-vert:#efe0e2;--sur-vert-pale:#c0a6ab;"
+PALETTE_LAPIS = ("--accent-titre:#1f3f7a;--accent-vif:#4f8ae0;--accent-clair:#c3d8ff;"
+                 "--vert-titre:var(--accent-titre);--vert-vif:var(--accent-vif);"
+                 "--vert-clair:var(--accent-clair);")
+NUIT_LAPIS = "--nuit-a:#16213a;--nuit-b:#101a30;--nuit-c:#0a111f;--sur-vert:#e6ecf7;--sur-vert-pale:#a8b7d4;"
 
 OUTILS = {
     "routing": {
@@ -133,6 +137,27 @@ OUTILS = {
                        "frontier cell: recall on the left, false alerts on the right.",
         "vif": "#d64a5c",
         "nuit": ("#33191f", "#241217", "#180b0f"),      # la nuit rubis de NUIT_RUBIS
+    },
+    "monitoring": {
+        "id": "monitoring",
+        "nom": "Monitoring",
+        "sous_dossier": "monitoring/",
+        "prefixe_racine": "../",
+        "question": "Which scenario suffices, at which threshold?",
+        "palette": PALETTE_LAPIS,
+        "favicon_accent": "%231f3f7a",
+        "robots": ("robot-lapis-penche.webp", "robot-lapis-montre.webp"),
+        "releve": _MAISON / "cascade-monitoring" / "releve-public.json",  # scellé, vérifié par lire_releve_scelle
+        "outil_chemin": _MAISON / "cascade-monitoring",
+        # le dépôt n'existe pas encore en ligne : lien mort jusqu'au push d'Arslane,
+        # exactement comme le rouge avant le sien
+        "depot": "https://github.com/ArslaneSempai-ui/cascade-monitoring",
+        "page_hero": "HERO-MONITORING.html",
+        "etiquette": "Monitoring &#183; transactions",
+        "pitch": "Seven scenarios, from a bare amount to a peer profile, measured on your own dispositioned alerts.",
+        "robot_rideau": "robot-lapis-montre.webp",    # il montre (rendu du chef)
+        "vif": "#4f8ae0",
+        "nuit": ("#16213a", "#101a30", "#0a111f"),      # la nuit lapis de NUIT_LAPIS
     },
 }
 

@@ -41,6 +41,12 @@ PROD_SCREENING = {
     "ANNEXE-SCREENING-METHODE.html": "screening/method.html",
     "ANNEXE-SCREENING-SECURITE.html": "screening/security.html",
 }
+PROD_MONITORING = {
+    "HERO-MONITORING.html": "monitoring/index.html",
+    "INSTRUMENT-MONITORING.html": "monitoring/instrument.html",
+    "ANNEXE-MONITORING-METHODE.html": "monitoring/method.html",
+    "ANNEXE-MONITORING-SECURITE.html": "monitoring/security.html",
+}
 
 PROD = {
     "ACCUEIL.html": "index.html",           # la page de la MARQUE (décision A, 6/09)
@@ -64,6 +70,7 @@ PROD = {
 # les pages bâties. Ordre tenu : bâtir, vérifier, seulement ensuite effacer.
 import subprocess
 for batisseur in ("batir-hero.py", "batir-instrument.py", "batir-instrument-screening.py",
+                  "batir-instrument-monitoring.py",
                   "batir-offre.py", "batir-annexe.py", "batir-404.py"):
     subprocess.run([sys.executable, str(MAQ / batisseur)], check=True,
                    cwd=str(MAQ), capture_output=True)
@@ -122,8 +129,9 @@ def entete_prod(t, neuf):
     adresse = BASE_URL if neuf == "index.html" else BASE_URL + neuf
     if neuf.endswith("/index.html"):
         adresse = BASE_URL + neuf.removesuffix("index.html")
-    # la couleur d'onglet suit la nuit de l'outil : rubis sous screening/
-    theme = "#241217" if neuf.startswith("screening/") else "#14251e"
+    # la couleur d'onglet suit la nuit de l'outil : rubis sous screening/, lapis sous monitoring/
+    theme = ("#241217" if neuf.startswith("screening/")
+             else "#101a30" if neuf.startswith("monitoring/") else "#14251e")
     extra = (f'<link rel="canonical" href="{adresse}">\n'
              f'<link rel="apple-touch-icon" href="{PREFIXE}apple-touch-icon.png">\n'
              f'<meta name="theme-color" content="{theme}">')
@@ -143,23 +151,35 @@ SCREENING_EMISES = {v: n for v, n in PROD_SCREENING.items() if (MAQ / v).exists(
 for v in PROD_SCREENING:
     if v not in SCREENING_EMISES:
         print(f"  screening : {v} absent (lot S2/S3) : non émis, dit ici")
+# Le sous-dossier bleu s'émet EN BLOC : ses quatre pages se référencent entre elles
+# (nav, annexes), et une moitié publiée serait un site aux liens morts : le contrôle
+# de liens le refuserait de toute façon : autant le dire AVANT, avec la liste.
+_mon_absentes = [v for v in PROD_MONITORING if not (MAQ / v).exists()]
+MONITORING_EMISES = {} if _mon_absentes else dict(PROD_MONITORING)
+if _mon_absentes:
+    print(f"  monitoring : non émis en bloc, il manque {_mon_absentes} (lots L5/L5-textes)")
+SOUS_DOSSIER_EMISES = {**SCREENING_EMISES, **MONITORING_EMISES}
 
 
-def renommer_liens(t, page_screening):
+def renommer_liens(t, page_sous_dossier):
     """Les noms SOURCE deviennent les noms de production. Dans une page du
     sous-dossier, une sœur rouge se lie par son nom NU (même dossier) ; depuis
     la racine, par son chemin complet. Les noms rouges se remplacent d'abord :
     plus longs, ils contiennent des fragments qui ressemblent aux verts."""
-    for v, n in SCREENING_EMISES.items():
-        t = t.replace(v, n.removeprefix("screening/") if page_screening else n)
+    for v, n in SOUS_DOSSIER_EMISES.items():
+        # dans une page d'un sous-dossier, une sœur du MÊME dossier se lie par son nom nu ;
+        # tout autre nom (l'autre outil compris) garde son chemin complet, que le ../ de la
+        # source fait sortir correctement
+        local = page_sous_dossier and n.startswith(page_sous_dossier)
+        t = t.replace(v, n.split("/", 1)[1] if local else n)
     for v, n in PROD.items():
         t = t.replace(v, n)
     return t
 
 
-for vieux, neuf in {**PROD, **SCREENING_EMISES}.items():
+for vieux, neuf in {**PROD, **SOUS_DOSSIER_EMISES}.items():
     t = (MAQ / vieux).read_text()
-    t = renommer_liens(t, neuf.startswith("screening/"))
+    t = renommer_liens(t, neuf.split("/", 1)[0] + "/" if "/" in neuf else None)
     (DOCS / neuf).parent.mkdir(parents=True, exist_ok=True)
     if neuf == "404.html":
         # servie pour N'IMPORTE QUEL chemin manquant : ses liens relatifs
@@ -261,12 +281,13 @@ if not {"Organization", "SoftwareApplication"} <= types_v:
     sys.exit(f"routing/index.html : Organization + SoftwareApplication attendus, "
              f"vu {sorted(x for x in types_v if x)}")
 # le héros rouge, quand il est émis, porte le même socle de graphe que le vert
-if "screening/index.html" in blocs_vus:
-    types_r = {noeud.get("@type")
-               for noeud in blocs_vus["screening/index.html"][0].get("@graph", [])}
-    if not {"Organization", "SoftwareApplication"} <= types_r:
-        sys.exit(f"screening/index.html : Organization + SoftwareApplication attendus, "
-                 f"vu {sorted(x for x in types_r if x)}")
+for sous_index in ("screening/index.html", "monitoring/index.html"):
+    if sous_index in blocs_vus:
+        types_r = {noeud.get("@type")
+                   for noeud in blocs_vus[sous_index][0].get("@graph", [])}
+        if not {"Organization", "SoftwareApplication"} <= types_r:
+            sys.exit(f"{sous_index} : Organization + SoftwareApplication attendus, "
+                     f"vu {sorted(x for x in types_r if x)}")
 print(f"  données structurées : "
       f"{sum(len(v) for v in blocs_vus.values())} blocs valides sur "
       f"{len(blocs_vus)} pages ; FAQ recomposée : {len(publiees)} questions")
@@ -294,6 +315,11 @@ for aff in (MAQ / "rendus").glob("affiche-*.jpg"):        # une affiche par outi
     shutil.copy(aff, DOCS / "rendus" / aff.name)
 for rb in (MAQ / "rendus").glob("robot-*.webp"):          # les robots de toutes les couleurs et poses
     shutil.copy(rb, DOCS / "rendus" / rb.name)
+# les robots de toutes les couleurs partent déjà par le glob ci-dessus (le rideau
+# les montre sur toutes les pages) ; seuls les ÉTATS du plateau bleu sont conditionnels
+if MONITORING_EMISES:
+    for w in (MAQ / "rendus" / "etats").glob("bassins-*.webp"):
+        shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
 if SCREENING_EMISES:
     for w in (MAQ / "rendus" / "etats").glob("tamis-*.webp"):
         shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
@@ -321,7 +347,7 @@ if not HOTE.endswith(".github.io"):
     f"Canonical: {BASE_URL}.well-known/security.txt\n")
 shutil.copy(MAQ / "apple-touch-icon.png", DOCS / "apple-touch-icon.png")
 publiques = ([n for n in PROD.values() if n != "404.html"]
-             + [n for n in SCREENING_EMISES.values()])
+             + [n for n in SOUS_DOSSIER_EMISES.values()])
 (DOCS / "sitemap.xml").write_text(
     '<?xml version="1.0" encoding="UTF-8"?>\n'
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -366,6 +392,8 @@ verifier_comptes(sorted(DOCS.glob("*.html")) + sorted((DOCS / "routing").glob("*
                  pathlib.Path.home() / "Documents" / "cascade" / "README.md", "routing")
 verifier_comptes(sorted((DOCS / "screening").glob("*.html")) if (DOCS / "screening").exists() else [],
                  pathlib.Path.home() / "Documents" / "cascade-screening" / "README.md", "screening")
+verifier_comptes(sorted((DOCS / "monitoring").glob("*.html")) if (DOCS / "monitoring").exists() else [],
+                 pathlib.Path.home() / "Documents" / "cascade-monitoring" / "README.md", "monitoring")
 
 # ── la garde des citations : « Where it lives » doit encore dire vrai ────────
 # Le site invite un relecteur bancaire à OUVRIR chaque chemin. Une citation qui
@@ -418,6 +446,9 @@ verifier_citations(sorted(DOCS.glob("*.html")) + sorted((DOCS / "routing").glob(
 verifier_citations(sorted((DOCS / "screening").glob("*.html")) if (DOCS / "screening").exists() else [],
                    MAQ / "ancres-citations-screening.json",
                    pathlib.Path.home() / "Documents" / "cascade-screening", "screening")
+verifier_citations(sorted((DOCS / "monitoring").glob("*.html")) if (DOCS / "monitoring").exists() else [],
+                   MAQ / "ancres-citations-monitoring.json",
+                   pathlib.Path.home() / "Documents" / "cascade-monitoring", "monitoring")
 
 # ── le contrôle de liens, témoin d'abord ─────────────────────────────────────
 def liens_casses(dossier):

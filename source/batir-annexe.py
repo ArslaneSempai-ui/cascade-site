@@ -511,9 +511,15 @@ for page in PLOMBERIE["pages"]:
 # L'objet 3D de chaque annexe rouge est le même objet que le vert, rendu par
 # etats/objets_v2.py avec --accent "#a3182b" (la pierre polie du robot rouge) :
 # seule la couleur de l'idée change avec l'outil, le monde reste celui de la maison.
-from outil import OUTILS, PALETTE_VERTE, PALETTE_RUBIS, NUIT_VERTE, NUIT_RUBIS, lire_releve_scelle, lien
+from outil import (OUTILS, PALETTE_VERTE, PALETTE_RUBIS, PALETTE_LAPIS,
+                   NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, lire_releve_scelle, lien)
 
 RUBIS = OUTILS["screening"]
+LAPIS = OUTILS["monitoring"]
+
+# Les pages d'annexes PAR OUTIL du catalogue : le rouge d'abord, le bleu par la même
+# fonction — une entrée de table, pas une copie. Les teintes d'impression et de tête
+# écrites en dur côté vert sont remplacées par celles de l'outil (spec_css).
 PAGES_ROUGES = [
     {"nav": "Method and reproducibility", "json": "annexe-screening-methode.json",
      "html": "ANNEXE-SCREENING-METHODE.html", "prod": "screening/method.html",
@@ -528,31 +534,45 @@ PAGES_ROUGES = [
      "alt": "A matte aluminium padlock; its shackle, closed, is the same deep ruby "
             "as the tool's accents."},
 ]
+PAGES_LAPIS = [
+    {"nav": "Method and reproducibility", "json": "annexe-monitoring-methode.json",
+     "html": "ANNEXE-MONITORING-METHODE.html", "prod": "monitoring/method.html",
+     "titre_onglet": "Cascade Monitoring &#183; method",
+     "objet": "rendus/etats/objet-monitoring-methode.webp",
+     "alt": "A matte aluminium balance with two pans at exactly the same height; "
+            "the right pan is the tool's deep lapis blue."},
+    {"nav": "Security and data handling", "json": "annexe-monitoring-securite.json",
+     "html": "ANNEXE-MONITORING-SECURITE.html", "prod": "monitoring/security.html",
+     "titre_onglet": "Cascade Monitoring &#183; security",
+     "objet": "rendus/etats/objet-monitoring-securite.webp",
+     "alt": "A matte aluminium padlock; its shackle, closed, is the same deep lapis "
+            "blue as the tool's accents."},
+]
 
 
-def barre_rouge(courante, sceau):
-    liens = [("INSTRUMENT-SCREENING.html", "Instrument"),
-             (lien(RUBIS, "ENGAGEMENT.html"), "Pricing"),
-             ("ANNEXE-SCREENING-METHODE.html", "Method"),
-             ("ANNEXE-SCREENING-SECURITE.html", "Security"),
-             (lien(RUBIS, "CONTACT.html"), "Contact")]
+def barre_outil(o, pages, instrument, courante, sceau):
+    liens = [(instrument, "Instrument"),
+             (lien(o, "ENGAGEMENT.html"), "Pricing"),
+             (pages[0]["html"], "Method"),
+             (pages[1]["html"], "Security"),
+             (lien(o, "CONTACT.html"), "Contact")]
     nav = "".join(
         f'<a href="{h}"' + (' aria-current="page"' if h == courante else "")
         + f'>{n}</a>' for h, n in liens)
     return (f'<header class="barre sur-nuit">\n'
-            f'  <a class="marque" href="{lien(RUBIS, "ACCUEIL.html")}">CASCADE</a>\n'
+            f'  <a class="marque" href="{lien(o, "ACCUEIL.html")}">CASCADE</a>\n'
             f'  <nav aria-label="Site">{nav}</nav>\n'
             f'  <span class="sceau">seal {sceau} &#183; measured, then frozen</span>\n'
             f'</header>')
 
 
-def pied_rouge(courante, sceau):
-    liens = [(p["html"], p["nav"]) for p in PAGES_ROUGES]
-    liens += [(lien(RUBIS, "ANNEXE-TERMS.html"), "Terms of engagement"),
-              (lien(RUBIS, "ANNEXE-PRIVACY.html"), "Privacy"),
-              (lien(RUBIS, "ANNEXE-ACCESSIBILITE.html"), "Accessibility"),
-              (lien(RUBIS, "CONTACT.html"), "Contact"),
-              (lien(RUBIS, "MENTIONS.html"), "The fine print")]
+def pied_outil(o, pages, courante, sceau):
+    liens = [(p["html"], p["nav"]) for p in pages]
+    liens += [(lien(o, "ANNEXE-TERMS.html"), "Terms of engagement"),
+              (lien(o, "ANNEXE-PRIVACY.html"), "Privacy"),
+              (lien(o, "ANNEXE-ACCESSIBILITE.html"), "Accessibility"),
+              (lien(o, "CONTACT.html"), "Contact"),
+              (lien(o, "MENTIONS.html"), "The fine print")]
     rang = "".join(
         f'<a href="{h}"' + (' aria-current="true"' if h == courante else "")
         + f'>{n}</a>' for h, n in liens)
@@ -566,20 +586,20 @@ def pied_rouge(courante, sceau):
             f'</div></footer>')
 
 
-def batir_annexes_rouges():
-    absentes = [p["json"] for p in PAGES_ROUGES if not (BASE / p["json"]).exists()]
+def batir_annexes_outil(o, pages, palette, nuit, tete_sombre, accent, lot, instrument, hero, nom):
+    absentes = [p["json"] for p in pages if not (BASE / p["json"]).exists()]
     if absentes:
-        print(f"  annexes rouges non bâties : {absentes} absents (lot S3) : l'absence est dite")
+        print(f"  annexes {o['id']} non bâties : {absentes} absents (lot {lot}) : l'absence est dite")
         return
-    sceau_r = lire_releve_scelle(RUBIS["releve"])["empreinte"]
-    css_r = CSS.replace(PALETTE_VERTE, PALETTE_RUBIS)
-    assert css_r != CSS, "la palette verte n'a pas été trouvée dans le CSS des annexes"
-    css_n = css_r.replace(NUIT_VERTE, NUIT_RUBIS)
-    assert css_n != css_r, "la nuit verte n'a pas été trouvée dans le CSS des annexes"
+    sceau_o = lire_releve_scelle(o["releve"])["empreinte"]
+    css_o = CSS.replace(PALETTE_VERTE, palette)
+    assert css_o != CSS, "la palette verte n'a pas été trouvée dans le CSS des annexes"
+    css_n = css_o.replace(NUIT_VERTE, nuit)
+    assert css_n != css_o, "la nuit verte n'a pas été trouvée dans le CSS des annexes"
     # le premier ton de la tête et les teintes d'impression sont écrits en dur côté vert
-    css_r = css_n.replace("#0f231b", "#2a1219").replace("#23543f", "#7a1f2e")
-    favicon_r = FAVICON.replace("%2323543f", RUBIS["favicon_accent"])
-    for lettre, page in zip("AB", PAGES_ROUGES):
+    css_o = css_n.replace("#0f231b", tete_sombre).replace("#23543f", accent)
+    favicon_o = FAVICON.replace("%2323543f", o["favicon_accent"])
+    for lettre, page in zip("AB", pages):
         PROD[page["html"]] = page["prod"]
         faits = json.loads((BASE / page["json"]).read_text())
         sections = "".join(section(x, i == 0) for i, x in enumerate(faits["sections"]))
@@ -587,22 +607,22 @@ def batir_annexes_rouges():
 <meta charset="utf-8"><title>{page["titre_onglet"]}</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 {og(page["titre_onglet"], faits["lede"], page["html"])}
-<link rel="icon" href="{favicon_r}">
-<link rel="stylesheet" href="{lien(RUBIS, "fontes/literata.css")}">
-<link rel="stylesheet" href="{lien(RUBIS, "fontes/roboto-mono.css")}">
+<link rel="icon" href="{favicon_o}">
+<link rel="stylesheet" href="{lien(o, "fontes/literata.css")}">
+<link rel="stylesheet" href="{lien(o, "fontes/roboto-mono.css")}">
 <script>document.documentElement.classList.add("js")</script>
-<style>{css_r}</style>
-{barre_rouge(page["html"], sceau_r)}
+<style>{css_o}</style>
+{barre_outil(o, pages, instrument, page["html"], sceau_o)}
 
 <main>
 <section class="tete-nuit"><div class="colonne">
   <div class="ariane">
-    <span class="fno">Appendix {lettre} &#183; Screening</span>
+    <span class="fno">Appendix {lettre} &#183; {nom}</span>
     <span class="fti">{page["nav"]}</span>
-    <a class="retour" href="HERO-SCREENING.html">&#8592; Back to the findings</a>
+    <a class="retour" href="{hero}">&#8592; Back to the findings</a>
   </div>
   <h1>{faits["titre"]}</h1>
-  <figure class="plaque"><img src="{lien(RUBIS, page["objet"])}" alt="{page["alt"]}"></figure>
+  <figure class="plaque"><img src="{lien(o, page["objet"])}" alt="{page["alt"]}"></figure>
 </div></section>
 
 <div class="colonne"><div class="doc">
@@ -611,10 +631,13 @@ def batir_annexes_rouges():
 </div></div>
 </main>
 
-{pied_rouge(page["html"], sceau_r)}
+{pied_outil(o, pages, page["html"], sceau_o)}
 """ + SCRIPT + "\n", encoding="utf-8")
-        assert "—" not in (BASE / page["html"]).read_text(), f"cadratin dans {page['html']}"
-        print(f"  {page['html']} (rubis)")
+        assert "\u2014" not in (BASE / page["html"]).read_text(), f"cadratin dans {page['html']}"
+        print(f"  {page['html']} ({o['id']})")
 
 
-batir_annexes_rouges()
+batir_annexes_outil(RUBIS, PAGES_ROUGES, PALETTE_RUBIS, NUIT_RUBIS, "#2a1219", "#7a1f2e",
+                    "S3", "INSTRUMENT-SCREENING.html", "HERO-SCREENING.html", "Screening")
+batir_annexes_outil(LAPIS, PAGES_LAPIS, PALETTE_LAPIS, NUIT_LAPIS, "#131c31", "#1f3f7a",
+                    "L5-textes", "INSTRUMENT-MONITORING.html", "HERO-MONITORING.html", "Monitoring")

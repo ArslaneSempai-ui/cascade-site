@@ -737,7 +737,30 @@ DONNEES_STRUCTUREES = json.dumps({
     ],
 }, ensure_ascii=True)
 
-from outil import OUTILS, PALETTE_VERTE, PALETTE_RUBIS, NUIT_VERTE, NUIT_RUBIS, lire_releve_scelle, lien
+from outil import (OUTILS, PALETTE_VERTE, PALETTE_RUBIS, PALETTE_LAPIS,
+                   NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, lire_releve_scelle, lien)
+
+
+def outils_vivants():
+    """Les outils que les pages MONTRENT : un pan de rideau, une entrée de nav ou un
+    nœud de graphe qui pointe vers une page ou un robot absents casserait tout le
+    site pour un outil pas prêt. Routing et Screening sont en ligne ; un outil
+    suivant entre TOUT SEUL le jour où ses findings ET son robot de rideau existent
+    — la promesse « le rideau gagne le pan tout seul », tenue par un test
+    d'existence plutôt que par une liste à retoucher."""
+    vivants = []
+    for o in OUTILS.values():
+        if o["id"] in ("routing", "screening"):
+            vivants.append(o)
+            continue
+        findings = BASE / f"findings-{o['id']}.json"
+        robot = BASE / "rendus" / o["robot_rideau"]
+        if findings.exists() and robot.exists():
+            vivants.append(o)
+        else:
+            print(f"  rideau : {o['id']} pas encore vivant "
+                  f"({'findings' if not findings.exists() else 'robot de rideau'} absent) : pan non montré")
+    return vivants
 
 NOMBRES = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
 
@@ -755,7 +778,7 @@ def choix_outils(outil):
     prendra sa place sans qu'on touche ici. Les classes cote-g / cote-d disent de
     quel côté un pan glisse : la première moitié à gauche, la seconde à droite."""
     pans = ""
-    outils = list(OUTILS.values())
+    outils = outils_vivants()
     for i, o in enumerate(outils):
         cote = "cote-g" if i < len(outils) / 2 else "cote-d"
         style = (f'--pan-vif:{o["vif"]};--pan-a:{o["nuit"][0]};'
@@ -771,7 +794,7 @@ def choix_outils(outil):
         else:
             pans += (f'\n  <a class="pan {cote}" style="{style}" href="{prefixe}{o["page_hero"]}#tools">{corps}'
                      f'<span class="p-ouvrir">Open {o["nom"]} <span aria-hidden="true">&#8594;</span></span></a>')
-    n = NOMBRES.get(len(OUTILS), str(len(OUTILS)))
+    n = NOMBRES.get(len(outils), str(len(outils)))
     return (f'<section class="rideau" id="tools" aria-label="The instruments">'
             f'\n  <span class="rideau-titre">Cascade &#183; {n} instruments, one method</span>'
             f'{pans}\n</section>')
@@ -914,12 +937,13 @@ def batir_accueil():
     qui pose la question commune aux instruments, puis le rideau à pans FERMÉS, puis
     les portes de la maison et le pied. Aucun chiffre : les chiffres vivent chez les
     outils, chacun sous son sceau."""
-    n = NOMBRES.get(len(OUTILS), str(len(OUTILS)))
+    vivants = outils_vivants()
+    n = NOMBRES.get(len(vivants), str(len(vivants)))
     graphe = [{"@type": "Organization", "@id": "https://cascade-routing.com/#org",
                "name": "Cascade", "url": "https://cascade-routing.com/",
                "logo": "https://cascade-routing.com/og.png",
                "email": "contact@cascade-routing.com"}]
-    for o in OUTILS.values():
+    for o in vivants:
         graphe.append({"@type": "SoftwareApplication", "name": f"Cascade {o['nom']}",
                        "url": f"https://cascade-routing.com/{o['sous_dossier']}",
                        "applicationCategory": "DeveloperApplication",
@@ -952,8 +976,7 @@ def batir_accueil():
 <header class="barre sur-nuit">
   <a class="marque" href="ACCUEIL.html">CASCADE</a>
   <nav aria-label="Site">
-    <a href="HERO.html">Routing</a>
-    <a href="HERO-SCREENING.html">Screening</a>
+    {chr(10).join(f'    <a href="{o["page_hero"]}">{o["nom"]}</a>' for o in vivants).lstrip()}
     <a href="ENGAGEMENT.html">Pricing</a>
     <a href="CONTACT.html">Contact</a>
   </nav>
@@ -1007,28 +1030,113 @@ batir_accueil()
 # rouge sans ses données ne se bâtit pas : l'absence est DITE, jamais improvisée.
 
 RUBIS = OUTILS["screening"]
-FINDINGS_SCREENING = BASE / "findings-screening.json"
+LAPIS = OUTILS["monitoring"]
+
+# ── LES SPÉCIFICITÉS PAR OUTIL de la page héros : tout ce qui n'est ni structure ni
+# table d'outil vit ici, pour que le troisième outil soit une ENTRÉE et non une
+# quatrième copie de la fonction (la divergence des copies est la maladie que le
+# catalogue existe pour fermer). Le rubis garde ses textes À L'OCTET : témoin cmp.
+SPECS = {
+    "screening": dict(
+        lot="S3",
+        etats="tamis",
+        alt_plateau="The sieve tower",
+        palette=PALETTE_RUBIS, nuit=NUIT_RUBIS,
+        titre="Cascade Screening &#183; sanctions screening audit",
+        og_titre="Cascade Screening: which matcher suffices, at which threshold",
+        description="A sanctions-screening audit: which name matcher suffices, at which threshold, "
+                    "measured on your own alert history. Nothing of yours goes up.",
+        app="Cascade Screening",
+        app_desc="A sanctions-screening audit: which name matcher suffices, "
+                 "at which threshold, measured on your own alert history. "
+                 "Nothing of yours goes up.",
+        offre="Thirty-day evaluation on your own alert history, granted in the public licence.",
+        lede="Seven name matchers, from strict equality to a multilingual embedding, swept across "
+             "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
+             "and every figure\n    <b>can be verified by you</b>.",
+        aria_commande="The measurement on your own alert history",
+        commandes=["npm ci --ignore-scripts", "npm run measure:yours -- --alerts=your-alerts.csv"],
+        note_commande="Your alert history, measured on your machine. Nothing of yours goes up.",
+        instrument_h2="Pick any cell, read what your threshold costs.",
+        instrument_page="INSTRUMENT-SCREENING.html",
+        instrument_eti="Cascade &#183; Screening",
+        instrument_sub="Every matcher at every threshold, recall and false alerts with their intervals, "
+                       "live from the sealed record, and the tool's own selection rule under your recall floor.",
+        annexe_methode=("Method &amp; what is measured", "What the frontier reads, and what it refuses.",
+                        "ANNEXE-SCREENING-METHODE.html"),
+        annexe_securite=("Security &amp; data handling", "The lists, the seal, and what never leaves.",
+                         "ANNEXE-SCREENING-SECURITE.html"),
+        icone_prefixe="objet-screening",
+        table_ligne="matcher",
+        table_caption="Recall over false alerts of each matcher at each threshold, on the written pairs",
+        table_note_unites='Measured on the {nMatch} written match pairs and {nDifferent} hard\n      negatives',
+        pied="On your records, on your machine. <em>Nothing of yours goes up.</em>",
+    ),
+    "monitoring": dict(
+        lot="L5-textes",
+        etats="bassins",
+        alt_plateau="The settling basins",
+        palette=PALETTE_LAPIS, nuit=NUIT_LAPIS,
+        titre="Cascade Monitoring &#183; transaction monitoring audit",
+        og_titre="Cascade Monitoring: which scenario suffices, at which threshold",
+        description="A transaction-monitoring audit: which scenario suffices, at which threshold, "
+                    "measured on your own dispositioned alerts. Nothing of yours goes up.",
+        app="Cascade Monitoring",
+        app_desc="A transaction-monitoring audit: which scenario suffices, "
+                 "at which threshold, measured on your own dispositioned alerts. "
+                 "Nothing of yours goes up.",
+        offre="Thirty-day evaluation on your own dispositioned alerts, granted in the public licence.",
+        lede="Seven scenarios, from a bare amount to the deviation from a peer profile, swept across "
+             "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
+             "and every figure\n    <b>can be verified by you</b>.",
+        aria_commande="The measurement on your own dispositioned alerts",
+        commandes=["npm ci --ignore-scripts",
+                   "npm run measure:yours -- --alerts=your-alerts.csv --transactions=your-transactions.csv"],
+        note_commande="Your dispositioned alerts, measured on your machine. Nothing of yours goes up.",
+        instrument_h2="Pick any cell, read what your threshold costs.",
+        instrument_page="INSTRUMENT-MONITORING.html",
+        instrument_eti="Cascade &#183; Monitoring",
+        instrument_sub="Every scenario at every threshold, recall and false alerts with their intervals, "
+                       "live from the sealed record, and the tool's own selection rule under your recall floor.",
+        annexe_methode=("Method &amp; what is measured", "What the frontier reads, and what it refuses.",
+                        "ANNEXE-MONITORING-METHODE.html"),
+        annexe_securite=("Security &amp; data handling", "What is rebuilt, what is assumed, and what never leaves.",
+                         "ANNEXE-MONITORING-SECURITE.html"),
+        icone_prefixe="objet-monitoring",
+        table_ligne="scenario",
+        table_caption="Recall over false alerts of each scenario at each threshold, on the written cases",
+        table_note_unites='Measured on the {nMatch} written suspicious cases and {nDifferent} benign\n      look&#8209;alikes',
+        pied="On your records, on your machine. <em>Nothing of yours goes up.</em>",
+    ),
+}
 
 
-def _tamis_dispo():
-    """Les cinq états du plateau rouge, fournis par le chef. Tant qu'ils manquent,
+def _etats_dispo(spec):
+    """Les cinq états du plateau de l'outil, fournis par le chef. Tant qu'ils manquent,
     la page se bâtit sur l'image verte AVEC un commentaire « placeholder » que
     l'assembleur refuse en production : la garde d'abord, l'image ensuite."""
-    return all((BASE / "rendus" / "etats" / f"tamis-0{i}.webp").exists() for i in range(1, 6))
+    return all((BASE / "rendus" / "etats" / f"{spec['etats']}-0{i}.webp").exists() for i in range(1, 6))
 
 
-def _image_etat(i):
-    """Le chemin est relatif à la PAGE, qui vit dans le sous-dossier : lien()
-    porte le ../ — le contrôle de liens de l'assembleur a attrapé la version
-    nue à la première passe, c'est son travail."""
-    if _tamis_dispo():
-        return lien(RUBIS, f"rendus/etats/tamis-0{i}.webp"), ""
-    return (lien(RUBIS, f"rendus/etats/objet-0{i}.webp"),
-            f"<!-- placeholder: tamis-0{i}.webp pending, green plateau shown -->")
+def _image_etat_outil(o, spec, i):
+    if _etats_dispo(spec):
+        return lien(o, f"rendus/etats/{spec['etats']}-0{i}.webp"), ""
+    return (lien(o, f"rendus/etats/objet-0{i}.webp"),
+            f"<!-- placeholder: {spec['etats']}-0{i}.webp pending, green plateau shown -->")
 
 
-def _scene_screening(i, f):
-    """La scène rouge : même squelette que scene_html, données du lot S3."""
+def _icone_tuile(o, spec, nom):
+    """L'icône 3D d'une tuile, dans l'accent de l'outil ; absente, l'icône VERTE du
+    même objet la remplace avec le marqueur que l'assembleur refuse en prod."""
+    voulu = BASE / "rendus" / "etats" / f"{spec['icone_prefixe']}-{nom}.webp"
+    if voulu.exists():
+        return lien(o, f"rendus/etats/{spec['icone_prefixe']}-{nom}.webp"), ""
+    return (lien(o, f"rendus/etats/objet-{nom}.webp"),
+            f"<!-- placeholder: {spec['icone_prefixe']}-{nom}.webp pending, green icon shown -->")
+
+
+def _scene_outil(o, spec, i, f):
+    """La scène d'un outil du catalogue : même squelette que scene_html, données du lot des textes."""
     lignes, etiquettes = "", ""
     for (ax, ay, lx, ly, txt) in f.get("annotations", []):
         x1, y1 = MX + lx * IW, ly * IH
@@ -1037,11 +1145,11 @@ def _scene_screening(i, f):
                    f'<circle cx="{x2:.0f}" cy="{y2:.0f}" r="4"/>')
         etiquettes += f'<span class="ap-eti" style="left:{x1 / 14.20:.1f}%;top:{y1 / 10.0:.1f}%">{txt}</span>'
     appels = f'<svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true">{lignes}</svg>{etiquettes}'
-    img, marque = _image_etat(i + 1)
+    img, marque = _image_etat_outil(o, spec, i + 1)
     return f"""
     <div class="scene{' actif' if i == 0 else ''}" id="scene-{i}" data-i="{i}">{marque}
       <img class="objet" src="{img}"
-        alt="The sieve tower, state {f['num']}: {f['titre']}">
+        alt="{spec['alt_plateau']}, state {f['num']}: {f['titre']}">
       {appels}
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding {f['num']}</span><span class="ft-cote">{f['cote']}</span></figcaption>
@@ -1054,24 +1162,25 @@ def _scene_screening(i, f):
     </div>"""
 
 
-def _rail_screening(findings):
+def _rail_outil(o, spec, findings):
     items = "".join(
         f"""<li><button class="jalon{' actif' if i == 0 else ''}" data-i="{i}" aria-label="Go to finding {f['num']}: {f['titre']}">
-        <img class="j-vig" src="{_image_etat(i + 1)[0]}" alt="">
+        <img class="j-vig" src="{_image_etat_outil(o, spec, i + 1)[0]}" alt="">
         <span class="j-num">{f['num']}</span><span class="j-corps"><span class="j-titre">{f['titre']}</span>
         <span class="j-cote">{f['cote']}</span></span></button></li>""" for i, f in enumerate(findings))
     return f'<nav class="rail" aria-label="Findings"><span class="jauge" aria-hidden="true"><i></i></span><ul>{items}</ul></nav>'
 
 
-def _table_screening(releve, findings):
-    """La grille du rouge sur son héros, comme le vert montre la sienne (Arslane, 7/09 :
-    « y'a pas son tableau du coup ? ») : chaque matcher présent, à sept seuils dont celui
-    de la frontière, rappel sur fausses alertes, tout lu dans le relevé scellé. La cellule
-    de la frontière est celle que finding 03 cite (source.a) : une seule source pour la
-    fiche, la tour et la grille."""
-    src = findings[2]["source"]["a"]
-    palier_f, seuil_f = src["palier"], src["seuil"]
-    seuils = sorted({"0.50", "0.60", "0.70", "0.80", "0.90", "1.00", seuil_f}, key=float)
+def _table_outil(spec, releve, findings):
+    """La grille de l'outil sur son héros, comme le vert montre la sienne : chaque palier
+    présent, à sept seuils dont celui de la frontière quand elle EXISTE, rappel sur
+    fausses alertes, tout lu dans le relevé scellé. La cellule de la frontière vient du
+    finding 03 (source.a) quand il en cite une ; la règle de l'outil peut n'en retenir
+    AUCUNE (le bleu à 0,90 sur les cas écrits) — alors aucune cellule n'est marquée, et
+    la note le dit au lieu de laisser deviner."""
+    src = findings[2].get("source", {}).get("a") or {}
+    palier_f, seuil_f = src.get("palier"), src.get("seuil")
+    seuils = sorted({"0.50", "0.60", "0.70", "0.80", "0.90", "1.00"} | ({seuil_f} if seuil_f else set()), key=float)
     auth = releve["authored"]
     tetes = "".join(f"<th scope='col'>{s}</th>" for s in seuils)
     lignes = ""
@@ -1079,45 +1188,50 @@ def _table_screening(releve, findings):
         cells = ""
         for s in seuils:
             c = auth["tables"][p][s]
-            choisi = " choisi" if (p, s) == (palier_f, seuil_f) else ""
+            choisi = " choisi" if (palier_f and (p, s) == (palier_f, seuil_f)) else ""
             cells += (f"<td class='cell{choisi}'><span>{c['rappel']['taux'] * 100:.0f}<small>%</small></span>"
                       f"<br><small>{c['fauxPositifs']['taux'] * 100:.0f}% fa</small></td>")
         lignes += f"<tr><th scope='row'>{p}</th>{cells}</tr>"
+    unites = spec["table_note_unites"].format(nMatch=auth.get("nMatch", auth.get("nSuspicious")),
+                                             nDifferent=auth.get("nDifferent", auth.get("nBenign")))
+    frontiere = (f"The ruby cell is the tool&#8217;s frontier under its\n      default rule, {palier_f} at {seuil_f}."
+                 if palier_f else
+                 "Under its default rule, the tool retains NO cell at the recall floor on these"
+                 "\n      cases: the record says so, and the instrument shows the strongest bound instead.")
     return f'''<div class="t-scroll"><table class="routage">
-      <caption class="sr">Recall over false alerts of each matcher at each threshold, on the written pairs</caption>
-      <thead><tr><th scope="col">matcher</th>{tetes}</tr></thead><tbody>{lignes}</tbody></table></div>
-      <p class="t-note">Measured on the {auth["nMatch"]} written match pairs and {auth["nDifferent"]} hard
-      negatives: recall on top, false alerts below. The ruby cell is the tool&#8217;s frontier under its
-      default rule, {palier_f} at {seuil_f}. The synthetic variants stay apart, on the instrument.</p>'''
+      <caption class="sr">{spec["table_caption"]}</caption>
+      <thead><tr><th scope="col">{spec["table_ligne"]}</th>{tetes}</tr></thead><tbody>{lignes}</tbody></table></div>
+      <p class="t-note">{unites}: recall on top, false alerts below. {frontiere} The synthetic variants stay apart, on the instrument.</p>'''
 
 
-def batir_screening():
-    if not FINDINGS_SCREENING.exists():
-        print("HERO-SCREENING.html non bâti : findings-screening.json absent (lot S3) : "
+def batir_outil_catalogue(o, spec):
+    findings_chemin = BASE / f"findings-{o['id']}.json"
+    if not findings_chemin.exists():
+        print(f"{o['page_hero']} non bâti : findings-{o['id']}.json absent (lot {spec['lot']}) : "
               "l'absence est dite, rien n'est improvisé")
         return False
-    RELEVE = lire_releve_scelle(RUBIS["releve"])
-    SCEAU_R = RELEVE["empreinte"]
-    _f = json.loads(FINDINGS_SCREENING.read_text())
-    if _f.get("sceau") != SCEAU_R:
-        sys.exit(f"findings-screening.json cite le scellé {_f.get('sceau')} mais le relevé "
-                 f"public porte {SCEAU_R} : les textes ont dérivé du relevé, lot S3 à resceller")
+    RELEVE = lire_releve_scelle(o["releve"])
+    SCEAU_O = RELEVE["empreinte"]
+    _f = json.loads(findings_chemin.read_text())
+    if _f.get("sceau") != SCEAU_O:
+        sys.exit(f"findings-{o['id']}.json cite le scellé {_f.get('sceau')} mais le relevé "
+                 f"public porte {SCEAU_O} : les textes ont dérivé du relevé, lot {spec['lot']} à resceller")
     FINDINGS = _f["findings"]
     if len(FINDINGS) != 5:
-        sys.exit(f"findings-screening.json porte {len(FINDINGS)} findings : la séquence en veut 5")
+        sys.exit(f"findings-{o['id']}.json porte {len(FINDINGS)} findings : la séquence en veut 5")
 
     _m = re.search(r"\*\*(\d+) tests\*\* across (\d+) files",
-                   (RUBIS["outil_chemin"] / "README.md").read_text())
+                   (o["outil_chemin"] / "README.md").read_text())
     if not _m:
-        sys.exit("le compte de tests est introuvable dans le README de cascade-screening")
-    n_tests_r = _m.group(1)
+        sys.exit(f"le compte de tests est introuvable dans le README de {o['outil_chemin'].name}")
+    n_tests_o = _m.group(1)
 
-    css_r = CSS.replace(PALETTE_VERTE, PALETTE_RUBIS)
-    assert css_r != CSS, "la palette verte n'a pas été trouvée dans le CSS : l'alias rubis n'a rien remplacé"
-    css_n = css_r.replace(NUIT_VERTE, NUIT_RUBIS)
-    assert css_n != css_r, "la nuit verte n'a pas été trouvée dans le CSS : la page rouge garderait une nuit verte"
-    css_r = css_n
-    p = RUBIS["prefixe_racine"]
+    css_o = CSS.replace(PALETTE_VERTE, spec["palette"])
+    assert css_o != CSS, "la palette verte n'a pas été trouvée dans le CSS : l'alias n'a rien remplacé"
+    css_n = css_o.replace(NUIT_VERTE, spec["nuit"])
+    assert css_n != css_o, "la nuit verte n'a pas été trouvée dans le CSS : la page garderait une nuit verte"
+    css_o = css_n
+    p = o["prefixe_racine"]
 
     donnees = json.dumps({
         "@context": "https://schema.org",
@@ -1126,140 +1240,143 @@ def batir_screening():
              "name": "Cascade", "url": "https://cascade-routing.com/",
              "logo": "https://cascade-routing.com/og.png",
              "email": "contact@cascade-routing.com"},
-            {"@type": "SoftwareApplication", "name": "Cascade Screening",
-             "url": "https://cascade-routing.com/screening/",
+            {"@type": "SoftwareApplication", "name": spec["app"],
+             "url": f"https://cascade-routing.com/{o['sous_dossier']}",
              "applicationCategory": "DeveloperApplication",
              "operatingSystem": "macOS, Linux (Node 24+)",
-             "downloadUrl": RUBIS["depot"],
-             "description": "A sanctions-screening audit: which name matcher suffices, "
-                            "at which threshold, measured on your own alert history. "
-                            "Nothing of yours goes up.",
+             "downloadUrl": o["depot"],
+             "description": spec["app_desc"],
              "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
-                        "description": "Thirty-day evaluation on your own alert history, "
-                                       "granted in the public licence."},
+                        "description": spec["offre"]},
              "publisher": {"@id": "https://cascade-routing.com/#org"}},
         ],
     }, ensure_ascii=True)
 
-    scenes_r = "".join(_scene_screening(i, f) for i, f in enumerate(FINDINGS))
-    tuiles_rouges = [
-        ("Method &amp; what is measured", "What the frontier reads, and what it refuses.", "ANNEXE-SCREENING-METHODE.html", lien(RUBIS, "rendus/etats/objet-screening-methode.webp")),
-        ("Security &amp; data handling", "The lists, the seal, and what never leaves.", "ANNEXE-SCREENING-SECURITE.html", lien(RUBIS, "rendus/etats/objet-screening-securite.webp")),
-        # les pages de la maison, mais l'icône est celle de la page ROUGE : le même objet,
-        # l'accent rubis (Arslane, 6/09 : « sur les icônes 3D de la partie rouge »)
-        ("Terms of engagement", "What the grant allows, for how long, and what a client buys.", lien(RUBIS, "ANNEXE-TERMS.html"), lien(RUBIS, "rendus/etats/objet-screening-terms.webp")),
-        ("Privacy", "No data is collected. Written down, and verifiable.", lien(RUBIS, "ANNEXE-PRIVACY.html"), lien(RUBIS, "rendus/etats/objet-screening-privacy.webp")),
-        ("Accessibility", "Usable by keyboard, by screen reader, and with motion turned off.", lien(RUBIS, "ANNEXE-ACCESSIBILITE.html"), lien(RUBIS, "rendus/etats/objet-screening-accessibilite.webp")),
+    scenes_o = "".join(_scene_outil(o, spec, i, f) for i, f in enumerate(FINDINGS))
+    im, iq = _icone_tuile(o, spec, "methode")
+    is_, iq2 = _icone_tuile(o, spec, "securite")
+    tuiles = [
+        (*spec["annexe_methode"], im + iq),
+        (*spec["annexe_securite"], is_ + iq2),
+        ("Terms of engagement", "What the grant allows, for how long, and what a client buys.",
+         lien(o, "ANNEXE-TERMS.html"), _icone_tuile(o, spec, "terms")[0] + _icone_tuile(o, spec, "terms")[1]),
+        ("Privacy", "No data is collected. Written down, and verifiable.",
+         lien(o, "ANNEXE-PRIVACY.html"), _icone_tuile(o, spec, "privacy")[0] + _icone_tuile(o, spec, "privacy")[1]),
+        ("Accessibility", "Usable by keyboard, by screen reader, and with motion turned off.",
+         lien(o, "ANNEXE-ACCESSIBILITE.html"), _icone_tuile(o, spec, "accessibilite")[0] + _icone_tuile(o, spec, "accessibilite")[1]),
     ]
-    tuiles_html = "".join(f"""
-      <a class="tuile" href="{href}">
+    def tuile_html(titre, desc, href, img_et_marque):
+        # le marqueur placeholder éventuel est ACCOLÉ au chemin par _icone_tuile : on les sépare
+        img, _, marque = img_et_marque.partition("<!--")
+        marque = ("<!--" + marque) if marque else ""
+        return f"""
+      <a class="tuile" href="{href}">{marque}
         <span class="tuile-img"><img src="{img}" alt=""></span>
         <span class="tuile-corps"><span class="tuile-t">{titre}</span>
         <span class="tuile-d">{desc}</span></span>
         <span class="tuile-fl" aria-hidden="true">&#8594;</span>
-      </a>""" for titre, desc, href, img in tuiles_rouges)
+      </a>"""
+    tuiles_html = "".join(tuile_html(*t) for t in tuiles)
+    commandes_html = "".join(f'<code class="ln">{c}</code>\n    ' for c in
+                             ([f"git clone {o['depot']}"] + spec["commandes"]))
 
     page = f"""<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade Screening &#183; sanctions screening audit</title>
+<meta charset="utf-8"><title>{spec["titre"]}</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Cascade Screening: which matcher suffices, at which threshold">
-<meta property="og:description" content="A sanctions-screening audit: which name matcher suffices, at which threshold, measured on your own alert history. Nothing of yours goes up.">
-<meta property="og:url" content="https://cascade-routing.com/screening/">
+<meta property="og:title" content="{spec["og_titre"]}">
+<meta property="og:description" content="{spec["description"]}">
+<meta property="og:url" content="https://cascade-routing.com/{o["sous_dossier"]}">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="A sanctions-screening audit: which name matcher suffices, at which threshold, measured on your own alert history. Nothing of yours goes up.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='{RUBIS["favicon_accent"]}'/%3E%3C/svg%3E">
+<meta name="description" content="{spec["description"]}">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='{o["favicon_accent"]}'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="{p}fontes/literata.css">
 <link rel="stylesheet" href="{p}fontes/roboto-mono.css">
 <script type="application/ld+json">{donnees}</script>
 <script>document.documentElement.classList.add("js")</script>
-<style>{css_r}</style>
+<style>{css_o}</style>
 <header class="barre sur-nuit">
-  <a class="marque" href="{lien(RUBIS, 'ACCUEIL.html')}">CASCADE</a>
+  <a class="marque" href="{lien(o, 'ACCUEIL.html')}">CASCADE</a>
   <nav aria-label="Site">
-    <a href="INSTRUMENT-SCREENING.html">Instrument</a>
-    <a href="{lien(RUBIS, 'ENGAGEMENT.html')}">Pricing</a>
-    <a href="ANNEXE-SCREENING-METHODE.html">Method</a>
-    <a href="ANNEXE-SCREENING-SECURITE.html">Security</a>
-    <a href="{lien(RUBIS, 'CONTACT.html')}">Contact</a>
+    <a href="{spec["instrument_page"]}">Instrument</a>
+    <a href="{lien(o, 'ENGAGEMENT.html')}">Pricing</a>
+    <a href="{spec["annexe_methode"][2]}">Method</a>
+    <a href="{spec["annexe_securite"][2]}">Security</a>
+    <a href="{lien(o, 'CONTACT.html')}">Contact</a>
   </nav>
-  <span class="sceau">seal {SCEAU_R} &#183; measured, then frozen</span>
+  <span class="sceau">seal {SCEAU_O} &#183; measured, then frozen</span>
 </header>
 
 <main>
 <section class="hero">
-  <h1 class="h1 entree">{RUBIS["question"]}</h1>
-  <p class="lede entree">Seven name matchers, from strict equality to a multilingual embedding, swept across fifty&#8209;one thresholds.<br>
-    Recall and false alerts carry their intervals, and every figure
-    <b>can be verified by you</b>.</p>
-  <div class="commande entree" role="group" aria-label="The measurement on your own alert history">
-    <code class="ln">git clone {RUBIS["depot"]}</code>
-    <code class="ln">npm ci --ignore-scripts</code>
-    <code class="ln">npm run measure:yours -- --alerts=your-alerts.csv</code>
-    <span class="note">Your alert history, measured on your machine. Nothing of yours goes up.</span>
+  <h1 class="h1 entree">{o["question"]}</h1>
+  <p class="lede entree">{spec["lede"]}</p>
+  <div class="commande entree" role="group" aria-label="{spec["aria_commande"]}">
+    {commandes_html}<span class="note">{spec["note_commande"]}</span>
   </div>
   <div class="cue" aria-hidden="true"><span>scroll</span><span class="fil"></span></div>
 </section>
 
-{choix_outils(RUBIS)}
+{choix_outils(o)}
 
 <section class="sequence" aria-label="The five findings">
   <div class="colle">
-    {_rail_screening(FINDINGS)}
+    {_rail_outil(o, spec, FINDINGS)}
     <div class="theatre">
-      <div class="scenes">{scenes_r}</div>
+      <div class="scenes">{scenes_o}</div>
     </div>
   </div>
 </section>
 <section class="instrument"><div class="colonne">
-  <h2 class="h2">Pick any cell, read what your threshold costs.</h2>
-  {_table_screening(RELEVE, FINDINGS)}
-  <div class="ouvrir-ligne"><a class="ouvrir" href="INSTRUMENT-SCREENING.html">
-    <span><span class="ouvrir-eti">Cascade &#183; Screening</span><span class="ouvrir-t">Open the live instrument</span>
-    <span class="ouvrir-s">Every matcher at every threshold, recall and false alerts with their intervals, live from the sealed record, and the tool's own selection rule under your recall floor.</span></span>
+  <h2 class="h2">{spec["instrument_h2"]}</h2>
+  {_table_outil(spec, RELEVE, FINDINGS)}
+  <div class="ouvrir-ligne"><a class="ouvrir" href="{spec["instrument_page"]}">
+    <span><span class="ouvrir-eti">{spec["instrument_eti"]}</span><span class="ouvrir-t">Open the live instrument</span>
+    <span class="ouvrir-s">{spec["instrument_sub"]}</span></span>
     <span class="fl" aria-hidden="true">&#8594;</span></a></div>
 </div></section>
 
 <div class="couture" aria-hidden="true"><div class="colonne">
   <span class="filet"></span>
-  <span class="sceau-c">measured, then frozen &#183; seal {SCEAU_R}</span>
+  <span class="sceau-c">measured, then frozen &#183; seal {SCEAU_O}</span>
   <span class="filet"></span>
 </div></div>
-{film_html(RUBIS)}
+{film_html(o)}
 <section class="menus"><div class="colonne">
   <h2 class="h2">The appendices your reviewers will ask for.</h2>
   <div class="grille">{tuiles_html}</div>
   <div class="rangee-fine">
-    <a class="lien-fin" href="{lien(RUBIS, 'ENGAGEMENT.html')}">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="{lien(RUBIS, 'CONTACT.html')}">Contact <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="{lien(RUBIS, 'MENTIONS.html')}">The fine print <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="{RUBIS["depot"]}">The repository, public <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="{lien(o, 'ENGAGEMENT.html')}">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="{lien(o, 'CONTACT.html')}">Contact <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="{lien(o, 'MENTIONS.html')}">The fine print <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="{o["depot"]}">The repository, public <span aria-hidden="true">&#8594;</span></a>
   </div></div></section>
 </main>
 
 <footer class="pied"><div class="colonne">
-  <p class="pied-p">On your records, on your machine. <em>Nothing of yours goes up.</em></p>
-  <span class="sceau">{n_tests_r} tests &#183; seal {SCEAU_R}</span>
+  <p class="pied-p">{spec["pied"]}</p>
+  <span class="sceau">{n_tests_o} tests &#183; seal {SCEAU_O}</span>
 </div></footer>
 
 <script>{JS}</script>
 """
-    assert "\u2014" not in page, "un cadratin s'est glissé dans la page rouge"
-    (BASE / "HERO-SCREENING.html").write_text(page, encoding="utf-8")
-    etat = "états tamis" if _tamis_dispo() else "PLACEHOLDERS (plateau vert) : refusé en prod"
-    print("HERO-SCREENING.html", f"{len(page) / 1e3:.0f} ko", "·", etat)
+    assert "\u2014" not in page, "un cadratin s'est glissé dans la page"
+    (BASE / o["page_hero"]).write_text(page, encoding="utf-8")
+    etat = f"états {spec['etats']}" if _etats_dispo(spec) else "PLACEHOLDERS (plateau vert) : refusé en prod"
+    print(o["page_hero"], f"{len(page) / 1e3:.0f} ko", "·", etat)
     return True
 
 
 def batir(outil_id):
     """Le point d'entrée du catalogue : « routing » est déjà émis à l'import
-    (le chemin historique, à l'octet) ; « screening » s'émet ici."""
+    (le chemin historique) ; les outils du catalogue s'émettent ici."""
     if outil_id == "routing":
         return True
-    if outil_id == "screening":
-        return batir_screening()
+    if outil_id in SPECS:
+        return batir_outil_catalogue(OUTILS[outil_id], SPECS[outil_id])
     sys.exit(f"outil inconnu : {outil_id}")
 
 
 batir("screening")
+batir("monitoring")
