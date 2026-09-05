@@ -755,8 +755,9 @@ DONNEES_STRUCTUREES = json.dumps({
     ],
 }, ensure_ascii=True)
 
-from outil import (OUTILS, PALETTE_VERTE, PALETTE_RUBIS, PALETTE_LAPIS,
-                   NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, lire_releve_scelle, lien, manques, ETATS_PREFIXE)
+from outil import (OUTILS, PALETTE_VERTE, PALETTE_RUBIS, PALETTE_LAPIS, PALETTE_ONYX,
+                   NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, NUIT_ONYX,
+                   lire_releve_scelle, lien, manques, ETATS_PREFIXE, ICONES_PREFIXE)
 
 
 def outils_vivants():
@@ -1053,6 +1054,82 @@ LAPIS = OUTILS["monitoring"]
 # table d'outil vit ici, pour que le troisième outil soit une ENTRÉE et non une
 # quatrième copie de la fonction (la divergence des copies est la maladie que le
 # catalogue existe pour fermer). Le rubis garde ses textes À L'OCTET : témoin cmp.
+def _refaire_dossier(releve, src, o):
+    """Les chiffres de l'onyx, refaits depuis le relevé scellé du Dossier. Les adresses
+    des fiches parlent le vocabulaire du CONTRAT (couverture, sceaux, signatures,
+    fraicheur, coherence, reseau : CONTRAT-OUTIL-DOSSIER §2) ; le relevé parle celui du
+    registre du lecteur (sealed, signed, fresh, consistent). La traduction vit ICI, une
+    fois : une adresse inconnue est un refus nommé, jamais un zéro silencieux."""
+    qs = [q for q in releve["questions"].values() if q.get("present")]
+
+    def tenu(controle, valeur=True):
+        return sum(1 for q in qs for v in q.get("verdicts", [])
+                   if v["controle"] == controle and v["tenu"] is valeur)
+
+    c = src["controle"]
+    if c == "couverture":
+        # la couverture de la chaîne — et la « portée mesure-publique » de la fiche 05
+        # est la MÊME grandeur : les relevés publics que la mesure du Dossier lit
+        n, sur = releve["couverture"]["n"], releve["couverture"]["sur"]
+        return [f"{n} / {sur}", f"{n}/{sur}", f"{n} of {sur}", str(n)]
+    if c == "sceaux":
+        return [str(tenu("sealed"))]
+    if c == "signatures":
+        return [str(tenu("signed"))]
+    if c == "fraicheur":
+        return [str(tenu("fresh") if src.get("etat") == "fresh" else tenu("fresh", False))]
+    if c == "coherence":
+        return [str(tenu("consistent") if src.get("etat") == "passes" else tenu("consistent", False))]
+    if c == "reseau":
+        # le compte des téléchargeurs AUTORISES de l'outil : la liste que son test
+        # réseau (frontiere.test.ts) tient vide — COMPTÉE dans sa source, pas recopiée,
+        # pour que le jour où un téléchargeur légitime y entre, la fiche 05 rougisse
+        src_test = (o["outil_chemin"] / "src" / "frontiere.test.ts").read_text()
+        bloc = re.search(r"const AUTORISES[^=]*=\s*\{(.*?)\n\};", src_test, re.S)
+        if not bloc:
+            sys.exit("frontiere.test.ts de cascade-dossier : le bloc AUTORISES est introuvable ; "
+                     "la fiche 05 cite un compte qui ne se refait plus")
+        return [str(len(re.findall(r'"[^"]+"\s*:', bloc.group(1))))]
+    sys.exit(f"findings-dossier.json : adresse de contrôle inconnue « {c} » ; "
+             "les adresses du contrat sont couverture, sceaux, signatures, fraicheur, coherence, reseau")
+
+
+def _table_dossier(spec, releve, findings):
+    """La table du héros onyx : les questions de la chaîne contre les cinq contrôles du
+    contrat, lues du relevé scellé. Pas de palier ni de seuil ici : la cellule marquée
+    d'une ligne est l'état atteint SANS TROU dans l'ordre du contrat ; une ligne sans
+    relevé public est dite non jugée, jamais devinée."""
+    ordre = releve["controles"]["presents"]
+    tetes = "".join(f"<th scope='col'>{c}</th>" for c in ordre)
+    lignes = ""
+    for nom_q, q in releve["questions"].items():
+        if not q.get("present"):
+            lignes += (f"<tr><th scope='row'>{nom_q}</th><td class='cell' colspan='{len(ordre)}'>"
+                       f"<small>no public record yet: nothing judged, and said</small></td></tr>")
+            continue
+        verd = {v["controle"]: v["tenu"] for v in q.get("verdicts", [])}
+        etat = q.get("etat")
+        cells = ""
+        for c in ordre:
+            if c not in verd:
+                cells += "<td class='cell'><small>not judged</small></td>"
+            elif verd[c]:
+                marque = " choisi" if c == etat else ""
+                cells += f"<td class='cell{marque}'><span>&#10003;</span><br><small>held</small></td>"
+            else:
+                cells += "<td class='cell'><span>&#215;</span><br><small>not held</small></td>"
+        lignes += f"<tr><th scope='row'>{nom_q}</th>{cells}</tr>"
+    cv, rg = releve["couverture"], releve["reglages"]
+    note = (f"{cv['n']} of the {cv['sur']} questions carry a sealed public record. In each row the "
+            "marked cell is the state reached with no gap in the contract&#8217;s order; a row "
+            "without one reaches none, and the record says so. Declared rhythm "
+            f"{rg['rythmeJours']} days, as of {rg['auJour']}.")
+    return f'''<div class="t-scroll"><table class="routage">
+      <caption class="sr">{spec["table_caption"]}</caption>
+      <thead><tr><th scope="col">{spec["table_ligne"]}</th>{tetes}</tr></thead><tbody>{lignes}</tbody></table></div>
+      <p class="t-note">{note}</p>'''
+
+
 SPECS = {
     "screening": dict(
         lot="S3",
@@ -1123,6 +1200,44 @@ SPECS = {
         table_ligne="scenario",
         table_caption="Recall over false alerts of each scenario at each threshold, on the written cases",
         table_note_unites='Measured on the {nMatch} written suspicious cases and {nDifferent} benign\n      look&#8209;alikes',
+        pied="On your records, on your machine. <em>Nothing of yours goes up.</em>",
+    ),
+    "dossier": dict(
+        lot="D3",
+        etats=ETATS_PREFIXE["dossier"],
+        alt_plateau="The staircase of seals",
+        palette=PALETTE_ONYX, nuit=NUIT_ONYX,
+        titre="Cascade Dossier &#183; the assembled audit trail",
+        og_titre="Cascade Dossier: is the whole chain measured, sealed and fresh",
+        description="One dossier over the suite&#8217;s four sealed answers: coverage, seals, "
+                    "signatures, freshness and coherence, verified on your machine. "
+                    "Nothing of yours goes up.",
+        app="Cascade Dossier",
+        app_desc="One dossier over the suite&#8217;s four sealed answers: coverage, "
+                 "seals, signatures, freshness and coherence, verified on your "
+                 "machine. Nothing of yours goes up.",
+        offre="Thirty-day evaluation on your own sealed reports, granted in the public licence.",
+        lede="Four questions&#8201;&#8212;&#8201;the reader, the matcher, the scenario, the factor&#8201;"
+             "&#8212;&#8201;five controls each.<br>\n    The Dossier reads the sealed reports and answers "
+             "as one piece, and every line\n    <b>can be verified by you</b>.",
+        aria_commande="The dossier over your own sealed reports",
+        commandes=["npm ci --ignore-scripts",
+                   "npm run dossier -- --reports=a-measured.json,b-measured.json"],
+        note_commande="Your sealed reports, read on your machine. Nothing of yours goes up.",
+        instrument_h2="Read the whole chain in one table.",
+        instrument_page="INSTRUMENT-DOSSIER.html",
+        instrument_eti="Cascade &#183; Dossier",
+        instrument_sub="The four questions against the five controls, states, seals and freshness "
+                       "live from the sealed public dossier, and what the next control still needs.",
+        annexe_methode=("Method &amp; what is verified", "What the five controls hold, and what a gap means.",
+                        "ANNEXE-DOSSIER-METHODE.html"),
+        annexe_securite=("Security &amp; data handling", "What is read, what is derived, and what never leaves.",
+                         "ANNEXE-DOSSIER-SECURITE.html"),
+        icone_prefixe=ICONES_PREFIXE["dossier"],
+        table_ligne="question",
+        table_caption="State reached by each question of the chain under the contract&#8217;s five controls, on the public records",
+        table=_table_dossier,
+        refaire=_refaire_dossier,
         pied="On your records, on your machine. <em>Nothing of yours goes up.</em>",
     ),
 }
@@ -1235,6 +1350,7 @@ def _table_outil(spec, releve, findings):
       <p class="t-note">{unites}: recall on top, false alerts below. {frontiere} The synthetic variants stay apart, on the instrument.</p>'''
 
 
+
 def batir_outil_catalogue(o, spec):
     findings_chemin = BASE / f"findings-{o['id']}.json"
     if not findings_chemin.exists():
@@ -1244,6 +1360,10 @@ def batir_outil_catalogue(o, spec):
     RELEVE = lire_releve_scelle(o["releve"])
     SCEAU_O = RELEVE["empreinte"]
     _f = json.loads(findings_chemin.read_text())
+    if not _f.get("pret", True):
+        print(f"{o['page_hero']} non bâti : findings-{o['id']}.json porte pret:false "
+              f"(lot {spec['lot']}, chiffres en attente de leur sceau) : l'absence est dite")
+        return False
     if _f.get("sceau") != SCEAU_O:
         sys.exit(f"findings-{o['id']}.json cite le scellé {_f.get('sceau')} mais le relevé "
                  f"public porte {SCEAU_O} : les textes ont dérivé du relevé, lot {spec['lot']} à resceller")
@@ -1255,13 +1375,16 @@ def batir_outil_catalogue(o, spec):
     # le relevé scellé : cellule[mesure][champ ou « taux »], ou le compte nommé : et le
     # nombre refait doit apparaître dans le HTML affiché (à une ou zéro décimale, les deux
     # écritures de la maison). Un chiffre qui ne se refait pas ne se publie pas.
-    def _refaire(src):
+    def _refaire_grille(src):
         moitie = RELEVE[src["table"]]
         if "compte" in src:
             return [str(moitie[src["compte"]])]
         c = moitie["tables"][src["palier"]][src["seuil"]][src["mesure"]]
         v = c[src.get("champ", "taux")]
         return [f"{v * 100:.1f}", f"{v * 100:.0f}"]
+    # l'onyx n'a ni palier ni seuil : ses adresses parlent le contrat, et son refaire
+    # vit dans le spec — le crochet, pas une quatrième copie de la boucle de garde
+    _refaire = (lambda src: spec["refaire"](RELEVE, src, o)) if "refaire" in spec else _refaire_grille
     for num_f, f in enumerate(FINDINGS, 1):
         for cote_nom in ("a", "b"):
             src = (f.get("source") or {}).get(cote_nom)
@@ -1384,7 +1507,7 @@ def batir_outil_catalogue(o, spec):
 </section>
 <section class="instrument"><div class="colonne">
   <h2 class="h2">{spec["instrument_h2"]}</h2>
-  {_table_outil(spec, RELEVE, FINDINGS)}
+  {spec.get("table", _table_outil)(spec, RELEVE, FINDINGS)}
   <div class="ouvrir-ligne"><a class="ouvrir" href="{spec["instrument_page"]}">
     <span><span class="ouvrir-eti">{spec["instrument_eti"]}</span><span class="ouvrir-t">Open the live instrument</span>
     <span class="ouvrir-s">{spec["instrument_sub"]}</span></span>
@@ -1434,3 +1557,4 @@ def batir(outil_id):
 
 batir("screening")
 batir("monitoring")
+batir("dossier")

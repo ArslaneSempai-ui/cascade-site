@@ -511,8 +511,8 @@ for page in PLOMBERIE["pages"]:
 # L'objet 3D de chaque annexe rouge est le même objet que le vert, rendu par
 # etats/objets_v2.py avec --accent "#a3182b" (la pierre polie du robot rouge) :
 # seule la couleur de l'idée change avec l'outil, le monde reste celui de la maison.
-from outil import (OUTILS, PALETTE_VERTE, PALETTE_RUBIS, PALETTE_LAPIS,
-                   NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, lire_releve_scelle, lien)
+from outil import (OUTILS, PALETTE_VERTE, PALETTE_RUBIS, PALETTE_LAPIS, PALETTE_ONYX,
+                   NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, NUIT_ONYX, lire_releve_scelle, lien)
 
 RUBIS = OUTILS["screening"]
 LAPIS = OUTILS["monitoring"]
@@ -547,6 +547,22 @@ PAGES_LAPIS = [
      "objet": "rendus/etats/objet-monitoring-securite.webp",
      "alt": "A matte aluminium padlock; its shackle, closed, is the same deep lapis "
             "blue as the tool's accents."},
+]
+
+
+PAGES_ONYX = [
+    {"nav": "Method and reproducibility", "json": "annexe-dossier-methode.json",
+     "html": "ANNEXE-DOSSIER-METHODE.html", "prod": "dossier/method.html",
+     "titre_onglet": "Cascade Dossier &#183; method",
+     "objet": "rendus/etats/objet-dossier-methode.webp",
+     "alt": "A matte aluminium balance with two pans at exactly the same height; "
+            "the right pan is the tool's polished onyx."},
+    {"nav": "Security and data handling", "json": "annexe-dossier-securite.json",
+     "html": "ANNEXE-DOSSIER-SECURITE.html", "prod": "dossier/security.html",
+     "titre_onglet": "Cascade Dossier &#183; security",
+     "objet": "rendus/etats/objet-dossier-securite.webp",
+     "alt": "A matte aluminium padlock; its shackle, closed, is the same polished "
+            "onyx as the tool's accents."},
 ]
 
 
@@ -641,3 +657,5 @@ batir_annexes_outil(RUBIS, PAGES_ROUGES, PALETTE_RUBIS, NUIT_RUBIS, "#2a1219", "
                     "S3", "INSTRUMENT-SCREENING.html", "HERO-SCREENING.html", "Screening")
 batir_annexes_outil(LAPIS, PAGES_LAPIS, PALETTE_LAPIS, NUIT_LAPIS, "#131c31", "#1f3f7a",
                     "L5-textes", "INSTRUMENT-MONITORING.html", "HERO-MONITORING.html", "Monitoring")
+batir_annexes_outil(OUTILS["dossier"], PAGES_ONYX, PALETTE_ONYX, NUIT_ONYX, "#0e0e12", "#1c1c22",
+                    "D3", "INSTRUMENT-DOSSIER.html", "HERO-DOSSIER.html", "Dossier")

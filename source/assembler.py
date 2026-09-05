@@ -47,6 +47,18 @@ PROD_MONITORING = {
     "ANNEXE-MONITORING-METHODE.html": "monitoring/method.html",
     "ANNEXE-MONITORING-SECURITE.html": "monitoring/security.html",
 }
+PROD_SCORING = {
+    "HERO-SCORING.html": "scoring/index.html",
+    "INSTRUMENT-SCORING.html": "scoring/instrument.html",
+    "ANNEXE-SCORING-METHODE.html": "scoring/method.html",
+    "ANNEXE-SCORING-SECURITE.html": "scoring/security.html",
+}
+PROD_DOSSIER = {
+    "HERO-DOSSIER.html": "dossier/index.html",
+    "INSTRUMENT-DOSSIER.html": "dossier/instrument.html",
+    "ANNEXE-DOSSIER-METHODE.html": "dossier/method.html",
+    "ANNEXE-DOSSIER-SECURITE.html": "dossier/security.html",
+}
 
 PROD = {
     "ACCUEIL.html": "index.html",           # la page de la MARQUE (décision A, 6/09)
@@ -131,7 +143,9 @@ def entete_prod(t, neuf):
         adresse = BASE_URL + neuf.removesuffix("index.html")
     # la couleur d'onglet suit la nuit de l'outil : rubis sous screening/, lapis sous monitoring/
     theme = ("#241217" if neuf.startswith("screening/")
-             else "#101a30" if neuf.startswith("monitoring/") else "#14251e")
+             else "#101a30" if neuf.startswith("monitoring/")
+             else "#1a1230" if neuf.startswith("scoring/")
+             else "#0c0c10" if neuf.startswith("dossier/") else "#14251e")
     extra = (f'<link rel="canonical" href="{adresse}">\n'
              f'<link rel="apple-touch-icon" href="{PREFIXE}apple-touch-icon.png">\n'
              f'<meta name="theme-color" content="{theme}">')
@@ -160,18 +174,22 @@ for v in PROD_SCREENING:
 import sys as _sys
 _sys.path.insert(0, str(MAQ))
 from outil import manques as _manques
-_mon_absentes = [v for v in PROD_MONITORING if not (MAQ / v).exists()]
-_mon_manques = _manques("monitoring", MAQ)
-if _mon_absentes or _mon_manques:
-    MONITORING_EMISES = {}
-    if _mon_absentes:
-        print(f"  monitoring : non émis en bloc, il manque {_mon_absentes} (lots L5/L5-textes)")
-    if _mon_manques:
-        print(f"  monitoring : non émis, {len(_mon_manques)} pièce(s) de rendu en attente "
-              f"({', '.join(_mon_manques[:4])}{'…' if len(_mon_manques) > 4 else ''}) (chef)")
-else:
-    MONITORING_EMISES = dict(PROD_MONITORING)
-SOUS_DOSSIER_EMISES = {**SCREENING_EMISES, **MONITORING_EMISES}
+EN_BLOC = (("monitoring", PROD_MONITORING, "L5/L5-textes"),
+           ("scoring", PROD_SCORING, "A-L5"),
+           ("dossier", PROD_DOSSIER, "D3/D4"))
+EMISES_EN_BLOC = {}
+for _oid, _prod, _lots in EN_BLOC:
+    _absentes = [v for v in _prod if not (MAQ / v).exists()]
+    _mq = _manques(_oid, MAQ)
+    if _absentes or _mq:
+        if _absentes:
+            print(f"  {_oid} : non émis en bloc, il manque {_absentes} (lots {_lots})")
+        if _mq:
+            print(f"  {_oid} : non émis, {len(_mq)} pièce(s) en attente "
+                  f"({', '.join(_mq[:4])}{'…' if len(_mq) > 4 else ''})")
+    else:
+        EMISES_EN_BLOC.update(_prod)
+SOUS_DOSSIER_EMISES = {**SCREENING_EMISES, **EMISES_EN_BLOC}
 
 
 def renommer_liens(t, page_sous_dossier):
@@ -333,11 +351,10 @@ for rb in (MAQ / "rendus").glob("robot-*.webp"):          # les robots de toutes
 # le PRÉFIXE des états vit dans outil.py seul (ETATS_PREFIXE) : le 8/09, « bassins » ici
 # quand le héros disait « rack » a publié cinq liens morts, attrapés par le contrôle
 from outil import ETATS_PREFIXE  # noqa: E402
-if MONITORING_EMISES:
-    for w in (MAQ / "rendus" / "etats").glob(f"{ETATS_PREFIXE['monitoring']}-*.webp"):
-        shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
-if SCREENING_EMISES:
-    for w in (MAQ / "rendus" / "etats").glob(f"{ETATS_PREFIXE['screening']}-*.webp"):
+_outils_emis = ({"screening"} if SCREENING_EMISES else set()) | {
+    n.split("/", 1)[0] for n in EMISES_EN_BLOC.values()}
+for _oid in sorted(_outils_emis):
+    for w in (MAQ / "rendus" / "etats").glob(f"{ETATS_PREFIXE[_oid]}-*.webp"):
         shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
 shutil.copy(MAQ / "releve.json", DOCS / "releve.json")
 shutil.copy(MAQ / "og.png", DOCS / "og.png")
@@ -410,6 +427,10 @@ verifier_comptes(sorted((DOCS / "screening").glob("*.html")) if (DOCS / "screeni
                  pathlib.Path.home() / "Documents" / "cascade-screening" / "README.md", "screening")
 verifier_comptes(sorted((DOCS / "monitoring").glob("*.html")) if (DOCS / "monitoring").exists() else [],
                  pathlib.Path.home() / "Documents" / "cascade-monitoring" / "README.md", "monitoring")
+verifier_comptes(sorted((DOCS / "scoring").glob("*.html")) if (DOCS / "scoring").exists() else [],
+                 pathlib.Path.home() / "Documents" / "cascade-scoring" / "README.md", "scoring")
+verifier_comptes(sorted((DOCS / "dossier").glob("*.html")) if (DOCS / "dossier").exists() else [],
+                 pathlib.Path.home() / "Documents" / "cascade-dossier" / "README.md", "dossier")
 
 # ── la garde des citations : « Where it lives » doit encore dire vrai ────────
 # Le site invite un relecteur bancaire à OUVRIR chaque chemin. Une citation qui
@@ -465,6 +486,12 @@ verifier_citations(sorted((DOCS / "screening").glob("*.html")) if (DOCS / "scree
 verifier_citations(sorted((DOCS / "monitoring").glob("*.html")) if (DOCS / "monitoring").exists() else [],
                    MAQ / "ancres-citations-monitoring.json",
                    pathlib.Path.home() / "Documents" / "cascade-monitoring", "monitoring")
+verifier_citations(sorted((DOCS / "scoring").glob("*.html")) if (DOCS / "scoring").exists() else [],
+                   MAQ / "ancres-citations-scoring.json",
+                   pathlib.Path.home() / "Documents" / "cascade-scoring", "scoring")
+verifier_citations(sorted((DOCS / "dossier").glob("*.html")) if (DOCS / "dossier").exists() else [],
+                   MAQ / "ancres-citations-dossier.json",
+                   pathlib.Path.home() / "Documents" / "cascade-dossier", "dossier")
 
 # ── le contrôle de liens, témoin d'abord ─────────────────────────────────────
 def liens_casses(dossier):

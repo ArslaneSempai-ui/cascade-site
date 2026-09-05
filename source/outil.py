@@ -87,6 +87,14 @@ PALETTE_LAPIS = ("--accent-titre:#1f3f7a;--accent-vif:#4f8ae0;--accent-clair:#c3
                  "--vert-titre:var(--accent-titre);--vert-vif:var(--accent-vif);"
                  "--vert-clair:var(--accent-clair);")
 NUIT_LAPIS = "--nuit-a:#16213a;--nuit-b:#101a30;--nuit-c:#0a111f;--sur-vert:#e6ecf7;--sur-vert-pale:#a8b7d4;"
+PALETTE_AMETHYSTE = ("--accent-titre:#4b2a7a;--accent-vif:#9b6fe0;--accent-clair:#e2d3ff;"
+                     "--vert-titre:var(--accent-titre);--vert-vif:var(--accent-vif);"
+                     "--vert-clair:var(--accent-clair);")
+NUIT_AMETHYSTE = "--nuit-a:#241a3a;--nuit-b:#1a1230;--nuit-c:#100b1f;--sur-vert:#ede6f7;--sur-vert-pale:#b9a9d4;"
+PALETTE_ONYX = ("--accent-titre:#1c1c22;--accent-vif:#8a8a96;--accent-clair:#e8e6df;"
+                "--vert-titre:var(--accent-titre);--vert-vif:var(--accent-vif);"
+                "--vert-clair:var(--accent-clair);")
+NUIT_ONYX = "--nuit-a:#121216;--nuit-b:#0c0c10;--nuit-c:#070709;--sur-vert:#efede6;--sur-vert-pale:#b8b6ad;"
 
 OUTILS = {
     "routing": {
@@ -166,6 +174,44 @@ OUTILS = {
         "vif": "#4f8ae0",
         "nuit": ("#16213a", "#101a30", "#0a111f"),      # la nuit lapis de NUIT_LAPIS
     },
+    "scoring": {
+        "id": "scoring",
+        "nom": "Scoring",
+        "sous_dossier": "scoring/",
+        "prefixe_racine": "../",
+        "question": "Which risk factor suffices, at which threshold?",
+        "palette": PALETTE_AMETHYSTE,
+        "favicon_accent": "%234b2a7a",
+        "robots": ("robot-amethyste-penche.webp", "robot-amethyste-pese.webp"),
+        "releve": _MAISON / "cascade-scoring" / "releve-public.json",   # scellé par le lot A-L4 (à venir) : l'entrée reste gated par manques()
+        "outil_chemin": _MAISON / "cascade-scoring",
+        "depot": "https://github.com/ArslaneSempai-ui/cascade-scoring",
+        "page_hero": "HERO-SCORING.html",
+        "etiquette": "Scoring &#183; risk rating",
+        "pitch": "Seven risk factors, from a country list to the deviation from the declared profile, measured on your own periodic-review outcomes.",
+        "robot_rideau": "robot-amethyste-pese.webp",    # il pèse : sa pose à lui
+        "vif": "#9b6fe0",
+        "nuit": ("#241a3a", "#1a1230", "#100b1f"),
+    },
+    "dossier": {
+        "id": "dossier",
+        "nom": "Dossier",
+        "sous_dossier": "dossier/",
+        "prefixe_racine": "../",
+        "question": "Is the whole chain measured, sealed and fresh?",
+        "palette": PALETTE_ONYX,
+        "favicon_accent": "%231c1c22",
+        "robots": ("robot-onyx-penche.webp", "robot-onyx-tient.webp"),
+        "releve": _MAISON / "cascade-dossier" / "releve-public.json",   # scellé 2497928ec273023c (D1 lu + D2 mesuré)
+        "outil_chemin": _MAISON / "cascade-dossier",
+        "depot": "https://github.com/ArslaneSempai-ui/cascade-dossier",
+        "page_hero": "HERO-DOSSIER.html",
+        "etiquette": "Dossier &#183; the regulator&#8217;s piece",
+        "pitch": "Four sealed answers, five controls, one dossier a reviewer verifies without us.",
+        "robot_rideau": "robot-onyx-tient.webp",        # il tient la pièce
+        "vif": "#8a8a96",
+        "nuit": ("#121216", "#0c0c10", "#070709"),
+    },
 }
 
 
@@ -173,8 +219,10 @@ OUTILS = {
 #    consommée par le rideau (batir-hero) ET par la porte d'émission (assembler).
 #    Deux définitions ont divergé en une heure le 7/09 : le rideau montrait un pan
 #    vers une page que l'assembleur refusait d'émettre : liens morts sur tout le site.
-ETATS_PREFIXE = {"routing": "objet", "screening": "tamis", "monitoring": "rack"}   # le rack, tranché par Arslane le 8/09 (les bassins refusés)
-ICONES_PREFIXE = {"screening": "objet-screening", "monitoring": "objet-monitoring"}
+ETATS_PREFIXE = {"routing": "objet", "screening": "tamis", "monitoring": "rack",
+                 "scoring": "rayonnage", "dossier": "escalier"}   # rack, rayonnage, escalier : tranchés par Arslane sur planches
+ICONES_PREFIXE = {"screening": "objet-screening", "monitoring": "objet-monitoring",
+                  "scoring": "objet-scoring", "dossier": "objet-dossier"}
 ICONES_NOMS = ("methode", "securite", "terms", "privacy", "accessibilite")
 
 
@@ -186,8 +234,19 @@ def manques(outil_id, base):
     o = OUTILS[outil_id]
     m = []
     if outil_id != "routing":
-        if not (base / f"findings-{outil_id}.json").exists():
+        chemin_f = base / f"findings-{outil_id}.json"
+        if not chemin_f.exists():
             m.append(f"findings-{outil_id}.json")
+        else:
+            # un fichier de findings livré AVANT le scellé de son relevé porte pret:false
+            # (le lot des textes refuse de deviner les chiffres) : il compte comme absent,
+            # en le disant — sinon le rideau montrerait un pan dont le héros refuse de se bâtir
+            try:
+                pret = json.loads(chemin_f.read_text()).get("pret", True)
+            except ValueError:
+                pret = False
+            if not pret:
+                m.append(f"findings-{outil_id}.json (pret: false : les chiffres attendent leur sceau)")
     if not (base / "rendus" / o["robot_rideau"]).exists():
         m.append(f"rendus/{o['robot_rideau']}")
     prefixe = ETATS_PREFIXE[outil_id]
