@@ -184,6 +184,12 @@ CSS = '''
     color:var(--sur-pale);font-size:13px}
   .pied a{color:inherit}
 
+  /* la barre se replie comme celle du vert : sous 1080 la nav disparaît, le sceau
+     garde sa place ; mesuré au banc des tailles : nav et sceau débordaient à 320-500 */
+  @media (max-width:1080px){
+    .barre{padding:12px 18px;gap:14px}
+    .barre nav{display:none}
+  }
   @media (max-width:900px){
     .colonne{padding:0 20px}
     .rb{width:220px;top:-200px;right:8px}

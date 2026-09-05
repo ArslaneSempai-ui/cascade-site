@@ -106,7 +106,8 @@ OUTILS = {
         "nom": "Screening",
         "sous_dossier": "screening/",
         "prefixe_racine": "../",
-        "question": "Which matcher suffices, at which&nbsp;threshold?",
+        # pas d'insécable ici : « which threshold? » d'un bloc déborde à 320 px (mesuré)
+        "question": "Which matcher suffices, at which threshold?",
         "palette": PALETTE_RUBIS,
         "favicon_accent": "%237a1f2e",
         "robots": ("robot-rubis-penche.webp", "robot-rubis-agrippe.webp"),

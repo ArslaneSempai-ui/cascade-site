@@ -16,8 +16,8 @@
         "b": { "table": "authored", "palier": "exact", "seuil": "0.50", "mesure": "fauxPositifs" }
       },
       "annotations": [
-        [0.50, 0.18, 0.16, 0.08, "the strict sieve: almost nothing passes"],
-        [0.72, 0.42, 0.84, 0.30, "true hits stopped with the noise"]
+        [0.66, 0.23, 0.86, 0.12, "the strict sieve, at the top: a few hits, no noise"],
+        [0.66, 0.71, 0.88, 0.88, "the loosest sieve, at the bottom: every hit is still there"]
       ]
     },
     {
@@ -34,8 +34,8 @@
         "b": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.50", "mesure": "fauxPositifs" }
       },
       "annotations": [
-        [0.50, 0.78, 0.16, 0.88, "the loose sieve: everything falls through"],
-        [0.78, 0.62, 0.86, 0.50, "noise outnumbers hits six to one"]
+        [0.66, 0.71, 0.88, 0.88, "the loose sieve: nothing escapes, nothing is filtered"],
+        [0.34, 0.71, 0.13, 0.60, "the grey ones are false alerts, nearly one per hit"]
       ]
     },
     {
@@ -52,8 +52,8 @@
         "b": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "fauxPositifs" }
       },
       "annotations": [
-        [0.50, 0.50, 0.14, 0.40, "the middle sieve holds the frontier"],
-        [0.80, 0.55, 0.88, 0.68, "certainty, paid in analyst hours"]
+        [0.66, 0.555, 0.86, 0.46, "the ruby frame: the sieve the frontier retains"],
+        [0.45, 0.80, 0.14, 0.88, "the true hits it lets through lie at the foot"]
       ]
     },
     {
@@ -70,8 +70,8 @@
         "b": { "table": "synthetic", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "fauxPositifs" }
       },
       "annotations": [
-        [0.34, 0.50, 0.10, 0.62, "written pairs: the measured half"],
-        [0.66, 0.50, 0.88, 0.62, "fabricated variants: labelled, apart"]
+        [0.295, 0.40, 0.12, 0.22, "written pairs: the measured half"],
+        [0.72, 0.495, 0.88, 0.82, "fabricated variants: labelled, apart"]
       ]
     },
     {
@@ -88,8 +88,8 @@
         "b": { "table": "synthetic", "compte": "nMatch" }
       },
       "annotations": [
-        [0.50, 0.30, 0.16, 0.20, "our pairs end where your export begins"],
-        [0.62, 0.72, 0.86, 0.84, "measure:yours, next to your file"]
+        [0.505, 0.20, 0.16, 0.10, "our pairs end where your export begins"],
+        [0.55, 0.84, 0.86, 0.92, "measure:yours, next to your file: uncoloured until measured"]
       ]
     }
   ]

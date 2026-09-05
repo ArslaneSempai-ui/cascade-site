@@ -527,6 +527,9 @@ CSS = '''
     .rideau{grid-template-columns:1fr}
     .pan{padding-top:84px}
     .rideau-titre+.pan{padding-top:124px}
+    /* au téléphone, une commande coupée par un ascenseur horizontal se lit
+       comme une commande cassée : elle se replie, entière */
+    .commande .ln{white-space:normal;overflow-wrap:anywhere}
     .grille{grid-template-columns:1fr}
     .couture .sceau-c{white-space:normal;text-align:center}
   }

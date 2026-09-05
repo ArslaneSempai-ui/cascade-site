@@ -1,0 +1,266 @@
+<!doctype html><html lang="en">
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-j1OUBR/XTgPJQsBFROAZZV0QpE2KDmxFM/HzPwdHiik='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-TH6Arr8Qvl1YyH0FPJrv9WemQy3KXu1Vnl79rSlIYqc='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta name="referrer" content="no-referrer"><title>Cascade Screening &#183; security</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://cascade-routing.com/screening/security.html">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#14251e">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cascade Screening &amp;#183; security">
+<meta property="og:description" content="Screening handles the most sensitive strings a bank holds: the names it checks. This page says what touches the network, what never does, and how both are enforced by tests rather than promised by sentences.">
+<meta property="og:url" content="https://cascade-routing.com/screening/security.html">
+<meta property="og:image" content="https://cascade-routing.com/og.png">
+<meta property="og:site_name" content="Cascade">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="Screening handles the most sensitive strings a bank holds: the names it checks. This page says what touches the network, what never does, and how both are enforced by tests rather than promised by sentences.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%237a1f2e'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../fontes/literata.css">
+<link rel="stylesheet" href="../fontes/roboto-mono.css">
+<script>document.documentElement.classList.add("js")</script>
+<style>
+  :root{--papier:#dbd7c5;--papier-haut:#e2ddcb;--papier-bas:#cdccb9;--encre:#1b1d18;
+    --demi:#4a4739;--pale:#55523f;--filet:#9d9a83;--filet-clair:#bab7a0;
+    --nuit-a:#1b3229;--nuit-b:#14251e;--nuit-c:#0e1a15;--sur-vert:#e4ecdf;--sur-vert-pale:#a9bdaf;
+    --accent-titre:#7a1f2e;--accent-vif:#d64a5c;--accent-clair:#ffc2c9;--vert-titre:var(--accent-titre);--vert-vif:var(--accent-vif);--vert-clair:var(--accent-clair);
+    --texte:"Literata",Georgia,serif;--mono:"Roboto Mono",ui-monospace,Menlo,monospace;
+    --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
+    --montee:cubic-bezier(.16,.84,.32,1)}
+  *{box-sizing:border-box;margin:0}
+  html{scroll-behavior:smooth;overflow-x:clip;caret-color:var(--vert-vif);
+    scrollbar-color:var(--vert-titre) var(--papier-bas)}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{background:var(--papier);color:var(--encre);font-family:var(--texte);line-height:1.55}
+  img{max-width:100%;display:block}
+  ::selection{background:var(--vert-titre);color:var(--sur-vert)}
+  a{text-underline-offset:4px;color:inherit}
+  :focus-visible{outline:3px solid var(--vert-vif);outline-offset:3px;border-radius:2px}
+  .colonne{max-width:1180px;margin:0 auto;padding:0 48px}
+
+  /* ── la barre : celle des pages principales, à l'identique ──────────────── */
+  .barre{position:fixed;inset:0 0 auto 0;z-index:40;display:flex;align-items:center;gap:28px;
+    padding:14px 32px;transition:background .3s,box-shadow .3s}
+  .barre.posee{background:color-mix(in srgb,var(--papier-haut) 88%,transparent);
+    backdrop-filter:blur(10px);box-shadow:0 1px 0 color-mix(in srgb,var(--filet) 55%,transparent)}
+  .barre.sur-nuit .marque{color:var(--sur-vert)}
+  .barre.sur-nuit nav a{color:var(--sur-vert-pale)}
+  .barre.sur-nuit nav a:hover{color:var(--sur-vert)}
+  .barre.sur-nuit .sceau{color:var(--sur-vert-pale)}
+  .marque{font-weight:700;font-size:19px;letter-spacing:.01em;text-decoration:none;
+    padding:10px 0;color:var(--encre)}
+  .barre nav{display:flex;gap:16px;margin-left:auto}
+  .barre nav a{font-size:14.5px;text-decoration:none;color:var(--demi);padding:13px 6px}
+  .barre nav a:hover{color:var(--encre);text-decoration:underline;
+    text-decoration-color:var(--vert-vif);text-decoration-thickness:1.5px}
+  .barre nav a[aria-current]{font-weight:600}
+  .sceau{font-family:var(--mono);font-size:11px;color:var(--pale);letter-spacing:.04em}
+  html:not(.js) .barre{position:absolute}
+  html:not(.js) .barre .marque{color:var(--sur-vert)}
+  html:not(.js) .barre nav a{color:var(--sur-vert-pale)}
+  html:not(.js) .barre .sceau{color:var(--sur-vert-pale)}
+
+  /* ── la tête : nuit dès le premier pixel, titre à gauche, objet à droite ── */
+  .tete-nuit{position:relative;padding:132px 0 48px;color:var(--sur-vert);
+    background:radial-gradient(120% 100% at 50% -20%,#2a1219,var(--nuit-b) 70%)}
+  .tete-nuit .colonne{display:grid;grid-template-columns:minmax(0,1fr) auto;
+    gap:18px 40px;align-items:center}
+  .ariane{grid-column:1/-1;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  .ariane .fno{font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--vert-vif)}
+  .ariane .fti{font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--sur-vert-pale)}
+  .retour{margin-left:auto;font-family:var(--mono);font-size:12px;
+    text-decoration:none;color:var(--sur-vert-pale);padding:4px 0}
+  .retour:hover{color:var(--sur-vert);text-decoration:underline;
+    text-decoration-color:var(--vert-vif)}
+  h1{font-size:clamp(32px,4.2vw,56px);font-weight:600;letter-spacing:-.02em;
+    line-height:1.06;text-wrap:balance;max-width:21ch}
+  h1 .deux{color:var(--vert-vif)}
+  .plaque{margin:0;width:min(24vw,300px);height:min(24vh,230px)}
+  .plaque img{width:100%;height:100%;object-fit:contain;
+    filter:drop-shadow(0 18px 34px rgba(0,0,0,.45))}
+
+  /* ── le document : la liste ouvrable, telle que validée ─────────────────── */
+  .doc{padding:38px 0 8px}
+  .lede{margin:0 0 26px;font-style:italic;font-size:17px;line-height:1.55;
+    color:var(--demi);max-width:88ch}
+  details{border-top:1px solid var(--filet-clair)}
+  details:last-of-type{border-bottom:1px solid var(--filet-clair)}
+  summary{cursor:pointer;list-style:none;display:flex;gap:.8rem;align-items:baseline;
+    padding:.95rem .2rem .95rem 0;
+    font:500 11.5px/1.4 var(--mono);letter-spacing:.13em;
+    text-transform:uppercase;color:var(--pale);
+    transition:color .16s ease}
+  summary::-webkit-details-marker{display:none}
+  summary .cr{font:400 14px/1 var(--sans);color:var(--filet);flex:none;
+    transition:transform .2s var(--montee),color .16s ease;width:1em}
+  summary:hover{color:var(--encre)}
+  summary:hover .cr{color:var(--encre)}
+  details[open] summary{color:var(--encre)}
+  details[open] summary .cr{transform:rotate(90deg);color:var(--vert-titre)}
+  .sec-corps{padding:0 0 1.4rem 1.8rem;max-width:148ch}
+  @media (min-width:1100px){
+    .sec-corps{columns:2;column-gap:clamp(2.6rem,5vw,5.5rem)}
+    .sec-corps p,.sec-corps ul,.sec-corps .ap{break-inside:avoid-column}
+    .sec-corps > p:first-child{margin-top:0}
+  }
+  .sec-corps p{margin:0 0 .8rem;font-size:15.5px;line-height:1.65;color:var(--encre)}
+  .sec-corps p:last-child{margin-bottom:0}
+  .sec-corps b{font-weight:600}
+  .sec-corps .v{color:var(--vert-titre);font-weight:600}
+  ul{margin:.2rem 0 .8rem;padding:0;list-style:none;font-size:15.5px;line-height:1.65}
+  li{padding-left:1.1rem;position:relative;margin-bottom:.25rem}
+  li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:1.5px;
+    background:var(--filet)}
+  code{font:400 13.5px/1.5 var(--mono);background:rgba(27,29,24,.055);
+    padding:.06rem .3rem}
+
+  /* le moyen de vérifier : les commandes dans un petit écran de terminal :
+     actionnables telles quelles : et les références de source EN DESSOUS, parce
+     qu'un chemin de fichier ne se tape pas dans un shell. */
+  .ap{margin:1rem 0 0;border-left:2px solid var(--vert-titre);padding:.15rem 0 .15rem .9rem}
+  .ap-t{font:500 10px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--vert-titre);display:block;margin-bottom:.3rem}
+  .ap p{margin:0 0 .5rem;font:italic 400 13.5px/1.5 var(--texte);
+    color:var(--demi)!important;font-size:13.5px!important}
+  .term{max-width:44ch;background:linear-gradient(163deg,var(--nuit-a),var(--nuit-b));
+    border:1px solid color-mix(in srgb,var(--vert-vif) 22%,transparent);
+    border-radius:8px;overflow:hidden;box-shadow:0 6px 18px rgba(20,37,30,.22)}
+  .term-bar{display:flex;gap:.32rem;align-items:center;padding:.42rem .6rem;
+    background:rgba(0,0,0,.28)}
+  .term-bar i{width:7px;height:7px;border-radius:50%;background:var(--sur-vert-pale);opacity:.45}
+  .term-bar span{margin-left:auto;font:500 9px/1 var(--mono);letter-spacing:.14em;
+    text-transform:uppercase;color:var(--sur-vert-pale)}
+  .term-corps{padding:.65rem .8rem .75rem;font:400 12.5px/1.75 var(--mono);
+    color:var(--sur-vert)}
+  .term-corps .cmd{display:block;white-space:pre-wrap;overflow-wrap:break-word;
+    background:none;padding:0}
+  /* l'invite est un ::before : elle ne part pas dans le presse-papier */
+  .term-corps .cmd::before{content:"$ ";color:var(--vert-vif);font-weight:600}
+  .term-corps .sortie{display:block;color:var(--sur-vert-pale);opacity:.9}
+  .term-corps .sortie::before{content:"# "}
+  .ap p.refs{margin:.5rem 0 0;font:400 11.5px/1.5 var(--mono)!important;
+    font-style:normal!important;color:var(--pale)!important}
+  .refs b{font:600 9.5px/1.5 var(--mono);letter-spacing:.13em;
+    text-transform:uppercase;color:var(--pale);margin-right:.5rem}
+
+  /* ── la plomberie : colonne de lecture simple, filets fins, pas d'objet ──── */
+  .pl-doc{max-width:78ch;padding:38px 0 8px}
+  .pl-doc .lede{max-width:none}
+  .pl-sec{border-top:1px solid var(--filet-clair);padding:1rem 0 1.3rem}
+  .pl-sec:last-of-type{border-bottom:1px solid var(--filet-clair)}
+  .pl-sec h2{margin:0 0 .55rem;font:500 11.5px/1.4 var(--mono);
+    letter-spacing:.13em;text-transform:uppercase;color:var(--pale)}
+  .pl-sec p{margin:0 0 .8rem;font-size:15.5px;line-height:1.65;color:var(--encre)}
+  .pl-sec p:last-child{margin-bottom:0}
+  .pl-sec b{font-weight:600}
+
+  /* ── le pied : celui des pages principales, plus le rang des annexes ────── */
+  .pied{background:var(--nuit-c);color:var(--sur-vert);padding:44px 0;margin-top:56px}
+  .pied .colonne{display:flex;flex-direction:column;gap:18px}
+  .pied-h{display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;
+    align-items:baseline}
+  .pied-p{font-size:clamp(17px,1.8vw,23px);font-weight:600}
+  .pied-p em{font-style:italic;color:var(--vert-clair)}
+  .pied .sceau{color:var(--sur-vert-pale)}
+  .annexes{display:flex;gap:4px 18px;flex-wrap:wrap;
+    border-top:1px solid color-mix(in srgb,var(--sur-vert-pale) 22%,transparent);
+    padding-top:16px}
+  .annexes a{font-size:13.5px;text-decoration:none;color:var(--sur-vert-pale);
+    padding:6px 2px}
+  .annexes a:hover{color:var(--sur-vert);text-decoration:underline;
+    text-decoration-color:var(--vert-vif)}
+  .annexes a[aria-current="true"]{color:var(--sur-vert);font-weight:600;
+    box-shadow:0 1.5px 0 var(--vert-vif)}
+
+  @media (prefers-reduced-motion:reduce){
+    summary .cr,summary,.barre{transition:none}
+  }
+  /* ── 641-1080 : la fenêtre de bureau NON MAXIMISÉE ─────────────────────────
+     On MAINTIENT la composition du large : l'objet reste à droite du titre,
+     plus petit (constat d'Arslane, 31/08 : la mise en page téléphone agrandie
+     donnait un objet géant dans une bande gonflée). */
+  @media (max-width:1080px){
+    .barre{padding:12px 18px;gap:14px}
+    .barre nav{display:none}
+    .tete-nuit{padding-top:104px}
+    .colonne{padding:0 26px}
+  }
+  @media (min-width:641px) and (max-width:1080px){
+    .plaque{width:min(28vw,260px);height:min(22vh,200px)}
+  }
+  @media (max-width:640px){
+    .tete-nuit .colonne{display:block}
+    .plaque{width:min(62vw,300px);height:min(26vh,190px);margin:20px auto 0}
+    h1{max-width:none}
+    .retour{margin-left:0}
+    .sec-corps{padding-left:.2rem}
+    .colonne{padding:0 22px}
+  }
+
+  /* ── l'impression : le mémo qu'un comité fait circuler ───────────────────── */
+  @media print{
+    body{background:#fff;color:#1b1d18}
+    .barre,.plaque,.retour,.annexes{display:none}
+    .tete-nuit{background:none;color:#1b1d18;padding:12px 0 4px}
+    h1{color:#1b1d18;max-width:none;font-size:26pt}
+    h1 .deux{color:#7a1f2e}
+    .ariane .fno{color:#7a1f2e}
+    .ariane .fti{color:#55523f}
+    .pied{background:none;color:#1b1d18;margin-top:20px;padding:10px 0;
+      border-top:1px solid #999}
+    .pied-p em{color:#7a1f2e}
+    .pied .sceau{color:#55523f}
+    .sec-corps{columns:1;max-width:none}
+    details,.pl-sec{break-inside:avoid}
+    .term{box-shadow:none}
+    summary .cr{display:none}
+  }
+</style>
+<header class="barre sur-nuit">
+  <a class="marque" href="../index.html">CASCADE</a>
+  <nav aria-label="Site"><a href="instrument.html">Instrument</a><a href="../engagement.html">Pricing</a><a href="method.html">Method</a><a href="security.html" aria-current="page">Security</a><a href="../contact.html">Contact</a></nav>
+  <span class="sceau">seal a1da60d0353bbd6f &#183; measured, then frozen</span>
+</header>
+
+<main>
+<section class="tete-nuit"><div class="colonne">
+  <div class="ariane">
+    <span class="fno">Appendix B &#183; Screening</span>
+    <span class="fti">Security and data handling</span>
+    <a class="retour" href="index.html">&#8592; Back to the findings</a>
+  </div>
+  <h1>The lists come down. <span class="deux">Nothing goes up.</span></h1>
+  <figure class="plaque"><img src="../rendus/etats/objet-securite.webp" alt="A matte aluminium padlock; its shackle, closed, is the same deep green as the site's accents."></figure>
+</div></section>
+
+<div class="colonne"><div class="doc">
+  <p class="lede">Screening handles the most sensitive strings a bank holds: the names it checks. This page says what touches the network, what never does, and how both are enforced by tests rather than promised by sentences.</p>
+  <details open><summary><span class="cr" aria-hidden="true">&#9656;</span>One file may touch the network, and a test walks all the others</summary><div class="sec-corps"><p>Exactly one module is allowed to reach the network: the downloader of the public sanctions lists. The permission is a <b>named allowlist with its reason</b>, and a structural test walks every source file for network sites (fetch, node:http and kin, WebSockets) and <b>fails the suite</b> if any other module grows one. The detector carries its own witness: it first proves it can see a planted call, so its zero means looked and found none.</p><p>What the one allowed file does is one-directional: the list comes down, nothing goes up. No name you screen exists yet at that point; the downloader moves public documents only.</p><div class="ap"><span class="ap-t">Verify the frontier</span><p>Run the suite. The walk fails if a network site appears outside the allowlist.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">npm test</code><span class="sortie">fails if any module but the downloader touches the network</span></div></div><p class="refs"><b>Where it lives</b>src/frontiere.test.ts:20 &#183; src/frontiere.test.ts:41</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>The lists are fingerprinted, and a changed file is refused</summary><div class="sec-corps"><p>npm run listes -- --fetch downloads OFAC SDN and the UN consolidated list, and writes a committed manifest: source, URL, date, sha256, byte and entry counts. The data itself stays out of git. When the tool later reads a list from disk, it recomputes the fingerprint and <b>refuses a file that no longer matches the manifest</b>, naming both fingerprints: screening against a list that is not the one recorded certifies nothing.</p><p>OFAC announces its own record count inside the file, and the parser is checked against it on every fetch; the UN address is the one the Security Council page publishes. Without the flag, npm run listes reports what is on disk and touches nothing.</p><div class="ap"><span class="ap-t">Verify without the network</span><p>The no-flag form reads the disk against the manifest and says so.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">npm run listes</code><span class="sortie">reports date, fingerprint state and entry counts; no network touched</span></div></div><p class="refs"><b>Where it lives</b>src/listes.ts:238 &#183; src/listes.ts:262</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>The EU list, honestly unavailable today</summary><div class="sec-corps"><p>The EU consolidated financial sanctions list is served through a token-gated endpoint. On the day this record was built, every file endpoint answered an error with the generic public token the Commission's own RSS still advertises, so the manifest records the fact with its date <b>instead of hiding the source</b>: which list, which URL, which error, and the way out.</p><p>The way out is one environment variable: a personal EU Login token through CASCADE_EU_TOKEN, same URL, fetch again. Until then the tool screens against OFAC and the UN and the manifest says exactly that; a report that cited three lists while holding two would be the kind of sentence this suite exists to prevent.</p><div class="ap"><span class="ap-t">Verify the manifest entry</span><p>The committed manifest carries the EU line, its error and its issue.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">python3 -c "import json; l=[x for x in json.load(open('listes-manifest.json'))['listes'] if x['source']=='EU'][0]; print(l['disponible'], l.get('erreur',''), l.get('issue','')[:40])"</code><span class="sortie">prints the recorded unavailability and the way out</span></div></div><p class="refs"><b>Where it lives</b>src/listes.ts:70 &#183; src/listes.ts:319</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>Offline, everything still runs, and says so</summary><div class="sec-corps"><p>CASCADE_OFFLINE=1 cuts the network for the whole tool. The suite passes under it, the measure runs under it, and the one command that needs the network refuses under it <b>by naming the flag and the way out</b> rather than failing into a stack trace. A refusal you can read is the difference between a tool that is off and a tool that is broken.</p><div class="ap"><span class="ap-t">Verify offline</span><p>Cut the network and run everything.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">CASCADE_OFFLINE=1 npm test</code><span class="sortie">the whole suite, network cut</span><code class="cmd">CASCADE_OFFLINE=1 npm run listes -- --fetch</code><span class="sortie">refuses, names the flag, names the way out, writes nothing</span></div></div><p class="refs"><b>Where it lives</b>src/listes.ts:319</p></div></div></details><details><summary><span class="cr" aria-hidden="true">&#9656;</span>Never a screened name in an output</summary><div class="sec-corps"><p>When you measure on your own alert history, the outputs are written <b>next to your file and nowhere else</b>: a report and a sealed record holding counts, rates, intervals and verdicts by your alert id. Never a screened name, never a list entry you matched, never a path with your username. Your identifiers do survive as verdict keys, so choose them opaque: an id that is an account number stays an account number.</p><p>The screening itself runs on your machine against local lists; there is no callback, no telemetry, no account. The evaluation needs nothing from us but the repository.</p><div class="ap"><span class="ap-t">Verify on a decoy</span><p>Measure a file with an invented name, then search the outputs for it.</p><div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div><div class="term-corps"><code class="cmd">grep -r "the name you invented" your-export-measured.md your-export-measured.json</code><span class="sortie">finds nothing; the outputs carry verdicts, not names</span></div></div><p class="refs"><b>Where it lives</b>src/your-alerts.ts:24 &#183; src/your-alerts.ts:395</p></div></div></details>
+</div></div>
+</main>
+
+<footer class="pied"><div class="colonne">
+  <div class="pied-h">
+    <p class="pied-p">On your records, on your machine. <em>Nothing of yours goes up.</em></p>
+    <span class="sceau">seal a1da60d0353bbd6f &#183; measured, then frozen</span>
+  </div>
+  <nav class="annexes" aria-label="Appendices"><a href="method.html">Method and reproducibility</a><a href="security.html" aria-current="true">Security and data handling</a><a href="../terms.html">Terms of engagement</a><a href="../privacy.html">Privacy</a><a href="../accessibility.html">Accessibility</a><a href="../contact.html">Contact</a><a href="../colophon.html">The fine print</a></nav>
+</div></footer>
+<script>
+const barre = document.querySelector(".barre");
+const poser = () => {
+  barre.classList.toggle("posee", scrollY > 40);
+  barre.classList.toggle("sur-nuit", scrollY <= 40);
+};
+addEventListener("scroll", poser, {passive: true}); poser();
+addEventListener("beforeprint", () => {
+  for (const d of document.querySelectorAll("details")) {
+    d.dataset.avant = d.open ? "1" : ""; d.open = true; }});
+addEventListener("afterprint", () => {
+  for (const d of document.querySelectorAll("details")) {
+    d.open = d.dataset.avant === "1"; }});
+</script>

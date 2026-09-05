@@ -62,8 +62,8 @@ PROD = {
 # ses entrées détruisait docs/ puis plantait, puisque source/ ne portait pas
 # les pages bâties. Ordre tenu : bâtir, vérifier, seulement ensuite effacer.
 import subprocess
-for batisseur in ("batir-hero.py", "batir-instrument.py", "batir-offre.py",
-                  "batir-annexe.py", "batir-404.py"):
+for batisseur in ("batir-hero.py", "batir-instrument.py", "batir-instrument-screening.py",
+                  "batir-offre.py", "batir-annexe.py", "batir-404.py"):
     subprocess.run([sys.executable, str(MAQ / batisseur)], check=True,
                    cwd=str(MAQ), capture_output=True)
 manquants = [v for v in PROD if not (MAQ / v).exists()]
@@ -365,33 +365,29 @@ verifier_comptes(sorted((DOCS / "screening").glob("*.html")) if (DOCS / "screeni
 # absence de citation. Mesuré le 31/08 : le durcissement de l'outil a déplacé 7
 # des 38 citations — un contrôle de bornes serait passé, elles pointaient toutes
 # dans un fichier de la bonne taille. On vérifie donc le CONTENU de la ligne.
-ANCRES = MAQ / "ancres-citations.json"
-OUTIL = pathlib.Path.home() / "Documents" / "cascade"
-citees = set()
-for page in DOCS.glob("*.html"):
-    citees |= set(re.findall(r"[A-Za-z0-9_./-]+\.(?:ts|mjs|json|md|js):\d+",
-                             page.read_text()))
-citees_rouges = set()
-if (DOCS / "screening").exists():
-    for page in (DOCS / "screening").glob("*.html"):
-        citees_rouges |= set(re.findall(r"[A-Za-z0-9_./-]+\.(?:ts|mjs|json|md|js):\d+",
-                                        page.read_text()))
-    if citees_rouges and not (MAQ / "ancres-citations-screening.json").exists():
-        print(f"  ! citations du rouge NON VÉRIFIÉES : ancres-citations-screening.json "
-              f"absent (lot S3) — {len(citees_rouges)} citées")
-if not ANCRES.exists():
-    print(f"  ! citations NON VÉRIFIÉES : {ANCRES.name} absent — {len(citees)} citées")
-elif not OUTIL.exists():
-    print(f"  ! citations NON VÉRIFIÉES : {OUTIL} absent — {len(citees)} citées")
-else:
-    import json as _json
-    ancres = _json.loads(ANCRES.read_text())["ancres"]
+# Chaque OUTIL contre SON dépôt et SON fichier d'ancres (ancrer-citations.py les
+# régénère) : les pages rouges citent cascade-screening, les vertes cascade.
+def verifier_citations(pages, ancres_fichier, outil, etiquette):
+    citees = set()
+    for page in pages:
+        citees |= set(re.findall(r"[A-Za-z0-9_./-]+\.(?:ts|mjs|json|md|js):\d+",
+                                 page.read_text()))
+    if not citees:
+        return
+    if not ancres_fichier.exists():
+        print(f"  ! citations {etiquette} NON VÉRIFIÉES : {ancres_fichier.name} absent — "
+              f"{len(citees)} citées")
+        return
+    if not outil.exists():
+        print(f"  ! citations {etiquette} NON VÉRIFIÉES : {outil} absent — {len(citees)} citées")
+        return
+    ancres = _json.loads(ancres_fichier.read_text())["ancres"]
     fautes = []
     for c in sorted(citees):
         if c not in ancres:
             fautes.append(f"{c} — aucune ancre déclarée"); continue
         chemin, n = c.rsplit(":", 1)
-        f = OUTIL / chemin
+        f = outil / chemin
         if not f.exists():
             fautes.append(f"{c} — fichier absent de l'outil"); continue
         lignes = f.read_text(errors="replace").splitlines()
@@ -404,9 +400,15 @@ else:
                           + (f", le contenu est en {chemin}:{ou[0]}" if len(ou) == 1
                              else ", contenu introuvable"))
     if fautes:
-        sys.exit("CITATIONS QUI NE DISENT PLUS VRAI :\n  " + "\n  ".join(fautes)
-                 + "\n  corriger les JSON, puis régénérer ancres-citations.json")
-    print(f"  citations vérifiées ligne à ligne contre l'outil : {len(citees)}")
+        sys.exit(f"CITATIONS {etiquette.upper()} QUI NE DISENT PLUS VRAI :\n  " + "\n  ".join(fautes)
+                 + f"\n  corriger les JSON, puis régénérer {ancres_fichier.name} (ancrer-citations.py)")
+    print(f"  citations {etiquette} vérifiées ligne à ligne contre l'outil : {len(citees)}")
+
+verifier_citations(sorted(DOCS.glob("*.html")), MAQ / "ancres-citations.json",
+                   pathlib.Path.home() / "Documents" / "cascade", "routing")
+verifier_citations(sorted((DOCS / "screening").glob("*.html")) if (DOCS / "screening").exists() else [],
+                   MAQ / "ancres-citations-screening.json",
+                   pathlib.Path.home() / "Documents" / "cascade-screening", "screening")
 
 # ── le contrôle de liens, témoin d'abord ─────────────────────────────────────
 def liens_casses(dossier):

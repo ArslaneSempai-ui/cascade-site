@@ -105,7 +105,7 @@ CSS = '''
   .refus{padding:34px 0 80px}
   .refus-carte{border:1px solid color-mix(in srgb,var(--sur-vert-pale) 22%,transparent);
     border-radius:12px;padding:20px 24px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
-  .refus-carte p{flex:1;min-width:320px;font-size:14.5px;color:var(--sur-vert-pale);line-height:1.6}
+  .refus-carte p{flex:1;min-width:min(320px,100%);font-size:14.5px;color:var(--sur-vert-pale);line-height:1.6}
   .refus-carte b{color:var(--sur-vert)}
 
   .pied{background:var(--nuit-c);color:var(--sur-vert);padding:52px 0}

@@ -1,10 +1,19 @@
 <!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade Screening &#183; live instrument</title>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-nRFLV0h0MyJLrsEJv1VCJ5BTMzNpiB1Kg99E36FVdcA=' 'unsafe-hashes' 'sha256-ogKvhph2a6LUD2Pr+pZ9rS6Ytjewm+TRvjLVOYBLELs=' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-TgJg7NN6DJnzwf/sxIQgXFZibOYhUOwAZxAUz5kUDfA='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta name="referrer" content="no-referrer"><title>Cascade Screening &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://cascade-routing.com/screening/instrument.html">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#14251e">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Screening: the live instrument">
 <meta property="og:description" content="Every matcher at every threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
 <meta property="og:url" content="https://cascade-routing.com/screening/instrument.html">
+<meta property="og:site_name" content="Cascade">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Every matcher at every threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23180b0f'/%3E%3Cpath d='M16 0v16H0z' fill='%237a1f2e'/%3E%3C/svg%3E">
@@ -128,6 +137,12 @@
     color:var(--sur-pale);font-size:13px}
   .pied a{color:inherit}
 
+  /* la barre se replie comme celle du vert : sous 1080 la nav disparaît, le sceau
+     garde sa place ; mesuré au banc des tailles : nav et sceau débordaient à 320-500 */
+  @media (max-width:1080px){
+    .barre{padding:12px 18px;gap:14px}
+    .barre nav{display:none}
+  }
   @media (max-width:900px){
     .colonne{padding:0 20px}
     .rb{width:220px;top:-200px;right:8px}
@@ -140,10 +155,10 @@
   }
 </style>
 <header class="barre">
-  <a class="marque" href="../HERO.html">CASCADE <small>&#183; Screening</small></a>
+  <a class="marque" href="../index.html">CASCADE <small>&#183; Screening</small></a>
   <nav aria-label="Site">
-    <a href="INSTRUMENT-SCREENING.html" aria-current="page">Instrument</a>
-    <a href="../ENGAGEMENT.html">Pricing</a>
+    <a href="instrument.html" aria-current="page">Instrument</a>
+    <a href="../engagement.html">Pricing</a>
     <a href="https://github.com/ArslaneSempai-ui/cascade-screening">Repository</a>
   </nav>
   <span class="sceau">sealed a1da60d0353bbd6f</span>
