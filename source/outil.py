@@ -156,10 +156,47 @@ OUTILS = {
         "etiquette": "Monitoring &#183; transactions",
         "pitch": "Seven scenarios, from a bare amount to a peer profile, measured on your own dispositioned alerts.",
         "robot_rideau": "robot-lapis-montre.webp",    # il montre (rendu du chef)
+        # l'affiche : plaque lapis (affiche-plaque.py --accent lapis) + les deux chiffres
+        # de la fiche 03 lus dans le relevé (ici deux BORNES BASSES, champ « bas » :
+        # aucune cellule ne tient le plancher, l'affiche le dit avec les deux meilleures)
+        "affiche": "affiche-monitoring.jpg",
+        "affiche_alt": "The lapis Cascade robot, palms up, projecting the two highest lower "
+                       "bounds of recall any single scenario reaches: amount on the left, "
+                       "peer on the right, both under the 0.90 floor.",
         "vif": "#4f8ae0",
         "nuit": ("#16213a", "#101a30", "#0a111f"),      # la nuit lapis de NUIT_LAPIS
     },
 }
+
+
+# ── ce qu'il faut à un outil pour être MONTRÉ et ÉMIS : une seule définition,
+#    consommée par le rideau (batir-hero) ET par la porte d'émission (assembler).
+#    Deux définitions ont divergé en une heure le 7/09 : le rideau montrait un pan
+#    vers une page que l'assembleur refusait d'émettre : liens morts sur tout le site.
+ETATS_PREFIXE = {"routing": "objet", "screening": "tamis", "monitoring": "bassins"}
+ICONES_PREFIXE = {"screening": "objet-screening", "monitoring": "objet-monitoring"}
+ICONES_NOMS = ("methode", "securite", "terms", "privacy", "accessibilite")
+
+
+def manques(outil_id, base):
+    """La liste de ce qui MANQUE à un outil du catalogue pour être prêt : vide = prêt.
+    Routing et Screening sont en ligne et leurs pièces sont commitées : liste vide par
+    construction ; le test reste exécuté pour eux, pour qu'une pièce retirée se voie."""
+    base = pathlib.Path(base)
+    o = OUTILS[outil_id]
+    m = []
+    if outil_id != "routing":
+        if not (base / f"findings-{outil_id}.json").exists():
+            m.append(f"findings-{outil_id}.json")
+    if not (base / "rendus" / o["robot_rideau"]).exists():
+        m.append(f"rendus/{o['robot_rideau']}")
+    prefixe = ETATS_PREFIXE[outil_id]
+    m += [f"rendus/etats/{prefixe}-0{i}.webp" for i in range(1, 6)
+          if not (base / "rendus" / "etats" / f"{prefixe}-0{i}.webp").exists()]
+    if outil_id in ICONES_PREFIXE:
+        m += [f"rendus/etats/{ICONES_PREFIXE[outil_id]}-{n}.webp" for n in ICONES_NOMS
+              if not (base / "rendus" / "etats" / f"{ICONES_PREFIXE[outil_id]}-{n}.webp").exists()]
+    return m
 
 
 def lien(outil, cible):

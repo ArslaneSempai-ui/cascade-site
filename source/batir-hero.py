@@ -738,7 +738,7 @@ DONNEES_STRUCTUREES = json.dumps({
 }, ensure_ascii=True)
 
 from outil import (OUTILS, PALETTE_VERTE, PALETTE_RUBIS, PALETTE_LAPIS,
-                   NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, lire_releve_scelle, lien)
+                   NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, lire_releve_scelle, lien, manques)
 
 
 def outils_vivants():
@@ -751,15 +751,14 @@ def outils_vivants():
     vivants = []
     for o in OUTILS.values():
         if o["id"] in ("routing", "screening"):
-            vivants.append(o)
+            vivants.append(o)      # en ligne : leurs pièces sont commitées
             continue
-        findings = BASE / f"findings-{o['id']}.json"
-        robot = BASE / "rendus" / o["robot_rideau"]
-        if findings.exists() and robot.exists():
+        m = manques(o["id"], BASE)
+        if not m:
             vivants.append(o)
         else:
-            print(f"  rideau : {o['id']} pas encore vivant "
-                  f"({'findings' if not findings.exists() else 'robot de rideau'} absent) : pan non montré")
+            print(f"  rideau : {o['id']} pas encore prêt ({len(m)} pièce(s) : "
+                  f"{', '.join(m[:3])}{'…' if len(m) > 3 else ''}) : pan non montré")
     return vivants
 
 NOMBRES = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
@@ -1194,10 +1193,19 @@ def _table_outil(spec, releve, findings):
         lignes += f"<tr><th scope='row'>{p}</th>{cells}</tr>"
     unites = spec["table_note_unites"].format(nMatch=auth.get("nMatch", auth.get("nSuspicious")),
                                              nDifferent=auth.get("nDifferent", auth.get("nBenign")))
-    frontiere = (f"The ruby cell is the tool&#8217;s frontier under its\n      default rule, {palier_f} at {seuil_f}."
-                 if palier_f else
-                 "Under its default rule, the tool retains NO cell at the recall floor on these"
-                 "\n      cases: the record says so, and the instrument shows the strongest bound instead.")
+    champ_cite = (findings[2].get("source", {}).get("a") or {}).get("champ", "taux")
+    if palier_f and champ_cite == "taux":
+        frontiere = (f"The ruby cell is the tool&#8217;s frontier under its\n      default rule, {palier_f} at {seuil_f}.")
+    elif palier_f:
+        # la fiche 03 cite une BORNE (champ « bas ») : la cellule marquée est la plus forte
+        # borne basse, pas une frontière : la règle de l'outil ne retient RIEN au plancher,
+        # et l'écrire « frontier » serait le mensonge exact que le relevé refuse
+        frontiere = (f"The marked cell, {palier_f} at {seuil_f}, carries the strongest recall lower"
+                     "\n      bound; under its default rule the tool retains NO cell at the recall floor on"
+                     "\n      these cases: the record says so, and the instrument shows it live.")
+    else:
+        frontiere = ("Under its default rule, the tool retains NO cell at the recall floor on these"
+                     "\n      cases: the record says so, and the instrument shows the strongest bound instead.")
     return f'''<div class="t-scroll"><table class="routage">
       <caption class="sr">{spec["table_caption"]}</caption>
       <thead><tr><th scope="col">{spec["table_ligne"]}</th>{tetes}</tr></thead><tbody>{lignes}</tbody></table></div>
@@ -1219,6 +1227,29 @@ def batir_outil_catalogue(o, spec):
     FINDINGS = _f["findings"]
     if len(FINDINGS) != 5:
         sys.exit(f"findings-{o['id']}.json porte {len(FINDINGS)} findings : la séquence en veut 5")
+
+    # AUCUN CHIFFRE TAPÉ : chaque valeur affichée d'une fiche à `source` est REFAITE depuis
+    # le relevé scellé : cellule[mesure][champ ou « taux »], ou le compte nommé : et le
+    # nombre refait doit apparaître dans le HTML affiché (à une ou zéro décimale, les deux
+    # écritures de la maison). Un chiffre qui ne se refait pas ne se publie pas.
+    def _refaire(src):
+        moitie = RELEVE[src["table"]]
+        if "compte" in src:
+            return [str(moitie[src["compte"]])]
+        c = moitie["tables"][src["palier"]][src["seuil"]][src["mesure"]]
+        v = c[src.get("champ", "taux")]
+        return [f"{v * 100:.1f}", f"{v * 100:.0f}"]
+    for num_f, f in enumerate(FINDINGS, 1):
+        for cote_nom in ("a", "b"):
+            src = (f.get("source") or {}).get(cote_nom)
+            if not src:
+                continue
+            affiche = re.sub(r"<[^>]+>", "", f[cote_nom])
+            attendus = _refaire(src)
+            if not any(x in affiche for x in attendus):
+                sys.exit(f"findings-{o['id']}.json, fiche {num_f}, côté {cote_nom} : "
+                         f"« {affiche} » ne contient aucune écriture du chiffre refait depuis le "
+                         f"relevé ({', '.join(attendus)}) : le chiffre affiché a dérivé de sa cellule")
 
     _m = re.search(r"\*\*(\d+) tests\*\* across (\d+) files",
                    (o["outil_chemin"] / "README.md").read_text())

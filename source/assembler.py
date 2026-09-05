@@ -154,10 +154,23 @@ for v in PROD_SCREENING:
 # Le sous-dossier bleu s'émet EN BLOC : ses quatre pages se référencent entre elles
 # (nav, annexes), et une moitié publiée serait un site aux liens morts : le contrôle
 # de liens le refuserait de toute façon : autant le dire AVANT, avec la liste.
+# Le bleu s'émet EN BLOC, et « prêt » a UNE définition : outil.manques(), la même que
+# le rideau consomme : deux définitions ont divergé en une heure (pan montré, page non
+# émise : liens morts partout), une seule ne le peut pas.
+import sys as _sys
+_sys.path.insert(0, str(MAQ))
+from outil import manques as _manques
 _mon_absentes = [v for v in PROD_MONITORING if not (MAQ / v).exists()]
-MONITORING_EMISES = {} if _mon_absentes else dict(PROD_MONITORING)
-if _mon_absentes:
-    print(f"  monitoring : non émis en bloc, il manque {_mon_absentes} (lots L5/L5-textes)")
+_mon_manques = _manques("monitoring", MAQ)
+if _mon_absentes or _mon_manques:
+    MONITORING_EMISES = {}
+    if _mon_absentes:
+        print(f"  monitoring : non émis en bloc, il manque {_mon_absentes} (lots L5/L5-textes)")
+    if _mon_manques:
+        print(f"  monitoring : non émis, {len(_mon_manques)} pièce(s) de rendu en attente "
+              f"({', '.join(_mon_manques[:4])}{'…' if len(_mon_manques) > 4 else ''}) (chef)")
+else:
+    MONITORING_EMISES = dict(PROD_MONITORING)
 SOUS_DOSSIER_EMISES = {**SCREENING_EMISES, **MONITORING_EMISES}
 
 
