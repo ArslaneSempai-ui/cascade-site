@@ -109,7 +109,10 @@ CSS = '''
   /* le poste : le robot rubis penche derriere le bord du terminal, coupe net */
   .poste{position:relative;padding:44px 0 64px}
   .dessus{position:relative;width:min(100%,1020px);margin:0 auto}
-  .rb{position:absolute;right:30px;top:-312px;width:340px;z-index:2;pointer-events:none;
+  /* height:auto : les attributs width/height de l'img fixaient une hauteur de 765 px pour
+     une largeur CSS de 340 px : le robot était ÉTIRÉ et sa tête passait sous le terminal
+     (Arslane, 6/09 : « le robot sur le tableau est bug ») */
+  .rb{position:absolute;right:30px;top:-312px;width:340px;height:auto;z-index:2;pointer-events:none;
     filter:drop-shadow(0 26px 44px rgba(0,0,0,.55))}
   .terminal{position:relative;z-index:3;
     background:linear-gradient(180deg,color-mix(in srgb,var(--nuit-b) 55%,#000),color-mix(in srgb,var(--nuit-c) 92%,#000) 120px);
@@ -359,7 +362,7 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="colonne">
     <div class="dessus">
       <div class="t-page-halo" aria-hidden="true"></div>
-      <img class="rb" src="../rendus/robot-rubis-penche.webp" alt="" width="680" height="765">
+      <img class="rb" src="../rendus/robot-rubis-penche.webp" alt="">
       <div class="terminal">
         <div class="tm-barre"><i></i><i></i><i></i><span>cascade screening &#183; the public record, live</span></div>
         <div class="tm-corps">

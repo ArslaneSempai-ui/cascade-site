@@ -522,15 +522,41 @@ CSS = '''
     box-shadow:inset 0 0 0 1.5px var(--vert-vif)}
   .cell small{font-size:.7em;color:var(--sur-vert-pale)}
   .t-note{font-size:12.5px;color:var(--pale);margin-top:14px;max-width:none;line-height:1.55}
-  .ouvrir-ligne{display:flex;justify-content:flex-end;margin-top:36px}
-  .ouvrir{display:inline-flex;align-items:baseline;gap:12px;background:transparent;
-    color:var(--vert-clair);text-decoration:none;font-family:var(--texte);font-size:17px;font-weight:600;
-    padding:14px 26px;border-radius:10px;border:1px solid color-mix(in srgb,var(--vert-vif) 55%,transparent);
-    transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
-  .ouvrir .fl{font-family:var(--sans);transition:transform .2s var(--montee)}
-  .ouvrir:hover{background:var(--vert-vif);color:var(--nuit-c);border-color:var(--vert-vif);
-    box-shadow:0 14px 36px color-mix(in srgb,var(--vert-vif) 32%,transparent)}
-  .ouvrir:hover .fl{transform:translateX(4px)}
+  /* le bandeau qui ouvre l'instrument, sous la vidéo (Arslane, 6/09 : « impressionnant,
+     effet souris, sur chaque couleur ») : large, la couleur de l'outil en halo qui suit la
+     souris, un éclat qui balaie, la flèche qui glisse dans son disque, la lueur qui monte ;
+     au clavier le focus donne le même état, centré ; mouvement réduit : halo fixe */
+  .ouvrir-ligne{display:flex;margin-top:40px}
+  .ouvrir{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;gap:28px;
+    width:100%;min-height:104px;padding:24px 28px 24px 34px;border-radius:16px;text-decoration:none;
+    color:var(--sur-vert);font-family:var(--texte);
+    background:linear-gradient(180deg,color-mix(in srgb,var(--nuit-a) 72%,var(--nuit-b)),var(--nuit-b));
+    border:1px solid color-mix(in srgb,var(--vert-vif) 42%,transparent);
+    transition:transform .4s var(--montee),border-color .3s,box-shadow .4s var(--montee)}
+  .ouvrir::before{content:"";position:absolute;inset:0;z-index:0;opacity:0;transition:opacity .4s;
+    background:radial-gradient(460px 280px at var(--mx,18%) var(--my,50%),
+      color-mix(in srgb,var(--vert-vif) 34%,transparent),transparent 70%)}
+  .ouvrir::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:linear-gradient(105deg,transparent 42%,color-mix(in srgb,var(--sur-vert) 9%,transparent) 50%,transparent 58%);
+    transform:translateX(-130%)}
+  .ouvrir>*{position:relative;z-index:1}
+  .ouvrir-eti{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--vert-vif);margin-bottom:8px}
+  .ouvrir-t{display:block;font-size:clamp(21px,2.3vw,30px);font-weight:600;letter-spacing:-.012em;line-height:1.12}
+  .ouvrir-s{display:block;margin-top:7px;font-size:14.5px;color:var(--sur-vert-pale);max-width:60ch}
+  .ouvrir .fl{margin-left:auto;flex:none;width:68px;height:68px;border-radius:50%;display:grid;place-items:center;
+    font-family:var(--sans);font-size:34px;line-height:1;color:var(--vert-clair);
+    border:1px solid color-mix(in srgb,var(--vert-vif) 50%,transparent);
+    transition:transform .4s var(--montee),background .3s,color .3s,border-color .3s}
+  .ouvrir:hover,.ouvrir:focus-visible{transform:translateY(-3px);border-color:var(--vert-vif);
+    box-shadow:0 28px 70px color-mix(in srgb,var(--vert-vif) 26%,transparent),
+      inset 0 0 0 1px color-mix(in srgb,var(--vert-vif) 30%,transparent)}
+  .ouvrir:hover::before,.ouvrir:focus-visible::before{opacity:1}
+  .ouvrir:hover::after{transform:translateX(130%);transition:transform 1.1s var(--montee)}
+  .ouvrir:hover .fl,.ouvrir:focus-visible .fl{transform:translateX(10px) rotate(-8deg);
+    background:var(--vert-vif);color:var(--nuit-c);border-color:var(--vert-vif)}
+  @media (max-width:700px){.ouvrir{gap:16px;padding:20px 20px 20px 22px}.ouvrir .fl{width:52px;height:52px;font-size:26px}
+    .ouvrir-s{display:none}}
 
   /* les annexes en tuiles */
   .menus{padding:110px 0 90px;background:var(--papier)}
@@ -618,6 +644,16 @@ JS = '''
   addEventListener("scroll", poserBarre, {passive: true});
   poserBarre();
 
+  // le halo qui suit la souris : sur les pans du rideau et sur le bandeau de l'instrument
+  // (mouvement réduit : le halo reste centré, rien ne suit)
+  if (!reduit) {
+    document.querySelectorAll("a.pan, .ouvrir").forEach((el) => el.addEventListener("pointermove", (ev) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", (ev.clientX - r.left) + "px");
+      el.style.setProperty("--my", (ev.clientY - r.top) + "px");
+    }, {passive: true}));
+  }
+
   // le rideau : les pans entrent quand il arrive dans la vue ; au clic sur un pan,
   // le rideau s'écarte puis l'outil s'ouvre sur sa page (mouvement réduit : lien nu)
   const rideau = document.querySelector(".rideau");
@@ -629,14 +665,6 @@ JS = '''
       io.observe(rideau);
     } else {
       rideau.classList.add("vu");
-    }
-    // le halo du survol suit la souris dans le pan (mouvement réduit : il reste centré)
-    if (!reduit) {
-      rideau.querySelectorAll("a.pan").forEach((pan) => pan.addEventListener("pointermove", (ev) => {
-        const r = pan.getBoundingClientRect();
-        pan.style.setProperty("--mx", (ev.clientX - r.left) + "px");
-        pan.style.setProperty("--my", (ev.clientY - r.top) + "px");
-      }, {passive: true}));
     }
     rideau.querySelectorAll("a.pan").forEach((pan) => pan.addEventListener("click", (ev) => {
       if (reduit || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0) return;
@@ -853,7 +881,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="instrument"><div class="colonne">
   <h2 class="h2">Pick any cell, read what your routing costs.</h2>
   {table_html()}
-  <div class="ouvrir-ligne"><a class="ouvrir" href="INSTRUMENT.html">Open the live instrument <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+  <div class="ouvrir-ligne"><a class="ouvrir" href="INSTRUMENT.html">
+    <span><span class="ouvrir-eti">Cascade &#183; Routing</span><span class="ouvrir-t">Open the live instrument</span>
+    <span class="ouvrir-s">Every field at every tier, accuracy and cost read live from the sealed record, and a budget slider that chooses the way the tool does.</span></span>
+    <span class="fl" aria-hidden="true">&#8594;</span></a></div>
 </div></section>
 
 {menus_html()}
@@ -1162,7 +1193,10 @@ def batir_screening():
   <h2 class="h2">Pick any cell, read what your threshold costs.</h2>
   <p class="t-note">The full grid: every matcher at every threshold, recall and false alerts with
     their intervals, read live from the sealed public record.</p>
-  <div class="ouvrir-ligne"><a class="ouvrir" href="INSTRUMENT-SCREENING.html">Open the live instrument <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+  <div class="ouvrir-ligne"><a class="ouvrir" href="INSTRUMENT-SCREENING.html">
+    <span><span class="ouvrir-eti">Cascade &#183; Screening</span><span class="ouvrir-t">Open the live instrument</span>
+    <span class="ouvrir-s">Every matcher at every threshold, recall and false alerts with their intervals, live from the sealed record, and the tool's own selection rule under your recall floor.</span></span>
+    <span class="fl" aria-hidden="true">&#8594;</span></a></div>
 </div></section>
 
 <section class="menus"><div class="colonne">
