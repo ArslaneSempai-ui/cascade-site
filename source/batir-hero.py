@@ -157,9 +157,24 @@ IH, IW = 1000.0, 1000.0 * (1374 / 1120)
 MX = (1420 - IW) / 2
 
 
+APPEL_MAX = 60   # caractères : deux lignes dans une chip .ap-eti, jamais trois (Arslane, 8/09 : « 2 lignes max »)
+
+
+def verifier_appel(txt, ou):
+    """Une explication en transparence sur un plateau tient en DEUX lignes, sur toutes les
+    couleurs ; au-delà, la chip couvre l'objet qu'elle explique. La règle est mécanique :
+    une étiquette trop longue ne se bâtit pas. Le maximum publié tenait en 59."""
+    if len(txt) > APPEL_MAX:
+        sys.exit(f"annotation trop longue ({len(txt)} > {APPEL_MAX}) sur {ou} : « {txt} » ; deux lignes max")
+    if not txt.strip():
+        sys.exit(f"annotation vide sur {ou}")
+    return txt
+
+
 def appels_html(i):
     lignes, etiquettes = "", ""
     for (ax, ay, lx, ly, txt) in APPELS[i]:
+        verifier_appel(txt, f"routing, scène {i + 1}")
         x1, y1 = MX + lx * IW, ly * IH
         x2, y2 = MX + ax * IW, ay * IH
         lignes += (f'<line x1="{x1:.0f}" y1="{y1:.0f}" x2="{x2:.0f}" y2="{y2:.0f}" pathLength="1"/>'
@@ -1140,7 +1155,12 @@ def _icone_tuile(o, spec, nom):
 def _scene_outil(o, spec, i, f):
     """La scène d'un outil du catalogue : même squelette que scene_html, données du lot des textes."""
     lignes, etiquettes = "", ""
-    for (ax, ay, lx, ly, txt) in f.get("annotations", []):
+    appels_f = f.get("annotations", [])
+    if len(appels_f) < 2:
+        sys.exit(f"{o['id']}, finding {f.get('num', i + 1)} : {len(appels_f)} annotation(s) ; chaque plateau porte "
+                 "ses explications en transparence, sur toutes les couleurs (deux au moins)")
+    for (ax, ay, lx, ly, txt) in appels_f:
+        verifier_appel(txt, f"{o['id']}, finding {f.get('num', i + 1)}")
         x1, y1 = MX + lx * IW, ly * IH
         x2, y2 = MX + ax * IW, ay * IH
         lignes += (f'<line x1="{x1:.0f}" y1="{y1:.0f}" x2="{x2:.0f}" y2="{y2:.0f}" pathLength="1"/>'

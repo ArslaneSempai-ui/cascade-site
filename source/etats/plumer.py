@@ -19,9 +19,17 @@ import subprocess
 import sys
 import tempfile
 
-MARGE = 90       # largeur de la rampe, en pixels, depuis chaque bord
+MARGE = 90       # largeur de la rampe, en pixels, depuis chaque bord (--marge N pour un objet cadré serré)
 SEUIL = 6        # alpha (sur 255) sous lequel un pixel est éteint
 OPAQUE = 200     # un pixel au-dessus est « de l'objet » : il ne doit pas être dans la marge
+if "--marge" in sys.argv:
+    # le rack lapis remplit son cadre (rack-etats.py, marge caméra 1.07) : à 90 px de rampe
+    # il serait refusé, à 40 le voile s'efface encore sans contour (vu sur le parchemin)
+    k = sys.argv.index("--marge")
+    MARGE = int(sys.argv[k + 1])
+    del sys.argv[k:k + 2]
+    if not 20 <= MARGE <= 200:
+        sys.exit(f"--marge {MARGE} : entre 20 et 200 px, sinon la rampe ne plume rien ou tout")
 # Le voile du capteur d'ombre (alpha 15-27 loin de l'objet) est retiré comme un
 # PLANCHER, puis le reste est ré-étalé : l'ombre de contact (alpha 60-255 sous le
 # socle) garde son dégradé, le voile disparaît sans contour. Un seuil dur à 30

@@ -1,0 +1,25 @@
+{
+  "_": "Pour chaque « Where it lives » des pages monitoring : le contenu EXACT de la ligne visée dans ~/Documents/cascade-monitoring. La garde de assembler.py refuse de bâtir si une citation ne pointe plus dessus. Régénérer avec ancrer-citations.py APRÈS un changement volontaire de l'outil, jamais pour faire taire la garde.",
+  "ancres": {
+    "src/assumptions.ts:29": "export type Provenance = \"retrieved\" | \"measured\" | \"assumed\" | \"chosen\" | \"synthetic\";",
+    "src/assumptions.ts:76": "echelleMontant: 20_000,",
+    "src/assumptions.ts:97": "seuilDeclaration: \"assumed\",",
+    "src/cas-etiquetes.json:2": "\"_\": \"The authored half of the lapis (Monitoring) public record: cases written family by family, each carrying its declared nature and a one-sentence reason. No real transaction and no real person: every account, amount and date here was written for the archetype it illustrates. The set earns its keep through the benign look-alikes: each benign nature is the twin of a suspicious one (payroll of rapid-movement, seasonal-trade of dormant-burst, loan-repayment of round-tripping, rent-collection of structuring, savings-transfer of rapid-movement, one-off-purchase of the raw amount peak), separated by history and rhythm, which is exactly what the relative scenarios must see. Validated case by case with exigerCas at authoring time; the suite revalidates.\",",
+    "src/cas-etiquetes.test.ts:11": "test(\"au moins 40 suspects et 40 bénins, chaque nature du contrat présente, identifiants uniques\", () => {",
+    "src/cas-etiquetes.test.ts:41": "test(\"les sosies sont structurellement des sosies : l'historique porte la différence\", () => {",
+    "src/cas.ts:47": "if (!c.id) throw new Error(\"a case needs an id\");",
+    "src/frontiere.test.ts:22": "const AUTORISES: Record<string, string> = {",
+    "src/frontiere.test.ts:43": "test(\"aucun module ne touche le réseau\", () => {",
+    "src/interval.ts:102": "export const ENOUGH = 20;",
+    "src/measure.ts:5": "* ce qui est mesuré ici est écrit et généré. Deux moitiés, tenues À PART et jamais",
+    "src/measure.ts:71": "rappel: cellule(rate(suspects.filter((x) => x.score >= seuil).length, suspects.length)),",
+    "src/optimise.ts:170": "console.error(`\\n${m.source.suspicious} confirmed suspicious case(s) in the record: too few confirmed\\n`",
+    "src/rapport.ts:25": "export const TROP_PEU_DE_SUSPECTS = \"too few confirmed cases to bound recall\";",
+    "src/sceller.ts:42": "console.log(`  ${cible}\\n  already sealed, and the seal matches: ${apres}. Nothing to do.`);",
+    "src/synthetic.ts:31": "export const NATURES_SUSPECTES = [",
+    "src/synthetic.ts:51": "export const SEUIL_DECLARATION = 10_000;",
+    "src/synthetic.ts:71": "if (!c.raison || !c.raison.trim()) throw new Error(`case \"${c.id}\" carries no raison`);",
+    "src/your-alerts.ts:25": "* `account_id`, un montant, une date de transaction ou un pays. Un test plante des",
+    "src/your-alerts.ts:9": "* `account_id`, reconstruit pour chaque alerte le CAS du contrat — la fenêtre de trente"
+  }
+}

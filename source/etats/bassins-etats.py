@@ -467,8 +467,9 @@ def rendre():
     sc.render.image_settings.color_mode = "RGBA"
     sc.render.film_transparent = (args.fond != "papier")
     os.makedirs(args.sortie, exist_ok=True)
-    # marge 1.08 : plumer.py refuse un objet opaque dans ses 90 px de bord (tamis : 1.09)
-    camera(position, cadre, focale=72, ouverture=0.0 if APERCU else 11.0, marge=1.08)
+    # marge 1.17 : plumer.py refuse un objet opaque dans ses 90 px de bord, et le socle
+    # de la cascade remplit la boîte en largeur (à 1.08, 30 px d'objet dans la marge : refusé)
+    camera(position, cadre, focale=72, ouverture=0.0 if APERCU else 11.0, marge=1.17)
     sc.render.filepath = os.path.join(args.sortie, f"bassins-0{args.etat}.png")
     bpy.ops.render.render(write_still=True)
     print(f"[bassins] rendu → {sc.render.filepath}\n[bassins] Le code de sortie 0 ne prouve rien : ouvrir l'image et la regarder.")
