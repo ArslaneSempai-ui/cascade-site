@@ -1,16 +1,16 @@
 {
-  "_": "The five findings of the onyx (Dossier) hero, filled from the sealed record ~/Documents/cascade-dossier/releve-public.json at seal `sceau`. Address grammar in `source`, resolved against that record: {cle, champ} reads releve[cle][champ]; {compte-verdicts: {controle, tenu}} counts verdicts with that controle and tenu across questions[*].verdicts; {compte-questions: {etat}} counts questions with that etat. Every displayed figure was derived from the record at writing time and re-verified mechanically (hardened citation script, displayed-precision rule). The figures tell the record's truth after A-L4 sealed the scoring: coverage 4 of 4, three seals recomputed, still zero signatures verifiable and the Dossier says so with one refusal per report, and one report present that cannot even state its measurement day, named as unjudgeable. `annotations` were measured and written against the five delivered renders (escalier-reel/parchemin-01..05): each label describes what its own frame shows. Note for the merge: the themes of states 3 (empty SIGNED step) and 4 (freshness rings) sit one step off findings 03 (freshness) and 04 (coherence); the labels follow the frames, and the pairing is the chef's call at re-render time.",
+  "_": "The five findings of the onyx (Dossier) hero, filled from the sealed record ~/Documents/cascade-dossier/releve-public.json at seal `sceau`. Address grammar in `source`: {cle, champ} reads releve[cle][champ] (`mesure: longueur` takes a list's length); {compte-verdicts: {controle, tenu}} counts verdicts across questions[*].verdicts; {question, champ} reads releve.questions[question][champ]. Every figure derived from the record at writing time and re-verified mechanically at displayed precision. The fiches are themed to the five stair states as arbitrated at re-render: 01 coverage, 02 seals, 03 signatures, 04 freshness, 05 yours. The record now tells the closed loop: on day one the Dossier printed zero verifiable signatures across its own house; the constats were acted on, every record is signed, the green gained a family record, and all four questions stand at consistent, five controls of five. `annotations` were rewritten for the re-rendered stair (four stones on the golden CONSISTENT step, ivory at the foot): the framing is fixed and the anchors reuse positions measured on the previous frames; each label will be checked against the delivered previews and adjusted if any falls badly on the object.",
   "pret": true,
-  "sceau": "b192d33e9c4f2088",
+  "sceau": "37f8e511de19c842",
   "findings": [
     {
       "num": "01",
       "titre": "Four questions, one piece.",
-      "phrase": "Each tool leaves a sealed report at your desk. A reviewer does not want four files: the Dossier reads them all and answers as one piece. All four questions now have a report, and one of them still cannot act as one: named, not excused.",
+      "phrase": "Each tool leaves a sealed report at your desk. A reviewer does not want four files: the Dossier reads them all and answers as one piece. All four questions have a report today, and all four stand at the top control, consistent, five of five.",
       "a": "4",
       "leg_a": "questions of the chain with a report present, of the 4 the suite asks",
-      "b": "3",
-      "leg_b": "reports whose seal recomputes and matches: the fourth cannot even state its day",
+      "b": "4",
+      "leg_b": "reports standing at consistent, the top of the five controls",
       "cote": "the keystone piece",
       "source": {
         "a": {
@@ -19,121 +19,41 @@
         },
         "b": {
           "compte-verdicts": {
-            "controle": "sealed",
+            "controle": "consistent",
             "tenu": true
           }
         }
       },
       "annotations": [
         [
-          0.42,
-          0.52,
+          0.48,
+          0.39,
           0.1,
-          0.16,
-          "two stones climbed today; the stair says how far"
-        ],
-        [
-          0.3,
-          0.62,
-          0.08,
-          0.78,
-          "two remain at the foot, and the piece names both"
-        ]
-      ]
-    },
-    {
-      "num": "02",
-      "titre": "A seal is checked, not trusted.",
-      "phrase": "A seal is recomputed before anything else is believed, and a signature is verified, never assumed. Today the Dossier finds three seals that match, and zero verifiable signatures across the suite: it prints the zero instead of waving it through, because nothing is called valid unverified.",
-      "a": "3",
-      "leg_a": "seals recomputed and matching, on the reports read",
-      "b": "0",
-      "leg_b": "public-record signatures verifiable today, and the Dossier says so, one refusal per report",
-      "cote": "zero, said aloud",
-      "source": {
-        "a": {
-          "compte-verdicts": {
-            "controle": "sealed",
-            "tenu": true
-          }
-        },
-        "b": {
-          "compte-verdicts": {
-            "controle": "signed",
-            "tenu": true
-          }
-        }
-      },
-      "annotations": [
-        [
-          0.42,
-          0.5,
-          0.1,
-          0.17,
-          "the sealed step: both fingerprints recomputed here"
+          0.15,
+          "four stones stand together on the golden step"
         ],
         [
           0.685,
           0.47,
           0.84,
           0.7,
-          "four house seals at the lectern, none verifiable yet"
+          "four questions, one lectern, one piece"
         ]
       ]
     },
     {
-      "num": "03",
-      "titre": "A measurement ages. The Dossier says by how much.",
-      "phrase": "Fresh, due, or stale: every measurement is dated against the rhythm you declare. And a report that cannot even state its measurement day is named for exactly that: age you cannot judge is not age zero.",
-      "a": "3",
-      "leg_a": "measurements fresh under the declared rhythm at the day of this Dossier",
-      "b": "1",
-      "leg_b": "report whose freshness cannot be judged at all: it carries no measurement day",
-      "cote": "age, counted or refused",
-      "source": {
-        "a": {
-          "compte-verdicts": {
-            "controle": "fresh",
-            "tenu": true
-          }
-        },
-        "b": {
-          "compte-verdicts": {
-            "controle": "fresh",
-            "tenu": false
-          }
-        }
-      },
-      "annotations": [
-        [
-          0.45,
-          0.46,
-          0.1,
-          0.16,
-          "the signed step stands empty; the zero is printed"
-        ],
-        [
-          0.41,
-          0.53,
-          0.09,
-          0.77,
-          "the stones wait below: sealed, dated, not yet signed"
-        ]
-      ]
-    },
-    {
-      "num": "04",
-      "titre": "One dataset, one seal: incoherence is named.",
-      "phrase": "The same dataset cannot carry two seals, and a report from an unknown tool version is named rather than guessed. Coherence is a check the Dossier runs across everything it reads, and its verdicts say what there was to cross-check, not more.",
+      "num": "02",
+      "titre": "A seal is checked, not trusted.",
+      "phrase": "A seal is recomputed before anything else is believed. The Dossier recomputes all four against their own content, and holds the rule that closes the family: one dataset cannot carry two seals, and a report from an unknown tool version is named, not guessed.",
       "a": "4",
-      "leg_a": "coherence checks passed, each report alone on its question so far, and the verdict says so",
+      "leg_a": "seals recomputed and matching, on the four reports read",
       "b": "5",
-      "leg_b": "controls the Dossier runs on every report: present, sealed, signed, fresh, consistent",
-      "cote": "checked across tools",
+      "leg_b": "controls every report passes through: present, sealed, signed, fresh, consistent",
+      "cote": "arithmetic, not our word",
       "source": {
         "a": {
           "compte-verdicts": {
-            "controle": "consistent",
+            "controle": "sealed",
             "tenu": true
           }
         },
@@ -145,18 +65,96 @@
       },
       "annotations": [
         [
-          0.395,
-          0.5,
+          0.48,
+          0.39,
           0.1,
           0.16,
-          "brass rings: measured zero days ago, in rhythm"
+          "every fingerprint recomputed on the way up"
         ],
         [
-          0.265,
-          0.585,
-          0.08,
+          0.685,
+          0.47,
+          0.84,
+          0.7,
+          "four house seals at the lectern, all checked"
+        ]
+      ]
+    },
+    {
+      "num": "03",
+      "titre": "The zero that fixed the house.",
+      "phrase": "On day one the Dossier printed zero verifiable signatures across its own suite, one refusal per report, because nothing is called valid unverified. The zero was acted on: today every public record carries the house signature, and the piece verifies all four.",
+      "a": "4",
+      "leg_a": "public-record signatures verified today, of the four reports read",
+      "b": "0",
+      "leg_b": "signature refusals left: the day-one zero did its work and is gone",
+      "cote": "the zero did its work",
+      "source": {
+        "a": {
+          "compte-verdicts": {
+            "controle": "signed",
+            "tenu": true
+          }
+        },
+        "b": {
+          "compte-verdicts": {
+            "controle": "signed",
+            "tenu": false
+          }
+        }
+      },
+      "annotations": [
+        [
+          0.44,
+          0.49,
+          0.09,
+          0.17,
+          "the signed step, once empty, now crossed by all"
+        ],
+        [
+          0.48,
+          0.39,
+          0.09,
           0.77,
-          "no ring at the foot: an age nobody can compute"
+          "the printed zero did its work: four signatures"
+        ]
+      ]
+    },
+    {
+      "num": "04",
+      "titre": "A measurement ages. The Dossier says by how much.",
+      "phrase": "Fresh, due, or stale: every measurement is dated against the rhythm you declare, ninety days by default and said as a declaration. Today all four are fresh, and the oldest is sixteen days into its rhythm: counted, not assumed.",
+      "a": "4",
+      "leg_a": "measurements fresh under the declared rhythm at the day of this Dossier",
+      "b": "16",
+      "leg_b": "days since the oldest measurement, routing, well inside the ninety-day rhythm",
+      "cote": "age, counted",
+      "source": {
+        "a": {
+          "compte-verdicts": {
+            "controle": "fresh",
+            "tenu": true
+          }
+        },
+        "b": {
+          "question": "routing",
+          "champ": "joursDepuis"
+        }
+      },
+      "annotations": [
+        [
+          0.47,
+          0.4,
+          0.1,
+          0.16,
+          "all four fresh, the oldest sixteen days in"
+        ],
+        [
+          0.51,
+          0.41,
+          0.09,
+          0.78,
+          "brass rings inside a ninety-day rhythm"
         ]
       ]
     },
