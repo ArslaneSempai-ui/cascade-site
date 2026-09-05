@@ -342,6 +342,10 @@ CSS = '''
      variables sur le pan, pas dans la palette de la page), le courant marqué */
   .rideau{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));
     position:relative;color:var(--sur-vert)}
+  /* cinq pierres : à 340 px de pan minimum, 1440 n'en range que quatre et le cinquième
+     tombe seul sur une deuxième rangée (vu le 8/09 sur toutes les pages). Dès 1200 px les
+     cinq tiennent sur une rangée à 240 px ; en dessous, trois puis deux (rangées entières). */
+  @media (min-width:1200px){.rideau{grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr))}}
   .rideau-titre{position:absolute;top:84px;left:0;right:0;z-index:2;text-align:center;padding:0 24px;
     font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--sur-vert-pale)}

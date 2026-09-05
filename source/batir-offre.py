@@ -174,7 +174,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <p class="c-qui">For deciding. Your records, your machine, nothing to sign.</p>
       <ul class="c-liste">
         <li>The whole tool, <b>on your own records</b></li>
-        <li>One plan, every Cascade tool: <b>Routing</b>, <b>Screening</b> and <b>Monitoring</b> alike</li>
+        <li>One plan, every Cascade tool: <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b> and <b>Scoring</b> alike, and the <b>Dossier</b> that reads them</li>
         <li>Counter starts at first use, not download</li>
         <li>Results stay internal, no production</li>
         <li>No document leaves your network</li>
@@ -188,7 +188,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <p class="c-qui">For the file your reviewers will open. One campaign, one deliverable.</p>
       <p class="c-plus">everything in the evaluation, plus</p>
       <ul class="c-liste">
-        <li><b>Which tier suffices</b>: field by field on Routing, tier and threshold on Screening, scenario and threshold on Monitoring</li>
+        <li><b>Which tier suffices</b>: field by field on Routing, tier and threshold on Screening, scenario and threshold on Monitoring, factor and threshold on Scoring; the Dossier binds the four</li>
         <li>Intervals, refusals under twenty observations</li>
         <li>A <b>sealed, signed report</b> your audit team verifies without us</li>
         <li>We never access your data</li>

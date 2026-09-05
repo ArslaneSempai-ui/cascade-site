@@ -33,26 +33,56 @@ if F["sceau"] != R["empreinte"]:
     sys.exit(f"findings-{outil_id}.json cite le sceau {F['sceau']}, le relevé porte {R['empreinte']}")
 src = F["findings"][2]["source"]
 cell_a, cell_b = src["a"], src["b"]
-def lire(c):
-    return R[c["table"]]["tables"][c["palier"]][c["seuil"]][c["mesure"]]
-a, b = lire(cell_a), lire(cell_b)
-# le CHAMP affiché suit la fiche : `taux` par défaut ; le bleu (finding 03) montre des
-# bornes basses (champ "bas"), parce qu'aucune cellule n'y tient le plancher
-champ_a, champ_b = cell_a.get("champ", "taux"), cell_b.get("champ", "taux")
-pc = lambda x, champ: f"{x[champ] * 100:.1f}".rstrip("0").rstrip(".")
-chiffre_a, chiffre_b = pc(a, champ_a), pc(b, champ_b)
-palier, seuil = cell_a["palier"], cell_a["seuil"]
-palier_b, seuil_b = cell_b["palier"], cell_b["seuil"]
 ETIQUETTE = {("rappel", "taux"): "recall, at the frontier",
              ("fauxPositifs", "taux"): "false alerts, same cell",
              ("rappel", "bas"): "recall, lower bound",
              ("fauxPositifs", "bas"): "false alerts, lower bound"}
-etiquette_a, etiquette_b = ETIQUETTE[(cell_a["mesure"], champ_a)], ETIQUETTE[(cell_b["mesure"], champ_b)]
-# la seconde paume nomme SA cellule quand ce n'est pas la même (le bleu compare deux
-# scénarios) ; sur la même cellule (le rouge), la ligne reste celle déjà publiée
-meme_cellule = (palier, seuil) == (palier_b, seuil_b)
-sous_b = (f"wilson [{b['bas'] * 100:.0f}&#8211;{b['haut'] * 100:.0f}] &#183; n={b['n']}" if meme_cellule else
-          f"{palier_b} &#183; threshold {seuil_b} &#183; wilson [{b['bas'] * 100:.0f}&#8211;{b['haut'] * 100:.0f}]")
+
+
+def paume(c):
+    """Une paume = un chiffre, son étiquette, sa ligne de source ; deux formes de fiche :
+    la CELLULE d'un instrument (table/palier/seuil/mesure, champ facultatif : taux ou bas),
+    ou le COMPTE DE VERDICTS du Dossier ({compte-verdicts: {controle, tenu}} : combien de
+    questions tiennent, ou ne tiennent pas, un contrôle). Un compte s'affiche entier, sans %."""
+    if "compte-verdicts" in c:
+        cv = c["compte-verdicts"]
+        n = sum(1 for q in R["questions"].values() for v in q.get("verdicts", [])
+                if v.get("controle") == cv["controle"] and bool(v.get("tenu")) == bool(cv["tenu"]))
+        total = len(R["questions"])
+        return dict(chiffre=str(n), pourcent=False,
+                    etiquette=f"questions {'holding' if cv['tenu'] else 'not holding'} {cv['controle']}",
+                    sous=f"of {total} questions &#183; rhythm {R['reglages']['rythmeJours']} days", cle=(cv["controle"], cv["tenu"]))
+    rate = R[c["table"]]["tables"][c["palier"]][c["seuil"]][c["mesure"]]
+    champ = c.get("champ", "taux")
+    chiffre = f"{rate[champ] * 100:.1f}".rstrip("0").rstrip(".")
+    return dict(chiffre=chiffre, pourcent=True, etiquette=ETIQUETTE[(c["mesure"], champ)], rate=rate,
+                palier=c["palier"], seuil=c["seuil"], cle=(c["palier"], c["seuil"]))
+
+
+# l'encre des hologrammes : le vif de l'outil, sauf quand l'outil en déclare une autre (l'onyx :
+# son vif est un gris qui s'efface sur le papier de la plaque ; il projette plus sombre)
+ENCRE = O.get("affiche_encre", O["vif"])
+A, B = paume(cell_a), paume(cell_b)
+chiffre_a, chiffre_b = A["chiffre"], B["chiffre"]
+etiquette_a, etiquette_b = A["etiquette"], B["etiquette"]
+pc_a = "<small>%</small>" if A["pourcent"] else ""
+pc_b = "<small>%</small>" if B["pourcent"] else ""
+if A["pourcent"]:
+    palier, seuil = A["palier"], A["seuil"]
+    sous_a = f"{palier} &#183; threshold {seuil} &#183; n={A['rate']['n']}"
+else:
+    palier, seuil = "dossier", "-"
+    sous_a = A["sous"]
+if B["pourcent"]:
+    b = B["rate"]
+    palier_b, seuil_b = B["palier"], B["seuil"]
+    # la seconde paume nomme SA cellule quand ce n'est pas la même (le bleu compare deux
+    # scénarios) ; sur la même cellule (le rouge), la ligne reste celle déjà publiée
+    sous_b = (f"wilson [{b['bas'] * 100:.0f}&#8211;{b['haut'] * 100:.0f}] &#183; n={b['n']}" if A["cle"] == B["cle"] else
+              f"{palier_b} &#183; threshold {seuil_b} &#183; wilson [{b['bas'] * 100:.0f}&#8211;{b['haut'] * 100:.0f}]")
+else:
+    palier_b, seuil_b = "dossier", "-"
+    sous_b = B["sous"]
 
 # la capture native (Chrome headless, CDP) vit dans la chaîne : etats/capturer-cdp.mjs ;
 # les fontes de la maison sont servies depuis source/fontes par le serveur de source/
@@ -75,16 +105,16 @@ html = f"""<!doctype html><html lang="en"><meta charset="utf-8"><title>affiche {
   #scene{{position:relative;width:1920px;height:1080px;overflow:hidden}}
   #scene *{{margin:0;box-sizing:border-box}}
   #plate{{position:absolute;inset:0;width:1920px;height:1080px;display:block}}
-  .holo{{position:absolute;color:{O["vif"]};font-family:"Literata",Georgia,serif;
+  .holo{{position:absolute;color:{ENCRE};font-family:"Literata",Georgia,serif;
     font-variant-numeric:tabular-nums;font-weight:600;letter-spacing:-.02em;line-height:1}}
-  .holo .n{{display:block;font-size:168px;text-shadow:0 0 28px {O["vif"]}66,0 0 70px {O["vif"]}33}}
+  .holo .n{{display:block;font-size:168px;text-shadow:0 0 28px {ENCRE}66,0 0 70px {ENCRE}33}}
   .holo .n small{{font-size:96px;font-weight:500}}
   .holo .l{{display:block;font-family:"Roboto Mono",ui-monospace,Menlo,monospace;font-size:28px;
     letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;opacity:.92}}
   .holo .s{{display:block;font-family:"Roboto Mono",ui-monospace,Menlo,monospace;font-size:20px;
     letter-spacing:.06em;margin-top:10px;opacity:.7}}
   .faisceau{{position:absolute;width:{LARGEUR_FAISCEAU}%;pointer-events:none;
-    background:linear-gradient(to top,{O["vif"]}66,{O["vif"]}1f 55%,transparent);
+    background:linear-gradient(to top,{ENCRE}66,{ENCRE}1f 55%,transparent);
     clip-path:polygon(46% 100%,54% 100%,100% 0,0 0);filter:blur(2px)}}
 </style>
 <div id="scene">
@@ -93,12 +123,12 @@ html = f"""<!doctype html><html lang="en"><meta charset="utf-8"><title>affiche {
   <div class="faisceau" style="left:{FAISCEAU['d']['x']}%;top:{FAISCEAU['d']['y']}%;height:{FAISCEAU['d']['h']}%"></div>
   <div class="holo" style="left:{POS['g']['x']}%;top:{POS['g']['y']}%">
     <span class="l">{etiquette_a}</span>
-    <span class="n">{chiffre_a}<small>%</small></span>
-    <span class="s">{palier} &#183; threshold {seuil} &#183; n={a['n']}</span>
+    <span class="n">{chiffre_a}{pc_a}</span>
+    <span class="s">{sous_a}</span>
   </div>
   <div class="holo" style="left:{POS['d']['x']}%;top:{POS['d']['y']}%">
     <span class="l">{etiquette_b}</span>
-    <span class="n">{chiffre_b}<small>%</small></span>
+    <span class="n">{chiffre_b}{pc_b}</span>
     <span class="s">{sous_b}</span>
   </div>
 </div>

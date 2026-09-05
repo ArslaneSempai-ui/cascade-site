@@ -190,6 +190,9 @@ OUTILS = {
         "etiquette": "Scoring &#183; risk rating",
         "pitch": "Seven risk factors, from a country list to the deviation from the declared profile, measured on your own periodic-review outcomes.",
         "robot_rideau": "robot-amethyste-pese.webp",    # il pèse : sa pose à lui
+        "affiche": "affiche-scoring.jpg",
+        "affiche_alt": "The amethyst Cascade robot, palms up, projecting the two lower bounds of recall "
+                       "the fiche names: product on the left, behaviour on the right, both under the 0.90 floor.",
         "vif": "#9b6fe0",
         "nuit": ("#241a3a", "#1a1230", "#100b1f"),
     },
@@ -209,6 +212,10 @@ OUTILS = {
         "etiquette": "Dossier &#183; the regulator&#8217;s piece",
         "pitch": "Four sealed answers, five controls, one dossier a reviewer verifies without us.",
         "robot_rideau": "robot-onyx-tient.webp",        # il tient la pièce
+        "affiche": "affiche-dossier.jpg",
+        "affiche_encre": "#2a2a31",                    # le gris vif de l'onyx s'efface sur la plaque : l'encre projetée est plus sombre
+        "affiche_alt": "The onyx Cascade robot, palms up, projecting two counts from the public dossier: "
+                       "the questions holding the fresh control on the left, those not holding it on the right.",
         "vif": "#8a8a96",
         "nuit": ("#121216", "#0c0c10", "#070709"),
     },

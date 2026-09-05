@@ -511,8 +511,8 @@ for page in PLOMBERIE["pages"]:
 # L'objet 3D de chaque annexe rouge est le même objet que le vert, rendu par
 # etats/objets_v2.py avec --accent "#a3182b" (la pierre polie du robot rouge) :
 # seule la couleur de l'idée change avec l'outil, le monde reste celui de la maison.
-from outil import (OUTILS, PALETTE_VERTE, PALETTE_RUBIS, PALETTE_LAPIS, PALETTE_ONYX,
-                   NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, NUIT_ONYX, lire_releve_scelle, lien)
+from outil import (OUTILS, PALETTE_VERTE, PALETTE_RUBIS, PALETTE_LAPIS, PALETTE_ONYX, PALETTE_AMETHYSTE,
+                   NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, NUIT_ONYX, NUIT_AMETHYSTE, lire_releve_scelle, lien)
 
 RUBIS = OUTILS["screening"]
 LAPIS = OUTILS["monitoring"]
@@ -547,6 +547,22 @@ PAGES_LAPIS = [
      "objet": "rendus/etats/objet-monitoring-securite.webp",
      "alt": "A matte aluminium padlock; its shackle, closed, is the same deep lapis "
             "blue as the tool's accents."},
+]
+
+
+PAGES_AMETHYSTE = [
+    {"nav": "Method and reproducibility", "json": "annexe-scoring-methode.json",
+     "html": "ANNEXE-SCORING-METHODE.html", "prod": "scoring/method.html",
+     "titre_onglet": "Cascade Scoring &#183; method",
+     "objet": "rendus/etats/objet-scoring-methode.webp",
+     "alt": "A matte aluminium balance with two pans at exactly the same height; "
+            "the right pan is the tool's deep amethyst."},
+    {"nav": "Security and data handling", "json": "annexe-scoring-securite.json",
+     "html": "ANNEXE-SCORING-SECURITE.html", "prod": "scoring/security.html",
+     "titre_onglet": "Cascade Scoring &#183; security",
+     "objet": "rendus/etats/objet-scoring-securite.webp",
+     "alt": "A matte aluminium padlock; its shackle, closed, is the same deep amethyst "
+            "as the tool's accents."},
 ]
 
 
@@ -657,5 +673,7 @@ batir_annexes_outil(RUBIS, PAGES_ROUGES, PALETTE_RUBIS, NUIT_RUBIS, "#2a1219", "
                     "S3", "INSTRUMENT-SCREENING.html", "HERO-SCREENING.html", "Screening")
 batir_annexes_outil(LAPIS, PAGES_LAPIS, PALETTE_LAPIS, NUIT_LAPIS, "#131c31", "#1f3f7a",
                     "L5-textes", "INSTRUMENT-MONITORING.html", "HERO-MONITORING.html", "Monitoring")
+batir_annexes_outil(OUTILS["scoring"], PAGES_AMETHYSTE, PALETTE_AMETHYSTE, NUIT_AMETHYSTE, "#1a1230", "#4b2a7a",
+                    "A-L5-textes", "INSTRUMENT-SCORING.html", "HERO-SCORING.html", "Scoring")
 batir_annexes_outil(OUTILS["dossier"], PAGES_ONYX, PALETTE_ONYX, NUIT_ONYX, "#0e0e12", "#1c1c22",
                     "D3", "INSTRUMENT-DOSSIER.html", "HERO-DOSSIER.html", "Dossier")
