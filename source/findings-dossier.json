@@ -1,5 +1,5 @@
 {
-  "_": "The five findings of the onyx (Dossier) hero, filled from the sealed record ~/Documents/cascade-dossier/releve-public.json at seal `sceau`. Address grammar in `source`, resolved against that record: {cle, champ} reads releve[cle][champ]; {compte-verdicts: {controle, tenu}} counts verdicts with that controle and tenu across questions[*].verdicts; {compte-questions: {etat}} counts questions with that etat. Every displayed figure was derived from the record at writing time and re-verified mechanically (hardened citation script, displayed-precision rule). The figures tell the record's own day-one truth: coverage 3 of 4 with the fourth named missing, two seals recomputed, zero signatures verifiable yet and the Dossier says so, one report present that cannot even state its measurement day. `annotations` are empty pending the five rendered states of the onyx stair (validated by Arslane); texts and fractions will be written against the delivered renders only, 60 characters or fewer each.",
+  "_": "The five findings of the onyx (Dossier) hero, filled from the sealed record ~/Documents/cascade-dossier/releve-public.json at seal `sceau`. Address grammar in `source`, resolved against that record: {cle, champ} reads releve[cle][champ]; {compte-verdicts: {controle, tenu}} counts verdicts with that controle and tenu across questions[*].verdicts; {compte-questions: {etat}} counts questions with that etat. Every displayed figure was derived from the record at writing time and re-verified mechanically (hardened citation script, displayed-precision rule). The figures tell the record's own day-one truth: coverage 3 of 4 with the fourth named missing, two seals recomputed, zero signatures verifiable yet and the Dossier says so, one report present that cannot even state its measurement day. `annotations` were measured and written against the five delivered renders (escalier-reel/parchemin-01..05): each label describes what its own frame shows. Note for the merge: the themes of states 3 (empty SIGNED step) and 4 (freshness rings) sit one step off findings 03 (freshness) and 04 (coherence); the labels follow the frames, and the pairing is the chef's call at re-render time.",
   "pret": true,
   "sceau": "2497928ec273023c",
   "findings": [
@@ -26,18 +26,18 @@
       },
       "annotations": [
         [
-          0.5,
-          0.3,
-          0.15,
-          0.12,
-          ""
+          0.42,
+          0.52,
+          0.1,
+          0.16,
+          "two stones climbed today; the stair says how far"
         ],
         [
-          0.7,
-          0.6,
-          0.85,
-          0.75,
-          ""
+          0.3,
+          0.62,
+          0.08,
+          0.78,
+          "two remain at the foot, and the piece names both"
         ]
       ]
     },
@@ -66,18 +66,18 @@
       },
       "annotations": [
         [
-          0.4,
-          0.4,
-          0.12,
-          0.25,
-          ""
+          0.42,
+          0.5,
+          0.1,
+          0.17,
+          "the sealed step: both fingerprints recomputed here"
         ],
         [
-          0.65,
-          0.5,
-          0.85,
-          0.35,
-          ""
+          0.685,
+          0.47,
+          0.84,
+          0.7,
+          "four house seals at the lectern, none verifiable yet"
         ]
       ]
     },
@@ -106,18 +106,18 @@
       },
       "annotations": [
         [
-          0.5,
           0.45,
-          0.14,
-          0.3,
-          ""
+          0.46,
+          0.1,
+          0.16,
+          "the signed step stands empty; the zero is printed"
         ],
         [
-          0.75,
-          0.65,
-          0.87,
-          0.8,
-          ""
+          0.41,
+          0.53,
+          0.09,
+          0.77,
+          "the stones wait below: sealed, dated, not yet signed"
         ]
       ]
     },
@@ -145,18 +145,18 @@
       },
       "annotations": [
         [
-          0.45,
+          0.395,
           0.5,
-          0.12,
-          0.4,
-          ""
+          0.1,
+          0.16,
+          "brass rings: measured zero days ago, in rhythm"
         ],
         [
-          0.7,
-          0.55,
-          0.85,
-          0.42,
-          ""
+          0.265,
+          0.585,
+          0.08,
+          0.77,
+          "no ring at the foot: an age nobody can compute"
         ]
       ]
     },
@@ -181,18 +181,18 @@
       },
       "annotations": [
         [
-          0.5,
-          0.35,
-          0.15,
-          0.2,
-          ""
+          0.34,
+          0.645,
+          0.09,
+          0.8,
+          "the ivory stone is yours, at the foot for now"
         ],
         [
+          0.685,
+          0.47,
+          0.84,
           0.7,
-          0.7,
-          0.85,
-          0.85,
-          ""
+          "the lectern: the piece your reviewer verifies alone"
         ]
       ]
     }
