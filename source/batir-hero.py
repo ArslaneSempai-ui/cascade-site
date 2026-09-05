@@ -1061,6 +1061,34 @@ def _rail_screening(findings):
     return f'<nav class="rail" aria-label="Findings"><span class="jauge" aria-hidden="true"><i></i></span><ul>{items}</ul></nav>'
 
 
+def _table_screening(releve, findings):
+    """La grille du rouge sur son héros, comme le vert montre la sienne (Arslane, 7/09 :
+    « y'a pas son tableau du coup ? ») : chaque matcher présent, à sept seuils dont celui
+    de la frontière, rappel sur fausses alertes, tout lu dans le relevé scellé. La cellule
+    de la frontière est celle que finding 03 cite (source.a) : une seule source pour la
+    fiche, la tour et la grille."""
+    src = findings[2]["source"]["a"]
+    palier_f, seuil_f = src["palier"], src["seuil"]
+    seuils = sorted({"0.50", "0.60", "0.70", "0.80", "0.90", "1.00", seuil_f}, key=float)
+    auth = releve["authored"]
+    tetes = "".join(f"<th scope='col'>{s}</th>" for s in seuils)
+    lignes = ""
+    for p in releve["paliers"]["presents"]:
+        cells = ""
+        for s in seuils:
+            c = auth["tables"][p][s]
+            choisi = " choisi" if (p, s) == (palier_f, seuil_f) else ""
+            cells += (f"<td class='cell{choisi}'><span>{c['rappel']['taux'] * 100:.0f}<small>%</small></span>"
+                      f"<br><small>{c['fauxPositifs']['taux'] * 100:.0f}% fa</small></td>")
+        lignes += f"<tr><th scope='row'>{p}</th>{cells}</tr>"
+    return f'''<div class="t-scroll"><table class="routage">
+      <caption class="sr">Recall over false alerts of each matcher at each threshold, on the written pairs</caption>
+      <thead><tr><th scope="col">matcher</th>{tetes}</tr></thead><tbody>{lignes}</tbody></table></div>
+      <p class="t-note">Measured on the {auth["nMatch"]} written match pairs and {auth["nDifferent"]} hard
+      negatives: recall on top, false alerts below. The ruby cell is the tool&#8217;s frontier under its
+      default rule, {palier_f} at {seuil_f}. The synthetic variants stay apart, on the instrument.</p>'''
+
+
 def batir_screening():
     if not FINDINGS_SCREENING.exists():
         print("HERO-SCREENING.html non bâti : findings-screening.json absent (lot S3) : "
@@ -1184,8 +1212,7 @@ def batir_screening():
 </section>
 <section class="instrument"><div class="colonne">
   <h2 class="h2">Pick any cell, read what your threshold costs.</h2>
-  <p class="t-note">The full grid: every matcher at every threshold, recall and false alerts with
-    their intervals, read live from the sealed public record.</p>
+  {_table_screening(RELEVE, FINDINGS)}
   <div class="ouvrir-ligne"><a class="ouvrir" href="INSTRUMENT-SCREENING.html">
     <span><span class="ouvrir-eti">Cascade &#183; Screening</span><span class="ouvrir-t">Open the live instrument</span>
     <span class="ouvrir-s">Every matcher at every threshold, recall and false alerts with their intervals, live from the sealed record, and the tool's own selection rule under your recall floor.</span></span>
