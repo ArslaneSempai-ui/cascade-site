@@ -300,7 +300,10 @@ CSS = '''
   .commande{background:var(--nuit-b);color:var(--sur-vert);border:1px solid color-mix(in srgb,var(--vert-vif) 40%,transparent);
     border-radius:10px;padding:18px 26px;text-align:left;font-family:var(--mono);font-size:12.5px;
     box-shadow:0 24px 60px rgba(14,26,21,.28);max-width:min(92vw,680px)}
-  .commande .ln{white-space:nowrap;overflow-x:auto;display:block;padding:2px 0}
+  /* une commande longue se REPLIE au lieu de glisser sous un ascenseur invisible : la
+     troisième ligne du bleu (deux fichiers) dépassait la boîte à 1440 sans aucun indice ;
+     les commandes courtes du vert et du rouge tiennent sur leur ligne, rien ne bouge pour elles */
+  .commande .ln{white-space:normal;overflow-wrap:anywhere;display:block;padding:2px 0}
   .commande .ln::before{content:"$ ";color:var(--vert-vif)}
   .commande .note{display:block;margin-top:8px;font-size:11px;color:var(--sur-vert-pale);text-align:center;
     font-family:var(--sans);letter-spacing:.02em}
@@ -738,7 +741,7 @@ DONNEES_STRUCTUREES = json.dumps({
 }, ensure_ascii=True)
 
 from outil import (OUTILS, PALETTE_VERTE, PALETTE_RUBIS, PALETTE_LAPIS,
-                   NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, lire_releve_scelle, lien, manques)
+                   NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, lire_releve_scelle, lien, manques, ETATS_PREFIXE)
 
 
 def outils_vivants():
@@ -1038,7 +1041,7 @@ LAPIS = OUTILS["monitoring"]
 SPECS = {
     "screening": dict(
         lot="S3",
-        etats="tamis",
+        etats=ETATS_PREFIXE["screening"],
         alt_plateau="The sieve tower",
         palette=PALETTE_RUBIS, nuit=NUIT_RUBIS,
         titre="Cascade Screening &#183; sanctions screening audit",
@@ -1073,7 +1076,7 @@ SPECS = {
     ),
     "monitoring": dict(
         lot="L5-textes",
-        etats="bassins",
+        etats=ETATS_PREFIXE["monitoring"],   # UNE source : outil.py (la divergence bassins/rack a failli faire attendre manques() pour toujours)
         alt_plateau="The settling basins",
         palette=PALETTE_LAPIS, nuit=NUIT_LAPIS,
         titre="Cascade Monitoring &#183; transaction monitoring audit",

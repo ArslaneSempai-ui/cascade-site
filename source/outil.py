@@ -173,7 +173,7 @@ OUTILS = {
 #    consommée par le rideau (batir-hero) ET par la porte d'émission (assembler).
 #    Deux définitions ont divergé en une heure le 7/09 : le rideau montrait un pan
 #    vers une page que l'assembleur refusait d'émettre : liens morts sur tout le site.
-ETATS_PREFIXE = {"routing": "objet", "screening": "tamis", "monitoring": "bassins"}
+ETATS_PREFIXE = {"routing": "objet", "screening": "tamis", "monitoring": "rack"}   # le rack, tranché par Arslane le 8/09 (les bassins refusés)
 ICONES_PREFIXE = {"screening": "objet-screening", "monitoring": "objet-monitoring"}
 ICONES_NOMS = ("methode", "securite", "terms", "privacy", "accessibilite")
 
