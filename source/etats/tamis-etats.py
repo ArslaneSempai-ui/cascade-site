@@ -53,8 +53,9 @@ ap.add_argument("--qualite", default="apercu", choices=["apercu", "livraison"])
 ap.add_argument("--fond", default="ombre", choices=["papier", "ombre", "sombre"])
 ap.add_argument("--azimut", type=float, default=-72.0)
 ap.add_argument("--elevation", type=float, default=27.0)
-ap.add_argument("--frontiere", default="jaro-winkler:0.60",
-                help="la cellule retenue par la frontière (finding 03), palier:seuil")
+ap.add_argument("--frontiere", default="jaro-winkler:0.56",
+                help="la cellule retenue par la règle de l'outil (optimise : borne basse du "
+                     "rappel >= 0,90, puis le moins de fausses alertes), palier:seuil")
 args = ap.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
 
 APERCU = args.qualite == "apercu"
@@ -72,7 +73,7 @@ PALIER_F, SEUIL_F = args.frontiere.split(":")
 # du plus strict (haut) au plus lâche (bas) ; exact est le tamis le plus strict
 # qui soit (l'identité après normalisation), puis jaro-winkler descend
 TAMIS = [("exact", "0.50"), ("jaro-winkler", "0.90"), ("jaro-winkler", "0.80"),
-         ("jaro-winkler", "0.70"), ("jaro-winkler", "0.60"), ("jaro-winkler", "0.55"),
+         ("jaro-winkler", "0.70"), ("jaro-winkler", "0.60"), ("jaro-winkler", "0.56"),
          ("jaro-winkler", "0.50")]
 
 

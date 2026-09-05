@@ -916,7 +916,7 @@ def batir_screening():
 <main>
 <section class="hero">
   <h1 class="h1 entree">{RUBIS["question"]}</h1>
-  <p class="lede entree">Six name matchers, from strict equality to character n&#8209;grams, swept across fifty&#8209;one thresholds.<br>
+  <p class="lede entree">Seven name matchers, from strict equality to a multilingual embedding, swept across fifty&#8209;one thresholds.<br>
     Recall and false alerts carry their intervals, and every figure
     <b>can be verified by you</b>.</p>
   <div class="commande entree" role="group" aria-label="The measurement on your own alert history">

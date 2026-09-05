@@ -1,6 +1,6 @@
 {
-  "_": "The five findings of the red (Screening) hero, in the EXACT keys lot S1 declared (message of the night of 5 to 6). Provenance: every figure in a/b/cote is a cell of ~/Documents/cascade-screening/releve-public.json at seal `sceau`; S1 refuses to build if the record on disk no longer matches that seal, and this file names each figure's cell in `source` beside it: {table, palier, seuil, mesure} reads releve[table].tables[palier][seuil][mesure] ({succes, n, taux, bas, haut}); {table, compte} reads releve[table][compte]. `source` is provenance for reviewers and future guards; builders may ignore it. Intervals in legends are Wilson 95% from the same cells, en dash, never an em dash. The declared recall floor behind finding 03 is 0.95 on the measured rate: chosen, not measured, and said on the fiche. `annotations` are provisional fractions of the tray box (anchor x, anchor y, label x, label y, text): the sieve tower is not rendered yet; S1 passes them through.",
-  "sceau": "a1da60d0353bbd6f",
+  "_": "The five findings of the red (Screening) hero, in the EXACT keys lot S1 declared (message of the night of 5 to 6). Provenance: every figure in a/b/cote is a cell of ~/Documents/cascade-screening/releve-public.json at seal `sceau`; S1 refuses to build if the record on disk no longer matches that seal, and this file names each figure's cell in `source` beside it: {table, palier, seuil, mesure} reads releve[table].tables[palier][seuil][mesure] ({succes, n, taux, bas, haut}); {table, compte} reads releve[table][compte]. `source` is provenance for reviewers and future guards; builders may ignore it. Intervals in legends are Wilson 95% from the same cells, en dash, never an em dash. The rule behind finding 03 is the tool's own default (optimise: Wilson lower bound of recall >= 0.90, then the fewest false alerts), the same rule the live instrument applies: one rule on the whole site, chosen, not measured, and said on the fiche. `annotations` are fractions of the rendered tower box (anchor x, anchor y, label x, label y, text), placed by the chef on the rendered states.",
+  "sceau": "74a18ebf30d05515",
   "findings": [
     {
       "num": "01",
@@ -41,33 +41,33 @@
     {
       "num": "03",
       "titre": "The frontier lives in the middle.",
-      "phrase": "Hold the measured recall at 95 percent or better, a floor we declare rather than measure, and the sweep of every tier and threshold settles on one cell. Even there, three alerts in four are false.",
-      "a": "96.7<small>%</small>",
-      "leg_a": "recall of the retained cell, jaro&#8209;winkler at 0.60, interval [89&#8211;99]",
-      "b": "75<small>%</small>",
-      "leg_b": "false alerts at that same cell, interval [63&#8211;84]: the price of the floor",
+      "phrase": "Hold the lower bound of measured recall at 90 percent, the tool's own default rule, and the sweep of every tier and threshold, the embedding included, settles on one cell. Even there, three alerts in four are false.",
+      "a": "98.3<small>%</small>",
+      "leg_a": "recall of the retained cell, jaro&#8209;winkler at 0.56, interval [91&#8211;100]",
+      "b": "76.7<small>%</small>",
+      "leg_b": "false alerts at that same cell, interval [65&#8211;86]: the price of the floor",
       "cote": "the frontier cell",
       "source": {
-        "a": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "rappel" },
-        "b": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "fauxPositifs" }
+        "a": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.56", "mesure": "rappel" },
+        "b": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.56", "mesure": "fauxPositifs" }
       },
       "annotations": [
-        [0.66, 0.555, 0.86, 0.46, "the ruby frame: the sieve the frontier retains"],
-        [0.45, 0.80, 0.14, 0.88, "the true hits it lets through lie at the foot"]
+        [0.66, 0.655, 0.86, 0.56, "the ruby frame: the sieve the frontier retains"],
+        [0.45, 0.80, 0.14, 0.88, "what it still lets through lies at the foot"]
       ]
     },
     {
       "num": "04",
       "titre": "Synthetic is declared. And never merged.",
-      "phrase": "The same cell, two provenances. On fabricated variants the false-alert rate reads ten times friendlier than on written pairs: blended, the synthetic half would flatter the tool. It is measured apart, labelled synthetic, and stays apart.",
-      "a": "75<small>%</small>",
-      "leg_a": "false alerts at the frontier cell, measured on the 60 written pairs, interval [63&#8211;84]",
-      "b": "7.8<small>%</small>",
-      "leg_b": "the same cell on 360 fabricated variants, interval [5&#8211;11]: kept apart precisely because it flatters",
+      "phrase": "The same cell, two provenances. On fabricated variants the false-alert rate reads far friendlier than on written pairs: blended, the synthetic half would flatter the tool. It is measured apart, labelled synthetic, and stays apart.",
+      "a": "76.7<small>%</small>",
+      "leg_a": "false alerts at the frontier cell, measured on the 60 written pairs, interval [65&#8211;86]",
+      "b": "17.2<small>%</small>",
+      "leg_b": "the same cell on 360 fabricated variants, interval [14&#8211;21]: kept apart precisely because it flatters",
       "cote": "never blended",
       "source": {
-        "a": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "fauxPositifs" },
-        "b": { "table": "synthetic", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "fauxPositifs" }
+        "a": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.56", "mesure": "fauxPositifs" },
+        "b": { "table": "synthetic", "palier": "jaro-winkler", "seuil": "0.56", "mesure": "fauxPositifs" }
       },
       "annotations": [
         [0.295, 0.40, 0.12, 0.22, "written pairs: the measured half"],

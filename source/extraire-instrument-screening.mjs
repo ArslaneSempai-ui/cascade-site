@@ -28,7 +28,9 @@ const ICI = fileURLToPath(new URL(".", import.meta.url));
 const { scelleIntact } = await import(join(OUTIL, "src", "empreinte.ts"));
 const { rate } = await import(join(OUTIL, "src", "interval.ts"));
 const { SEUILS, PALIERS } = await import(join(OUTIL, "src", "matcher.ts"));
-const { registre } = await import(join(OUTIL, "src", "matchers", "index.ts"));
+// registreComplet : les sept paliers quand les poids de l'embedding sont là (le relevé
+// public est mesuré avec) ; registre() reste les six qu'un client mesure sans réchauffer
+const { registreComplet: registre } = await import(join(OUTIL, "src", "matchers", "index.ts"));
 
 const releve = JSON.parse(readFileSync(join(OUTIL, "releve-public.json"), "utf8"));
 

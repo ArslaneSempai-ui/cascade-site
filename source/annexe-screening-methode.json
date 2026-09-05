@@ -19,7 +19,7 @@
             "n": "says: already sealed, and the seal matches"
           }
         ],
-        "refs": "src/measure.ts:190 &#183; src/measure.ts:123"
+        "refs": "src/measure.ts:197 &#183; src/measure.ts:123"
       }
     },
     {
@@ -73,7 +73,7 @@
             "n": "the matcher contract cases pin the grid and the bound"
           }
         ],
-        "refs": "src/matcher.ts:34 &#183; src/matcher.ts:37 &#183; src/measure.ts:106"
+        "refs": "src/matcher.ts:43 &#183; src/matcher.ts:46 &#183; src/measure.ts:106"
       }
     }
   ]

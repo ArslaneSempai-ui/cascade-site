@@ -19,7 +19,7 @@
             "n": "fails if any module but the downloader touches the network"
           }
         ],
-        "refs": "src/frontiere.test.ts:20 &#183; src/frontiere.test.ts:41"
+        "refs": "src/frontiere.test.ts:20 &#183; src/frontiere.test.ts:45"
       }
     },
     {

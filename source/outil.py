@@ -122,7 +122,7 @@ OUTILS = {
         "depot": "https://github.com/ArslaneSempai-ui/cascade-screening",
         "page_hero": "HERO-SCREENING.html",
         "etiquette": "Screening &#183; name matching",
-        "pitch": "Six matchers, from strict equality to character n&#8209;grams, measured on your own alert history.",
+        "pitch": "Seven matchers, from strict equality to a multilingual embedding, measured on your own alert history.",
         "robot_rideau": "robot-rubis-agrippe.webp",
         "vif": "#d64a5c",
         "nuit": ("#33191f", "#241217", "#180b0f"),      # la nuit rubis de NUIT_RUBIS
