@@ -341,8 +341,25 @@ CSS = '''
     margin-top:8px;padding:10px 16px;border-radius:8px;transition:background .2s,color .2s;
     border:1px solid color-mix(in srgb,var(--sur-vert) 30%,transparent)}
   a.pan:hover .p-ouvrir,a.pan:focus-visible .p-ouvrir{background:var(--sur-vert);color:var(--nuit-c)}
-  a.pan:hover img{transform:translateY(-6px)}
   .pan[aria-current] .p-ouvrir{border-style:dashed;color:var(--sur-vert-pale)}
+  /* le survol d'un pan (Arslane, 6/09) : un halo de SA couleur qui suit la souris,
+     le robot qui se soulève, la question qui monte d'un souffle, l'autre pan qui
+     s'assombrit ; au clavier, le focus donne le même halo, centré */
+  .pan{position:relative;isolation:isolate}
+  .pan::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;z-index:0;
+    transition:opacity .4s var(--montee);
+    background:radial-gradient(560px 460px at var(--mx,50%) var(--my,42%),
+      color-mix(in srgb,var(--pan-vif) 26%,transparent),transparent 70%)}
+  .pan>*{position:relative;z-index:1}
+  a.pan:hover::before,a.pan:focus-visible::before{opacity:1}
+  a.pan:hover{box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--pan-vif) 60%,transparent)}
+  a.pan:hover img{transform:translateY(-12px) scale(1.04)}
+  a.pan:hover .p-h{transform:translateY(-4px)}
+  a.pan:hover .p-eti{text-shadow:0 0 18px color-mix(in srgb,var(--pan-vif) 80%,transparent)}
+  /* l'autre pan s'assombrit (un filtre, pas une opacité : en transparence il
+     laissait voir le parchemin et virait au gris délavé, vu sur capture) */
+  .pan{transition:transform .8s var(--montee),opacity .8s var(--montee),filter .45s var(--montee)}
+  .rideau:has(a.pan:hover) .pan:not(:hover){filter:brightness(.72) saturate(.85)}
   /* l'entrée et l'ouverture du rideau (Arslane, 6/09 : « le slide de l'écran 1 à 2
      n'a rien de spécial ») : les pans arrivent des deux côtés quand le rideau
      entre dans la vue, et s'écartent au clic avant d'ouvrir l'outil ; sans script,
@@ -612,6 +629,14 @@ JS = '''
       io.observe(rideau);
     } else {
       rideau.classList.add("vu");
+    }
+    // le halo du survol suit la souris dans le pan (mouvement réduit : il reste centré)
+    if (!reduit) {
+      rideau.querySelectorAll("a.pan").forEach((pan) => pan.addEventListener("pointermove", (ev) => {
+        const r = pan.getBoundingClientRect();
+        pan.style.setProperty("--mx", (ev.clientX - r.left) + "px");
+        pan.style.setProperty("--my", (ev.clientY - r.top) + "px");
+      }, {passive: true}));
     }
     rideau.querySelectorAll("a.pan").forEach((pan) => pan.addEventListener("click", (ev) => {
       if (reduit || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0) return;

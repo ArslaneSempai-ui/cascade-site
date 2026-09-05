@@ -105,7 +105,7 @@ OUTILS = {
         "page_hero": "HERO.html",
         "etiquette": "Routing &#183; extraction",
         "pitch": "Seven tiers, from a regular expression to a human, measured on sealed records.",
-        "robot_rideau": "robot-agrippe.webp",
+        "robot_rideau": "robot-salut.webp",           # il salue (etats/robots-rideau.py)
         "vif": "#57b184",
         "nuit": ("#1b3229", "#14251e", "#0e1a15"),
     },
@@ -125,7 +125,7 @@ OUTILS = {
         "page_hero": "HERO-SCREENING.html",
         "etiquette": "Screening &#183; name matching",
         "pitch": "Seven matchers, from strict equality to a multilingual embedding, measured on your own alert history.",
-        "robot_rideau": "robot-rubis-agrippe.webp",
+        "robot_rideau": "robot-rubis-curieux.webp",   # il se penche, curieux (etats/robots-rideau.py)
         # l'affiche du film : la plaque 3D (etats/affiche-plaque.py) + la carte des deux
         # chiffres de la frontière lus dans le relevé (etats/affiche-composer.py)
         "affiche": "affiche-screening.jpg",

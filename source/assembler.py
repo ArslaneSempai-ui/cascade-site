@@ -292,11 +292,9 @@ for w in (MAQ / "rendus" / "etats").glob("objet-*.webp"):
     shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
 for aff in (MAQ / "rendus").glob("affiche-*.jpg"):        # une affiche par outil filmé
     shutil.copy(aff, DOCS / "rendus" / aff.name)
-for rb in ("robot-penche.webp", "robot-agrippe.webp"):
-    shutil.copy(MAQ / "rendus" / rb, DOCS / "rendus" / rb)
+for rb in (MAQ / "rendus").glob("robot-*.webp"):          # les robots de toutes les couleurs et poses
+    shutil.copy(rb, DOCS / "rendus" / rb.name)
 if SCREENING_EMISES:
-    for rb in ("robot-rubis-penche.webp", "robot-rubis-agrippe.webp"):
-        shutil.copy(MAQ / "rendus" / rb, DOCS / "rendus" / rb)
     for w in (MAQ / "rendus" / "etats").glob("tamis-*.webp"):
         shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
 shutil.copy(MAQ / "releve.json", DOCS / "releve.json")

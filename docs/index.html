@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-lWojdVDpBr0CujUaINEg5OIseWB+o7EaU203+NFkFQE=' 'unsafe-hashes' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-UspTkI48fmp0D6STsvkxOoG3equ8Q2WJuP2BpB3e8Cs='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-AaYLrYH5YZ8q16e2nmo0iJ7O9DF1GNaNbfP3f1d4G0Q=' 'unsafe-hashes' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-6Y7wzdhmCgiA/FAJEGnNQSc3GnhwEZx2mbg/lieKa1E='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; measured instruments for compliance</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/">
@@ -124,8 +124,25 @@
     margin-top:8px;padding:10px 16px;border-radius:8px;transition:background .2s,color .2s;
     border:1px solid color-mix(in srgb,var(--sur-vert) 30%,transparent)}
   a.pan:hover .p-ouvrir,a.pan:focus-visible .p-ouvrir{background:var(--sur-vert);color:var(--nuit-c)}
-  a.pan:hover img{transform:translateY(-6px)}
   .pan[aria-current] .p-ouvrir{border-style:dashed;color:var(--sur-vert-pale)}
+  /* le survol d'un pan (Arslane, 6/09) : un halo de SA couleur qui suit la souris,
+     le robot qui se soulève, la question qui monte d'un souffle, l'autre pan qui
+     s'assombrit ; au clavier, le focus donne le même halo, centré */
+  .pan{position:relative;isolation:isolate}
+  .pan::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;z-index:0;
+    transition:opacity .4s var(--montee);
+    background:radial-gradient(560px 460px at var(--mx,50%) var(--my,42%),
+      color-mix(in srgb,var(--pan-vif) 26%,transparent),transparent 70%)}
+  .pan>*{position:relative;z-index:1}
+  a.pan:hover::before,a.pan:focus-visible::before{opacity:1}
+  a.pan:hover{box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--pan-vif) 60%,transparent)}
+  a.pan:hover img{transform:translateY(-12px) scale(1.04)}
+  a.pan:hover .p-h{transform:translateY(-4px)}
+  a.pan:hover .p-eti{text-shadow:0 0 18px color-mix(in srgb,var(--pan-vif) 80%,transparent)}
+  /* l'autre pan s'assombrit (un filtre, pas une opacité : en transparence il
+     laissait voir le parchemin et virait au gris délavé, vu sur capture) */
+  .pan{transition:transform .8s var(--montee),opacity .8s var(--montee),filter .45s var(--montee)}
+  .rideau:has(a.pan:hover) .pan:not(:hover){filter:brightness(.72) saturate(.85)}
   /* l'entrée et l'ouverture du rideau (Arslane, 6/09 : « le slide de l'écran 1 à 2
      n'a rien de spécial ») : les pans arrivent des deux côtés quand le rideau
      entre dans la vue, et s'écartent au clic avant d'ouvrir l'outil ; sans script,
@@ -411,8 +428,8 @@
 
 <section class="rideau" id="tools" aria-label="The instruments">
   <span class="rideau-titre">Cascade &#183; two instruments, one method</span>
-  <a class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" href="routing/index.html#tools"><span class="p-eti">Routing &#183; extraction</span><img src="rendus/robot-agrippe.webp" alt=""><span class="p-h">Where should the next dollar&nbsp;go?</span><span class="p-d">Seven tiers, from a regular expression to a human, measured on sealed records.</span><span class="p-ouvrir">Open Routing <span aria-hidden="true">&#8594;</span></span></a>
-  <a class="pan cote-d" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" href="screening/index.html#tools"><span class="p-eti">Screening &#183; name matching</span><img src="rendus/robot-rubis-agrippe.webp" alt=""><span class="p-h">Which matcher suffices, at which threshold?</span><span class="p-d">Seven matchers, from strict equality to a multilingual embedding, measured on your own alert history.</span><span class="p-ouvrir">Open Screening <span aria-hidden="true">&#8594;</span></span></a>
+  <a class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" href="routing/index.html#tools"><span class="p-eti">Routing &#183; extraction</span><img src="rendus/robot-salut.webp" alt=""><span class="p-h">Where should the next dollar&nbsp;go?</span><span class="p-d">Seven tiers, from a regular expression to a human, measured on sealed records.</span><span class="p-ouvrir">Open Routing <span aria-hidden="true">&#8594;</span></span></a>
+  <a class="pan cote-d" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" href="screening/index.html#tools"><span class="p-eti">Screening &#183; name matching</span><img src="rendus/robot-rubis-curieux.webp" alt=""><span class="p-h">Which matcher suffices, at which threshold?</span><span class="p-d">Seven matchers, from strict equality to a multilingual embedding, measured on your own alert history.</span><span class="p-ouvrir">Open Screening <span aria-hidden="true">&#8594;</span></span></a>
 </section>
 
 <section class="menus"><div class="colonne">
@@ -453,6 +470,14 @@
       io.observe(rideau);
     } else {
       rideau.classList.add("vu");
+    }
+    // le halo du survol suit la souris dans le pan (mouvement réduit : il reste centré)
+    if (!reduit) {
+      rideau.querySelectorAll("a.pan").forEach((pan) => pan.addEventListener("pointermove", (ev) => {
+        const r = pan.getBoundingClientRect();
+        pan.style.setProperty("--mx", (ev.clientX - r.left) + "px");
+        pan.style.setProperty("--my", (ev.clientY - r.top) + "px");
+      }, {passive: true}));
     }
     rideau.querySelectorAll("a.pan").forEach((pan) => pan.addEventListener("click", (ev) => {
       if (reduit || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0) return;
