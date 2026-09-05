@@ -507,8 +507,9 @@ for page in PLOMBERIE["pages"]:
 # quand ils existent (l'absence est dite, jamais improvisée), avec la barre et
 # le pied de l'outil rouge : les liens vers les pages de la MAISON sortent du
 # sous-dossier par outil.lien, les liens entre pages rouges restent nus.
-# L'objet 3D propre à chaque annexe rouge n'est pas encore rendu (look-dev du
-# chef, après la tour) : l'objet vert sert, et son alt continue de dire vrai.
+# L'objet 3D de chaque annexe rouge est le même objet que le vert, rendu par
+# etats/objets_v2.py avec --accent "#a3182b" (la pierre polie du robot rouge) :
+# seule la couleur de l'idée change avec l'outil, le monde reste celui de la maison.
 from outil import OUTILS, PALETTE_VERTE, PALETTE_RUBIS, lire_releve_scelle, lien
 
 RUBIS = OUTILS["screening"]
@@ -516,11 +517,15 @@ PAGES_ROUGES = [
     {"nav": "Method and reproducibility", "json": "annexe-screening-methode.json",
      "html": "ANNEXE-SCREENING-METHODE.html", "prod": "screening/method.html",
      "titre_onglet": "Cascade Screening &#183; method",
-     "objet": "rendus/etats/objet-methode.webp", "alt": PAGES[0]["alt"]},
+     "objet": "rendus/etats/objet-screening-methode.webp",
+     "alt": "A matte aluminium balance with two pans at exactly the same height; "
+            "the right pan is the tool's deep ruby."},
     {"nav": "Security and data handling", "json": "annexe-screening-securite.json",
      "html": "ANNEXE-SCREENING-SECURITE.html", "prod": "screening/security.html",
      "titre_onglet": "Cascade Screening &#183; security",
-     "objet": "rendus/etats/objet-securite.webp", "alt": PAGES[1]["alt"]},
+     "objet": "rendus/etats/objet-screening-securite.webp",
+     "alt": "A matte aluminium padlock; its shackle, closed, is the same deep ruby "
+            "as the tool's accents."},
 ]
 
 

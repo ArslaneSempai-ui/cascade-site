@@ -312,13 +312,15 @@ PAGE = f'''<!doctype html><html lang="en">
 <script>document.documentElement.classList.add("js")</script>
 <style>{CSS}</style>
 <header class="barre">
-  <a class="marque" href="../HERO.html">CASCADE <small>&#183; Screening</small></a>
+  <a class="marque" href="../HERO.html">CASCADE</a>
   <nav aria-label="Site">
     <a href="INSTRUMENT-SCREENING.html" aria-current="page">Instrument</a>
     <a href="../ENGAGEMENT.html">Pricing</a>
-    <a href="{DEPOT_URL}">Repository</a>
+    <a href="ANNEXE-SCREENING-METHODE.html">Method</a>
+    <a href="ANNEXE-SCREENING-SECURITE.html">Security</a>
+    <a href="../CONTACT.html">Contact</a>
   </nav>
-  <span class="sceau">sealed {D["provenance"]["empreinte"]}</span>
+  <span class="sceau">seal {D["provenance"]["empreinte"]} &#183; measured, then frozen</span>
 </header>
 
 <section class="tete">

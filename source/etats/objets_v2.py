@@ -38,6 +38,10 @@ ap.add_argument("--objet", required=True,
 ap.add_argument("--sortie", default="/tmp/objet")
 ap.add_argument("--qualite", default="apercu", choices=["apercu", "livraison"])
 ap.add_argument("--large", type=int, default=700)
+# l'élément qui porte l'idée de la page : vert pour l'outil vert, rubis (#a3182b,
+# la pierre polie du robot rouge) pour les annexes de Screening ; même objet,
+# même monde, seule la couleur de l'idée change avec l'outil
+ap.add_argument("--accent", default="#2e9065")
 args = ap.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
 APERCU = args.qualite == "apercu"
 
@@ -137,7 +141,7 @@ softbox("rebond", 4.0, 180, (-3.4, -1.0, 0.6), (0.90, 0.94, 1.0))
 softbox("lisere", 3.0, 320, (-1.2, 3.2, 2.2), (1.0, 1.0, 1.0))
 
 M_GRIS = matiere("m_gris", srgb("#8d95a1"), rugosite=0.30, metal=0.92)
-M_VERT = matiere("m_vert", srgb("#2e9065"), rugosite=0.30, metal=0.75)
+M_VERT = matiere("m_vert", srgb(args.accent), rugosite=0.30, metal=0.75)
 M_SOMBRE = matiere("m_sombre", srgb("#23261f"), rugosite=0.45, metal=0.30)
 M_PAPIER = matiere("m_papier", srgb("#d8d5c9"), rugosite=0.55, metal=0.05)
 
