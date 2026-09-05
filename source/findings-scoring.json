@@ -1,5 +1,5 @@
 {
-  "_": "The five findings of the amethyst (Scoring) hero, in the house keys. Provenance: every figure in a/b is a cell of ~/Documents/cascade-scoring/releve-public.json at seal `sceau`; addresses in `source` ({table, palier, seuil, mesure}, optional `champ` naming which Rate field is displayed, or {table, compte}); re-verified mechanically at the displayed precision. Finding 01 states a deliberate design fact the record proves: geography scores zero on both sides because every written dossier resides in ordinary Union countries and no official country list was copied into the data, so risk lives in declared fields, not passports. Finding 04 shows the amethyst's reversal: here the generated variants are HARSHER than the written dossiers on the best factor, which is exactly why separation is a rule and not a convenience. `annotations` are provisional fractions of the shelving tray (eight bays, registry order, amethyst pile = recall bound, ivory pile = false alerts, brass shelf = floor): the renders are due within the hour, and texts plus fractions will be rewritten against the delivered frames, 60 characters or fewer each.",
+  "_": "The five findings of the amethyst (Scoring) hero, in the house keys. Provenance: every figure in a/b is a cell of ~/Documents/cascade-scoring/releve-public.json at seal `sceau`; addresses in `source` ({table, palier, seuil, mesure}, optional `champ` naming which Rate field is displayed, or {table, compte}); re-verified mechanically at the displayed precision. Finding 01 states a deliberate design fact the record proves: geography scores zero on both sides because every written dossier resides in ordinary Union countries and no official country list was copied into the data, so risk lives in declared fields, not passports. Finding 04 shows the amethyst's reversal: here the generated variants are HARSHER than the written dossiers on the best factor, which is exactly why separation is a rule and not a convenience. `annotations` are provisional fractions of the shelving tray (eight bays, registry order, amethyst pile = recall bound, ivory pile = false alerts, brass shelf = floor): texts and fractions were measured against the delivered frames (rayonnage-reel/parchemin-01..05). One answer for the re-render: state 2 lights the tenure bay, but finding 02 is about PRODUCT: light bay three (the labels already anchor it, so they hold as-is once the light moves). State 4 keeps its own framing, the two-bay close-up.",
   "sceau": "f51ff169dbc4fd15",
   "findings": [
     {
@@ -12,12 +12,34 @@
       "leg_b": "false alerts on the 42 maintained twins, interval [0&#8211;8]: nothing to alarm on either",
       "cote": "blind by design, said",
       "source": {
-        "a": { "table": "authored", "palier": "geography", "seuil": "0.50", "mesure": "rappel" },
-        "b": { "table": "authored", "palier": "geography", "seuil": "0.50", "mesure": "fauxPositifs" }
+        "a": {
+          "table": "authored",
+          "palier": "geography",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        },
+        "b": {
+          "table": "authored",
+          "palier": "geography",
+          "seuil": "0.50",
+          "mesure": "fauxPositifs"
+        }
       },
       "annotations": [
-        [0.2, 0.4, 0.08, 0.2, ""],
-        [0.5, 0.6, 0.8, 0.75, ""]
+        [
+          0.145,
+          0.45,
+          0.06,
+          0.2,
+          "the empty bay: geography sees nothing in this book"
+        ],
+        [
+          0.15,
+          0.55,
+          0.06,
+          0.72,
+          "every dossier lives in ordinary countries: no list"
+        ]
       ]
     },
     {
@@ -30,12 +52,34 @@
       "leg_b": "false alerts on the 42 maintained twins, interval [13&#8211;39]: the price of the signal",
       "cote": "one twin in four alarms",
       "source": {
-        "a": { "table": "authored", "palier": "product", "seuil": "0.50", "mesure": "rappel" },
-        "b": { "table": "authored", "palier": "product", "seuil": "0.50", "mesure": "fauxPositifs" }
+        "a": {
+          "table": "authored",
+          "palier": "product",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        },
+        "b": {
+          "table": "authored",
+          "palier": "product",
+          "seuil": "0.50",
+          "mesure": "fauxPositifs"
+        }
       },
       "annotations": [
-        [0.4, 0.4, 0.12, 0.2, ""],
-        [0.45, 0.6, 0.15, 0.78, ""]
+        [
+          0.315,
+          0.38,
+          0.08,
+          0.14,
+          "the tallest pile: products carry the signal"
+        ],
+        [
+          0.365,
+          0.5,
+          0.08,
+          0.7,
+          "and its ivory shadow: one twin in four reviewed"
+        ]
       ]
     },
     {
@@ -48,12 +92,36 @@
       "leg_b": "the cleanest factor's bound: behaviour at 0.50, zero false alerts, interval [52&#8211;79]",
       "cote": "the floor stays unmet",
       "source": {
-        "a": { "table": "authored", "palier": "product", "seuil": "0.50", "mesure": "rappel", "champ": "bas" },
-        "b": { "table": "authored", "palier": "behaviour", "seuil": "0.50", "mesure": "rappel", "champ": "bas" }
+        "a": {
+          "table": "authored",
+          "palier": "product",
+          "seuil": "0.50",
+          "mesure": "rappel",
+          "champ": "bas"
+        },
+        "b": {
+          "table": "authored",
+          "palier": "behaviour",
+          "seuil": "0.50",
+          "mesure": "rappel",
+          "champ": "bas"
+        }
       },
       "annotations": [
-        [0.5, 0.45, 0.14, 0.25, ""],
-        [0.65, 0.5, 0.85, 0.3, ""]
+        [
+          0.32,
+          0.3,
+          0.6,
+          0.12,
+          "the brass shelf at ninety: no pile reaches it"
+        ],
+        [
+          0.615,
+          0.42,
+          0.78,
+          0.82,
+          "behaviour: clean, not one ivory box, half seen"
+        ]
       ]
     },
     {
@@ -66,12 +134,34 @@
       "leg_b": "the same cell on 126 generated variants, interval [71&#8211;86]: harsher, and still kept apart",
       "cote": "a rule, not a convenience",
       "source": {
-        "a": { "table": "authored", "palier": "product", "seuil": "0.50", "mesure": "rappel" },
-        "b": { "table": "synthetic", "palier": "product", "seuil": "0.50", "mesure": "rappel" }
+        "a": {
+          "table": "authored",
+          "palier": "product",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        },
+        "b": {
+          "table": "synthetic",
+          "palier": "product",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        }
       },
       "annotations": [
-        [0.35, 0.45, 0.1, 0.25, ""],
-        [0.6, 0.45, 0.85, 0.6, ""]
+        [
+          0.4,
+          0.45,
+          0.1,
+          0.2,
+          "written dossiers: the bound stops under the shelf"
+        ],
+        [
+          0.55,
+          0.47,
+          0.8,
+          0.2,
+          "the variants do worse, and still stay apart"
+        ]
       ]
     },
     {
@@ -84,12 +174,30 @@
       "leg_b": "generated escalated variants behind the synthetic half, natures preserved by construction",
       "cote": "yours replace both",
       "source": {
-        "a": { "table": "authored", "compte": "nEscalated" },
-        "b": { "table": "synthetic", "compte": "nEscalated" }
+        "a": {
+          "table": "authored",
+          "compte": "nEscalated"
+        },
+        "b": {
+          "table": "synthetic",
+          "compte": "nEscalated"
+        }
       },
       "annotations": [
-        [0.5, 0.3, 0.15, 0.15, ""],
-        [0.7, 0.7, 0.85, 0.85, ""]
+        [
+          0.795,
+          0.58,
+          0.66,
+          0.14,
+          "an ivory archive box: your book goes here"
+        ],
+        [
+          0.8,
+          0.68,
+          0.8,
+          0.84,
+          "two files replay the grid; nothing leaves"
+        ]
       ]
     }
   ]
