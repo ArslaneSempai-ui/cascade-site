@@ -1,16 +1,16 @@
 {
-  "_": "The five findings of the onyx (Dossier) hero, filled from the sealed record ~/Documents/cascade-dossier/releve-public.json at seal `sceau`. Address grammar in `source`, resolved against that record: {cle, champ} reads releve[cle][champ]; {compte-verdicts: {controle, tenu}} counts verdicts with that controle and tenu across questions[*].verdicts; {compte-questions: {etat}} counts questions with that etat. Every displayed figure was derived from the record at writing time and re-verified mechanically (hardened citation script, displayed-precision rule). The figures tell the record's own day-one truth: coverage 3 of 4 with the fourth named missing, two seals recomputed, zero signatures verifiable yet and the Dossier says so, one report present that cannot even state its measurement day. `annotations` were measured and written against the five delivered renders (escalier-reel/parchemin-01..05): each label describes what its own frame shows. Note for the merge: the themes of states 3 (empty SIGNED step) and 4 (freshness rings) sit one step off findings 03 (freshness) and 04 (coherence); the labels follow the frames, and the pairing is the chef's call at re-render time.",
+  "_": "The five findings of the onyx (Dossier) hero, filled from the sealed record ~/Documents/cascade-dossier/releve-public.json at seal `sceau`. Address grammar in `source`, resolved against that record: {cle, champ} reads releve[cle][champ]; {compte-verdicts: {controle, tenu}} counts verdicts with that controle and tenu across questions[*].verdicts; {compte-questions: {etat}} counts questions with that etat. Every displayed figure was derived from the record at writing time and re-verified mechanically (hardened citation script, displayed-precision rule). The figures tell the record's truth after A-L4 sealed the scoring: coverage 4 of 4, three seals recomputed, still zero signatures verifiable and the Dossier says so with one refusal per report, and one report present that cannot even state its measurement day, named as unjudgeable. `annotations` were measured and written against the five delivered renders (escalier-reel/parchemin-01..05): each label describes what its own frame shows. Note for the merge: the themes of states 3 (empty SIGNED step) and 4 (freshness rings) sit one step off findings 03 (freshness) and 04 (coherence); the labels follow the frames, and the pairing is the chef's call at re-render time.",
   "pret": true,
-  "sceau": "2497928ec273023c",
+  "sceau": "b192d33e9c4f2088",
   "findings": [
     {
       "num": "01",
       "titre": "Four questions, one piece.",
-      "phrase": "Each tool leaves a sealed report at your desk. A reviewer does not want four files: the Dossier reads them all and answers as one piece, and on day one it says three of the four questions have a report, naming the fourth as missing rather than hiding it.",
-      "a": "3",
-      "leg_a": "questions of the chain with a report present, of the 4 the suite asks: the missing one is named",
-      "b": "2",
-      "leg_b": "reports whose seal recomputes and matches, of the 3 read",
+      "phrase": "Each tool leaves a sealed report at your desk. A reviewer does not want four files: the Dossier reads them all and answers as one piece. All four questions now have a report, and one of them still cannot act as one: named, not excused.",
+      "a": "4",
+      "leg_a": "questions of the chain with a report present, of the 4 the suite asks",
+      "b": "3",
+      "leg_b": "reports whose seal recomputes and matches: the fourth cannot even state its day",
       "cote": "the keystone piece",
       "source": {
         "a": {
@@ -44,8 +44,8 @@
     {
       "num": "02",
       "titre": "A seal is checked, not trusted.",
-      "phrase": "A seal is recomputed before anything else is believed, and a signature is verified, never assumed. Today the Dossier finds two seals that match, and zero verifiable signatures across the suite: it prints the zero instead of waving it through, because nothing is called valid unverified.",
-      "a": "2",
+      "phrase": "A seal is recomputed before anything else is believed, and a signature is verified, never assumed. Today the Dossier finds three seals that match, and zero verifiable signatures across the suite: it prints the zero instead of waving it through, because nothing is called valid unverified.",
+      "a": "3",
       "leg_a": "seals recomputed and matching, on the reports read",
       "b": "0",
       "leg_b": "public-record signatures verifiable today, and the Dossier says so, one refusal per report",
@@ -85,7 +85,7 @@
       "num": "03",
       "titre": "A measurement ages. The Dossier says by how much.",
       "phrase": "Fresh, due, or stale: every measurement is dated against the rhythm you declare. And a report that cannot even state its measurement day is named for exactly that: age you cannot judge is not age zero.",
-      "a": "2",
+      "a": "3",
       "leg_a": "measurements fresh under the declared rhythm at the day of this Dossier",
       "b": "1",
       "leg_b": "report whose freshness cannot be judged at all: it carries no measurement day",
@@ -125,7 +125,7 @@
       "num": "04",
       "titre": "One dataset, one seal: incoherence is named.",
       "phrase": "The same dataset cannot carry two seals, and a report from an unknown tool version is named rather than guessed. Coherence is a check the Dossier runs across everything it reads, and its verdicts say what there was to cross-check, not more.",
-      "a": "3",
+      "a": "4",
       "leg_a": "coherence checks passed, each report alone on its question so far, and the verdict says so",
       "b": "5",
       "leg_b": "controls the Dossier runs on every report: present, sealed, signed, fresh, consistent",
