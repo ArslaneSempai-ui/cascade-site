@@ -1,0 +1,101 @@
+{
+  "_": "Security page of the red tool (Screening). Same shape as annexe-securite.json (green). Every refs points at a real line of ~/Documents/cascade-screening at main c0ed214; Portfolio: the citation guard must learn the second repository. The object render does not exist yet (Chef's look-dev).",
+  "objet": "rendus/etats/objet-screening-securite.webp",
+  "titre": "The lists come down. <span class=\"deux\">Nothing goes up.</span>",
+  "lede": "Screening handles the most sensitive strings a bank holds: the names it checks. This page says what touches the network, what never does, and how both are enforced by tests rather than promised by sentences.",
+  "sections": [
+    {
+      "h2": "One file may touch the network, and a test walks all the others",
+      "html": [
+        "<p>Exactly one module is allowed to reach the network: the downloader of the public sanctions lists. The permission is a <b>named allowlist with its reason</b>, and a structural test walks every source file for network sites (fetch, node:http and kin, WebSockets) and <b>fails the suite</b> if any other module grows one. The detector carries its own witness: it first proves it can see a planted call, so its zero means looked and found none.</p>",
+        "<p>What the one allowed file does is one-directional: the list comes down, nothing goes up. No name you screen exists yet at that point; the downloader moves public documents only.</p>"
+      ],
+      "verif": {
+        "t": "Verify the frontier",
+        "p": "Run the suite. The walk fails if a network site appears outside the allowlist.",
+        "cmd": [
+          {
+            "c": "npm test",
+            "n": "fails if any module but the downloader touches the network"
+          }
+        ],
+        "refs": "src/frontiere.test.ts:20 &#183; src/frontiere.test.ts:41"
+      }
+    },
+    {
+      "h2": "The lists are fingerprinted, and a changed file is refused",
+      "html": [
+        "<p>npm run listes -- --fetch downloads OFAC SDN and the UN consolidated list, and writes a committed manifest: source, URL, date, sha256, byte and entry counts. The data itself stays out of git. When the tool later reads a list from disk, it recomputes the fingerprint and <b>refuses a file that no longer matches the manifest</b>, naming both fingerprints: screening against a list that is not the one recorded certifies nothing.</p>",
+        "<p>OFAC announces its own record count inside the file, and the parser is checked against it on every fetch; the UN address is the one the Security Council page publishes. Without the flag, npm run listes reports what is on disk and touches nothing.</p>"
+      ],
+      "verif": {
+        "t": "Verify without the network",
+        "p": "The no-flag form reads the disk against the manifest and says so.",
+        "cmd": [
+          {
+            "c": "npm run listes",
+            "n": "reports date, fingerprint state and entry counts; no network touched"
+          }
+        ],
+        "refs": "src/listes.ts:238 &#183; src/listes.ts:262"
+      }
+    },
+    {
+      "h2": "The EU list, honestly unavailable today",
+      "html": [
+        "<p>The EU consolidated financial sanctions list is served through a token-gated endpoint. On the day this record was built, every file endpoint answered an error with the generic public token the Commission's own RSS still advertises, so the manifest records the fact with its date <b>instead of hiding the source</b>: which list, which URL, which error, and the way out.</p>",
+        "<p>The way out is one environment variable: a personal EU Login token through CASCADE_EU_TOKEN, same URL, fetch again. Until then the tool screens against OFAC and the UN and the manifest says exactly that; a report that cited three lists while holding two would be the kind of sentence this suite exists to prevent.</p>"
+      ],
+      "verif": {
+        "t": "Verify the manifest entry",
+        "p": "The committed manifest carries the EU line, its error and its issue.",
+        "cmd": [
+          {
+            "c": "python3 -c \"import json; l=[x for x in json.load(open('listes-manifest.json'))['listes'] if x['source']=='EU'][0]; print(l['disponible'], l.get('erreur',''), l.get('issue','')[:40])\"",
+            "n": "prints the recorded unavailability and the way out"
+          }
+        ],
+        "refs": "src/listes.ts:70 &#183; src/listes.ts:319"
+      }
+    },
+    {
+      "h2": "Offline, everything still runs, and says so",
+      "html": [
+        "<p>CASCADE_OFFLINE=1 cuts the network for the whole tool. The suite passes under it, the measure runs under it, and the one command that needs the network refuses under it <b>by naming the flag and the way out</b> rather than failing into a stack trace. A refusal you can read is the difference between a tool that is off and a tool that is broken.</p>"
+      ],
+      "verif": {
+        "t": "Verify offline",
+        "p": "Cut the network and run everything.",
+        "cmd": [
+          {
+            "c": "CASCADE_OFFLINE=1 npm test",
+            "n": "the whole suite, network cut"
+          },
+          {
+            "c": "CASCADE_OFFLINE=1 npm run listes -- --fetch",
+            "n": "refuses, names the flag, names the way out, writes nothing"
+          }
+        ],
+        "refs": "src/listes.ts:319"
+      }
+    },
+    {
+      "h2": "Never a screened name in an output",
+      "html": [
+        "<p>When you measure on your own alert history, the outputs are written <b>next to your file and nowhere else</b>: a report and a sealed record holding counts, rates, intervals and verdicts by your alert id. Never a screened name, never a list entry you matched, never a path with your username. Your identifiers do survive as verdict keys, so choose them opaque: an id that is an account number stays an account number.</p>",
+        "<p>The screening itself runs on your machine against local lists; there is no callback, no telemetry, no account. The evaluation needs nothing from us but the repository.</p>"
+      ],
+      "verif": {
+        "t": "Verify on a decoy",
+        "p": "Measure a file with an invented name, then search the outputs for it.",
+        "cmd": [
+          {
+            "c": "grep -r \"the name you invented\" your-export-measured.md your-export-measured.json",
+            "n": "finds nothing; the outputs carry verdicts, not names"
+          }
+        ],
+        "refs": "src/your-alerts.ts:24 &#183; src/your-alerts.ts:395"
+      }
+    }
+  ]
+}

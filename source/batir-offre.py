@@ -174,6 +174,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <p class="c-qui">For deciding. Your records, your machine, nothing to sign.</p>
       <ul class="c-liste">
         <li>The whole tool, <b>on your own records</b></li>
+        <li>One plan, every Cascade tool: <b>Routing</b> and <b>Screening</b> alike</li>
         <li>Counter starts at first use, not download</li>
         <li>Results stay internal, no production</li>
         <li>No document leaves your network</li>
@@ -187,7 +188,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <p class="c-qui">For the file your reviewers will open. One campaign, one deliverable.</p>
       <p class="c-plus">everything in the evaluation, plus</p>
       <ul class="c-liste">
-        <li><b>Which tier suffices</b>, field by field</li>
+        <li><b>Which tier suffices</b>: field by field on Routing, tier and threshold on Screening</li>
         <li>Intervals, refusals under twenty observations</li>
         <li>A <b>sealed, signed report</b> your audit team verifies without us</li>
         <li>We never access your data</li>
@@ -202,6 +203,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <p class="c-plus">everything in the campaign, plus</p>
       <ul class="c-liste">
         <li>Commercial use for your own business</li>
+        <li>The same licence covers <b>every Cascade tool</b>: Routing and Screening, one paper</li>
         <li>The <b>licensed component</b>, not published</li>
         <li>Updates included for every paid term</li>
         <li><b>Recertify</b> on fresh records, re-sealed, on the rhythm you declare</li>
@@ -218,7 +220,8 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="pas">
     <div class="p-un"><span class="p-no">01</span><span class="p-t">Write</span>
       <p class="p-d"><a href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a>,
-        or open an issue on the public repository. Name the figure you care about.</p></div>
+        or open an issue on the public repository. Name the figure you care about,
+        and the tool it lives in: <b>Routing</b> or <b>Screening</b>.</p></div>
     <div class="p-un"><span class="p-no">02</span><span class="p-t">Evaluate</span>
       <p class="p-d">Thirty days on your records, at your desk. Nothing to install on our side,
         because there is no our side.</p></div>

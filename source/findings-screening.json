@@ -1,0 +1,96 @@
+{
+  "_": "The five findings of the red (Screening) hero, in the EXACT keys lot S1 declared (message of the night of 5 to 6). Provenance: every figure in a/b/cote is a cell of ~/Documents/cascade-screening/releve-public.json at seal `sceau`; S1 refuses to build if the record on disk no longer matches that seal, and this file names each figure's cell in `source` beside it: {table, palier, seuil, mesure} reads releve[table].tables[palier][seuil][mesure] ({succes, n, taux, bas, haut}); {table, compte} reads releve[table][compte]. `source` is provenance for reviewers and future guards; builders may ignore it. Intervals in legends are Wilson 95% from the same cells, en dash, never an em dash. The declared recall floor behind finding 03 is 0.95 on the measured rate: chosen, not measured, and said on the fiche. `annotations` are provisional fractions of the tray box (anchor x, anchor y, label x, label y, text): the sieve tower is not rendered yet; S1 passes them through.",
+  "sceau": "a1da60d0353bbd6f",
+  "findings": [
+    {
+      "num": "01",
+      "titre": "Exact never alarms. It also never finds.",
+      "phrase": "Exact match after normalisation raises no false alert on our written pairs, and that safety is the trap: it misses four true hits in five that your reviewers already confirmed.",
+      "a": "21.7<small>%</small>",
+      "leg_a": "recall on the 60 written match pairs, interval [13&#8211;34]: any threshold, exact is flat",
+      "b": "0<small>%</small>",
+      "leg_b": "false alerts on the 60 written non-match pairs, interval [0&#8211;6]",
+      "cote": "4 hits in 5 missed",
+      "source": {
+        "a": { "table": "authored", "palier": "exact", "seuil": "0.50", "mesure": "rappel" },
+        "b": { "table": "authored", "palier": "exact", "seuil": "0.50", "mesure": "fauxPositifs" }
+      },
+      "annotations": [
+        [0.50, 0.18, 0.16, 0.08, "the strict sieve: almost nothing passes"],
+        [0.72, 0.42, 0.84, 0.30, "true hits stopped with the noise"]
+      ]
+    },
+    {
+      "num": "02",
+      "titre": "Loose matching finds everyone. And everyone else.",
+      "phrase": "Drop the threshold and nothing escapes: every true hit is caught. So is most of everything unrelated, and every false alert is analyst time you pay for.",
+      "a": "100<small>%</small>",
+      "leg_a": "recall at the loosest threshold of the sweep, interval [94&#8211;100], 60 match pairs",
+      "b": "85<small>%</small>",
+      "leg_b": "false alerts at the same threshold, interval [74&#8211;92], 60 non-match pairs",
+      "cote": "every hit, drowned",
+      "source": {
+        "a": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.50", "mesure": "rappel" },
+        "b": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.50", "mesure": "fauxPositifs" }
+      },
+      "annotations": [
+        [0.50, 0.78, 0.16, 0.88, "the loose sieve: everything falls through"],
+        [0.78, 0.62, 0.86, 0.50, "noise outnumbers hits six to one"]
+      ]
+    },
+    {
+      "num": "03",
+      "titre": "The frontier lives in the middle.",
+      "phrase": "Hold the measured recall at 95 percent or better, a floor we declare rather than measure, and the sweep of every tier and threshold settles on one cell. Even there, three alerts in four are false.",
+      "a": "96.7<small>%</small>",
+      "leg_a": "recall of the retained cell, jaro&#8209;winkler at 0.60, interval [89&#8211;99]",
+      "b": "75<small>%</small>",
+      "leg_b": "false alerts at that same cell, interval [63&#8211;84]: the price of the floor",
+      "cote": "the frontier cell",
+      "source": {
+        "a": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "rappel" },
+        "b": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "fauxPositifs" }
+      },
+      "annotations": [
+        [0.50, 0.50, 0.14, 0.40, "the middle sieve holds the frontier"],
+        [0.80, 0.55, 0.88, 0.68, "certainty, paid in analyst hours"]
+      ]
+    },
+    {
+      "num": "04",
+      "titre": "Synthetic is declared. And never merged.",
+      "phrase": "The same cell, two provenances. On fabricated variants the false-alert rate reads ten times friendlier than on written pairs: blended, the synthetic half would flatter the tool. It is measured apart, labelled synthetic, and stays apart.",
+      "a": "75<small>%</small>",
+      "leg_a": "false alerts at the frontier cell, measured on the 60 written pairs, interval [63&#8211;84]",
+      "b": "7.8<small>%</small>",
+      "leg_b": "the same cell on 360 fabricated variants, interval [5&#8211;11]: kept apart precisely because it flatters",
+      "cote": "never blended",
+      "source": {
+        "a": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "fauxPositifs" },
+        "b": { "table": "synthetic", "palier": "jaro-winkler", "seuil": "0.60", "mesure": "fauxPositifs" }
+      },
+      "annotations": [
+        [0.34, 0.50, 0.10, 0.62, "written pairs: the measured half"],
+        [0.66, 0.50, 0.88, 0.62, "fabricated variants: labelled, apart"]
+      ]
+    },
+    {
+      "num": "05",
+      "titre": "Your history, your frontier.",
+      "phrase": "Every pair behind these findings is ours: written and declared, or fabricated and labelled. One command replays the whole sweep on your own alert history, on your machine. Nothing leaves it.",
+      "a": "60",
+      "leg_a": "written pairs behind the measured half, declared nature by nature",
+      "b": "360",
+      "leg_b": "fabricated variants behind the synthetic half, labelled and kept apart",
+      "cote": "yours replace both",
+      "source": {
+        "a": { "table": "authored", "compte": "nMatch" },
+        "b": { "table": "synthetic", "compte": "nMatch" }
+      },
+      "annotations": [
+        [0.50, 0.30, 0.16, 0.20, "our pairs end where your export begins"],
+        [0.62, 0.72, 0.86, 0.84, "measure:yours, next to your file"]
+      ]
+    }
+  ]
+}
