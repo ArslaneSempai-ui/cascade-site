@@ -8,9 +8,10 @@ réduite au format de l'affiche verte (1280x720, grain) : rendus/affiche-<outil>
 Les deux chiffres sont ceux de la cellule que la règle de l'outil retient (la
 frontière, finding 03) : rappel et fausses alertes, avec leurs cellules nommées.
 Aucun chiffre n'est tapé : la carte refuse si le relevé ne porte pas la cellule.
-La capture passe par scratchpad/capture.mjs (Chrome headless, port 9222) sur le
-serveur de source/ (port 8812) : la page est servie, jamais ouverte en file://,
-parce que les fontes de la maison sont chargées par feuille de style.
+La capture passe par etats/capturer-cdp.mjs (Chrome headless lancé avec
+--remote-debugging-port=9222) sur le serveur de source/ (python3 -m http.server 8812
+-d source) : la page est servie, jamais ouverte en file://, parce que les fontes de
+la maison sont chargées par feuille de style.
 """
 import json
 import pathlib
@@ -39,9 +40,9 @@ pc = lambda x: f"{x['taux'] * 100:.1f}".rstrip("0").rstrip(".")
 chiffre_a, chiffre_b = pc(a), pc(b)
 palier, seuil = cell_a["palier"], cell_a["seuil"]
 
-# les fontes de la maison, servies depuis source/fontes
-CAPTURE = pathlib.Path("/private/tmp/claude-501/-Users-arslanechr-Downloads-atlas-final-en-fr/"
-                       "9eaa6456-ea12-48c5-bd77-6279f40c9def/scratchpad/capture.mjs")
+# la capture native (Chrome headless, CDP) vit dans la chaîne : etats/capturer-cdp.mjs ;
+# les fontes de la maison sont servies depuis source/fontes par le serveur de source/
+CAPTURE = ICI / "capturer-cdp.mjs"
 plaque_web = ICI / f"affiche-{outil_id}-plaque.png"
 plaque_web.write_bytes(plaque.read_bytes())
 
