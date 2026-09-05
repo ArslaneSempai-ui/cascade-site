@@ -124,6 +124,11 @@ OUTILS = {
         "etiquette": "Screening &#183; name matching",
         "pitch": "Seven matchers, from strict equality to a multilingual embedding, measured on your own alert history.",
         "robot_rideau": "robot-rubis-agrippe.webp",
+        # l'affiche du film : la plaque 3D (etats/affiche-plaque.py) + la carte des deux
+        # chiffres de la frontière lus dans le relevé (etats/affiche-composer.py)
+        "affiche": "affiche-screening.jpg",
+        "affiche_alt": "The ruby Cascade robot, palms up, projecting the two rates of the "
+                       "frontier cell: recall on the left, false alerts on the right.",
         "vif": "#d64a5c",
         "nuit": ("#33191f", "#241217", "#180b0f"),      # la nuit rubis de NUIT_RUBIS
     },

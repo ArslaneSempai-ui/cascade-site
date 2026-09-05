@@ -684,15 +684,21 @@ def film_html(outil):
     en ligne. Sans vidéo rendue, l'affiche est COMPOSÉE (nuit de l'outil, robot
     penché, question) : aucune durée n'est affichée, parce qu'aucune n'est mesurée ;
     le vert, dont le film existe, garde son affiche rendue et ses 57 secondes."""
+    if outil.get("affiche"):
+        # l'affiche RENDUE, comme le vert : le robot de la couleur, paumes ouvertes,
+        # projetant deux chiffres du relevé (etats/affiche-plaque.py + affiche-composer.py)
+        visuel = (f'<img src="{lien(outil, "rendus/" + outil["affiche"])}" '
+                  f'alt="{outil["affiche_alt"]}">')
+    else:
+        visuel = (f'<span class="affiche" role="img" aria-label="The {outil["nom"]} robot, leaning in, beside the question the film answers">'
+                  f'<span class="af-t"><span class="af-eti">Cascade &#183; {outil["nom"]}</span><span class="af-q">{outil["question"]}</span></span>'
+                  f'<img src="{lien(outil, "rendus/" + outil["robots"][0])}" alt=""></span>')
     return f"""
 <section class="film"><div class="colonne">
   <h2 class="h2">Cascade {outil["nom"]}, on film.</h2>
   <p class="film-duree">The five findings, explained</p>
   <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film of Cascade {outil["nom"]}, opens on YouTube">
-    <span class="affiche" role="img" aria-label="The {outil["nom"]} robot, leaning in, beside the question the film answers">
-      <span class="af-t"><span class="af-eti">Cascade &#183; {outil["nom"]}</span><span class="af-q">{outil["question"]}</span></span>
-      <img src="{lien(outil, 'rendus/' + outil['robots'][0])}" alt="">
-    </span>
+    {visuel}
     <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
   </a>
   <div class="film-note">

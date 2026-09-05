@@ -283,7 +283,8 @@ shutil.copy(MAQ / "fontes" / "roboto-mono.woff2", DOCS / "fontes" / "roboto-mono
 (DOCS / "rendus" / "etats").mkdir(parents=True)
 for w in (MAQ / "rendus" / "etats").glob("objet-*.webp"):
     shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
-shutil.copy(MAQ / "rendus" / "affiche-film.jpg", DOCS / "rendus" / "affiche-film.jpg")
+for aff in (MAQ / "rendus").glob("affiche-*.jpg"):        # une affiche par outil filmé
+    shutil.copy(aff, DOCS / "rendus" / aff.name)
 for rb in ("robot-penche.webp", "robot-agrippe.webp"):
     shutil.copy(MAQ / "rendus" / rb, DOCS / "rendus" / rb)
 if SCREENING_EMISES:

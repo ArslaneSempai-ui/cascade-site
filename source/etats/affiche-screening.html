@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>affiche screening</title>
+<link rel="stylesheet" href="../fontes/literata.css"><link rel="stylesheet" href="../fontes/roboto-mono.css">
+<style>
+  html,body{margin:0;background:#000}
+  #scene{position:relative;width:1920px;height:1080px;overflow:hidden}
+  #scene *{margin:0;box-sizing:border-box}
+  #plate{position:absolute;inset:0;width:1920px;height:1080px;display:block}
+  .holo{position:absolute;color:#d64a5c;font-family:"Literata",Georgia,serif;
+    font-variant-numeric:tabular-nums;font-weight:600;letter-spacing:-.02em;line-height:1}
+  .holo .n{display:block;font-size:168px;text-shadow:0 0 28px #d64a5c66,0 0 70px #d64a5c33}
+  .holo .n small{font-size:96px;font-weight:500}
+  .holo .l{display:block;font-family:"Roboto Mono",ui-monospace,Menlo,monospace;font-size:28px;
+    letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;opacity:.92}
+  .holo .s{display:block;font-family:"Roboto Mono",ui-monospace,Menlo,monospace;font-size:20px;
+    letter-spacing:.06em;margin-top:10px;opacity:.7}
+  .faisceau{position:absolute;width:22.0%;pointer-events:none;
+    background:linear-gradient(to top,#d64a5c66,#d64a5c1f 55%,transparent);
+    clip-path:polygon(46% 100%,54% 100%,100% 0,0 0);filter:blur(2px)}
+</style>
+<div id="scene">
+  <img id="plate" src="affiche-screening-plaque.png" alt="">
+  <div class="faisceau" style="left:13.0%;top:52.0%;height:24.0%"></div>
+  <div class="faisceau" style="left:67.0%;top:33.0%;height:25.0%"></div>
+  <div class="holo" style="left:9.0%;top:30.0%">
+    <span class="l">recall, at the frontier</span>
+    <span class="n">98.3<small>%</small></span>
+    <span class="s">jaro-winkler &#183; threshold 0.56 &#183; n=60</span>
+  </div>
+  <div class="holo" style="left:63.0%;top:11.0%">
+    <span class="l">false alerts, same cell</span>
+    <span class="n">76.7<small>%</small></span>
+    <span class="s">wilson [65&#8211;86] &#183; n=60</span>
+  </div>
+</div>
+</html>
