@@ -642,6 +642,13 @@ if _ta.returncode != 0:
     sys.exit("L'ACCUEIL NE TIENT PAS SES AFFIRMATIONS (temoin-accueil) :\n" + _ta.stdout[-2000:] + _ta.stderr[-400:])
 print("  " + _ta.stdout.strip().splitlines()[-1])
 
+# ── le témoin des tarifs, moitié statique (la moitié navigateur vit au banc) ─
+_tt = subprocess.run([sys.executable, str(MAQ / "temoin-tarifs.py"), "--statique", "--docs", str(DOCS)],
+                     capture_output=True, text=True)
+if _tt.returncode != 0:
+    sys.exit("LES TARIFS NE TIENNENT PAS LEUR STRUCTURE (temoin-tarifs) :\n" + _tt.stdout[-2000:] + _tt.stderr[-400:])
+print("  " + _tt.stdout.strip().splitlines()[0].strip())
+
 # ── le contrôle de liens, témoin d'abord ─────────────────────────────────────
 def liens_casses(dossier):
     casses = []
