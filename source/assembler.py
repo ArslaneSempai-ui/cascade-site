@@ -632,6 +632,16 @@ if _gv.returncode != 0:
     sys.exit("LA VOIX N'EST PAS TENUE (garde-voix, VOIX.md) :\n" + _gv.stdout[-2400:])
 print("  " + next(l.strip() for l in _gv.stdout.splitlines() if "voix tenue" in l))
 
+# ── le témoin de l'accueil : le grand livre, l'éventail, la méthode ──────────
+# Statique et auto-témoigné par mutation (quatre mues doivent rougir avant que le
+# vert soit cru) ; un accueil dont le sceau, les cartes ou les citations dérivent
+# ne s'émet pas. verif-final tient la mâchoire du débranchement sur sa ligne.
+_ta = subprocess.run([sys.executable, str(MAQ / "temoin-accueil.py"), "--docs", str(DOCS)],
+                     capture_output=True, text=True)
+if _ta.returncode != 0:
+    sys.exit("L'ACCUEIL NE TIENT PAS SES AFFIRMATIONS (temoin-accueil) :\n" + _ta.stdout[-2000:] + _ta.stderr[-400:])
+print("  " + _ta.stdout.strip().splitlines()[-1])
+
 # ── le contrôle de liens, témoin d'abord ─────────────────────────────────────
 def liens_casses(dossier):
     casses = []

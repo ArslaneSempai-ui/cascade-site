@@ -35,6 +35,8 @@ grep -E "non émis|cassé sur|BOUGÉES|Traceback" $SORTIE/assemblage.log | cut -
 [ $code = 0 ] || { echo "assembleur : code $code, on s'arrête ($SORTIE/assemblage.log)"; exit 1; }
 # le témoin de DÉBRANCHEMENT de la garde de voix : si l'assemblage vert ne porte plus la
 # ligne de la garde, quelqu'un a retiré l'appel — un vert sans la voix ne part pas
+grep -q "témoin de l'accueil" $SORTIE/assemblage.log || {
+  echo "REFUS : l'assemblage vert ne porte plus la ligne du témoin de l'accueil — débranché" ; exit 5 ; }
 grep -q "voix tenue" $SORTIE/assemblage.log || {
   echo "REFUS : l'assemblage est vert mais ne porte pas « voix tenue » — la garde de la voix" ;
   echo "        a été DÉBRANCHÉE de l'assembleur (ou muselée) ; rebrancher avant de servir" ; exit 5 ; }
