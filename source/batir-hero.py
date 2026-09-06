@@ -100,10 +100,10 @@ SCENES = [
     dict(num="02", titre="A routing 3.5&#215; cheaper, same accuracy",
          phrase="The file-aimed routing costs 3.5 times less than the published one, at the same accuracy.",
          a="$191", b="$54", cote="3.5&#215; cheaper"),
-    dict(num="03", titre="Silence beats a wrong value",
+    dict(num="03", titre="Abstention: 85 wrong values removed, 12 right lost",
          phrase="Delivering every value gives 30% accuracy; staying silent instead of guessing gives 62.3%.",
          a="30<small>%</small>", b="62.3<small>%</small>", cote="after abstention"),
-    dict(num="04", titre="Counts identical, durations withheld",
+    dict(num="04", titre="Two passes: every count identical, durations withheld",
          phrase="Two passes give identical counts, while the durations move 16% to 60%, so the tool withholds them.",
          a="identical", b="16&#8211;60<small>%</small>", cote="withheld"),
     dict(num="05", titre="Every routing enumerated",
@@ -112,15 +112,15 @@ SCENES = [
 ]
 
 LEGS = [
-    ("The dashboard mean.",
-     "All five fields, correct. The number the desk works from."),
+    ("mean accuracy over the five fields",
+     "files with all five fields correct, 92 of 120"),
     ("What the published routing costs, per 100,000 documents.",
      "The routing aimed at the file. No file comes out worse."),
     ("When each value is delivered, right or wrong.",
      "When the tool stays silent instead of guessing."),
     ("Each count, run twice, to the digit.",
-     "Each duration moved. So durations stay withheld."),
-    ("Each routing tried, end to end. Not a sample.",
+     "Every duration moved, so the durations stay withheld."),
+    ("Every routing tried, end to end, not just a sample.",
      f"Held out and frozen, {N_TESTS} tests counted on your machine."),
 ]
 
