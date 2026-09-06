@@ -225,7 +225,7 @@ def page(nom, titre, fonte, css, oeil, h1, sous):
     <h1>{h1}</h1>
     <p class="sous">{sous}</p>
     <div class="agir"><a class="bouton" href="#">Have your routing measured</a>
-      <p>If nothing comes out cheaper without breaking a file, the report says so.</p></div>
+      <p>If no configuration comes out cheaper without breaking a file, the report states this.</p></div>
   </div>
 {PIED}
 </div>

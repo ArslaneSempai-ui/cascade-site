@@ -330,7 +330,7 @@ ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
 # la phrase suit l'état du registre : des parenthèses vides « () » se sont affichées
 # le soir où le septième palier est arrivé (relu sur capture)
 PHRASE_ABSENTS = (
-    f"a scenario absent from tonight&#8217;s registry ({ABSENTS}) is a named row, never a guessed column"
+    f"a scenario absent from tonight&#8217;s registry ({ABSENTS}) is a named row, instead of a guessed column"
     if ABSENTS else
     "each scenario of the registry is present tonight; an absent one would be a named row, "
     "never a guessed column")
@@ -366,7 +366,7 @@ PAGE = f'''<!doctype html><html lang="en">
     <h1 class="h1">Each scenario at each threshold, live.</h1>
     <p class="lede">Each figure on this page comes from the <b>sealed public record</b> of
       cascade-monitoring: cases the repository wrote itself, benign look-alikes included, measured
-      by its own scenarios. No client data exists here, nothing enters and nothing leaves,
+      by its own scenarios. No client data exists here, none enters and none leaves,
       and each figure is recomputed from the sealed record as the page loads.</p>
   </div>
 </section>
@@ -427,11 +427,11 @@ PAGE = f'''<!doctype html><html lang="en">
         look-alikes (payroll, seasonal trade, loan repayments) that resemble them. The labels ship with the
         cases, debatable ones with their reasons.</li>
       <li><b>Synthetic variants, kept apart.</b> Generated from the written cases, nature by
-        nature, and never merged with the authored half: the toggle above switches the whole
-        grid, it never blends.</li>
+        nature, and kept apart from the authored half: the toggle above switches the whole
+        grid, and the two stay separate.</li>
       <li data-commun="instrument"><b>The tool&#8217;s selection rule.</b> The slider holds your recall floor at the Wilson
         <b>lower bound</b>, exactly as <span style="font-family:var(--mono)">npm run optimise</span>
-        does: a point estimate never clears a floor here.</li>
+        does: a point estimate does not clear a floor here.</li>
     </ul>
       </details>
       <details class="pli"><summary>What this refuses</summary>
@@ -445,7 +445,7 @@ PAGE = f'''<!doctype html><html lang="en">
     </div>
     <aside class="clone-col">
     <h2>Measure your own alert history</h2>
-    <p>The instrument shows our record. Yours is measured at home, by the tool, and nothing
+    <p>The instrument shows our record. Yours is measured at home, by the tool, and no data
       about your file leaves your machine.</p>
     <span class="clone-t">The three commands, exactly as they run</span>
     <div class="clone" role="group" aria-label="The three commands that measure your own alert history">
@@ -460,7 +460,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <footer class="pied">
   <div class="colonne">
-    <p class="pied-p">On your records, on your machine. <em>Nothing of yours goes up.</em></p>
+    <p class="pied-p">Your records stay on your machine, and <em>no data of yours goes up.</em></p>
     <span class="sceau">seal {D["provenance"]["empreinte"]} &#183; measured, then frozen &#183; <a href="{DEPOT_URL}">repository</a></span>
   </div>
 </footer>

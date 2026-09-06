@@ -330,7 +330,7 @@ PAGE = f'''<!doctype html><html lang="en">
     <h1 class="h1">The whole chain in one table, live.</h1>
     <p class="lede">Each line on this page comes from the <b>sealed public dossier</b> of
       cascade-dossier: the suite&#8217;s own public records, read and judged by its five controls.
-      No client data exists here, nothing enters and nothing leaves,
+      No client data exists here, none enters and none leaves,
       and each figure is recomputed from the sealed record as the page loads.</p>
   </div>
 </section>
@@ -418,7 +418,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <footer class="pied">
   <div class="colonne">
-    <p class="pied-p">On your records, on your machine. <em>Nothing of yours goes up.</em></p>
+    <p class="pied-p">Your records stay on your machine, and <em>no data of yours goes up.</em></p>
     <span class="sceau">seal {D["provenance"]["empreinte"]} &#183; measured, then frozen &#183; <a href="{DEPOT_URL}">repository</a></span>
   </div>
 </footer>

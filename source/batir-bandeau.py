@@ -393,9 +393,9 @@ TITRE = ('<span class="ligne"><i>Both numbers are true.</i></span> '
 SOUS = ("94.4% is the number on your dashboard. 76.7% is the one on your desk: the share of "
         "files where all five fields are right together, 92 of 120.")
 AGIR = ('<div class="agir"><a class="bouton" href="#">Have your routing measured</a>'
-        '<p class="promesse">If nothing comes out cheaper without breaking a file, the '
-        'report says so.</p></div>')
-PIED = ('<div class="pied"><span>On your records, on your machine. <b>Nothing leaves the '
+        '<p class="promesse">If no configuration comes out cheaper without breaking a file, the '
+        'report states this.</p></div>')
+PIED = ('<div class="pied"><span>Your records stay on your machine, and <b>no data leaves the '
         'network.</b></span><span>One measurement, frozen, delivered as a report you can '
         'contest line by line.</span></div>')
 

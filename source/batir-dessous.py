@@ -71,8 +71,8 @@ TRONC = f"""  <div class="tete"><b>CASCADE</b><span>routing audit, KYC extractio
       sampled field by field.</p>
   </div>"""
 
-PIED_MIN = ('<div class="pied"><span class="dit">On your records, on your machine. '
-            '<b>Nothing leaves the network.</b></span></div>')
+PIED_MIN = ('<div class="pied"><span class="dit">Your records stay on your machine, and '
+            '<b>no data leaves the network.</b></span></div>')
 
 COMMUN_W = """
   h1{margin:0}

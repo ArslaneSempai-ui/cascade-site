@@ -186,8 +186,7 @@ def pied(couleur_faible):
     <button class="prise" type="button" aria-expanded="false"><b>17.7</b> points apart<dfn
       style="color:{couleur_faible}">— the distance between the two, over the same 120
       files.</dfn></button>
-    <span style="color:{couleur_faible};white-space:normal">On your records, on your machine.
-      Nothing leaves the network.</span>
+    <span style="color:{couleur_faible};white-space:normal">Your records stay on your machine, and no data leaves the network.</span>
   </div>"""
 
 
@@ -281,7 +280,7 @@ page("C2-nuit.html", "Cascade — twenty-eight files", """
     <p class="sous">A field-by-field average and a per-file rate are not the same measurement.
       Only one of them describes what leaves your desk.</p>
     <div class="agir"><a class="bouton" href="#">Have your routing measured</a>
-      <p>On your records, on your machine. Nothing leaves the network.</p></div>
+      <p>Your records stay on your machine, and no data leaves the network.</p></div>
   </div>
 {pied("#6f887b")}
 </div>""")
@@ -377,7 +376,7 @@ page("C4-ocre.html", "Cascade — 94 and 77", """
     <p class="sous">Both figures are true, and they measure different things. Only one counts
       a file as right when all five fields are right together.</p>
     <div class="agir"><a class="bouton" href="#">Have your routing measured</a>
-      <p>On your records, on your machine. Nothing leaves the network.</p></div>
+      <p>Your records stay on your machine, and no data leaves the network.</p></div>
   </div>
 {pied("#8a7440")}
 </div>""")

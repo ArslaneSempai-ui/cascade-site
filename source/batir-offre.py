@@ -247,7 +247,7 @@ PAGE = f'''<!doctype html><html lang="en">
 </main>
 
 <footer class="pied"><div class="colonne">
-  <p class="pied-p">On your records, on your machine. <em>Nothing leaves the network.</em></p>
+  <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
   <span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>
 </div></footer>
 '''

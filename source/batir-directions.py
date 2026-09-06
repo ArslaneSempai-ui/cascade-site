@@ -33,8 +33,8 @@ THESE = ("Both figures are true, and they measure different things. Only one cou
          "as right when <b>all five fields are right together</b> — and that is the one "
          "whose errors reach your review team.")
 CTA = '<a class="bouton" href="#">Have your routing measured</a>'
-APPUI = ("On your records, on your machine. Nothing leaves the network. If nothing comes "
-         "out cheaper without breaking a file, the report says so.")
+APPUI = ("Your records stay on your machine, and no data leaves the network. If no configuration comes "
+         "out cheaper without breaking a file, the report states this.")
 ALT = ("The measurement in relief: six rows of chip stacks on a plate, one stack per reader "
        "and per field, each chip worth ten points of measured accuracy. The seventh row has "
        "no tiles at all — the human operator was never sampled field by field.")
@@ -295,7 +295,7 @@ page("D4-couverture.html", "Cascade — cover", """
     <button class="prise" type="button" aria-expanded="false"><b>94.4%</b> mean of five field rates<dfn>— five fields measured one at a time, then divided by five. Not a proportion, so no interval.</dfn></button>
     <button class="prise" type="button" aria-expanded="false"><b>76.7%</b> per file · 92 of 120<dfn>— a file counts only when all five fields are right together. Wilson 95% [68.3 – 83.3].</dfn></button>
     <button class="prise" type="button" aria-expanded="false"><b>17.7</b> points apart<dfn>— the distance between the two, over the same 120 files.</dfn></button>
-    <span style="white-space:normal">On your records, on your machine. Nothing leaves the network.</span>
+    <span style="white-space:normal">Your records stay on your machine, and no data leaves the network.</span>
   </div>
 </div>""", """<script>
 /* Une définition à la fois, et repliée par défaut : une couverture qui déplie tout n'est

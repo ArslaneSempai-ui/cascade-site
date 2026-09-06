@@ -2,7 +2,7 @@
   "_": "Security page of the onyx tool (Dossier). Same shape as the house annexes. Every refs points at a real line of ~/Documents/cascade-dossier at main 74a3a2f. The object render does not exist yet (look-dev).",
   "objet": "rendus/etats/objet-dossier-securite.webp",
   "titre": "What the Dossier reads, and what stays local.",
-  "lede": "The Dossier is the piece your regulator reads, so its own discipline is the strictest of the suite: it reads seals, dates, versions and verdicts from the other tools' reports, never a value of yours, and it touches no network at all.",
+  "lede": "The Dossier is the piece your regulator reads, so its own discipline is the strictest of the suite: it reads seals, dates, versions and verdicts from the other tools' reports, and no value of yours, and it touches no network at all.",
   "sections": [
     {
       "h2": "The network allowlist is empty, and a test traverses each file",
@@ -23,7 +23,7 @@
       "commun": "securite"
     },
     {
-      "h2": "What crosses into the Dossier, and what never does",
+      "h2": "What crosses into the Dossier, and what stays out",
       "html": [
         "<p>The Dossier reads the other tools' sealed reports: seals, dates, versions, rule settings, verdict counts. It never reads, stores or reprints a client value: <b>no name, no amount, no account, no country of yours</b> exists in any report of the suite in the first place, and the Dossier cites reports by their fingerprints and their verdicts, by review identifiers only.</p>",
         "<p>The piece it writes lands next to your files and nowhere else, sealed with the same fingerprint arithmetic as each record of the suite, and the verification command ships on the page that announces it.</p>"

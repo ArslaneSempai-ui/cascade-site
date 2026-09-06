@@ -372,8 +372,8 @@ def pied_html(courante):
         + f'>{n}</a>' for h, n in liens)
     return (f'<footer class="pied"><div class="colonne">\n'
             f'  <div class="pied-h">\n'
-            f'    <p class="pied-p">On your records, on your machine. '
-            f'<em>Nothing leaves the network.</em></p>\n'
+            f'    <p class="pied-p">Your records stay on your machine, and '
+            f'<em>no data leaves the network.</em></p>\n'
             f'    <span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>\n'
             f'  </div>\n'
             f'  <nav class="annexes" aria-label="Appendices">{rang}</nav>\n'
@@ -612,8 +612,8 @@ def pied_outil(o, pages, courante, sceau):
         + f'>{n}</a>' for h, n in liens)
     return (f'<footer class="pied"><div class="colonne">\n'
             f'  <div class="pied-h">\n'
-            f'    <p class="pied-p">On your records, on your machine. '
-            f'<em>Nothing of yours goes up.</em></p>\n'
+            f'    <p class="pied-p">Your records stay on your machine, and '
+            f'<em>no data of yours goes up.</em></p>\n'
             f'    <span class="sceau">seal {sceau} &#183; measured, then frozen</span>\n'
             f'  </div>\n'
             f'  <nav class="annexes" aria-label="Appendices">{rang}</nav>\n'

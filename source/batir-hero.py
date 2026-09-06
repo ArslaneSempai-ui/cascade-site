@@ -1116,7 +1116,7 @@ PAGE = f'''<!doctype html><html lang="en">
 </main>
 
 <footer class="pied"><div class="colonne">
-  <p class="pied-p">On your records, on your machine. <em>Nothing leaves the network.</em></p>
+  <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
   <span class="sceau">120 files &#183; {N_TESTS} tests &#183; seal {SCEAU}</span>
 </div></footer>
 
@@ -1208,7 +1208,7 @@ def batir_accueil():
 </main>
 
 <footer class="pied"><div class="colonne">
-  <p class="pied-p">On your records, on your machine. <em>Nothing leaves the network.</em></p>
+  <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
   <span class="sceau">measured, then frozen</span>
 </div></footer>
 
@@ -1340,7 +1340,7 @@ SPECS = {
         table_ligne="matcher",
         table_caption="Recall over false alerts of each matcher at each threshold, on the written pairs",
         table_note_unites='Measured on the {nMatch} written match pairs and {nDifferent} hard\n      negatives',
-        pied="On your records, on your machine. <em>Nothing of yours goes up.</em>",
+        pied="Your records stay on your machine, and <em>no data of yours goes up.</em>",
     ),
     "monitoring": dict(
         lot="L5-textes",
@@ -1376,7 +1376,7 @@ SPECS = {
         table_ligne="scenario",
         table_caption="Recall over false alerts of each scenario at each threshold, on the written cases",
         table_note_unites='Measured on the {nMatch} written suspicious cases and {nDifferent} benign\n      look&#8209;alikes',
-        pied="On your records, on your machine. <em>Nothing of yours goes up.</em>",
+        pied="Your records stay on your machine, and <em>no data of yours goes up.</em>",
     ),
     "scoring": dict(
         lot="A-L5-textes",
@@ -1412,7 +1412,7 @@ SPECS = {
         table_ligne="factor",
         table_caption="Recall over false alerts of each risk factor at each threshold, on the written files",
         table_note_unites='Measured on the {nMatch} written escalated files and {nDifferent} maintained\n      look&#8209;alikes',
-        pied="On your records, on your machine. <em>Nothing of yours goes up.</em>",
+        pied="Your records stay on your machine, and <em>no data of yours goes up.</em>",
     ),
     "dossier": dict(
         lot="D3",
@@ -1450,7 +1450,7 @@ SPECS = {
         table_caption="State reached by each question of the chain under the contract&#8217;s five controls, on the public records",
         table=_table_dossier,
         refaire=_refaire_dossier,
-        pied="On your records, on your machine. <em>Nothing of yours goes up.</em>",
+        pied="Your records stay on your machine, and <em>no data of yours goes up.</em>",
     ),
 }
 
