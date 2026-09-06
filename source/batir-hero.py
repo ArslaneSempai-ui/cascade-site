@@ -134,9 +134,9 @@ APPELS = [
         (0.780, 0.250, 0.343, 0.052, "the empty row: the human tier, never sampled"),
     ],
     [
-        (0.440, 0.530, 0.422, 0.220, "name changes reader: the file-aimed pick"),
-        (0.270, 0.550, 0.265, 0.052, "the published pick it replaces"),
-        (0.720, 0.280, 0.500, 0.190, "a pick both routings share"),
+        (0.440, 0.530, 0.500, 0.220, "name changes reader: the file-aimed pick"),
+        (0.270, 0.550, 0.108, 0.260, "the published pick it replaces"),
+        (0.720, 0.280, 0.696, 0.052, "a pick both routings share"),
     ],
     [
         (0.820, 0.520, 0.814, 0.220, "an emptied cell: silence instead of a wrong value"),
