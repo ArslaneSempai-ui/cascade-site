@@ -5,11 +5,11 @@
     {
       "num": "01",
       "titre": "Exact matching raises no false alert and misses most confirmed matches.",
-      "phrase": "Exact matching, after normalisation, raises no false alert on the 60 written non-match pairs, and finds 21.7% of the confirmed matches.",
-      "a": "21.7<small>%</small>",
-      "leg_a": "recall 21.7% on 60 written match pairs, interval [13&#8211;34], at any threshold",
-      "b": "0<small>%</small>",
-      "leg_b": "false alerts 0% on 60 written non-match pairs, interval [0&#8211;6]",
+      "phrase": "Exact matching, after normalisation, raises no false alert on the 60 pairs of non-matches, and finds 21.7% of the confirmed matches.",
+      "a": "21.7%",
+      "leg_a": "recall 21.7% on 60 pairs, interval 13% to 34%, at any threshold",
+      "b": "0%",
+      "leg_b": "false alerts 0% on 60 pairs, interval 0% to 6%",
       "cote": "recall 21.7%",
       "source": {
         "a": {
@@ -44,12 +44,12 @@
     },
     {
       "num": "02",
-      "titre": "The loosest threshold finds every match and alerts on 85% of non-matches.",
-      "phrase": "At the loosest threshold the matcher finds every confirmed match on the 60 pairs, and alerts on 85% of the non-match pairs; each false alert is analyst time.",
-      "a": "100<small>%</small>",
-      "leg_a": "recall 100% at the loosest threshold, interval [94&#8211;100], 60 match pairs",
-      "b": "85<small>%</small>",
-      "leg_b": "false alerts 85% at the same threshold, interval [74&#8211;92], 60 non-match pairs",
+      "titre": "The loosest threshold finds each match and alerts on most non-matches.",
+      "phrase": "At the loosest threshold the matcher finds each confirmed match on the 60 pairs, and alerts on 85% of the non-matches; each false alert is analyst time.",
+      "a": "100%",
+      "leg_a": "recall 100% at the loosest threshold, interval 94% to 100%, 60 pairs",
+      "b": "85%",
+      "leg_b": "false alerts 85% at the same threshold, interval 74% to 92%, 60 pairs",
       "cote": "false alerts 85%",
       "source": {
         "a": {
@@ -78,18 +78,18 @@
           0.6,
           0.186,
           0.88,
-          "false alerts 85% on non-match pairs"
+          "false alerts 85% on non-matches"
         ]
       ]
     },
     {
       "num": "03",
       "titre": "The best trade-off keeps 98.3% recall at 76.7% false alerts.",
-      "phrase": "The tool keeps the recall floor at 90%, then reads the cost. Across every model tier and threshold, the embedding included, the best trade-off is jaro-winkler at 0.56: recall 98.3%, and still 76.7% false alerts.",
-      "a": "98.3<small>%</small>",
-      "leg_a": "recall 98.3% at jaro&#8209;winkler 0.56, interval [91&#8211;100], 60 match pairs",
-      "b": "76.7<small>%</small>",
-      "leg_b": "false alerts 76.7% at the same cell, interval [65&#8211;86]",
+      "phrase": "The tool keeps the recall floor at 90%, then reads the cost. Across each model tier and threshold, the embedding included, the best trade-off is jaro-winkler at 0.56, at recall 98.3% and 76.7% false alerts.",
+      "a": "98.3%",
+      "leg_a": "recall 98.3% at jaro-winkler 0.56, interval 91% to 100%, 60 pairs",
+      "b": "76.7%",
+      "leg_b": "false alerts 76.7% at the same cell, interval 65% to 86%",
       "cote": "recall 98.3%",
       "source": {
         "a": {
@@ -125,11 +125,11 @@
     {
       "num": "04",
       "titre": "Fabricated variants score 17.2% false alerts against 76.7% on written pairs.",
-      "phrase": "The same cell reads 76.7% false alerts on the 60 written pairs and 17.2% on the 360 fabricated variants. The fabricated set is easier, so it is measured on its own and never merged into the headline rate.",
-      "a": "76.7<small>%</small>",
-      "leg_a": "false alerts 76.7% at the best cell on 60 written pairs, interval [65&#8211;86]",
-      "b": "17.2<small>%</small>",
-      "leg_b": "false alerts 17.2% at the same cell on 360 fabricated variants, interval [14&#8211;21]",
+      "phrase": "The same cell reads 76.7% false alerts on 60 pairs, all written, and 17.2% on 360 pairs, all fabricated. The fabricated set is easier, so it is measured on its own and kept out of the headline rate.",
+      "a": "76.7%",
+      "leg_a": "false alerts 76.7% at the best cell on 60 pairs, interval 65% to 86%",
+      "b": "17.2%",
+      "leg_b": "false alerts 17.2% at the same cell on 360 pairs, interval 14% to 21%",
       "cote": "measured apart",
       "source": {
         "a": {
@@ -164,13 +164,13 @@
     },
     {
       "num": "05",
-      "titre": "The public record holds 60 written pairs and 360 fabricated variants.",
-      "phrase": "Every pair behind these findings is in the public record: 60 written and declared, 360 fabricated and labelled. One command reruns the full sweep on your own alert history at your desk.",
-      "a": "60",
-      "leg_a": "written match and non-match pairs behind the measured rates, declared by typology",
-      "b": "360",
-      "leg_b": "fabricated variants behind the separate rates, labelled and measured apart",
-      "cote": "60 written, 360 fabricated",
+      "titre": "The public record holds written pairs and fabricated variants.",
+      "phrase": "Each pair behind these findings is in the public record: 60 pairs written and declared, 360 pairs fabricated and labelled. One command reruns the full sweep on your alert history at your desk.",
+      "a": "60 pairs",
+      "leg_a": "written pairs behind the measured rates, declared by typology",
+      "b": "360 pairs",
+      "leg_b": "fabricated pairs behind the separate rates, labelled and measured apart",
+      "cote": "written and fabricated",
       "source": {
         "a": {
           "table": "authored",
@@ -187,14 +187,14 @@
           0.28,
           0.5,
           0.13,
-          "written pairs behind the measured rates"
+          "written pairs behind the rates"
         ],
         [
           0.55,
           0.87,
           0.578,
           0.96,
-          "fabricated variants, measured apart"
+          "fabricated pairs, measured apart"
         ]
       ]
     }

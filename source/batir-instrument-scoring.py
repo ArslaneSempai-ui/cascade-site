@@ -239,7 +239,7 @@ JS = '''
     for (const c of cells) {
       const cel = g[c.dataset.p][c.dataset.s];
       c.querySelector(".c-rappel").textContent = pc(cel.rappel.taux);
-      c.querySelector(".c-fp").textContent = pc(cel.fauxPositifs.taux) + " fa";
+      c.querySelector(".c-fp").textContent = pc(cel.fauxPositifs.taux);
     }
     $("#g-quoi").innerHTML = moitie === "authored"
       ? "authored files: <b>" + D.authored.nEscalated + " escalated</b>, <b>" + D.authored.nMaintained + " maintained look-alikes</b>"
@@ -363,11 +363,11 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section class="tete">
   <div class="colonne">
-    <h1 class="h1">Which risk factor, at which threshold. Live.</h1>
+    <h1 class="h1">Every risk factor at every threshold, live.</h1>
     <p class="lede">Every figure on this page comes from the <b>sealed public record</b> of
       cascade-scoring: customer files the repository wrote itself, benign look-alikes included,
       measured by its own risk factors. No client data exists here, nothing enters and nothing leaves,
-      and the page checks its own arithmetic before your eyes.</p>
+      and each figure is recomputed from the sealed record as the page loads.</p>
   </div>
 </section>
 
@@ -420,7 +420,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <li><b>The sealed public record.</b> releve-public.json in the repository, fingerprint
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
         on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
-        then recomposes witness cells with the tool&#8217;s own interval code, and refuses to emit
+        then recomposes witness cells with the tool&#8217;s own interval code, and does not emit
         if a single figure disagrees.</li>
       <li><b>Files the repository wrote.</b> The labelled half is authored: archetypes of risk
         (shell layers, a PEP relative, cash-intensive trade, an offshore structure, undeclared

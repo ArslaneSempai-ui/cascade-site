@@ -5,11 +5,11 @@
     {
       "num": "01",
       "titre": "Geography scores zero recall and zero false alerts here.",
-      "phrase": "Every file in the record resides in an ordinary Union country, because no official country list was copied into the data. The geography factor therefore scores 0% recall and 0% false alerts, and risk lives in the declared facts rather than the country.",
-      "a": "0<small>%</small>",
-      "leg_a": "recall 0% for the geography factor on 42 escalated files, interval [0&#8211;8]",
-      "b": "0<small>%</small>",
-      "leg_b": "false alerts 0% on 42 retained files, interval [0&#8211;8]",
+      "phrase": "Each file in the record resides in an ordinary Union country, because no official country list was copied into the data. The geography factor therefore scores 0% recall and 0% false alerts, and risk lives in the declared facts while the country plays no part.",
+      "a": "0%",
+      "leg_a": "recall 0% for the geography factor on 42 files, interval 0% to 8%",
+      "b": "0%",
+      "leg_b": "false alerts 0% on 42 files, interval 0% to 8%",
       "cote": "geography: 0% both sides",
       "source": {
         "a": {
@@ -46,10 +46,10 @@
       "num": "02",
       "titre": "The product factor reaches 92.9% recall at 23.8% false alerts.",
       "phrase": "Scoring only the products a client holds reaches 92.9% recall, since correspondent accounts, private banking and crypto rails carry the signal. The same factor alerts on 23.8% of the retained files, and each one is a review.",
-      "a": "92.9<small>%</small>",
-      "leg_a": "recall 92.9% for the product factor at 0.50, interval [81&#8211;98], 42 escalated files",
-      "b": "23.8<small>%</small>",
-      "leg_b": "false alerts 23.8% on 42 retained files, interval [13&#8211;39]",
+      "a": "92.9%",
+      "leg_a": "recall 92.9% for the product factor at 0.50, interval 81% to 98%, 42 files",
+      "b": "23.8%",
+      "leg_b": "false alerts 23.8% on 42 files, interval 13% to 39%",
       "cote": "recall 92.9%",
       "source": {
         "a": {
@@ -85,11 +85,11 @@
     {
       "num": "03",
       "titre": "No single factor reaches the 90% recall floor.",
-      "phrase": "The tool asks the lower bound of measured recall to reach 90%. On the 42 written files no factor reaches it: the best lower bound is 81% for product, and behaviour, with no false alert, reaches only 52%. Scoring on more than one factor is needed.",
-      "a": "81<small>%</small>",
-      "leg_a": "highest recall lower bound, product at 0.50: 81%, interval [81&#8211;98]",
-      "b": "52<small>%</small>",
-      "leg_b": "cleanest factor, behaviour at 0.50: 52%, zero false alerts, interval [52&#8211;79]",
+      "phrase": "The tool asks the lower bound of measured recall to reach 90%. On the 42 files no factor reaches it: the best lower bound is 81% for product, and behaviour, with no false alert, reaches only 52%. Scoring on more than one factor is needed.",
+      "a": "81%",
+      "leg_a": "highest recall lower bound, product at 0.50: 81%, interval 81% to 98%",
+      "b": "52%",
+      "leg_b": "cleanest factor, behaviour at 0.50: 52%, zero false alerts, interval 52% to 79%",
       "cote": "best bound 81%",
       "source": {
         "a": {
@@ -127,11 +127,11 @@
     {
       "num": "04",
       "titre": "The product factor scores 79.4% recall on variants against 92.9% on written files.",
-      "phrase": "The same cell scores 92.9% recall on the 42 written files and 79.4% on the 126 generated variants. Here the generated set is harder, and it is still measured on its own and never merged into the headline rate.",
-      "a": "92.9<small>%</small>",
-      "leg_a": "recall 92.9% for product at 0.50 on 42 escalated files, interval [81&#8211;98]",
-      "b": "79.4<small>%</small>",
-      "leg_b": "recall 79.4% at the same cell on 126 generated variants, interval [71&#8211;86]",
+      "phrase": "The same cell scores 92.9% recall on 42 files, all written, and 79.4% on 126 files, all generated. Here the generated set is harder, and it is still measured on its own and kept out of the headline rate.",
+      "a": "92.9%",
+      "leg_a": "recall 92.9% for product at 0.50 on 42 files, interval 81% to 98%",
+      "b": "79.4%",
+      "leg_b": "recall 79.4% at the same cell on 126 files, interval 71% to 86%",
       "cote": "measured apart",
       "source": {
         "a": {
@@ -166,13 +166,13 @@
     },
     {
       "num": "05",
-      "titre": "The public record holds 42 written files and 126 generated variants.",
-      "phrase": "Every file behind these findings is in the public record: 42 written, seven per typology, and 126 generated under a seed. Two files from your systems, reviews and customer attributes, rerun the full grid at your desk.",
-      "a": "42",
-      "leg_a": "written escalated files behind the measured rates, seven per declared typology",
-      "b": "126",
+      "titre": "The public record holds written files and generated variants.",
+      "phrase": "Each file behind these findings is in the public record: 42 files written, seven per typology, and 126 files generated under a seed. Two files from your systems, reviews and customer attributes, rerun the full grid at your desk.",
+      "a": "42 files",
+      "leg_a": "written escalated files behind the measured rates, seven per typology",
+      "b": "126 files",
       "leg_b": "generated variants behind the separate rates, typologies preserved by construction",
-      "cote": "42 written, 126 generated",
+      "cote": "written and generated",
       "source": {
         "a": {
           "table": "authored",
@@ -196,7 +196,7 @@
           0.66,
           0.265,
           0.8,
-          "42 written, 126 generated"
+          "written and generated files"
         ]
       ]
     }

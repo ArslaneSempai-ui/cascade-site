@@ -1,13 +1,13 @@
 {
   "_": "Security page of the lapis tool (Monitoring). Same shape as the red annexes. Every refs points at a real line of ~/Documents/cascade-monitoring at main 9f77ea2; the citation guard must know the third repository. The object render does not exist yet (look-dev).",
   "objet": "rendus/etats/objet-monitoring-securite.webp",
-  "titre": "No file touches the network. <span class=\"deux\">None needs to.</span>",
+  "titre": "Where monitoring runs, and what stays local.",
   "lede": "Transaction monitoring handles the most sensitive table a bank holds. This tool's answer is structural: its public data is written and generated, so not one module is allowed to reach the network, and the two files you measure with never leave your machine.",
   "sections": [
     {
-      "h2": "The network allowlist is empty, and a test walks every file",
+      "h2": "The network allowlist is empty, and a test traverses each file",
       "html": [
-        "<p>The green tool downloads model weights once; the red one downloads public sanctions lists. The blue one downloads <b>nothing</b>: its public record is built from written cases and seeded variants, so the allowlist of modules that may touch the network is empty, with the comment saying exactly that. A structural test walks every source file for network sites (fetch, node:http and kin, WebSockets) and <b>fails the suite if any module grows one</b>; the detector first proves it can see a planted call, so its zero means looked and found none.</p>"
+        "<p>The green tool downloads model weights once; the red one downloads public sanctions lists. The blue one downloads <b>nothing</b>: its public record is built from written cases and seeded variants, so the allowlist of modules that may touch the network is empty, with the comment saying exactly that. A structural test traverses each source file for network sites (fetch, node:http and kin, WebSockets) and <b>fails the suite if any module grows one</b>; the detector first proves it can see a planted call, so its zero means looked and found none.</p>"
       ],
       "verif": {
         "t": "Verify the frontier",
@@ -24,7 +24,7 @@
     {
       "h2": "No real transaction, no real person, anywhere public",
       "html": [
-        "<p>Every account, amount and date in the public record was <b>written for the archetype it illustrates</b> or generated from those cases under a seed. There is no anonymised customer data, because anonymised is a promise and absent is a fact. The file that holds the cases says so in its own header, and each case carries the one-sentence reason it was written.</p>"
+        "<p>Each account, amount and date in the public record was <b>written for the archetype it illustrates</b> or generated from those cases under a seed. There is no anonymised customer data, because anonymised is a promise and absent is a fact. The file that holds the cases states this in its own header, and each case carries the one-sentence reason it was written.</p>"
       ],
       "verif": {
         "t": "Verify the provenance",

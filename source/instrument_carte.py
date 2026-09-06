@@ -358,7 +358,7 @@ PANNEAU_VERT_HTML = '''<aside class="pan" id="pan" aria-live="polite">
         <div class="plancher" id="pan-plancher"></div>
       </aside>'''
 
-CARTE_ONYX_HTML = '''<p class="carte-aide">each stone is one question's sealed record, placed at its age in days · <b>pull the rhythm line</b> to ask what a shorter or longer rhythm would change : a stone past it would lose its « fresh » control, and the --next lines say so · hover a stone to read its five verdicts</p>
+CARTE_ONYX_HTML = '''<p class="carte-aide">each dot is one question's sealed record, placed at its age in days · <b>pull the validity line</b> to ask what a shorter or longer validity period would change : a dot past it would lose its « fresh » control, and the --next lines state it · hover a dot to read its five verdicts</p>
           <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 300" role="img" aria-label="The questions' seals on a time axis, with the declared rhythm as a line"></svg></div>'''
 
 PANNEAU_ONYX_HTML = '''<aside class="pan" id="pan" aria-live="polite">

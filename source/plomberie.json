@@ -5,13 +5,13 @@
       "html": "CONTACT.html",
       "titre_onglet": "Cascade &#183; contact",
       "fno": "Contact",
-      "titre": "Bring your questions. <span class=\"deux\">Keep your records.</span>",
-      "lede": "The right first message names a figure, not a feeling: every number on this site carries a declared source, so a dispute can start precisely. And it attaches nothing: this tool exists so your documents never travel, and that starts here.",
+      "titre": "How to reach us about a figure.",
+      "lede": "The right first message names a figure, not a feeling: each number on this site carries a declared source, so a dispute can start precisely. And it attaches nothing: this tool exists so your documents never travel, and that starts here.",
       "sections": [
         {
           "h2": "Two channels, one of them public",
           "html": [
-            "<p>Write to <a href=\"mailto:contact@cascade-routing.com\"><b>contact@cascade-routing.com</b></a>: the direct channel. For anything worth deciding in the open (a disputed figure, a wrong line, a question others will have), open an issue at <a href=\"https://github.com/ArslaneSempai-ui/cascade-routing/issues\"><b>github.com/ArslaneSempai-ui/cascade-routing</b></a>. An issue is public, so put nothing confidential in it: no client names, no records, no internal figures. Either way, attach nothing: a channel for records is opened in the engagement letter, before signature, like every other term.</p>"
+            "<p>Write to <a href=\"mailto:contact@cascade-routing.com\"><b>contact@cascade-routing.com</b></a>: the direct channel. For anything worth deciding in the open (a disputed figure, a wrong line, a question others will have), open an issue at <a href=\"https://github.com/ArslaneSempai-ui/cascade-routing/issues\"><b>github.com/ArslaneSempai-ui/cascade-routing</b></a>. An issue is public, so put nothing confidential in it: no client names, no records, no internal figures. Either way, attach nothing: a channel for records is opened in the engagement letter, before signature, like each other term.</p>"
           ]
         },
         {
@@ -46,7 +46,7 @@
       "html": "MENTIONS.html",
       "titre_onglet": "Cascade &#183; the fine print",
       "fno": "The fine print",
-      "titre": "The small print, printed large. <span class=\"deux\">Nothing hides in it.</span>",
+      "titre": "The fine print, in full.",
       "lede": "Who publishes this, under which licences, served from where, and what this site does to its visitors, which is nothing. The one page of a sales site that is usually mumbled; here it follows the same rule as the rest: plain, sourced, short.",
       "sections": [
         {
@@ -70,13 +70,13 @@
         {
           "h2": "What this site does to visitors: nothing",
           "html": [
-            "<p><b>No cookies, no analytics, no tracking, no forms.</b> The scripts on this site do two things only: the main screen synchronises its animation clock and tab title, and the appendix pages open their sections when you print. Switch them off and everything still works. Every figure displayed carries a declared source; the full declaration file is public, beside this page: <a href=\"releve.json\"><b>releve.json</b></a>, and the seal in the masthead is the content fingerprint of the sealed record the figures come from.</p>"
+            "<p><b>No cookies, no analytics, no tracking, no forms.</b> The scripts on this site do two things only: the main screen synchronises its animation clock and tab title, and the appendix pages open their sections when you print. Switch them off and everything still works. Each figure displayed carries a declared source; the full declaration file is public, beside this page: <a href=\"releve.json\"><b>releve.json</b></a>, and the seal in the masthead is the content fingerprint of the sealed record the figures come from.</p>"
           ]
         },
         {
           "h2": "When we are wrong",
           "html": [
-            "<p>The tool publishes its own errors: a retraction file lists every published conclusion that turned out to be wrong, held open by a test. This site inherits the rule: a corrected figure is corrected in daylight, not swapped quietly.</p>"
+            "<p>The tool publishes its own errors: a retraction file lists each published conclusion that turned out to be wrong, held open by a test. This site inherits the rule: a corrected figure is corrected in daylight, not swapped quietly.</p>"
           ]
         }
       ]

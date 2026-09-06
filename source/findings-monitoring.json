@@ -5,11 +5,11 @@
     {
       "num": "01",
       "titre": "The amount scenario alone reaches 95.2% recall at 16.7% false alerts.",
-      "phrase": "Scoring only the largest amount in the window reaches 95.2% recall on the 42 written suspicious cases. It alerts on 16.7% of the benign twins, and each of those is a one-off family purchase the history explains.",
-      "a": "95.2<small>%</small>",
-      "leg_a": "recall 95.2% for the amount scenario at 0.50, interval [84&#8211;99], 42 written suspicious cases",
-      "b": "16.7<small>%</small>",
-      "leg_b": "false alerts 16.7% on 42 benign twins, interval [8&#8211;31]",
+      "phrase": "Scoring only the largest amount in the window reaches 95.2% recall on the 42 cases. It alerts on 16.7% of the benign twins, and each of those is a one-off family purchase the history explains.",
+      "a": "95.2%",
+      "leg_a": "recall 95.2% for the amount scenario at 0.50, interval 84% to 99%, 42 cases",
+      "b": "16.7%",
+      "leg_b": "false alerts 16.7% on 42 cases of benign twins, interval 8% to 31%",
       "cote": "recall 95.2%",
       "source": {
         "a": {
@@ -38,7 +38,7 @@
           0.74,
           0.48,
           0.94,
-          "false alerts 16.7% on benign twins"
+          "false alerts 16.7% on twins"
         ]
       ]
     },
@@ -46,10 +46,10 @@
       "num": "02",
       "titre": "The velocity scenario reaches 28.6% recall and alerts on half the twins.",
       "phrase": "Counting transactions reaches 28.6% recall, since most written cases are not the busiest accounts. The same count alerts on half the benign twins, which are payroll, seasonal trade and monthly savings.",
-      "a": "28.6<small>%</small>",
-      "leg_a": "recall 28.6% for the velocity scenario at 0.50, interval [17&#8211;44]",
-      "b": "50<small>%</small>",
-      "leg_b": "false alerts 50% at the same threshold, interval [36&#8211;64], 42 benign twins",
+      "a": "28.6%",
+      "leg_a": "recall 28.6% for the velocity scenario at 0.50, interval 17% to 44%",
+      "b": "50%",
+      "leg_b": "false alerts 50% at the same threshold, interval 36% to 64%, 42 cases",
       "cote": "false alerts 50%",
       "source": {
         "a": {
@@ -85,11 +85,11 @@
     {
       "num": "03",
       "titre": "No single scenario reaches the 90% recall floor.",
-      "phrase": "The tool asks the lower bound of measured recall to reach 90%. On the 42 written cases no single scenario reaches it: the best lower bound is 84.2% for amount, the next 75% for peer. More than one scenario is needed.",
-      "a": "84.2<small>%</small>",
-      "leg_a": "highest recall lower bound, amount at 0.50: 84.2%, interval [84&#8211;99]",
-      "b": "75<small>%</small>",
-      "leg_b": "next best lower bound, peer at 0.50: 75%, interval [75&#8211;95]",
+      "phrase": "The tool asks the lower bound of measured recall to reach 90%. On the 42 cases no single scenario reaches it: the best lower bound is 84.2% for amount, the next 75% for peer. More than one scenario is needed.",
+      "a": "84.2%",
+      "leg_a": "highest recall lower bound, amount at 0.50: 84.2%, interval 84% to 99%",
+      "b": "75%",
+      "leg_b": "next best lower bound, peer at 0.50: 75%, interval 75% to 95%",
       "cote": "best bound 84.2%",
       "source": {
         "a": {
@@ -127,11 +127,11 @@
     {
       "num": "04",
       "titre": "The amount scenario scores 100% recall on variants against 95.2% on written cases.",
-      "phrase": "The same cell scores 95.2% recall on the 42 written cases and 100% on the 126 generated variants. The generated set is easier, so it is measured on its own and never merged into the headline rate.",
-      "a": "95.2<small>%</small>",
-      "leg_a": "recall 95.2% for amount at 0.50 on 42 written suspicious cases, interval [84&#8211;99]",
-      "b": "100<small>%</small>",
-      "leg_b": "recall 100% at the same cell on 126 generated variants, interval [97&#8211;100]",
+      "phrase": "The same cell scores 95.2% recall on 42 cases, all written, and 100% on 126 cases, all generated. The generated set is easier, so it is measured on its own and kept out of the headline rate.",
+      "a": "95.2%",
+      "leg_a": "recall 95.2% for amount at 0.50 on 42 cases, interval 84% to 99%",
+      "b": "100%",
+      "leg_b": "recall 100% at the same cell on 126 cases, interval 97% to 100%",
       "cote": "measured apart",
       "source": {
         "a": {
@@ -166,13 +166,13 @@
     },
     {
       "num": "05",
-      "titre": "The public record holds 42 written cases and 126 generated variants.",
-      "phrase": "Every case behind these findings is in the public record: 42 written, seven per typology, and 126 generated under a seed. Two files from your systems, alerts and transactions, rerun the full grid at your desk.",
-      "a": "42",
-      "leg_a": "written suspicious cases behind the measured rates, seven per declared typology",
-      "b": "126",
+      "titre": "The public record holds written cases and generated variants.",
+      "phrase": "Each case behind these findings is in the public record: 42 cases written, seven per typology, and 126 cases generated under a seed. Two files from your systems, alerts and transactions, rerun the full grid at your desk.",
+      "a": "42 cases",
+      "leg_a": "written suspicious cases behind the measured rates, seven per typology",
+      "b": "126 cases",
       "leg_b": "generated variants behind the separate rates, typologies preserved by construction",
-      "cote": "42 written, 126 generated",
+      "cote": "written and generated",
       "source": {
         "a": {
           "table": "authored",
@@ -196,7 +196,7 @@
           0.62,
           0.72,
           0.82,
-          "42 written, 126 generated"
+          "written and generated cases"
         ]
       ]
     }

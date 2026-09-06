@@ -1,13 +1,13 @@
 {
   "_": "Security page of the onyx tool (Dossier). Same shape as the house annexes. Every refs points at a real line of ~/Documents/cascade-dossier at main 74a3a2f. The object render does not exist yet (look-dev).",
   "objet": "rendus/etats/objet-dossier-securite.webp",
-  "titre": "It reads seals and dates. <span class=\"deux\">Never a value.</span>",
+  "titre": "What the Dossier reads, and what stays local.",
   "lede": "The Dossier is the piece your regulator reads, so its own discipline is the strictest of the suite: it reads seals, dates, versions and verdicts from the other tools' reports, never a value of yours, and it touches no network at all.",
   "sections": [
     {
-      "h2": "The network allowlist is empty, and a test walks every file",
+      "h2": "The network allowlist is empty, and a test traverses each file",
       "html": [
-        "<p>Like the blue and the amethyst, the Dossier downloads <b>nothing</b>: the allowlist of modules that may touch the network is empty, and a structural test walks every source file for network sites and fails the suite if one appears. The detector proves it can see a planted call before its zero is believed.</p>"
+        "<p>Like Monitoring and Scoring, the Dossier downloads <b>nothing</b>: the allowlist of modules that may touch the network is empty, and a structural test traverses each source file for network sites and fails the suite if one appears. The detector proves it can see a planted call before its zero is believed.</p>"
       ],
       "verif": {
         "t": "Verify the frontier",
@@ -25,7 +25,7 @@
       "h2": "What crosses into the Dossier, and what never does",
       "html": [
         "<p>The Dossier reads the other tools' sealed reports: seals, dates, versions, rule settings, verdict counts. It never reads, stores or reprints a client value: <b>no name, no amount, no account, no country of yours</b> exists in any report of the suite in the first place, and the Dossier cites reports by their fingerprints and their verdicts, by review identifiers only.</p>",
-        "<p>The piece it writes lands next to your files and nowhere else, sealed with the same fingerprint arithmetic as every record of the suite, and the verification command ships on the page that announces it.</p>"
+        "<p>The piece it writes lands next to your files and nowhere else, sealed with the same fingerprint arithmetic as each record of the suite, and the verification command ships on the page that announces it.</p>"
       ],
       "verif": {
         "t": "Verify on the record itself",

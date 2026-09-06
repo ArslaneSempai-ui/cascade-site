@@ -327,11 +327,11 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section class="tete">
   <div class="colonne">
-    <h1 class="h1">The whole chain, one table. Live.</h1>
+    <h1 class="h1">The whole chain in one table, live.</h1>
     <p class="lede">Every line on this page comes from the <b>sealed public dossier</b> of
       cascade-dossier: the suite&#8217;s own public records, read and judged by its five controls.
       No client data exists here, nothing enters and nothing leaves,
-      and the page checks its own arithmetic before your eyes.</p>
+      and each figure is recomputed from the sealed record as the page loads.</p>
   </div>
 </section>
 
@@ -377,7 +377,7 @@ PAGE = f'''<!doctype html><html lang="en">
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
         on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
         then recomposes every question&#8217;s state from its own verdicts with the contract&#8217;s
-        no-gap rule, and refuses to emit if a single line disagrees.</li>
+        no-gap rule, and does not emit if a single line disagrees.</li>
       <li><b>The suite&#8217;s own public records.</b> The reports judged here are the public
         records of Cascade&#8217;s tools (the reader, the matcher, the scenario, the factor):
         published, sealed, verifiable by anyone. A question without one is a named row,

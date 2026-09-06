@@ -238,8 +238,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section class="refus"><div class="colonne">
   <div class="refus-carte">
-    <p><b>What none of this certifies.</b> The report proves what was measured and, in its own
-      words, nothing more; the burden stays on the measurement. External publication of engagement
+    <p><b>What none of this certifies.</b> The report proves what was measured and nothing more; the burden stays on the measurement. External publication of engagement
       results is excluded from day one. The full terms are on
       <a href="ANNEXE-TERMS.html">the terms page</a>, in the same words the paper uses.</p>
     <a class="cta" href="CONTACT.html">Contact us <span class="fl" aria-hidden="true">&#8594;</span></a>

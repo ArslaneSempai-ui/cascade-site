@@ -1196,7 +1196,7 @@ def batir_accueil():
 {choix_outils(None)}
 
 <section class="menus"><div class="colonne">
-  <h2 class="h2">The house, in common.</h2>
+  <h2 class="h2">One method, shared across the tools.</h2>
   <div class="rangee-fine">
     <a class="lien-fin" href="ENGAGEMENT.html">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>
     <a class="lien-fin" href="ANNEXE-TERMS.html">Terms of engagement <span aria-hidden="true">&#8594;</span></a>
@@ -1298,7 +1298,7 @@ def _table_dossier(spec, releve, findings):
     cv, rg = releve["couverture"], releve["reglages"]
     note = (f"{cv['n']} of the {cv['sur']} questions carry a sealed public record. In each row the "
             "marked cell is the state reached with no gap in the contract&#8217;s order; a row "
-            "without one reaches none, and the record says so. Declared rhythm "
+            "without one reaches none, and the record states this. The declared validity period is "
             f"{rg['rythmeJours']} days, as of {rg['auJour']}.")
     return f'''<div class="t-scroll"><table class="routage">
       <caption class="sr">{spec["table_caption"]}</caption>
@@ -1539,24 +1539,23 @@ def _table_outil(spec, releve, findings):
             c = auth["tables"][p][s]
             choisi = " choisi" if (palier_f and (p, s) == (palier_f, seuil_f)) else ""
             cells += (f"<td class='cell{choisi}'><span>{c['rappel']['taux'] * 100:.0f}<small>%</small></span>"
-                      f"<br><small>{c['fauxPositifs']['taux'] * 100:.0f}% fa</small></td>")
+                      f"<br><small>{c['fauxPositifs']['taux'] * 100:.0f}<small>%</small></small></td>")
         lignes += f"<tr><th scope='row'>{p}</th>{cells}</tr>"
     unites = spec["table_note_unites"].format(
         nMatch=auth.get("nMatch", auth.get("nSuspicious", auth.get("nEscalated"))),
         nDifferent=auth.get("nDifferent", auth.get("nBenign", auth.get("nMaintained"))))
     champ_cite = (findings[2].get("source", {}).get("a") or {}).get("champ", "taux")
     if palier_f and champ_cite == "taux":
-        frontiere = (f"The ruby cell is the tool&#8217;s frontier under its\n      default rule, {palier_f} at {seuil_f}.")
+        frontiere = (f"The marked cell is the tool&#8217;s best trade-off under its\n      default rule, {palier_f} at {seuil_f}.")
     elif palier_f:
         # la fiche 03 cite une BORNE (champ « bas ») : la cellule marquée est la plus forte
-        # borne basse, pas une frontière : la règle de l'outil ne retient RIEN au plancher,
-        # et l'écrire « frontier » serait le mensonge exact que le relevé refuse
+        # borne basse, pas un meilleur compromis : la règle de l'outil ne retient rien au plancher
         frontiere = (f"The marked cell, {palier_f} at {seuil_f}, carries the strongest recall lower"
-                     "\n      bound; under its default rule the tool retains NO cell at the recall floor on"
-                     "\n      these cases: the record says so, and the instrument shows it live.")
+                     "\n      bound. Under its default rule the tool retains no cell at the recall floor on"
+                     "\n      these cases, and the instrument shows the same reading live.")
     else:
-        frontiere = ("Under its default rule, the tool retains NO cell at the recall floor on these"
-                     "\n      cases: the record says so, and the instrument shows the strongest bound instead.")
+        frontiere = ("Under its default rule, the tool retains no cell at the recall floor on these"
+                     "\n      cases, and the instrument shows the strongest bound instead.")
     return f'''<div class="t-scroll"><table class="routage">
       <caption class="sr">{spec["table_caption"]}</caption>
       <thead><tr><th scope="col">{spec["table_ligne"]}</th>{tetes}</tr></thead><tbody>{lignes}</tbody></table></div>
