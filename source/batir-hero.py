@@ -104,10 +104,10 @@ SCENES = [
          phrase="A blank gets read again. A wrong value gets filed.",
          a="30<small>%</small>", b="62.3<small>%</small>", cote="after abstention"),
     dict(num="04", titre="What we withhold",
-         phrase="Every count held across two passes. Every duration moved.",
+         phrase="Each count held across two passes. Each duration moved.",
          a="identical", b="16&#8211;60<small>%</small>", cote="withheld"),
     dict(num="05", titre="The engagement",
-         phrase="Every routing enumerated. One report you can argue with.",
+         phrase="Each routing enumerated. One report you can argue with.",
          a="16,807", b="120<small>&nbsp;files</small>", cote="the full span"),
 ]
 
@@ -116,11 +116,11 @@ LEGS = [
      "All five fields, correct. The number the desk works from."),
     ("What the published routing costs, per 100,000 documents.",
      "The routing aimed at the file. No file comes out worse."),
-    ("When every value is delivered, right or wrong.",
+    ("When each value is delivered, right or wrong.",
      "When the tool stays silent instead of guessing."),
-    ("Every count, run twice, to the digit.",
-     "Every duration moved. So durations stay withheld."),
-    ("Every routing tried, end to end. Not a sample.",
+    ("Each count, run twice, to the digit.",
+     "Each duration moved. So durations stay withheld."),
+    ("Each routing tried, end to end. Not a sample.",
      f"Held out and frozen, {N_TESTS} tests counted on your machine."),
 ]
 
@@ -144,11 +144,11 @@ APPELS = [
         (0.480, 0.380, 0.343, 0.220, "85 wrong values removed, 12 right lost"),
     ],
     [
-        (0.520, 0.480, 0.500, 0.160, "run twice: every count identical, to the digit"),
+        (0.520, 0.480, 0.500, 0.160, "run twice: each count identical, to the digit"),
         (0.600, 0.350, 0.892, 0.780, "nothing turns green: the durations moved, withheld"),
     ],
     [
-        (0.500, 0.450, 0.500, 0.160, "every stack green: 16,807 routings crossed"),
+        (0.500, 0.450, 0.500, 0.160, "each stack green: 16,807 routings crossed"),
         (0.800, 0.520, 0.892, 0.780, "still empty: the human tier, never sampled"),
     ],
 ]
@@ -224,7 +224,7 @@ def rail_html():
 
 MENUS = [
     ("methode", "Method &amp; reproducibility", "One method, no secrets. Run it twice, compare.", "ANNEXE-METHODE.html"),
-    ("securite", "Security &amp; data handling", "Every place the tool touches.", "ANNEXE-SECURITE.html"),
+    ("securite", "Security &amp; data handling", "Each place the tool touches.", "ANNEXE-SECURITE.html"),
     ("questions", "Questions", "Eight objections a bank's reviewers actually raise.", "ANNEXE-QUESTIONS.html"),
     ("terms", "Terms of engagement", "What the grant allows, for how long, and what a client buys.", "ANNEXE-TERMS.html"),
     ("privacy", "Privacy", "No data is collected. Written down, and verifiable.", "ANNEXE-PRIVACY.html"),
@@ -240,7 +240,7 @@ def menus_html():
         <span class="tuile-d">{desc}</span></span>
         <span class="tuile-fl" aria-hidden="true">&#8594;</span>
       </a>''' for cle, titre, desc, href in MENUS)
-    return f'''<section class="menus"><div class="colonne">
+    return f'''<nav class="menus" aria-label="Appendices"><div class="colonne">
       <h2 class="h2">The appendices your reviewers will ask for.</h2>
       <div class="grille">{tuiles}</div>
       <div class="rangee-fine">
@@ -248,7 +248,7 @@ def menus_html():
         <a class="lien-fin" href="CONTACT.html">Contact <span aria-hidden="true">&#8594;</span></a>
         <a class="lien-fin" href="MENTIONS.html">The fine print <span aria-hidden="true">&#8594;</span></a>
         <a class="lien-fin" href="{DEPOT_URL}">The repository, public <span aria-hidden="true">&#8594;</span></a>
-      </div></div></section>'''
+      </div></div></nav>'''
 
 
 # ── la mise en dépliage : partagée par le petit écran ET l'absence de script ─
@@ -854,9 +854,9 @@ def choix_outils(outil):
             pans += (f'\n  <a class="pan {cote}" style="{style}" href="{prefixe}{o["page_hero"]}">{corps}'
                      f'<span class="p-ouvrir">Open {o["nom"]} <span aria-hidden="true">&#8594;</span></span></a>')
     n = NOMBRES.get(len(outils), str(len(outils)))
-    return (f'<section class="rideau" id="tools" aria-label="The instruments">'
+    return (f'<nav class="rideau" id="tools" aria-label="The instruments">'
             f'\n  <span class="rideau-titre">Cascade &#183; {n} instruments, one method</span>'
-            f'{pans}\n</section>')
+            f'{pans}\n</nav>')
 
 
 def film_html(outil):
@@ -1063,9 +1063,9 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <main>
 <section class="hero">
-  <h1 class="h1 entree">Where should the next dollar&nbsp;go?</h1>
+  <h1 class="h1 entree">Which model tier reads each identity field?</h1>
   <p class="lede entree">Seven tiers, from a regular expression to a human, measured on your own records.<br>
-    The answer is rarely &ldquo;buy the bigger model&rdquo;, and every figure
+    The answer is rarely &ldquo;buy the bigger model&rdquo;, and each figure
     <b>can be verified by you</b>.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
@@ -1089,7 +1089,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="instrument"><div class="colonne">
   <h2 class="h2">The live instrument, on the sealed record.</h2>
   {affiche_html("paliers", LANDING, [], "INSTRUMENT.html", "Cascade &#183; Routing",
-                "Every field at every tier, accuracy and cost read live from the sealed record, and a budget line you pull the way the tool chooses.",
+                "Each field at each tier, accuracy and cost read live from the sealed record, and a budget line you pull the way the tool chooses.",
                 "rendus/robot-vert-regarde.webp")}
 </div></section>
 
@@ -1154,7 +1154,7 @@ def batir_accueil():
                                                  "granted in the public licence."},
                        "publisher": {"@id": "https://cascade-routing.com/#org"}})
     donnees = json.dumps({"@context": "https://schema.org", "@graph": graphe}, ensure_ascii=True)
-    description = ("Cascade: instruments for compliance decisions, one method. Every tier "
+    description = ("Cascade: instruments for compliance decisions, one method. Each tier "
                    "measured on sealed records, the frontier read with its interval, rerun on "
                    "your own machine. Nothing of yours goes up.")
     page = f'''<!doctype html><html lang="en">
@@ -1188,7 +1188,7 @@ def batir_accueil():
   <span class="marque-h entree">Cascade &#183; {n} instruments, one method</span>
   <h1 class="h1 entree">Which tier suffices?</h1>
   <p class="lede entree">Instruments for compliance decisions, and one method behind all of them:
-    every tier is measured on sealed records, the frontier is read with its interval,
+    each tier is measured on sealed records, the frontier is read with its interval,
     and the whole sweep reruns on your own machine. <b>Nothing of yours goes up.</b></p>
   <div class="cue" aria-hidden="true"><span>choose</span><span class="fil"></span></div>
 </section>
@@ -1323,14 +1323,14 @@ SPECS = {
         offre="Thirty-day evaluation on your own alert history, granted in the public licence.",
         lede="Seven name matchers, from strict equality to a multilingual embedding, swept across "
              "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
-             "and every figure\n    <b>can be verified by you</b>.",
+             "and each figure\n    <b>can be verified by you</b>.",
         aria_commande="The measurement on your own alert history",
         commandes=["npm ci --ignore-scripts", "npm run measure:yours -- --alerts=your-alerts.csv"],
         note_commande="Your alert history, measured on your machine. Nothing of yours goes up.",
         instrument_h2="Pick any cell, read what your threshold costs.",
         instrument_page="INSTRUMENT-SCREENING.html",
         instrument_eti="Cascade &#183; Screening",
-        instrument_sub="Every matcher at every threshold, recall and false alerts with their intervals, "
+        instrument_sub="Each matcher at each threshold, recall and false alerts with their intervals, "
                        "live from the sealed record, and the tool's own selection rule under your recall floor.",
         annexe_methode=("Method &amp; what is measured", "What the frontier reads, and what it refuses.",
                         "ANNEXE-SCREENING-METHODE.html"),
@@ -1358,7 +1358,7 @@ SPECS = {
         offre="Thirty-day evaluation on your own dispositioned alerts, granted in the public licence.",
         lede="Seven scenarios, from a bare amount to the deviation from a peer profile, swept across "
              "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
-             "and every figure\n    <b>can be verified by you</b>.",
+             "and each figure\n    <b>can be verified by you</b>.",
         aria_commande="The measurement on your own dispositioned alerts",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --alerts=your-alerts.csv --transactions=your-transactions.csv"],
@@ -1366,7 +1366,7 @@ SPECS = {
         instrument_h2="Pick any cell, read what your threshold costs.",
         instrument_page="INSTRUMENT-MONITORING.html",
         instrument_eti="Cascade &#183; Monitoring",
-        instrument_sub="Every scenario at every threshold, recall and false alerts with their intervals, "
+        instrument_sub="Each scenario at each threshold, recall and false alerts with their intervals, "
                        "live from the sealed record, and the tool's own selection rule under your recall floor.",
         annexe_methode=("Method &amp; what is measured", "What the frontier reads, and what it refuses.",
                         "ANNEXE-MONITORING-METHODE.html"),
@@ -1394,7 +1394,7 @@ SPECS = {
         offre="Thirty-day evaluation on your own review outcomes, granted in the public licence.",
         lede="Seven risk factors, from a country list to the deviation from the declared profile, swept across "
              "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
-             "and every figure\n    <b>can be verified by you</b>.",
+             "and each figure\n    <b>can be verified by you</b>.",
         aria_commande="The measurement on your own periodic-review outcomes",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --customers=your-customers.csv --reviews=your-reviews.csv"],
@@ -1402,7 +1402,7 @@ SPECS = {
         instrument_h2="Pick any cell, read what your threshold costs.",
         instrument_page="INSTRUMENT-SCORING.html",
         instrument_eti="Cascade &#183; Scoring",
-        instrument_sub="Every risk factor at every threshold, recall and false alerts with their intervals, "
+        instrument_sub="Each risk factor at each threshold, recall and false alerts with their intervals, "
                        "live from the sealed record, and the tool's own selection rule under your recall floor.",
         annexe_methode=("Method &amp; what is measured", "What the frontier reads, and what it refuses.",
                         "ANNEXE-SCORING-METHODE.html"),
@@ -1431,7 +1431,7 @@ SPECS = {
         offre="Thirty-day evaluation on your own sealed reports, granted in the public licence.",
         lede="Four questions (the reader, the matcher, the scenario, the factor), "
              "five controls each.<br>\n    The Dossier reads the sealed reports and answers "
-             "as one piece, and every line\n    <b>can be verified by you</b>.",
+             "as one piece, and each line\n    <b>can be verified by you</b>.",
         aria_commande="The dossier over your own sealed reports",
         commandes=["npm ci --ignore-scripts",
                    "npm run dossier -- --reports=a-measured.json,b-measured.json"],

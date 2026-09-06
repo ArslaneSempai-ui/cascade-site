@@ -256,8 +256,8 @@ JS = '''
     $("#tm-delta").innerHTML = "vs published  "
       + (dc >= 0 ? "+" : "&#8722;") + "$" + Math.abs(dc).toFixed(Math.abs(dc) < 99.5 ? 1 : 0)
       + " &#183; " + (dj >= 0 ? "+" : "&#8722;") + Math.abs(dj).toFixed(1) + "&nbsp;pt";
-    const memePub = F.every((f) => routage[f] === D.publie.routage[f]);
-    const memeVise = F.every((f) => routage[f] === D.vise.routage[f]);
+    const memePub = F.each((f) => routage[f] === D.publie.routage[f]);
+    const memeVise = F.each((f) => routage[f] === D.vise.routage[f]);
     $("#r-pub").classList.toggle("actif", memePub);
     $("#r-vise").classList.toggle("actif", memeVise);
     viseV = null; dessinerV(); peindrePanneauV();     /* a change of routing reads the routing, not a stale hover */
@@ -402,13 +402,13 @@ PAGE = f'''<!doctype html><html lang="en">
     human tier uses an assumed pace and salary. <b>Change the assumptions and the dollars move.
     The accuracies do not.</b></p>
   <p><b>The human column is the one exception: an assumption until you measure it.</b>
-    {D["humanAccuracy"]:.0f}% on every field, declared in the tool's own source. Every other
+    {D["humanAccuracy"]:.0f}% on each field, declared in the tool's own source. Each other
     accuracy shown here was measured. <code>npm run measure:humans -- --cases=your-file.csv</code>
     grades your own reviewers: accuracy per field with intervals, agreement between reviewers,
     seconds per record. Pass the sealed result to <code>optimise</code> with <code>--humans</code>
     and the optimiser reads your measurement instead of the assumption.</p>
   <p><b>Your documents never touch this page.</b> Nothing is uploaded, nothing is fetched, and the
-    page's security policy refuses every network call.</p>
+    page's security policy refuses each network call.</p>
   <p><b>These are our sealed readings. Now test them against yours.</b> The tool clones next to
     your files and measures them there: your CSV stays where it is, the report lands beside it.</p>
     </details>

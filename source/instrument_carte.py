@@ -9,13 +9,13 @@ hovered cell draws its interval and is read in a fixed side panel; the other hal
 painted by the same figures, for keyboard users and readers without a pointer.
 
 The three builders are line-for-line copies of each other; this module holds what they share so
-the chart is written once. Every figure comes from the tool's JSON; nothing is typed here."""
+the chart is written once. Each figure comes from the tool's JSON; nothing is typed here."""
 
 # ── the black page : overrides appended after each builder's own CSS ─────────────────────────
 CSS_NOIR = '''
   /* THE BLACK PAGE (Arslane, 9/09) : the tool's night becomes near-black, its colour stays in
      strokes, figures and glows ; the parchment section turns black with paper ink, the clone
-     terminal too. The variables are re-declared so every rule below inherits the change. */
+     terminal too. The variables are re-declared so each rule below inherits the change. */
   :root{--nuit-a:#1a1a1f;--nuit-b:#0e0e11;--nuit-c:#08080a;
     --papier:#0e0e11;--papier-haut:#121215;--encre:#e8e6df;--demi:#a5a39a;--pale:#8f8d84;
     --filet-clair:#2c2c33;--sur:#e8e6df;--sur-pale:#9a988f;--tenu:#7fd4a0}
@@ -134,8 +134,8 @@ CSS_NOIR = '''
 
 def carte_html(x_titre, y_titre):
     """The chart and its side panel, empty : the JS draws both from the embedded record."""
-    return f'''<p class="carte-aide">every point is one cell of the record : hover it to read it, click it to keep it, <b>pull the floor line</b> (or the slider below) and what holds the lower bound lights up</p>
-          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="{y_titre} of every tier at every {x_titre} of the public record, with the recall floor as a line"></svg></div>'''
+    return f'''<p class="carte-aide">each point is one cell of the record : hover it to read it, click it to keep it, <b>pull the floor line</b> (or the slider below) and what holds the lower bound lights up</p>
+          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="{y_titre} of each tier at each {x_titre} of the public record, with the recall floor as a line"></svg></div>'''
 
 
 PANNEAU_HTML = '''<aside class="pan" id="pan" aria-live="polite">
@@ -293,7 +293,7 @@ def js_carte(mot_x, mot_y, mot_fp):
 # THE TWO INSTRUMENTS WITHOUT A THRESHOLD GRID, same language (Arslane, 9/09 : « oui, les deux
 # comme ça ») : one chart, one line you drag, what holds lights up, a side panel reads the thing
 # under the pointer.
-#   VERT : every routing of the fields over the tiers (7^5 = 16 807, the ones optimise
+#   VERT : each routing of the fields over the tiers (7^5 = 16 807, the ones optimise
 #          enumerates) as a cloud of cost x accuracy, the frontier drawn, the BUDGET a vertical
 #          line you drag ; the best routing under it lights up and the panel names it field by
 #          field ; hovering a frontier point reads its routing, clicking it composes it.
@@ -347,8 +347,8 @@ CSS_ONYX = '''
   .pan .verdicts b{color:var(--sur);font-weight:500}
 '''
 
-CARTE_VERT_HTML = '''<p class="carte-aide">every dot is one routing of the five fields, priced and scored from the sealed bricks ; the line through the bright dots is the frontier no routing beats · <b>pull the budget line</b> (or the slider below), the best routing under it lights up · hover a frontier dot to read it, click it to compose it</p>
-          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="Every routing as cost against accuracy, the frontier, and the budget as a line"><g id="carte-nuage"></g><g id="carte-vif"></g></svg></div>'''
+CARTE_VERT_HTML = '''<p class="carte-aide">each dot is one routing of the five fields, priced and scored from the sealed bricks ; the line through the bright dots is the frontier no routing beats · <b>pull the budget line</b> (or the slider below), the best routing under it lights up · hover a frontier dot to read it, click it to compose it</p>
+          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="Each routing as cost against accuracy, the frontier, and the budget as a line"><g id="carte-nuage"></g><g id="carte-vif"></g></svg></div>'''
 
 PANNEAU_VERT_HTML = '''<aside class="pan" id="pan" aria-live="polite">
         <div class="qui">the routing under the pointer</div>
@@ -378,7 +378,7 @@ JS_VERT = '''
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   let viseV = null;                          /* the frontier point under the pointer */
   const budgetDe = () => Math.pow(10, parseFloat(curseur.value)) / 100;
-  /* the cloud, drawn ONCE : every routing, thinned to one in three (the eye cannot tell) */
+  /* the cloud, drawn ONCE : each routing, thinned to one in three (the eye cannot tell) */
   (() => {
     let h = ""; let i = 0;
     const marche = (k, r, cout, just) => {
@@ -388,7 +388,7 @@ JS_VERT = '''
     marche(0, {}, 0, 0);
     nuageG.innerHTML = '<g class="nuage">' + h + "</g>";
   })();
-  const memeR = (a, b) => F.every((f) => a[f] === b[f]);
+  const memeR = (a, b) => F.each((f) => a[f] === b[f]);
   function dessinerV() {
     const budget = budgetDe();
     let h = "";
@@ -498,7 +498,7 @@ JS_ONYX = '''
       const suivant = ORDRE.find((c) => !(c in tenu) || !tenu[c]);
       const jours = typeof d.joursDepuis === "number" ? " \\u00b7 measured " + d.joursDepuis + " day(s) ago" : "";
       const echeance = typeof d.joursDepuis === "number" ? (d.joursDepuis <= rythme ? " \\u00b7 due in " + (rythme - d.joursDepuis) + " day(s)" : " \\u00b7 <b>past a " + rythme + "-day rhythm</b>") : "";
-      if (suivant === undefined) lignes.push("<b>" + esc(q) + "</b>: every control held" + jours + echeance);
+      if (suivant === undefined) lignes.push("<b>" + esc(q) + "</b>: each control held" + jours + echeance);
       else { const v = verdictDe(q, suivant); lignes.push("<b>" + esc(q) + "</b>: state reached <b>" + esc(d.etat) + "</b>" + jours + " \\u00b7 next, <b>" + esc(suivant) + "</b>: " + (v ? esc(v.detail) : "not judged by the record")); }
     }
     $("#g-suivant").innerHTML = lignes.join("<br>") + (rythme === D.reglages.rythmeJours ? "" : "<br><span class=\\"tm-l\\">what-if at " + rythme + " days ; the dossier's declared rhythm is " + D.reglages.rythmeJours + "</span>");

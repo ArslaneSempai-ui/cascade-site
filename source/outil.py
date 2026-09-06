@@ -105,7 +105,7 @@ OUTILS = {
         # Routing vit sous routing/ comme Screening sous screening/
         "sous_dossier": "routing/",
         "prefixe_racine": "../",
-        "question": "Where should the next dollar&nbsp;go?",
+        "question": "Which model tier reads each identity field?",
         "palette": PALETTE_VERTE,
         "favicon_accent": "%2323543f",
         "robots": ("robot-penche.webp", "robot-agrippe.webp"),
@@ -119,8 +119,8 @@ OUTILS = {
         # TOUTE page ; ses teintes vivent ici parce que la page rubis aliase la
         # palette et que le pan vert doit y rester vert
         "page_hero": "HERO.html",
-        "etiquette": "Routing &#183; extraction",
-        "pitch": "Seven tiers, from a regular expression to a human, measured on sealed records.",
+        "etiquette": "Routing &#183; identity-field extraction",
+        "pitch": "Seven model tiers per field, from a regular expression to a human, measured on sealed records.",
         "robot_rideau": "robot-salut.webp",           # il salue (etats/robots-rideau.py)
         "vif": "#57b184",
         "nuit": ("#1b3229", "#14251e", "#0e1a15"),
@@ -165,7 +165,7 @@ OUTILS = {
         # exactement comme le rouge avant le sien
         "depot": "https://github.com/ArslaneSempai-ui/cascade-monitoring",
         "page_hero": "HERO-MONITORING.html",
-        "etiquette": "Monitoring &#183; transactions",
+        "etiquette": "Monitoring &#183; transaction monitoring",
         "pitch": "Seven scenarios, from a bare amount to a peer profile, measured on your own dispositioned alerts.",
         "robot_rideau": "robot-lapis-montre.webp",    # il montre (rendu du chef)
         # l'affiche : plaque lapis (affiche-plaque.py --accent lapis) + les deux chiffres
@@ -205,7 +205,7 @@ OUTILS = {
         "nom": "Dossier",
         "sous_dossier": "dossier/",
         "prefixe_racine": "../",
-        "question": "Is the whole chain measured, sealed and fresh?",
+        "question": "Is the whole chain measured, signed and current?",
         "palette": PALETTE_ONYX,
         "favicon_accent": "%231c1c22",
         "robots": ("robot-onyx-penche.webp", "robot-onyx-tient.webp"),
@@ -213,8 +213,8 @@ OUTILS = {
         "outil_chemin": _MAISON / "cascade-dossier",
         "depot": "https://github.com/ArslaneSempai-ui/cascade-dossier",
         "page_hero": "HERO-DOSSIER.html",
-        "etiquette": "Dossier &#183; the regulator&#8217;s piece",
-        "pitch": "Four sealed answers, five controls, one dossier a reviewer verifies without us.",
+        "etiquette": "Dossier &#183; the audit dossier",
+        "pitch": "Four signed reports, five controls, one dossier a reviewer verifies without us.",
         "robot_rideau": "robot-onyx-tient.webp",        # il tient la pièce
         "affiche": "affiche-dossier.jpg",
         "affiche_encre": "#2a2a31",                    # le gris vif de l'onyx s'efface sur la plaque : l'encre projetée est plus sombre

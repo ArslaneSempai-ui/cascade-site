@@ -326,7 +326,7 @@ ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
 PHRASE_ABSENTS = (
     f"a matcher absent from tonight&#8217;s registry ({ABSENTS}) is a named row, never a guessed column"
     if ABSENTS else
-    "every matcher of the registry is present tonight; an absent one would be a named row, "
+    "each matcher of the registry is present tonight; an absent one would be a named row, "
     "never a guessed column")
 
 PAGE = f'''<!doctype html><html lang="en">
@@ -334,10 +334,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Screening: the live instrument">
-<meta property="og:description" content="Every matcher at every threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
+<meta property="og:description" content="Each matcher at each threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
 <meta property="og:url" content="https://cascade-routing.com/screening/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Every matcher at every threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
+<meta name="description" content="Each matcher at each threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23180b0f'/%3E%3Cpath d='M16 0v16H0z' fill='%237a1f2e'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
@@ -357,8 +357,8 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section class="tete">
   <div class="colonne">
-    <h1 class="h1">Every matcher at every threshold, live.</h1>
-    <p class="lede">Every figure on this page comes from the <b>sealed public record</b> of
+    <h1 class="h1">Each matcher at each threshold, live.</h1>
+    <p class="lede">Each figure on this page comes from the <b>sealed public record</b> of
       cascade-screening: pairs the repository wrote itself, hard negatives included, measured
       by its own matchers. No client data exists here, nothing enters and nothing leaves,
       and each figure is recomputed from the sealed record as the page loads.</p>
@@ -433,7 +433,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <li><b>Your data.</b> This page cannot read it: no network requests leave it
         (connect-src &#8216;none&#8217;), no third-party resource is loaded, and there is no input
         field to paste a name into.</li>
-      <li><b>Bare rates.</b> Every cell carries its n and its 95&nbsp;% interval; {PHRASE_ABSENTS}.</li>
+      <li><b>Bare rates.</b> Each cell carries its n and its 95&nbsp;% interval; {PHRASE_ABSENTS}.</li>
     </ul>
       </details>
     </div>

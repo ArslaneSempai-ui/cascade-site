@@ -258,7 +258,7 @@ JS = '''
       const suivant = ORDRE.find((c) => !(c in tenu) || !tenu[c]);
       const jours = typeof d.joursDepuis === "number" ? " \\u00b7 measured " + d.joursDepuis + " day(s) ago" : "";
       if (suivant === undefined) {
-        lignes.push("<b>" + q + "</b>: every control held" + jours);
+        lignes.push("<b>" + q + "</b>: each control held" + jours);
       } else {
         const v = verdictDe(q, suivant);
         lignes.push("<b>" + q + "</b>: state reached <b>" + d.etat + "</b>" + jours
@@ -328,7 +328,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">The whole chain in one table, live.</h1>
-    <p class="lede">Every line on this page comes from the <b>sealed public dossier</b> of
+    <p class="lede">Each line on this page comes from the <b>sealed public dossier</b> of
       cascade-dossier: the suite&#8217;s own public records, read and judged by its five controls.
       No client data exists here, nothing enters and nothing leaves,
       and each figure is recomputed from the sealed record as the page loads.</p>
@@ -376,7 +376,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <li><b>The sealed public dossier.</b> releve-public.json in the repository, fingerprint
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
         on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
-        then recomposes every question&#8217;s state from its own verdicts with the contract&#8217;s
+        then recomposes each question&#8217;s state from its own verdicts with the contract&#8217;s
         no-gap rule, and does not emit if a single line disagrees.</li>
       <li><b>The suite&#8217;s own public records.</b> The reports judged here are the public
         records of Cascade&#8217;s tools (the reader, the matcher, the scenario, the factor):
@@ -395,7 +395,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <li><b>Your data.</b> This page cannot read it: no network requests leave it
         (connect-src &#8216;none&#8217;), no third-party resource is loaded, and there is no input
         field to paste a report into.</li>
-      <li><b>A verdict without its sentence.</b> Every cell opens into the record&#8217;s own
+      <li><b>A verdict without its sentence.</b> Each cell opens into the record&#8217;s own
         words: what was checked, on which file, and what the next control still needs.</li>
     </ul>
       </details>
