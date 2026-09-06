@@ -106,6 +106,10 @@ _ts = subprocess.run([sys.executable, str(MAQ / "temoin-sequences.py")],
                      capture_output=True, text=True)
 if _ts.returncode != 0:
     sys.exit(f"GARDE CASSÉE : un témoin des gardes de séquences ne rougit plus :\n{_ts.stdout}{_ts.stderr}")
+# la garde « les étiquettes sur le crème » (Arslane, 9/09) : même preuve avant de croire manques()
+_te = subprocess.run([sys.executable, str(MAQ / "temoin-etiquettes.py")], capture_output=True, text=True)
+if _te.returncode != 0:
+    sys.exit(f"GARDE CASSÉE : le témoin des étiquettes ne rougit plus :\n{_te.stdout}{_te.stderr}")
 
 # ── docs/ : les pages, renommées, liens réécrits ─────────────────────────────
 if DOCS.exists():

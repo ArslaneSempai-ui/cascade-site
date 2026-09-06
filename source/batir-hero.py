@@ -47,7 +47,7 @@ if not _m:
     sys.exit("le compte de tests est introuvable dans le README de l'outil : refus de le recopier")
 N_TESTS, N_FICHIERS = _m.group(1), _m.group(2)
 
-from outil import SCEAU_ROUTING
+from outil import SCEAU_ROUTING, etiquette_sur_objet, SEUIL_OBJET
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-routing"
 
@@ -176,6 +176,12 @@ def appels_html(i):
     lignes, etiquettes = "", ""
     for (ax, ay, lx, ly, txt) in APPELS[i]:
         verifier_appel(txt, f"routing, scène {i + 1}")
+        # l'étiquette sur le crème, jamais sur l'objet (Arslane, 9/09) : même garde que les quatre outils
+        image_v = BASE / "rendus" / "etats" / f"objet-0{i + 1}.webp"
+        if image_v.exists():
+            part = etiquette_sur_objet(image_v, lx, ly)
+            if part > SEUIL_OBJET:
+                sys.exit(f"routing, scène {i + 1} : l'étiquette « {txt} » couvre l'objet ({part:.0%}) : la poser sur le crème")
         x1, y1 = MX + lx * IW, ly * IH
         x2, y2 = MX + ax * IW, ay * IH
         lignes += (f'<line x1="{x1:.0f}" y1="{y1:.0f}" x2="{x2:.0f}" y2="{y2:.0f}" pathLength="1"/>'

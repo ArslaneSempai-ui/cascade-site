@@ -281,6 +281,7 @@ def manques(outil_id, base):
         m += [f"rendus/etats/{ICONES_PREFIXE[outil_id]}-{n}.webp" for n in ICONES_NOMS
               if not (base / "rendus" / "etats" / f"{ICONES_PREFIXE[outil_id]}-{n}.webp").exists()]
     m += manques_sequences(outil_id, base)
+    m += manques_etiquettes(outil_id, base)
     return m
 
 
@@ -418,3 +419,75 @@ def lien(outil, cible):
     sous-dossier quand il y en a un. Les liens entre pages d'un même outil ne
     passent pas ici : ils restent nus, sœurs de dossier."""
     return outil["prefixe_racine"] + cible
+
+
+# ── LES ÉTIQUETTES SUR LE CRÈME, JAMAIS SUR L'OBJET (Arslane, 9/09 : « les infos directement
+# sur le modèle, ça les rend illisibles ; mets-les toujours sur le fond crème ») ──────────
+# Une annotation est une pointe (ax, ay) SUR l'objet et une étiquette (lx, ly) à côté. Depuis
+# les gros plans, l'objet remplit l'image et une étiquette posée au hasard tombe dessus. La
+# règle est mécanique : l'alpha de l'image d'état est lu sous la boîte de l'étiquette ; plus
+# d'un dixième de pixels d'objet, et le bloc de l'outil n'est pas prêt (manques()).
+# Géométrie du héros (batir-hero.py) : viewBox 1420×1000, l'image (rapport 1374/1120) centrée ;
+# une chip .ap-eti fait au plus 240 px sur 2 lignes dans une scène de ~744 px pour 1420 unités.
+IW_ANNOT = 1000.0 * (1374 / 1120)
+MX_ANNOT = (1420 - IW_ANNOT) / 2
+CHIP_DEMI = (229, 41)          # demi-largeur, demi-hauteur d'une chip pleine, en unités du viewBox
+SEUIL_OBJET = 0.10             # part de pixels d'objet tolérée sous l'étiquette
+_ALPHAS = {}
+
+
+def alpha_webp(chemin):
+    """(W, H, alpha) d'un webp, par dwebp (libwebp) ; mis en cache par chemin."""
+    import subprocess
+    chemin = str(chemin)
+    if chemin in _ALPHAS:
+        return _ALPHAS[chemin]
+    brut = subprocess.run(["dwebp", chemin, "-pam", "-o", "-"], capture_output=True, check=True).stdout
+    fin = brut.index(b"ENDHDR\n") + 7
+    tete = dict(l.split(" ", 1) for l in brut[:fin].decode().splitlines() if " " in l)
+    W, H, prof = int(tete["WIDTH"]), int(tete["HEIGHT"]), int(tete["DEPTH"])
+    px = brut[fin:]
+    alpha = px[prof - 1::prof] if prof == 4 else bytes([255]) * (W * H)
+    _ALPHAS[chemin] = (W, H, alpha)
+    return _ALPHAS[chemin]
+
+
+def etiquette_sur_objet(image, lx, ly, demi=CHIP_DEMI):
+    """La part de pixels d'OBJET (alpha > 40) sous la boîte de l'étiquette centrée en (lx, ly),
+    coordonnées relatives à l'image comme dans findings-*.json. Hors de l'image = du crème."""
+    W, H, alpha = alpha_webp(image)
+    cx, cy = MX_ANNOT + lx * IW_ANNOT, ly * 1000.0
+    ex = W / IW_ANNOT
+    x0, x1 = int((cx - demi[0] - MX_ANNOT) * ex), int((cx + demi[0] - MX_ANNOT) * ex)
+    y0, y1 = int((cy - demi[1]) * H / 1000.0), int((cy + demi[1]) * H / 1000.0)
+    total = max(1, (x1 - x0) * (y1 - y0))
+    objet = 0
+    for y in range(max(0, y0), min(H, y1)):
+        ligne = alpha[y * W + max(0, x0): y * W + min(W, x1)]
+        objet += sum(1 for a in ligne if a > 40)
+    return objet / total
+
+
+def manques_etiquettes(outil_id, base, seuil=SEUIL_OBJET):
+    """Chaque étiquette de findings-<outil>.json doit être sur le crème de SON image d'état."""
+    base = pathlib.Path(base)
+    chemin_f = base / f"findings-{outil_id}.json"
+    if outil_id == "routing" or not chemin_f.exists():
+        return []
+    try:
+        f = json.loads(chemin_f.read_text())
+    except ValueError:
+        return []
+    findings = f["findings"] if isinstance(f, dict) and "findings" in f else f
+    prefixe = ETATS_PREFIXE[outil_id]
+    m = []
+    for i, fd in enumerate(findings if isinstance(findings, list) else []):
+        image = base / "rendus" / "etats" / f"{prefixe}-0{i + 1}.webp"
+        if not image.exists():
+            continue
+        for (ax, ay, lx, ly, txt) in fd.get("annotations", []):
+            part = etiquette_sur_objet(image, lx, ly)
+            if part > seuil:
+                m.append(f"findings-{outil_id}.json, finding {fd.get('num', i + 1)} : l'étiquette « {txt[:38]}… » "
+                         f"couvre l'objet ({part:.0%} de pixels d'objet sous elle) : à poser sur le crème")
+    return m
