@@ -1090,7 +1090,10 @@ PAGE = f'''<!doctype html><html lang="en">
   <h2 class="h2">The live instrument, on the sealed record.</h2>
   {affiche_html("paliers", LANDING, [], "INSTRUMENT.html", "Cascade &#183; Routing",
                 "Each field at each tier, accuracy and cost read live from the sealed record, and a budget line you pull the way the tool chooses.",
-                "rendus/robot-vert-regarde.webp")}
+                "rendus/robot-vert-regarde.webp",
+                note=f"Measured on {N_SOCLE:,} held-out records for rules, small and large, {N_GEN} for the generative tiers. "
+                     f"The human tier is assumed at {qte(HUMAIN)} % until you measure it: "
+                     "<code>npm run measure:humans</code> grades your own reviewers. The rings mark the published routing.")}
 </div></section>
 
 <div class="couture" aria-hidden="true"><div class="colonne">
@@ -1520,6 +1523,27 @@ def _rail_outil(o, spec, findings):
     return f'<nav class="rail" aria-label="Findings"><span class="jauge" aria-hidden="true"><i></i></span><ul>{items}</ul></nav>'
 
 
+def _note_outil(spec, releve, findings):
+    """La base de la mesure sous l'affiche (la grille la portait ; l'affiche la garde, sinon la
+    page ne dit plus sur combien de paires les chiffres tiennent) : les effectifs du relevé, la
+    cellule retenue par la règle de l'outil quand elle existe."""
+    src = findings[2].get("source", {}).get("a") or {} if len(findings) > 2 else {}
+    palier_f, seuil_f = src.get("palier"), src.get("seuil")
+    auth = releve["authored"]
+    unites = spec["table_note_unites"].format(
+        nMatch=auth.get("nMatch", auth.get("nSuspicious", auth.get("nEscalated"))),
+        nDifferent=auth.get("nDifferent", auth.get("nBenign", auth.get("nMaintained"))))
+    champ_cite = src.get("champ", "taux")
+    if palier_f and champ_cite == "taux":
+        choix = f"The ring marks the cell the tool retains under its default rule, {palier_f} at {seuil_f}."
+    elif palier_f:
+        choix = (f"The marked cell, {palier_f} at {seuil_f}, carries the strongest recall lower bound; "
+                 "under its default rule the tool retains no cell at the recall floor on these cases.")
+    else:
+        choix = "Under its default rule the tool retains no cell at the recall floor on these cases."
+    return f"{unites}: recall of each {spec['table_ligne']} at each threshold. {choix} The synthetic variants stay apart, on the instrument."
+
+
 def _table_outil(spec, releve, findings):
     """La grille de l'outil sur son héros, comme le vert montre la sienne : chaque palier
     présent, à sept seuils dont celui de la frontière quand elle EXISTE, rappel sur
@@ -1726,7 +1750,8 @@ def batir_outil_catalogue(o, spec):
 <section class="instrument" data-commun="instrument"><div class="colonne">
   <h2 class="h2">The live instrument, on the sealed record.</h2>
   {affiche_html("horloge" if o["id"] == "dossier" else "courbes", RELEVE, FINDINGS, spec["instrument_page"],
-                spec["instrument_eti"], spec["instrument_sub"], "../rendus/robot-" + ICONES_COULEUR[o["id"]] + "-regarde.webp")}
+                spec["instrument_eti"], spec["instrument_sub"], "../rendus/robot-" + ICONES_COULEUR[o["id"]] + "-regarde.webp",
+                note="" if o["id"] == "dossier" else _note_outil(spec, RELEVE, FINDINGS))}
 </div></section>
 
 <div class="couture" aria-hidden="true"><div class="colonne">

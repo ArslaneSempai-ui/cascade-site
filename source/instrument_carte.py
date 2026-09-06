@@ -570,6 +570,7 @@ CSS_AFFICHE = '''
   .affiche-carte .nom{fill:var(--sur-vert-pale);font-size:11px}
   .affiche-carte .nom.fort{fill:var(--sur-vert)}
   .affiche-carte .pierre{fill:var(--vert-vif);stroke:var(--vert-clair);stroke-width:2}
+  .affiche-col .t-note{margin:18px 4px 0;max-width:80ch}
   .affiche-texte{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
   .affiche-texte .ouvrir-t{font-size:clamp(24px,2.6vw,36px)}
   .affiche-texte .fl{margin:14px 0 0;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;
@@ -667,7 +668,7 @@ def _svg_horloge(releve):
     return f'<svg viewBox="0 0 {W} {H}" aria-hidden="true">{out}</svg>'
 
 
-def affiche_html(sorte, donnees, findings, page, eti, sous, robot):
+def affiche_html(sorte, donnees, findings, page, eti, sous, robot, note=""):
     """L'affiche : la carte statique de l'outil (sorte : courbes | paliers | horloge), le robot
     de la couleur penché sur son bord, le bouton en valeur. `robot` est le chemin de l'image."""
     svg = {"courbes": lambda: _svg_courbes(donnees, findings),
@@ -680,4 +681,5 @@ def affiche_html(sorte, donnees, findings, page, eti, sous, robot):
       <div class="affiche-texte"><span class="ouvrir-eti">{eti}</span><span class="ouvrir-t">Open the live instrument</span>
         <span class="ouvrir-s">{sous}</span><span class="fl" aria-hidden="true">&#8594;</span></div>
     </a>
+    {f'<p class="t-note">{note}</p>' if note else ""}
   </div>'''
