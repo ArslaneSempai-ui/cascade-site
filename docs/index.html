@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-DM+Dj/xzXJ+1NSFPq+8ZOAl0phPyuvS9HtTnku8DAiM=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-1E1qkgmdPlQyuvKKBY3/pD5zBGwiNLt3HF/GxGixoEU='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-2TKlQqrdF8XVFRZcvkp6XHlPiLFTPnp8Q2fk1Mn3sEk=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-1E1qkgmdPlQyuvKKBY3/pD5zBGwiNLt3HF/GxGixoEU='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; measured instruments for compliance</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/">
@@ -76,6 +76,9 @@
   .hero .cue{color:var(--sur-vert-pale)}
   .marque-h{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--sur-vert-pale)}
+  /* depuis la copy (10/09) un titre de héros est une phrase entière : au-delà de 48 caractères
+     il prend une taille plus basse et une mesure plus large, trois ou quatre lignes, pas cinq */
+  .h1.h1-long{font-size:clamp(34px,4.6vw,64px);max-width:24ch}
   .h1{font-size:clamp(44px,7vw,92px);font-weight:600;letter-spacing:-.02em;line-height:1.02;
     text-wrap:balance;max-width:14ch}
   .lede{font-size:clamp(16px,1.35vw,19px);color:var(--demi);max-width:78ch;line-height:1.6;text-wrap:balance}
@@ -507,7 +510,7 @@
 <main>
 <section class="hero">
   <span class="marque-h entree">Cascade &#183; five instruments, one method</span>
-  <h1 class="h1 entree">Measure each model tier's accuracy and cost, on your own records.</h1>
+  <h1 class="h1 entree h1-long">Measure each model tier's accuracy and cost, on your own records.</h1>
   <p class="lede entree">Cascade routes each identity field to a model tier, from a regular expression to a
     human, and measures the accuracy and cost of every routing on a sealed public record. The same run
     repeats on your own files, at your desk.</p>

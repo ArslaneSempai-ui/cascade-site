@@ -321,6 +321,9 @@ CSS = '''
   .hero .cue{color:var(--sur-vert-pale)}
   .marque-h{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--sur-vert-pale)}
+  /* depuis la copy (10/09) un titre de héros est une phrase entière : au-delà de 48 caractères
+     il prend une taille plus basse et une mesure plus large, trois ou quatre lignes, pas cinq */
+  .h1.h1-long{font-size:clamp(34px,4.6vw,64px);max-width:24ch}
   .h1{font-size:clamp(44px,7vw,92px);font-weight:600;letter-spacing:-.02em;line-height:1.02;
     text-wrap:balance;max-width:14ch}
   .lede{font-size:clamp(16px,1.35vw,19px);color:var(--demi);max-width:78ch;line-height:1.6;text-wrap:balance}
@@ -1063,7 +1066,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <main>
 <section class="hero">
-  <h1 class="h1 entree">Measure each model tier's accuracy and cost, field by field.</h1>
+  <h1 class="h1 entree h1-long">Measure each model tier's accuracy and cost, field by field.</h1>
   <p class="lede entree">Seven model tiers, from a regular expression to a human, measured on your own records.<br>
     The answer is rarely &ldquo;buy the bigger model&rdquo;; each figure carries its base and its n.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
@@ -1188,7 +1191,7 @@ def batir_accueil():
 <main>
 <section class="hero">
   <span class="marque-h entree">Cascade &#183; {n} instruments, one method</span>
-  <h1 class="h1 entree">Measure each model tier's accuracy and cost, on your own records.</h1>
+  <h1 class="h1 entree h1-long">Measure each model tier's accuracy and cost, on your own records.</h1>
   <p class="lede entree">Cascade routes each identity field to a model tier, from a regular expression to a
     human, and measures the accuracy and cost of every routing on a sealed public record. The same run
     repeats on your own files, at your desk.</p>
@@ -1728,7 +1731,7 @@ def batir_outil_catalogue(o, spec):
 
 <main>
 <section class="hero">
-  <h1 class="h1 entree">{spec["h1"]}</h1>
+  <h1 class="h1 entree{" h1-long" if len(spec["h1"]) > 48 else ""}">{spec["h1"]}</h1>
   <p class="lede entree">{spec["lede"]}</p>
   <div class="commande entree" role="group" aria-label="{spec["aria_commande"]}">
     {commandes_html}
