@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-mq45Zbt6nc0wHzPfz5AXG0ldBdKAfhs01+B/HQ+B2UE=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-IBfMpx6fh8WQmy9u/OlyCG6Yh98O0RfPmyNa6ylKhas='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-vzF4/slbcasjuC71tMm3JNtu9OmYRR9+lqfPGSQQGOU=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-IBfMpx6fh8WQmy9u/OlyCG6Yh98O0RfPmyNa6ylKhas='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/instrument.html">
@@ -215,7 +215,10 @@
   /* over the window's right edge the robot sat on the title (the panel took the width) : it
      leans over the PANEL's card, at the far right, and looks left, at the chart */
   .pan-col{position:relative}
-  .rb{right:-24px;left:auto;width:340px;top:-262px;z-index:2;
+  /* 10/09 : le panneau descend d'un cran pour une visibilité entière, le robot descend avec lui
+     (pose « regarde », la tête tournée vers la carte à sa gauche) */
+  @media (min-width:981px){.pan{margin-top:120px}}
+  .rb{right:-24px;left:auto;width:340px;top:-150px;z-index:2;
     filter:drop-shadow(0 26px 44px rgba(0,0,0,.85)) brightness(.92)}
   @media (max-width:980px){.rb{display:none}}
   /* as wide as the robot allows (three lines at 1440), never the old 52ch block */
@@ -275,6 +278,33 @@
   .pan .plancher b{color:var(--accent-clair);font-size:19px;font-weight:500}
   .pan .tenu{color:var(--tenu)} .pan .pas{color:var(--accent-clair)}
   @media (prefers-reduced-motion:reduce){.caret{animation:none}}
+
+  /* LE BAS DE PAGE (Arslane, 10/09 : « le terminal en couleur à droite, sur toutes les couleurs ;
+     la partie droite est trop vide, c'est un long scroll ; les trucs en liste ouvrable ») : deux
+     colonnes, les listes deviennent des plis qui s'ouvrent au clic, le terminal des trois
+     commandes tient la colonne de droite, collant, dans la couleur de l'outil */
+  .basse-grille,.reserves-grille{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:56px;align-items:start}
+  @media (max-width:980px){.basse-grille,.reserves-grille{grid-template-columns:minmax(0,1fr)}}
+  .plis{border-top:1px solid #232328}
+  .pli{border-bottom:1px solid #232328}
+  .pli summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    padding:20px 0;font-family:var(--texte);font-size:clamp(20px,2vw,26px);font-weight:600;letter-spacing:-.012em;color:var(--encre)}
+  .pli summary::-webkit-details-marker{display:none}
+  .pli summary::after{content:"+";font-family:var(--mono);font-size:22px;font-weight:400;color:var(--accent-vif);flex:none}
+  .pli[open] summary::after{content:"−"}
+  .pli summary:hover{color:var(--accent-clair)}
+  .pli ul,.pli p{margin:0 0 22px}
+  .clone-col{position:sticky;top:24px}
+  .clone-col h2{margin:0 0 12px}
+  .clone-col p{margin:0 0 18px}
+  .clone-col .clone-t{margin-top:0}
+  .basse .clone,.reserves .term{max-width:none;border-color:color-mix(in srgb,var(--accent-vif) 60%,transparent);
+    background:linear-gradient(163deg,color-mix(in srgb,var(--accent-titre) 60%,#0e0e11),color-mix(in srgb,var(--accent-titre) 22%,#0e0e11));
+    box-shadow:0 30px 70px rgba(0,0,0,.55),inset 0 1px 0 color-mix(in srgb,var(--accent-clair) 20%,transparent)}
+  .basse .clone .ps,.reserves .term-corps .cmd::before{color:var(--accent-clair)}
+  .basse .clone .note,.reserves .term-corps .sortie{color:color-mix(in srgb,var(--accent-clair) 70%,var(--sur-pale))}
+  .reserves .term-bar{background:color-mix(in srgb,var(--accent-vif) 22%,transparent)}
+  .reserves .ouvrir-ligne{justify-content:flex-start;margin-top:22px}
 
   /* the vert names its colours differently : aliased so the shared chart rules apply */
   :root{--accent-titre:var(--vert-titre);--accent-vif:var(--vert-vif);--accent-clair:var(--vert-clair);
@@ -376,8 +406,9 @@
 </div></section>
 </main>
 
-<section class="reserves"><div class="colonne">
-  <h2>What this instrument rests on, and what it refuses.</h2>
+<section class="reserves"><div class="colonne reserves-grille">
+  <div class="plis">
+    <details class="pli" open><summary>What this instrument rests on, and what it refuses.</summary>
   <p><b>The prices are assumed, and say so.</b> The small and large tiers use assumed per-call
     rates. The generative tiers use their measured latency against an assumed machine cost. The
     human tier uses an assumed pace and salary. <b>Change the assumptions and the dollars move.
@@ -392,6 +423,9 @@
     page's security policy refuses every network call.</p>
   <p><b>These are our sealed readings. Now test them against yours.</b> The tool clones next to
     your files and measures them there: your CSV stays where it is, the report lands beside it.</p>
+    </details>
+  </div>
+  <aside class="clone-col">
   <div class="vos" role="group" aria-label="The three commands that measure your own records">
     <span class="vos-t">The three commands, exactly as they run</span>
     <div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div>
@@ -403,6 +437,7 @@
     </div></div>
   </div>
   <div class="ouvrir-ligne"><a class="ouvrir" href="https://github.com/ArslaneSempai-ui/cascade-routing">Run it on your records <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+  </aside>
 </div></section>
 
 <footer class="pied"><div class="colonne">

@@ -394,8 +394,9 @@ PAGE = f'''<!doctype html><html lang="en">
 </div></section>
 </main>
 
-<section class="reserves"><div class="colonne">
-  <h2>What this instrument rests on, and what it refuses.</h2>
+<section class="reserves"><div class="colonne reserves-grille">
+  <div class="plis">
+    <details class="pli" open><summary>What this instrument rests on, and what it refuses.</summary>
   <p><b>The prices are assumed, and say so.</b> The small and large tiers use assumed per-call
     rates. The generative tiers use their measured latency against an assumed machine cost. The
     human tier uses an assumed pace and salary. <b>Change the assumptions and the dollars move.
@@ -410,6 +411,9 @@ PAGE = f'''<!doctype html><html lang="en">
     page's security policy refuses every network call.</p>
   <p><b>These are our sealed readings. Now test them against yours.</b> The tool clones next to
     your files and measures them there: your CSV stays where it is, the report lands beside it.</p>
+    </details>
+  </div>
+  <aside class="clone-col">
   <div class="vos" role="group" aria-label="The three commands that measure your own records">
     <span class="vos-t">The three commands, exactly as they run</span>
     <div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div>
@@ -421,6 +425,7 @@ PAGE = f'''<!doctype html><html lang="en">
     </div></div>
   </div>
   <div class="ouvrir-ligne"><a class="ouvrir" href="{DEPOT_URL}">Run it on your records <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+  </aside>
 </div></section>
 
 <footer class="pied"><div class="colonne">

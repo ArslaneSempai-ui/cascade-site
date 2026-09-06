@@ -39,7 +39,10 @@ CSS_NOIR = '''
   /* over the window's right edge the robot sat on the title (the panel took the width) : it
      leans over the PANEL's card, at the far right, and looks left, at the chart */
   .pan-col{position:relative}
-  .rb{right:-24px;left:auto;width:340px;top:-262px;z-index:2;
+  /* 10/09 : le panneau descend d'un cran pour une visibilité entière, le robot descend avec lui
+     (pose « regarde », la tête tournée vers la carte à sa gauche) */
+  @media (min-width:981px){.pan{margin-top:120px}}
+  .rb{right:-24px;left:auto;width:340px;top:-150px;z-index:2;
     filter:drop-shadow(0 26px 44px rgba(0,0,0,.85)) brightness(.92)}
   @media (max-width:980px){.rb{display:none}}
   /* as wide as the robot allows (three lines at 1440), never the old 52ch block */
@@ -99,6 +102,33 @@ CSS_NOIR = '''
   .pan .plancher b{color:var(--accent-clair);font-size:19px;font-weight:500}
   .pan .tenu{color:var(--tenu)} .pan .pas{color:var(--accent-clair)}
   @media (prefers-reduced-motion:reduce){.caret{animation:none}}
+
+  /* LE BAS DE PAGE (Arslane, 10/09 : « le terminal en couleur à droite, sur toutes les couleurs ;
+     la partie droite est trop vide, c'est un long scroll ; les trucs en liste ouvrable ») : deux
+     colonnes, les listes deviennent des plis qui s'ouvrent au clic, le terminal des trois
+     commandes tient la colonne de droite, collant, dans la couleur de l'outil */
+  .basse-grille,.reserves-grille{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:56px;align-items:start}
+  @media (max-width:980px){.basse-grille,.reserves-grille{grid-template-columns:minmax(0,1fr)}}
+  .plis{border-top:1px solid #232328}
+  .pli{border-bottom:1px solid #232328}
+  .pli summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    padding:20px 0;font-family:var(--texte);font-size:clamp(20px,2vw,26px);font-weight:600;letter-spacing:-.012em;color:var(--encre)}
+  .pli summary::-webkit-details-marker{display:none}
+  .pli summary::after{content:"+";font-family:var(--mono);font-size:22px;font-weight:400;color:var(--accent-vif);flex:none}
+  .pli[open] summary::after{content:"−"}
+  .pli summary:hover{color:var(--accent-clair)}
+  .pli ul,.pli p{margin:0 0 22px}
+  .clone-col{position:sticky;top:24px}
+  .clone-col h2{margin:0 0 12px}
+  .clone-col p{margin:0 0 18px}
+  .clone-col .clone-t{margin-top:0}
+  .basse .clone,.reserves .term{max-width:none;border-color:color-mix(in srgb,var(--accent-vif) 60%,transparent);
+    background:linear-gradient(163deg,color-mix(in srgb,var(--accent-titre) 60%,#0e0e11),color-mix(in srgb,var(--accent-titre) 22%,#0e0e11));
+    box-shadow:0 30px 70px rgba(0,0,0,.55),inset 0 1px 0 color-mix(in srgb,var(--accent-clair) 20%,transparent)}
+  .basse .clone .ps,.reserves .term-corps .cmd::before{color:var(--accent-clair)}
+  .basse .clone .note,.reserves .term-corps .sortie{color:color-mix(in srgb,var(--accent-clair) 70%,var(--sur-pale))}
+  .reserves .term-bar{background:color-mix(in srgb,var(--accent-vif) 22%,transparent)}
+  .reserves .ouvrir-ligne{justify-content:flex-start;margin-top:22px}
 '''
 
 
@@ -502,3 +532,152 @@ JS_ONYX = '''
   carte.addEventListener("click", (ev) => { if (tireO) return; const q = pierreDe(ev); if (!q) return; const cel = cells.find((x) => x.dataset.q === q && x.dataset.c === "fresh") || cells.find((x) => x.dataset.q === q); if (cel) lire(cel); });
   dessinerO(); peindrePanneauO(); suivantesO();
 '''
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════════════
+# L'AFFICHE DE L'INSTRUMENT sur les héros (Arslane, 10/09 : « la liste en bloc est imposante
+# mais ne sert pas à grand-chose ; notre outil est plus beau que son affiche »). La grille
+# palier × seuil quitte le héros ; à sa place, une affiche qui ressemble à l'outil : la même
+# carte que l'instrument, STATIQUE, dessinée par Python depuis le relevé scellé (aucun chiffre
+# tapé), le robot de la couleur penché sur son bord, le bouton « Open the live instrument » en
+# valeur. Les nombres exacts restent sur l'instrument ; l'affiche donne la forme.
+# ═══════════════════════════════════════════════════════════════════════════════════════════
+
+CSS_AFFICHE = '''
+  .instrument .h2{max-width:22ch}     /* le titre reste à gauche du robot qui penche sur l'affiche */
+  .affiche-col{position:relative;margin-top:36px}
+  .affiche-robot{position:absolute;right:26px;top:-206px;width:300px;height:auto;z-index:1;pointer-events:none;
+    filter:drop-shadow(0 26px 44px rgba(0,0,0,.7)) brightness(.94)}
+  .affiche{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.85fr);
+    gap:36px;align-items:end;padding:30px 36px 34px;border-radius:18px;text-decoration:none;color:var(--sur-vert);
+    background:linear-gradient(180deg,color-mix(in srgb,var(--nuit-a) 72%,var(--nuit-b)),var(--nuit-b));
+    border:1px solid color-mix(in srgb,var(--vert-vif) 42%,transparent);
+    box-shadow:0 40px 100px rgba(0,0,0,.55);transition:transform .4s var(--montee),border-color .3s,box-shadow .4s var(--montee)}
+  .affiche:hover,.affiche:focus-visible{transform:translateY(-3px);border-color:color-mix(in srgb,var(--vert-vif) 75%,transparent);
+    box-shadow:0 50px 120px color-mix(in srgb,var(--vert-vif) 16%,transparent)}
+  .affiche-carte{min-width:0}
+  .affiche-carte svg{display:block;width:100%;height:auto;font-family:var(--mono)}
+  .affiche-carte .ax{fill:var(--sur-vert-pale);font-size:10.5px}
+  .affiche-carte .gr{stroke:color-mix(in srgb,var(--sur-vert) 10%,transparent);stroke-width:1}
+  .affiche-carte .cb{fill:none;stroke:color-mix(in srgb,var(--sur-vert) 32%,transparent);stroke-width:1.3}
+  .affiche-carte .cb.fort{stroke:var(--sur-vert);stroke-width:2}
+  .affiche-carte .pt{fill:var(--nuit-c);stroke:color-mix(in srgb,var(--sur-vert) 45%,transparent);stroke-width:1.2}
+  .affiche-carte .pt.fort{fill:var(--vert-vif);stroke:var(--vert-clair);stroke-width:2}
+  .affiche-carte .anneau{fill:none;stroke:var(--vert-vif);stroke-width:2.5}
+  .affiche-carte .ligne{stroke:var(--vert-clair);stroke-width:1.5}
+  .affiche-carte .zone{fill:var(--vert-vif);opacity:.07}
+  .affiche-carte .eti{fill:var(--vert-clair);font-size:11px}
+  .affiche-carte .nom{fill:var(--sur-vert-pale);font-size:11px}
+  .affiche-carte .nom.fort{fill:var(--sur-vert)}
+  .affiche-carte .pierre{fill:var(--vert-vif);stroke:var(--vert-clair);stroke-width:2}
+  .affiche-texte{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+  .affiche-texte .ouvrir-t{font-size:clamp(24px,2.6vw,36px)}
+  .affiche-texte .fl{margin:14px 0 0;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;
+    font-family:var(--sans);font-size:36px;color:var(--vert-clair);border:1px solid color-mix(in srgb,var(--vert-vif) 55%,transparent);
+    background:color-mix(in srgb,var(--vert-vif) 10%,transparent);transition:transform .4s var(--montee),background .3s}
+  .affiche:hover .fl,.affiche:focus-visible .fl{transform:translateX(8px);background:color-mix(in srgb,var(--vert-vif) 22%,transparent)}
+  @media (max-width:980px){.affiche{grid-template-columns:minmax(0,1fr)}.affiche-robot{display:none}}
+'''
+
+
+def _svg_courbes(releve, findings):
+    """Les courbes rappel × seuil des paliers présents, lues dans le relevé scellé ; la cellule
+    de la frontière (finding 03, source.a) en anneau quand elle existe."""
+    seuils = ["0.50", "0.60", "0.70", "0.80", "0.85", "0.90", "0.95", "1.00"]
+    tables = releve["authored"]["tables"]
+    paliers = [p for p in releve["paliers"]["presents"] if p in tables]
+    src = (findings[2].get("source", {}) or {}).get("a") or {} if len(findings) > 2 else {}
+    W, H, L, R, T, B = 720, 300, 40, 90, 18, 28
+    x = lambda s: L + (float(s) - 0.5) / 0.5 * (W - L - R)
+    y = lambda t: (H - B) - t * (H - B - T)
+    fort = src.get("palier")
+    out = ""
+    for v in (0, .5, 1):
+        out += f'<line class="gr" x1="{L}" x2="{W - R}" y1="{y(v):.0f}" y2="{y(v):.0f}"/><text class="ax" x="{L - 6}" y="{y(v) + 4:.0f}" text-anchor="end">{int(v * 100)}</text>'
+    for p in paliers:
+        pts = " ".join(f"{x(s):.0f},{y(tables[p][s]['rappel']['taux']):.0f}" for s in seuils if s in tables[p])
+        out += f'<polyline class="cb{" fort" if p == fort else ""}" points="{pts}"/>'
+    for p in paliers:
+        for s in seuils:
+            if s in tables[p]:
+                out += f'<circle class="pt{" fort" if p == fort else ""}" cx="{x(s):.0f}" cy="{y(tables[p][s]["rappel"]["taux"]):.0f}" r="{3.2 if p == fort else 2.4}"/>'
+    for s in seuils:
+        out += f'<text class="ax" x="{x(s):.0f}" y="{H - 8}" text-anchor="middle">{s}</text>'
+    fins = sorted((y(tables[p]["1.00"]["rappel"]["taux"]), p) for p in paliers if "1.00" in tables[p])
+    d = -99
+    for y0, p in fins:
+        yy = max(y0, d + 12); d = yy
+        out += f'<text class="nom{" fort" if p == fort else ""}" x="{W - R + 8}" y="{yy + 4:.0f}">{p}</text>'
+    if fort and src.get("seuil") is not None:
+        s = f"{float(src['seuil']):.2f}"
+        if s in tables.get(fort, {}):
+            out += f'<circle class="anneau" cx="{x(s):.0f}" cy="{y(tables[fort][s]["rappel"]["taux"]):.0f}" r="8"/>'
+            out += f'<text class="eti" x="{x(s) + 12:.0f}" y="{y(tables[fort][s]["rappel"]["taux"]) - 10:.0f}">the tool’s pick · {fort} at {s}</text>'
+    return f'<svg viewBox="0 0 {W} {H}" aria-hidden="true">{out}</svg>'
+
+
+def _svg_paliers(landing):
+    """Le vert : une courbe par champ sur l'axe des paliers (dans l'ordre du relevé), la
+    justesse en ordonnée, le palier publié de chaque champ en anneau. Aucun prix : le
+    landing ne les porte pas par champ, l'instrument les calcule."""
+    F, tiers = list(landing["fields"]), [t["id"] for t in landing["tiers"]]
+    pub = landing["routing"]["fields"]
+    W, H, L, R, T, B = 720, 300, 40, 20, 18, 28
+    x = lambda i: L + i / max(1, len(tiers) - 1) * (W - L - R)
+    y = lambda v: (H - B) - v / 100 * (H - B - T)
+    out = ""
+    for v in (0, 50, 100):
+        out += f'<line class="gr" x1="{L}" x2="{W - R}" y1="{y(v):.0f}" y2="{y(v):.0f}"/><text class="ax" x="{L - 6}" y="{y(v) + 4:.0f}" text-anchor="end">{v}</text>'
+    acc = {t["id"]: t["acc"] for t in landing["tiers"]}
+    for f in F:
+        pts = " ".join(f"{x(i):.0f},{y(acc[t][f]['accuracy']):.0f}" for i, t in enumerate(tiers) if acc[t][f].get("accuracy") is not None)
+        out += f'<polyline class="cb" points="{pts}"/>'
+    for f in F:
+        for i, t in enumerate(tiers):
+            a = acc[t][f].get("accuracy")
+            if a is None:
+                continue
+            k = "pt fort" if pub.get(f) == t else "pt"
+            out += f'<circle class="{k}" cx="{x(i):.0f}" cy="{y(a):.0f}" r="{4 if pub.get(f) == t else 2.4}"/>'
+            if pub.get(f) == t:
+                out += f'<circle class="anneau" cx="{x(i):.0f}" cy="{y(a):.0f}" r="8"/>'
+    for i, t in enumerate(tiers):
+        out += f'<text class="ax" x="{x(i):.0f}" y="{H - 8}" text-anchor="middle">{t}</text>'
+    out += f'<text class="eti" x="{L}" y="{T - 4}">the published routing, one ring per field · {landing["routing"]["accuracy"]} % mean accuracy</text>'
+    return f'<svg viewBox="0 0 {W} {H}" aria-hidden="true">{out}</svg>'
+
+
+def _svg_horloge(releve):
+    """L'onyx : les sceaux des questions sur l'axe des jours, la ligne du rythme déclaré."""
+    Q = {q: d for q, d in (releve.get("questions") or {}).items() if d.get("present")}
+    rythme = (releve.get("reglages") or {}).get("rythmeJours", 90)
+    W, H, L, R, T, B = 720, 300, 100, 30, 26, 28
+    XMAX = 180
+    x = lambda d: L + min(d, XMAX) / XMAX * (W - L - R)
+    noms = list(Q)
+    HR = (H - T - B) / max(1, len(noms))
+    out = f'<rect class="zone" x="{L}" y="{T}" width="{x(rythme) - L:.0f}" height="{H - T - B}"/>'
+    for k in range(0, XMAX + 1, 30):
+        out += f'<text class="ax" x="{x(k):.0f}" y="{H - 8}" text-anchor="middle">{k} d</text><line class="gr" x1="{x(k):.0f}" x2="{x(k):.0f}" y1="{T}" y2="{H - B}"/>'
+    for i, q in enumerate(noms):
+        yy = T + (i + .5) * HR; d = Q[q].get("joursDepuis", 0)
+        out += f'<text class="nom" x="0" y="{yy + 4:.0f}">{q}</text><line class="gr" x1="{L}" x2="{W - R}" y1="{yy:.0f}" y2="{yy:.0f}"/>'
+        out += f'<circle class="pierre" cx="{x(d):.0f}" cy="{yy:.0f}" r="7"/><text class="ax" x="{x(d):.0f}" y="{yy - 12:.0f}" text-anchor="middle">{d} d · {Q[q].get("etat", "")}</text>'
+    out += f'<line class="ligne" x1="{x(rythme):.0f}" x2="{x(rythme):.0f}" y1="{T}" y2="{H - B}"/><text class="eti" x="{x(rythme):.0f}" y="{T - 8}" text-anchor="middle">declared rhythm {rythme} days</text>'
+    return f'<svg viewBox="0 0 {W} {H}" aria-hidden="true">{out}</svg>'
+
+
+def affiche_html(sorte, donnees, findings, page, eti, sous, robot):
+    """L'affiche : la carte statique de l'outil (sorte : courbes | paliers | horloge), le robot
+    de la couleur penché sur son bord, le bouton en valeur. `robot` est le chemin de l'image."""
+    svg = {"courbes": lambda: _svg_courbes(donnees, findings),
+           "paliers": lambda: _svg_paliers(donnees),
+           "horloge": lambda: _svg_horloge(donnees)}[sorte]()
+    return f'''<div class="affiche-col">
+    <img class="affiche-robot" src="{robot}" alt="">
+    <a class="affiche" href="{page}">
+      <div class="affiche-carte">{svg}</div>
+      <div class="affiche-texte"><span class="ouvrir-eti">{eti}</span><span class="ouvrir-t">Open the live instrument</span>
+        <span class="ouvrir-s">{sous}</span><span class="fl" aria-hidden="true">&#8594;</span></div>
+    </a>
+  </div>'''

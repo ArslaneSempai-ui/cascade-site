@@ -413,8 +413,9 @@ PAGE = f'''<!doctype html><html lang="en">
 </section>
 
 <section class="basse">
-  <div class="colonne">
-    <h2>What this rests on</h2>
+  <div class="colonne basse-grille">
+    <div class="plis">
+      <details class="pli"><summary>What this rests on</summary>
     <ul>
       <li><b>The sealed public record.</b> releve-public.json in the repository, fingerprint
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
@@ -437,13 +438,17 @@ PAGE = f'''<!doctype html><html lang="en">
         settings) is photographed inside the record this page reads: a figure never floats
         free of the tables it was measured under.</li>
     </ul>
-    <h2>What this refuses</h2>
+      </details>
+      <details class="pli"><summary>What this refuses</summary>
     <ul>
       <li><b>Your data.</b> This page cannot read it: no network requests leave it
         (connect-src &#8216;none&#8217;), no third-party resource is loaded, and there is no input
         field to paste a customer file into.</li>
       <li><b>Bare rates.</b> Every cell carries its n and its 95&nbsp;% interval; {PHRASE_ABSENTS}.</li>
     </ul>
+      </details>
+    </div>
+    <aside class="clone-col">
     <h2>Measure your own review history</h2>
     <p>The instrument shows our record. Yours is measured at home, by the tool, and nothing
       about your files leaves your machine.</p>
@@ -454,6 +459,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <div><span class="ps">$</span> npm run measure:yours -- --customers=your-customers.csv --reviews=your-reviews.csv</div>
       <div class="note">the report and the sealed record are written next to your files, and nowhere else &#183; a record measured under your tables carries them: share it as you would your risk policy</div>
     </div>
+    </aside>
   </div>
 </section>
 

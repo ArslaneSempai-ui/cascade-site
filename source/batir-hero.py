@@ -48,6 +48,7 @@ if not _m:
 N_TESTS, N_FICHIERS = _m.group(1), _m.group(2)
 
 from outil import SCEAU_ROUTING, etiquette_sur_objet, SEUIL_OBJET, etiquettes_qui_se_recouvrent
+from instrument_carte import CSS_AFFICHE, affiche_html   # l'affiche de l'instrument (10/09)
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-routing"
 
@@ -352,6 +353,11 @@ CSS = '''
 
   /* le rideau : le deuxième écran, un pan par outil dans SES couleurs (posées en
      variables sur le pan, pas dans la palette de la page), le courant marqué */
+  /* la traversée d'une page à l'autre est FONDUE (View Transitions, même origine) : ouvrir un
+     outil depuis le rideau ne ressemble plus à un rafraîchissement (Arslane, 10/09) */
+  @view-transition{navigation:auto}
+  ::view-transition-old(root),::view-transition-new(root){animation-duration:.5s}
+  @media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
   .rideau{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));
     position:relative;color:var(--sur-vert)}
   /* cinq pierres : à 340 px de pan minimum, 1440 n'en range que quatre et le cinquième
@@ -361,8 +367,10 @@ CSS = '''
   .rideau-titre{position:absolute;top:84px;left:0;right:0;z-index:2;text-align:center;padding:0 24px;
     font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--sur-vert-pale)}
-  .pan{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-    gap:16px;min-height:100vh;padding:130px 40px 80px;text-decoration:none;color:inherit;outline-offset:-6px;
+  /* les cinq boutons « Open… » sur UNE ligne : les pans partent du haut et le bouton est
+     poussé en bas (Arslane, 10/09 : « mets-les à la même ligne, là c'est éparpillé ») */
+  .pan{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;
+    gap:16px;min-height:100vh;padding:150px 40px 90px;text-decoration:none;color:inherit;outline-offset:-6px;
     background:radial-gradient(120% 100% at 50% -10%,var(--pan-a),var(--pan-b) 55%,var(--pan-c))}
   .pan img{height:clamp(150px,24vh,230px);width:auto;filter:drop-shadow(0 20px 36px rgba(0,0,0,.55));
     transition:transform .35s var(--montee)}
@@ -372,7 +380,7 @@ CSS = '''
     text-wrap:balance;max-width:14ch;display:flex;align-items:center;justify-content:center;min-height:3.2em}
   .pan .p-d{font-size:15px;color:var(--sur-vert-pale);max-width:38ch;line-height:1.5}
   .pan .p-ouvrir{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-    margin-top:8px;padding:10px 16px;border-radius:8px;transition:background .2s,color .2s;
+    margin-top:auto;padding:10px 16px;border-radius:8px;transition:background .2s,color .2s;
     border:1px solid color-mix(in srgb,var(--sur-vert) 30%,transparent)}
   a.pan:hover .p-ouvrir,a.pan:focus-visible .p-ouvrir{background:var(--sur-vert);color:var(--nuit-c)}
   .pan[aria-current] .p-ouvrir{border-style:dashed;color:var(--sur-vert-pale)}
@@ -601,6 +609,7 @@ CSS = '''
   @media (max-width:700px){.ouvrir{gap:16px;padding:20px 20px 20px 22px}.ouvrir .fl{width:52px;height:52px;font-size:26px}
     .ouvrir-s{display:none}}
 
+''' + CSS_AFFICHE + '''
   /* les annexes en tuiles */
   .menus{padding:110px 0 90px;background:var(--papier)}
   .grille{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -715,7 +724,9 @@ JS = '''
       // le rideau s'écarte sur la nuit de l'outil choisi : la page qui suit commence dans cette nuit
       rideau.style.setProperty("--ouverture", getComputedStyle(pan).getPropertyValue("--pan-b"));
       rideau.classList.add("ouvre");
-      setTimeout(() => { location.href = pan.href; }, 620);
+      // 380 ms d'écart, puis la page de l'outil (son héros, en haut) ; la traversée est fondue par
+      // @view-transition : plus de « rafraîchissement » (Arslane, 10/09), plus d'ancre #tools
+      setTimeout(() => { location.href = pan.href; }, 380);
     }));
   }
 
@@ -740,7 +751,8 @@ JS = '''
   }
   addEventListener("scroll", surScroll, {passive: true});
   jalons.forEach((j, k) => j.addEventListener("click", () => {
-    const r = seq.offsetTop + (seq.offsetHeight - innerHeight) * ((k + 0.5) / scenes.length);
+    // le milieu du palier d'arrivée (le scrub tient la dernière image sur la seconde moitié)
+    const r = seq.offsetTop + (seq.offsetHeight - innerHeight) * ((k + 0.75) / scenes.length);
     scrollTo({top: innerWidth <= 1080 ? scenes[k].offsetTop - 90 : r,
               behavior: reduit ? "auto" : "smooth"});
   }));
@@ -782,6 +794,9 @@ from outil import (OUTILS, PALETTE_VERTE, PALETTE_RUBIS, PALETTE_LAPIS, PALETTE_
                    PALETTE_AMETHYSTE, NUIT_AMETHYSTE,
                    NUIT_VERTE, NUIT_RUBIS, NUIT_LAPIS, NUIT_ONYX,
                    lire_releve_scelle, lien, manques, ETATS_PREFIXE, ICONES_PREFIXE)
+
+
+ICONES_COULEUR = {"screening": "rubis", "monitoring": "lapis", "scoring": "amethyste", "dossier": "onyx"}
 
 
 def outils_vivants():
@@ -836,7 +851,7 @@ def choix_outils(outil):
             pans += (f'\n  <div class="pan {cote}" style="{style}" aria-current="page">{corps}'
                      f'<span class="p-ouvrir">You are here &#183; {o["nom"]}</span></div>')
         else:
-            pans += (f'\n  <a class="pan {cote}" style="{style}" href="{prefixe}{o["page_hero"]}#tools">{corps}'
+            pans += (f'\n  <a class="pan {cote}" style="{style}" href="{prefixe}{o["page_hero"]}">{corps}'
                      f'<span class="p-ouvrir">Open {o["nom"]} <span aria-hidden="true">&#8594;</span></span></a>')
     n = NOMBRES.get(len(outils), str(len(outils)))
     return (f'<section class="rideau" id="tools" aria-label="The instruments">'
@@ -885,6 +900,11 @@ def film_html(outil):
 CSS_SCRUB = """
   canvas.scrub{position:absolute;inset:0;width:100%;height:100%;z-index:0}
   .colle.scrub .scene .objet{visibility:hidden}
+  /* les aimants : un point d'accroche au milieu de chaque palier d'arrivée ; « proximity »
+     ramène le défilement dessus quand il s'arrête près, et laisse filer sinon */
+  html.js{scroll-snap-type:y proximity}
+  .sequence .aimant{position:absolute;left:0;width:1px;height:1px;scroll-snap-align:start;pointer-events:none}
+  @media (max-width:1080px),(prefers-reduced-motion:reduce){html.js{scroll-snap-type:none}}
   @media (max-width:1080px){canvas.scrub{display:none}}
 """
 
@@ -906,6 +926,17 @@ JS_SCRUB = """
   const jalonsS = [...document.querySelectorAll(".jalon")];
   if (!colle || !seqEl || !canevas || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const ctx = canevas.getContext("2d");
+  // Le palier d'arrivée : la moitié de chaque scène tient la dernière image avec sa fiche
+  // (le manifeste dit 0.66 de mouvement ; à l'écran c'était trop court pour « tomber sur la
+  // bonne image », Arslane 10/09). Les aimants : un point d'accroche au milieu de chaque
+  // palier, le navigateur y ramène le défilement quand il s'arrête à proximité.
+  const MOUV = Math.min(M.mouvement, 0.5);
+  for (let k = 0; k < M.transitions; k++) {
+    const aimant = document.createElement("div");
+    aimant.className = "aimant"; aimant.setAttribute("aria-hidden", "true");
+    aimant.style.top = "calc(" + ((k + (MOUV + 1) / 2) / M.transitions).toFixed(4) + " * (100% - 100vh))";
+    seqEl.appendChild(aimant);
+  }
   const nom = (k, i) => M.chemin + M.prefixe + "-seq-0" + (k + 1) + "-" + String(i).padStart(3, "0") + M.ext;
   const T = [];
   let pret = false, mort = false, demande = false, dernier = "";
@@ -936,9 +967,9 @@ JS_SCRUB = """
     const p = Math.min(1, Math.max(0, -r.top / total));
     const brut = Math.min(M.transitions - 1e-9, p * M.transitions);
     const k = Math.floor(brut), q = brut - k;
-    const t = Math.min(1, q / M.mouvement);
+    const t = Math.min(1, q / MOUV);
     const i = Math.round(t * (M.n - 1));
-    const arret = q >= M.mouvement;
+    const arret = q >= MOUV;
     scenesS.forEach((s, x) => {
       const a = arret && x === k;
       s.classList.toggle("actif", a);
@@ -1056,12 +1087,10 @@ PAGE = f'''<!doctype html><html lang="en">
 </section>
 
 <section class="instrument"><div class="colonne">
-  <h2 class="h2">Pick any cell, read what your routing costs.</h2>
-  {table_html()}
-  <div class="ouvrir-ligne"><a class="ouvrir" href="INSTRUMENT.html">
-    <span><span class="ouvrir-eti">Cascade &#183; Routing</span><span class="ouvrir-t">Open the live instrument</span>
-    <span class="ouvrir-s">Every field at every tier, accuracy and cost read live from the sealed record, and a budget slider that chooses the way the tool does.</span></span>
-    <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+  <h2 class="h2">The live instrument, on the sealed record.</h2>
+  {affiche_html("paliers", LANDING, [], "INSTRUMENT.html", "Cascade &#183; Routing",
+                "Every field at every tier, accuracy and cost read live from the sealed record, and a budget line you pull the way the tool chooses.",
+                "rendus/robot-vert-regarde.webp")}
 </div></section>
 
 <div class="couture" aria-hidden="true"><div class="colonne">
@@ -1696,12 +1725,9 @@ def batir_outil_catalogue(o, spec):
   </div>
 </section>
 <section class="instrument"><div class="colonne">
-  <h2 class="h2">{spec["instrument_h2"]}</h2>
-  {spec.get("table", _table_outil)(spec, RELEVE, FINDINGS)}
-  <div class="ouvrir-ligne"><a class="ouvrir" href="{spec["instrument_page"]}">
-    <span><span class="ouvrir-eti">{spec["instrument_eti"]}</span><span class="ouvrir-t">Open the live instrument</span>
-    <span class="ouvrir-s">{spec["instrument_sub"]}</span></span>
-    <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+  <h2 class="h2">The live instrument, on the sealed record.</h2>
+  {affiche_html("horloge" if o["id"] == "dossier" else "courbes", RELEVE, FINDINGS, spec["instrument_page"],
+                spec["instrument_eti"], spec["instrument_sub"], "../rendus/robot-" + ICONES_COULEUR[o["id"]] + "-regarde.webp")}
 </div></section>
 
 <div class="couture" aria-hidden="true"><div class="colonne">

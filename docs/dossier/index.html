@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-1e3Jp4gdBQ9yC/sn/0QtP2ZpQSi4g5ASVBoMo0DLpHY=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-mOyl6x9YzzIyW0KgKTCP176LRPW58h2QDc+H7M/sNLU=' 'sha256-tjFO5ptmdld+VyTooNVrS+UnydTC+ts3f6k0z22Jqxc=' 'sha256-9/lwJejrIxYOssOdIiOgKy/Yeg15T3Mef8gWttLd860=' 'sha256-kv3Sv2Sj8Qeh5H/NNQJtJE1V1TxnvFd2Fe+Y6wrzglQ=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg=' 'sha256-/vYkeP6dXt+l11vONzlXfD8Zv2L2CaEuHLfU62Zvubo=' 'sha256-J3jtxzWdxaAXGj10v/+vK9Lq4f+yS3hCawGN7iBV9xg=' 'sha256-94u25WhXvMAHah9HuVfk6QNXg8h1t8c1QmH2t/TagZw='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-+c9OIIf3a/MlOgV31/mIGgYHsEh169DqCjo4btkWXFw=' 'sha256-72vdoy613rg5edP10A8boSm4Eu+yffndyE//ryMVJ3Q='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-/YyyGqdR02Ztcz+bcfj5Ok0KhfyNRPFVFy2zVzKLj9E=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-mOyl6x9YzzIyW0KgKTCP176LRPW58h2QDc+H7M/sNLU=' 'sha256-tjFO5ptmdld+VyTooNVrS+UnydTC+ts3f6k0z22Jqxc=' 'sha256-9/lwJejrIxYOssOdIiOgKy/Yeg15T3Mef8gWttLd860=' 'sha256-kv3Sv2Sj8Qeh5H/NNQJtJE1V1TxnvFd2Fe+Y6wrzglQ=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg=' 'sha256-/vYkeP6dXt+l11vONzlXfD8Zv2L2CaEuHLfU62Zvubo=' 'sha256-J3jtxzWdxaAXGj10v/+vK9Lq4f+yS3hCawGN7iBV9xg=' 'sha256-94u25WhXvMAHah9HuVfk6QNXg8h1t8c1QmH2t/TagZw='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-1E1qkgmdPlQyuvKKBY3/pD5zBGwiNLt3HF/GxGixoEU=' 'sha256-z3E7bG3BkoE2VjQokP6P42t03Rx7TIdj6V0Az1VHxMY='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Dossier &#183; the assembled audit trail</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/dossier/">
@@ -108,6 +108,11 @@
 
   /* le rideau : le deuxième écran, un pan par outil dans SES couleurs (posées en
      variables sur le pan, pas dans la palette de la page), le courant marqué */
+  /* la traversée d'une page à l'autre est FONDUE (View Transitions, même origine) : ouvrir un
+     outil depuis le rideau ne ressemble plus à un rafraîchissement (Arslane, 10/09) */
+  @view-transition{navigation:auto}
+  ::view-transition-old(root),::view-transition-new(root){animation-duration:.5s}
+  @media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
   .rideau{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));
     position:relative;color:var(--sur-vert)}
   /* cinq pierres : à 340 px de pan minimum, 1440 n'en range que quatre et le cinquième
@@ -117,8 +122,10 @@
   .rideau-titre{position:absolute;top:84px;left:0;right:0;z-index:2;text-align:center;padding:0 24px;
     font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--sur-vert-pale)}
-  .pan{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-    gap:16px;min-height:100vh;padding:130px 40px 80px;text-decoration:none;color:inherit;outline-offset:-6px;
+  /* les cinq boutons « Open… » sur UNE ligne : les pans partent du haut et le bouton est
+     poussé en bas (Arslane, 10/09 : « mets-les à la même ligne, là c'est éparpillé ») */
+  .pan{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;
+    gap:16px;min-height:100vh;padding:150px 40px 90px;text-decoration:none;color:inherit;outline-offset:-6px;
     background:radial-gradient(120% 100% at 50% -10%,var(--pan-a),var(--pan-b) 55%,var(--pan-c))}
   .pan img{height:clamp(150px,24vh,230px);width:auto;filter:drop-shadow(0 20px 36px rgba(0,0,0,.55));
     transition:transform .35s var(--montee)}
@@ -128,7 +135,7 @@
     text-wrap:balance;max-width:14ch;display:flex;align-items:center;justify-content:center;min-height:3.2em}
   .pan .p-d{font-size:15px;color:var(--sur-vert-pale);max-width:38ch;line-height:1.5}
   .pan .p-ouvrir{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-    margin-top:8px;padding:10px 16px;border-radius:8px;transition:background .2s,color .2s;
+    margin-top:auto;padding:10px 16px;border-radius:8px;transition:background .2s,color .2s;
     border:1px solid color-mix(in srgb,var(--sur-vert) 30%,transparent)}
   a.pan:hover .p-ouvrir,a.pan:focus-visible .p-ouvrir{background:var(--sur-vert);color:var(--nuit-c)}
   .pan[aria-current] .p-ouvrir{border-style:dashed;color:var(--sur-vert-pale)}
@@ -357,6 +364,41 @@
   @media (max-width:700px){.ouvrir{gap:16px;padding:20px 20px 20px 22px}.ouvrir .fl{width:52px;height:52px;font-size:26px}
     .ouvrir-s{display:none}}
 
+
+  .instrument .h2{max-width:22ch}     /* le titre reste à gauche du robot qui penche sur l'affiche */
+  .affiche-col{position:relative;margin-top:36px}
+  .affiche-robot{position:absolute;right:26px;top:-206px;width:300px;height:auto;z-index:1;pointer-events:none;
+    filter:drop-shadow(0 26px 44px rgba(0,0,0,.7)) brightness(.94)}
+  .affiche{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.85fr);
+    gap:36px;align-items:end;padding:30px 36px 34px;border-radius:18px;text-decoration:none;color:var(--sur-vert);
+    background:linear-gradient(180deg,color-mix(in srgb,var(--nuit-a) 72%,var(--nuit-b)),var(--nuit-b));
+    border:1px solid color-mix(in srgb,var(--vert-vif) 42%,transparent);
+    box-shadow:0 40px 100px rgba(0,0,0,.55);transition:transform .4s var(--montee),border-color .3s,box-shadow .4s var(--montee)}
+  .affiche:hover,.affiche:focus-visible{transform:translateY(-3px);border-color:color-mix(in srgb,var(--vert-vif) 75%,transparent);
+    box-shadow:0 50px 120px color-mix(in srgb,var(--vert-vif) 16%,transparent)}
+  .affiche-carte{min-width:0}
+  .affiche-carte svg{display:block;width:100%;height:auto;font-family:var(--mono)}
+  .affiche-carte .ax{fill:var(--sur-vert-pale);font-size:10.5px}
+  .affiche-carte .gr{stroke:color-mix(in srgb,var(--sur-vert) 10%,transparent);stroke-width:1}
+  .affiche-carte .cb{fill:none;stroke:color-mix(in srgb,var(--sur-vert) 32%,transparent);stroke-width:1.3}
+  .affiche-carte .cb.fort{stroke:var(--sur-vert);stroke-width:2}
+  .affiche-carte .pt{fill:var(--nuit-c);stroke:color-mix(in srgb,var(--sur-vert) 45%,transparent);stroke-width:1.2}
+  .affiche-carte .pt.fort{fill:var(--vert-vif);stroke:var(--vert-clair);stroke-width:2}
+  .affiche-carte .anneau{fill:none;stroke:var(--vert-vif);stroke-width:2.5}
+  .affiche-carte .ligne{stroke:var(--vert-clair);stroke-width:1.5}
+  .affiche-carte .zone{fill:var(--vert-vif);opacity:.07}
+  .affiche-carte .eti{fill:var(--vert-clair);font-size:11px}
+  .affiche-carte .nom{fill:var(--sur-vert-pale);font-size:11px}
+  .affiche-carte .nom.fort{fill:var(--sur-vert)}
+  .affiche-carte .pierre{fill:var(--vert-vif);stroke:var(--vert-clair);stroke-width:2}
+  .affiche-texte{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+  .affiche-texte .ouvrir-t{font-size:clamp(24px,2.6vw,36px)}
+  .affiche-texte .fl{margin:14px 0 0;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;
+    font-family:var(--sans);font-size:36px;color:var(--vert-clair);border:1px solid color-mix(in srgb,var(--vert-vif) 55%,transparent);
+    background:color-mix(in srgb,var(--vert-vif) 10%,transparent);transition:transform .4s var(--montee),background .3s}
+  .affiche:hover .fl,.affiche:focus-visible .fl{transform:translateX(8px);background:color-mix(in srgb,var(--vert-vif) 22%,transparent)}
+  @media (max-width:980px){.affiche{grid-template-columns:minmax(0,1fr)}.affiche-robot{display:none}}
+
   /* les annexes en tuiles */
   .menus{padding:110px 0 90px;background:var(--papier)}
   .grille{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -449,6 +491,11 @@
 
   canvas.scrub{position:absolute;inset:0;width:100%;height:100%;z-index:0}
   .colle.scrub .scene .objet{visibility:hidden}
+  /* les aimants : un point d'accroche au milieu de chaque palier d'arrivée ; « proximity »
+     ramène le défilement dessus quand il s'arrête près, et laisse filer sinon */
+  html.js{scroll-snap-type:y proximity}
+  .sequence .aimant{position:absolute;left:0;width:1px;height:1px;scroll-snap-align:start;pointer-events:none}
+  @media (max-width:1080px),(prefers-reduced-motion:reduce){html.js{scroll-snap-type:none}}
   @media (max-width:1080px){canvas.scrub{display:none}}
 </style>
 <header class="barre sur-nuit">
@@ -480,10 +527,10 @@
 
 <section class="rideau" id="tools" aria-label="The instruments">
   <span class="rideau-titre">Cascade &#183; five instruments, one method</span>
-  <a class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" href="../routing/index.html#tools"><span class="p-eti">Routing &#183; extraction</span><img src="../rendus/robot-salut.webp" alt=""><span class="p-h">Where should the next dollar&nbsp;go?</span><span class="p-d">Seven tiers, from a regular expression to a human, measured on sealed records.</span><span class="p-ouvrir">Open Routing <span aria-hidden="true">&#8594;</span></span></a>
-  <a class="pan cote-g" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" href="../screening/index.html#tools"><span class="p-eti">Screening &#183; name matching</span><img src="../rendus/robot-rubis-curieux.webp" alt=""><span class="p-h">Which matcher suffices, at which threshold?</span><span class="p-d">Seven matchers, from strict equality to a multilingual embedding, measured on your own alert history.</span><span class="p-ouvrir">Open Screening <span aria-hidden="true">&#8594;</span></span></a>
-  <a class="pan cote-g" style="--pan-vif:#4f8ae0;--pan-a:#16213a;--pan-b:#101a30;--pan-c:#0a111f" href="../monitoring/index.html#tools"><span class="p-eti">Monitoring &#183; transactions</span><img src="../rendus/robot-lapis-montre.webp" alt=""><span class="p-h">Which scenario suffices, at which threshold?</span><span class="p-d">Seven scenarios, from a bare amount to a peer profile, measured on your own dispositioned alerts.</span><span class="p-ouvrir">Open Monitoring <span aria-hidden="true">&#8594;</span></span></a>
-  <a class="pan cote-d" style="--pan-vif:#9b6fe0;--pan-a:#241a3a;--pan-b:#1a1230;--pan-c:#100b1f" href="../scoring/index.html#tools"><span class="p-eti">Scoring &#183; risk rating</span><img src="../rendus/robot-amethyste-pese.webp" alt=""><span class="p-h">Which risk factor suffices, at which threshold?</span><span class="p-d">Seven risk factors, from a country list to the deviation from the declared profile, measured on your own periodic-review outcomes.</span><span class="p-ouvrir">Open Scoring <span aria-hidden="true">&#8594;</span></span></a>
+  <a class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" href="../routing/index.html"><span class="p-eti">Routing &#183; extraction</span><img src="../rendus/robot-salut.webp" alt=""><span class="p-h">Where should the next dollar&nbsp;go?</span><span class="p-d">Seven tiers, from a regular expression to a human, measured on sealed records.</span><span class="p-ouvrir">Open Routing <span aria-hidden="true">&#8594;</span></span></a>
+  <a class="pan cote-g" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" href="../screening/index.html"><span class="p-eti">Screening &#183; name matching</span><img src="../rendus/robot-rubis-curieux.webp" alt=""><span class="p-h">Which matcher suffices, at which threshold?</span><span class="p-d">Seven matchers, from strict equality to a multilingual embedding, measured on your own alert history.</span><span class="p-ouvrir">Open Screening <span aria-hidden="true">&#8594;</span></span></a>
+  <a class="pan cote-g" style="--pan-vif:#4f8ae0;--pan-a:#16213a;--pan-b:#101a30;--pan-c:#0a111f" href="../monitoring/index.html"><span class="p-eti">Monitoring &#183; transactions</span><img src="../rendus/robot-lapis-montre.webp" alt=""><span class="p-h">Which scenario suffices, at which threshold?</span><span class="p-d">Seven scenarios, from a bare amount to a peer profile, measured on your own dispositioned alerts.</span><span class="p-ouvrir">Open Monitoring <span aria-hidden="true">&#8594;</span></span></a>
+  <a class="pan cote-d" style="--pan-vif:#9b6fe0;--pan-a:#241a3a;--pan-b:#1a1230;--pan-c:#100b1f" href="../scoring/index.html"><span class="p-eti">Scoring &#183; risk rating</span><img src="../rendus/robot-amethyste-pese.webp" alt=""><span class="p-h">Which risk factor suffices, at which threshold?</span><span class="p-d">Seven risk factors, from a country list to the deviation from the declared profile, measured on your own periodic-review outcomes.</span><span class="p-ouvrir">Open Scoring <span aria-hidden="true">&#8594;</span></span></a>
   <div class="pan cote-d" style="--pan-vif:#8a8a96;--pan-a:#121216;--pan-b:#0c0c10;--pan-c:#070709" aria-current="page"><span class="p-eti">Dossier &#183; the regulator&#8217;s piece</span><img src="../rendus/robot-onyx-tient.webp" alt=""><span class="p-h">Is the whole chain measured, sealed and fresh?</span><span class="p-d">Four sealed answers, five controls, one dossier a reviewer verifies without us.</span><span class="p-ouvrir">You are here &#183; Dossier</span></div>
 </section>
 
@@ -576,15 +623,15 @@
   </div>
 </section>
 <section class="instrument"><div class="colonne">
-  <h2 class="h2">Read the whole chain in one table.</h2>
-  <div class="t-scroll"><table class="routage">
-      <caption class="sr">State reached by each question of the chain under the contract&#8217;s five controls, on the public records</caption>
-      <thead><tr><th scope="col">question</th><th scope='col'>present</th><th scope='col'>sealed</th><th scope='col'>signed</th><th scope='col'>fresh</th><th scope='col'>consistent</th></tr></thead><tbody><tr><th scope='row'>routing</th><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell choisi'><span>&#10003;</span><br><small>held</small></td></tr><tr><th scope='row'>screening</th><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell choisi'><span>&#10003;</span><br><small>held</small></td></tr><tr><th scope='row'>monitoring</th><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell choisi'><span>&#10003;</span><br><small>held</small></td></tr><tr><th scope='row'>scoring</th><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell'><span>&#10003;</span><br><small>held</small></td><td class='cell choisi'><span>&#10003;</span><br><small>held</small></td></tr></tbody></table></div>
-      <p class="t-note">4 of the 4 questions carry a sealed public record. In each row the marked cell is the state reached with no gap in the contract&#8217;s order; a row without one reaches none, and the record says so. Declared rhythm 90 days, as of 2026-09-05.</p>
-  <div class="ouvrir-ligne"><a class="ouvrir" href="instrument.html">
-    <span><span class="ouvrir-eti">Cascade &#183; Dossier</span><span class="ouvrir-t">Open the live instrument</span>
-    <span class="ouvrir-s">The four questions against the five controls, states, seals and freshness live from the sealed public dossier, and what the next control still needs.</span></span>
-    <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+  <h2 class="h2">The live instrument, on the sealed record.</h2>
+  <div class="affiche-col">
+    <img class="affiche-robot" src="../rendus/robot-onyx-regarde.webp" alt="">
+    <a class="affiche" href="instrument.html">
+      <div class="affiche-carte"><svg viewBox="0 0 720 300" aria-hidden="true"><rect class="zone" x="100" y="26" width="295" height="246"/><text class="ax" x="100" y="292" text-anchor="middle">0 d</text><line class="gr" x1="100" x2="100" y1="26" y2="272"/><text class="ax" x="198" y="292" text-anchor="middle">30 d</text><line class="gr" x1="198" x2="198" y1="26" y2="272"/><text class="ax" x="297" y="292" text-anchor="middle">60 d</text><line class="gr" x1="297" x2="297" y1="26" y2="272"/><text class="ax" x="395" y="292" text-anchor="middle">90 d</text><line class="gr" x1="395" x2="395" y1="26" y2="272"/><text class="ax" x="493" y="292" text-anchor="middle">120 d</text><line class="gr" x1="493" x2="493" y1="26" y2="272"/><text class="ax" x="592" y="292" text-anchor="middle">150 d</text><line class="gr" x1="592" x2="592" y1="26" y2="272"/><text class="ax" x="690" y="292" text-anchor="middle">180 d</text><line class="gr" x1="690" x2="690" y1="26" y2="272"/><text class="nom" x="0" y="61">routing</text><line class="gr" x1="100" x2="690" y1="57" y2="57"/><circle class="pierre" cx="152" cy="57" r="7"/><text class="ax" x="152" y="45" text-anchor="middle">16 d · consistent</text><text class="nom" x="0" y="122">screening</text><line class="gr" x1="100" x2="690" y1="118" y2="118"/><circle class="pierre" cx="100" cy="118" r="7"/><text class="ax" x="100" y="106" text-anchor="middle">0 d · consistent</text><text class="nom" x="0" y="184">monitoring</text><line class="gr" x1="100" x2="690" y1="180" y2="180"/><circle class="pierre" cx="100" cy="180" r="7"/><text class="ax" x="100" y="168" text-anchor="middle">0 d · consistent</text><text class="nom" x="0" y="245">scoring</text><line class="gr" x1="100" x2="690" y1="241" y2="241"/><circle class="pierre" cx="100" cy="241" r="7"/><text class="ax" x="100" y="229" text-anchor="middle">0 d · consistent</text><line class="ligne" x1="395" x2="395" y1="26" y2="272"/><text class="eti" x="395" y="18" text-anchor="middle">declared rhythm 90 days</text></svg></div>
+      <div class="affiche-texte"><span class="ouvrir-eti">Cascade &#183; Dossier</span><span class="ouvrir-t">Open the live instrument</span>
+        <span class="ouvrir-s">The four questions against the five controls, states, seals and freshness live from the sealed public dossier, and what the next control still needs.</span><span class="fl" aria-hidden="true">&#8594;</span></div>
+    </a>
+  </div>
 </div></section>
 
 <div class="couture" aria-hidden="true"><div class="colonne">
@@ -689,7 +736,9 @@
       // le rideau s'écarte sur la nuit de l'outil choisi : la page qui suit commence dans cette nuit
       rideau.style.setProperty("--ouverture", getComputedStyle(pan).getPropertyValue("--pan-b"));
       rideau.classList.add("ouvre");
-      setTimeout(() => { location.href = pan.href; }, 620);
+      // 380 ms d'écart, puis la page de l'outil (son héros, en haut) ; la traversée est fondue par
+      // @view-transition : plus de « rafraîchissement » (Arslane, 10/09), plus d'ancre #tools
+      setTimeout(() => { location.href = pan.href; }, 380);
     }));
   }
 
@@ -714,7 +763,8 @@
   }
   addEventListener("scroll", surScroll, {passive: true});
   jalons.forEach((j, k) => j.addEventListener("click", () => {
-    const r = seq.offsetTop + (seq.offsetHeight - innerHeight) * ((k + 0.5) / scenes.length);
+    // le milieu du palier d'arrivée (le scrub tient la dernière image sur la seconde moitié)
+    const r = seq.offsetTop + (seq.offsetHeight - innerHeight) * ((k + 0.75) / scenes.length);
     scrollTo({top: innerWidth <= 1080 ? scenes[k].offsetTop - 90 : r,
               behavior: reduit ? "auto" : "smooth"});
   }));
@@ -731,6 +781,17 @@
   const jalonsS = [...document.querySelectorAll(".jalon")];
   if (!colle || !seqEl || !canevas || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const ctx = canevas.getContext("2d");
+  // Le palier d'arrivée : la moitié de chaque scène tient la dernière image avec sa fiche
+  // (le manifeste dit 0.66 de mouvement ; à l'écran c'était trop court pour « tomber sur la
+  // bonne image », Arslane 10/09). Les aimants : un point d'accroche au milieu de chaque
+  // palier, le navigateur y ramène le défilement quand il s'arrête à proximité.
+  const MOUV = Math.min(M.mouvement, 0.5);
+  for (let k = 0; k < M.transitions; k++) {
+    const aimant = document.createElement("div");
+    aimant.className = "aimant"; aimant.setAttribute("aria-hidden", "true");
+    aimant.style.top = "calc(" + ((k + (MOUV + 1) / 2) / M.transitions).toFixed(4) + " * (100% - 100vh))";
+    seqEl.appendChild(aimant);
+  }
   const nom = (k, i) => M.chemin + M.prefixe + "-seq-0" + (k + 1) + "-" + String(i).padStart(3, "0") + M.ext;
   const T = [];
   let pret = false, mort = false, demande = false, dernier = "";
@@ -761,9 +822,9 @@
     const p = Math.min(1, Math.max(0, -r.top / total));
     const brut = Math.min(M.transitions - 1e-9, p * M.transitions);
     const k = Math.floor(brut), q = brut - k;
-    const t = Math.min(1, q / M.mouvement);
+    const t = Math.min(1, q / MOUV);
     const i = Math.round(t * (M.n - 1));
-    const arret = q >= M.mouvement;
+    const arret = q >= MOUV;
     scenesS.forEach((s, x) => {
       const a = arret && x === k;
       s.classList.toggle("actif", a);

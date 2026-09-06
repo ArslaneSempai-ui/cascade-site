@@ -116,7 +116,8 @@ POSES = {
 PENCHE = dict(corps=(16, 0, 0), tete=(22, 0, 0), bg=(-55, -14, 0), bd=(-55, 14, 0))
 # « regarde » (Arslane, 9/09 : « faut que le robot regarde l'outil ») : la même pose penchée sur le
 # bord de la fenêtre, la tête basculée vers le bas pour lire l'instrument, les mains au bord
-REGARDE = dict(corps=(22, 0, 0), tete=(34, 0, -18), bg=(-58, -14, 0), bd=(-58, 14, 0))   # la tête vers la carte, à sa gauche
+REGARDE = dict(corps=(18, 0, 6), tete=(22, 0, -36), bg=(-58, -12, 0), bd=(-56, 16, 0))   # 10/09 : la tête tournée vers la carte, à sa gauche (le panneau descend)
+
 poser(**({"penche": PENCHE, "regarde": REGARDE}[args.pose] if args.pose else POSES[args.outil]))
 os.makedirs(args.sortie, exist_ok=True)
 sc.render.filepath = os.path.join(args.sortie, f"robot-{args.outil}{('-' + args.pose) if args.pose else ''}.png")

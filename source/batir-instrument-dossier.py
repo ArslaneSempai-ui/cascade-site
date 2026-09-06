@@ -369,8 +369,9 @@ PAGE = f'''<!doctype html><html lang="en">
 </section>
 
 <section class="basse">
-  <div class="colonne">
-    <h2>What this rests on</h2>
+  <div class="colonne basse-grille">
+    <div class="plis">
+      <details class="pli"><summary>What this rests on</summary>
     <ul>
       <li><b>The sealed public dossier.</b> releve-public.json in the repository, fingerprint
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
@@ -388,7 +389,8 @@ PAGE = f'''<!doctype html><html lang="en">
         against the rhythm written in the dossier itself ({RG["rythmeJours"]} days), never
         against an unstated habit.</li>
     </ul>
-    <h2>What this refuses</h2>
+      </details>
+      <details class="pli"><summary>What this refuses</summary>
     <ul>
       <li><b>Your data.</b> This page cannot read it: no network requests leave it
         (connect-src &#8216;none&#8217;), no third-party resource is loaded, and there is no input
@@ -396,6 +398,9 @@ PAGE = f'''<!doctype html><html lang="en">
       <li><b>A verdict without its sentence.</b> Every cell opens into the record&#8217;s own
         words: what was checked, on which file, and what the next control still needs.</li>
     </ul>
+      </details>
+    </div>
+    <aside class="clone-col">
     <h2>Assemble the dossier of your own reports</h2>
     <p>The instrument shows our dossier, over our public records. Yours is assembled at home,
       by the tool, from the sealed reports the suite&#8217;s tools left at your desk, and nothing
@@ -407,6 +412,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <div><span class="ps">$</span> npm run dossier -- --reports=a-measured.json,b-measured.json</div>
       <div class="note">the dossier is written next to your reports, and nowhere else</div>
     </div>
+    </aside>
   </div>
 </section>
 
