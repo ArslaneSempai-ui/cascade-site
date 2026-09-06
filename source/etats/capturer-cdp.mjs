@@ -29,17 +29,43 @@ await send("Page.enable");
 await send("Network.enable");
 await send("Network.setCacheDisabled", { cacheDisabled: true });
 await send("Emulation.setDeviceMetricsOverride", { width: +w, height: +h, deviceScaleFactor: 1, mobile: false });
-const loaded = new Promise(r => {
-  const t = setInterval(() => { if (events.includes("Page.loadEventFired")) { clearInterval(t); r(); } }, 50);
-  setTimeout(() => { clearInterval(t); r(); }, 8000);
+// A page is loaded when it SAYS so (Page.loadEventFired), never after a fixed delay: a delay
+// that elapses concludes on a page still building, and the capture lies without a word.
+// Past the deadline the answer is "undetermined", said as such, not a screenshot.
+const DEADLINE_MS = 20_000;
+const attendreChargement = () => new Promise((res, rej) => {
+  const debut = Date.now();
+  const t = setInterval(() => {
+    if (events.includes("Page.loadEventFired")) { clearInterval(t); res(); }
+    else if (Date.now() - debut > DEADLINE_MS) { clearInterval(t); rej(new Error(`undetermined: ${url} never fired its load event within ${DEADLINE_MS} ms; nothing captured`)); }
+  }, 50);
 });
+await send("Runtime.enable");
+// Settled = three consecutive readings, at least one second apart, that agree on the page's
+// height and scroll position. A deferred script can move the layout two seconds after
+// everything looks still; sampling until it stops is the only way to know it has.
+const attendreStabilite = async (quoi) => {
+  const lire = async () => (await send("Runtime.evaluate", {
+    expression: "document.readyState+':'+document.documentElement.scrollHeight+':'+Math.round(scrollY)", returnByValue: true })).result.value;
+  let precedent = await lire(), identiques = 1;
+  for (let tour = 0; tour < 15 && identiques < 3; tour++) {
+    await new Promise(r => setTimeout(r, 1000));
+    const courant = await lire();
+    identiques = courant === precedent ? identiques + 1 : 1;
+    precedent = courant;
+  }
+  if (identiques < 3) throw new Error(`undetermined: ${url} has not settled ${quoi} after 15 s (last reading ${precedent}); nothing captured`);
+};
+// Any refusal below closes the tab and exits 2, so the caller reads "undetermined", not a
+// stack trace, and no half-open tab survives in the headless profile.
+try {
+const chargement = attendreChargement();
 await send("Page.navigate", { url });
-await loaded;
-await new Promise(r => setTimeout(r, 600));
+await chargement;
+await attendreStabilite("after load");
 if (scrollJs && scrollJs !== "-") {
-  await send("Runtime.enable");
   await send("Runtime.evaluate", { expression: `document.documentElement.style.scrollBehavior='auto';${scrollJs}`, awaitPromise: false });
-  await new Promise(r => setTimeout(r, +(process.env.WAIT || 500)));
+  await attendreStabilite("after the scroll");
 }
 const shot = await send("Page.captureScreenshot", { format: "png" });
 writeFileSync(out, Buffer.from(shot.data, "base64"));
@@ -47,3 +73,9 @@ const info = await send("Runtime.evaluate", { expression: "innerWidth+'x'+innerH
 console.log(out, info?.result?.value ?? "");
 ws.close();
 await fetch(`http://127.0.0.1:${port}/json/close/${target.id}`);
+} catch (e) {
+  console.error(e instanceof Error ? e.message : String(e));
+  try { ws.close(); await fetch(`http://127.0.0.1:${port}/json/close/${target.id}`); }
+  catch (e2) { console.error(`(the tab could not be closed either: ${e2 instanceof Error ? e2.message : String(e2)})`); }
+  process.exit(2);
+}

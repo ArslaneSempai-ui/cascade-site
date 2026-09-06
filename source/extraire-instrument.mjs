@@ -37,12 +37,12 @@ for (const t of TIERS) {
       price[t][f] = pricePerThousandExtractions(t, ASSUMPTIONS);
       acc[t][f] = ASSUMPTIONS.humanAccuracy * 100;
     } else {
-      if (!cell) throw new Error(`le relevé de référence ne porte pas ${t}/${f}`);
+      if (!cell) throw new Error(`the reference record carries no ${t}/${f} cell`);
       price[t][f] = pricePerThousandExtractions(t, ASSUMPTIONS, cell.latency);
       const officielle = landing.tiers.find((x) => x.id === t).acc[f].accuracy;
       const relue = cell.accuracy * 100;
       if (Math.abs(officielle - relue) > 0.06) {
-        throw new Error(`justesse divergente sur ${t}/${f} : landing ${officielle} vs relevé ${relue}`);
+        throw new Error(`accuracy diverges on ${t}/${f}: landing ${officielle} vs record ${relue}`);
       }
       acc[t][f] = officielle;
     }
