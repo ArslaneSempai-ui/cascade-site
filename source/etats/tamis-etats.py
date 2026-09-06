@@ -120,8 +120,13 @@ def table_rase():
     c.max_bounces = 6
     c.sample_clamp_indirect = 10.0
     sc.render.use_persistent_data = True
+    # le périphérique : METAL sur le Mac (défaut) ; CASCADE_GPU=OPTIX ou CUDA sur une machine louée (9/09)
     try:
-        bpy.context.preferences.addons["cycles"].preferences.compute_device_type = "METAL"
+        prefs = bpy.context.preferences.addons["cycles"].preferences
+        prefs.compute_device_type = os.environ.get("CASCADE_GPU", "METAL")
+        prefs.get_devices()
+        for d in prefs.devices:
+            d.use = (d.type != "CPU")
         c.device = "GPU"
     except Exception:
         c.device = "CPU"

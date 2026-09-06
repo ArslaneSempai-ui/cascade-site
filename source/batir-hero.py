@@ -867,9 +867,9 @@ def film_html(outil):
 # complétude) sont le lot M-C1, dans l'assembleur.
 
 CSS_SCRUB = """
-  canvas.film{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-  .colle.film .scene .objet{visibility:hidden}
-  @media (max-width:1080px){canvas.film{display:none}}
+  canvas.scrub{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+  .colle.scrub .scene .objet{visibility:hidden}
+  @media (max-width:1080px){canvas.scrub{display:none}}
 """
 
 # Le contrat du geste : p vient du même calcul que surScroll ; k = floor(p·5),
@@ -885,7 +885,7 @@ JS_SCRUB = """
   const M = JSON.parse(document.getElementById("seq-manifeste").textContent);
   const colle = document.querySelector(".colle");
   const seqEl = document.querySelector(".sequence");
-  const canevas = document.querySelector("canvas.film");
+  const canevas = document.querySelector("canvas.scrub");
   const scenesS = [...document.querySelectorAll(".scene")];
   const jalonsS = [...document.querySelectorAll(".jalon")];
   if (!colle || !seqEl || !canevas || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -914,7 +914,7 @@ JS_SCRUB = """
   };
   function peindre(force) {
     if (mort || !pret) return;
-    if (innerWidth <= 1080) { colle.classList.remove("film"); dernier = ""; return; }
+    if (innerWidth <= 1080) { colle.classList.remove("scrub"); dernier = ""; return; }
     const r = seqEl.getBoundingClientRect();
     const total = r.height - innerHeight;
     const p = Math.min(1, Math.max(0, -r.top / total));
@@ -932,7 +932,7 @@ JS_SCRUB = """
     const cle = k + ":" + i + ":" + canevas.clientWidth;
     if (!force && cle === dernier) return;
     dernier = cle;
-    colle.classList.add("film");
+    colle.classList.add("scrub");
     const dpr = Math.min(2, devicePixelRatio || 1);
     const lw = Math.round(canevas.clientWidth * dpr), lh = Math.round(canevas.clientHeight * dpr);
     if (canevas.width !== lw || canevas.height !== lh) { canevas.width = lw; canevas.height = lh; }
@@ -977,7 +977,7 @@ def sequence_scrub(prefixe):
     donnees = json.dumps({"prefixe": m["prefixe"], "n": m["n"], "transitions": m["transitions"],
                           "ext": m["ext"], "mouvement": m["mouvement"],
                           "chemin": f"../rendus/sequences/{prefixe}/"}, ensure_ascii=True)
-    canevas = f'<canvas class="film" width="{m["large"]}" height="{m["haut"]}" aria-hidden="true"></canvas>'
+    canevas = f'<canvas class="scrub" width="{m["large"]}" height="{m["haut"]}" aria-hidden="true"></canvas>'
     script = (f'\n<script type="application/json" id="seq-manifeste">{donnees}</script>'
               f'\n<script>{JS_SCRUB}</script>')
     return canevas, CSS_SCRUB, script
