@@ -12,7 +12,7 @@
       ],
       "verif": {
         "t": "Verify the best trade-off",
-        "p": "Run the suite. The walk fails if a network site appears outside the allowlist.",
+        "p": "Run the suite: the test fails if a network site appears outside the allowlist.",
         "cmd": [
           {
             "c": "npm test",
