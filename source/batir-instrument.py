@@ -38,6 +38,7 @@ D = json.loads((BASE / "instrument-donnees.json").read_text())
 
 FIELDS, TIERS = D["fields"], D["tiers"]
 from outil import SCEAU_ROUTING
+from outil import OUTILS, barre_site, CSS_BARRE_SITE
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-routing"
 
@@ -327,19 +328,8 @@ PAGE = f'''<!doctype html><html lang="en">
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">
 <script>document.documentElement.classList.add("js")</script>
-<style>{CSS}{CSS_NOIR}{CSS_VERT}</style>
-<header class="barre">
-  <a class="marque" href="ACCUEIL.html">CASCADE</a>
-  <nav aria-label="Site">
-    <a href="INSTRUMENT.html" aria-current="page">Instrument</a>
-    <a href="ENGAGEMENT.html">Pricing</a>
-    <a href="ANNEXE-METHODE.html">Method</a>
-    <a href="ANNEXE-SECURITE.html">Security</a>
-    <a href="ANNEXE-QUESTIONS.html">Questions</a>
-    <a href="CONTACT.html">Contact</a>
-  </nav>
-  <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>
-</header>
+<style>{CSS}{CSS_NOIR}{CSS_VERT}{CSS_BARRE_SITE}</style>
+{barre_site(courant=OUTILS["routing"]["page_hero"], sceau=SCEAU, racine="")}
 
 <main>
 <section class="tete"><div class="colonne">

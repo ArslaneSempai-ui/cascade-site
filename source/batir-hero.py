@@ -47,7 +47,7 @@ if not _m:
     sys.exit("le compte de tests est introuvable dans le README de l'outil : refus de le recopier")
 N_TESTS, N_FICHIERS = _m.group(1), _m.group(2)
 
-from outil import SCEAU_ROUTING, etiquette_sur_objet, SEUIL_OBJET, etiquettes_qui_se_recouvrent
+from outil import SCEAU_ROUTING, etiquette_sur_objet, SEUIL_OBJET, etiquettes_qui_se_recouvrent, barre_site, CSS_BARRE_SITE, OUTILS
 from instrument_carte import (CSS_AFFICHE, affiche_html, CSS_ACCUEIL, eventail_html, methode_html,   # l'affiche (10/09), l'accueil (10/09)
                               _svg_courbes, _svg_paliers, _svg_horloge)
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
@@ -1051,19 +1051,8 @@ PAGE = f'''<!doctype html><html lang="en">
 <link rel="stylesheet" href="fontes/roboto-mono.css">
 <script type="application/ld+json">{DONNEES_STRUCTUREES}</script>
 <script>document.documentElement.classList.add("js")</script>
-<style>{CSS}{_CSS_SCRUB_V}</style>
-<header class="barre sur-nuit">
-  <a class="marque" href="ACCUEIL.html">CASCADE</a>
-  <nav aria-label="Site">
-    <a href="INSTRUMENT.html">Instrument</a>
-    <a href="ENGAGEMENT.html">Pricing</a>
-    <a href="ANNEXE-METHODE.html">Method</a>
-    <a href="ANNEXE-SECURITE.html">Security</a>
-    <a href="ANNEXE-QUESTIONS.html">Questions</a>
-    <a href="CONTACT.html">Contact</a>
-  </nav>
-  <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>
-</header>
+<style>{CSS}{_CSS_SCRUB_V}{CSS_BARRE_SITE}</style>
+{barre_site(courant="HERO.html", sceau=SCEAU)}
 
 <main>
 <section class="hero">
@@ -1794,18 +1783,8 @@ def batir_outil_catalogue(o, spec):
 <link rel="stylesheet" href="{p}fontes/roboto-mono.css">
 <script type="application/ld+json">{donnees}</script>
 <script>document.documentElement.classList.add("js")</script>
-<style>{css_o}{css_scrub_o}</style>
-<header class="barre sur-nuit">
-  <a class="marque" href="{lien(o, 'ACCUEIL.html')}">CASCADE</a>
-  <nav aria-label="Site">
-    <a href="{spec["instrument_page"]}">Instrument</a>
-    <a href="{lien(o, 'ENGAGEMENT.html')}">Pricing</a>
-    <a href="{spec["annexe_methode"][2]}">Method</a>
-    <a href="{spec["annexe_securite"][2]}">Security</a>
-    <a href="{lien(o, 'CONTACT.html')}">Contact</a>
-  </nav>
-  <span class="sceau">content hash {SCEAU_O} &#183; measured, then frozen</span>
-</header>
+<style>{css_o}{css_scrub_o}{CSS_BARRE_SITE}</style>
+{barre_site(courant=o["page_hero"], sceau=SCEAU_O, racine=o["prefixe_racine"])}
 
 <main>
 <section class="hero">

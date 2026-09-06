@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-n5wUVOaQQNMXk166Kly/tg1qNElA6tvVP07c8vO9KC0='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-TH6Arr8Qvl1YyH0FPJrv9WemQy3KXu1Vnl79rSlIYqc='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-L01jeT8uRNpfcTjXY2/XeczBym8eW0VRODpRkD1xx2A='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-TH6Arr8Qvl1YyH0FPJrv9WemQy3KXu1Vnl79rSlIYqc='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; questions</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/questions.html">
@@ -220,11 +220,25 @@
     .term{box-shadow:none}
     summary .cr{display:none}
   }
+
+  /* the current link, marked the same way on every page (the heroes had no rule, the instruments
+     only brightened it, the house pages only weighted it) */
+  .barre nav a[aria-current]{color:var(--sur,var(--sur-vert,#e4ecdf));font-weight:600}
+  /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
+     colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
+  @media (max-width:1080px){
+    .barre{position:static;padding:12px 18px 8px;flex-wrap:wrap}
+    html:not(.js) .barre{position:static}
+    .barre.sur-nuit,.barre.sur-nuit.posee{background:var(--nuit-c,#0e1a15);box-shadow:none;backdrop-filter:none}
+    .barre.sur-nuit .marque{color:var(--sur-vert,#e4ecdf)}.barre.sur-nuit .sceau{color:var(--sur-vert-pale,#a9bdaf)}
+    .barre .sceau{order:5;flex-basis:100%;font-size:10px;margin-top:2px}
+    .tete{padding-top:36px}.hero{padding-top:40px}
+  }
 </style>
 <header class="barre sur-nuit">
   <a class="marque" href="index.html">CASCADE</a>
-  <nav aria-label="Site"><a href="instrument.html">Instrument</a><a href="engagement.html">Pricing</a><a href="method.html">Method</a><a href="security.html">Security</a><a href="questions.html" aria-current="page">Questions</a><a href="contact.html">Contact</a></nav>
-  <span class="sceau">content hash dbf26abec438515e &#183; measured, then frozen</span>
+  <nav aria-label="Site"><a href="routing/index.html">Routing</a><a href="screening/index.html">Screening</a><a href="monitoring/index.html">Monitoring</a><a href="scoring/index.html">Scoring</a><a href="dossier/index.html">Dossier</a><a href="engagement.html">Pricing</a><a href="contact.html">Contact</a></nav>
+  <span class="sceau">measured, then frozen</span>
 </header>
 
 <main>

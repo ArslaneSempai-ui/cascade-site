@@ -30,6 +30,7 @@ BASE = pathlib.Path(__file__).parent
 
 sys.path.insert(0, str(BASE))
 from instrument_carte import CSS_NOIR, CSS_ONYX, CARTE_ONYX_HTML, PANNEAU_ONYX_HTML, JS_ONYX  # noqa: E402
+from outil import OUTILS, barre_site, CSS_BARRE_SITE
 
 r = subprocess.run(["node", str(BASE / "extraire-instrument-dossier.mjs")],
                    capture_output=True, text=True)
@@ -312,18 +313,8 @@ PAGE = f'''<!doctype html><html lang="en">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
 <script>document.documentElement.classList.add("js")</script>
-<style>{CSS}{CSS_NOIR}{CSS_ONYX}</style>
-<header class="barre">
-  <a class="marque" href="../ACCUEIL.html">CASCADE</a>
-  <nav aria-label="Site">
-    <a href="INSTRUMENT-DOSSIER.html" aria-current="page">Instrument</a>
-    <a href="../ENGAGEMENT.html">Pricing</a>
-    <a href="ANNEXE-DOSSIER-METHODE.html">Method</a>
-    <a href="ANNEXE-DOSSIER-SECURITE.html">Security</a>
-    <a href="../CONTACT.html">Contact</a>
-  </nav>
-  <span class="sceau"<content hash {D["provenance"]["empreinte"]} &#183; measured, then frozen</span>
-</header>
+<style>{CSS}{CSS_NOIR}{CSS_ONYX}{CSS_BARRE_SITE}</style>
+{barre_site(courant=OUTILS["dossier"]["page_hero"], sceau=D["provenance"]["empreinte"], racine="../")}
 
 <section class="tete">
   <div class="colonne">

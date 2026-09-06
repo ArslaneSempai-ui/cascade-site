@@ -28,7 +28,7 @@ spec = importlib.util.spec_from_file_location("bn", BASE / "batir-nav.py")
 bn = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(bn)
 
-from outil import SCEAU_ROUTING
+from outil import SCEAU_ROUTING, barre_site, CSS_BARRE_SITE
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 
 # ── les six annexes : une lettre, une source, un objet, une sortie ───────────
@@ -350,17 +350,9 @@ CSS = """
 
 # la nav du haut : celle des pages principales, avec la page courante marquée
 def barre_html(courante):
-    liens = [("INSTRUMENT.html", "Instrument"), ("ENGAGEMENT.html", "Pricing"),
-             ("ANNEXE-METHODE.html", "Method"), ("ANNEXE-SECURITE.html", "Security"),
-             ("ANNEXE-QUESTIONS.html", "Questions"), ("CONTACT.html", "Contact")]
-    nav = "".join(
-        f'<a href="{h}"' + (' aria-current="page"' if h == courante else "")
-        + f'>{n}</a>' for h, n in liens)
-    return (f'<header class="barre sur-nuit">\n'
-            f'  <a class="marque" href="ACCUEIL.html">CASCADE</a>\n'
-            f'  <nav aria-label="Site">{nav}</nav>\n'
-            f'  <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>\n'
-            f'</header>')
+    """Les pages de la maison : la barre du site seule (Arslane, 11/09), le lien courant marqué
+    quand la page est dans la barre (Pricing, Contact)."""
+    return barre_site(courant=courante)
 
 
 def pied_html(courante):
@@ -444,7 +436,7 @@ for lettre, page in zip(LETTRES, PAGES):
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">{donnees}
 <script>document.documentElement.classList.add("js")</script>
-<style>{CSS}</style>
+<style>{CSS}{CSS_BARRE_SITE}</style>
 {barre_html(page["html"])}
 
 <main>
@@ -483,7 +475,7 @@ for page in PLOMBERIE["pages"]:
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">
 <script>document.documentElement.classList.add("js")</script>
-<style>{CSS}</style>
+<style>{CSS}{CSS_BARRE_SITE}</style>
 {barre_html(page["html"])}
 
 <main>
@@ -585,19 +577,8 @@ PAGES_ONYX = [
 
 
 def barre_outil(o, pages, instrument, courante, sceau):
-    liens = [(instrument, "Instrument"),
-             (lien(o, "ENGAGEMENT.html"), "Pricing"),
-             (pages[0]["html"], "Method"),
-             (pages[1]["html"], "Security"),
-             (lien(o, "CONTACT.html"), "Contact")]
-    nav = "".join(
-        f'<a href="{h}"' + (' aria-current="page"' if h == courante else "")
-        + f'>{n}</a>' for h, n in liens)
-    return (f'<header class="barre sur-nuit">\n'
-            f'  <a class="marque" href="{lien(o, "ACCUEIL.html")}">CASCADE</a>\n'
-            f'  <nav aria-label="Site">{nav}</nav>\n'
-            f'  <span class="sceau">content hash {sceau} &#183; measured, then frozen</span>\n'
-            f'</header>')
+    """Les pages d'un outil : la barre du site, l'outil courant marqué, son empreinte dans le sceau."""
+    return barre_site(courant=o["page_hero"], sceau=sceau, racine=o["prefixe_racine"])
 
 
 def pied_outil(o, pages, courante, sceau):
@@ -645,7 +626,7 @@ def batir_annexes_outil(o, pages, palette, nuit, tete_sombre, accent, lot, instr
 <link rel="stylesheet" href="{lien(o, "fontes/literata.css")}">
 <link rel="stylesheet" href="{lien(o, "fontes/roboto-mono.css")}">
 <script>document.documentElement.classList.add("js")</script>
-<style>{css_o}</style>
+<style>{css_o}{CSS_BARRE_SITE}</style>
 {barre_outil(o, pages, instrument, page["html"], sceau_o)}
 
 <main>

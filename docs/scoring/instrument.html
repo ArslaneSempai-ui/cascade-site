@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-Uk83yZv2FEVYyKPISen6BH31iJ4q/ZBTzTv9RkWDfNU=' 'unsafe-hashes' 'sha256-ogKvhph2a6LUD2Pr+pZ9rS6Ytjewm+TRvjLVOYBLELs=' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-mCMt/OEouFimAbiyodwIOkduWe/Zi5+uiYpQe1nCv2Y='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-JbO7sR+chN8RC/4EcGE3RpHUeB3b4/X+EFBWLP2E70s=' 'unsafe-hashes' 'sha256-ogKvhph2a6LUD2Pr+pZ9rS6Ytjewm+TRvjLVOYBLELs=' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-mCMt/OEouFimAbiyodwIOkduWe/Zi5+uiYpQe1nCv2Y='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Scoring &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/scoring/instrument.html">
@@ -293,17 +293,25 @@
   .clone-col .ouvrir{display:inline-flex;align-items:baseline;gap:10px;font-family:var(--texte);font-weight:600;font-size:15px;
     padding:10px 18px;border:1px solid;border-radius:8px;text-decoration:none;transition:background .2s,color .2s}
   .clone-col .ouvrir.tarif{opacity:.85}
+
+  /* the current link, marked the same way on every page (the heroes had no rule, the instruments
+     only brightened it, the house pages only weighted it) */
+  .barre nav a[aria-current]{color:var(--sur,var(--sur-vert,#e4ecdf));font-weight:600}
+  /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
+     colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
+  @media (max-width:1080px){
+    .barre{position:static;padding:12px 18px 8px;flex-wrap:wrap}
+    html:not(.js) .barre{position:static}
+    .barre.sur-nuit,.barre.sur-nuit.posee{background:var(--nuit-c,#0e1a15);box-shadow:none;backdrop-filter:none}
+    .barre.sur-nuit .marque{color:var(--sur-vert,#e4ecdf)}.barre.sur-nuit .sceau{color:var(--sur-vert-pale,#a9bdaf)}
+    .barre .sceau{order:5;flex-basis:100%;font-size:10px;margin-top:2px}
+    .tete{padding-top:36px}.hero{padding-top:40px}
+  }
 </style>
-<header class="barre">
+<header class="barre sur-nuit">
   <a class="marque" href="../index.html">CASCADE</a>
-  <nav aria-label="Site">
-    <a href="instrument.html" aria-current="page">Instrument</a>
-    <a href="../engagement.html">Pricing</a>
-    <a href="method.html">Method</a>
-    <a href="security.html">Security</a>
-    <a href="../contact.html">Contact</a>
-  </nav>
-  <span class="sceau"<content hash f51ff169dbc4fd15 &#183; measured, then frozen</span>
+  <nav aria-label="Site"><a href="../routing/index.html">Routing</a><a href="../screening/index.html">Screening</a><a href="../monitoring/index.html">Monitoring</a><a href="../index.html" aria-current="page">Scoring</a><a href="../dossier/index.html">Dossier</a><a href="../engagement.html">Pricing</a><a href="../contact.html">Contact</a></nav>
+  <span class="sceau">content hash f51ff169dbc4fd15 &#183; measured, then frozen</span>
 </header>
 
 <section class="tete">

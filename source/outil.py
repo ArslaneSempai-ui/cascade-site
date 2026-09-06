@@ -559,3 +559,38 @@ def manques_etiquettes(outil_id, base, seuil=SEUIL_OBJET):
             m.append(f"findings-{outil_id}.json, finding {fd.get('num', i + 1)} : les étiquettes « {annotations[a][4][:30]}… » "
                      f"et « {annotations[b][4][:30]}… » se recouvrent : les écarter")
     return m
+
+
+# ── UNE SEULE BARRE, PARTOUT (Arslane, 11/09) ─────────────────────────────────────────────────
+# La barre du site, identique sur toutes les pages : les cinq instruments dans l'ordre du rideau,
+# Pricing, Contact ; l'outil courant marqué. Il a vu la version à deux niveaux (barre du site puis
+# ligne de l'outil) et l'a refusée : « absolument partout qu'une seule barre ». Une fonction, huit
+# en-têtes.
+NAV_SITE = [(o["page_hero"], o["nom"]) for o in OUTILS.values()] + [("ENGAGEMENT.html", "Pricing"), ("CONTACT.html", "Contact")]
+
+
+def barre_site(courant=None, sceau=None, racine="", nuit=True):
+    """`racine` : « ../ » depuis un sous-dossier ; `courant` marque le lien du site (la page d'outil
+    courante, Pricing ou Contact). `sceau` : l'empreinte de l'outil, sinon la devise seule."""
+    nav = "".join(f'<a href="{racine + c}"' + (' aria-current="page"' if c == courant else "") + f'>{n}</a>'
+                  for c, n in NAV_SITE)
+    devise = f"content hash {sceau} &#183; measured, then frozen" if sceau else "measured, then frozen"
+    return (f'<header class="barre{" sur-nuit" if nuit else ""}">\n  <a class="marque" href="{racine}ACCUEIL.html">CASCADE</a>\n'
+            f'  <nav aria-label="Site">{nav}</nav>\n  <span class="sceau">{devise}</span>\n</header>')
+
+
+CSS_BARRE_SITE = '''
+  /* the current link, marked the same way on every page (the heroes had no rule, the instruments
+     only brightened it, the house pages only weighted it) */
+  .barre nav a[aria-current]{color:var(--sur,var(--sur-vert,#e4ecdf));font-weight:600}
+  /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
+     colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
+  @media (max-width:1080px){
+    .barre{position:static;padding:12px 18px 8px;flex-wrap:wrap}
+    html:not(.js) .barre{position:static}
+    .barre.sur-nuit,.barre.sur-nuit.posee{background:var(--nuit-c,#0e1a15);box-shadow:none;backdrop-filter:none}
+    .barre.sur-nuit .marque{color:var(--sur-vert,#e4ecdf)}.barre.sur-nuit .sceau{color:var(--sur-vert-pale,#a9bdaf)}
+    .barre .sceau{order:5;flex-basis:100%;font-size:10px;margin-top:2px}
+    .tete{padding-top:36px}.hero{padding-top:40px}
+  }
+'''
