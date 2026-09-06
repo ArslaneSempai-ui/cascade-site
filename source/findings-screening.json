@@ -12,12 +12,34 @@
       "leg_b": "false alerts on the 60 written non-match pairs, interval [0&#8211;6]",
       "cote": "4 hits in 5 missed",
       "source": {
-        "a": { "table": "authored", "palier": "exact", "seuil": "0.50", "mesure": "rappel" },
-        "b": { "table": "authored", "palier": "exact", "seuil": "0.50", "mesure": "fauxPositifs" }
+        "a": {
+          "table": "authored",
+          "palier": "exact",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        },
+        "b": {
+          "table": "authored",
+          "palier": "exact",
+          "seuil": "0.50",
+          "mesure": "fauxPositifs"
+        }
       },
       "annotations": [
-        [0.66, 0.23, 0.86, 0.12, "the strict sieve, at the top: a few hits, no noise"],
-        [0.66, 0.71, 0.88, 0.88, "the loosest sieve, at the bottom: every hit is still there"]
+        [
+          0.5,
+          0.55,
+          0.5,
+          0.2,
+          "the strict sieve, at the top: a few hits, no noise"
+        ],
+        [
+          0.48,
+          0.93,
+          0.108,
+          0.92,
+          "the loosest sieve, at the bottom: every hit is still there"
+        ]
       ]
     },
     {
@@ -30,12 +52,34 @@
       "leg_b": "false alerts at the same threshold, interval [74&#8211;92], 60 non-match pairs",
       "cote": "every hit, drowned",
       "source": {
-        "a": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.50", "mesure": "rappel" },
-        "b": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.50", "mesure": "fauxPositifs" }
+        "a": {
+          "table": "authored",
+          "palier": "jaro-winkler",
+          "seuil": "0.50",
+          "mesure": "rappel"
+        },
+        "b": {
+          "table": "authored",
+          "palier": "jaro-winkler",
+          "seuil": "0.50",
+          "mesure": "fauxPositifs"
+        }
       },
       "annotations": [
-        [0.66, 0.71, 0.88, 0.88, "the loose sieve: nothing escapes, nothing is filtered"],
-        [0.34, 0.71, 0.13, 0.60, "the grey ones are false alerts, nearly one per hit"]
+        [
+          0.52,
+          0.62,
+          0.814,
+          0.88,
+          "the loose sieve: nothing escapes, nothing is filtered"
+        ],
+        [
+          0.4,
+          0.6,
+          0.186,
+          0.88,
+          "the grey ones are false alerts, nearly one per hit"
+        ]
       ]
     },
     {
@@ -48,12 +92,34 @@
       "leg_b": "false alerts at that same cell, interval [65&#8211;86]: the price of the floor",
       "cote": "the frontier cell",
       "source": {
-        "a": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.56", "mesure": "rappel" },
-        "b": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.56", "mesure": "fauxPositifs" }
+        "a": {
+          "table": "authored",
+          "palier": "jaro-winkler",
+          "seuil": "0.56",
+          "mesure": "rappel"
+        },
+        "b": {
+          "table": "authored",
+          "palier": "jaro-winkler",
+          "seuil": "0.56",
+          "mesure": "fauxPositifs"
+        }
       },
       "annotations": [
-        [0.66, 0.655, 0.86, 0.56, "the ruby frame: the sieve the frontier retains"],
-        [0.45, 0.80, 0.14, 0.88, "what it still lets through lies at the foot"]
+        [
+          0.5,
+          0.58,
+          0.186,
+          0.13,
+          "the ruby frame: the sieve the frontier retains"
+        ],
+        [
+          0.5,
+          0.8,
+          0.814,
+          0.13,
+          "what it still lets through lies at the foot"
+        ]
       ]
     },
     {
@@ -66,12 +132,34 @@
       "leg_b": "the same cell on 360 fabricated variants, interval [14&#8211;21]: kept apart precisely because it flatters",
       "cote": "never blended",
       "source": {
-        "a": { "table": "authored", "palier": "jaro-winkler", "seuil": "0.56", "mesure": "fauxPositifs" },
-        "b": { "table": "synthetic", "palier": "jaro-winkler", "seuil": "0.56", "mesure": "fauxPositifs" }
+        "a": {
+          "table": "authored",
+          "palier": "jaro-winkler",
+          "seuil": "0.56",
+          "mesure": "fauxPositifs"
+        },
+        "b": {
+          "table": "synthetic",
+          "palier": "jaro-winkler",
+          "seuil": "0.56",
+          "mesure": "fauxPositifs"
+        }
       },
       "annotations": [
-        [0.295, 0.40, 0.12, 0.22, "written pairs: the measured half"],
-        [0.72, 0.495, 0.88, 0.82, "fabricated variants: labelled, apart"]
+        [
+          0.3,
+          0.4,
+          0.186,
+          0.2,
+          "written pairs: the measured half"
+        ],
+        [
+          0.72,
+          0.49,
+          0.814,
+          0.2,
+          "fabricated variants: labelled, apart"
+        ]
       ]
     },
     {
@@ -84,12 +172,30 @@
       "leg_b": "fabricated variants behind the synthetic half, labelled and kept apart",
       "cote": "yours replace both",
       "source": {
-        "a": { "table": "authored", "compte": "nMatch" },
-        "b": { "table": "synthetic", "compte": "nMatch" }
+        "a": {
+          "table": "authored",
+          "compte": "nMatch"
+        },
+        "b": {
+          "table": "synthetic",
+          "compte": "nMatch"
+        }
       },
       "annotations": [
-        [0.505, 0.20, 0.16, 0.10, "our pairs end where your export begins"],
-        [0.55, 0.84, 0.86, 0.92, "measure:yours, next to your file: uncoloured until measured"]
+        [
+          0.5,
+          0.28,
+          0.5,
+          0.13,
+          "our pairs end where your export begins"
+        ],
+        [
+          0.55,
+          0.87,
+          0.578,
+          0.96,
+          "measure:yours, next to your file: uncoloured until measured"
+        ]
       ]
     }
   ]
