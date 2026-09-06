@@ -5,13 +5,13 @@
   "findings": [
     {
       "num": "01",
-      "titre": "Four questions, one piece.",
-      "phrase": "Each tool leaves a sealed report at your desk. A reviewer does not want four files: the Dossier reads them all and answers as one piece. All four questions have a report today, and all four stand at the top control, consistent, five of five.",
+      "titre": "The Dossier reads all four tool reports as one audit file.",
+      "phrase": "Each tool writes a public record. The Dossier, the audit file a reviewer reads, takes all four and reports on them together. Today all four reports are present, and all four pass the top control, consistent.",
       "a": "4",
-      "leg_a": "questions of the chain with a report present, of the 4 the suite asks",
+      "leg_a": "tool reports present, of the 4 the suite produces",
       "b": "4",
-      "leg_b": "reports standing at consistent, the top of the five controls",
-      "cote": "the keystone piece",
+      "leg_b": "reports at the top control, consistent",
+      "cote": "4 of 4 present",
       "source": {
         "a": {
           "cle": "couverture",
@@ -30,26 +30,26 @@
           0.56,
           0.696,
           0.25,
-          "four stones stand together on the golden step"
+          "reports present: 4 of 4"
         ],
         [
           0.13,
           0.585,
           0.108,
           0.25,
-          "four questions, one lectern, one piece"
+          "consistent control: 4 of 4"
         ]
       ]
     },
     {
       "num": "02",
-      "titre": "A seal is checked, not trusted.",
-      "phrase": "A seal is recomputed before anything else is believed. The Dossier recomputes all four against their own content, and holds the rule that closes the family: one dataset cannot carry two seals, and a report from an unknown tool version is named, not guessed.",
+      "titre": "The Dossier recomputes each content hash and checks it matches.",
+      "phrase": "The Dossier recomputes the sha256 content hash of each report and checks it against the stored value. One dataset cannot carry two hashes, and a report from an unknown tool version is named in the output rather than guessed.",
       "a": "4",
-      "leg_a": "seals recomputed and matching, on the four reports read",
+      "leg_a": "sha256 content hashes recomputed and matching, on the 4 reports read",
       "b": "5",
-      "leg_b": "controls every report passes through: present, sealed, signed, fresh, consistent",
-      "cote": "arithmetic, not our word",
+      "leg_b": "controls each report passes: present, hash, signature, validity, consistency",
+      "cote": "4 hashes recomputed",
       "source": {
         "a": {
           "compte-verdicts": {
@@ -69,26 +69,26 @@
           0.7,
           0.108,
           0.25,
-          "every fingerprint recomputed on the way up"
+          "content hash recomputed: 4 of 4"
         ],
         [
           0.6,
           0.4,
           0.696,
           0.22,
-          "four house seals at the lectern, all checked"
+          "five controls per report"
         ]
       ]
     },
     {
       "num": "03",
-      "titre": "The zero that fixed the house.",
-      "phrase": "On day one the Dossier printed zero verifiable signatures across its own suite, one refusal per report, because nothing is called valid unverified. The zero was acted on: today every public record carries the house signature, and the piece verifies all four.",
+      "titre": "Every public record now carries a verifiable signature.",
+      "phrase": "On its first run the Dossier verified zero signatures across the suite, one refusal per report, because an unverified signature does not count as valid. The records were then signed, and today the Dossier verifies all four with no refusal left.",
       "a": "4",
-      "leg_a": "public-record signatures verified today, of the four reports read",
+      "leg_a": "public-record signatures verified, of the 4 reports read",
       "b": "0",
-      "leg_b": "signature refusals left: the day-one zero did its work and is gone",
-      "cote": "the zero did its work",
+      "leg_b": "signature refusals remaining across the 4 reports",
+      "cote": "0 signature refusals",
       "source": {
         "a": {
           "compte-verdicts": {
@@ -109,26 +109,26 @@
           0.2,
           0.304,
           0.047,
-          "the signed step, once empty, now crossed by all"
+          "signatures verified: 4 of 4"
         ],
         [
           0.5,
           0.4,
           0.759,
           0.22,
-          "the printed zero did its work: four signatures"
+          "signature refusals: 0"
         ]
       ]
     },
     {
       "num": "04",
-      "titre": "A measurement ages. The Dossier says by how much.",
-      "phrase": "Fresh, due, or stale: every measurement is dated against the rhythm you declare, ninety days by default and said as a declaration. Today all four are fresh, and the oldest is sixteen days into its rhythm: counted, not assumed.",
+      "titre": "All four measurements sit within the 90-day validity period.",
+      "phrase": "The Dossier dates each measurement against a validity period the record declares, 90 days by default. Today all four sit within it, and the oldest, routing, is 16 days old.",
       "a": "4",
-      "leg_a": "measurements fresh under the declared rhythm at the day of this Dossier",
+      "leg_a": "measurements within the declared validity period, on the day of this Dossier",
       "b": "16",
-      "leg_b": "days since the oldest measurement, routing, well inside the ninety-day rhythm",
-      "cote": "age, counted",
+      "leg_b": "days since the oldest measurement, routing, within the 90-day period",
+      "cote": "oldest 16 days",
       "source": {
         "a": {
           "compte-verdicts": {
@@ -147,26 +147,26 @@
           0.5,
           0.304,
           0.19,
-          "all four fresh, the oldest sixteen days in"
+          "within validity: 4 of 4"
         ],
         [
           0.68,
           0.62,
           0.892,
           0.25,
-          "brass rings inside a ninety-day rhythm"
+          "oldest measurement: 16 days"
         ]
       ]
     },
     {
       "num": "05",
-      "titre": "Your reviewer verifies it without us.",
-      "phrase": "The Dossier is written next to your files, sealed with the same fingerprint the whole suite uses, and it judges freshness against a rhythm you declare, named in the record as a declaration. Nothing leaves your machine, and nothing about the verdict requires our word.",
+      "titre": "Your reviewer verifies the Dossier without us.",
+      "phrase": "The Dossier is written next to your files and carries the same sha256 content hash the suite uses. It checks each measurement against a 90-day validity period the record declares. The verdict needs no service of ours to confirm.",
       "a": "4",
-      "leg_a": "questions the piece answers as one, for the whole chain",
+      "leg_a": "questions the Dossier answers as one, for the whole suite",
       "b": "90",
-      "leg_b": "days of the declared review rhythm it judges freshness against: an assumption, named",
-      "cote": "verifiable, alone",
+      "leg_b": "days of the declared validity period it checks freshness against",
+      "cote": "verifiable at your desk",
       "source": {
         "a": {
           "cle": "couverture",
@@ -183,14 +183,14 @@
           0.72,
           0.233,
           0.86,
-          "the ivory stone is yours, at the foot for now"
+          "your report is added here"
         ],
         [
           0.73,
           0.52,
           0.759,
           0.25,
-          "the lectern: the piece your reviewer verifies alone"
+          "validity period: 90 days"
         ]
       ]
     }

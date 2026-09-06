@@ -4,13 +4,13 @@
   "findings": [
     {
       "num": "01",
-      "titre": "The naked amount catches nearly everything.",
-      "phrase": "Score nothing but the biggest amount in the window and almost every archetype trips it. So does the family purchase the history explains: every one of its false alerts is the same benign twin, the one-off purchase.",
+      "titre": "The amount scenario alone reaches 95.2% recall at 16.7% false alerts.",
+      "phrase": "Scoring only the largest amount in the window reaches 95.2% recall on the 42 written suspicious cases. It alerts on 16.7% of the benign twins, and each of those is a one-off family purchase the history explains.",
       "a": "95.2<small>%</small>",
-      "leg_a": "recall of the amount scenario at 0.50, interval [84&#8211;99], 42 written suspicious cases",
+      "leg_a": "recall 95.2% for the amount scenario at 0.50, interval [84&#8211;99], 42 written suspicious cases",
       "b": "16.7<small>%</small>",
-      "leg_b": "false alerts on the 42 benign twins, interval [8&#8211;31]: all of them one-off purchases",
-      "cote": "one twin in six alarms",
+      "leg_b": "false alerts 16.7% on 42 benign twins, interval [8&#8211;31]",
+      "cote": "recall 95.2%",
       "source": {
         "a": {
           "table": "authored",
@@ -31,26 +31,26 @@
           0.45,
           0.48,
           0.13,
-          "one number, one blade: its bar stops under the brass line"
+          "amount scenario: recall 95.2%"
         ],
         [
           0.575,
           0.74,
           0.48,
           0.94,
-          "the amber behind the blade: all one-off purchases"
+          "false alerts 16.7% on benign twins"
         ]
       ]
     },
     {
       "num": "02",
-      "titre": "A busy account is not a signal.",
-      "phrase": "Count transactions and payroll looks like laundering: the twins velocity trips on are the salary account, the market season and the monthly savings, while most true archetypes pass under it quietly.",
+      "titre": "The velocity scenario reaches 28.6% recall and alerts on half the twins.",
+      "phrase": "Counting transactions reaches 28.6% recall, since most written cases are not the busiest accounts. The same count alerts on half the benign twins, which are payroll, seasonal trade and monthly savings.",
       "a": "28.6<small>%</small>",
-      "leg_a": "recall of the velocity scenario at 0.50, interval [17&#8211;44]: most archetypes are not busy",
+      "leg_a": "recall 28.6% for the velocity scenario at 0.50, interval [17&#8211;44]",
       "b": "50<small>%</small>",
-      "leg_b": "false alerts at the same threshold, interval [36&#8211;64]: payroll, season and savings, measured",
-      "cote": "half the twins alarm",
+      "leg_b": "false alerts 50% at the same threshold, interval [36&#8211;64], 42 benign twins",
+      "cote": "false alerts 50%",
       "source": {
         "a": {
           "table": "authored",
@@ -71,26 +71,26 @@
           0.55,
           0.48,
           0.13,
-          "the counting blade: most archetypes pass under it, unlit"
+          "velocity scenario: recall 28.6%"
         ],
         [
           0.575,
           0.735,
           0.48,
           0.94,
-          "half this amber grid burns: payday, season, savings"
+          "false alerts 50% on benign twins"
         ]
       ]
     },
     {
       "num": "03",
-      "titre": "No single scenario holds the floor.",
-      "phrase": "The tool's rule asks the lower bound of measured recall to reach 90. On 42 written cases no cell of any scenario gets there alone: the best bound stops at 84, the next at 75. That is the honest headline, and the reason the sweep is worth running on your history.",
+      "titre": "No single scenario reaches the 90% recall floor.",
+      "phrase": "The tool asks the lower bound of measured recall to reach 90%. On the 42 written cases no single scenario reaches it: the best lower bound is 84.2% for amount, the next 75% for peer. More than one scenario is needed.",
       "a": "84.2<small>%</small>",
-      "leg_a": "the highest lower bound any single cell reaches: amount at 0.50, recall interval [84&#8211;99]",
+      "leg_a": "highest recall lower bound, amount at 0.50: 84.2%, interval [84&#8211;99]",
       "b": "75<small>%</small>",
-      "leg_b": "the next best bound: peer at 0.50, recall interval [75&#8211;95]",
-      "cote": "the floor stays unmet",
+      "leg_b": "next best lower bound, peer at 0.50: 75%, interval [75&#8211;95]",
+      "cote": "best bound 84.2%",
       "source": {
         "a": {
           "table": "authored",
@@ -113,26 +113,26 @@
           0.53,
           0.64,
           0.13,
-          "the brass line at ninety: no bar reaches it alone"
+          "recall floor 90%: unmet by any scenario"
         ],
         [
           0.21,
           0.545,
           0.12,
           0.13,
-          "the tallest bar is amount's, and it stops short"
+          "amount: recall lower bound 84.2%"
         ]
       ]
     },
     {
       "num": "04",
-      "titre": "Written and generated, kept apart.",
-      "phrase": "The same cell, two provenances. On generated variants the amount scenario scores a perfect recall; on the written cases it does not. Blended, the synthetic half would round the record's own doubt away. It is measured apart, labelled synthetic, and stays apart.",
+      "titre": "The amount scenario scores 100% recall on variants against 95.2% on written cases.",
+      "phrase": "The same cell scores 95.2% recall on the 42 written cases and 100% on the 126 generated variants. The generated set is easier, so it is measured on its own and never merged into the headline rate.",
       "a": "95.2<small>%</small>",
-      "leg_a": "recall at amount 0.50 on the 42 written suspicious cases, interval [84&#8211;99]",
+      "leg_a": "recall 95.2% for amount at 0.50 on 42 written suspicious cases, interval [84&#8211;99]",
       "b": "100<small>%</small>",
-      "leg_b": "the same cell on 126 generated variants, interval [97&#8211;100]: kept apart precisely because it flatters",
-      "cote": "never blended",
+      "leg_b": "recall 100% at the same cell on 126 generated variants, interval [97&#8211;100]",
+      "cote": "measured apart",
       "source": {
         "a": {
           "table": "authored",
@@ -153,26 +153,26 @@
           0.32,
           0.11,
           0.07,
-          "the same blade twice: written cases, then variants"
+          "written cases: recall 95.2%"
         ],
         [
           0.59,
           0.395,
           0.72,
           0.07,
-          "only the variants' bar crosses the line: kept apart"
+          "generated variants: recall 100%"
         ]
       ]
     },
     {
       "num": "05",
-      "titre": "Your history, your scenarios.",
-      "phrase": "Every case behind these findings is ours: written twin by twin, or generated under a seed. Two files from your own systems, alerts and transactions, replay the whole grid on your machine. Nothing leaves it, and the report lands next to your files.",
+      "titre": "The public record holds 42 written cases and 126 generated variants.",
+      "phrase": "Every case behind these findings is in the public record: 42 written, seven per typology, and 126 generated under a seed. Two files from your systems, alerts and transactions, rerun the full grid at your desk.",
       "a": "42",
-      "leg_a": "written suspicious cases behind the measured half, seven per declared nature",
+      "leg_a": "written suspicious cases behind the measured rates, seven per declared typology",
       "b": "126",
-      "leg_b": "generated suspicious variants behind the synthetic half, natures preserved by construction",
-      "cote": "yours replace both",
+      "leg_b": "generated variants behind the separate rates, typologies preserved by construction",
+      "cote": "42 written, 126 generated",
       "source": {
         "a": {
           "table": "authored",
@@ -189,14 +189,14 @@
           0.55,
           0.72,
           0.13,
-          "the eighth blade is yours: unlit until measured"
+          "your cases rerun at your desk"
         ],
         [
           0.805,
           0.62,
           0.72,
           0.82,
-          "an ivory card, two files, your own alert history"
+          "42 written, 126 generated"
         ]
       ]
     }

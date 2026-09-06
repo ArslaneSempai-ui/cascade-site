@@ -4,13 +4,13 @@
   "findings": [
     {
       "num": "01",
-      "titre": "Geography sees nothing here. On purpose.",
-      "phrase": "Every written dossier resides in an ordinary Union country, because no official country list was copied into the data. The geography factor therefore scores zero on both sides, and that blindness is the finding: risk lives in declared facts, not in passports.",
+      "titre": "Geography scores zero recall and zero false alerts here.",
+      "phrase": "Every file in the record resides in an ordinary Union country, because no official country list was copied into the data. The geography factor therefore scores 0% recall and 0% false alerts, and risk lives in the declared facts rather than the country.",
       "a": "0<small>%</small>",
-      "leg_a": "recall of the geography factor on the 42 written escalated dossiers, interval [0&#8211;8]",
+      "leg_a": "recall 0% for the geography factor on 42 escalated files, interval [0&#8211;8]",
       "b": "0<small>%</small>",
-      "leg_b": "false alerts on the 42 maintained twins, interval [0&#8211;8]: nothing to alarm on either",
-      "cote": "blind by design, said",
+      "leg_b": "false alerts 0% on 42 retained files, interval [0&#8211;8]",
+      "cote": "geography: 0% both sides",
       "source": {
         "a": {
           "table": "authored",
@@ -31,26 +31,26 @@
           0.42,
           0.5,
           0.07,
-          "the empty bay: geography sees nothing in this book"
+          "geography factor: recall 0%"
         ],
         [
           0.47,
           0.7,
           0.5,
           0.96,
-          "every dossier lives in ordinary countries: no list"
+          "geography factor: false alerts 0%"
         ]
       ]
     },
     {
       "num": "02",
-      "titre": "Products carry the strongest signal. And its cost.",
-      "phrase": "Score nothing but the products a client holds and most escalated dossiers trip it: correspondent accounts, private banking, crypto rails. So does a quarter of the honest book, and every one of those reviews is analyst time.",
+      "titre": "The product factor reaches 92.9% recall at 23.8% false alerts.",
+      "phrase": "Scoring only the products a client holds reaches 92.9% recall, since correspondent accounts, private banking and crypto rails carry the signal. The same factor alerts on 23.8% of the retained files, and each one is a review.",
       "a": "92.9<small>%</small>",
-      "leg_a": "recall of the product factor at 0.50, interval [81&#8211;98], 42 written escalated dossiers",
+      "leg_a": "recall 92.9% for the product factor at 0.50, interval [81&#8211;98], 42 escalated files",
       "b": "23.8<small>%</small>",
-      "leg_b": "false alerts on the 42 maintained twins, interval [13&#8211;39]: the price of the signal",
-      "cote": "one twin in four alarms",
+      "leg_b": "false alerts 23.8% on 42 retained files, interval [13&#8211;39]",
+      "cote": "recall 92.9%",
       "source": {
         "a": {
           "table": "authored",
@@ -71,26 +71,26 @@
           0.55,
           0.422,
           0.07,
-          "the tallest pile: products carry the signal"
+          "product factor: recall 92.9%"
         ],
         [
           0.53,
           0.82,
           0.5,
           0.96,
-          "and its ivory shadow: one twin in four reviewed"
+          "false alerts 23.8% on retained files"
         ]
       ]
     },
     {
       "num": "03",
-      "titre": "No single factor holds the floor.",
-      "phrase": "The tool's rule asks the lower bound of measured recall to reach 90. On 42 written dossiers no factor gets there alone: the best bound stops at 81, and the cleanest one, behaviour without a single false alert, sees only half. That is the case for scoring on more than one factor, measured.",
+      "titre": "No single factor reaches the 90% recall floor.",
+      "phrase": "The tool asks the lower bound of measured recall to reach 90%. On the 42 written files no factor reaches it: the best lower bound is 81% for product, and behaviour, with no false alert, reaches only 52%. Scoring on more than one factor is needed.",
       "a": "81<small>%</small>",
-      "leg_a": "the highest lower bound any factor reaches: product at 0.50, recall interval [81&#8211;98]",
+      "leg_a": "highest recall lower bound, product at 0.50: 81%, interval [81&#8211;98]",
       "b": "52<small>%</small>",
-      "leg_b": "the cleanest factor's bound: behaviour at 0.50, zero false alerts, interval [52&#8211;79]",
-      "cote": "the floor stays unmet",
+      "leg_b": "cleanest factor, behaviour at 0.50: 52%, zero false alerts, interval [52&#8211;79]",
+      "cote": "best bound 81%",
       "source": {
         "a": {
           "table": "authored",
@@ -113,26 +113,26 @@
           0.53,
           0.186,
           0.2,
-          "the brass shelf at ninety: no pile reaches it"
+          "recall floor 90%: unmet by any factor"
         ],
         [
           0.67,
           0.72,
           0.814,
           0.2,
-          "behaviour: clean, not one ivory box, half seen"
+          "behaviour: recall 52%, 0 false alerts"
         ]
       ]
     },
     {
       "num": "04",
-      "titre": "Written and generated, kept apart. Both ways.",
-      "phrase": "The same cell, two provenances, and here the generated variants are the harsher half: the best factor drops ten points of recall on them. Separation is not a way to hide a flattering number. It is a rule, and it holds whichever side it favours.",
+      "titre": "The product factor scores 79.4% recall on variants against 92.9% on written files.",
+      "phrase": "The same cell scores 92.9% recall on the 42 written files and 79.4% on the 126 generated variants. Here the generated set is harder, and it is still measured on its own and never merged into the headline rate.",
       "a": "92.9<small>%</small>",
-      "leg_a": "recall at product 0.50 on the 42 written escalated dossiers, interval [81&#8211;98]",
+      "leg_a": "recall 92.9% for product at 0.50 on 42 escalated files, interval [81&#8211;98]",
       "b": "79.4<small>%</small>",
-      "leg_b": "the same cell on 126 generated variants, interval [71&#8211;86]: harsher, and still kept apart",
-      "cote": "a rule, not a convenience",
+      "leg_b": "recall 79.4% at the same cell on 126 generated variants, interval [71&#8211;86]",
+      "cote": "measured apart",
       "source": {
         "a": {
           "table": "authored",
@@ -153,26 +153,26 @@
           0.62,
           0.265,
           0.96,
-          "written dossiers: the bound stops under the shelf"
+          "written files: recall 92.9%"
         ],
         [
           0.58,
           0.62,
           0.892,
           0.96,
-          "the variants do worse, and still stay apart"
+          "generated variants: recall 79.4%"
         ]
       ]
     },
     {
       "num": "05",
-      "titre": "Your book, your factors.",
-      "phrase": "Every dossier behind these findings is ours: written twin by twin, or generated under a seed. Two files from your own systems, reviews and customers, replay the whole grid on your machine. Nothing leaves it, and the report lands next to your files.",
+      "titre": "The public record holds 42 written files and 126 generated variants.",
+      "phrase": "Every file behind these findings is in the public record: 42 written, seven per typology, and 126 generated under a seed. Two files from your systems, reviews and customer attributes, rerun the full grid at your desk.",
       "a": "42",
-      "leg_a": "written escalated dossiers behind the measured half, seven per declared nature",
+      "leg_a": "written escalated files behind the measured rates, seven per declared typology",
       "b": "126",
-      "leg_b": "generated escalated variants behind the synthetic half, natures preserved by construction",
-      "cote": "yours replace both",
+      "leg_b": "generated variants behind the separate rates, typologies preserved by construction",
+      "cote": "42 written, 126 generated",
       "source": {
         "a": {
           "table": "authored",
@@ -189,14 +189,14 @@
           0.6,
           0.892,
           0.84,
-          "an ivory archive box: your book goes here"
+          "your files rerun at your desk"
         ],
         [
           0.32,
           0.66,
           0.265,
           0.8,
-          "two files replay the grid; nothing leaves"
+          "42 written, 126 generated"
         ]
       ]
     }
