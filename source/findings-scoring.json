@@ -27,17 +27,17 @@
       },
       "annotations": [
         [
-          0.145,
-          0.45,
-          0.06,
-          0.2,
+          0.47,
+          0.42,
+          0.5,
+          0.07,
           "the empty bay: geography sees nothing in this book"
         ],
         [
-          0.15,
-          0.55,
-          0.06,
-          0.72,
+          0.47,
+          0.7,
+          0.5,
+          0.96,
           "every dossier lives in ordinary countries: no list"
         ]
       ]
@@ -67,17 +67,17 @@
       },
       "annotations": [
         [
-          0.315,
-          0.38,
-          0.08,
-          0.14,
+          0.44,
+          0.55,
+          0.422,
+          0.07,
           "the tallest pile: products carry the signal"
         ],
         [
-          0.365,
+          0.53,
+          0.82,
           0.5,
-          0.08,
-          0.7,
+          0.96,
           "and its ivory shadow: one twin in four reviewed"
         ]
       ]
@@ -109,17 +109,17 @@
       },
       "annotations": [
         [
-          0.32,
-          0.3,
-          0.6,
-          0.12,
+          0.35,
+          0.53,
+          0.186,
+          0.2,
           "the brass shelf at ninety: no pile reaches it"
         ],
         [
-          0.615,
-          0.42,
-          0.78,
-          0.82,
+          0.67,
+          0.72,
+          0.814,
+          0.2,
           "behaviour: clean, not one ivory box, half seen"
         ]
       ]
@@ -149,17 +149,17 @@
       },
       "annotations": [
         [
-          0.4,
-          0.45,
-          0.1,
-          0.2,
+          0.34,
+          0.62,
+          0.265,
+          0.96,
           "written dossiers: the bound stops under the shelf"
         ],
         [
-          0.55,
-          0.47,
-          0.8,
-          0.2,
+          0.58,
+          0.62,
+          0.892,
+          0.96,
           "the variants do worse, and still stay apart"
         ]
       ]
@@ -185,17 +185,17 @@
       },
       "annotations": [
         [
-          0.795,
-          0.58,
-          0.66,
-          0.14,
+          0.85,
+          0.6,
+          0.892,
+          0.84,
           "an ivory archive box: your book goes here"
         ],
         [
+          0.32,
+          0.66,
+          0.265,
           0.8,
-          0.68,
-          0.8,
-          0.84,
           "two files replay the grid; nothing leaves"
         ]
       ]
