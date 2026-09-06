@@ -256,8 +256,8 @@ JS = '''
     $("#tm-delta").innerHTML = "vs published  "
       + (dc >= 0 ? "+" : "&#8722;") + "$" + Math.abs(dc).toFixed(Math.abs(dc) < 99.5 ? 1 : 0)
       + " &#183; " + (dj >= 0 ? "+" : "&#8722;") + Math.abs(dj).toFixed(1) + "&nbsp;pt";
-    const memePub = F.each((f) => routage[f] === D.publie.routage[f]);
-    const memeVise = F.each((f) => routage[f] === D.vise.routage[f]);
+    const memePub = F.every((f) => routage[f] === D.publie.routage[f]);
+    const memeVise = F.every((f) => routage[f] === D.vise.routage[f]);
     $("#r-pub").classList.toggle("actif", memePub);
     $("#r-vise").classList.toggle("actif", memeVise);
     viseV = null; dessinerV(); peindrePanneauV();     /* a change of routing reads the routing, not a stale hover */

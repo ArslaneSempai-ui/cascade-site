@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-51ptDqvcMVgSm1H+qKrX7qjYC33rSTUUXlHB5fHst1E=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-UKDVsAa4lJsyqc2WKJpHNVpeXFSKU5Hhx6LPP2yxx6U='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-51ptDqvcMVgSm1H+qKrX7qjYC33rSTUUXlHB5fHst1E=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-uXtQpDo3Mmzr2dIzFLn72h90+zAinacEPFFnXt5213Q='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/instrument.html">
@@ -473,8 +473,8 @@ const DONNEES = {"fields": ["name", "birth", "document", "country", "address"], 
     $("#tm-delta").innerHTML = "vs published  "
       + (dc >= 0 ? "+" : "&#8722;") + "$" + Math.abs(dc).toFixed(Math.abs(dc) < 99.5 ? 1 : 0)
       + " &#183; " + (dj >= 0 ? "+" : "&#8722;") + Math.abs(dj).toFixed(1) + "&nbsp;pt";
-    const memePub = F.each((f) => routage[f] === D.publie.routage[f]);
-    const memeVise = F.each((f) => routage[f] === D.vise.routage[f]);
+    const memePub = F.every((f) => routage[f] === D.publie.routage[f]);
+    const memeVise = F.every((f) => routage[f] === D.vise.routage[f]);
     $("#r-pub").classList.toggle("actif", memePub);
     $("#r-vise").classList.toggle("actif", memeVise);
     viseV = null; dessinerV(); peindrePanneauV();     /* a change of routing reads the routing, not a stale hover */
@@ -544,7 +544,7 @@ const DONNEES = {"fields": ["name", "birth", "document", "country", "address"], 
     marche(0, {}, 0, 0);
     nuageG.innerHTML = '<g class="nuage">' + h + "</g>";
   })();
-  const memeR = (a, b) => F.each((f) => a[f] === b[f]);
+  const memeR = (a, b) => F.every((f) => a[f] === b[f]);
   function dessinerV() {
     const budget = budgetDe();
     let h = "";

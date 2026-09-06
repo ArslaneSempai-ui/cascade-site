@@ -388,7 +388,7 @@ JS_VERT = '''
     marche(0, {}, 0, 0);
     nuageG.innerHTML = '<g class="nuage">' + h + "</g>";
   })();
-  const memeR = (a, b) => F.each((f) => a[f] === b[f]);
+  const memeR = (a, b) => F.every((f) => a[f] === b[f]);
   function dessinerV() {
     const budget = budgetDe();
     let h = "";
