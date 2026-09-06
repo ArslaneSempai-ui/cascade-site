@@ -4,7 +4,7 @@ factice, un carré opaque au centre ; une étiquette posée sur le carré doit �
 étiquette dans un coin doit passer. Un témoin qui ne rougit plus arrête l'émission."""
 import os, subprocess, sys, tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from outil import etiquette_sur_objet, SEUIL_OBJET, CHIP_DEMI, IW_ANNOT  # noqa: E402
+from outil import etiquette_sur_objet, etiquette_dans_scene, SEUIL_OBJET, CHIP_DEMI, IW_ANNOT  # noqa: E402
 
 W, H = 1374, 1120
 px = bytearray(W * H * 4)
@@ -34,5 +34,7 @@ if not (0.12 <= quinze <= 0.18 and quinze > SEUIL_OBJET):
     sys.exit(f"témoin cassé : la chip à 15 % dans le carré donne {quinze:.0%} (échelle ou seuil dérivés)")
 if not (0.03 <= cinq <= 0.07 and cinq < SEUIL_OBJET):
     sys.exit(f"témoin cassé : la chip à 5 % dans le carré donne {cinq:.0%} (échelle ou seuil dérivés)")
+if etiquette_dans_scene(0.02, 0.5) or not etiquette_dans_scene(0.12, 0.5) or etiquette_dans_scene(0.5, 0.99):
+    sys.exit("témoin cassé : la boîte de la chip ne se voit plus sortir de la scène (0.02 et 0.99 doivent déborder, 0.12 tenir)")
 print(f"témoin des étiquettes : sur l'objet {dessus:.0%} (vu), coin {coin:.0%}, marge {hors:.0%} (passent), "
       f"bord 15 % → {quinze:.0%} (vu), bord 5 % → {cinq:.0%} (passe)")

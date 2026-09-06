@@ -436,9 +436,9 @@ MX_ANNOT = (1420 - IW_ANNOT) / 2
 # le @media ≤ 1080 qui empile). Son empreinte en unités du viewBox est donc la plus grande sur la
 # plus PETITE scène : 240/477 × 1420 = 714 de large, 44/336 × 1000 = 131 de haut. La garde se
 # calibre là (relecture de Mesure, 9/09) : une étiquette qui passe ici passe à toutes les tailles.
-SCENE_MIN_PX = 477
-CHIP_PX = (240, 44)
-CHIP_DEMI = (round(CHIP_PX[0] / SCENE_MIN_PX * 1420 / 2), round(CHIP_PX[1] / (SCENE_MIN_PX / 1.42) * 1000 / 2))   # (357, 65)
+# Depuis le 9/09 (15h40) la chip est en POUR CENT de la scène (32,3 % de large, police en cqi) : son
+# empreinte est la même en unités du viewBox à toutes les fenêtres, 240×44 px sur la scène de 744 px.
+CHIP_DEMI = (round(240 / 744 * 1420 / 2), round(44 / (744 / 1.42) * 1000 / 2))   # (229, 42)
 SEUIL_OBJET = 0.10             # part de pixels d'objet tolérée sous l'étiquette
 _ALPHAS = {}
 
@@ -480,6 +480,14 @@ def etiquette_sur_objet(image, lx, ly, demi=CHIP_DEMI):
     return objet / total
 
 
+def etiquette_dans_scene(lx, ly, demi=CHIP_DEMI, tolerance=8):
+    """La boîte de l'étiquette tient dans la scène (viewBox 1420×1000) : au-delà elle couvre le rail
+    ou la fiche, et le lecteur perd l'un ou l'autre."""
+    cx, cy = MX_ANNOT + lx * IW_ANNOT, ly * 1000.0
+    return (cx - demi[0] >= -tolerance and cx + demi[0] <= 1420 + tolerance
+            and cy - demi[1] >= -tolerance and cy + demi[1] <= 1000 + tolerance)
+
+
 def manques_etiquettes(outil_id, base, seuil=SEUIL_OBJET):
     """Chaque étiquette de findings-<outil>.json doit être sur le crème de SON image d'état."""
     base = pathlib.Path(base)
@@ -504,6 +512,10 @@ def manques_etiquettes(outil_id, base, seuil=SEUIL_OBJET):
         if not image.exists():
             continue
         for (ax, ay, lx, ly, txt) in fd.get("annotations", []):
+            if not etiquette_dans_scene(lx, ly):
+                m.append(f"findings-{outil_id}.json, finding {fd.get('num', i + 1)} : l'étiquette « {txt[:38]}… » "
+                         "déborde de la scène (sur le rail ou la fiche) : la rentrer")
+                continue
             part = etiquette_sur_objet(image, lx, ly)
             if part > seuil:
                 m.append(f"findings-{outil_id}.json, finding {fd.get('num', i + 1)} : l'étiquette « {txt[:38]}… » "

@@ -439,7 +439,7 @@ CSS = '''
     overflow:hidden;transition:opacity .3s,max-height .3s}
   .jalon.actif .j-cote{opacity:1;max-height:2em}
   .theatre{flex:1;min-width:0;position:relative;display:flex;flex-direction:column;gap:20px}
-  .scenes{position:relative;aspect-ratio:1.42/1;width:auto;margin:0 auto 0 0;
+  .scenes{position:relative;aspect-ratio:1.42/1;width:auto;margin:0 auto 0 0;container-type:inline-size;
     height:min(62vh,calc((min(100vw,1400px) - min(290px,22vw) - 366px)/1.42))}
   .scene{position:absolute;inset:0;opacity:0;transform:translateY(14px);
     transition:opacity .45s var(--montee),transform .45s var(--montee);pointer-events:none}
@@ -456,10 +456,13 @@ CSS = '''
     transition:stroke-dashoffset .7s .25s var(--montee)}
   .appels circle{fill:color-mix(in srgb,var(--vert-vif) 80%,transparent)}
   .scene.actif .appels line{stroke-dashoffset:0}
-  .ap-eti{position:absolute;transform:translate(-50%,-50%);width:max-content;max-width:240px;
-    text-wrap:balance;font-family:var(--mono);font-size:11.5px;line-height:1.45;
+  /* LA CHIP SUIT LA SCÈNE (9/09) : 240 px fixes sur une scène qui rétrécit débordaient sur le rail
+     aux petites fenêtres ; en pour cent de la scène (32,3 % = 240/744) et en cqi, son empreinte est
+     constante en unités du viewBox, et la garde des étiquettes (outil.py) se calibre une fois. */
+  .ap-eti{position:absolute;transform:translate(-50%,-50%);width:max-content;max-width:32.3%;
+    text-wrap:balance;font-family:var(--mono);font-size:clamp(9.5px,1.55cqi,11.5px);line-height:1.45;
     color:var(--vert-titre);background:color-mix(in srgb,var(--vert-vif) 13%,transparent);
-    backdrop-filter:blur(3px);padding:5px 9px;
+    backdrop-filter:blur(3px);padding:.45em .8em;
     border:1px solid color-mix(in srgb,var(--vert-vif) 32%,transparent);
     border-radius:6px;opacity:0;transition:opacity .4s .55s;pointer-events:none}
   .scene.actif .ap-eti{opacity:1}
