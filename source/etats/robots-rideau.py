@@ -23,7 +23,7 @@ import galet    # noqa: E402
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--outil", required=True, choices=["routing", "screening", "monitoring", "scoring", "dossier"])
-ap.add_argument("--pose", default=None, choices=[None, "penche", "regarde"],
+ap.add_argument("--pose", default=None, choices=[None, "penche", "regarde", "tient", "pese", "montre", "curieux", "salut"],
                 help="penche : la pose de l'instrument (derrière le terminal), même pour toutes les couleurs")
 ap.add_argument("--sortie", default="/tmp/robots")
 ap.add_argument("--large", type=int, default=1400)
@@ -118,7 +118,10 @@ PENCHE = dict(corps=(16, 0, 0), tete=(22, 0, 0), bg=(-55, -14, 0), bd=(-55, 14, 
 # bord de la fenêtre, la tête basculée vers le bas pour lire l'instrument, les mains au bord
 REGARDE = dict(corps=(18, 0, 6), tete=(22, 0, -36), bg=(-58, -12, 0), bd=(-56, 16, 0))   # 10/09 : la tête tournée vers la carte, à sa gauche (le panneau descend)
 
-poser(**({"penche": PENCHE, "regarde": REGARDE}[args.pose] if args.pose else POSES[args.outil]))
+# 10/09 : une pose d'un autre outil sur n'importe quelle couleur (le robot de la licence, page des tarifs)
+EMPRUNTS = {"tient": POSES["dossier"], "pese": POSES["scoring"], "montre": POSES["monitoring"],
+            "curieux": POSES["screening"], "salut": POSES["routing"]}
+poser(**({"penche": PENCHE, "regarde": REGARDE, **EMPRUNTS}[args.pose] if args.pose else POSES[args.outil]))
 os.makedirs(args.sortie, exist_ok=True)
 sc.render.filepath = os.path.join(args.sortie, f"robot-{args.outil}{('-' + args.pose) if args.pose else ''}.png")
 bpy.ops.render.render(write_still=True)
