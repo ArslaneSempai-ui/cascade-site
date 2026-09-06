@@ -1249,10 +1249,8 @@ def batir_accueil():
   <div class="hero-grille">
     <div class="hero-texte">
       <span class="marque-h entree">Cascade &#183; instruments for compliance decisions</span>
-      <h1 class="h1 entree h1-long">Measure each model tier's accuracy and cost, on your own records.</h1>
-      <p class="lede entree">Cascade routes each identity field to a model tier, from a regular expression to a
-        human, and measures the accuracy and cost of every routing on a sealed public record. The same run
-        repeats on your own files, at your desk.</p>
+      <h1 class="h1 entree">Which model tier suffices, at what cost?</h1>
+      <p class="lede entree">Accuracy and cost of every tier, measured on a sealed public record, then rerun on your own files.</p>
       <div class="hero-cue" aria-hidden="true"><span>five instruments, choose one</span><span class="fil"></span></div>
     </div>
     {eventail_html(cartes)}

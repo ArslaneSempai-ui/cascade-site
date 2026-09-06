@@ -700,11 +700,11 @@ CSS_ACCUEIL = '''
   body{background:var(--nuit-b)}
   .hero{background:radial-gradient(120% 90% at 30% -10%,color-mix(in srgb,var(--vert-titre) 34%,#0e0e11),var(--nuit-b) 65%);
     min-height:auto;padding:150px 0 80px}
-  .hero-grille{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:48px;align-items:center;
+  .hero-grille{display:grid;grid-template-columns:minmax(0,1fr) 600px;gap:56px;align-items:center;
     max-width:1300px;margin:0 auto;padding:0 48px;position:relative;text-align:left}
   .hero-grille .marque-h,.hero-grille .h1,.hero-grille .lede{text-align:left;margin-left:0;margin-right:0}
-  .hero-grille .h1{max-width:16ch;font-size:clamp(30px,3.6vw,54px)}
-  .hero-grille .lede{max-width:46ch}
+  .hero-grille .h1{max-width:14ch;font-size:clamp(30px,3.6vw,54px)}
+  .hero-grille .lede{max-width:44ch;font-size:18px}
   .hero{min-height:0;padding:96px 24px 64px}
   .hero-texte{position:relative;z-index:2}
   .hero-cue{margin-top:34px;display:flex;gap:14px;align-items:center;font-family:var(--mono);font-size:11.5px;
@@ -712,8 +712,8 @@ CSS_ACCUEIL = '''
   .hero-cue .fil{width:60px;height:1px;background:var(--sur-vert-pale);opacity:.6}
 
   /* l'éventail : cinq cartes empilées, chacune dans SES couleurs, la survolée sort du paquet */
-  .eventail{position:relative;height:min(520px,52vw);perspective:1600px}
-  .carte-ev{position:absolute;left:50%;top:50%;width:min(460px,42vw);aspect-ratio:1.5/1;margin:-32% 0 0 -50%;
+  .eventail{position:relative;height:480px;perspective:1600px}
+  .carte-ev{position:absolute;left:50%;top:50%;width:420px;aspect-ratio:1.5/1;margin:-140px 0 0 -210px;
     display:block;border-radius:14px;overflow:hidden;text-decoration:none;color:var(--sur-vert);
     background:linear-gradient(180deg,color-mix(in srgb,var(--ev-nuit-a) 80%,#000),color-mix(in srgb,var(--ev-nuit-c) 92%,#000));
     border:1px solid color-mix(in srgb,var(--ev-vif) 45%,transparent);
@@ -790,7 +790,7 @@ def eventail_html(cartes):
     n = len(cartes); out = ""
     for k, (href, svg, eti, nom, vif, clair, nuits) in enumerate(cartes):
         c = k - (n - 1) / 2
-        style = (f"--z:{k + 1};--rot:{c * 6:.1f}deg;--dx:{c * 34:.0f}px;--dy:{abs(c) * 10:.0f}px;"
+        style = (f"--z:{k + 1};--rot:{c * 5:.1f}deg;--dx:{c * 26:.0f}px;--dy:{abs(c) * 10:.0f}px;"
                  f"--ev-vif:{vif};--ev-clair:{clair};--ev-nuit-a:{nuits[0]};--ev-nuit-c:{nuits[2]}")
         out += (f'<a class="carte-ev" href="{href}" style="{style}" aria-label="Open {nom}">'
                 f'<div class="ev-svg">{svg}</div>'
