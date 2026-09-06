@@ -330,10 +330,10 @@ ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
 # la phrase suit l'état du registre : des parenthèses vides « () » se sont affichées
 # le soir où le septième palier est arrivé (relu sur capture)
 PHRASE_ABSENTS = (
-    f"a factor absent from tonight&#8217;s registry ({ABSENTS}) is a named row, instead of a guessed column"
+    f"a factor absent from tonight&#8217;s registry ({ABSENTS}) is shown as a labelled blank"
     if ABSENTS else
-    "each factor of the registry is present tonight; an absent one would be a named row, "
-    "never a guessed column")
+    "each factor of the registry is present in the record; an absent one is shown as a labelled blank "
+    "and no guessed column")
 
 PAGE = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade Scoring &#183; live instrument</title>
@@ -422,7 +422,7 @@ PAGE = f'''<!doctype html><html lang="en">
         on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
         then recomposes witness cells with the tool&#8217;s own interval code, and does not emit
         if a single figure disagrees.</li>
-      <li><b>Files the repository wrote.</b> The labelled half is authored: archetypes of risk
+      <li><b>Files the repository wrote.</b> The labelled half is authored: typologies of risk
         (shell layers, a PEP relative, cash-intensive trade, an offshore structure, undeclared
         turnover) and benign cases (a local shop, a salaried resident, a domestic SME,
         a retiree) that resemble them. The labels ship with the files, debatable ones with
@@ -435,7 +435,7 @@ PAGE = f'''<!doctype html><html lang="en">
         does: a point estimate does not clear a floor here.</li>
       <li><b>The declared tables, sealed in.</b> Each weight the factors read (the country
         list, the activity and product tables, the exposure, structure, behaviour and tenure
-        settings) is photographed inside the record this page reads: a figure never floats
+        settings) is recorded in the public record this page reads: a figure stays tied to the tables
         free of the tables it was measured under.</li>
     </ul>
       </details>
@@ -450,7 +450,7 @@ PAGE = f'''<!doctype html><html lang="en">
     </div>
     <aside class="clone-col">
     <h2>Measure your own review history</h2>
-    <p>The instrument shows our record. Yours is measured at home, by the tool, and nothing
+    <p>The instrument shows our record. The measurement runs at your desk, and no data
       about your files leaves your machine.</p>
     <span class="clone-t">The three commands, exactly as they run</span>
     <div class="clone" role="group" aria-label="The three commands that measure your own review history">
@@ -465,7 +465,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <footer class="pied">
   <div class="colonne">
-    <p class="pied-p">Your records stay on your machine, and <em>no data of yours goes up.</em></p>
+    <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
     <span class="sceau"<content hash {D["provenance"]["empreinte"]} &#183; measured, then frozen &#183; <a href="{DEPOT_URL}">repository</a></span>
   </div>
 </footer>

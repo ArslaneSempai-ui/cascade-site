@@ -613,7 +613,7 @@ def pied_outil(o, pages, courante, sceau):
     return (f'<footer class="pied"><div class="colonne">\n'
             f'  <div class="pied-h">\n'
             f'    <p class="pied-p">Your records stay on your machine, and '
-            f'<em>no data of yours goes up.</em></p>\n'
+            f'<em>no data leaves the network.</em></p>\n'
             f'    <span class="sceau">content hash {sceau} &#183; measured, then frozen</span>\n'
             f'  </div>\n'
             f'  <nav class="annexes" aria-label="Appendices">{rang}</nav>\n'

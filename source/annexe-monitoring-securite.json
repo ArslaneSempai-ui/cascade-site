@@ -60,7 +60,7 @@
     {
       "h2": "Sealed, offline, and re-measured only out loud",
       "html": [
-        "<p>The sealed public record is sealed by a content content hash; a hand-edited figure fails loudly, and re-measuring over an existing record requires an explicit flag on the command line, where an auditor can see it. The whole suite runs with the network cut, which for this tool is the only behaviour it has.</p>"
+        "<p>The sealed public record is sealed by a content hash; a hand-edited figure fails loudly, and re-measuring over an existing record requires an explicit flag on the command line, where an auditor can see it. The whole suite runs with the network cut, which for this tool is the only behaviour it has.</p>"
       ],
       "verif": {
         "t": "Verify the seal, offline",

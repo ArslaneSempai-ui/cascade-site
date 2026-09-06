@@ -47,7 +47,7 @@
       "titre_onglet": "Cascade &#183; the fine print",
       "fno": "The fine print",
       "titre": "The fine print, in full.",
-      "lede": "Who publishes this, under which licences, served from where, and what this site does to its visitors, which is nothing. The one page of a sales site that is usually mumbled; here it follows the same rule as the rest: plain, sourced, short.",
+      "lede": "Who publishes this, under which licences, served from where, and what this site does to its visitors, which is nothing. The one page of a sales site that is rarely spelled out; here it follows the same rule as the rest: plain, sourced, short.",
       "sections": [
         {
           "h2": "Who publishes this",
@@ -70,7 +70,7 @@
         {
           "h2": "What this site does to visitors: nothing",
           "html": [
-            "<p><b>No cookies, no analytics, no tracking, no forms.</b> The scripts on this site do two things only: the main screen synchronises its animation clock and tab title, and the appendix pages open their sections when you print. Switch them off and everything still works. Each figure displayed carries a declared source; the full declaration file is public, beside this page: <a href=\"releve.json\"><b>releve.json</b></a>, and the seal in the masthead is the content content hash of the sealed public record the figures come from.</p>"
+            "<p><b>No cookies, no analytics, no tracking, no forms.</b> The scripts on this site do two things only: the main screen synchronises its animation clock and tab title, and the appendix pages open their sections when you print. Switch them off and everything still works. Each figure displayed carries a declared source; the full declaration file is public, beside this page: <a href=\"releve.json\"><b>releve.json</b></a>, and the seal in the masthead is the content hash of the sealed public record the figures come from.</p>"
           ]
         },
         {

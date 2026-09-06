@@ -396,14 +396,13 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section class="reserves"><div class="colonne reserves-grille">
   <div class="plis">
-    <details class="pli" open><summary>What this instrument rests on, and what it refuses.</summary>
+    <details class="pli" open><summary>What this instrument rests on, and what it cannot do.</summary>
   <p><b>The prices are assumed, and say so.</b> The small and large tiers use assumed per-call
     rates. The generative tiers use their measured latency against an assumed machine cost. The
     human tier uses an assumed pace and salary. <b>Change the assumptions and the dollars move.
     The accuracies do not.</b></p>
   <p><b>The human column is the one exception: an assumption until you measure it.</b>
-    {D["humanAccuracy"]:.0f}% on each field, declared in the tool's own source. Each other
-    accuracy shown here was measured. <code>npm run measure:humans -- --cases=your-file.csv</code>
+    {D["humanAccuracy"]:.0f}% on each field, declared in the tool's own source. Every other accuracy shown here was measured. <code>npm run measure:humans -- --cases=your-file.csv</code>
     grades your own reviewers: accuracy per field with intervals, agreement between reviewers,
     seconds per record. Pass the sealed result to <code>optimise</code> with <code>--humans</code>
     and the optimiser reads your measurement instead of the assumption.</p>

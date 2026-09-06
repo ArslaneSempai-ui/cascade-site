@@ -346,7 +346,7 @@ PAGE = f'''<!doctype html><html lang="en">
         <div class="tm-corps">
           <p class="tm-l"><span class="ps">$</span> cascade dossier --live<span class="caret" aria-hidden="true"></span></p>
           <p class="tm-sortie">coverage <b>{CV["n"]} / {CV["sur"]}</b> questions with a sealed public record &#183;
-            declared rhythm <b>{RG["rythmeJours"]} days</b> &#183; as of <b>{RG["auJour"]}</b></p>
+            declared validity period <b>{RG["rythmeJours"]} days</b> &#183; as of <b>{RG["auJour"]}</b></p>
           {CARTE_ONYX_HTML}
           {table_html()}
           <p class="tm-sortie" id="g-lecture">pick a cell: the verdict in the record&#8217;s own words &#183; the outlined cell of a row is the state reached with no gap</p>
@@ -380,13 +380,13 @@ PAGE = f'''<!doctype html><html lang="en">
         no-gap rule, and does not emit if a single line disagrees.</li>
       <li><b>The suite&#8217;s own sealed public records.</b> The reports judged here are the public
         records of Cascade&#8217;s tools (the reader, the matcher, the scenario, the factor):
-        published, sealed, verifiable by anyone. A question without one is a named row,
-        never a guessed column.</li>
-      <li><b>Five controls, one order.</b> present, sealed, signed, fresh, consistent: the
+        published, sealed, verifiable by anyone. A question without one is shown as a labelled blank,
+        and no guessed column.</li>
+      <li><b>The five controls, in a fixed order.</b> present, sealed, signed, fresh, consistent: the
         state reached is the highest control held <b>without a gap</b> in that order. A held
         control above a hole counts for nothing, and the table shows why.</li>
-      <li><b>Freshness against a declared rhythm.</b> Each measurement&#8217;s age is judged
-        against the rhythm written in the dossier itself ({RG["rythmeJours"]} days), never
+      <li><b>Freshness against a declared validity period.</b> Each measurement&#8217;s age is judged
+        against the validity period written in the dossier itself ({RG["rythmeJours"]} days), never
         against an unstated habit.</li>
     </ul>
       </details>
@@ -418,7 +418,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <footer class="pied">
   <div class="colonne">
-    <p class="pied-p">Your records stay on your machine, and <em>no data of yours goes up.</em></p>
+    <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
     <span class="sceau"<content hash {D["provenance"]["empreinte"]} &#183; measured, then frozen &#183; <a href="{DEPOT_URL}">repository</a></span>
   </div>
 </footer>

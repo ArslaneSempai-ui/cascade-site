@@ -41,7 +41,7 @@
       }
     },
     {
-      "h2": "The EU list, honestly unavailable today",
+      "h2": "The EU list, unavailable today",
       "html": [
         "<p>The EU consolidated financial sanctions list is served through a token-gated endpoint. On the day this record was built, each file endpoint answered an error with the generic public token the Commission's own RSS still advertises, so the manifest records the fact with its date <b>and does not hide the source</b>: which list, which URL, which error, and the way out.</p>",
         "<p>The way out is one environment variable: a personal EU Login token through CASCADE_EU_TOKEN, same URL, fetch again. Until then the tool screens against OFAC and the UN and the manifest says exactly that; a report cannot cite three lists while holding two.</p>"

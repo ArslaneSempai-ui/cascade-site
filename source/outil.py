@@ -196,7 +196,7 @@ OUTILS = {
         "robot_rideau": "robot-amethyste-pese.webp",    # il pèse : sa pose à lui
         "affiche": "affiche-scoring.jpg",
         "affiche_alt": "The amethyst Cascade robot, palms up, projecting the two lower bounds of recall "
-                       "the fiche names: product on the left, behaviour on the right, both under the 0.90 floor.",
+                       "the card names: product on the left, behaviour on the right, both under the 0.90 floor.",
         "vif": "#9b6fe0",
         "nuit": ("#241a3a", "#1a1230", "#100b1f"),
     },

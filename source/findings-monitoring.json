@@ -125,7 +125,7 @@
           "amount: recall lower bound 84.2%"
         ]
       ],
-      "rail": "No scenario reaches the 90% floor"
+      "rail": "No scenario's lower bound reaches 90%"
     },
     {
       "num": "04",

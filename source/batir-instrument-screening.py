@@ -324,10 +324,10 @@ ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
 # la phrase suit l'état du registre : des parenthèses vides « () » se sont affichées
 # le soir où le septième palier est arrivé (relu sur capture)
 PHRASE_ABSENTS = (
-    f"a matcher absent from tonight&#8217;s registry ({ABSENTS}) is a named row, instead of a guessed column"
+    f"a matcher absent from tonight&#8217;s registry ({ABSENTS}) is shown as a labelled blank"
     if ABSENTS else
-    "each matcher of the registry is present tonight; an absent one would be a named row, "
-    "never a guessed column")
+    "each matcher of the registry is present in the record; an absent one is shown as a labelled blank "
+    "and no guessed column")
 
 PAGE = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade Screening &#183; live instrument</title>
@@ -439,7 +439,7 @@ PAGE = f'''<!doctype html><html lang="en">
     </div>
     <aside class="clone-col">
     <h2>Measure your own alert history</h2>
-    <p>The instrument shows our record. Yours is measured at home, by the tool, and no data
+    <p>The instrument shows our record. The measurement runs at your desk, and no data
       about your file leaves your machine.</p>
     <span class="clone-t">The three commands, exactly as they run</span>
     <div class="clone" role="group" aria-label="The three commands that measure your own alert history">
@@ -454,7 +454,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <footer class="pied">
   <div class="colonne">
-    <p class="pied-p">Your records stay on your machine, and <em>no data of yours goes up.</em></p>
+    <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
     <span class="sceau"<content hash {D["provenance"]["empreinte"]} &#183; measured, then frozen &#183; <a href="{DEPOT_URL}">repository</a></span>
   </div>
 </footer>

@@ -87,11 +87,11 @@
     {
       "num": "03",
       "titre": "No factor's recall lower bound reaches the 90% floor.",
-      "phrase": "The tool holds the Wilson lower bound of recall at 90%, then takes the fewest false alerts. On the 42 files no factor reaches that floor: product's lower bound is 81%, and behaviour, at 66.7% recall with no false alert, has a lower bound of 52%.",
+      "phrase": "The tool holds the Wilson lower bound of recall at 90%, then takes the fewest false alerts. On the 42 files no factor reaches that floor: product's lower bound is 81%, and behaviour, at 66.7% recall with no false alert, has a lower bound of 51.6%.",
       "a": "81%",
       "leg_a": "highest recall lower bound, product at 0.50: 81%, interval 81% to 98%",
-      "b": "52%",
-      "leg_b": "cleanest factor, behaviour at 0.50: recall lower bound 52%, with zero false alerts",
+      "b": "51.6%",
+      "leg_b": "cleanest factor, behaviour at 0.50: recall lower bound 51.6%, with zero false alerts",
       "cote": "best bound 81%",
       "source": {
         "a": {
@@ -122,10 +122,10 @@
           0.72,
           0.814,
           0.2,
-          "behaviour: recall lower bound 52%"
+          "behaviour: recall lower bound 51.6%"
         ]
       ],
-      "rail": "No factor reaches the 90% floor"
+      "rail": "No factor's lower bound reaches 90%"
     },
     {
       "num": "04",

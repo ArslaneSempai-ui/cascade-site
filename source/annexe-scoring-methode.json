@@ -5,18 +5,18 @@
   "lede": "This page shows what the scoring numbers are made of: which dossiers, which factors, which declared tables, and where each figure is not quoted. No real person exists in the sealed public record, and no official risk list was copied into it: that refusal is enforced by a test and not by discipline.",
   "sections": [
     {
-      "h2": "Written dossiers, twin by twin",
+      "h2": "Written dossiers, file by file",
       "html": [
-        "<p>The measured half rests on dossiers <b>we wrote and we declare</b>: six escalated typologies and, deliberately, their six retained files: a family company with each ownership layer named against the shell that hides them, a neighbourhood shop whose turnover sits on its declaration against the counter that outruns it, a salaried account at ratio one against the firm at ratio five, a foreign student at stipend scale against the remote newcomer at several times his declaration. What separates each twin is <b>in the fields</b>, history and ratios, never only in the label, and a test pins all six pairs structurally.</p>",
-        "<p>No official country list was copied, and a test makes the refusal structural: suspects and twins <b>share their countries of residence</b>, so no code can quietly become a list. The geography factor scores zero on this book, on both sides, and the page above states this as a finding and does not hide it.</p>"
+        "<p>The measured half rests on dossiers <b>we wrote and we declare</b>: six escalated typologies and, deliberately, their six retained files: a family company with each ownership layer named against the shell that hides them, a neighbourhood shop whose turnover sits on its declaration against the counter that outruns it, a salaried account at ratio one against the firm at ratio five, a foreign student at stipend scale against the remote newcomer at several times his declaration. What separates each file is <b>in the fields</b>, history and ratios, never only in the label, and a test pins all six pairs structurally.</p>",
+        "<p>No official country list was copied, and a test makes the refusal structural: escalated and retained files <b>share their countries of residence</b>, so no code can quietly become a list. The geography factor scores zero on this book, on both sides, and the page above states this as a finding and does not hide it.</p>"
       ],
       "verif": {
         "t": "Verify the dossiers",
-        "p": "The suite revalidates each written dossier, the six twin pairs, and the country-sharing rule.",
+        "p": "The suite revalidates each written dossier, the six file pairs, and the country-sharing rule.",
         "cmd": [
           {
             "c": "npm test",
-            "n": "84 dossiers revalidated, twin invariants and the no-list rule pinned"
+            "n": "84 dossiers revalidated, file invariants and the no-list rule pinned"
           }
         ],
         "refs": "src/dossiers-etiquetes.test.ts:65 &#183; src/synthetic.ts:29 &#183; src/synthetic.ts:50"

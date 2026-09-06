@@ -345,7 +345,7 @@
 
 <main>
 <section class="tete"><div class="colonne">
-  <h1 class="h1">Test the routing on the sealed public record (hashed, then frozen: its content hash is checked before a figure is shown), live.</h1>
+  <h1 class="h1">Test the routing on the sealed public record, live.</h1>
   <p class="lede">One tier per field. Click any cell to see what your routing costs and how often it
     gets it right. Or set your budget and let the enumeration choose, the way the tool does:
     <b>highest accuracy first, cheaper on a tie</b>.</p>
@@ -408,14 +408,13 @@
 
 <section class="reserves"><div class="colonne reserves-grille">
   <div class="plis">
-    <details class="pli" open><summary>What this instrument rests on, and what it refuses.</summary>
+    <details class="pli" open><summary>What this instrument rests on, and what it cannot do.</summary>
   <p><b>The prices are assumed, and say so.</b> The small and large tiers use assumed per-call
     rates. The generative tiers use their measured latency against an assumed machine cost. The
     human tier uses an assumed pace and salary. <b>Change the assumptions and the dollars move.
     The accuracies do not.</b></p>
   <p><b>The human column is the one exception: an assumption until you measure it.</b>
-    85% on each field, declared in the tool's own source. Each other
-    accuracy shown here was measured. <code>npm run measure:humans -- --cases=your-file.csv</code>
+    85% on each field, declared in the tool's own source. Every other accuracy shown here was measured. <code>npm run measure:humans -- --cases=your-file.csv</code>
     grades your own reviewers: accuracy per field with intervals, agreement between reviewers,
     seconds per record. Pass the sealed result to <code>optimise</code> with <code>--humans</code>
     and the optimiser reads your measurement instead of the assumption.</p>

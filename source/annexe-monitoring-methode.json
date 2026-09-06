@@ -5,18 +5,18 @@
   "lede": "This page shows what the monitoring numbers are made of: which cases, which scenarios, which scales, and where each figure is not quoted. No real transaction exists in the sealed public record, and the page states this before anything else: the measurement that counts is yours, on your own dispositioned alerts, at your desk.",
   "sections": [
     {
-      "h2": "Written cases, twin by twin",
+      "h2": "Written cases, case by case",
       "html": [
-        "<p>The measured half rests on cases <b>we wrote and we declare</b>: six suspicious typologies (structuring, rapid movement, dormant burst, round-tripping, cash-intensive, layering fan-out) and, deliberately, their six benign cases: payroll that moves money fast, a market season that looks like a dormant account waking, a loan instalment that repeats the same amount to the cent, rents that cluster like structuring. What separates each twin from its typology is <b>in the data</b>, history and rhythm, never only in the label, and a test pins that structurally.</p>",
-        "<p>A set without twins would flatter each scenario: anything alarms when the benign cases are easy. The twins are the point, and the findings above say which scenario trips on which twin, measured.</p>"
+        "<p>The measured half rests on cases <b>we wrote and we declare</b>: six suspicious typologies (structuring, rapid movement, dormant burst, round-tripping, cash-intensive, layering fan-out) and, deliberately, their six benign cases: payroll that moves money fast, a market season that looks like a dormant account waking, a loan instalment that repeats the same amount to the last unit, rents that cluster like structuring. What separates each case from its typology is <b>in the data</b>, history and validity period, never only in the label, and a test pins that structurally.</p>",
+        "<p>A set without cases would flatter each scenario: anything alarms when the benign cases are easy. The cases are the point, and the findings above say which scenario trips on which case, measured.</p>"
       ],
       "verif": {
         "t": "Verify the cases",
-        "p": "The suite revalidates each written case, its nature and its window, and the twin structure itself.",
+        "p": "The suite revalidates each written case, its nature and its window, and the case structure itself.",
         "cmd": [
           {
             "c": "npm test",
-            "n": "84 cases revalidated, twin invariants pinned"
+            "n": "84 cases revalidated, case invariants pinned"
           }
         ],
         "refs": "src/cas-etiquetes.test.ts:11 &#183; src/cas-etiquetes.test.ts:41 &#183; src/cas.ts:47"

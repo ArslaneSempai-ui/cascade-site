@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#101a30">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Monitoring: the live instrument">
-<meta property="og:description" content="Each scenario at each threshold on the sealed public record (hashed, then frozen: its content hash is checked before a figure is shown): recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
+<meta property="og:description" content="Each scenario at each threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
 <meta property="og:url" content="https://cascade-routing.com/monitoring/instrument.html">
 <meta property="og:site_name" content="Cascade">
 <meta property="og:locale" content="en_US">
@@ -304,7 +304,7 @@
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">Each scenario at each threshold, live.</h1>
-    <p class="lede">Each figure on this page comes from the <b>sealed public record</b> of
+    <p class="lede">Each figure on this page comes from the <b>sealed public record (hashed, then frozen: its content hash is checked before a figure is shown)</b> of
       cascade-monitoring: cases the repository wrote itself, benign cases included, measured
       by its own scenarios. No client data exists here, none enters and none leaves,
       and each figure is recomputed from the sealed public record as the page loads.</p>
@@ -327,7 +327,7 @@
           </div>
           <p class="tm-sortie" id="g-quoi"></p>
           <p class="carte-aide" data-commun="instrument">each point is one cell of the sealed public record; <b>pull the floor line</b> or the slider, and the cells whose recall lower bound clears the floor turn green</p>
-          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="recall of each tier at each threshold of the sealed public record, with the recall floor as a line"></svg></div>
+          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="recall of each row at each threshold of the sealed public record, with the recall floor as a line"></svg></div>
           <div class="t-scroll"><table class="grille">
       <caption class="sr">Pick a cell: each shows recall on confirmed suspicious cases over false alerts on benign cases, at that scenario and threshold</caption>
       <thead><tr><th scope="col">scenario \ threshold</th><th scope='col'>0.50</th><th scope='col'>0.60</th><th scope='col'>0.70</th><th scope='col'>0.80</th><th scope='col'>0.85</th><th scope='col'>0.90</th><th scope='col'>0.95</th><th scope='col'>1.00</th></tr></thead>
@@ -372,7 +372,7 @@
         on 2026-09-05. The extractor that feeds this page verifies the seal,
         then recomposes witness cells with the tool&#8217;s own interval code, and does not emit
         if a single figure disagrees.</li>
-      <li><b>Cases the repository wrote.</b> The labelled half is authored: archetypes of suspicion
+      <li><b>Cases the repository wrote.</b> The labelled half is authored: typologies of suspicion
         (structuring, rapid movement, a dormant account that wakes, round-tripping) and benign
         cases (payroll, seasonal trade, loan repayments) that resemble them. The labels ship with the
         cases, debatable ones with their reasons.</li>
@@ -389,13 +389,13 @@
       <li><b>Your data.</b> This page cannot read it: no network requests leave it
         (connect-src &#8216;none&#8217;), no third-party resource is loaded, and there is no input
         field to paste a name into.</li>
-      <li><b>Bare rates.</b> Each cell carries its n and its 95&nbsp;% interval; each scenario of the registry is present tonight; an absent one would be a named row, never a guessed column.</li>
+      <li><b>Bare rates.</b> Each cell carries its n and its 95&nbsp;% interval; each scenario of the registry is present in the record; an absent one is shown as a labelled blank and no guessed column.</li>
     </ul>
       </details>
     </div>
     <aside class="clone-col">
     <h2>Measure your own alert history</h2>
-    <p>The instrument shows our record. Yours is measured at home, by the tool, and no data
+    <p>The instrument shows our record. The measurement runs at your desk, and no data
       about your file leaves your machine.</p>
     <span class="clone-t">The three commands, exactly as they run</span>
     <div class="clone" role="group" aria-label="The three commands that measure your own alert history">
@@ -410,7 +410,7 @@
 
 <footer class="pied">
   <div class="colonne">
-    <p class="pied-p">Your records stay on your machine, and <em>no data of yours goes up.</em></p>
+    <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
     <span class="sceau"<content hash 692d499018e53e07 &#183; measured, then frozen &#183; <a href="https://github.com/ArslaneSempai-ui/cascade-monitoring">repository</a></span>
   </div>
 </footer>

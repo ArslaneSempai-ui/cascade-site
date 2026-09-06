@@ -135,7 +135,7 @@ CSS_NOIR = '''
 def carte_html(x_titre, y_titre):
     """The chart and its side panel, empty : the JS draws both from the embedded record."""
     return f'''<p class="carte-aide" data-commun="instrument">each point is one cell of the sealed public record; <b>pull the floor line</b> or the slider, and the cells whose recall lower bound clears the floor turn green</p>
-          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="{y_titre} of each tier at each {x_titre} of the sealed public record, with the recall floor as a line"></svg></div>'''
+          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="{y_titre} of each row at each {x_titre} of the sealed public record, with the recall floor as a line"></svg></div>'''
 
 
 PANNEAU_HTML = '''<aside class="pan" id="pan" aria-live="polite">
@@ -359,7 +359,7 @@ PANNEAU_VERT_HTML = '''<aside class="pan" id="pan" aria-live="polite">
       </aside>'''
 
 CARTE_ONYX_HTML = '''<p class="carte-aide" data-commun="instrument">each dot is one question's sealed public record, placed at its age in days · <b>pull the validity line</b> to ask what a shorter or longer validity period would change : a dot past it would lose its « fresh » control, and the --next lines state it · hover a dot to read its five verdicts</p>
-          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 300" role="img" aria-label="The questions' seals on a time axis, with the declared rhythm as a line"></svg></div>'''
+          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 300" role="img" aria-label="The questions' seals on a time axis, with the declared validity period as a line"></svg></div>'''
 
 PANNEAU_ONYX_HTML = '''<aside class="pan" id="pan" aria-live="polite">
         <div class="qui">the question under the pointer</div>
@@ -457,7 +457,7 @@ JS_VERT = '''
 '''
 
 JS_ONYX = '''
-  /* THE LIVE CHART OF THE ONYX : the seals on the clock, the rhythm line you drag (a what-if). */
+  /* THE LIVE CHART OF THE ONYX : the seals on the clock, the validity period line you drag (a what-if). */
   const carte = $("#carte");
   const CW = 900, CH = 300, CL = 100, CR = 40, CT = 30, CB = 34, XMAX = 180;
   const noms = Object.keys(D.questions).filter((q) => D.questions[q].present);
@@ -478,17 +478,17 @@ JS_ONYX = '''
     h += '<rect class="ligne-prise" x="' + (xs - 9).toFixed(0) + '" y="' + CT + '" width="18" height="' + (CH - CT - CB) + '"/>'
        + '<line class="ligne-l" x1="' + xs.toFixed(0) + '" x2="' + xs.toFixed(0) + '" y1="' + CT + '" y2="' + (CH - CB) + '"/>'
        + '<rect class="ligne-poignee" x="' + (xs - 7).toFixed(0) + '" y="' + (CT - 8) + '" width="14" height="14" rx="3"/>'
-       + '<text class="ligne-t" x="' + xs.toFixed(0) + '" y="' + (CT - 12) + '">' + (rythme === D.reglages.rythmeJours ? "declared rhythm " + rythme + " days" : "if the rhythm were " + rythme + " days (declared: " + D.reglages.rythmeJours + ")") + '</text>';
+       + '<text class="ligne-t" x="' + xs.toFixed(0) + '" y="' + (CT - 12) + '">' + (rythme === D.reglages.rythmeJours ? "declared validity period " + rythme + " days" : "if the validity period were " + rythme + " days (declared: " + D.reglages.rythmeJours + ")") + '</text>';
     carte.innerHTML = h;
   }
   function peindrePanneauO() {
-    if (!viseQ) { $("#pan-nom").textContent = "hover a stone"; $("#pan-g1").textContent = ""; $("#pan-l1").textContent = ""; $("#pan-verdicts").innerHTML = "<b>" + noms.filter(frais).length + "</b> of " + noms.length + " fresh within " + rythme + " days" + (rythme === D.reglages.rythmeJours ? "" : " (what-if : the sealed verdicts below keep the declared rhythm)"); return; }
+    if (!viseQ) { $("#pan-nom").textContent = "hover a stone"; $("#pan-g1").textContent = ""; $("#pan-l1").textContent = ""; $("#pan-verdicts").innerHTML = "<b>" + noms.filter(frais).length + "</b> of " + noms.length + " fresh within " + rythme + " days" + (rythme === D.reglages.rythmeJours ? "" : " (what-if : the sealed verdicts below keep the declared validity period)"); return; }
     const d = D.questions[viseQ];
     $("#pan-nom").innerHTML = esc(viseQ) + " <small>" + esc(d.etat) + "</small>";
     $("#pan-g1").innerHTML = d.joursDepuis + "<small> days</small>";
     $("#pan-l1").textContent = "since its record was measured \\u00b7 seal " + String(d.sceau).slice(0, 8) + "\\u2026 \\u00b7 " + String(d.fichier).slice(0, 36);
     $("#pan-verdicts").innerHTML = (d.verdicts || []).map((v) => esc(v.controle) + " <b class=\\"" + (v.tenu ? "tenu" : "pas") + "\\">" + (v.tenu ? "held" : "not held") + "</b>").join("<br>")
-      + "<br><span class=\\"" + (frais(viseQ) ? "tenu" : "pas") + "\\">" + (frais(viseQ) ? "fresh within " + rythme + " days" : "would fall out of a " + rythme + "-day rhythm") + "</span>";
+      + "<br><span class=\\"" + (frais(viseQ) ? "tenu" : "pas") + "\\">" + (frais(viseQ) ? "fresh within " + rythme + " days" : "would fall out of a " + rythme + "-day validity period") + "</span>";
   }
   function suivantesO() {
     const lignes = [];
@@ -497,11 +497,11 @@ JS_ONYX = '''
       const tenu = Object.fromEntries((d.verdicts || []).map((v) => [v.controle, v.tenu]));
       const suivant = ORDRE.find((c) => !(c in tenu) || !tenu[c]);
       const jours = typeof d.joursDepuis === "number" ? " \\u00b7 measured " + d.joursDepuis + " day(s) ago" : "";
-      const echeance = typeof d.joursDepuis === "number" ? (d.joursDepuis <= rythme ? " \\u00b7 due in " + (rythme - d.joursDepuis) + " day(s)" : " \\u00b7 <b>past a " + rythme + "-day rhythm</b>") : "";
+      const echeance = typeof d.joursDepuis === "number" ? (d.joursDepuis <= rythme ? " \\u00b7 due in " + (rythme - d.joursDepuis) + " day(s)" : " \\u00b7 <b>past a " + rythme + "-day validity period</b>") : "";
       if (suivant === undefined) lignes.push("<b>" + esc(q) + "</b>: each control held" + jours + echeance);
       else { const v = verdictDe(q, suivant); lignes.push("<b>" + esc(q) + "</b>: state reached <b>" + esc(d.etat) + "</b>" + jours + " \\u00b7 next, <b>" + esc(suivant) + "</b>: " + (v ? esc(v.detail) : "not judged by the record")); }
     }
-    $("#g-suivant").innerHTML = lignes.join("<br>") + (rythme === D.reglages.rythmeJours ? "" : "<br><span class=\\"tm-l\\">what-if at " + rythme + " days ; the dossier's declared rhythm is " + D.reglages.rythmeJours + "</span>");
+    $("#g-suivant").innerHTML = lignes.join("<br>") + (rythme === D.reglages.rythmeJours ? "" : "<br><span class=\\"tm-l\\">what-if at " + rythme + " days ; the dossier's declared validity period is " + D.reglages.rythmeJours + "</span>");
   }
   const pierreDe = (ev) => {
     const r = carte.getBoundingClientRect();
@@ -664,7 +664,7 @@ def _svg_horloge(releve):
         yy = T + (i + .5) * HR; d = Q[q].get("joursDepuis", 0)
         out += f'<text class="nom" x="0" y="{yy + 4:.0f}">{q}</text><line class="gr" x1="{L}" x2="{W - R}" y1="{yy:.0f}" y2="{yy:.0f}"/>'
         out += f'<circle class="pierre" cx="{x(d):.0f}" cy="{yy:.0f}" r="7"/><text class="ax" x="{x(d):.0f}" y="{yy - 12:.0f}" text-anchor="middle">{d} d · {Q[q].get("etat", "")}</text>'
-    out += f'<line class="ligne" x1="{x(rythme):.0f}" x2="{x(rythme):.0f}" y1="{T}" y2="{H - B}"/><text class="eti" x="{x(rythme):.0f}" y="{T - 8}" text-anchor="middle">declared rhythm {rythme} days</text>'
+    out += f'<line class="ligne" x1="{x(rythme):.0f}" x2="{x(rythme):.0f}" y1="{T}" y2="{H - B}"/><text class="eti" x="{x(rythme):.0f}" y="{T - 8}" text-anchor="middle">declared validity period {rythme} days</text>'
     return f'<svg viewBox="0 0 {W} {H}" aria-hidden="true">{out}</svg>'
 
 

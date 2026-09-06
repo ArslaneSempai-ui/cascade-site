@@ -94,8 +94,8 @@ def table_html():
 
 # ── le contenu de la séquence : les cinq trouvailles, mot pour mot du publié ─
 SCENES = [
-    dict(num="01", titre="Published routing leads by 17.7 points",
-         phrase="The published routing reads at 94.4% accuracy; a cheaper one trails it by 17.7 points.",
+    dict(num="01", titre="94.4% per field, 76.7% per file",
+         phrase="The same published routing reads 94.4% accuracy averaged per field and 76.7% as the per-file rate, 92 of 120 files, 17.7 points apart.",
          a="94.4<small>%</small>", b="76.7<small>%</small>", cote="17.7 points apart"),
     dict(num="02", titre="A routing 3.5&#215; cheaper, same accuracy",
          phrase="The file-aimed routing costs 3.5 times less than the published one, at the same accuracy.",
@@ -130,26 +130,26 @@ LEGS = [
 # Chaque phrase sort du site ou de l'outil publiés, rien d'inventé.
 APPELS = [
     [
-        (0.830, 0.330, 0.814, 0.160, "one chip: ten points of measured accuracy"),
-        (0.470, 0.520, 0.343, 0.220, "the published pick: name goes to the large reader"),
-        (0.780, 0.250, 0.343, 0.052, "the empty row: the human tier, never sampled"),
+        (0.830, 0.330, 0.814, 0.160, "published routing: 94.4% accuracy per field"),
+        (0.470, 0.520, 0.343, 0.220, "per-file rate: 76.7%, 92 of 120 files"),
+        (0.780, 0.250, 0.343, 0.052, "human tier: assumed 85%, not sampled"),
     ],
     [
-        (0.440, 0.530, 0.500, 0.220, "name changes reader: the file-aimed pick"),
-        (0.270, 0.550, 0.108, 0.260, "the published pick it replaces"),
-        (0.720, 0.280, 0.696, 0.052, "a pick both routings share"),
+        (0.440, 0.530, 0.500, 0.220, "file-aimed routing: 3.5&#215; cheaper"),
+        (0.270, 0.550, 0.108, 0.260, "published routing: the pick it replaces"),
+        (0.720, 0.280, 0.696, 0.052, "a tier both routings share"),
     ],
     [
-        (0.820, 0.520, 0.814, 0.220, "an emptied cell: silence instead of a wrong value"),
-        (0.480, 0.380, 0.343, 0.220, "85 wrong values removed, 12 right lost"),
+        (0.820, 0.520, 0.814, 0.220, "an emptied cell: a blank held for re-reading"),
+        (0.480, 0.380, 0.343, 0.220, "abstention: 85 of the wrong dropped, 12 of the right"),
     ],
     [
-        (0.520, 0.480, 0.500, 0.160, "run twice: each count identical, to the digit"),
-        (0.600, 0.350, 0.892, 0.780, "nothing turns green: the durations moved, withheld"),
+        (0.520, 0.480, 0.500, 0.160, "run twice: counts identical to the digit"),
+        (0.600, 0.350, 0.892, 0.780, "durations move 16% to 60%, withheld"),
     ],
     [
-        (0.500, 0.450, 0.500, 0.160, "each stack green: 16,807 routings crossed"),
-        (0.800, 0.520, 0.892, 0.780, "still empty: the human tier, never sampled"),
+        (0.500, 0.450, 0.500, 0.160, "all 16807 routings crossed, none sampled"),
+        (0.800, 0.520, 0.892, 0.780, "human tier: assumed 85%, not sampled"),
     ],
 ]
 
@@ -1068,7 +1068,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="hero">
   <h1 class="h1 entree h1-long">Measure each model tier's accuracy and cost, field by field.</h1>
   <p class="lede entree">Seven model tiers, from a regular expression to a human, measured on your own records.<br>
-    The answer is rarely &ldquo;buy the bigger model&rdquo;; each figure carries its base and its n.</p>
+    On the measured corpus, three of the five fields are already carried by regexes at zero cost.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
     <code class="ln">node src/premiere-reponse.mjs</code>
@@ -1328,7 +1328,7 @@ SPECS = {
         h1="Measure each matcher's recall against its false alerts, on your own alert history.",
         lede="Seven name matchers, from strict equality to a multilingual embedding, swept across "
              "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
-             "and each figure\n    <b>can be verified by you</b>.",
+             "and each figure carries its 95% interval and its n.",
         aria_commande="The measurement on your own alert history",
         commandes=["npm ci --ignore-scripts", "npm run measure:yours -- --alerts=your-alerts.csv"],
         note_commande="Your alert history, measured on your machine.",
@@ -1345,7 +1345,7 @@ SPECS = {
         table_ligne="matcher",
         table_caption="Recall over false alerts of each matcher at each threshold, on the written pairs",
         table_note_unites='Measured on the {nMatch} written match pairs and {nDifferent} hard\n      negatives',
-        pied="Your records stay on your machine, and <em>no data of yours goes up.</em>",
+        pied="Your records stay on your machine, and <em>no data leaves the network.</em>",
     ),
     "monitoring": dict(
         lot="L5-textes",
@@ -1363,7 +1363,7 @@ SPECS = {
         h1="Measure each scenario's recall against its false alerts, on your own alerts.",
         lede="Seven scenarios, from a bare amount to the deviation from a peer profile, swept across "
              "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
-             "and each figure\n    <b>can be verified by you</b>.",
+             "and each figure carries its 95% interval and its n.",
         aria_commande="The measurement on your own dispositioned alerts",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --alerts=your-alerts.csv --transactions=your-transactions.csv"],
@@ -1381,7 +1381,7 @@ SPECS = {
         table_ligne="scenario",
         table_caption="Recall over false alerts of each scenario at each threshold, on the written cases",
         table_note_unites='Measured on the {nMatch} written suspicious cases and {nDifferent} benign\n      look&#8209;alikes',
-        pied="Your records stay on your machine, and <em>no data of yours goes up.</em>",
+        pied="Your records stay on your machine, and <em>no data leaves the network.</em>",
     ),
     "scoring": dict(
         lot="A-L5-textes",
@@ -1399,7 +1399,7 @@ SPECS = {
         h1="Measure each risk factor's recall against its false alerts, on your own reviews.",
         lede="Seven risk factors, from a country list to the deviation from the declared profile, swept across "
              "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
-             "and each figure\n    <b>can be verified by you</b>.",
+             "and each figure carries its 95% interval and its n.",
         aria_commande="The measurement on your own periodic-review outcomes",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --customers=your-customers.csv --reviews=your-reviews.csv"],
@@ -1417,7 +1417,7 @@ SPECS = {
         table_ligne="factor",
         table_caption="Recall over false alerts of each risk factor at each threshold, on the written files",
         table_note_unites='Measured on the {nMatch} written escalated files and {nDifferent} maintained\n      look&#8209;alikes',
-        pied="Your records stay on your machine, and <em>no data of yours goes up.</em>",
+        pied="Your records stay on your machine, and <em>no data leaves the network.</em>",
     ),
     "dossier": dict(
         lot="D3",
@@ -1433,10 +1433,9 @@ SPECS = {
                  "seals, signatures, freshness and coherence, verified on your "
                  "machine.",
         offre="Thirty-day evaluation on your own signed reports, granted in the public licence.",
-        h1="Check the four tool reports for coverage, hashes, signatures, validity and consistency.",
-        lede="Four questions, one per tool, checked against five controls, "
-             "five controls each.<br>\n    The Dossier reads the signed reports and answers "
-             "as one piece, and each line\n    <b>can be verified by you</b>.",
+        h1="Check each report: present, sealed, signed, fresh, consistent.",
+        lede="Four questions, one per tool, each checked against five controls.<br>\n    The Dossier reads the signed reports and answers "
+             "as one piece, each line carrying its base.",
         aria_commande="The dossier over your own signed reports",
         commandes=["npm ci --ignore-scripts",
                    "npm run dossier -- --reports=a-measured.json,b-measured.json"],
@@ -1455,7 +1454,7 @@ SPECS = {
         table_caption="State reached by each question of the chain under the contract&#8217;s five controls, on the sealed public records",
         table=_table_dossier,
         refaire=_refaire_dossier,
-        pied="Your records stay on your machine, and <em>no data of yours goes up.</em>",
+        pied="Your records stay on your machine, and <em>no data leaves the network.</em>",
     ),
 }
 

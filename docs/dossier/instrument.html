@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-ikRUwwZNoMKjsCWNHKg2r4gRvYIGuXXRqfl09pdZ82M=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-6Dnj0kqV5W7EqSBgjdyso47IqE0+IY2Sm6wNqr++vb0='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-ikRUwwZNoMKjsCWNHKg2r4gRvYIGuXXRqfl09pdZ82M=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-jVS511UuNeG+DdaJVuFcLnJjgiABGoHBGnfQrKlH3/4='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Dossier &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/dossier/instrument.html">
@@ -301,8 +301,8 @@
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">The whole chain in one table, live.</h1>
-    <p class="lede">Each line on this page comes from the <b>sealed public dossier</b> of
-      cascade-dossier: the suite&#8217;s own sealed public records (hashed, then frozen: its content hash is checked before a figure is shown), read and judged by its five controls.
+    <p class="lede">Each line on this page comes from the <b>sealed public dossier (hashed, then frozen: its content hash is checked before a figure is shown)</b> of
+      cascade-dossier: the suite&#8217;s own sealed public records, read and judged by its five controls.
       No client data exists here, none enters and none leaves,
       and each figure is recomputed from the sealed public record as the page loads.</p>
   </div>
@@ -319,9 +319,9 @@
         <div class="tm-corps">
           <p class="tm-l"><span class="ps">$</span> cascade dossier --live<span class="caret" aria-hidden="true"></span></p>
           <p class="tm-sortie">coverage <b>4 / 4</b> questions with a sealed public record &#183;
-            declared rhythm <b>90 days</b> &#183; as of <b>2026-09-05</b></p>
+            declared validity period <b>90 days</b> &#183; as of <b>2026-09-05</b></p>
           <p class="carte-aide" data-commun="instrument">each dot is one question's sealed public record, placed at its age in days · <b>pull the validity line</b> to ask what a shorter or longer validity period would change : a dot past it would lose its « fresh » control, and the --next lines state it · hover a dot to read its five verdicts</p>
-          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 300" role="img" aria-label="The questions' seals on a time axis, with the declared rhythm as a line"></svg></div>
+          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 300" role="img" aria-label="The questions' seals on a time axis, with the declared validity period as a line"></svg></div>
           <div class="t-scroll"><table class="grille">
       <caption class="sr">Pick a cell: each question of the chain against each control of the contract, held or not, with the verdict in the record's own words</caption>
       <thead><tr><th scope="col">question \ control</th><th scope='col'>present</th><th scope='col'>sealed</th><th scope='col'>signed</th><th scope='col'>fresh</th><th scope='col'>consistent</th></tr></thead>
@@ -362,13 +362,13 @@
         no-gap rule, and does not emit if a single line disagrees.</li>
       <li><b>The suite&#8217;s own sealed public records.</b> The reports judged here are the public
         records of Cascade&#8217;s tools (the reader, the matcher, the scenario, the factor):
-        published, sealed, verifiable by anyone. A question without one is a named row,
-        never a guessed column.</li>
-      <li><b>Five controls, one order.</b> present, sealed, signed, fresh, consistent: the
+        published, sealed, verifiable by anyone. A question without one is shown as a labelled blank,
+        and no guessed column.</li>
+      <li><b>The five controls, in a fixed order.</b> present, sealed, signed, fresh, consistent: the
         state reached is the highest control held <b>without a gap</b> in that order. A held
         control above a hole counts for nothing, and the table shows why.</li>
-      <li><b>Freshness against a declared rhythm.</b> Each measurement&#8217;s age is judged
-        against the rhythm written in the dossier itself (90 days), never
+      <li><b>Freshness against a declared validity period.</b> Each measurement&#8217;s age is judged
+        against the validity period written in the dossier itself (90 days), never
         against an unstated habit.</li>
     </ul>
       </details>
@@ -400,7 +400,7 @@
 
 <footer class="pied">
   <div class="colonne">
-    <p class="pied-p">Your records stay on your machine, and <em>no data of yours goes up.</em></p>
+    <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
     <span class="sceau"<content hash 37f8e511de19c842 &#183; measured, then frozen &#183; <a href="https://github.com/ArslaneSempai-ui/cascade-dossier">repository</a></span>
   </div>
 </footer>
@@ -486,7 +486,7 @@
     }
   })();
 
-  /* THE LIVE CHART OF THE ONYX : the seals on the clock, the rhythm line you drag (a what-if). */
+  /* THE LIVE CHART OF THE ONYX : the seals on the clock, the validity period line you drag (a what-if). */
   const carte = $("#carte");
   const CW = 900, CH = 300, CL = 100, CR = 40, CT = 30, CB = 34, XMAX = 180;
   const noms = Object.keys(D.questions).filter((q) => D.questions[q].present);
@@ -507,17 +507,17 @@
     h += '<rect class="ligne-prise" x="' + (xs - 9).toFixed(0) + '" y="' + CT + '" width="18" height="' + (CH - CT - CB) + '"/>'
        + '<line class="ligne-l" x1="' + xs.toFixed(0) + '" x2="' + xs.toFixed(0) + '" y1="' + CT + '" y2="' + (CH - CB) + '"/>'
        + '<rect class="ligne-poignee" x="' + (xs - 7).toFixed(0) + '" y="' + (CT - 8) + '" width="14" height="14" rx="3"/>'
-       + '<text class="ligne-t" x="' + xs.toFixed(0) + '" y="' + (CT - 12) + '">' + (rythme === D.reglages.rythmeJours ? "declared rhythm " + rythme + " days" : "if the rhythm were " + rythme + " days (declared: " + D.reglages.rythmeJours + ")") + '</text>';
+       + '<text class="ligne-t" x="' + xs.toFixed(0) + '" y="' + (CT - 12) + '">' + (rythme === D.reglages.rythmeJours ? "declared validity period " + rythme + " days" : "if the validity period were " + rythme + " days (declared: " + D.reglages.rythmeJours + ")") + '</text>';
     carte.innerHTML = h;
   }
   function peindrePanneauO() {
-    if (!viseQ) { $("#pan-nom").textContent = "hover a stone"; $("#pan-g1").textContent = ""; $("#pan-l1").textContent = ""; $("#pan-verdicts").innerHTML = "<b>" + noms.filter(frais).length + "</b> of " + noms.length + " fresh within " + rythme + " days" + (rythme === D.reglages.rythmeJours ? "" : " (what-if : the sealed verdicts below keep the declared rhythm)"); return; }
+    if (!viseQ) { $("#pan-nom").textContent = "hover a stone"; $("#pan-g1").textContent = ""; $("#pan-l1").textContent = ""; $("#pan-verdicts").innerHTML = "<b>" + noms.filter(frais).length + "</b> of " + noms.length + " fresh within " + rythme + " days" + (rythme === D.reglages.rythmeJours ? "" : " (what-if : the sealed verdicts below keep the declared validity period)"); return; }
     const d = D.questions[viseQ];
     $("#pan-nom").innerHTML = esc(viseQ) + " <small>" + esc(d.etat) + "</small>";
     $("#pan-g1").innerHTML = d.joursDepuis + "<small> days</small>";
     $("#pan-l1").textContent = "since its record was measured \u00b7 seal " + String(d.sceau).slice(0, 8) + "\u2026 \u00b7 " + String(d.fichier).slice(0, 36);
     $("#pan-verdicts").innerHTML = (d.verdicts || []).map((v) => esc(v.controle) + " <b class=\"" + (v.tenu ? "tenu" : "pas") + "\">" + (v.tenu ? "held" : "not held") + "</b>").join("<br>")
-      + "<br><span class=\"" + (frais(viseQ) ? "tenu" : "pas") + "\">" + (frais(viseQ) ? "fresh within " + rythme + " days" : "would fall out of a " + rythme + "-day rhythm") + "</span>";
+      + "<br><span class=\"" + (frais(viseQ) ? "tenu" : "pas") + "\">" + (frais(viseQ) ? "fresh within " + rythme + " days" : "would fall out of a " + rythme + "-day validity period") + "</span>";
   }
   function suivantesO() {
     const lignes = [];
@@ -526,11 +526,11 @@
       const tenu = Object.fromEntries((d.verdicts || []).map((v) => [v.controle, v.tenu]));
       const suivant = ORDRE.find((c) => !(c in tenu) || !tenu[c]);
       const jours = typeof d.joursDepuis === "number" ? " \u00b7 measured " + d.joursDepuis + " day(s) ago" : "";
-      const echeance = typeof d.joursDepuis === "number" ? (d.joursDepuis <= rythme ? " \u00b7 due in " + (rythme - d.joursDepuis) + " day(s)" : " \u00b7 <b>past a " + rythme + "-day rhythm</b>") : "";
+      const echeance = typeof d.joursDepuis === "number" ? (d.joursDepuis <= rythme ? " \u00b7 due in " + (rythme - d.joursDepuis) + " day(s)" : " \u00b7 <b>past a " + rythme + "-day validity period</b>") : "";
       if (suivant === undefined) lignes.push("<b>" + esc(q) + "</b>: each control held" + jours + echeance);
       else { const v = verdictDe(q, suivant); lignes.push("<b>" + esc(q) + "</b>: state reached <b>" + esc(d.etat) + "</b>" + jours + " \u00b7 next, <b>" + esc(suivant) + "</b>: " + (v ? esc(v.detail) : "not judged by the record")); }
     }
-    $("#g-suivant").innerHTML = lignes.join("<br>") + (rythme === D.reglages.rythmeJours ? "" : "<br><span class=\"tm-l\">what-if at " + rythme + " days ; the dossier's declared rhythm is " + D.reglages.rythmeJours + "</span>");
+    $("#g-suivant").innerHTML = lignes.join("<br>") + (rythme === D.reglages.rythmeJours ? "" : "<br><span class=\"tm-l\">what-if at " + rythme + " days ; the dossier's declared validity period is " + D.reglages.rythmeJours + "</span>");
   }
   const pierreDe = (ev) => {
     const r = carte.getBoundingClientRect();

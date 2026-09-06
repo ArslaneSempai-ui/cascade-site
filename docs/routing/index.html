@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#14251e">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade: routing audit, KYC extraction">
-<meta property="og:description" content="A routing audit for KYC extraction: measured on sealed public records (hashed, then frozen: its content hash is checked before a figure is shown), rerun on your machine. On your records, on your machine: nothing leaves the network.">
+<meta property="og:description" content="A routing audit for KYC extraction: measured on sealed public records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
 <meta property="og:url" content="https://cascade-routing.com/routing/">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
 <meta property="og:site_name" content="Cascade">
@@ -519,7 +519,7 @@
 <section class="hero">
   <h1 class="h1 entree h1-long">Measure each model tier's accuracy and cost, field by field.</h1>
   <p class="lede entree">Seven model tiers, from a regular expression to a human, measured on your own records.<br>
-    The answer is rarely &ldquo;buy the bigger model&rdquo;; each figure carries its base and its n.</p>
+    On the measured corpus, three of the five fields are already carried by regexes at zero cost.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone https://github.com/ArslaneSempai-ui/cascade-routing</code>
     <code class="ln">node src/premiere-reponse.mjs</code>
@@ -539,9 +539,9 @@
 
 <section class="sequence" aria-label="The five findings">
   <div class="colle">
-    <nav class="rail" aria-label="Findings"><span class="jauge" aria-hidden="true"><i></i></span><ul><li><button class="jalon actif" data-i="0" aria-label="Go to finding 01: Published routing leads by 17.7 points">
+    <nav class="rail" aria-label="Findings"><span class="jauge" aria-hidden="true"><i></i></span><ul><li><button class="jalon actif" data-i="0" aria-label="Go to finding 01: 94.4% per field, 76.7% per file">
         <img class="j-vig" src="../rendus/etats/objet-01.webp" alt="">
-        <span class="j-num">01</span><span class="j-corps"><span class="j-titre">Published routing leads by 17.7 points</span>
+        <span class="j-num">01</span><span class="j-corps"><span class="j-titre">94.4% per field, 76.7% per file</span>
         <span class="j-cote">17.7 points apart</span></span></button></li><li><button class="jalon" data-i="1" aria-label="Go to finding 02: A routing 3.5&#215; cheaper, same accuracy">
         <img class="j-vig" src="../rendus/etats/objet-02.webp" alt="">
         <span class="j-num">02</span><span class="j-corps"><span class="j-titre">A routing 3.5&#215; cheaper, same accuracy</span>
@@ -559,11 +559,11 @@
       <div class="scenes"><canvas class="scrub" width="1600" height="1152" aria-hidden="true"></canvas>
     <div class="scene actif" id="scene-0" data-i="0">
       <img class="objet" src="../rendus/etats/objet-01.webp"
-        alt="The measured relief, state 01: Published routing leads by 17.7 points">
-      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="1095" y1="160" x2="1115" y2="330" pathLength="1"/><circle cx="1115" cy="330" r="4"/><line x1="517" y1="220" x2="673" y2="520" pathLength="1"/><circle cx="673" cy="520" r="4"/><line x1="517" y1="52" x2="1054" y2="250" pathLength="1"/><circle cx="1054" cy="250" r="4"/></svg><span class="ap-eti" style="left:77.1%;top:16.0%">one chip: ten points of measured accuracy</span><span class="ap-eti" style="left:36.4%;top:22.0%">the published pick: name goes to the large reader</span><span class="ap-eti" style="left:36.4%;top:5.2%">the empty row: the human tier, never sampled</span>
+        alt="The measured relief, state 01: 94.4% per field, 76.7% per file">
+      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="1095" y1="160" x2="1115" y2="330" pathLength="1"/><circle cx="1115" cy="330" r="4"/><line x1="517" y1="220" x2="673" y2="520" pathLength="1"/><circle cx="673" cy="520" r="4"/><line x1="517" y1="52" x2="1054" y2="250" pathLength="1"/><circle cx="1054" cy="250" r="4"/></svg><span class="ap-eti" style="left:77.1%;top:16.0%">published routing: 94.4% accuracy per field</span><span class="ap-eti" style="left:36.4%;top:22.0%">per-file rate: 76.7%, 92 of 120 files</span><span class="ap-eti" style="left:36.4%;top:5.2%">human tier: assumed 85%, not sampled</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 01</span><span class="ft-cote">17.7 points apart</span></figcaption>
-        <p class="fiche-phrase">The published routing reads at 94.4% accuracy; a cheaper one trails it by 17.7 points.</p>
+        <p class="fiche-phrase">The same published routing reads 94.4% accuracy averaged per field and 76.7% as the per-file rate, 92 of 120 files, 17.7 points apart.</p>
         <div class="paire">
           <div class="val"><span class="chiffre pale-v">94.4<small>%</small></span><span class="leg">The dashboard mean.</span></div>
           <div class="val"><span class="chiffre vert-v">76.7<small>%</small></span><span class="leg">All five fields, correct. The number the desk works from.</span></div>
@@ -573,7 +573,7 @@
     <div class="scene" id="scene-1" data-i="1">
       <img class="objet" src="../rendus/etats/objet-02.webp"
         alt="The measured relief, state 02: A routing 3.5&#215; cheaper, same accuracy">
-      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="220" x2="636" y2="530" pathLength="1"/><circle cx="636" cy="530" r="4"/><line x1="229" y1="260" x2="428" y2="550" pathLength="1"/><circle cx="428" cy="550" r="4"/><line x1="950" y1="52" x2="980" y2="280" pathLength="1"/><circle cx="980" cy="280" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:22.0%">name changes reader: the file-aimed pick</span><span class="ap-eti" style="left:16.1%;top:26.0%">the published pick it replaces</span><span class="ap-eti" style="left:66.9%;top:5.2%">a pick both routings share</span>
+      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="220" x2="636" y2="530" pathLength="1"/><circle cx="636" cy="530" r="4"/><line x1="229" y1="260" x2="428" y2="550" pathLength="1"/><circle cx="428" cy="550" r="4"/><line x1="950" y1="52" x2="980" y2="280" pathLength="1"/><circle cx="980" cy="280" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:22.0%">file-aimed routing: 3.5&#215; cheaper</span><span class="ap-eti" style="left:16.1%;top:26.0%">published routing: the pick it replaces</span><span class="ap-eti" style="left:66.9%;top:5.2%">a tier both routings share</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 02</span><span class="ft-cote">3.5&#215; cheaper</span></figcaption>
         <p class="fiche-phrase">The file-aimed routing costs 3.5 times less than the published one, at the same accuracy.</p>
@@ -586,7 +586,7 @@
     <div class="scene" id="scene-2" data-i="2">
       <img class="objet" src="../rendus/etats/objet-03.webp"
         alt="The measured relief, state 03: Silence beats a wrong value">
-      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="1095" y1="220" x2="1103" y2="520" pathLength="1"/><circle cx="1103" cy="520" r="4"/><line x1="517" y1="220" x2="685" y2="380" pathLength="1"/><circle cx="685" cy="380" r="4"/></svg><span class="ap-eti" style="left:77.1%;top:22.0%">an emptied cell: silence instead of a wrong value</span><span class="ap-eti" style="left:36.4%;top:22.0%">85 wrong values removed, 12 right lost</span>
+      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="1095" y1="220" x2="1103" y2="520" pathLength="1"/><circle cx="1103" cy="520" r="4"/><line x1="517" y1="220" x2="685" y2="380" pathLength="1"/><circle cx="685" cy="380" r="4"/></svg><span class="ap-eti" style="left:77.1%;top:22.0%">an emptied cell: a blank held for re-reading</span><span class="ap-eti" style="left:36.4%;top:22.0%">abstention: 85 of the wrong dropped, 12 of the right</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 03</span><span class="ft-cote">after abstention</span></figcaption>
         <p class="fiche-phrase">Delivering every value gives 30% accuracy; staying silent instead of guessing gives 62.3%.</p>
@@ -599,7 +599,7 @@
     <div class="scene" id="scene-3" data-i="3">
       <img class="objet" src="../rendus/etats/objet-04.webp"
         alt="The measured relief, state 04: Counts identical, durations withheld">
-      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="160" x2="735" y2="480" pathLength="1"/><circle cx="735" cy="480" r="4"/><line x1="1191" y1="780" x2="833" y2="350" pathLength="1"/><circle cx="833" cy="350" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:16.0%">run twice: each count identical, to the digit</span><span class="ap-eti" style="left:83.9%;top:78.0%">nothing turns green: the durations moved, withheld</span>
+      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="160" x2="735" y2="480" pathLength="1"/><circle cx="735" cy="480" r="4"/><line x1="1191" y1="780" x2="833" y2="350" pathLength="1"/><circle cx="833" cy="350" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:16.0%">run twice: counts identical to the digit</span><span class="ap-eti" style="left:83.9%;top:78.0%">durations move 16% to 60%, withheld</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 04</span><span class="ft-cote">withheld</span></figcaption>
         <p class="fiche-phrase">Two passes give identical counts, while the durations move 16% to 60%, so the tool withholds them.</p>
@@ -612,7 +612,7 @@
     <div class="scene" id="scene-4" data-i="4">
       <img class="objet" src="../rendus/etats/objet-05.webp"
         alt="The measured relief, state 05: Every routing enumerated">
-      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="160" x2="710" y2="450" pathLength="1"/><circle cx="710" cy="450" r="4"/><line x1="1191" y1="780" x2="1078" y2="520" pathLength="1"/><circle cx="1078" cy="520" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:16.0%">each stack green: 16,807 routings crossed</span><span class="ap-eti" style="left:83.9%;top:78.0%">still empty: the human tier, never sampled</span>
+      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="160" x2="710" y2="450" pathLength="1"/><circle cx="710" cy="450" r="4"/><line x1="1191" y1="780" x2="1078" y2="520" pathLength="1"/><circle cx="1078" cy="520" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:16.0%">all 16807 routings crossed, none sampled</span><span class="ap-eti" style="left:83.9%;top:78.0%">human tier: assumed 85%, not sampled</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 05</span><span class="ft-cote">the full span</span></figcaption>
         <p class="fiche-phrase">The tool enumerates every routing of the five fields and writes one report you can dispute line by line.</p>

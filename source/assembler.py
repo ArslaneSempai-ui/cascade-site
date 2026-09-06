@@ -275,12 +275,49 @@ def renommer_liens(t, page_sous_dossier):
 # la signature (VOIX, tranché le 10/09). À sa PREMIÈRE apparition sur chaque page, une
 # incise le définit une fois ; ensuite le mot nu.
 _SCELLE_DEF = " (hashed, then frozen: its content hash is checked before a figure is shown)"
+_SCELLE_TERMES = ("sealed public records", "sealed public record", "sealed public dossiers",
+                  "sealed public dossier", "sealed records", "sealed record")
+# les zones où « sealed » ne se définit PAS : le rideau et ses pans, la nav, le pied, les
+# boutons, les étiquettes (le chef, 10/09) — la définition va dans la prose du corps.
+_SCELLE_SAUT_TAGS = {"nav", "footer", "button"}
+_SCELLE_SAUT_CLS = ("rideau", "pan", "ap-eti", "j-titre", "j-cote", "j-num", "note",
+                    "cue", "marque", "sceau", "rail", "affiche")
+_VOID = {"img", "br", "input", "meta", "link", "hr", "source", "path", "circle", "line", "use", "col"}
 def definir_sealed(t):
-    for terme in ("sealed public records", "sealed public record", "sealed public dossiers", "sealed public dossier", "sealed records", "sealed record"):
-        i = t.find(terme)
-        if i != -1:
-            j = i + len(terme)
-            return t[:j] + _SCELLE_DEF + t[j:]
+    """Insère l'incise à la PREMIÈRE mention d'un terme scellé qui vit dans la PROSE DU
+    CORPS : dans un <p>, hors rideau/pan, hors nav/pied, hors boutons, titres et étiquettes
+    (le chef, 10/09 : jamais dans un titre, une carte, un pied, un lien)."""
+    saut = 0      # profondeur dans une zone sautée (rideau, nav, pied, bouton, étiquette)
+    pp = 0        # profondeur de <p> : on ne définit que dans un paragraphe
+    for m in re.finditer(r'<[^>]+>|[^<]+', t):
+        frag = m.group(0)
+        if frag.startswith("<"):
+            if frag.startswith("</"):
+                nom = re.match(r'</\s*([a-zA-Z0-9]+)', frag)
+                nom = nom.group(1).lower() if nom else ""
+                if nom == "p" and pp > 0:
+                    pp -= 1
+                if saut > 0:
+                    saut -= 1
+            elif not frag.endswith("/>"):
+                nom = re.match(r'<\s*([a-zA-Z0-9]+)', frag)
+                nom = nom.group(1).lower() if nom else ""
+                if nom in _VOID:
+                    continue
+                cls = re.search(r'class\s*=\s*"([^"]*)"', frag)
+                cls = cls.group(1) if cls else ""
+                skip = nom in _SCELLE_SAUT_TAGS or any(c in cls.split() for c in _SCELLE_SAUT_CLS)
+                saut += 1 if (skip or saut > 0) else 0
+                if nom == "p":
+                    pp += 1
+            continue
+        if saut or pp == 0:
+            continue
+        for terme in _SCELLE_TERMES:
+            k = frag.find(terme)
+            if k != -1:
+                pos = m.start() + k + len(terme)
+                return t[:pos] + _SCELLE_DEF + t[pos:]
     return t
 
 

@@ -7,7 +7,7 @@
     {
       "h2": "Five controls, run in order, refusals named",
       "html": [
-        "<p>Each report the Dossier reads passes the same five controls: <b>present</b> (a readable report from a named tool), <b>sealed</b> (the content hash it carries is the content hash of its content), <b>signed</b> (the sealed public record it cites carries the tool's signature), <b>fresh</b> (measured within the declared rhythm; due under two rhythms, stale beyond), <b>consistent</b> (one dataset, one seal; an unknown tool version is named and not guessed). The registry derives the list from code: an absent control is computed, never recited.</p>",
+        "<p>Each report the Dossier reads passes the same five controls: <b>present</b> (a readable report from a named tool), <b>sealed</b> (the content hash it carries is the content hash of its content), <b>signed</b> (the sealed public record it cites carries the tool's signature), <b>fresh</b> (measured within the declared validity period; due under two validity periods, stale beyond), <b>consistent</b> (one dataset, one seal; an unknown tool version is named and not guessed). The registry derives the list from code: an absent control is computed, never recited.</p>",
         "<p>Each verdict carries its reason in words. A report that cannot state its measurement day is not called stale: it is named as unjudgeable, which is a different and worse fact, and the Dossier says it.</p>"
       ],
       "verif": {
@@ -25,7 +25,7 @@
     {
       "h2": "Its own public measure: the suite, judged by the Dossier",
       "html": [
-        "<p>The Dossier's sealed public record is the suite judging itself: it runs on the sealed public records of the other tools and prints coverage, seals, signatures and freshness as it finds them on the day of the measure. On day one that meant three questions of four covered with the fourth named missing, two seals recomputed, and <b>zero verifiable signatures, printed and not waved through</b>. A Dossier that flattered its own suite would be worthless to a reviewer.</p>"
+        "<p>The Dossier's sealed public record is the suite judging itself: it runs on the sealed public records of the other tools and prints coverage, seals, signatures and freshness as it finds them on the day of the measure. On day one that meant three questions of four covered with the fourth named missing, two seals recomputed, and <b>zero verifiable signatures, printed and not waved through</b>. A Dossier that flattered its own suite would be worth nothing to a reviewer.</p>"
       ],
       "verif": {
         "t": "Verify the record",
@@ -40,17 +40,17 @@
       }
     },
     {
-      "h2": "The rhythm is declared, and age is counted against it",
+      "h2": "The validity period is declared, and age is counted against it",
       "html": [
-        "<p>Freshness only means something against a rhythm, and the rhythm is yours: ninety days by default, named in the record as a declaration, changed with a flag an auditor can see. The record photographs the settings it was measured under, so two Dossiers can be compared knowing whether the rule moved between them.</p>"
+        "<p>Freshness only means something against a validity period, and the validity period is yours: ninety days by default, named in the record as a declaration, changed with a flag an auditor can see. The record records the settings it was measured under, so two Dossiers can be compared knowing whether the rule moved between them.</p>"
       ],
       "verif": {
         "t": "Verify the settings",
-        "p": "The record carries its settings block, rhythm included.",
+        "p": "The record carries its settings block, validity period included.",
         "cmd": [
           {
-            "c": "python3 -c \"import json; r=json.load(open('releve-public.json'))['reglages']; print(r['rythmeJours'], 'days, stale beyond', r['staleApres'], 'rhythms')\"",
-            "n": "prints the declared rhythm the verdicts were judged under"
+            "c": "python3 -c \"import json; r=json.load(open('releve-public.json'))['reglages']; print(r['rythmeJours'], 'days, stale beyond', r['staleApres'], 'validity periods')\"",
+            "n": "prints the declared validity period the verdicts were judged under"
           }
         ],
         "refs": "src/controles/fresh.ts:22 &#183; src/measure.ts:98"

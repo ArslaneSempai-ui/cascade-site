@@ -162,7 +162,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <main>
 <section class="tete"><div class="colonne">
   <h1 class="h1">What an engagement buys.</h1>
-  <p class="lede"><b>Proof before commitment.</b><br>Test the instrument free on your own records.
+  <p class="lede"><b>Test the instrument for thirty days on your own records.</b><br>
     Run one sealed campaign when you are ready. Then license it for the year, when the results
     make the case.</p>
 </div></section>
@@ -189,7 +189,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <p class="c-qui">For the file your reviewers will open. One campaign, one deliverable.</p>
       <p class="c-plus">everything in the evaluation, plus</p>
       <ul class="c-liste">
-        <li><b>Which tier suffices</b>: field by field on Routing, tier and threshold on Screening, scenario and threshold on Monitoring, factor and threshold on Scoring; the Dossier binds the four</li>
+        <li><b>Which model tier suffices</b>: field by field on Routing, matcher and threshold on Screening, scenario and threshold on Monitoring, factor and threshold on Scoring; the Dossier binds the four</li>
         <li>Intervals, refusals under twenty observations</li>
         <li>A <b>sealed, signed report</b> your audit team verifies without us</li>
         <li>We never access your data</li>
@@ -208,7 +208,7 @@ PAGE = f'''<!doctype html><html lang="en">
         <li>And the <b>Dossier</b>: the cross-tool piece your regulator reads, sealed, verified without us</li>
         <li>The <b>licensed component</b>, kept unpublished</li>
         <li>Updates included for each paid term</li>
-        <li><b>Recertify</b> on fresh records, re-sealed, on the rhythm you declare</li>
+        <li><b>Recertify</b> on fresh records, re-sealed, on the validity period you declare</li>
         <li>One legal entity signs; affiliates named, instead of assumed</li>
       </ul>
       <a class="cta" href="CONTACT.html">Talk terms <span class="fl" aria-hidden="true">&#8594;</span></a>
