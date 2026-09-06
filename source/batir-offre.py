@@ -185,11 +185,11 @@ JS = r'''<script>
     document.querySelectorAll('.pap').forEach(p => { const d = parseFloat(p.style.getPropertyValue('--d')); p.classList.toggle('vu', u >= d - 0.5); });
     const pl = document.querySelector('.anneau .plein'); if (pl) pl.style.strokeDashoffset = 100.5 * (1 - Math.min(30, j) / 30);
     let s;
-    if (j <= 30) s = '<b>Day ' + j + ' of the thirty.</b> The counter runs at your desk and results stay internal. Nothing has reached us and nothing is owed.';
-    else if (j < 45) s = '<b>Day ' + j + '.</b> The thirty days have run. Nothing is owed until a paper is signed; your legal team can read the papers now.';
+    if (j <= 30) s = '<b>Day ' + j + ' of the thirty.</b> The counter runs at your desk and results stay internal. No data has reached us, and nothing is owed.';
+    else if (j < 45) s = '<b>Day ' + j + '.</b> The thirty days have run. Nothing is owed until you sign; your legal team can read the papers now.';
     else if (j < 105) s = '<b>Day ' + j + '.</b> Signed ' + (j - 45 === 0 ? 'today' : (j - 45) + ' days ago') + '. Campaign: the invoice (' + fmt(CAMP) + ', fixed) is settled and the sealed report is at your desk. Licence: 30% paid (' + fmt(LIC * PART) + '); the balance (' + fmt(LIC * (1 - PART)) + ') falls due in ' + (105 - j) + ' days.';
     else if (j < 365) s = '<b>Day ' + j + '.</b> The balance is settled. The licence year runs on all five instruments, updates included, with recertification on fresh records over the period you declare.';
-    else s = '<b>Month 12.</b> Renewal, at most the lower of CPI-U and 5% above this year.';
+    else s = '<b>The twelfth month.</b> Renewal capped at the lower of CPI-U and 5% above this year.';
     etat.innerHTML = s; };
   const depuis = e => { const b = axe.getBoundingClientRect(); return (e.clientX - b.left) / b.width * ECHELLE; };
   axe.addEventListener('pointerdown', e => { actif = true; axe.setPointerCapture(e.pointerId); poser(depuis(e)); });
@@ -314,7 +314,7 @@ PAGE = f'''<!doctype html><html lang="en">
       </div>
       <div class="graduations">
         <span style="--d:0"><i></i>Day 0<br>first use</span><span style="--d:30"><i></i>Day 30</span><span style="--d:45"><i></i>Signature</span>
-        <span style="--d:105"><i></i>+ 60 days</span><span class="coupure" style="--d:130"><i></i></span><span style="--d:150"><i></i>Month 12</span>
+        <span style="--d:105"><i></i>+ 60 days</span><span class="coupure" style="--d:130"><i></i></span><span style="--d:150"><i></i>Twelfth month</span>
       </div>
       <div class="regle"><i></i></div>
       <div class="curseur" id="curseur" role="slider" aria-valuemin="0" aria-valuemax="365" aria-valuenow="12" tabindex="0" aria-label="Day"><span id="jour">Day 12</span></div>
