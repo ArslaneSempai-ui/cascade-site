@@ -304,10 +304,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Dossier: the live instrument">
-<meta property="og:description" content="The four questions of the chain against the contract's five controls, states and verdicts live from the sealed public dossier, and what the next control still needs.">
+<meta property="og:description" content="The four questions of the chain against the contract's five controls, states and verdicts live from the public dossier, and what the next control still needs.">
 <meta property="og:url" content="https://cascade-routing.com/dossier/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="The four questions of the chain against the contract's five controls, states and verdicts live from the sealed public dossier, and what the next control still needs.">
+<meta name="description" content="The four questions of the chain against the contract's five controls, states and verdicts live from the public dossier, and what the next control still needs.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23070709'/%3E%3Cpath d='M16 0v16H0z' fill='%231c1c22'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
@@ -328,10 +328,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">The whole chain in one table, live.</h1>
-    <p class="lede">Each line on this page comes from the <b>sealed public dossier</b> of
+    <p class="lede">Each line on this page comes from the <b>public dossier</b> of
       cascade-dossier: the suite&#8217;s own public records, read and judged by its five controls.
       No client data exists here, none enters and none leaves,
-      and each figure is recomputed from the sealed record as the page loads.</p>
+      and each figure is recomputed from the public record as the page loads.</p>
   </div>
 </section>
 
@@ -345,7 +345,7 @@ PAGE = f'''<!doctype html><html lang="en">
         <div class="tm-barre"><i></i><i></i><i></i><span>cascade dossier &#183; the public dossier, live</span></div>
         <div class="tm-corps">
           <p class="tm-l"><span class="ps">$</span> cascade dossier --live<span class="caret" aria-hidden="true"></span></p>
-          <p class="tm-sortie">coverage <b>{CV["n"]} / {CV["sur"]}</b> questions with a sealed public record &#183;
+          <p class="tm-sortie">coverage <b>{CV["n"]} / {CV["sur"]}</b> questions with a public record &#183;
             declared rhythm <b>{RG["rythmeJours"]} days</b> &#183; as of <b>{RG["auJour"]}</b></p>
           {CARTE_ONYX_HTML}
           {table_html()}
@@ -373,7 +373,7 @@ PAGE = f'''<!doctype html><html lang="en">
     <div class="plis">
       <details class="pli"><summary>What this rests on</summary>
     <ul>
-      <li><b>The sealed public dossier.</b> releve-public.json in the repository, fingerprint
+      <li><b>The public dossier.</b> releve-public.json in the repository, content hash
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
         on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
         then recomposes each question&#8217;s state from its own verdicts with the contract&#8217;s
@@ -403,7 +403,7 @@ PAGE = f'''<!doctype html><html lang="en">
     <aside class="clone-col">
     <h2>Assemble the dossier of your own reports</h2>
     <p>The instrument shows our dossier, over our public records. Yours is assembled at home,
-      by the tool, from the sealed reports the suite&#8217;s tools left at your desk, and nothing
+      by the tool, from the signed reports the suite&#8217;s tools left at your desk, and nothing
       about them leaves your machine.</p>
     <span class="clone-t">The three commands, exactly as they run</span>
     <div class="clone" role="group" aria-label="The three commands that assemble the dossier of your own reports">

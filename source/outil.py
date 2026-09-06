@@ -120,7 +120,7 @@ OUTILS = {
         # palette et que le pan vert doit y rester vert
         "page_hero": "HERO.html",
         "etiquette": "Routing &#183; identity-field extraction",
-        "pitch": "Seven model tiers per field, from a regular expression to a human, measured on sealed records.",
+        "pitch": "Seven model tiers per field, from a regular expression to a human, measured on public records.",
         "robot_rideau": "robot-salut.webp",           # il salue (etats/robots-rideau.py)
         "vif": "#57b184",
         "nuit": ("#1b3229", "#14251e", "#0e1a15"),
@@ -146,7 +146,7 @@ OUTILS = {
         # chiffres de la frontière lus dans le relevé (etats/affiche-composer.py)
         "affiche": "affiche-screening.jpg",
         "affiche_alt": "The ruby Cascade robot, palms up, projecting the two rates of the "
-                       "frontier cell: recall on the left, false alerts on the right.",
+                       "best-trade-off cell: recall on the left, false alerts on the right.",
         "vif": "#d64a5c",
         "nuit": ("#33191f", "#241217", "#180b0f"),      # la nuit rubis de NUIT_RUBIS
     },

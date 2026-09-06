@@ -65,7 +65,7 @@ def table_html():
         f"<td colspan='{len(MONTRES)}'>not in tonight's registry: measured when it ships, absent rather than faked</td></tr>"
         for a in D["absents"])
     return f'''<div class="t-scroll"><table class="grille">
-      <caption class="sr">Pick a cell: each shows recall on confirmed escalations over false alerts on maintained look-alikes, at that factor and threshold</caption>
+      <caption class="sr">Pick a cell: each shows recall on confirmed escalations over false alerts on maintained cases, at that factor and threshold</caption>
       <thead><tr><th scope="col">factor \\ threshold</th>{tetes}</tr></thead>
       <tbody>{lignes}{absents}</tbody></table></div>'''
 
@@ -242,7 +242,7 @@ JS = '''
       c.querySelector(".c-fp").textContent = pc(cel.fauxPositifs.taux);
     }
     $("#g-quoi").innerHTML = moitie === "authored"
-      ? "authored files: <b>" + D.authored.nEscalated + " escalated</b>, <b>" + D.authored.nMaintained + " maintained look-alikes</b>"
+      ? "authored files: <b>" + D.authored.nEscalated + " escalated</b>, <b>" + D.authored.nMaintained + " maintained cases</b>"
       : "synthetic variants, declared and kept apart: <b>" + D.synthetic.nEscalated + " escalated</b>, <b>" + D.synthetic.nMaintained + " maintained</b>";
   }
   function lire(c) {
@@ -340,10 +340,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Scoring: the live instrument">
-<meta property="og:description" content="Each risk factor at each threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
+<meta property="og:description" content="Each risk factor at each threshold on the public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
 <meta property="og:url" content="https://cascade-routing.com/scoring/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Each risk factor at each threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
+<meta name="description" content="Each risk factor at each threshold on the public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23100b1f'/%3E%3Cpath d='M16 0v16H0z' fill='%234b2a7a'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
@@ -364,10 +364,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">Each risk factor at each threshold, live.</h1>
-    <p class="lede">Each figure on this page comes from the <b>sealed public record</b> of
-      cascade-scoring: customer files the repository wrote itself, benign look-alikes included,
+    <p class="lede">Each figure on this page comes from the <b>public record</b> of
+      cascade-scoring: customer files the repository wrote itself, benign cases included,
       measured by its own risk factors. No client data exists here, none enters and none leaves,
-      and each figure is recomputed from the sealed record as the page loads.</p>
+      and each figure is recomputed from the public record as the page loads.</p>
   </div>
 </section>
 
@@ -417,14 +417,14 @@ PAGE = f'''<!doctype html><html lang="en">
     <div class="plis">
       <details class="pli"><summary>What this rests on</summary>
     <ul>
-      <li><b>The sealed public record.</b> releve-public.json in the repository, fingerprint
+      <li><b>The public record.</b> releve-public.json in the repository, content hash
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
         on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
         then recomposes witness cells with the tool&#8217;s own interval code, and does not emit
         if a single figure disagrees.</li>
       <li><b>Files the repository wrote.</b> The labelled half is authored: archetypes of risk
         (shell layers, a PEP relative, cash-intensive trade, an offshore structure, undeclared
-        turnover) and benign look-alikes (a local shop, a salaried resident, a domestic SME,
+        turnover) and benign cases (a local shop, a salaried resident, a domestic SME,
         a retiree) that resemble them. The labels ship with the files, debatable ones with
         their reasons.</li>
       <li><b>Synthetic variants, kept apart.</b> Generated from the written cases, nature by
@@ -457,7 +457,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <div><span class="ps">$</span> git clone {DEPOT_URL}.git</div>
       <div><span class="ps">$</span> npm ci --ignore-scripts</div>
       <div><span class="ps">$</span> npm run measure:yours -- --customers=your-customers.csv --reviews=your-reviews.csv</div>
-      <div class="note">the report and the sealed record are written next to your files, and nowhere else &#183; a record measured under your tables carries them: share it as you would your risk policy</div>
+      <div class="note">the report and the public record are written next to your files, and nowhere else &#183; a record measured under your tables carries them: share it as you would your risk policy</div>
     </div>
     </aside>
   </div>

@@ -8,14 +8,14 @@
       "h2": "The keyboard is a first-class door",
       "html": [
         "<p>Each finding on the main screen is a plain address: a link to an anchor. The whole instrument navigates by keyboard alone: <b>Tab reaches each control, Enter opens it</b>, and the browser's back button retraces your trail, because each state you visit is a real place in the address bar.</p>",
-        "<p>The one small script on that screen only synchronises the animation clock and the tab title. <b>Switch JavaScript off and each state still opens</b>: the navigation is the address, instead of a handler.</p>",
+        "<p>The one small script on that screen only synchronises the animation clock and the tab title. <b>Switch JavaScript off and each state still opens</b>: the navigation is the address, with no handler.</p>",
         "<p><i>Try it now: press Tab until the findings rail takes focus, then Enter. Then press Back.</i></p>"
       ]
     },
     {
       "h2": "Contrast, measured",
       "html": [
-        "<p>Computed from this site's own palette, instead of asserted: body ink on this paper measures <b>11.1:1</b>. The weakest text pairing anywhere on the site measures <b>5.6:1</b>. The accessibility floor for body text is 4.5:1; each pairing here clears it with room to spare.</p>",
+        "<p>Computed from this site's own palette, not asserted: body ink on this paper measures <b>11.1:1</b>. The weakest text pairing anywhere on the site measures <b>5.6:1</b>. The accessibility floor for body text is 4.5:1; each pairing here clears it with room to spare.</p>",
         "<p>And colour never carries a meaning alone: wherever the green marks something (a shackle, a plateau, a signature), <b>a word or a shape carries the same meaning beside it</b>.</p>"
       ]
     },

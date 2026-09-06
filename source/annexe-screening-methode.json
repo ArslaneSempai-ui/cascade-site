@@ -8,11 +8,11 @@
       "h2": "Written pairs, declared nature by nature",
       "html": [
         "<p>The measured half rests on pairs <b>we wrote and we declare</b>: match pairs a screening system should catch (transliterations, token order, initials, typos, diacritics, particles, phonetic spellings) and non-match pairs it should ignore, including the hard kind: siblings, shared given names, near strings. The record carries the count of each nature, so you can see exactly what the set does and does not contain.</p>",
-        "<p>Authored pairs are a limit, and the page that shows their figures states this on each fiche: they prove what a tier does <b>on declared deformations</b>, instead of on your alert history. The command that replaces them with your history is one line, and it never sends a byte.</p>"
+        "<p>Authored pairs are a limit, and the page that shows their figures states this on each fiche: they prove what a tier does <b>on declared deformations</b> and not on your alert history. The command that replaces them with your history is one line, and it never sends a byte.</p>"
       ],
       "verif": {
         "t": "Verify the record",
-        "p": "The public record is sealed. Recompute the fingerprint with the repository's own tool; it answers in one line.",
+        "p": "The public record is sealed. Recompute the content hash with the repository's own tool; it answers in one line.",
         "cmd": [
           {
             "c": "npm run sceller -- releve-public.json",
@@ -26,7 +26,7 @@
       "h2": "The synthetic half, apart by construction",
       "html": [
         "<p>Fabricated variants (typos in four kinds, reversed order, initials, stripped diacritics, doubled letters, transliterations and their alternatives) are labelled <b>synthetic</b>, nature by nature, and measured in their own tables. They never enter a measured rate: on some cells the fabricated set reads far friendlier than the written pairs, and a blend would flatter the tool exactly there.</p>",
-        "<p>The separation is not discipline, it is construction: the record holds two blocks with two provenances, and the code that could merge them does not exist. The synthetic generator itself lives behind a declared boundary, so the measure runs and says <b>absent</b> when it is not there, instead of inventing an empty half.</p>"
+        "<p>The separation is built into the record, which holds two blocks with two provenances, and the code that could merge them does not exist. The synthetic generator itself lives behind a declared boundary, so the measure runs and says <b>absent</b> when it is not there and does not invent an empty half.</p>"
       ],
       "verif": {
         "t": "Verify the separation",
@@ -45,11 +45,11 @@
       "h2": "Wilson everywhere, and refusals where n is small",
       "html": [
         "<p>Each rate on the screening pages travels with its Wilson interval at 95 percent and its n. Below <b>twenty observations</b> a rate is not quoted as a number: the interval spans too much of the scale to separate anything, and a figure that looks like a measurement would be the worst way to say so.</p>",
-        "<p>The same refusal guards recall on your own history: with <b>fewer than five confirmed matches</b> in your export, the tool says recall cannot be bounded and shows the synthetic tables apart, instead of printing a recall that rests on almost nothing.</p>"
+        "<p>The same refusal guards recall on your own history: with <b>fewer than five confirmed matches</b> in your export, the tool says recall cannot be bounded and shows the synthetic tables apart and does not print a recall that rests on almost nothing.</p>"
       ],
       "verif": {
         "t": "Verify the refusals",
-        "p": "Both thresholds live in code, instead of in prose, and the suite exercises them.",
+        "p": "Both thresholds live in code and not in prose, and the suite exercises them.",
         "cmd": [
           {
             "c": "npm test",
@@ -63,7 +63,7 @@
       "h2": "One threshold grid, inclusive, shared by each tier",
       "html": [
         "<p>Each tier returns a score in [0, 1], deterministic, with no network and no state. The sweep traverses one shared grid from 0.50 to 1.00 in steps of 0.01, and a pair counts as an alert when its score is <b>at or above</b> the threshold: inclusive, so the strictest cell of the grid still means something for a tier that answers exactly 1.</p>",
-        "<p>The grid is computed once and rounded to the cent, so two lots that rebuild it get the same numbers; a score outside [0, 1] is refused with the tier's name instead of clamped into a rate.</p>"
+        "<p>The grid is computed once and rounded to the cent, so two lots that rebuild it get the same numbers; a score outside [0, 1] is refused with the tier's name and not clamped into a rate.</p>"
       ],
       "verif": {
         "t": "Verify the grid",

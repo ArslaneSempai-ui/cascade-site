@@ -226,7 +226,7 @@ PAGE = f'''<!doctype html><html lang="en">
         and the tool it lives in: <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b> or <b>Scoring</b>.</p></div>
     <div class="p-un"><span class="p-no">02</span><span class="p-t">Evaluate</span>
       <p class="p-d">Thirty days on your records, at your desk. Nothing to install on our side,
-        because there is no our side.</p></div>
+        because we run no service on our side.</p></div>
     <div class="p-un"><span class="p-no">03</span><span class="p-t">Sign</span>
       <p class="p-d">An engagement letter for the campaign, or the commercial licence for the year.
         The paper names what it does not certify.</p></div>

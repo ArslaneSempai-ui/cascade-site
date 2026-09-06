@@ -40,7 +40,8 @@
           0.92,
           "hard negatives: false alerts 0%"
         ]
-      ]
+      ],
+      "rail": "Exact matching: 21.7% recall, no false alert"
     },
     {
       "num": "02",
@@ -80,7 +81,8 @@
           0.88,
           "hard negatives: false alerts 85%"
         ]
-      ]
+      ],
+      "rail": "Jaro-winkler 0.50: 100% recall, 85% false alerts"
     },
     {
       "num": "03",
@@ -120,7 +122,8 @@
           0.13,
           "that cell: false alerts 76.7%"
         ]
-      ]
+      ],
+      "rail": "Best trade-off: 98.3% recall, 76.7% false alerts"
     },
     {
       "num": "04",
@@ -160,7 +163,8 @@
           0.2,
           "generated hard negatives: 17.2%"
         ]
-      ]
+      ],
+      "rail": "Generated vs written, measured apart"
     },
     {
       "num": "05",
@@ -196,7 +200,8 @@
           0.96,
           "720 pairs generated"
         ]
-      ]
+      ],
+      "rail": "Your own alert history"
     }
   ]
 }

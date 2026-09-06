@@ -334,10 +334,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Screening: the live instrument">
-<meta property="og:description" content="Each matcher at each threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
+<meta property="og:description" content="Each matcher at each threshold on the public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
 <meta property="og:url" content="https://cascade-routing.com/screening/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Each matcher at each threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
+<meta name="description" content="Each matcher at each threshold on the public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23180b0f'/%3E%3Cpath d='M16 0v16H0z' fill='%237a1f2e'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
@@ -358,10 +358,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">Each matcher at each threshold, live.</h1>
-    <p class="lede">Each figure on this page comes from the <b>sealed public record</b> of
+    <p class="lede">Each figure on this page comes from the <b>public record</b> of
       cascade-screening: pairs the repository wrote itself, hard negatives included, measured
       by its own matchers. No client data exists here, none enters and none leaves,
-      and each figure is recomputed from the sealed record as the page loads.</p>
+      and each figure is recomputed from the public record as the page loads.</p>
   </div>
 </section>
 
@@ -411,7 +411,7 @@ PAGE = f'''<!doctype html><html lang="en">
     <div class="plis">
       <details class="pli"><summary>What this rests on</summary>
     <ul>
-      <li><b>The sealed public record.</b> releve-public.json in the repository, fingerprint
+      <li><b>The public record.</b> releve-public.json in the repository, content hash
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
         on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
         then recomposes witness cells with the tool&#8217;s own interval code, and does not emit
@@ -446,7 +446,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <div><span class="ps">$</span> git clone {DEPOT_URL}.git</div>
       <div><span class="ps">$</span> npm ci --ignore-scripts</div>
       <div><span class="ps">$</span> npm run measure:yours -- --alerts=your-alerts.csv</div>
-      <div class="note">the report and the sealed record are written next to your file, and nowhere else</div>
+      <div class="note">the report and the public record are written next to your file, and nowhere else</div>
     </div>
     </aside>
   </div>

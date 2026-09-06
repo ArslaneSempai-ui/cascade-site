@@ -6,10 +6,10 @@
       "titre_onglet": "Cascade &#183; contact",
       "fno": "Contact",
       "titre": "How to reach us about a figure.",
-      "lede": "The right first message names a figure, not a feeling: each number on this site carries a declared source, so a dispute can start precisely. And it attaches no file: this tool exists so your documents stay with you, and that starts here.",
+      "lede": "The right first message names a figure with its source: each number on this site carries a declared source, so a dispute can start precisely. And it attaches no file: this tool exists so your documents stay with you, and that starts here.",
       "sections": [
         {
-          "h2": "Two channels, one of them public",
+          "h2": "Two ways to reach us, email and a public issue",
           "html": [
             "<p>Write to <a href=\"mailto:contact@cascade-routing.com\"><b>contact@cascade-routing.com</b></a>: the direct channel. For anything worth deciding in the open (a disputed figure, a wrong line, a question others will have), open an issue at <a href=\"https://github.com/ArslaneSempai-ui/cascade-routing/issues\"><b>github.com/ArslaneSempai-ui/cascade-routing</b></a>. An issue is public, so keep confidential material out of it: no client names, no records, no internal figures. Either way, attach no file: a channel for records is opened in the engagement letter, before signature, like every other term.</p>"
           ]
@@ -23,7 +23,7 @@
         {
           "h2": "What to keep out",
           "html": [
-            "<p><b>Your records. Not even a sample.</b> The tool exists so your documents never leave your machine; a sample attached to a public issue is published, and no apology deletes a clone. If your question needs your data, the answer is a command that runs where the data lives, and we will point you to it.</p>"
+            "<p><b>We receive none of your records, not even a sample.</b> The tool exists so your documents never leave your machine; a sample attached to a public issue is published, and a clone, once made, cannot be recalled. If your question needs your data, the answer is a command that runs where the data lives, and we will point you to it.</p>"
           ]
         },
         {
@@ -70,13 +70,13 @@
         {
           "h2": "What this site does to visitors: nothing",
           "html": [
-            "<p><b>No cookies, no analytics, no tracking, no forms.</b> The scripts on this site do two things only: the main screen synchronises its animation clock and tab title, and the appendix pages open their sections when you print. Switch them off and everything still works. Each figure displayed carries a declared source; the full declaration file is public, beside this page: <a href=\"releve.json\"><b>releve.json</b></a>, and the seal in the masthead is the content fingerprint of the sealed record the figures come from.</p>"
+            "<p><b>No cookies, no analytics, no tracking, no forms.</b> The scripts on this site do two things only: the main screen synchronises its animation clock and tab title, and the appendix pages open their sections when you print. Switch them off and everything still works. Each figure displayed carries a declared source; the full declaration file is public, beside this page: <a href=\"releve.json\"><b>releve.json</b></a>, and the seal in the masthead is the content content hash of the public record the figures come from.</p>"
           ]
         },
         {
           "h2": "When we are wrong",
           "html": [
-            "<p>The tool publishes its own errors: a retraction file lists each published conclusion that turned out to be wrong, held open by a test. This site inherits the rule: a corrected figure is corrected in daylight, not swapped quietly.</p>"
+            "<p>The tool publishes its own errors: a retraction file lists each published conclusion that turned out to be wrong, held open by a test. This site inherits the rule: a corrected figure is corrected in the open, with the change recorded.</p>"
           ]
         }
       ]

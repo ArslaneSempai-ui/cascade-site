@@ -39,7 +39,8 @@
           0.25,
           "consistent control: 4 of 4"
         ]
-      ]
+      ],
+      "rail": "Four reports, one audit file"
     },
     {
       "num": "02",
@@ -78,7 +79,8 @@
           0.22,
           "five controls per report"
         ]
-      ]
+      ],
+      "rail": "Each content hash recomputed"
     },
     {
       "num": "03",
@@ -118,7 +120,8 @@
           0.22,
           "signature refusals: 0"
         ]
-      ]
+      ],
+      "rail": "Every record now signed"
     },
     {
       "num": "04",
@@ -156,7 +159,8 @@
           0.25,
           "oldest measurement: 16 days"
         ]
-      ]
+      ],
+      "rail": "All four within validity"
     },
     {
       "num": "05",
@@ -192,7 +196,8 @@
           0.25,
           "validity period: 90 days"
         ]
-      ]
+      ],
+      "rail": "Verified by your reviewer"
     }
   ]
 }

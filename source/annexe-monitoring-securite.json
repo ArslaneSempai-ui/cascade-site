@@ -10,7 +10,7 @@
         "<p>Routing downloads model weights once; Screening downloads public sanctions lists. Monitoring downloads <b>no file</b>: its public record is built from written cases and seeded variants, so the allowlist of modules that may touch the network is empty, with the comment saying exactly that. A structural test traverses each source file for network sites (fetch, node:http and kin, WebSockets) and <b>fails the suite if any module grows one</b>; the detector first proves it can see a planted call, so its zero means looked and found none.</p>"
       ],
       "verif": {
-        "t": "Verify the frontier",
+        "t": "Verify the best trade-off",
         "p": "Run the suite. The walk fails if any file gains a network site.",
         "cmd": [
           {
@@ -25,7 +25,7 @@
     {
       "h2": "No real transaction, no real person, anywhere public",
       "html": [
-        "<p>Each account, amount and date in the public record was <b>written for the archetype it illustrates</b> or generated from those cases under a seed. There is no anonymised customer data, because anonymised is a promise and absent is a fact. The file that holds the cases states this in its own header, and each case carries the one-sentence reason it was written.</p>"
+        "<p>Each account, amount and date in the public record was <b>written for the typology it illustrates</b> or generated from those cases under a seed. There is no anonymised customer data, because the customer data is simply absent. The file that holds the cases states this in its own header, and each case carries the one-sentence reason it was written.</p>"
       ],
       "verif": {
         "t": "Verify the provenance",
@@ -51,7 +51,7 @@
         "cmd": [
           {
             "c": "grep -r \"the amount you invented\" your-alerts-measured.md your-alerts-measured.json",
-            "n": "finds nothing; the outputs carry verdicts, instead of values"
+            "n": "finds nothing; the outputs carry verdicts and no values"
           }
         ],
         "refs": "src/your-alerts.ts:9 &#183; src/your-alerts.ts:25"
@@ -60,7 +60,7 @@
     {
       "h2": "Sealed, offline, and re-measured only out loud",
       "html": [
-        "<p>The public record is sealed by a content fingerprint; a hand-edited figure fails loudly, and re-measuring over an existing record requires an explicit flag on the command line, where an auditor can see it. The whole suite runs with the network cut, which for this tool is not a mode: it is the only behaviour it has.</p>"
+        "<p>The public record is sealed by a content content hash; a hand-edited figure fails loudly, and re-measuring over an existing record requires an explicit flag on the command line, where an auditor can see it. The whole suite runs with the network cut, which for this tool is the only behaviour it has.</p>"
       ],
       "verif": {
         "t": "Verify the seal, offline",

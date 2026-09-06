@@ -7,7 +7,7 @@
     {
       "h2": "Thirty days, in writing",
       "html": [
-        "<p>The Evaluation Grant is in the licence file, instead of in a sales deck: <b>thirty days from first use</b>, on your organisation's own data, for its own internal evaluation, with the output shareable inside your organisation. Three things it forbids, in plain words: relying on the output in production, redistributing the software, publishing the output externally. The period is extended <b>only in writing</b>, and anything beyond evaluation is a separate commercial licence.</p>"
+        "<p>The Evaluation Grant is in the licence file and not in a sales deck: <b>thirty days from first use</b>, on your organisation's own data, for its own internal evaluation, with the output shareable inside your organisation. Three things it forbids, in plain words: relying on the output in production, redistributing the software, publishing the output externally. The period is extended <b>only in writing</b>, and anything beyond evaluation is a separate commercial licence.</p>"
       ],
       "verif": {
         "t": "Read the grant",
@@ -22,16 +22,16 @@
       }
     },
     {
-      "h2": "Three tiers, one of them paid",
+      "h2": "The licence has three tiers, one paid",
       "html": [
         "<p>The public licence is <b>PolyForm Noncommercial</b>: anyone, with no time limit, may read, study, fork and use the tool noncommercially. An evaluating organisation gets the thirty days above. A client gets a negotiated commercial licence: the public licence says of itself that <b>it is not what a client buys</b>.</p>",
-        "<p>Two notes: it is not an OSI&#8209;approved licence, which some organisations exclude by policy: a brake on spontaneous adoption, instead of on a negotiated engagement; and like all such licences it ships <b>without warranty</b>, with a 32&#8209;day cure period after written notice of a violation.</p>"
+        "<p>Two notes: it is not an OSI&#8209;approved licence, which some organisations exclude by policy: a brake on spontaneous adoption and not on a negotiated engagement; and like all such licences it ships <b>without warranty</b>, with a 32&#8209;day cure period after written notice of a violation.</p>"
       ]
     },
     {
       "h2": "The commitment where we lose",
       "html": [
-        "<p>The engagement can end with the recommendation to keep what you have, and the machinery for that outcome is in the public source, instead of in our goodwill. Under <b>20 observations</b> the tool does not recommend anything. The validation dossier states that it <b>does not certify anything</b>: it assembles what a reviewer needs and the decision is the committee's. The recommendation itself prints <b>what would flip it</b>, in figures. And on the corpus we measured, 3 of the 5 fields are already carried by regexes at zero cost: the cheapest possible answer sits in the headline, instead of in the fine print.</p>"
+        "<p>The engagement can end with the recommendation to keep what you have, and the machinery for that outcome is in the public source and not in our goodwill. Under <b>20 observations</b> the tool does not recommend anything. The validation dossier states that it <b>does not certify anything</b>: it assembles what a reviewer needs and the decision is the committee's. The recommendation itself prints <b>what would flip it</b>, in figures. And on the corpus we measured, 3 of the 5 fields are already carried by regexes at zero cost: the cheapest possible answer sits in the headline and not in the fine print.</p>"
       ],
       "verif": {
         "t": "See the losing answer",
@@ -66,7 +66,7 @@
     {
       "h2": "Settled before signature",
       "html": [
-        "<p>The remaining terms of a paid engagement (payment, confidentiality, audit rights, change of control, precedence, and the rights in the produced report) are settled in the engagement letter, <b>written before signature, instead of negotiated after delivery</b>. They are business terms, so this page states their existence instead of quoting them; the letter is the document your counsel receives.</p>",
+        "<p>The remaining terms of a paid engagement (payment, confidentiality, audit rights, change of control, precedence, and the rights in the produced report) are settled in the engagement letter, <b>written before signature and not negotiated after delivery</b>. They are business terms, so this page states their existence and does not quote them; the letter is the document your counsel receives.</p>",
         "<p>One rule from the public licence already binds the evaluation period: the output of an evaluation run is <b>internal to your organisation</b>: external publication is excluded from day one.</p>"
       ]
     }

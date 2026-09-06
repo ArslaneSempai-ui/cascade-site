@@ -10,7 +10,7 @@
         "<p>Like Monitoring and the Dossier, Scoring downloads <b>nothing</b>: the allowlist of modules that may touch the network is empty, and a structural test traverses each source file for network sites and fails the suite if one appears. The detector proves it can see a planted call before its zero is believed.</p>"
       ],
       "verif": {
-        "t": "Verify the frontier",
+        "t": "Verify the best trade-off",
         "p": "Run the suite; the walk fails if any file gains a network site.",
         "cmd": [
           {
@@ -25,7 +25,7 @@
     {
       "h2": "No real person, and no official list, anywhere public",
       "html": [
-        "<p>Each dossier in the public record was <b>written for the archetype it illustrates</b> or generated from those dossiers under a seed. No anonymised customer data, because anonymised is a promise and absent is a fact. And no official risk list was copied into the data: a test requires suspects and benign twins to <b>share their countries</b>, so the record cannot smuggle a list in through its examples, and the geography factor's zero on this book is printed as a finding.</p>"
+        "<p>Each dossier in the public record was <b>written for the typology it illustrates</b> or generated from those dossiers under a seed. No anonymised customer data, because the customer data is simply absent. And no official risk list was copied into the data: a test requires suspects and retained files to <b>share their countries</b>, so the record cannot smuggle a list in through its examples, and the geography factor's zero on this book is printed as a finding.</p>"
       ],
       "verif": {
         "t": "Verify the provenance",

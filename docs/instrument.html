@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-51ptDqvcMVgSm1H+qKrX7qjYC33rSTUUXlHB5fHst1E=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-FlAuybSG1ayuM8Ia9PUHQrOgdop6hukOas1Q3EipeTI='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-51ptDqvcMVgSm1H+qKrX7qjYC33rSTUUXlHB5fHst1E=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-UKDVsAa4lJsyqc2WKJpHNVpeXFSKU5Hhx6LPP2yxx6U='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/instrument.html">
@@ -345,7 +345,7 @@
 
 <main>
 <section class="tete"><div class="colonne">
-  <h1 class="h1">Test the routing on the sealed record, live.</h1>
+  <h1 class="h1">Test the routing on the public record, live.</h1>
   <p class="lede">One tier per field. Click any cell to see what your routing costs and how often it
     gets it right. Or set your budget and let the enumeration choose, the way the tool does:
     <b>highest accuracy first, cheaper on a tie</b>.</p>
@@ -369,8 +369,8 @@
           <button class="regl actif" id="r-pub">published &#183; $191</button>
           <button class="regl" id="r-vise">file-aimed &#183; $54</button>
         </div>
-        <p class="carte-aide" data-commun="instrument">each dot is one routing of the five fields, priced and scored from the sealed bricks ; the line through the bright dots is the frontier no routing beats · <b>pull the budget line</b> (or the slider below), the best routing under it lights up · hover a frontier dot to read it, click it to compose it</p>
-          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="Each routing as cost against accuracy, the frontier, and the budget as a line"><g id="carte-nuage"></g><g id="carte-vif"></g></svg></div>
+        <p class="carte-aide" data-commun="instrument">each dot is one routing of the five fields, priced and scored from the sealed bricks ; the line through the bright dots is the best trade-off no routing beats · <b>pull the budget line</b> (or the slider below), the best routing under it lights up · hover a frontier dot to read it, click it to compose it</p>
+          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="Each routing as cost against accuracy, the best trade-off, and the budget as a line"><g id="carte-nuage"></g><g id="carte-vif"></g></svg></div>
       </div>
       <div class="t-scroll"><table class="routage">
       <caption class="sr">Pick one tier per field; each cell shows measured accuracy and the price of a thousand extractions</caption>
@@ -527,13 +527,13 @@ const DONNEES = {"fields": ["name", "birth", "document", "country", "address"], 
     }
   })();
 
-  /* THE LIVE CHART OF THE VERT : the cloud of routings, the frontier, the budget line you drag. */
+  /* THE LIVE CHART OF THE VERT : the cloud of routings, the best trade-off, the budget line you drag. */
   const carte = $("#carte"), nuageG = $("#carte-nuage"), vifG = $("#carte-vif");
   const CW = 900, CH = 400, CL = 56, CR = 30, CT = 26, CB = 34;
   const xl = (cout) => CL + Math.log10(Math.max(cout * 100, 1)) / 5 * (CW - CL - CR);   /* $ per 100k, log 1..100k */
   const yl = (just) => (CH - CB) - just / 100 * (CH - CB - CT);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-  let viseV = null;                          /* the frontier point under the pointer */
+  let viseV = null;                          /* the best trade-off point under the pointer */
   const budgetDe = () => Math.pow(10, parseFloat(curseur.value)) / 100;
   /* the cloud, drawn ONCE : each routing, thinned to one in three (the eye cannot tell) */
   (() => {

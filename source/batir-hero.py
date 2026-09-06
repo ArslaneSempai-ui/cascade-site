@@ -94,20 +94,20 @@ def table_html():
 
 # ── le contenu de la séquence : les cinq trouvailles, mot pour mot du publié ─
 SCENES = [
-    dict(num="01", titre="The gap",
-         phrase="Both numbers are true. Only one leaves your desk.",
+    dict(num="01", titre="Published routing leads by 17.7 points",
+         phrase="The published routing reads at 94.4% accuracy; a cheaper one trails it by 17.7 points.",
          a="94.4<small>%</small>", b="76.7<small>%</small>", cote="17.7 points apart"),
-    dict(num="02", titre="The cheaper routing",
-         phrase="Cost separates the two routings. Accuracy does not.",
+    dict(num="02", titre="A routing 3.5&#215; cheaper, same accuracy",
+         phrase="The file-aimed routing costs 3.5 times less than the published one, at the same accuracy.",
          a="$191", b="$54", cote="3.5&#215; cheaper"),
-    dict(num="03", titre="Silence over a guess",
-         phrase="A blank gets read again. A wrong value gets filed.",
+    dict(num="03", titre="Silence beats a wrong value",
+         phrase="Delivering every value gives 30% accuracy; staying silent instead of guessing gives 62.3%.",
          a="30<small>%</small>", b="62.3<small>%</small>", cote="after abstention"),
-    dict(num="04", titre="What we withhold",
-         phrase="Each count held across two passes. Each duration moved.",
+    dict(num="04", titre="Counts identical, durations withheld",
+         phrase="Two passes give identical counts, while the durations move 16% to 60%, so the tool withholds them.",
          a="identical", b="16&#8211;60<small>%</small>", cote="withheld"),
-    dict(num="05", titre="The engagement",
-         phrase="Each routing enumerated. One report you can argue with.",
+    dict(num="05", titre="Every routing enumerated",
+         phrase="The tool enumerates every routing of the five fields and writes one report you can dispute line by line.",
          a="16,807", b="120<small>&nbsp;files</small>", cote="the full span"),
 ]
 
@@ -1037,11 +1037,11 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade: routing audit, KYC extraction">
-<meta property="og:description" content="A routing audit for KYC extraction: measured on sealed records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
+<meta property="og:description" content="A routing audit for KYC extraction: measured on public records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
 <meta property="og:url" content="https://cascade-routing.com/routing/">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="A routing audit for KYC extraction: measured on sealed records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
+<meta name="description" content="A routing audit for KYC extraction: measured on public records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">
@@ -1069,7 +1069,7 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
     <code class="ln">node src/premiere-reponse.mjs</code>
-    <span class="note">The conclusion, from the sealed records. Before npm install, under a second.</span>
+    <span class="note">The conclusion, from the public records. Before npm install, under a second.</span>
   </div>
   <div class="cue" aria-hidden="true"><span>scroll</span><span class="fil"></span></div>
 </section>
@@ -1086,9 +1086,9 @@ PAGE = f'''<!doctype html><html lang="en">
 </section>
 
 <section class="instrument" data-commun="instrument"><div class="colonne">
-  <h2 class="h2">The live instrument, on the sealed record.</h2>
+  <h2 class="h2">The live instrument, on the public record.</h2>
   {affiche_html("paliers", LANDING, [], "INSTRUMENT.html", "Cascade &#183; Routing",
-                "Each field at each tier, accuracy and cost read live from the sealed record, and a budget line you pull the way the tool chooses.",
+                "Each field at each tier, accuracy and cost read live from the public record, and a budget line you pull the way the tool chooses.",
                 "rendus/robot-vert-regarde.webp",
                 note=f"Measured on {N_SOCLE:,} held-out records for rules, small and large, {N_GEN} for the generative tiers. "
                      f"The human tier is assumed at {qte(HUMAIN)} % until you measure it: "
@@ -1157,7 +1157,7 @@ def batir_accueil():
                        "publisher": {"@id": "https://cascade-routing.com/#org"}})
     donnees = json.dumps({"@context": "https://schema.org", "@graph": graphe}, ensure_ascii=True)
     description = ("Cascade: instruments for compliance decisions, one method. Each tier "
-                   "measured on sealed records, the frontier read with its interval, rerun on "
+                   "measured on public records, the best trade-off read with its interval, rerun on "
                    "your own machine.")
     page = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade &#183; measured instruments for compliance</title>
@@ -1190,7 +1190,7 @@ def batir_accueil():
   <span class="marque-h entree">Cascade &#183; {n} instruments, one method</span>
   <h1 class="h1 entree">Measure each model tier's accuracy and cost, on your own records.</h1>
   <p class="lede entree">Cascade routes each identity field to a model tier, from a regular expression to a
-    human, and measures the accuracy and cost of every routing on a sealed public record. The same run
+    human, and measures the accuracy and cost of every routing on a public record. The same run
     repeats on your own files, at your desk.</p>
   <div class="cue" aria-hidden="true"><span>choose</span><span class="fil"></span></div>
 </section>
@@ -1298,7 +1298,7 @@ def _table_dossier(spec, releve, findings):
                 cells += "<td class='cell'><span>&#215;</span><br><small>not held</small></td>"
         lignes += f"<tr><th scope='row'>{nom_q}</th>{cells}</tr>"
     cv, rg = releve["couverture"], releve["reglages"]
-    note = (f"{cv['n']} of the {cv['sur']} questions carry a sealed public record. In each row the "
+    note = (f"{cv['n']} of the {cv['sur']} questions carry a public record. In each row the "
             "marked cell is the state reached with no gap in the contract&#8217;s order; a row "
             "without one reaches none, and the record states this. The declared validity period is "
             f"{rg['rythmeJours']} days, as of {rg['auJour']}.")
@@ -1333,7 +1333,7 @@ SPECS = {
         instrument_page="INSTRUMENT-SCREENING.html",
         instrument_eti="Cascade &#183; Screening",
         instrument_sub="Each matcher at each threshold, recall and false alerts with their intervals, "
-                       "live from the sealed record, and the tool's own selection rule under your recall floor.",
+                       "live from the public record, and the tool's own selection rule under your recall floor.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
                         "ANNEXE-SCREENING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "The lists, the seal, and what never leaves.",
@@ -1369,7 +1369,7 @@ SPECS = {
         instrument_page="INSTRUMENT-MONITORING.html",
         instrument_eti="Cascade &#183; Monitoring",
         instrument_sub="Each scenario at each threshold, recall and false alerts with their intervals, "
-                       "live from the sealed record, and the tool's own selection rule under your recall floor.",
+                       "live from the public record, and the tool's own selection rule under your recall floor.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
                         "ANNEXE-MONITORING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "What is rebuilt, what is assumed, and what never leaves.",
@@ -1405,7 +1405,7 @@ SPECS = {
         instrument_page="INSTRUMENT-SCORING.html",
         instrument_eti="Cascade &#183; Scoring",
         instrument_sub="Each risk factor at each threshold, recall and false alerts with their intervals, "
-                       "live from the sealed record, and the tool's own selection rule under your recall floor.",
+                       "live from the public record, and the tool's own selection rule under your recall floor.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
                         "ANNEXE-SCORING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "The declared tables, the seal, and what never leaves.",
@@ -1429,20 +1429,20 @@ SPECS = {
         app_desc="One dossier over the suite&#8217;s four sealed answers: coverage, "
                  "seals, signatures, freshness and coherence, verified on your "
                  "machine.",
-        offre="Thirty-day evaluation on your own sealed reports, granted in the public licence.",
+        offre="Thirty-day evaluation on your own signed reports, granted in the public licence.",
         h1="Check the four tool reports for coverage, hashes, signatures, validity and consistency.",
         lede="Four questions, one per tool, checked against five controls, "
-             "five controls each.<br>\n    The Dossier reads the sealed reports and answers "
+             "five controls each.<br>\n    The Dossier reads the signed reports and answers "
              "as one piece, and each line\n    <b>can be verified by you</b>.",
-        aria_commande="The dossier over your own sealed reports",
+        aria_commande="The dossier over your own signed reports",
         commandes=["npm ci --ignore-scripts",
                    "npm run dossier -- --reports=a-measured.json,b-measured.json"],
-        note_commande="Your sealed reports, read on your machine.",
+        note_commande="Your signed reports, read on your machine.",
         instrument_h2="Read the whole chain in one table.",
         instrument_page="INSTRUMENT-DOSSIER.html",
         instrument_eti="Cascade &#183; Dossier",
         instrument_sub="The four questions against the five controls, states, seals and freshness "
-                       "live from the sealed public dossier, and what the next control still needs.",
+                       "live from the public dossier, and what the next control still needs.",
         annexe_methode=("Method &amp; what is verified", "What the five controls hold, and what a gap means.",
                         "ANNEXE-DOSSIER-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "What is read, what is derived, and what never leaves.",
@@ -1517,7 +1517,7 @@ def _rail_outil(o, spec, findings):
     items = "".join(
         f"""<li><button class="jalon{' actif' if i == 0 else ''}" data-i="{i}" aria-label="Go to finding {f['num']}: {f['titre']}">
         <img class="j-vig" src="{_image_etat_outil(o, spec, i + 1)[0]}" alt="">
-        <span class="j-num">{f['num']}</span><span class="j-corps"><span class="j-titre">{f['titre']}</span>
+        <span class="j-num">{f['num']}</span><span class="j-corps"><span class="j-titre">{f.get("rail", f["titre"])}</span>
         <span class="j-cote">{f['cote']}</span></span></button></li>""" for i, f in enumerate(findings))
     return f'<nav class="rail" aria-label="Findings"><span class="jauge" aria-hidden="true"><i></i></span><ul>{items}</ul></nav>'
 
@@ -1747,7 +1747,7 @@ def batir_outil_catalogue(o, spec):
   </div>
 </section>
 <section class="instrument" data-commun="instrument"><div class="colonne">
-  <h2 class="h2">The live instrument, on the sealed record.</h2>
+  <h2 class="h2">The live instrument, on the public record.</h2>
   {affiche_html("horloge" if o["id"] == "dossier" else "courbes", RELEVE, FINDINGS, spec["instrument_page"],
                 spec["instrument_eti"], spec["instrument_sub"], "../rendus/robot-" + ICONES_COULEUR[o["id"]] + "-regarde.webp",
                 note="" if o["id"] == "dossier" else _note_outil(spec, RELEVE, FINDINGS))}

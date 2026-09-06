@@ -40,7 +40,8 @@
           0.94,
           "benign cases: false alerts 16.7%"
         ]
-      ]
+      ],
+      "rail": "Amount: 95.2% recall, 16.7% false alerts"
     },
     {
       "num": "02",
@@ -80,7 +81,8 @@
           0.94,
           "benign cases: false alerts 50%"
         ]
-      ]
+      ],
+      "rail": "Velocity: 28.6% recall, 50% false alerts"
     },
     {
       "num": "03",
@@ -122,7 +124,8 @@
           0.13,
           "amount: recall lower bound 84.2%"
         ]
-      ]
+      ],
+      "rail": "No scenario reaches the 90% floor"
     },
     {
       "num": "04",
@@ -162,7 +165,8 @@
           0.07,
           "generated cases: recall 100%"
         ]
-      ]
+      ],
+      "rail": "Generated vs written, measured apart"
     },
     {
       "num": "05",
@@ -198,7 +202,8 @@
           0.82,
           "252 cases generated"
         ]
-      ]
+      ],
+      "rail": "Your own alert history"
     }
   ]
 }

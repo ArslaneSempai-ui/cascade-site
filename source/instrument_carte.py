@@ -294,7 +294,7 @@ def js_carte(mot_x, mot_y, mot_fp):
 # comme ça ») : one chart, one line you drag, what holds lights up, a side panel reads the thing
 # under the pointer.
 #   VERT : each routing of the fields over the tiers (7^5 = 16 807, the ones optimise
-#          enumerates) as a cloud of cost x accuracy, the frontier drawn, the BUDGET a vertical
+#          enumerates) as a cloud of cost x accuracy, the best trade-off drawn, the BUDGET a vertical
 #          line you drag ; the best routing under it lights up and the panel names it field by
 #          field ; hovering a frontier point reads its routing, clicking it composes it.
 #   ONYX : the questions' seals on a time axis (days since measured), the declared RHYTHM a
@@ -347,8 +347,8 @@ CSS_ONYX = '''
   .pan .verdicts b{color:var(--sur);font-weight:500}
 '''
 
-CARTE_VERT_HTML = '''<p class="carte-aide" data-commun="instrument">each dot is one routing of the five fields, priced and scored from the sealed bricks ; the line through the bright dots is the frontier no routing beats · <b>pull the budget line</b> (or the slider below), the best routing under it lights up · hover a frontier dot to read it, click it to compose it</p>
-          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="Each routing as cost against accuracy, the frontier, and the budget as a line"><g id="carte-nuage"></g><g id="carte-vif"></g></svg></div>'''
+CARTE_VERT_HTML = '''<p class="carte-aide" data-commun="instrument">each dot is one routing of the five fields, priced and scored from the sealed bricks ; the line through the bright dots is the best trade-off no routing beats · <b>pull the budget line</b> (or the slider below), the best routing under it lights up · hover a frontier dot to read it, click it to compose it</p>
+          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="Each routing as cost against accuracy, the best trade-off, and the budget as a line"><g id="carte-nuage"></g><g id="carte-vif"></g></svg></div>'''
 
 PANNEAU_VERT_HTML = '''<aside class="pan" id="pan" aria-live="polite">
         <div class="qui">the routing under the pointer</div>
@@ -358,7 +358,7 @@ PANNEAU_VERT_HTML = '''<aside class="pan" id="pan" aria-live="polite">
         <div class="plancher" id="pan-plancher"></div>
       </aside>'''
 
-CARTE_ONYX_HTML = '''<p class="carte-aide" data-commun="instrument">each dot is one question's sealed record, placed at its age in days · <b>pull the validity line</b> to ask what a shorter or longer validity period would change : a dot past it would lose its « fresh » control, and the --next lines state it · hover a dot to read its five verdicts</p>
+CARTE_ONYX_HTML = '''<p class="carte-aide" data-commun="instrument">each dot is one question's public record, placed at its age in days · <b>pull the validity line</b> to ask what a shorter or longer validity period would change : a dot past it would lose its « fresh » control, and the --next lines state it · hover a dot to read its five verdicts</p>
           <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 300" role="img" aria-label="The questions' seals on a time axis, with the declared rhythm as a line"></svg></div>'''
 
 PANNEAU_ONYX_HTML = '''<aside class="pan" id="pan" aria-live="polite">
@@ -370,13 +370,13 @@ PANNEAU_ONYX_HTML = '''<aside class="pan" id="pan" aria-live="polite">
 
 
 JS_VERT = '''
-  /* THE LIVE CHART OF THE VERT : the cloud of routings, the frontier, the budget line you drag. */
+  /* THE LIVE CHART OF THE VERT : the cloud of routings, the best trade-off, the budget line you drag. */
   const carte = $("#carte"), nuageG = $("#carte-nuage"), vifG = $("#carte-vif");
   const CW = 900, CH = 400, CL = 56, CR = 30, CT = 26, CB = 34;
   const xl = (cout) => CL + Math.log10(Math.max(cout * 100, 1)) / 5 * (CW - CL - CR);   /* $ per 100k, log 1..100k */
   const yl = (just) => (CH - CB) - just / 100 * (CH - CB - CT);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-  let viseV = null;                          /* the frontier point under the pointer */
+  let viseV = null;                          /* the best trade-off point under the pointer */
   const budgetDe = () => Math.pow(10, parseFloat(curseur.value)) / 100;
   /* the cloud, drawn ONCE : each routing, thinned to one in three (the eye cannot tell) */
   (() => {

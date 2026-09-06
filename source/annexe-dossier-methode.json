@@ -7,7 +7,7 @@
     {
       "h2": "Five controls, run in order, refusals named",
       "html": [
-        "<p>Each report the Dossier reads passes the same five controls: <b>present</b> (a readable report from a named tool), <b>sealed</b> (the fingerprint it carries is the fingerprint of its content), <b>signed</b> (the public record it cites carries the tool's signature), <b>fresh</b> (measured within the declared rhythm; due under two rhythms, stale beyond), <b>consistent</b> (one dataset, one seal; an unknown tool version is named, instead of guessed). The registry derives the list from code: an absent control is computed, never recited.</p>",
+        "<p>Each report the Dossier reads passes the same five controls: <b>present</b> (a readable report from a named tool), <b>sealed</b> (the content hash it carries is the content hash of its content), <b>signed</b> (the public record it cites carries the tool's signature), <b>fresh</b> (measured within the declared rhythm; due under two rhythms, stale beyond), <b>consistent</b> (one dataset, one seal; an unknown tool version is named and not guessed). The registry derives the list from code: an absent control is computed, never recited.</p>",
         "<p>Each verdict carries its reason in words. A report that cannot state its measurement day is not called stale: it is named as unjudgeable, which is a different and worse fact, and the Dossier says it.</p>"
       ],
       "verif": {
@@ -25,11 +25,11 @@
     {
       "h2": "Its own public measure: the suite, judged by the Dossier",
       "html": [
-        "<p>The Dossier's public record is the suite judging itself: it runs on the public records of the other tools and prints coverage, seals, signatures and freshness as it finds them on the day of the measure. On day one that meant three questions of four covered with the fourth named missing, two seals recomputed, and <b>zero verifiable signatures, printed instead of waved through</b>. A Dossier that flattered its own suite would be worthless to a reviewer.</p>"
+        "<p>The Dossier's public record is the suite judging itself: it runs on the public records of the other tools and prints coverage, seals, signatures and freshness as it finds them on the day of the measure. On day one that meant three questions of four covered with the fourth named missing, two seals recomputed, and <b>zero verifiable signatures, printed and not waved through</b>. A Dossier that flattered its own suite would be worthless to a reviewer.</p>"
       ],
       "verif": {
         "t": "Verify the record",
-        "p": "The public record is sealed; recompute the fingerprint with the repository's own tool.",
+        "p": "The public record is sealed; recompute the content hash with the repository's own tool.",
         "cmd": [
           {
             "c": "npm run sceller -- releve-public.json",
