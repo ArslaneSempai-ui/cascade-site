@@ -1190,7 +1190,7 @@ def batir_accueil():
   <span class="marque-h entree">Cascade &#183; {n} instruments, one method</span>
   <h1 class="h1 entree">Measure each model tier's accuracy and cost, on your own records.</h1>
   <p class="lede entree">Cascade routes each identity field to a model tier, from a regular expression to a
-    human, and measures the accuracy and cost of every routing on a sealed public record (hashed, then frozen: its content hash is checked before a figure is shown). The same run
+    human, and measures the accuracy and cost of every routing on a sealed public record. The same run
     repeats on your own files, at your desk.</p>
   <div class="cue" aria-hidden="true"><span>choose</span><span class="fil"></span></div>
 </section>

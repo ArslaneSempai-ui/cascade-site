@@ -271,8 +271,22 @@ def renommer_liens(t, page_sous_dossier):
     return t
 
 
+# « sealed » nomme l'opération (hashed, then frozen) ; content hash le nombre, signature
+# la signature (VOIX, tranché le 10/09). À sa PREMIÈRE apparition sur chaque page, une
+# incise le définit une fois ; ensuite le mot nu.
+_SCELLE_DEF = " (hashed, then frozen: its content hash is checked before a figure is shown)"
+def definir_sealed(t):
+    for terme in ("sealed public records", "sealed public record", "sealed public dossiers", "sealed public dossier", "sealed records", "sealed record"):
+        i = t.find(terme)
+        if i != -1:
+            j = i + len(terme)
+            return t[:j] + _SCELLE_DEF + t[j:]
+    return t
+
+
 for vieux, neuf in {**PROD, **SOUS_DOSSIER_EMISES}.items():
     t = (MAQ / vieux).read_text()
+    t = definir_sealed(t)
     t = renommer_liens(t, neuf.split("/", 1)[0] + "/" if "/" in neuf else None)
     (DOCS / neuf).parent.mkdir(parents=True, exist_ok=True)
     if neuf == "404.html":
