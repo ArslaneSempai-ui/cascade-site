@@ -28,6 +28,9 @@ import sys
 
 BASE = pathlib.Path(__file__).parent
 
+sys.path.insert(0, str(BASE))
+from instrument_carte import CSS_NOIR, carte_html, PANNEAU_HTML, js_carte  # noqa: E402  (the live chart, shared)
+
 r = subprocess.run(["node", str(BASE / "extraire-instrument-scoring.mjs")],
                    capture_output=True, text=True)
 if r.returncode != 0:
@@ -248,6 +251,7 @@ JS = '''
     $("#g-lecture").innerHTML = "<b>" + c.dataset.p + "</b> at threshold <b>" + c.dataset.s + "</b>: "
       + "recall on confirmed escalations <b>" + pc1(cel.rappel.taux) + "</b> " + iv(cel.rappel) + ", n=" + cel.rappel.n
       + " \\u00b7 false alerts <b>" + pc1(cel.fauxPositifs.taux) + "</b> " + iv(cel.fauxPositifs) + ", n=" + cel.fauxPositifs.n;
+    vise = null; dessiner(); peindrePanneau();
   }
   cells.forEach((c) => c.addEventListener("click", () => lire(c)));
   $("#m-auth").addEventListener("click", () => { moitie = "authored"; basculer(); });
@@ -258,6 +262,7 @@ JS = '''
     peindreGrille();
     const presse = cells.find((x) => x.getAttribute("aria-pressed") === "true");
     if (presse) lire(presse);
+    dessiner(); peindrePanneau();
   }
 
   /* LA MEME REGLE QUE L'OUTIL, reappliquee ici : borne basse du rappel au plancher,
@@ -279,19 +284,20 @@ JS = '''
   }
   const curseur = $("#b-curseur");
   function rejouer() {
-    const plancher = parseFloat(curseur.value);
+    plancher = parseFloat(curseur.value);      /* the slider and the floor line are ONE value */
     $("#b-val").textContent = plancher.toFixed(2);
     const c = retenir(plancher);
     const sortie = $("#b-lecture");
     if (!c) {
       sortie.innerHTML = "no cell holds a recall LOWER BOUND of <b>" + plancher.toFixed(2)
         + "</b> on the public record \\u00b7 the tool would say the same, and name the strongest bound available";
-      return;
+    } else {
+      sortie.innerHTML = "under a recall floor of <b>" + plancher.toFixed(2) + "</b> (lower bound, the tool's rule): "
+        + "<b>" + c.palier + "</b> at threshold <b>" + c.seuil.toFixed(2) + "</b>"
+        + '<span class="b-rout">recall ' + pc1(c.rappel.taux) + " " + iv(c.rappel) + ", n=" + c.rappel.n
+        + " \\u00b7 false alerts " + pc1(c.fauxPositifs.taux) + " " + iv(c.fauxPositifs) + ", n=" + c.fauxPositifs.n + "</span>";
     }
-    sortie.innerHTML = "under a recall floor of <b>" + plancher.toFixed(2) + "</b> (lower bound, the tool's rule): "
-      + "<b>" + c.palier + "</b> at threshold <b>" + c.seuil.toFixed(2) + "</b>"
-      + '<span class="b-rout">recall ' + pc1(c.rappel.taux) + " " + iv(c.rappel) + ", n=" + c.rappel.n
-      + " \\u00b7 false alerts " + pc1(c.fauxPositifs.taux) + " " + iv(c.fauxPositifs) + ", n=" + c.fauxPositifs.n + "</span>";
+    dessiner(); peindrePanneau();
   }
   curseur.addEventListener("input", rejouer);
 
@@ -313,9 +319,11 @@ JS = '''
     }
   })();
 
+''' + js_carte("threshold", "recall", "false alerts") + '''
   peindreGrille();
   curseur.value = D.recommandee.plancher;
   rejouer();
+  dessiner(); peindrePanneau();
 '''
 
 ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
@@ -340,7 +348,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
 <script>document.documentElement.classList.add("js")</script>
-<style>{CSS}</style>
+<style>{CSS}{CSS_NOIR}</style>
 <header class="barre">
   <a class="marque" href="../ACCUEIL.html">CASCADE</a>
   <nav aria-label="Site">
@@ -367,7 +375,8 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="colonne">
     <div class="dessus">
       <div class="t-page-halo" aria-hidden="true"></div>
-      <img class="rb" src="../rendus/robot-amethyste-penche.webp" alt="">
+      <div class="poste-grille">
+      <div class="fen-robot">
       <div class="terminal">
         <div class="tm-barre"><i></i><i></i><i></i><span>cascade scoring &#183; the public record, live</span></div>
         <div class="tm-corps">
@@ -377,6 +386,7 @@ PAGE = f'''<!doctype html><html lang="en">
             <button class="regl" id="m-synth">synthetic variants (declared)</button>
           </div>
           <p class="tm-sortie" id="g-quoi"></p>
+          {carte_html("threshold", "recall")}
           {table_html()}
           <p class="tm-sortie" id="g-lecture">pick a cell: recall over false alerts, with n and its 95&nbsp;% interval</p>
 
@@ -391,6 +401,12 @@ PAGE = f'''<!doctype html><html lang="en">
           <p class="tm-l" style="margin-top:14px"><span class="ps">$</span> cascade verify --sealed</p>
           <p class="tm-preuve" id="tm-preuve">checking&#8230;</p>
         </div>
+      </div>
+      </div>
+      <div class="pan-col">
+      <img class="rb" src="../rendus/robot-amethyste-regarde.webp" alt="">
+      {PANNEAU_HTML}
+      </div>
       </div>
     </div>
   </div>

@@ -154,6 +154,8 @@ def js_carte(mot_x, mot_y, mot_fp):
       colonne.sort((a, b) => a[0] - b[0]);
       let dernier = -99;
       for (const e of colonne) { e[2] = Math.max(e[0], dernier + 12); dernier = e[2]; }
+      const depasse = dernier - (CH - CB - 6);          /* zeros stacked under the axis : slide up */
+      if (depasse > 0) for (const e of colonne) e[2] -= depasse;
     }
     const yLabel = Object.fromEntries(colonne.map(([y0, p, y]) => [p, y]));
     for (const [p, ligne] of Object.entries(g)) {
@@ -173,7 +175,7 @@ def js_carte(mot_x, mot_y, mot_fp):
     /* the tool's own pick at this floor, on the authored half and all 51 thresholds : a ring at its true ''' + mot_x + ''' */
     const choix = retenir(plancher);
     if (choix && moitie === "authored" && choix.seuil >= XMIN && choix.seuil <= XMAX) {
-      h += '<g class="choix"><circle cx="' + cx(choix.seuil) + '" cy="' + cy(choix.rappel.taux) + '" r="8"/><text x="' + cx(choix.seuil) + '" y="' + (cy(choix.rappel.taux) - 13) + '">the tool\\u2019s pick \\u00b7 ' + esc(choix.palier) + " at " + choix.seuil.toFixed(2) + '</text></g>';
+      h += '<g class="choix"><circle cx="' + cx(choix.seuil) + '" cy="' + cy(choix.rappel.taux) + '" r="8"/><text x="' + (cx(choix.seuil) + 13) + '" y="' + (cy(choix.rappel.taux) + 4) + '" style="text-anchor:start">the tool\\u2019s pick \\u00b7 ' + esc(choix.palier) + " at " + choix.seuil.toFixed(2) + '</text></g>';
     }
     if (cible) h += '<line class="viseur" x1="' + cx(+cible.s) + '" x2="' + cx(+cible.s) + '" y1="' + CT + '" y2="' + (CH - CB) + '"/>';
     const yf = cy(plancher);
@@ -184,11 +186,14 @@ def js_carte(mot_x, mot_y, mot_fp):
     for (const s of MONTRES) h += '<text class="seuil' + (cible && cible.s === s ? " axe" : "") + '" x="' + cx(+s) + '" y="' + (CH - 8) + '">' + s + '</text>';
     /* the names at the right end of their curve, pushed apart when curves end on the same value */
     const fins = Object.entries(g).map(([p, ligne]) => [cy(ligne[MONTRES[MONTRES.length - 1]].rappel.taux), p]).sort((a, b) => a[0] - b[0]);
-    let dernier = -99;
-    for (const [y0, p] of fins) {
-      const y = Math.max(y0, dernier + 13); dernier = y;
+    let dernier = -99; const ys = [];
+    for (const [y0, p] of fins) { const y = Math.max(y0, dernier + 13); dernier = y; ys.push(y); }
+    /* curves that end at zero pushed the stack under the axis (monitoring, 9/09) : it slides back up */
+    const depasse = dernier - (CH - CB - 4);
+    fins.forEach(([y0, p], i) => {
+      const y = ys[i] - Math.max(0, depasse);
       h += '<g class="legende"><text x="' + (CW - CR + 8) + '" y="' + (y + 4) + '" class="' + (cible && cible.p === p ? "axe" : "") + '">' + esc(p) + '</text></g>';
-    }
+    });
     h += '<g class="legende"><text class="fantome-t" x="' + (CW - CR + 8) + '" y="' + (CT + 8) + '">dotted: ' + autre() + '</text></g>';
     carte.innerHTML = h;
   }
