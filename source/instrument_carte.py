@@ -743,46 +743,32 @@ CSS_ACCUEIL = '''
     .carte-ev{position:relative;left:auto;top:auto;margin:0 0 14px;width:100%;transform:none;aspect-ratio:auto}
     .carte-ev:hover{transform:none}.carte-ev .ev-pied{flex-wrap:wrap;gap:6px 14px}.carte-ev .ev-pied b{white-space:nowrap;margin-left:auto}}
 
-  /* les deux robots de l'accueil : positions PROVISOIRES, à régler avec Arslane */
-  .robot-hg{position:absolute;left:-222px;top:110px;width:214px;height:auto;z-index:1;pointer-events:none;
-    filter:drop-shadow(0 26px 44px rgba(0,0,0,.8)) brightness(.92)}
-  .robot-bd{position:absolute;right:-30px;top:0;width:290px;height:auto;z-index:1;pointer-events:none;
-    filter:drop-shadow(0 26px 44px rgba(0,0,0,.8)) brightness(.92)}
-  @media (max-width:980px){.robot-hg,.robot-bd{display:none}}
-
-  /* la méthode : une figure, le terminal des trois commandes, les annexes en une ligne */
-  .methode{padding:100px 0 90px;background:var(--nuit-b);border-top:1px solid #1e1e23;position:relative}
-  .methode .h2{color:var(--sur-vert);max-width:24ch}
-  .stations{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:36px 0 0;padding:0;list-style:none}
-  .stations li{position:relative;border:1px solid #232328;border-radius:12px;padding:18px 18px 16px;background:#101013;min-height:230px;
-    display:flex;flex-direction:column;gap:8px}
-  .stations li+li::before{content:"→";position:absolute;left:-17px;top:20px;font-family:var(--mono);color:var(--sur-vert-pale)}
-  .stations .num{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--vert-vif)}
-  .stations h3{margin:0;font-size:17px;font-weight:600;color:var(--sur-vert);line-height:1.2}
-  .stations p{margin:0;font-size:13px;line-height:1.55;color:var(--sur-vert-pale)}
-  .stations b{margin-top:auto;font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--vert-clair);padding-top:10px;border-top:1px solid #232328}
-  @media (max-width:980px){.stations{grid-template-columns:repeat(2,minmax(0,1fr))}.stations li+li::before{display:none}}
-  @media (max-width:560px){.stations{grid-template-columns:minmax(0,1fr)}}
-  .methode-bas{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:48px;align-items:end;margin-top:28px}
-  @media (max-width:1180px){.robot-hg{display:none}}
-  .methode-term-col{position:relative;overflow:hidden;padding-top:172px}
-  .methode-term{position:relative;z-index:2}
-  @media (max-width:980px){.methode-bas{grid-template-columns:minmax(0,1fr)}}
-  .methode-grille{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(320px,.8fr);gap:48px;align-items:start;margin-top:36px}
-  .methode-fig{border:1px solid #232328;border-radius:14px;padding:22px 26px 18px;
-    background:linear-gradient(180deg,#131316,#0b0b0d)}
-  .methode-fig svg{display:block;width:100%;height:auto;font-family:var(--mono)}
-  .methode-fig .st{fill:none;stroke:var(--vert-vif);stroke-width:1.5}
-  .methode-fig .st-fond{fill:#101013;stroke:#2c2c33;stroke-width:1}
-  .methode-fig .num{fill:var(--vert-vif);font-size:11px;letter-spacing:.12em}
-  .methode-fig .titre{fill:var(--sur-vert);font-family:var(--texte);font-size:17px;font-weight:600}
-  .methode-fig .texte{fill:var(--sur-vert-pale);font-size:11px}
-  .methode-fig .fleche{stroke:var(--sur-vert-pale);stroke-width:1.2;fill:none;marker-end:url(#fl)}
-  .methode-fig .fl{fill:var(--sur-vert-pale)}
-  .methode-fig .chiffre{fill:var(--vert-clair);font-size:12px}
+  /* LA MÉTHODE SUR PAPIER (Arslane, 10/09 : « dans notre style, pas tout noir ») : le rail des quatre
+     stations à gauche, comme le rail des findings des pages outils ; à droite le gros plan du dossier
+     avec ses étiquettes publiées sur le crème ; les trois commandes vivent dans la station 03. */
+  .methode{padding:96px 0 84px;background:var(--papier);color:var(--encre);position:relative;
+    border-top:3px double var(--encre)}
+  .methode .h2{color:var(--encre);max-width:22ch}
+  .methode-grille{display:grid;grid-template-columns:minmax(300px,.9fr) minmax(0,1.1fr);gap:56px;align-items:start;margin-top:40px}
+  .stations{margin:0;padding:0;list-style:none;border-left:2px solid var(--filet-clair)}
+  .stations li{position:relative;padding:18px 0 22px 26px;display:flex;flex-direction:column;gap:8px}
+  .stations li::before{content:"";position:absolute;left:-7px;top:26px;width:12px;height:12px;border-radius:50%;
+    background:var(--papier);border:2px solid var(--vert-titre)}
+  .stations li:first-child::before{background:var(--vert-vif);border-color:var(--vert-vif)}
+  .stations .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--vert-titre)}
+  .stations h3{margin:0;font-size:19px;font-weight:600;color:var(--encre);line-height:1.18;letter-spacing:-.01em}
+  .stations p{margin:0;font-size:15px;line-height:1.55;color:var(--demi);max-width:44ch}
+  .stations b{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--vert-titre);letter-spacing:.04em}
+  .stations .methode-term{margin-top:8px;max-width:520px}
+  .methode-grille>div:last-child{position:sticky;top:96px}
+  .methode-scene{position:relative;aspect-ratio:1374/1120;container-type:inline-size;margin-top:6px}
+  .methode-scene .scene{position:absolute;inset:0}
+  .methode-scene .objet{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+    filter:drop-shadow(0 30px 40px rgba(27,29,24,.22))}
+  .methode-note{font-size:13px;color:var(--pale);margin-top:14px;max-width:60ch;line-height:1.5}
   .methode-term{border:1px solid color-mix(in srgb,var(--vert-vif) 55%,transparent);border-radius:10px;overflow:hidden;
     background:linear-gradient(163deg,color-mix(in srgb,var(--vert-titre) 55%,#0e0e11),color-mix(in srgb,var(--vert-titre) 20%,#0e0e11));
-    box-shadow:0 30px 70px rgba(0,0,0,.55)}
+    box-shadow:0 24px 50px rgba(27,29,24,.28)}
   .methode-term .tb{display:flex;gap:6px;align-items:center;padding:9px 14px;background:color-mix(in srgb,var(--vert-vif) 18%,transparent);
     font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--sur-vert-pale)}
   .methode-term .tb i{width:8px;height:8px;border-radius:50%;background:var(--sur-vert-pale);opacity:.5}
@@ -791,10 +777,10 @@ CSS_ACCUEIL = '''
   .methode-term .tc code{display:block;white-space:pre-wrap;overflow-wrap:anywhere}
   .methode-term .tc code::before{content:"$ ";color:var(--vert-clair);font-weight:600}
   .methode-term .tc .note{display:block;color:var(--sur-vert-pale);font-size:11.5px;margin-top:6px}
-  .methode-liens{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:40px;font-size:14.5px}
-  .methode-liens a{color:var(--sur-vert-pale);text-decoration:none;border-bottom:1px solid #2c2c33;padding-bottom:3px}
-  .methode-liens a:hover{color:var(--sur-vert);border-color:var(--vert-vif)}
-  @media (max-width:980px){.methode-grille{grid-template-columns:minmax(0,1fr)}}
+  .methode-liens{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:48px;padding-top:22px;border-top:1px solid var(--filet);font-size:14.5px}
+  .methode-liens a{color:var(--demi);text-decoration:none;border-bottom:1px solid var(--filet-clair);padding-bottom:3px}
+  .methode-liens a:hover{color:var(--encre);border-color:var(--vert-vif)}
+  @media (max-width:980px){.methode-grille{grid-template-columns:minmax(0,1fr)}.methode-scene{max-width:640px}}
 '''
 
 
@@ -812,12 +798,14 @@ def eventail_html(cartes):
     return f'<div class="eventail" aria-label="The five instruments">{out}</div>'
 
 
-def methode_html(stations):
-    """Les quatre stations de la méthode en HTML (un SVG à 640 px coupait ses textes) : numéro,
-    titre, phrase, chiffre ; les chiffres viennent des relevés, par l'appelant."""
+def methode_html(stations, extra=None):
+    """Les quatre stations de la méthode, en rail (le papier des pages outils) : numéro, titre,
+    phrase, chiffre ; les chiffres viennent des relevés, par l'appelant. `extra` : du HTML posé
+    dans une station, par son numéro (les trois commandes vivent dans « 03 · RERUN »)."""
     out = ""
     for num, titre, texte, chiffre in stations:
-        out += f'<li><span class="num">{num}</span><h3>{titre}</h3><p>{" ".join(texte)}</p><b>{chiffre}</b></li>'
+        out += (f'<li><span class="num">{num}</span><h3>{titre}</h3><p>{" ".join(texte)}</p>'
+                f'{(extra or {}).get(num, "")}<b>{chiffre}</b></li>')
     return f'<ol class="stations">{out}</ol>'
 
 

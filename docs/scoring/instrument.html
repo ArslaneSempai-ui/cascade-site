@@ -304,7 +304,7 @@
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">Each risk factor at each threshold, live.</h1>
-    <p class="lede">Each figure on this page comes from the <b>sealed public record (hashed, then frozen: its content hash is checked before a figure is shown)</b> of
+    <p class="lede">Each figure on this page comes from the <b>sealed public record</b> of
       cascade-scoring: customer files the repository wrote itself, benign cases included,
       measured by its own risk factors. No client data exists here, none enters and none leaves,
       and each figure is recomputed from the sealed public record as the page loads.</p>
@@ -326,7 +326,7 @@
             <button class="regl" id="m-synth">synthetic variants (declared)</button>
           </div>
           <p class="tm-sortie" id="g-quoi"></p>
-          <p class="carte-aide" data-commun="instrument">each point is one cell of the sealed public record; <b>pull the floor line</b> or the slider, and the cells whose recall lower bound clears the floor turn green</p>
+          <p class="carte-aide" data-commun="instrument">each point is one cell of the sealed public record (hashed, then frozen: its content hash is checked before a figure is shown); <b>pull the floor line</b> or the slider, and the cells whose recall lower bound clears the floor turn green</p>
           <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="recall of each row at each threshold of the sealed public record, with the recall floor as a line"></svg></div>
           <div class="t-scroll"><table class="grille">
       <caption class="sr">Pick a cell: each shows recall on confirmed escalations over false alerts on maintained cases, at that factor and threshold</caption>

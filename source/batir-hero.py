@@ -1180,7 +1180,7 @@ def batir_accueil():
     dossier_r = lire_releve_scelle(OUTILS["dossier"]["releve"])
     stations = [
         ("01 · MEASURE", "On sealed public records",
-         ["Each tool measures every tier on records", "the repository wrote itself: 1,000 held-out", "records for the reader, 60 + 60 pairs, 42 + 42", "cases, 84 files. Intervals on every rate."],
+         ["Each tool measures every tier on the", "repository's own sealed public records: 1,000", "held-out records for the reader, 60 + 60 pairs,", "42 + 42 cases, 84 files. Intervals on every rate."],
          f"{N_SOCLE:,} records · {N_GEN} for the generative tiers"),
         ("02 · SEAL", "Hashed, then frozen",
          ["Each record carries its content hash.", "A page checks it before a figure is shown;", "a record that changed after sealing", "is not used."],
@@ -1192,6 +1192,29 @@ def batir_accueil():
          ["Four reports against five controls:", "present, sealed, signed, fresh, consistent.", "A reviewer verifies the dossier without", "us, from the hashes and signatures."],
          f"{dossier_r['couverture']['n']} of {dossier_r['couverture']['sur']} reports · {len(dossier_r['controles']['presents'])} controls"),
     ]
+    # LA SCÈNE DE LA MÉTHODE : le gros plan 01 du dossier avec ses étiquettes PUBLIÉES (les mêmes
+    # que la page outil, même géométrie, même garde), sur le papier de la maison
+    f_dossier = json.loads((BASE / "findings-dossier.json").read_text())["findings"][0]
+    img_dossier = BASE / "rendus" / "etats" / f"{SPECS['dossier']['etats']}-01.webp"
+    assert img_dossier.exists(), f"gros plan du dossier absent : {img_dossier}"
+    lignes, etiquettes = "", ""
+    for (ax, ay, lx, ly, txt) in f_dossier["annotations"]:
+        verifier_appel(txt, "accueil, méthode, dossier finding 01")
+        x1, y1, x2, y2 = MX + lx * IW, ly * IH, MX + ax * IW, ay * IH
+        lignes += f'<line x1="{x1:.0f}" y1="{y1:.0f}" x2="{x2:.0f}" y2="{y2:.0f}" pathLength="1"/><circle cx="{x2:.0f}" cy="{y2:.0f}" r="4"/>'
+        etiquettes += f'<span class="ap-eti" style="left:{x1 / 14.20:.1f}%;top:{y1 / 10.0:.1f}%">{txt}</span>'
+    scene = (f'<div class="scene actif"><img class="objet" src="rendus/etats/{img_dossier.name}" '
+             f'alt="{SPECS["dossier"]["alt_plateau"]}, state {f_dossier["num"]}: {f_dossier["titre"]}">'
+             f'<svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true">{lignes}</svg>{etiquettes}</div>')
+    terminal = f'''<div class="methode-term" role="group" aria-label="The three commands that measure your own records">
+        <div class="tb"><i></i><i></i><i></i><span>run it yourself</span></div>
+        <div class="tc"><code>git clone {OUTILS["routing"]["depot"]}</code><code>npm ci --ignore-scripts</code>
+          <code>npm run measure:yours -- --cases=your-file.csv</code>
+          <span class="note">the report is written next to your file, and nowhere else</span></div>
+      </div>'''
+    # the black page redefines the paper tokens ; the method section gets the REAL paper back,
+    # read from the site's own :root block (never retyped, so it cannot drift)
+    tokens_papier = re.search(r":root\{(.*?)\}", CSS, re.S).group(1)
     description = ("Cascade: instruments for compliance decisions, one method. Each tier "
                    "measured on sealed public records, the best trade-off read with its interval, rerun on "
                    "your own machine.")
@@ -1210,7 +1233,7 @@ def batir_accueil():
 <link rel="stylesheet" href="fontes/roboto-mono.css">
 <script type="application/ld+json">{donnees}</script>
 <script>document.documentElement.classList.add("js")</script>
-<style>{CSS}{CSS_ACCUEIL}</style>
+<style>{CSS}{CSS_ACCUEIL}.methode{{{tokens_papier}}}</style>
 <header class="barre sur-nuit">
   <a class="marque" href="ACCUEIL.html">CASCADE</a>
   <nav aria-label="Site">
@@ -1224,7 +1247,6 @@ def batir_accueil():
 <main>
 <section class="hero">
   <div class="hero-grille">
-    <img class="robot-hg" src="rendus/robot-vert-regarde.webp" alt="">
     <div class="hero-texte">
       <span class="marque-h entree">Cascade &#183; instruments for compliance decisions</span>
       <h1 class="h1 entree h1-long">Measure each model tier's accuracy and cost, on your own records.</h1>
@@ -1239,29 +1261,26 @@ def batir_accueil():
 
 {choix_outils(None)}
 
-<section class="methode"><div class="colonne">
+<section class="methode" id="method">
+  <div class="colonne">
   <h2 class="h2">One method, shared across the tools.</h2>
-  {methode_html(stations)}
-  <div class="methode-bas">
-    <nav class="methode-liens" aria-label="The house">
-      <a href="ENGAGEMENT.html">Pricing, in figures</a>
-      <a href="ANNEXE-TERMS.html">Terms of engagement</a>
-      <a href="ANNEXE-PRIVACY.html">Privacy</a>
-      <a href="ANNEXE-ACCESSIBILITE.html">Accessibility</a>
-      <a href="CONTACT.html">Contact</a>
-      <a href="MENTIONS.html">The fine print</a>
-    </nav>
-    <div class="methode-term-col">
-      <img class="robot-bd" src="rendus/robot-onyx-regarde.webp" alt="">
-      <div class="methode-term" role="group" aria-label="The three commands that measure your own records">
-        <div class="tb"><i></i><i></i><i></i><span>run it yourself</span></div>
-        <div class="tc"><code>git clone {OUTILS["routing"]["depot"]}</code><code>npm ci --ignore-scripts</code>
-          <code>npm run measure:yours -- --cases=your-file.csv</code>
-          <span class="note">the report is written next to your file, and nowhere else</span></div>
-      </div>
+  <div class="methode-grille">
+    {methode_html(stations, extra={"03 · RERUN": terminal})}
+    <div>
+      <div class="methode-scene">{scene}</div>
+      <p class="methode-note">{f_dossier['phrase']}</p>
     </div>
   </div>
-</div></section>
+  <nav class="methode-liens" aria-label="The house">
+    <a href="ENGAGEMENT.html">Pricing, in figures</a>
+    <a href="ANNEXE-TERMS.html">Terms of engagement</a>
+    <a href="ANNEXE-PRIVACY.html">Privacy</a>
+    <a href="ANNEXE-ACCESSIBILITE.html">Accessibility</a>
+    <a href="CONTACT.html">Contact</a>
+    <a href="MENTIONS.html">The fine print</a>
+  </nav>
+  </div>
+</section>
 </main>
 
 <footer class="pied"><div class="colonne">
@@ -1276,7 +1295,6 @@ def batir_accueil():
     print("ACCUEIL.html", f"{len(page) / 1e3:.0f} ko")
 
 
-batir_accueil()
 
 
 # ═════════════════════════ LE CATALOGUE : bâtir(outil) ═════════════════════════
@@ -1852,3 +1870,4 @@ batir("screening")
 batir("monitoring")
 batir("scoring")
 batir("dossier")
+batir_accueil()   # last : it reads SPECS and links the five pages
