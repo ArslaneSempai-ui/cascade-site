@@ -703,15 +703,26 @@ CSS_ACCUEIL = '''
   /* la grille du premier écran, SYMÉTRIQUE (Arslane, 10/09) : deux colonnes de largeur connue, centrées
      ensemble, un gouffre entre elles plus large que tout espace interne ; les marges extérieures se valent */
   .hero-grille{display:grid;grid-template-columns:minmax(360px,460px) minmax(0,600px);gap:clamp(48px,7.4vw,106px);
-    align-items:center;justify-content:center;max-width:none;margin:0 auto;padding:0 65px 0 48px;position:relative;text-align:left}
-  .hero-grille .marque-h,.hero-grille .h1,.hero-grille .lede{text-align:left;margin-left:0;margin-right:0}
-  .hero-grille .h1{max-width:14ch;font-size:clamp(30px,3.6vw,54px)}
-  .hero-grille .lede{max-width:44ch;font-size:18px;margin-top:28px}
+    align-items:start;justify-content:center;max-width:none;margin:0 auto;padding:0 65px 0 48px;position:relative;text-align:left}
+  /* LE GRAND LIVRE (Arslane, 10/09, D1) : un titre court, six lignes libellé / valeur au poids des
+     grilles des cartes, la commande en dernière ; le bloc pend du haut de l'éventail (le panel des
+     cinq regards : un bloc centré à côté d'un objet est le héros de gabarit) */
+  .hero-grille .h1{text-align:left;margin:0;max-width:14ch;font-size:clamp(30px,3.1vw,44px);line-height:1.06;letter-spacing:-.015em}
+  .hero-texte{padding-top:72px}
+  .ledger{margin:26px 0 0}
+  .ledger div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;min-height:38px;padding:9px 0;
+    border-bottom:1px solid color-mix(in srgb,var(--sur-vert) 10%,transparent)}
+  .ledger div:first-child{border-top:1px solid color-mix(in srgb,var(--sur-vert) 10%,transparent)}
+  .ledger dt{font-family:var(--mono);font-size:12px;color:var(--sur-vert-pale);letter-spacing:.02em}
+  .ledger .pt{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;background:var(--vert-vif)}
+  .ledger dd{margin:0;font-family:var(--mono);font-size:13px;color:var(--sur-vert);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+  .ledger .cmd{flex-wrap:wrap;row-gap:4px}
+  .ledger .cmd .c1::before{content:"$ ";color:var(--sur-vert-pale)}
+  .ledger .cmd .c2{flex-basis:100%;font-family:var(--mono);font-size:11px;color:var(--sur-vert-pale);overflow-wrap:anywhere}
+  .ledger .cmd .c2::before{content:"$ "}
+  @media (max-width:560px){.ledger div{flex-wrap:wrap}.ledger dd{white-space:normal;text-align:left;overflow-wrap:anywhere}}
   .hero{min-height:0;padding:96px 24px 64px}
   .hero-texte{position:relative;z-index:2}
-  .hero-cue{margin-top:46px;display:flex;gap:14px;align-items:center;font-family:var(--mono);font-size:11.5px;
-    letter-spacing:.18em;text-transform:uppercase;color:var(--sur-vert-pale)}
-  .hero-cue .fil{width:60px;height:1px;background:var(--sur-vert-pale);opacity:.6}
 
   /* l'éventail : cinq cartes empilées, chacune dans SES couleurs, la survolée sort du paquet */
   .eventail{position:relative;height:min(480px,34vw);perspective:1600px}
@@ -741,7 +752,7 @@ CSS_ACCUEIL = '''
   .carte-ev .ev-pied{display:flex;justify-content:space-between;align-items:baseline;padding:6px 16px 14px;
     font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ev-vif)}
   .carte-ev .ev-pied b{font-weight:500;color:var(--sur-vert);letter-spacing:.06em;text-transform:none;font-size:12.5px;white-space:nowrap}
-  @media (max-width:1100px){.hero-grille{grid-template-columns:minmax(0,1fr)}.eventail{height:auto;padding:24px 0}
+  @media (max-width:1100px){.hero-grille{grid-template-columns:minmax(0,1fr);padding:0 8px}.hero-texte{padding-top:0}.eventail{height:auto;padding:24px 0}
     .carte-ev{position:relative;left:auto;top:auto;margin:0 0 14px;width:100%;transform:none;aspect-ratio:auto}
     .carte-ev:hover{transform:none}.carte-ev .ev-pied{flex-wrap:wrap;gap:6px 14px}.carte-ev .ev-pied b{white-space:nowrap;margin-left:auto}}
 

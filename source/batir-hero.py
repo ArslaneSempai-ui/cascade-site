@@ -1215,6 +1215,11 @@ def batir_accueil():
     # the black page redefines the paper tokens ; the method section gets the REAL paper back,
     # read from the site's own :root block (never retyped, so it cannot drift)
     tokens_papier = re.search(r":root\{(.*?)\}", CSS, re.S).group(1)
+    # LE GRAND LIVRE du premier écran (Arslane, 10/09, D1) : les chiffres sont ceux des scènes du
+    # routing (SCENES, vérifiées contre l'outil par l'assembleur), le compte du socle et le sceau
+    acc_champ = re.sub(r"<[^>]+>", "", SCENES[0]["a"])
+    acc_fichier = re.sub(r"<[^>]+>", "", SCENES[0]["b"])
+    moins_cher = SCENES[1]["cote"]
     description = ("Cascade: instruments for compliance decisions, one method. Each tier "
                    "measured on sealed public records, the best trade-off read with its interval, rerun on "
                    "your own machine.")
@@ -1248,10 +1253,16 @@ def batir_accueil():
 <section class="hero">
   <div class="hero-grille">
     <div class="hero-texte">
-      <span class="marque-h entree">Cascade &#183; instruments for compliance decisions</span>
-      <h1 class="h1 entree">Which model tier suffices, at what cost?</h1>
-      <p class="lede entree">Accuracy and cost of every tier, measured on a sealed public record, then rerun on your own files.</p>
-      <div class="hero-cue" aria-hidden="true"><span>five instruments, choose one</span><span class="fil"></span></div>
+      <h1 class="h1 entree">Five instruments for compliance decisions.</h1>
+      <dl class="ledger entree" aria-label="The routing instrument, in figures">
+        <div><dt><i class="pt" aria-hidden="true"></i>routing, mean accuracy per field</dt><dd>{acc_champ}</dd></div>
+        <div><dt>accuracy per file</dt><dd>{acc_fichier}</dd></div>
+        <div><dt>sealed public records</dt><dd>{N_SOCLE:,}</dd></div>
+        <div><dt>cost at equal accuracy</dt><dd>{moins_cher}</dd></div>
+        <div><dt>content hash</dt><dd>{SCEAU_ROUTING}</dd></div>
+        <div class="cmd"><dt>rerun on your own files</dt><dd class="c1">node src/premiere-reponse.mjs</dd>
+          <small class="c2">git clone {OUTILS["routing"]["depot"]}</small></div>
+      </dl>
     </div>
     {eventail_html(cartes)}
   </div>
