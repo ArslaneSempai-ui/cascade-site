@@ -93,6 +93,16 @@ if manquants:
 if not (MAQ / "og.png").exists():
     sys.exit("og.png absent — le régénérer depuis og-card.html (capture 1200x630)")
 
+# ── témoin d'abord (lot M-C1) : les gardes de séquences savent-elles encore rougir ? ─────
+# manques() porte désormais les quatre gardes de séquences (identité, fraîcheur, poids,
+# complétude). Avant de croire un manques() vide, on prouve que chacune voit encore son
+# défaut : temoin-sequences.py mue un arbre factice défaut par défaut et exige le rouge.
+# Un témoin cassé arrête l'émission AVANT le rmtree de docs/ (l'incident du 9/09 : la porte vivait après le vide, un témoin rouge laissait docs/ vide) — un zéro qui ne sait plus rougir ne garde rien.
+_ts = subprocess.run([sys.executable, str(MAQ / "temoin-sequences.py")],
+                     capture_output=True, text=True)
+if _ts.returncode != 0:
+    sys.exit(f"GARDE CASSÉE : un témoin des gardes de séquences ne rougit plus :\n{_ts.stdout}{_ts.stderr}")
+
 # ── docs/ : les pages, renommées, liens réécrits ─────────────────────────────
 if DOCS.exists():
     shutil.rmtree(DOCS)
@@ -176,15 +186,6 @@ import sys as _sys
 _sys.path.insert(0, str(MAQ))
 from outil import manques as _manques
 
-# ── témoin d'abord (lot M-C1) : les gardes de séquences savent-elles encore rougir ? ─────
-# manques() porte désormais les quatre gardes de séquences (identité, fraîcheur, poids,
-# complétude). Avant de croire un manques() vide, on prouve que chacune voit encore son
-# défaut : temoin-sequences.py mue un arbre factice défaut par défaut et exige le rouge.
-# Un témoin cassé arrête l'émission ici — un zéro qui ne sait plus rougir ne garde rien.
-_ts = subprocess.run([sys.executable, str(MAQ / "temoin-sequences.py")],
-                     capture_output=True, text=True)
-if _ts.returncode != 0:
-    sys.exit(f"GARDE CASSÉE : un témoin des gardes de séquences ne rougit plus :\n{_ts.stdout}{_ts.stderr}")
 EN_BLOC = (("monitoring", PROD_MONITORING, "L5/L5-textes"),
            ("scoring", PROD_SCORING, "A-L5"),
            ("dossier", PROD_DOSSIER, "D3/D4"))
