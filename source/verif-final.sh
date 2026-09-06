@@ -33,6 +33,11 @@ echo "=== assemblage $(date +%H:%M:%S)"
 python3 assembler.py > $SORTIE/assemblage.log 2>&1; code=$?
 grep -E "non émis|cassé sur|BOUGÉES|Traceback" $SORTIE/assemblage.log | cut -c1-140
 [ $code = 0 ] || { echo "assembleur : code $code, on s'arrête ($SORTIE/assemblage.log)"; exit 1; }
+# le témoin de DÉBRANCHEMENT de la garde de voix : si l'assemblage vert ne porte plus la
+# ligne de la garde, quelqu'un a retiré l'appel — un vert sans la voix ne part pas
+grep -q "voix tenue" $SORTIE/assemblage.log || {
+  echo "REFUS : l'assemblage est vert mais ne porte pas « voix tenue » — la garde de la voix" ;
+  echo "        a été DÉBRANCHÉE de l'assembleur (ou muselée) ; rebrancher avant de servir" ; exit 5 ; }
 
 echo "=== serveur $PORT (127.0.0.1 seulement)"
 # un serveur déjà debout ne se réutilise que s'il sert CE docs/ : la page servie n'est
@@ -75,6 +80,13 @@ for t in $OUTILS; do
     echo "$t : 6 captures (ffmpeg absent : pas de bande, dit)"
   fi
 done
+
+echo "=== les cinq instruments vivants (temoin-instrument.py) $(date +%H:%M:%S)"
+# le trou du 10/09 : F.every devenu F.each dans deux bâtisseurs, cinq panneaux morts,
+# assembleur et gardes aveugles — une page qui ne TOURNE plus ne doit pas s'émettre
+python3 $SRC/temoin-instrument.py > $SORTIE/instruments.log 2>&1; code=$?
+tail -2 $SORTIE/instruments.log | cut -c1-160
+[ $code = 0 ] || { echo "REFUS : un instrument vivant ne tourne plus ($SORTIE/instruments.log)"; exit 6; }
 
 echo "=== porte mécanique (controle.mjs) $(date +%H:%M:%S)"
 if [ -f $CTL ]; then
