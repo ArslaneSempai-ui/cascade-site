@@ -28,7 +28,8 @@ spec = importlib.util.spec_from_file_location("bn", BASE / "batir-nav.py")
 bn = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(bn)
 
-SCEAU = "1151f5a1cfaae0c0"
+from outil import SCEAU_ROUTING
+SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 
 # ── les six annexes : une lettre, une source, un objet, une sortie ───────────
 # L'ordre suit bn.ANNEXES ; la lettre d'appendice en découle (A-F).

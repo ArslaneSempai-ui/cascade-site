@@ -34,7 +34,8 @@ print(" ", r.stdout.strip())
 D = json.loads((BASE / "instrument-donnees.json").read_text())
 
 FIELDS, TIERS = D["fields"], D["tiers"]
-SCEAU = "1151f5a1cfaae0c0"
+from outil import SCEAU_ROUTING
+SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-routing"
 
 

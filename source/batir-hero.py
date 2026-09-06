@@ -47,7 +47,8 @@ if not _m:
     sys.exit("le compte de tests est introuvable dans le README de l'outil : refus de le recopier")
 N_TESTS, N_FICHIERS = _m.group(1), _m.group(2)
 
-SCEAU = "1151f5a1cfaae0c0"
+from outil import SCEAU_ROUTING
+SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-routing"
 
 
@@ -1065,12 +1066,22 @@ def _refaire_dossier(releve, src, o):
     {cle, champ} lit releve[cle][champ] (mesure "longueur" en prend la taille) ;
     {compte-verdicts: {controle, tenu}} compte les verdicts de ce contrôle et de ce
     tenu à travers les questions ; {compte-questions: {etat}} compte les questions à
-    cet état. Une adresse inconnue est un refus nommé, jamais un zéro silencieux."""
+    cet état ; {question, champ} lit releve["questions"][question][champ], le champ
+    d'UNE question (lot D3 post-signatures, 9d62c47 : « 16 days since the oldest
+    measurement, routing » est questions.routing.joursDepuis, pas un compte).
+    Une adresse inconnue est un refus nommé, jamais un zéro silencieux."""
     if "cle" in src:
         v = releve[src["cle"]][src["champ"]]
         if src.get("mesure") == "longueur":
             v = len(v)
         return [str(v)]
+    if "question" in src:
+        q = releve["questions"].get(src["question"])
+        if q is None or src["champ"] not in q:
+            sys.exit(f"findings-dossier.json : {src} n'existe pas dans le relevé scellé du Dossier "
+                     f"(questions : {', '.join(releve['questions'])}) ; la fiche cite un chiffre "
+                     "que le relevé ne porte pas")
+        return [str(q[src["champ"]])]
     if "compte-verdicts" in src:
         c = src["compte-verdicts"]
         return [str(sum(1 for q in releve["questions"].values()

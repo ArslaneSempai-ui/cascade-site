@@ -1,7 +1,7 @@
 {
   "mesure": {
-    "94.4": "moyenne des cinq taux par champ, scellé 1151f5a1cfaae0c0, 120 dossiers",
-    "76.7": "taux par dossier, 92 sur 120, scellé 1151f5a1cfaae0c0",
+    "94.4": "moyenne des cinq taux par champ, scellé dbf26abec438515e, 120 dossiers",
+    "76.7": "taux par dossier, 92 sur 120, scellé dbf26abec438515e",
     "92": "dossiers dont les cinq champs sont justes ensemble",
     "120": "dossiers du banc",
     "68.3": "borne basse de Wilson à 95 % sur 92/120",
@@ -110,7 +110,8 @@
     "05": "numéro d'ordre d'écran",
     "64": "fragment de l'empreinte du relevé",
     "256": "fragment de « SHA-256 », pas un compte",
-    "1151": "fragment de l'empreinte du scellé 1151f5a1cfaae0c0",
+    "26": "fragment de l'empreinte du scellé dbf26abec438515e (dbf|26|abec…)",
+    "438515": "fragment de l'empreinte du scellé dbf26abec438515e (…abec|438515|e)",
     "2026": "millésime dans un nom de fichier daté (rapport, relevé scellé)",
     "08": "mois dans un nom de rapport daté",
     "22": "jour dans un nom de rapport daté",

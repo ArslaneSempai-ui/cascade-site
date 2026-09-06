@@ -109,6 +109,9 @@ OUTILS = {
         "favicon_accent": "%2323543f",
         "robots": ("robot-penche.webp", "robot-agrippe.webp"),
         "releve": _MAISON / "cascade" / "landing.json",     # pas de scellé : garde d'absence seule (historique)
+        # le RELEVÉ SCELLÉ du vert (son relevé de référence, marqué et re-scellé le 8/09) : la
+        # source unique du sceau que les pages vertes citent ; landing.json reste le fichier de chiffres
+        "releve_scelle": _MAISON / "cascade" / "profiles-2026-08-20-coeur-rendu.json",
         "outil_chemin": _MAISON / "cascade",
         "depot": "https://github.com/ArslaneSempai-ui/cascade-routing",
         # le rideau (deuxième écran) : ce que le pan de CET outil dit de lui, sur
@@ -278,6 +281,11 @@ def manques(outil_id, base):
               if not (base / "rendus" / "etats" / f"{ICONES_PREFIXE[outil_id]}-{n}.webp").exists()]
     return m
 
+
+# Le sceau du vert, LU dans son relevé scellé et vérifié : cinq bâtisseurs le tapaient à la main
+# (1151f5a1cfaae0c0) et le relevé a été re-scellé le 8/09 (marques kind/version) : un sceau
+# recopié rouille ; celui-ci suit le fichier.
+SCEAU_ROUTING = lire_releve_scelle(OUTILS["routing"]["releve_scelle"])["empreinte"]
 
 def lien(outil, cible):
     """Le lien d'une page de CET outil vers une cible de la MAISON (nom source,

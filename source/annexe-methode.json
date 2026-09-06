@@ -58,10 +58,10 @@
         "cmd": [
           {
             "c": "npm run sceller -- profiles-2026-08-20-coeur-rendu.json",
-            "n": "already sealed, and the seal matches: 1151f5a1cfaae0c0"
+            "n": "already sealed, and the seal matches: dbf26abec438515e"
           }
         ],
-        "refs": "src/measure.ts:298 &#183; src/sceller.ts:12"
+        "refs": "src/measure.ts:299 &#183; src/sceller.ts:12"
       }
     },
     {
@@ -126,7 +126,7 @@
             "n": "fresh records against the sealed baseline: verdict per field, report re-sealed"
           }
         ],
-        "refs": "src/measure.ts:963 &#183; src/your-cases.ts:1455"
+        "refs": "src/measure.ts:969 &#183; src/your-cases.ts:1455"
       }
     }
   ],

@@ -10,7 +10,8 @@ pour que ses liens se résolvent depuis la racine quel que soit le chemin raté.
 import pathlib
 
 BASE = pathlib.Path(__file__).parent
-SCEAU = "1151f5a1cfaae0c0"
+from outil import SCEAU_ROUTING
+SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 
 CSS = '''
   :root{--nuit-a:#1b3229;--nuit-b:#14251e;--nuit-c:#0e1a15;--sur-vert:#e4ecdf;

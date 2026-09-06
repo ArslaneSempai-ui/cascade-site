@@ -10,8 +10,8 @@
     "src/empreinte.ts:31": "export function scelleIntact(releve: Record<string, unknown>): boolean {",
     "src/frontiere.test.ts:22": "const AUTORISES: Record<string, string> = {",
     "src/frontiere.test.ts:43": "test(\"aucun module ne touche le réseau\", () => {",
-    "src/measure.ts:68": "export function mesurePublique(reglages: Reglages): {",
-    "src/measure.ts:73": "reglages: Reglages;",
+    "src/measure.ts:93": "export function mesurePublique(reglages: Reglages): {",
+    "src/measure.ts:98": "reglages: Reglages;",
     "src/sceller.ts:42": "console.log(`  ${cible}\\n  already sealed, and the seal matches: ${apres}. Nothing to do.`);"
   }
 }
