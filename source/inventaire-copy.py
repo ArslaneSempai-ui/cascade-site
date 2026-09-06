@@ -26,32 +26,50 @@ SORTES = {"h1": "titre", "h2": "titre", "h3": "titre", "h4": "titre", "p": "para
 
 
 class Cueilleur(HTMLParser):
-    """Collects the text of every block-level text element, with its class hint."""
+    """Collects the text of every block-level text element, with its class hint,
+    its LINE (a guard names its refusals) and its ZONE (nav / pied / scene : la
+    garde de voix les exclut ou les exempte selon VOIX.md ; l'inventaire les
+    ignore, sa sortie ne change pas). UN cueilleur pour l'inventaire ET la garde :
+    deux copies de cette marche divergeraient en une semaine."""
+    ZONES = {"nav": "nav", "footer": "pied", "header": "nav"}
+
     def __init__(self):
         super().__init__(convert_charrefs=True)
-        self.pile = []          # (tag, classes, buffer)
+        self.pile = []          # (tag, classes, buffer, ligne)
         self.saut = 0
-        self.blocs = []
+        self.zones = []         # pile des zones ouvertes : (tag, nom)
+        self.blocs = []         # (tag, classes, texte) — la forme de l'inventaire
+        self.blocs_situes = []  # (tag, classes, texte, ligne, zone) — pour la garde
         self.attrs_textes = []  # alt / aria-label / title / placeholder
+
+    def zone(self):
+        return self.zones[-1][1] if self.zones else "corps"
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
+        if tag in self.ZONES:
+            self.zones.append((tag, self.ZONES[tag]))
+        elif "scene" in a.get("class", "").split() or "rideau" in a.get("class", "").split():
+            self.zones.append((tag, "scene"))
         if tag in SAUT:
             self.saut += 1
         for k in ("alt", "aria-label", "title", "placeholder"):
             if a.get(k, "").strip():
                 self.attrs_textes.append((tag, k, a[k].strip()))
         if tag in TEXTE and not self.saut:
-            self.pile.append([tag, a.get("class", ""), []])
+            self.pile.append([tag, a.get("class", ""), [], self.getpos()[0]])
 
     def handle_endtag(self, tag):
+        if self.zones and self.zones[-1][0] == tag:
+            self.zones.pop()
         if tag in SAUT and self.saut:
             self.saut -= 1
         if tag in TEXTE and self.pile and self.pile[-1][0] == tag:
-            t, cls, buf = self.pile.pop()
+            t, cls, buf, ligne = self.pile.pop()
             texte = re.sub(r"\s+", " ", "".join(buf)).strip()
             if texte:
                 self.blocs.append((t, cls, texte))
+                self.blocs_situes.append((t, cls, texte, ligne, self.zone()))
             if self.pile:                      # nested text also counts for the parent
                 self.pile[-1][2].append(" " + texte + " ")
 
@@ -75,59 +93,64 @@ def sorte(tag, cls, texte):
     return SORTES.get(tag, tag)
 
 
-records = []
-vus = set()
-for page in sorted(DOCS.rglob("*.html")):
-    rel = str(page.relative_to(DOCS))
-    c = Cueilleur()
-    c.feed(page.read_text(encoding="utf-8"))
-    for tag, cls, texte in c.blocs:
-        if len(texte) < 3:
-            continue
-        cle = (rel, texte)
-        if cle in vus:
-            continue
-        vus.add(cle)
-        records.append({"page": rel, "sorte": sorte(tag, cls, texte), "balise": tag, "classe": cls, "texte": texte, "car": len(texte)})
-    for tag, k, texte in c.attrs_textes:
-        cle = (rel, texte)
-        if cle in vus:
-            continue
-        vus.add(cle)
-        records.append({"page": rel, "sorte": f"attribut {k}", "balise": tag, "classe": "", "texte": texte, "car": len(texte)})
+def principal():
+    records = []
+    vus = set()
+    for page in sorted(DOCS.rglob("*.html")):
+        rel = str(page.relative_to(DOCS))
+        c = Cueilleur()
+        c.feed(page.read_text(encoding="utf-8"))
+        for tag, cls, texte in c.blocs:
+            if len(texte) < 3:
+                continue
+            cle = (rel, texte)
+            if cle in vus:
+                continue
+            vus.add(cle)
+            records.append({"page": rel, "sorte": sorte(tag, cls, texte), "balise": tag, "classe": cls, "texte": texte, "car": len(texte)})
+        for tag, k, texte in c.attrs_textes:
+            cle = (rel, texte)
+            if cle in vus:
+                continue
+            vus.add(cle)
+            records.append({"page": rel, "sorte": f"attribut {k}", "balise": tag, "classe": "", "texte": texte, "car": len(texte)})
 
-# the findings : labels and cards of the five heroes (inlined by the builders, but listed by source)
-for f in sorted(BASE.glob("findings-*.json")):
-    d = json.loads(f.read_text())
-    findings = d["findings"] if isinstance(d, dict) and "findings" in d else d
-    for i, fd in enumerate(findings if isinstance(findings, list) else []):
-        for k in ("titre", "title", "kicker", "sous", "corps", "body", "texte", "chiffre_legende", "legende"):
-            v = fd.get(k)
-            if isinstance(v, str) and v.strip():
-                records.append({"page": f.name, "sorte": f"finding {fd.get('num', i + 1)} · {k}", "balise": "json", "classe": "", "texte": v.strip(), "car": len(v.strip())})
-        for a in fd.get("annotations", []):
-            if isinstance(a, (list, tuple)) and len(a) == 5:
-                records.append({"page": f.name, "sorte": f"finding {fd.get('num', i + 1)} · étiquette-3D", "balise": "json", "classe": "", "texte": a[4], "car": len(a[4])})
+    # the findings : labels and cards of the five heroes (inlined by the builders, but listed by source)
+    for f in sorted(BASE.glob("findings-*.json")):
+        d = json.loads(f.read_text())
+        findings = d["findings"] if isinstance(d, dict) and "findings" in d else d
+        for i, fd in enumerate(findings if isinstance(findings, list) else []):
+            for k in ("titre", "title", "kicker", "sous", "corps", "body", "texte", "chiffre_legende", "legende"):
+                v = fd.get(k)
+                if isinstance(v, str) and v.strip():
+                    records.append({"page": f.name, "sorte": f"finding {fd.get('num', i + 1)} · {k}", "balise": "json", "classe": "", "texte": v.strip(), "car": len(v.strip())})
+            for a in fd.get("annotations", []):
+                if isinstance(a, (list, tuple)) and len(a) == 5:
+                    records.append({"page": f.name, "sorte": f"finding {fd.get('num', i + 1)} · étiquette-3D", "balise": "json", "classe": "", "texte": a[4], "car": len(a[4])})
 
-(OUT / "inventaire-copy.json").write_text(json.dumps(records, ensure_ascii=False, indent=1), encoding="utf-8")
+    (OUT / "inventaire-copy.json").write_text(json.dumps(records, ensure_ascii=False, indent=1), encoding="utf-8")
 
-# the readable table
-lignes = ["# Inventaire de la copy du site (servi)", "",
-          f"{len(records)} blocs de texte · {sum(r['car'] for r in records)} caractères · "
-          f"{len({r['page'] for r in records})} sources", ""]
-par_page = {}
-for r in records:
-    par_page.setdefault(r["page"], []).append(r)
-for page, rs in par_page.items():
-    lignes += [f"## {page} · {len(rs)} blocs · {sum(r['car'] for r in rs)} car", "", "| sorte | car | texte |", "|---|---:|---|"]
-    for r in rs:
-        t = r["texte"].replace("|", "\\|")
-        lignes.append(f"| {r['sorte']} | {r['car']} | {t} |")
-    lignes.append("")
-(OUT / "inventaire-copy.md").write_text("\n".join(lignes), encoding="utf-8")
-sortes = {}
-for r in records:
-    s = r["sorte"].split(" · ")[-1] if r["sorte"].startswith("finding") else r["sorte"]
-    sortes[s] = sortes.get(s, 0) + 1
-print(f"{len(records)} blocs, {sum(r['car'] for r in records)} caractères, {len(par_page)} sources → {OUT / 'inventaire-copy.md'}")
-print("par sorte :", ", ".join(f"{k} {v}" for k, v in sorted(sortes.items(), key=lambda x: -x[1])))
+    # the readable table
+    lignes = ["# Inventaire de la copy du site (servi)", "",
+              f"{len(records)} blocs de texte · {sum(r['car'] for r in records)} caractères · "
+              f"{len({r['page'] for r in records})} sources", ""]
+    par_page = {}
+    for r in records:
+        par_page.setdefault(r["page"], []).append(r)
+    for page, rs in par_page.items():
+        lignes += [f"## {page} · {len(rs)} blocs · {sum(r['car'] for r in rs)} car", "", "| sorte | car | texte |", "|---|---:|---|"]
+        for r in rs:
+            t = r["texte"].replace("|", "\\|")
+            lignes.append(f"| {r['sorte']} | {r['car']} | {t} |")
+        lignes.append("")
+    (OUT / "inventaire-copy.md").write_text("\n".join(lignes), encoding="utf-8")
+    sortes = {}
+    for r in records:
+        s = r["sorte"].split(" · ")[-1] if r["sorte"].startswith("finding") else r["sorte"]
+        sortes[s] = sortes.get(s, 0) + 1
+    print(f"{len(records)} blocs, {sum(r['car'] for r in records)} caractères, {len(par_page)} sources → {OUT / 'inventaire-copy.md'}")
+    print("par sorte :", ", ".join(f"{k} {v}" for k, v in sorted(sortes.items(), key=lambda x: -x[1])))
+
+
+if __name__ == "__main__":
+    principal()
