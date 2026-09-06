@@ -48,7 +48,8 @@ if not _m:
 N_TESTS, N_FICHIERS = _m.group(1), _m.group(2)
 
 from outil import SCEAU_ROUTING, etiquette_sur_objet, SEUIL_OBJET, etiquettes_qui_se_recouvrent
-from instrument_carte import CSS_AFFICHE, affiche_html   # l'affiche de l'instrument (10/09)
+from instrument_carte import (CSS_AFFICHE, affiche_html, CSS_ACCUEIL, eventail_html, methode_html,   # l'affiche (10/09), l'accueil (10/09)
+                              _svg_courbes, _svg_paliers, _svg_horloge)
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-routing"
 
@@ -1159,6 +1160,38 @@ def batir_accueil():
                                                  "granted in the public licence."},
                        "publisher": {"@id": "https://cascade-routing.com/#org"}})
     donnees = json.dumps({"@context": "https://schema.org", "@graph": graphe}, ensure_ascii=True)
+    # L'ÉVENTAIL (Arslane, 10/09) : les cinq cartes des instruments, les vraies courbes de chaque
+    # relevé scellé, dans l'ordre du rideau ; la dernière du paquet est au-dessus
+    cartes = []
+    for o in vivants:
+        if o["id"] == "routing":
+            svg = _svg_paliers(LANDING)
+        else:
+            releve_o = lire_releve_scelle(o["releve"])
+            if o["id"] == "dossier":
+                svg = _svg_horloge(releve_o)
+            else:
+                fj = json.loads((BASE / f"findings-{o['id']}.json").read_text())
+                svg = _svg_courbes(releve_o, fj["findings"] if isinstance(fj, dict) else fj)
+        cartes.append((o["page_hero"], svg, o["etiquette"], o["nom"], o["vif"],
+                       {"routing": "#a5f7cb", "screening": "#ffc2c9", "monitoring": "#c3d8ff",
+                        "scoring": "#e2d3ff", "dossier": "#e8e6df"}[o["id"]], o["nuit"]))
+    # LA MÉTHODE : quatre stations, chaque chiffre lu dans un relevé
+    dossier_r = lire_releve_scelle(OUTILS["dossier"]["releve"])
+    stations = [
+        ("01 · MEASURE", "On sealed public records",
+         ["Each tool measures every tier on records", "the repository wrote itself: 1,000 held-out", "records for the reader, 60 + 60 pairs, 42 + 42", "cases, 84 files. Intervals on every rate."],
+         f"{N_SOCLE:,} records · {N_GEN} for the generative tiers"),
+        ("02 · SEAL", "Hashed, then frozen",
+         ["Each record carries its content hash.", "A page checks it before a figure is shown;", "a record that changed after sealing", "is not used."],
+         f"content hash {SCEAU_ROUTING[:8]}… (reader)"),
+        ("03 · RERUN", "On your own files, at your desk",
+         ["One command reruns the whole sweep on", "your records. The report is written next", "to your file, and no data leaves the", "network."],
+         "3 commands, no account, no upload"),
+        ("04 · DOSSIER", "Signed, current, verifiable",
+         ["Four reports against five controls:", "present, sealed, signed, fresh, consistent.", "A reviewer verifies the dossier without", "us, from the hashes and signatures."],
+         f"{dossier_r['couverture']['n']} of {dossier_r['couverture']['sur']} reports · {len(dossier_r['controles']['presents'])} controls"),
+    ]
     description = ("Cascade: instruments for compliance decisions, one method. Each tier "
                    "measured on sealed public records, the best trade-off read with its interval, rerun on "
                    "your own machine.")
@@ -1177,7 +1210,7 @@ def batir_accueil():
 <link rel="stylesheet" href="fontes/roboto-mono.css">
 <script type="application/ld+json">{donnees}</script>
 <script>document.documentElement.classList.add("js")</script>
-<style>{CSS}</style>
+<style>{CSS}{CSS_ACCUEIL}</style>
 <header class="barre sur-nuit">
   <a class="marque" href="ACCUEIL.html">CASCADE</a>
   <nav aria-label="Site">
@@ -1190,26 +1223,45 @@ def batir_accueil():
 
 <main>
 <section class="hero">
-  <span class="marque-h entree">Cascade &#183; {n} instruments, one method</span>
-  <h1 class="h1 entree h1-long">Measure each model tier's accuracy and cost, on your own records.</h1>
-  <p class="lede entree">Cascade routes each identity field to a model tier, from a regular expression to a
-    human, and measures the accuracy and cost of every routing on a sealed public record. The same run
-    repeats on your own files, at your desk.</p>
-  <div class="cue" aria-hidden="true"><span>choose</span><span class="fil"></span></div>
+  <div class="hero-grille">
+    <img class="robot-hg" src="rendus/robot-vert-regarde.webp" alt="">
+    <div class="hero-texte">
+      <span class="marque-h entree">Cascade &#183; instruments for compliance decisions</span>
+      <h1 class="h1 entree h1-long">Measure each model tier's accuracy and cost, on your own records.</h1>
+      <p class="lede entree">Cascade routes each identity field to a model tier, from a regular expression to a
+        human, and measures the accuracy and cost of every routing on a sealed public record. The same run
+        repeats on your own files, at your desk.</p>
+      <div class="hero-cue" aria-hidden="true"><span>five instruments, choose one</span><span class="fil"></span></div>
+    </div>
+    {eventail_html(cartes)}
+  </div>
 </section>
 
 {choix_outils(None)}
 
-<section class="menus"><div class="colonne">
+<section class="methode"><div class="colonne">
   <h2 class="h2">One method, shared across the tools.</h2>
-  <div class="rangee-fine">
-    <a class="lien-fin" href="ENGAGEMENT.html">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="ANNEXE-TERMS.html">Terms of engagement <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="ANNEXE-PRIVACY.html">Privacy <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="ANNEXE-ACCESSIBILITE.html">Accessibility <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="CONTACT.html">Contact <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="MENTIONS.html">The fine print <span aria-hidden="true">&#8594;</span></a>
-  </div></div></section>
+  {methode_html(stations)}
+  <div class="methode-bas">
+    <nav class="methode-liens" aria-label="The house">
+      <a href="ENGAGEMENT.html">Pricing, in figures</a>
+      <a href="ANNEXE-TERMS.html">Terms of engagement</a>
+      <a href="ANNEXE-PRIVACY.html">Privacy</a>
+      <a href="ANNEXE-ACCESSIBILITE.html">Accessibility</a>
+      <a href="CONTACT.html">Contact</a>
+      <a href="MENTIONS.html">The fine print</a>
+    </nav>
+    <div class="methode-term-col">
+      <img class="robot-bd" src="rendus/robot-onyx-regarde.webp" alt="">
+      <div class="methode-term" role="group" aria-label="The three commands that measure your own records">
+        <div class="tb"><i></i><i></i><i></i><span>run it yourself</span></div>
+        <div class="tc"><code>git clone {OUTILS["routing"]["depot"]}</code><code>npm ci --ignore-scripts</code>
+          <code>npm run measure:yours -- --cases=your-file.csv</code>
+          <span class="note">the report is written next to your file, and nowhere else</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
 </main>
 
 <footer class="pied"><div class="colonne">

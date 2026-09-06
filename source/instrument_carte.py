@@ -683,3 +683,158 @@ def affiche_html(sorte, donnees, findings, page, eti, sous, robot, note=""):
     </a>
     {f'<p class="t-note">{note}</p>' if note else ""}
   </div>'''
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════════════
+# L'ACCUEIL (Arslane, 10/09) : noir comme les instruments ; au premier écran, à droite de la
+# première ligne, les cinq cartes des instruments EN ÉVENTAIL (les vraies courbes du relevé,
+# statiques : le langage des affiches) ; survoler une carte la sort du paquet, cliquer ouvre
+# l'outil ; après le rideau, UNE figure de la méthode + le terminal des trois commandes + les
+# annexes en une ligne ; deux robots, positionnés avec Arslane.
+# ═══════════════════════════════════════════════════════════════════════════════════════════
+
+CSS_ACCUEIL = '''
+  /* la page de la marque en noir : les nuits de la maison deviennent le noir des instruments */
+  :root{--nuit-a:#1a1a1f;--nuit-b:#0e0e11;--nuit-c:#08080a;--sur-vert:#e8e6df;--sur-vert-pale:#9a988f;
+    --papier:#0e0e11;--papier-haut:#121215;--encre:#e8e6df;--demi:#a5a39a;--pale:#8f8d84;--filet-clair:#2c2c33}
+  body{background:var(--nuit-b)}
+  .hero{background:radial-gradient(120% 90% at 30% -10%,color-mix(in srgb,var(--vert-titre) 34%,#0e0e11),var(--nuit-b) 65%);
+    min-height:auto;padding:150px 0 80px}
+  .hero-grille{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:48px;align-items:center;
+    max-width:1300px;margin:0 auto;padding:0 48px;position:relative;text-align:left}
+  .hero-grille .marque-h,.hero-grille .h1,.hero-grille .lede{text-align:left;margin-left:0;margin-right:0}
+  .hero-grille .h1{max-width:16ch;font-size:clamp(30px,3.6vw,54px)}
+  .hero-grille .lede{max-width:46ch}
+  .hero{min-height:0;padding:96px 24px 64px}
+  .hero-texte{position:relative;z-index:2}
+  .hero-cue{margin-top:34px;display:flex;gap:14px;align-items:center;font-family:var(--mono);font-size:11.5px;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--sur-vert-pale)}
+  .hero-cue .fil{width:60px;height:1px;background:var(--sur-vert-pale);opacity:.6}
+
+  /* l'éventail : cinq cartes empilées, chacune dans SES couleurs, la survolée sort du paquet */
+  .eventail{position:relative;height:min(520px,52vw);perspective:1600px}
+  .carte-ev{position:absolute;left:50%;top:50%;width:min(460px,42vw);aspect-ratio:1.5/1;margin:-32% 0 0 -50%;
+    display:block;border-radius:14px;overflow:hidden;text-decoration:none;color:var(--sur-vert);
+    background:linear-gradient(180deg,color-mix(in srgb,var(--ev-nuit-a) 80%,#000),color-mix(in srgb,var(--ev-nuit-c) 92%,#000));
+    border:1px solid color-mix(in srgb,var(--ev-vif) 45%,transparent);
+    box-shadow:0 30px 70px rgba(0,0,0,.6),inset 0 1px 0 color-mix(in srgb,var(--ev-vif) 25%,transparent);
+    transform:translate(var(--dx),var(--dy)) rotate(var(--rot));transform-origin:50% 120%;
+    transition:transform .5s var(--montee),box-shadow .5s var(--montee),border-color .3s;z-index:var(--z)}
+  .carte-ev:hover,.carte-ev:focus-visible{transform:translate(var(--dx),calc(var(--dy) - 36px)) rotate(0deg) scale(1.04);
+    z-index:10;border-color:var(--ev-vif);box-shadow:0 50px 110px rgba(0,0,0,.7),0 0 0 1px var(--ev-vif)}
+  .carte-ev .ev-svg{padding:14px 16px 4px}
+  .carte-ev svg{display:block;width:100%;height:auto;font-family:var(--mono)}
+  .carte-ev .ax{fill:var(--sur-vert-pale);font-size:11px}
+  .carte-ev .gr{stroke:color-mix(in srgb,var(--sur-vert) 10%,transparent);stroke-width:1}
+  .carte-ev .cb{fill:none;stroke:color-mix(in srgb,var(--sur-vert) 30%,transparent);stroke-width:1.3}
+  .carte-ev .cb.fort{stroke:var(--sur-vert);stroke-width:2}
+  .carte-ev .pt{fill:var(--nuit-c);stroke:color-mix(in srgb,var(--sur-vert) 45%,transparent);stroke-width:1.2}
+  .carte-ev .pt.fort{fill:var(--ev-vif);stroke:var(--ev-clair);stroke-width:2}
+  .carte-ev .anneau{fill:none;stroke:var(--ev-vif);stroke-width:2.5}
+  .carte-ev .ligne{stroke:var(--ev-clair);stroke-width:1.5}
+  .carte-ev .zone{fill:var(--ev-vif);opacity:.08}
+  .carte-ev .eti{fill:var(--ev-clair);font-size:11.5px}
+  .carte-ev .nom{fill:var(--sur-vert-pale);font-size:11px} .carte-ev .nom.fort{fill:var(--sur-vert)}
+  .carte-ev .pierre{fill:var(--ev-vif);stroke:var(--ev-clair);stroke-width:2}
+  .carte-ev .ev-pied{display:flex;justify-content:space-between;align-items:baseline;padding:6px 16px 14px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ev-vif)}
+  .carte-ev .ev-pied b{font-weight:500;color:var(--sur-vert);letter-spacing:.06em;text-transform:none;font-size:12.5px}
+  @media (max-width:1100px){.hero-grille{grid-template-columns:minmax(0,1fr)}.eventail{height:auto;padding:24px 0}
+    .carte-ev{position:relative;left:auto;top:auto;margin:0 0 14px;width:100%;transform:none;aspect-ratio:auto}
+    .carte-ev:hover{transform:none}.carte-ev .ev-pied{flex-wrap:wrap;gap:6px 14px}.carte-ev .ev-pied b{white-space:nowrap;margin-left:auto}}
+
+  /* les deux robots de l'accueil : positions PROVISOIRES, à régler avec Arslane */
+  .robot-hg{position:absolute;left:-222px;top:110px;width:214px;height:auto;z-index:1;pointer-events:none;
+    filter:drop-shadow(0 26px 44px rgba(0,0,0,.8)) brightness(.92)}
+  .robot-bd{position:absolute;right:-30px;top:0;width:290px;height:auto;z-index:1;pointer-events:none;
+    filter:drop-shadow(0 26px 44px rgba(0,0,0,.8)) brightness(.92)}
+  @media (max-width:980px){.robot-hg,.robot-bd{display:none}}
+
+  /* la méthode : une figure, le terminal des trois commandes, les annexes en une ligne */
+  .methode{padding:100px 0 90px;background:var(--nuit-b);border-top:1px solid #1e1e23;position:relative}
+  .methode .h2{color:var(--sur-vert);max-width:24ch}
+  .stations{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:36px 0 0;padding:0;list-style:none}
+  .stations li{position:relative;border:1px solid #232328;border-radius:12px;padding:18px 18px 16px;background:#101013;min-height:230px;
+    display:flex;flex-direction:column;gap:8px}
+  .stations li+li::before{content:"→";position:absolute;left:-17px;top:20px;font-family:var(--mono);color:var(--sur-vert-pale)}
+  .stations .num{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--vert-vif)}
+  .stations h3{margin:0;font-size:17px;font-weight:600;color:var(--sur-vert);line-height:1.2}
+  .stations p{margin:0;font-size:13px;line-height:1.55;color:var(--sur-vert-pale)}
+  .stations b{margin-top:auto;font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--vert-clair);padding-top:10px;border-top:1px solid #232328}
+  @media (max-width:980px){.stations{grid-template-columns:repeat(2,minmax(0,1fr))}.stations li+li::before{display:none}}
+  @media (max-width:560px){.stations{grid-template-columns:minmax(0,1fr)}}
+  .methode-bas{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:48px;align-items:end;margin-top:28px}
+  @media (max-width:1180px){.robot-hg{display:none}}
+  .methode-term-col{position:relative;overflow:hidden;padding-top:172px}
+  .methode-term{position:relative;z-index:2}
+  @media (max-width:980px){.methode-bas{grid-template-columns:minmax(0,1fr)}}
+  .methode-grille{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(320px,.8fr);gap:48px;align-items:start;margin-top:36px}
+  .methode-fig{border:1px solid #232328;border-radius:14px;padding:22px 26px 18px;
+    background:linear-gradient(180deg,#131316,#0b0b0d)}
+  .methode-fig svg{display:block;width:100%;height:auto;font-family:var(--mono)}
+  .methode-fig .st{fill:none;stroke:var(--vert-vif);stroke-width:1.5}
+  .methode-fig .st-fond{fill:#101013;stroke:#2c2c33;stroke-width:1}
+  .methode-fig .num{fill:var(--vert-vif);font-size:11px;letter-spacing:.12em}
+  .methode-fig .titre{fill:var(--sur-vert);font-family:var(--texte);font-size:17px;font-weight:600}
+  .methode-fig .texte{fill:var(--sur-vert-pale);font-size:11px}
+  .methode-fig .fleche{stroke:var(--sur-vert-pale);stroke-width:1.2;fill:none;marker-end:url(#fl)}
+  .methode-fig .fl{fill:var(--sur-vert-pale)}
+  .methode-fig .chiffre{fill:var(--vert-clair);font-size:12px}
+  .methode-term{border:1px solid color-mix(in srgb,var(--vert-vif) 55%,transparent);border-radius:10px;overflow:hidden;
+    background:linear-gradient(163deg,color-mix(in srgb,var(--vert-titre) 55%,#0e0e11),color-mix(in srgb,var(--vert-titre) 20%,#0e0e11));
+    box-shadow:0 30px 70px rgba(0,0,0,.55)}
+  .methode-term .tb{display:flex;gap:6px;align-items:center;padding:9px 14px;background:color-mix(in srgb,var(--vert-vif) 18%,transparent);
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--sur-vert-pale)}
+  .methode-term .tb i{width:8px;height:8px;border-radius:50%;background:var(--sur-vert-pale);opacity:.5}
+  .methode-term .tb span{margin-left:auto}
+  .methode-term .tc{padding:14px 18px 16px;font-family:var(--mono);font-size:12.5px;line-height:1.85;color:var(--sur-vert)}
+  .methode-term .tc code{display:block;white-space:pre-wrap;overflow-wrap:anywhere}
+  .methode-term .tc code::before{content:"$ ";color:var(--vert-clair);font-weight:600}
+  .methode-term .tc .note{display:block;color:var(--sur-vert-pale);font-size:11.5px;margin-top:6px}
+  .methode-liens{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:40px;font-size:14.5px}
+  .methode-liens a{color:var(--sur-vert-pale);text-decoration:none;border-bottom:1px solid #2c2c33;padding-bottom:3px}
+  .methode-liens a:hover{color:var(--sur-vert);border-color:var(--vert-vif)}
+  @media (max-width:980px){.methode-grille{grid-template-columns:minmax(0,1fr)}}
+'''
+
+
+def eventail_html(cartes):
+    """`cartes` : liste de (href, svg, etiquette, nom, vif, clair, nuits) dans l'ordre du paquet ;
+    la dernière est au-dessus. Les décalages et rotations donnent l'éventail."""
+    n = len(cartes); out = ""
+    for k, (href, svg, eti, nom, vif, clair, nuits) in enumerate(cartes):
+        c = k - (n - 1) / 2
+        style = (f"--z:{k + 1};--rot:{c * 6:.1f}deg;--dx:{c * 34:.0f}px;--dy:{abs(c) * 10:.0f}px;"
+                 f"--ev-vif:{vif};--ev-clair:{clair};--ev-nuit-a:{nuits[0]};--ev-nuit-c:{nuits[2]}")
+        out += (f'<a class="carte-ev" href="{href}" style="{style}" aria-label="Open {nom}">'
+                f'<div class="ev-svg">{svg}</div>'
+                f'<div class="ev-pied"><span>{eti}</span><b>Open {nom} &#8594;</b></div></a>')
+    return f'<div class="eventail" aria-label="The five instruments">{out}</div>'
+
+
+def methode_html(stations):
+    """Les quatre stations de la méthode en HTML (un SVG à 640 px coupait ses textes) : numéro,
+    titre, phrase, chiffre ; les chiffres viennent des relevés, par l'appelant."""
+    out = ""
+    for num, titre, texte, chiffre in stations:
+        out += f'<li><span class="num">{num}</span><h3>{titre}</h3><p>{" ".join(texte)}</p><b>{chiffre}</b></li>'
+    return f'<ol class="stations">{out}</ol>'
+
+
+def methode_svg(stations):
+    """La figure de la méthode : quatre stations reliées, chacune avec son numéro, son titre, sa
+    phrase et son chiffre (lus dans les relevés par l'appelant, jamais tapés ici)."""
+    W, H = 900, 250; n = len(stations); lw = (W - 40 - (n - 1) * 28) / n
+    out = ('<defs><marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">'
+           '<path class="fl" d="M0,0 L10,5 L0,10 z"/></marker></defs>')
+    for i, (num, titre, texte, chiffre) in enumerate(stations):
+        x = 20 + i * (lw + 28)
+        out += f'<rect class="st-fond" x="{x:.0f}" y="30" width="{lw:.0f}" height="190" rx="10"/>'
+        out += f'<text class="num" x="{x + 16:.0f}" y="58">{num}</text>'
+        out += f'<text class="titre" x="{x + 16:.0f}" y="88">{titre}</text>'
+        for j, ligne in enumerate(texte):
+            out += f'<text class="texte" x="{x + 16:.0f}" y="{114 + j * 17}">{ligne}</text>'
+        out += f'<text class="chiffre" x="{x + 16:.0f}" y="200">{chiffre}</text>'
+        if i < n - 1:
+            out += f'<path class="fleche" d="M{x + lw + 4:.0f},125 L{x + lw + 24:.0f},125"/>'
+    return f'<svg viewBox="0 0 {W} {H}" aria-hidden="true">{out}</svg>'
