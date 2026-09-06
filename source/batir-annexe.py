@@ -359,7 +359,7 @@ def barre_html(courante):
     return (f'<header class="barre sur-nuit">\n'
             f'  <a class="marque" href="ACCUEIL.html">CASCADE</a>\n'
             f'  <nav aria-label="Site">{nav}</nav>\n'
-            f'  <span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>\n'
+            f'  <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>\n'
             f'</header>')
 
 
@@ -374,7 +374,7 @@ def pied_html(courante):
             f'  <div class="pied-h">\n'
             f'    <p class="pied-p">Your records stay on your machine, and '
             f'<em>no data leaves the network.</em></p>\n'
-            f'    <span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>\n'
+            f'    <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>\n'
             f'  </div>\n'
             f'  <nav class="annexes" aria-label="Appendices">{rang}</nav>\n'
             f'</div></footer>')
@@ -596,7 +596,7 @@ def barre_outil(o, pages, instrument, courante, sceau):
     return (f'<header class="barre sur-nuit">\n'
             f'  <a class="marque" href="{lien(o, "ACCUEIL.html")}">CASCADE</a>\n'
             f'  <nav aria-label="Site">{nav}</nav>\n'
-            f'  <span class="sceau">seal {sceau} &#183; measured, then frozen</span>\n'
+            f'  <span class="sceau">content hash {sceau} &#183; measured, then frozen</span>\n'
             f'</header>')
 
 
@@ -614,7 +614,7 @@ def pied_outil(o, pages, courante, sceau):
             f'  <div class="pied-h">\n'
             f'    <p class="pied-p">Your records stay on your machine, and '
             f'<em>no data of yours goes up.</em></p>\n'
-            f'    <span class="sceau">seal {sceau} &#183; measured, then frozen</span>\n'
+            f'    <span class="sceau">content hash {sceau} &#183; measured, then frozen</span>\n'
             f'  </div>\n'
             f'  <nav class="annexes" aria-label="Appendices">{rang}</nav>\n'
             f'</div></footer>')

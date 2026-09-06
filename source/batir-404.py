@@ -69,7 +69,7 @@ PAGE = f'''<!doctype html><html lang="en">
   <a class="porte" href="INSTRUMENT.html">The instrument &#8594;</a>
   <a class="porte" href="CONTACT.html">Say a figure is missing &#8594;</a>
 </nav>
-<span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>
+<span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>
 '''
 
 assert "—" not in PAGE

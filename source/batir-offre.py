@@ -156,7 +156,7 @@ PAGE = f'''<!doctype html><html lang="en">
     <a href="ANNEXE-QUESTIONS.html">Questions</a>
     <a href="CONTACT.html">Contact</a>
   </nav>
-  <span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>
+  <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>
 </header>
 
 <main>
@@ -248,7 +248,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <footer class="pied"><div class="colonne">
   <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
-  <span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>
+  <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>
 </div></footer>
 '''
 

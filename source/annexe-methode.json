@@ -31,7 +31,7 @@
       ],
       "verif": {
         "t": "Verify the enumeration",
-        "p": "Run the optimiser. It enumerates from the public record and announces the human tier as an assumption, each time.",
+        "p": "Run the optimiser. It enumerates from the sealed public record and announces the human tier as an assumption, each time.",
         "cmd": [
           {
             "c": "npm run optimise",
@@ -54,7 +54,7 @@
       ],
       "verif": {
         "t": "Recompute the seal",
-        "p": "Point the sealing command at the public record shipped with the repository. It recomputes the content hash and prints it; on an untouched record it changes nothing.",
+        "p": "Point the sealing command at the sealed public record shipped with the repository. It recomputes the content hash and prints it; on an untouched record it changes nothing.",
         "cmd": [
           {
             "c": "npm run sceller -- profiles-2026-08-20-coeur-rendu.json",
@@ -111,7 +111,7 @@
         "cmd": [
           {
             "c": "MESURE_VOULUE=1 npm run measure",
-            "n": "reruns the full measurement and freezes a public record"
+            "n": "reruns the full measurement and freezes a sealed public record"
           },
           {
             "c": "npm run measure:yours -- --cases=your-file.csv",

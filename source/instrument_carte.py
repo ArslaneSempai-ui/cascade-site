@@ -134,8 +134,8 @@ CSS_NOIR = '''
 
 def carte_html(x_titre, y_titre):
     """The chart and its side panel, empty : the JS draws both from the embedded record."""
-    return f'''<p class="carte-aide" data-commun="instrument">each point is one cell of the public record; <b>pull the floor line</b> or the slider, and the cells whose recall lower bound clears the floor turn green</p>
-          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="{y_titre} of each tier at each {x_titre} of the public record, with the recall floor as a line"></svg></div>'''
+    return f'''<p class="carte-aide" data-commun="instrument">each point is one cell of the sealed public record; <b>pull the floor line</b> or the slider, and the cells whose recall lower bound clears the floor turn green</p>
+          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="{y_titre} of each tier at each {x_titre} of the sealed public record, with the recall floor as a line"></svg></div>'''
 
 
 PANNEAU_HTML = '''<aside class="pan" id="pan" aria-live="polite">
@@ -358,7 +358,7 @@ PANNEAU_VERT_HTML = '''<aside class="pan" id="pan" aria-live="polite">
         <div class="plancher" id="pan-plancher"></div>
       </aside>'''
 
-CARTE_ONYX_HTML = '''<p class="carte-aide" data-commun="instrument">each dot is one question's public record, placed at its age in days · <b>pull the validity line</b> to ask what a shorter or longer validity period would change : a dot past it would lose its « fresh » control, and the --next lines state it · hover a dot to read its five verdicts</p>
+CARTE_ONYX_HTML = '''<p class="carte-aide" data-commun="instrument">each dot is one question's sealed public record, placed at its age in days · <b>pull the validity line</b> to ask what a shorter or longer validity period would change : a dot past it would lose its « fresh » control, and the --next lines state it · hover a dot to read its five verdicts</p>
           <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 300" role="img" aria-label="The questions' seals on a time axis, with the declared rhythm as a line"></svg></div>'''
 
 PANNEAU_ONYX_HTML = '''<aside class="pan" id="pan" aria-live="polite">
@@ -493,7 +493,7 @@ JS_ONYX = '''
   function suivantesO() {
     const lignes = [];
     for (const [q, d] of Object.entries(D.questions)) {
-      if (!d.present) { lignes.push("<b>" + esc(q) + "</b>: no public record yet \\u00b7 nothing judged"); continue; }
+      if (!d.present) { lignes.push("<b>" + esc(q) + "</b>: no sealed public record yet \\u00b7 nothing judged"); continue; }
       const tenu = Object.fromEntries((d.verdicts || []).map((v) => [v.controle, v.tenu]));
       const suivant = ORDRE.find((c) => !(c in tenu) || !tenu[c]);
       const jours = typeof d.joursDepuis === "number" ? " \\u00b7 measured " + d.joursDepuis + " day(s) ago" : "";

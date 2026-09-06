@@ -290,7 +290,7 @@ JS = '''
     const sortie = $("#b-lecture");
     if (!c) {
       sortie.innerHTML = "no cell holds a recall LOWER BOUND of <b>" + plancher.toFixed(2)
-        + "</b> on the public record \\u00b7 the tool would say the same, and name the strongest bound available";
+        + "</b> on the sealed public record \\u00b7 the tool would say the same, and name the strongest bound available";
     } else {
       sortie.innerHTML = "under a recall floor of <b>" + plancher.toFixed(2) + "</b> (lower bound, the tool's rule): "
         + "<b>" + c.palier + "</b> at threshold <b>" + c.seuil.toFixed(2) + "</b>"
@@ -340,10 +340,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Scoring: the live instrument">
-<meta property="og:description" content="Each risk factor at each threshold on the public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
+<meta property="og:description" content="Each risk factor at each threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
 <meta property="og:url" content="https://cascade-routing.com/scoring/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Each risk factor at each threshold on the public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
+<meta name="description" content="Each risk factor at each threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23100b1f'/%3E%3Cpath d='M16 0v16H0z' fill='%234b2a7a'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
@@ -358,16 +358,16 @@ PAGE = f'''<!doctype html><html lang="en">
     <a href="ANNEXE-SCORING-SECURITE.html">Security</a>
     <a href="../CONTACT.html">Contact</a>
   </nav>
-  <span class="sceau">seal {D["provenance"]["empreinte"]} &#183; measured, then frozen</span>
+  <span class="sceau"<content hash {D["provenance"]["empreinte"]} &#183; measured, then frozen</span>
 </header>
 
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">Each risk factor at each threshold, live.</h1>
-    <p class="lede">Each figure on this page comes from the <b>public record</b> of
+    <p class="lede">Each figure on this page comes from the <b>sealed public record</b> of
       cascade-scoring: customer files the repository wrote itself, benign cases included,
       measured by its own risk factors. No client data exists here, none enters and none leaves,
-      and each figure is recomputed from the public record as the page loads.</p>
+      and each figure is recomputed from the sealed public record as the page loads.</p>
   </div>
 </section>
 
@@ -378,7 +378,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <div class="poste-grille">
       <div class="fen-robot">
       <div class="terminal">
-        <div class="tm-barre"><i></i><i></i><i></i><span>cascade scoring &#183; the public record, live</span></div>
+        <div class="tm-barre"><i></i><i></i><i></i><span>cascade scoring &#183; the sealed public record, live</span></div>
         <div class="tm-corps">
           <p class="tm-l"><span class="ps">$</span> cascade score --live<span class="caret" aria-hidden="true"></span></p>
           <div class="regls" role="group" aria-label="Which half of the record">
@@ -417,7 +417,7 @@ PAGE = f'''<!doctype html><html lang="en">
     <div class="plis">
       <details class="pli"><summary>What this rests on</summary>
     <ul>
-      <li><b>The public record.</b> releve-public.json in the repository, content hash
+      <li><b>The sealed public record.</b> releve-public.json in the repository, content hash
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
         on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
         then recomposes witness cells with the tool&#8217;s own interval code, and does not emit
@@ -457,7 +457,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <div><span class="ps">$</span> git clone {DEPOT_URL}.git</div>
       <div><span class="ps">$</span> npm ci --ignore-scripts</div>
       <div><span class="ps">$</span> npm run measure:yours -- --customers=your-customers.csv --reviews=your-reviews.csv</div>
-      <div class="note">the report and the public record are written next to your files, and nowhere else &#183; a record measured under your tables carries them: share it as you would your risk policy</div>
+      <div class="note">the report and the sealed public record are written next to your files, and nowhere else &#183; a record measured under your tables carries them: share it as you would your risk policy</div>
     </div>
     </aside>
   </div>
@@ -466,7 +466,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <footer class="pied">
   <div class="colonne">
     <p class="pied-p">Your records stay on your machine, and <em>no data of yours goes up.</em></p>
-    <span class="sceau">seal {D["provenance"]["empreinte"]} &#183; measured, then frozen &#183; <a href="{DEPOT_URL}">repository</a></span>
+    <span class="sceau"<content hash {D["provenance"]["empreinte"]} &#183; measured, then frozen &#183; <a href="{DEPOT_URL}">repository</a></span>
   </div>
 </footer>
 

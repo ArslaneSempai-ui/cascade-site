@@ -1037,11 +1037,11 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade: routing audit, KYC extraction">
-<meta property="og:description" content="A routing audit for KYC extraction: measured on public records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
+<meta property="og:description" content="A routing audit for KYC extraction: measured on sealed public records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
 <meta property="og:url" content="https://cascade-routing.com/routing/">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="A routing audit for KYC extraction: measured on public records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
+<meta name="description" content="A routing audit for KYC extraction: measured on sealed public records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">
@@ -1058,7 +1058,7 @@ PAGE = f'''<!doctype html><html lang="en">
     <a href="ANNEXE-QUESTIONS.html">Questions</a>
     <a href="CONTACT.html">Contact</a>
   </nav>
-  <span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>
+  <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>
 </header>
 
 <main>
@@ -1069,7 +1069,7 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
     <code class="ln">node src/premiere-reponse.mjs</code>
-    <span class="note">The conclusion, from the public records. Before npm install, under a second.</span>
+    <span class="note">The conclusion, from the sealed public records. Before npm install, under a second.</span>
   </div>
   <div class="cue" aria-hidden="true"><span>scroll</span><span class="fil"></span></div>
 </section>
@@ -1086,9 +1086,9 @@ PAGE = f'''<!doctype html><html lang="en">
 </section>
 
 <section class="instrument" data-commun="instrument"><div class="colonne">
-  <h2 class="h2">The live instrument, on the public record.</h2>
+  <h2 class="h2">The live instrument, on the sealed public record.</h2>
   {affiche_html("paliers", LANDING, [], "INSTRUMENT.html", "Cascade &#183; Routing",
-                "Each field at each tier, accuracy and cost read live from the public record, and a budget line you pull the way the tool chooses.",
+                "Each field at each tier, accuracy and cost read live from the sealed public record, and a budget line you pull the way the tool chooses.",
                 "rendus/robot-vert-regarde.webp",
                 note=f"Measured on {N_SOCLE:,} held-out records for rules, small and large, {N_GEN} for the generative tiers. "
                      f"The human tier is assumed at {qte(HUMAIN)} % until you measure it: "
@@ -1097,7 +1097,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <div class="couture" aria-hidden="true"><div class="colonne">
   <span class="filet"></span>
-  <span class="sceau-c">measured, then frozen &#183; seal {SCEAU}</span>
+  <span class="sceau-c">measured, then frozen &#183; content hash {SCEAU}</span>
   <span class="filet"></span>
 </div></div>
 
@@ -1119,7 +1119,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <footer class="pied"><div class="colonne">
   <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
-  <span class="sceau">120 files &#183; {N_TESTS} tests &#183; seal {SCEAU}</span>
+  <span class="sceau">120 files &#183; {N_TESTS} tests &#183; content hash {SCEAU}</span>
 </div></footer>
 
 <script>{JS}</script>{_SCRUB_V}
@@ -1157,7 +1157,7 @@ def batir_accueil():
                        "publisher": {"@id": "https://cascade-routing.com/#org"}})
     donnees = json.dumps({"@context": "https://schema.org", "@graph": graphe}, ensure_ascii=True)
     description = ("Cascade: instruments for compliance decisions, one method. Each tier "
-                   "measured on public records, the best trade-off read with its interval, rerun on "
+                   "measured on sealed public records, the best trade-off read with its interval, rerun on "
                    "your own machine.")
     page = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade &#183; measured instruments for compliance</title>
@@ -1190,7 +1190,7 @@ def batir_accueil():
   <span class="marque-h entree">Cascade &#183; {n} instruments, one method</span>
   <h1 class="h1 entree">Measure each model tier's accuracy and cost, on your own records.</h1>
   <p class="lede entree">Cascade routes each identity field to a model tier, from a regular expression to a
-    human, and measures the accuracy and cost of every routing on a public record. The same run
+    human, and measures the accuracy and cost of every routing on a sealed public record (hashed, then frozen: its content hash is checked before a figure is shown). The same run
     repeats on your own files, at your desk.</p>
   <div class="cue" aria-hidden="true"><span>choose</span><span class="fil"></span></div>
 </section>
@@ -1283,7 +1283,7 @@ def _table_dossier(spec, releve, findings):
     for nom_q, q in releve["questions"].items():
         if not q.get("present"):
             lignes += (f"<tr><th scope='row'>{nom_q}</th><td class='cell' colspan='{len(ordre)}'>"
-                       f"<small>no public record yet: nothing judged, and said</small></td></tr>")
+                       f"<small>no sealed public record yet: nothing judged, and said</small></td></tr>")
             continue
         verd = {v["controle"]: v["tenu"] for v in q.get("verdicts", [])}
         etat = q.get("etat")
@@ -1298,7 +1298,7 @@ def _table_dossier(spec, releve, findings):
                 cells += "<td class='cell'><span>&#215;</span><br><small>not held</small></td>"
         lignes += f"<tr><th scope='row'>{nom_q}</th>{cells}</tr>"
     cv, rg = releve["couverture"], releve["reglages"]
-    note = (f"{cv['n']} of the {cv['sur']} questions carry a public record. In each row the "
+    note = (f"{cv['n']} of the {cv['sur']} questions carry a sealed public record. In each row the "
             "marked cell is the state reached with no gap in the contract&#8217;s order; a row "
             "without one reaches none, and the record states this. The declared validity period is "
             f"{rg['rythmeJours']} days, as of {rg['auJour']}.")
@@ -1333,7 +1333,7 @@ SPECS = {
         instrument_page="INSTRUMENT-SCREENING.html",
         instrument_eti="Cascade &#183; Screening",
         instrument_sub="Each matcher at each threshold, recall and false alerts with their intervals, "
-                       "live from the public record, and the tool's own selection rule under your recall floor.",
+                       "live from the sealed public record, and the tool's own selection rule under your recall floor.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
                         "ANNEXE-SCREENING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "The lists, the seal, and what never leaves.",
@@ -1369,7 +1369,7 @@ SPECS = {
         instrument_page="INSTRUMENT-MONITORING.html",
         instrument_eti="Cascade &#183; Monitoring",
         instrument_sub="Each scenario at each threshold, recall and false alerts with their intervals, "
-                       "live from the public record, and the tool's own selection rule under your recall floor.",
+                       "live from the sealed public record, and the tool's own selection rule under your recall floor.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
                         "ANNEXE-MONITORING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "What is rebuilt, what is assumed, and what never leaves.",
@@ -1405,7 +1405,7 @@ SPECS = {
         instrument_page="INSTRUMENT-SCORING.html",
         instrument_eti="Cascade &#183; Scoring",
         instrument_sub="Each risk factor at each threshold, recall and false alerts with their intervals, "
-                       "live from the public record, and the tool's own selection rule under your recall floor.",
+                       "live from the sealed public record, and the tool's own selection rule under your recall floor.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
                         "ANNEXE-SCORING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "The declared tables, the seal, and what never leaves.",
@@ -1442,14 +1442,14 @@ SPECS = {
         instrument_page="INSTRUMENT-DOSSIER.html",
         instrument_eti="Cascade &#183; Dossier",
         instrument_sub="The four questions against the five controls, states, seals and freshness "
-                       "live from the public dossier, and what the next control still needs.",
+                       "live from the sealed public dossier, and what the next control still needs.",
         annexe_methode=("Method &amp; what is verified", "What the five controls hold, and what a gap means.",
                         "ANNEXE-DOSSIER-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "What is read, what is derived, and what never leaves.",
                          "ANNEXE-DOSSIER-SECURITE.html"),
         icone_prefixe=ICONES_PREFIXE["dossier"],
         table_ligne="question",
-        table_caption="State reached by each question of the chain under the contract&#8217;s five controls, on the public records",
+        table_caption="State reached by each question of the chain under the contract&#8217;s five controls, on the sealed public records",
         table=_table_dossier,
         refaire=_refaire_dossier,
         pied="Your records stay on your machine, and <em>no data of yours goes up.</em>",
@@ -1723,7 +1723,7 @@ def batir_outil_catalogue(o, spec):
     <a href="{spec["annexe_securite"][2]}">Security</a>
     <a href="{lien(o, 'CONTACT.html')}">Contact</a>
   </nav>
-  <span class="sceau">seal {SCEAU_O} &#183; measured, then frozen</span>
+  <span class="sceau">content hash {SCEAU_O} &#183; measured, then frozen</span>
 </header>
 
 <main>
@@ -1747,7 +1747,7 @@ def batir_outil_catalogue(o, spec):
   </div>
 </section>
 <section class="instrument" data-commun="instrument"><div class="colonne">
-  <h2 class="h2">The live instrument, on the public record.</h2>
+  <h2 class="h2">The live instrument, on the sealed public record.</h2>
   {affiche_html("horloge" if o["id"] == "dossier" else "courbes", RELEVE, FINDINGS, spec["instrument_page"],
                 spec["instrument_eti"], spec["instrument_sub"], "../rendus/robot-" + ICONES_COULEUR[o["id"]] + "-regarde.webp",
                 note="" if o["id"] == "dossier" else _note_outil(spec, RELEVE, FINDINGS))}
@@ -1755,7 +1755,7 @@ def batir_outil_catalogue(o, spec):
 
 <div class="couture" aria-hidden="true"><div class="colonne">
   <span class="filet"></span>
-  <span class="sceau-c">measured, then frozen &#183; seal {SCEAU_O}</span>
+  <span class="sceau-c">measured, then frozen &#183; content hash {SCEAU_O}</span>
   <span class="filet"></span>
 </div></div>
 {film_html(o)}
@@ -1772,7 +1772,7 @@ def batir_outil_catalogue(o, spec):
 
 <footer class="pied"><div class="colonne">
   <p class="pied-p">{spec["pied"]}</p>
-  <span class="sceau">{n_tests_o} tests &#183; seal {SCEAU_O}</span>
+  <span class="sceau">{n_tests_o} tests &#183; content hash {SCEAU_O}</span>
 </div></footer>
 
 <script>{JS}</script>{scrub_o}

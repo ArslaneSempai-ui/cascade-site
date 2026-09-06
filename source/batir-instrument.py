@@ -337,12 +337,12 @@ PAGE = f'''<!doctype html><html lang="en">
     <a href="ANNEXE-QUESTIONS.html">Questions</a>
     <a href="CONTACT.html">Contact</a>
   </nav>
-  <span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>
+  <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>
 </header>
 
 <main>
 <section class="tete"><div class="colonne">
-  <h1 class="h1">Test the routing on the public record, live.</h1>
+  <h1 class="h1">Test the routing on the sealed public record, live.</h1>
   <p class="lede">One tier per field. Click any cell to see what your routing costs and how often it
     gets it right. Or set your budget and let the enumeration choose, the way the tool does:
     <b>highest accuracy first, cheaper on a tie</b>.</p>
@@ -430,7 +430,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <footer class="pied"><div class="colonne">
   <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
-  <span class="sceau">seal {SCEAU} &#183; measured, then frozen</span>
+  <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>
 </div></footer>
 
 <script>

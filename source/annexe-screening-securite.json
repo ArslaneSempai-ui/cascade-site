@@ -82,7 +82,7 @@
     {
       "h2": "Never a screened name in an output",
       "html": [
-        "<p>When you measure on your own alert history, the outputs are written <b>next to your file and nowhere else</b>: a report and a public record holding counts, rates, intervals and verdicts by your alert id. No screened name, no list entry you matched and no path with your username leave the machine. Your identifiers do survive as verdict keys, so choose them opaque: an id that is an account number stays an account number.</p>",
+        "<p>When you measure on your own alert history, the outputs are written <b>next to your file and nowhere else</b>: a report and a sealed public record holding counts, rates, intervals and verdicts by your alert id. No screened name, no list entry you matched and no path with your username leave the machine. Your identifiers do survive as verdict keys, so choose them opaque: an id that is an account number stays an account number.</p>",
         "<p>The screening itself runs on your machine against local lists; there is no callback, no telemetry, no account. The evaluation needs nothing from us but the repository.</p>"
       ],
       "verif": {

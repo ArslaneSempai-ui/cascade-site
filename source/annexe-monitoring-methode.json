@@ -2,7 +2,7 @@
   "_": "Method page of the lapis tool (Monitoring). Same shape as the red annexes. Every refs points at a real line of ~/Documents/cascade-monitoring at main 9f77ea2; the citation guard must know the third repository. The object render does not exist yet (look-dev).",
   "objet": "rendus/etats/objet-monitoring-methode.webp",
   "titre": "How the monitoring grid is measured.",
-  "lede": "This page shows what the monitoring numbers are made of: which cases, which scenarios, which scales, and where each figure is not quoted. No real transaction exists in the public record, and the page states this before anything else: the measurement that counts is yours, on your own dispositioned alerts, at your desk.",
+  "lede": "This page shows what the monitoring numbers are made of: which cases, which scenarios, which scales, and where each figure is not quoted. No real transaction exists in the sealed public record, and the page states this before anything else: the measurement that counts is yours, on your own dispositioned alerts, at your desk.",
   "sections": [
     {
       "h2": "Written cases, twin by twin",

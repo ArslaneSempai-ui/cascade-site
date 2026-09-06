@@ -25,7 +25,7 @@
     {
       "h2": "No real person, and no official list, anywhere public",
       "html": [
-        "<p>Each dossier in the public record was <b>written for the typology it illustrates</b> or generated from those dossiers under a seed. No anonymised customer data, because the customer data is simply absent. And no official risk list was copied into the data: a test requires suspects and retained files to <b>share their countries</b>, so the record cannot smuggle a list in through its examples, and the geography factor's zero on this book is printed as a finding.</p>"
+        "<p>Each dossier in the sealed public record was <b>written for the typology it illustrates</b> or generated from those dossiers under a seed. No anonymised customer data, because the customer data is simply absent. And no official risk list was copied into the data: a test requires suspects and retained files to <b>share their countries</b>, so the record cannot smuggle a list in through its examples, and the geography factor's zero on this book is printed as a finding.</p>"
       ],
       "verif": {
         "t": "Verify the provenance",
@@ -47,7 +47,7 @@
       ],
       "verif": {
         "t": "Verify the seal, offline",
-        "p": "Cut the network, run everything, then recompute the public record's seal.",
+        "p": "Cut the network, run everything, then recompute the sealed public record's seal.",
         "cmd": [
           {
             "c": "CASCADE_OFFLINE=1 npm test",

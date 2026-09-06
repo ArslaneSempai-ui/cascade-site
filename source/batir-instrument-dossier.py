@@ -68,7 +68,7 @@ def table_html():
     for q in QUESTIONS:
         if not D["questions"][q]["present"]:
             lignes += (f"<tr class='absent'><th scope='row'>{q}</th>"
-                       f"<td colspan='{len(ORDRE)}'>no public record yet: nothing judged, and said rather than guessed</td></tr>")
+                       f"<td colspan='{len(ORDRE)}'>no sealed public record yet: nothing judged, and said rather than guessed</td></tr>")
             continue
         cells = "".join(
             f'<td><button class="cell" data-q="{q}" data-c="{c}" aria-pressed="false">'
@@ -253,7 +253,7 @@ JS = '''
   (() => {
     const lignes = [];
     for (const [q, d] of Object.entries(D.questions)) {
-      if (!d.present) { lignes.push("<b>" + q + "</b>: no public record yet \\u00b7 nothing judged"); continue; }
+      if (!d.present) { lignes.push("<b>" + q + "</b>: no sealed public record yet \\u00b7 nothing judged"); continue; }
       const tenu = Object.fromEntries((d.verdicts || []).map((v) => [v.controle, v.tenu]));
       const suivant = ORDRE.find((c) => !(c in tenu) || !tenu[c]);
       const jours = typeof d.joursDepuis === "number" ? " \\u00b7 measured " + d.joursDepuis + " day(s) ago" : "";
@@ -304,10 +304,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Dossier: the live instrument">
-<meta property="og:description" content="The four questions of the chain against the contract's five controls, states and verdicts live from the public dossier, and what the next control still needs.">
+<meta property="og:description" content="The four questions of the chain against the contract's five controls, states and verdicts live from the sealed public dossier, and what the next control still needs.">
 <meta property="og:url" content="https://cascade-routing.com/dossier/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="The four questions of the chain against the contract's five controls, states and verdicts live from the public dossier, and what the next control still needs.">
+<meta name="description" content="The four questions of the chain against the contract's five controls, states and verdicts live from the sealed public dossier, and what the next control still needs.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23070709'/%3E%3Cpath d='M16 0v16H0z' fill='%231c1c22'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
@@ -322,16 +322,16 @@ PAGE = f'''<!doctype html><html lang="en">
     <a href="ANNEXE-DOSSIER-SECURITE.html">Security</a>
     <a href="../CONTACT.html">Contact</a>
   </nav>
-  <span class="sceau">seal {D["provenance"]["empreinte"]} &#183; measured, then frozen</span>
+  <span class="sceau"<content hash {D["provenance"]["empreinte"]} &#183; measured, then frozen</span>
 </header>
 
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">The whole chain in one table, live.</h1>
-    <p class="lede">Each line on this page comes from the <b>public dossier</b> of
-      cascade-dossier: the suite&#8217;s own public records, read and judged by its five controls.
+    <p class="lede">Each line on this page comes from the <b>sealed public dossier</b> of
+      cascade-dossier: the suite&#8217;s own sealed public records, read and judged by its five controls.
       No client data exists here, none enters and none leaves,
-      and each figure is recomputed from the public record as the page loads.</p>
+      and each figure is recomputed from the sealed public record as the page loads.</p>
   </div>
 </section>
 
@@ -342,10 +342,10 @@ PAGE = f'''<!doctype html><html lang="en">
       <div class="poste-grille">
       <div class="fen-robot">
       <div class="terminal">
-        <div class="tm-barre"><i></i><i></i><i></i><span>cascade dossier &#183; the public dossier, live</span></div>
+        <div class="tm-barre"><i></i><i></i><i></i><span>cascade dossier &#183; the sealed public dossier, live</span></div>
         <div class="tm-corps">
           <p class="tm-l"><span class="ps">$</span> cascade dossier --live<span class="caret" aria-hidden="true"></span></p>
-          <p class="tm-sortie">coverage <b>{CV["n"]} / {CV["sur"]}</b> questions with a public record &#183;
+          <p class="tm-sortie">coverage <b>{CV["n"]} / {CV["sur"]}</b> questions with a sealed public record &#183;
             declared rhythm <b>{RG["rythmeJours"]} days</b> &#183; as of <b>{RG["auJour"]}</b></p>
           {CARTE_ONYX_HTML}
           {table_html()}
@@ -373,12 +373,12 @@ PAGE = f'''<!doctype html><html lang="en">
     <div class="plis">
       <details class="pli"><summary>What this rests on</summary>
     <ul>
-      <li><b>The public dossier.</b> releve-public.json in the repository, content hash
+      <li><b>The sealed public dossier.</b> releve-public.json in the repository, content hash
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
         on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
         then recomposes each question&#8217;s state from its own verdicts with the contract&#8217;s
         no-gap rule, and does not emit if a single line disagrees.</li>
-      <li><b>The suite&#8217;s own public records.</b> The reports judged here are the public
+      <li><b>The suite&#8217;s own sealed public records.</b> The reports judged here are the public
         records of Cascade&#8217;s tools (the reader, the matcher, the scenario, the factor):
         published, sealed, verifiable by anyone. A question without one is a named row,
         never a guessed column.</li>
@@ -402,7 +402,7 @@ PAGE = f'''<!doctype html><html lang="en">
     </div>
     <aside class="clone-col">
     <h2>Assemble the dossier of your own reports</h2>
-    <p>The instrument shows our dossier, over our public records. Yours is assembled at home,
+    <p>The instrument shows our dossier, over our sealed public records. Yours is assembled at home,
       by the tool, from the signed reports the suite&#8217;s tools left at your desk, and nothing
       about them leaves your machine.</p>
     <span class="clone-t">The three commands, exactly as they run</span>
@@ -419,7 +419,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <footer class="pied">
   <div class="colonne">
     <p class="pied-p">Your records stay on your machine, and <em>no data of yours goes up.</em></p>
-    <span class="sceau">seal {D["provenance"]["empreinte"]} &#183; measured, then frozen &#183; <a href="{DEPOT_URL}">repository</a></span>
+    <span class="sceau"<content hash {D["provenance"]["empreinte"]} &#183; measured, then frozen &#183; <a href="{DEPOT_URL}">repository</a></span>
   </div>
 </footer>
 

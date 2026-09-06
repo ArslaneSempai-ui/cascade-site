@@ -30,7 +30,7 @@
       ],
       "verif": {
         "t": "Verify on the record itself",
-        "p": "The public record holds verdicts, seals, dates and counts; search it for anything else.",
+        "p": "The sealed public record holds verdicts, seals, dates and counts; search it for anything else.",
         "cmd": [
           {
             "c": "python3 -c \"import json; d=json.load(open('releve-public.json')); print(sorted(d), '/', sorted(d['questions']))\"",
@@ -47,7 +47,7 @@
       ],
       "verif": {
         "t": "Verify a refusal",
-        "p": "Read any signed verdict in the public record: it carries its reason.",
+        "p": "Read any signed verdict in the sealed public record: it carries its reason.",
         "cmd": [
           {
             "c": "python3 -c \"import json; q=json.load(open('releve-public.json'))['questions']['screening']; print([v['detail'] for v in q['verdicts'] if v['controle']=='signed'][0])\"",

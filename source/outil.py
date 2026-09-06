@@ -120,7 +120,7 @@ OUTILS = {
         # palette et que le pan vert doit y rester vert
         "page_hero": "HERO.html",
         "etiquette": "Routing &#183; identity-field extraction",
-        "pitch": "Seven model tiers per field, from a regular expression to a human, measured on public records.",
+        "pitch": "Seven model tiers per field, from a regular expression to a human, measured on sealed public records.",
         "robot_rideau": "robot-salut.webp",           # il salue (etats/robots-rideau.py)
         "vif": "#57b184",
         "nuit": ("#1b3229", "#14251e", "#0e1a15"),
@@ -218,7 +218,7 @@ OUTILS = {
         "robot_rideau": "robot-onyx-tient.webp",        # il tient la pièce
         "affiche": "affiche-dossier.jpg",
         "affiche_encre": "#2a2a31",                    # le gris vif de l'onyx s'efface sur la plaque : l'encre projetée est plus sombre
-        "affiche_alt": "The onyx Cascade robot, palms up, projecting two counts from the public dossier: "
+        "affiche_alt": "The onyx Cascade robot, palms up, projecting two counts from the sealed public dossier: "
                        "the questions holding the fresh control on the left, those not holding it on the right.",
         "vif": "#8a8a96",
         "nuit": ("#121216", "#0c0c10", "#070709"),

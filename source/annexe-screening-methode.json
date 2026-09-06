@@ -12,7 +12,7 @@
       ],
       "verif": {
         "t": "Verify the record",
-        "p": "The public record is sealed. Recompute the content hash with the repository's own tool; it answers in one line.",
+        "p": "The sealed public record is sealed. Recompute the content hash with the repository's own tool; it answers in one line.",
         "cmd": [
           {
             "c": "npm run sceller -- releve-public.json",
