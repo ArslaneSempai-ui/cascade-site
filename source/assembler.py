@@ -5,12 +5,12 @@ Lancé depuis source/, il se reconnaît et ne recopie pas la chaîne sur
 elle-même. Ce qu'il produit :
   docs/    le site bâti, noms de production (index.html, security.html…),
            prêt pour n'importe quel hébergement statique ;
-  source/  toute la chaîne de fabrication — bâtisseurs, contenus JSON, relevé,
-           scripts Blender — pour que le site reste re-bâtissable.
+  source/  toute la chaîne de fabrication : bâtisseurs, contenus JSON, relevé,
+           scripts Blender : pour que le site reste re-bâtissable.
 
 Le branchement sur la publication N'EST PAS fait ici : docs/ du dépôt
 cascade-routing est GÉNÉRÉ par `npm run pages` et gardé par des tests
-d'empreintes (.sources.json) — y verser ce site est une opération dans ce
+d'empreintes (.sources.json) : y verser ce site est une opération dans ce
 dépôt-là, à décider séparément.
 
 Contrôle de liens avec témoin positif : avant de croire « zéro lien cassé »,
@@ -31,7 +31,7 @@ DOCS = SITE / "docs"
 BASE_URL = "https://cascade-routing.com/"
 # Le chemin sous lequel le site est servi se déduit de l'URL : « /cascade-site/ »
 # aujourd'hui, « / » le jour du domaine propre. Trois usages en dépendent (la
-# base de la 404, l'icône tactile, le contrôle de liens) — ils lisent tous ICI.
+# base de la 404, l'icône tactile, le contrôle de liens) : ils lisent tous ICI.
 from urllib.parse import urlparse
 PREFIXE = urlparse(BASE_URL).path
 
@@ -89,8 +89,8 @@ import subprocess
 # ── les pièces ne doivent pas bouger SOUS l'assemblage ───────────────────────
 # Le 9/09, un pan de rideau vers HERO-SCORING est resté dans les pages émises alors
 # que l'émission refusait le bloc : la définition de « prêt » (manques()) est bien
-# unique, mais elle est LUE deux fois — par batir-hero au bâti, par la porte à
-# l'émission — et entre les deux, une livraison d'états en cours l'a fait changer.
+# unique, mais elle est LUE deux fois : par batir-hero au bâti, par la porte à
+# l'émission : et entre les deux, une livraison d'états en cours l'a fait changer.
 # Le contrôle de liens attrapait le symptôme (liens cassés) ; ceci nomme la cause.
 import sys as _sys0
 _sys0.path.insert(0, str(MAQ))
@@ -109,7 +109,7 @@ def verifier_pieces_stables(avant, apres):
         detail = "; ".join(f"{oid}: {len(avant[oid])} pièce(s) manquante(s) avant, "
                            f"{len(apres[oid])} après" for oid in bouges)
         sys.exit(f"PIÈCES BOUGÉES PENDANT L'ASSEMBLAGE ({detail}) : les rideaux bâtis et "
-                 "la porte d'émission ne décrivent plus le même site — une livraison est "
+                 "la porte d'émission ne décrivent plus le même site : une livraison est "
                  "passée sous l'assemblage ; la poser entière, puis relancer")
 
 _PIECES_AVANT = photo_pieces()
@@ -122,15 +122,15 @@ for batisseur in ("batir-hero.py", "batir-instrument.py", "batir-instrument-scre
                    cwd=str(MAQ), capture_output=True)
 manquants = [v for v in PROD if not (MAQ / v).exists()]
 if manquants:
-    sys.exit(f"pages absentes après bâtisse : {manquants} — rien n'est effacé")
+    sys.exit(f"pages absentes après bâtisse : {manquants} : rien n'est effacé")
 if not (MAQ / "og.png").exists():
-    sys.exit("og.png absent — le régénérer depuis og-card.html (capture 1200x630)")
+    sys.exit("og.png absent : le régénérer depuis og-card.html (capture 1200x630)")
 
 # ── témoin d'abord (lot M-C1) : les gardes de séquences savent-elles encore rougir ? ─────
 # manques() porte désormais les quatre gardes de séquences (identité, fraîcheur, poids,
 # complétude). Avant de croire un manques() vide, on prouve que chacune voit encore son
 # défaut : temoin-sequences.py mue un arbre factice défaut par défaut et exige le rouge.
-# Un témoin cassé arrête l'émission AVANT le rmtree de docs/ (l'incident du 9/09 : la porte vivait après le vide, un témoin rouge laissait docs/ vide) — un zéro qui ne sait plus rougir ne garde rien.
+# Un témoin cassé arrête l'émission AVANT le rmtree de docs/ (l'incident du 9/09 : la porte vivait après le vide, un témoin rouge laissait docs/ vide) : un zéro qui ne sait plus rougir ne garde rien.
 _ts = subprocess.run([sys.executable, str(MAQ / "temoin-sequences.py")],
                      capture_output=True, text=True)
 if _ts.returncode != 0:
@@ -148,7 +148,7 @@ DOCS.mkdir(parents=True)
 def csp(t):
     """La politique de sécurité de contenu, par empreintes : seuls NOS styles
     et NOS scripts, hachés sur leur contenu final, ont le droit de tourner.
-    Tout le reste — connexions, cadres, formulaires, scripts étrangers — est
+    Tout le reste : connexions, cadres, formulaires, scripts étrangers : est
     refusé. GitHub Pages ne pose pas d'en-têtes ; la balise meta porte tout ce
     qu'une meta peut porter (frame-ancestors, lui, exige un en-tête)."""
     import base64
@@ -163,7 +163,7 @@ def csp(t):
     style_src = "'self' " + " ".join(h(s) for s in styles)
     # les attributs style="…" (les drapeaux de l'instrument du héros) ne sont
     # pas couverts par les hachés d'éléments : CSP3 les admet un par un via
-    # 'unsafe-hashes' — chaque VALEUR d'attribut est hachée, rien d'autre ne passe
+    # 'unsafe-hashes' : chaque VALEUR d'attribut est hachée, rien d'autre ne passe
     attributs = sorted(set(re.findall(r'style="([^"]*)"', t)))
     if attributs:
         style_src += " 'unsafe-hashes' " + " ".join(h(a) for a in attributs)
@@ -237,7 +237,7 @@ for _oid, _prod, _lots in EN_BLOC:
     _mq = _manques(_oid, MAQ)
     if _absentes and not _mq:
         # manques() est vide : le rideau MONTRE le pan de cet outil sur toutes les
-        # pages — et une page de production manque quand même. C'est toujours un
+        # pages : et une page de production manque quand même. C'est toujours un
         # bâtisseur non enregistré (PAGES_* de batir-annexe, liste des bâtisseurs
         # ci-dessus, SPECS du héros) : publier ferait des liens morts, et l'a fait
         # (six vers HERO-SCORING le 9/09). Refus nommé, plus une absence dite.
@@ -278,8 +278,8 @@ _SCELLE_DEF = " (hashed, then frozen: its content hash is checked before a figur
 _SCELLE_TERMES = ("sealed public records", "sealed public record", "sealed public dossiers",
                   "sealed public dossier", "sealed records", "sealed record")
 # les zones où « sealed » ne se définit PAS : le HÉROS et son lede (l'accroche reste
-# légère — le chef, 10/09), le rideau et ses pans, la nav, le pied, les boutons, les
-# étiquettes — la définition se pose sur la première mention APRÈS le héros, dans la prose.
+# légère : le chef, 10/09), le rideau et ses pans, la nav, le pied, les boutons, les
+# étiquettes : la définition se pose sur la première mention APRÈS le héros, dans la prose.
 _SCELLE_SAUT_TAGS = {"nav", "footer", "button"}
 _SCELLE_SAUT_CLS = ("hero", "lede", "rideau", "pan", "ap-eti", "j-titre", "j-cote", "j-num",
                     "note", "cue", "marque", "sceau", "rail", "affiche")
@@ -471,7 +471,7 @@ for _oid in sorted(_outils_emis | {"routing"}):
     for w in (MAQ / "rendus" / "etats").glob(f"{ETATS_PREFIXE[_oid]}-*.webp"):
         shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
     # les séquences de la chorégraphie (lot P-C1) suivent les états : copiées quand
-    # l'outil s'émet ET que son dossier existe ; sans séquences, rien — la page bâtie
+    # l'outil s'émet ET que son dossier existe ; sans séquences, rien : la page bâtie
     # sans manifeste n'y fait de toute façon aucune référence
     _seq = MAQ / "rendus" / "sequences" / ETATS_PREFIXE[_oid]
     if _seq.exists():
@@ -481,7 +481,7 @@ shutil.copy(MAQ / "og.png", DOCS / "og.png")
 (DOCS / ".nojekyll").write_text("")
 
 # Le fichier CNAME : c'est LUI qui déclare le domaine propre à GitHub Pages, et
-# docs/ est régénéré à chaque assemblage — s'il n'était pas émis ici, la
+# docs/ est régénéré à chaque assemblage : s'il n'était pas émis ici, la
 # première reconstruction après la bascule ferait tomber le domaine.
 HOTE = urlparse(BASE_URL).hostname
 if not HOTE.endswith(".github.io"):
@@ -510,7 +510,7 @@ publiques = ([n for n in PROD.values() if n != "404.html"]
 
 # ── la garde de dérive : le compte de tests que le site PUBLIE ───────────────
 # Le 31 août, le dépôt est passé de 584/65 à 595/66 en une heure et le site a
-# continué d'afficher l'ancien — sur la page même qui promet qu'un tel chiffre
+# continué d'afficher l'ancien : sur la page même qui promet qu'un tel chiffre
 # « cannot silently rot ». La règle vérifiable devient donc un refus.
 # Elle dit AUSSI quand elle n'a pas pu regarder : un silence se lirait comme un
 # accord, et c'est exactement le vert vide qu'on cherche à éviter.
@@ -527,12 +527,12 @@ def verifier_comptes(pages, depot, etiquette):
     comptes = {n for n, _ in publie}
     fichiers = {f for _, f in publie if f}
     if not depot.exists():
-        print(f"  ! compte de tests {etiquette} NON VÉRIFIÉ : {depot} absent — "
+        print(f"  ! compte de tests {etiquette} NON VÉRIFIÉ : {depot} absent : "
               f"le site publie {sorted(comptes)} / {sorted(fichiers)}")
         return
     m = re.search(r"\*\*(\d+) tests\*\*(?: across (\d+) files)?", depot.read_text())
     if not m:
-        sys.exit(f"la phrase des tests est introuvable dans {depot} — "
+        sys.exit(f"la phrase des tests est introuvable dans {depot} : "
                  f"garde cassée, son silence ne vaut rien")
     vrai_n, vrai_f = m.group(1), m.group(2)
     if comptes - {vrai_n} or (vrai_f and fichiers - {vrai_f}):
@@ -556,7 +556,7 @@ verifier_comptes(sorted((DOCS / "dossier").glob("*.html")) if (DOCS / "dossier")
 # Le site invite un relecteur bancaire à OUVRIR chaque chemin. Une citation qui
 # a glissé de vingt lignes le fait tomber sur autre chose, et c'est pire qu'une
 # absence de citation. Mesuré le 31/08 : le durcissement de l'outil a déplacé 7
-# des 38 citations — un contrôle de bornes serait passé, elles pointaient toutes
+# des 38 citations : un contrôle de bornes serait passé, elles pointaient toutes
 # dans un fichier de la bonne taille. On vérifie donc le CONTENU de la ligne.
 # Chaque OUTIL contre SON dépôt et SON fichier d'ancres (ancrer-citations.py les
 # régénère) : les pages rouges citent cascade-screening, les vertes cascade.
@@ -568,28 +568,28 @@ def verifier_citations(pages, ancres_fichier, outil, etiquette):
     if not citees:
         return
     if not ancres_fichier.exists():
-        print(f"  ! citations {etiquette} NON VÉRIFIÉES : {ancres_fichier.name} absent — "
+        print(f"  ! citations {etiquette} NON VÉRIFIÉES : {ancres_fichier.name} absent : "
               f"{len(citees)} citées")
         return
     if not outil.exists():
-        print(f"  ! citations {etiquette} NON VÉRIFIÉES : {outil} absent — {len(citees)} citées")
+        print(f"  ! citations {etiquette} NON VÉRIFIÉES : {outil} absent : {len(citees)} citées")
         return
     ancres = _json.loads(ancres_fichier.read_text())["ancres"]
     fautes = []
     for c in sorted(citees):
         if c not in ancres:
-            fautes.append(f"{c} — aucune ancre déclarée"); continue
+            fautes.append(f"{c} : aucune ancre déclarée"); continue
         chemin, n = c.rsplit(":", 1)
         f = outil / chemin
         if not f.exists():
-            fautes.append(f"{c} — fichier absent de l'outil"); continue
+            fautes.append(f"{c} : fichier absent de l'outil"); continue
         lignes = f.read_text(errors="replace").splitlines()
         n = int(n)
         if n > len(lignes):
-            fautes.append(f"{c} — au-delà de la fin ({len(lignes)} lignes)"); continue
+            fautes.append(f"{c} : au-delà de la fin ({len(lignes)} lignes)"); continue
         if lignes[n - 1].strip() != ancres[c]:
             ou = [i + 1 for i, x in enumerate(lignes) if x.strip() == ancres[c]]
-            fautes.append(f"{c} — la ligne a changé"
+            fautes.append(f"{c} : la ligne a changé"
                           + (f", le contenu est en {chemin}:{ou[0]}" if len(ou) == 1
                              else ", contenu introuvable"))
     if fautes:
@@ -617,13 +617,13 @@ verifier_citations(sorted((DOCS / "dossier").glob("*.html")) if (DOCS / "dossier
 # Témoin planté d'abord, comme pour les liens : une page zz aux restes bannis DOIT
 # rougir avant qu'un zéro soit cru ; puis la vraie passe, et un refus arrête
 # l'assemblage en nommant page et ligne. garde-voix.py joue en plus son propre
-# témoin interne (fixtures fautive/saine) à chaque lancement — code 2 = garde cassée.
+# témoin interne (fixtures fautive/saine) à chaque lancement : code 2 = garde cassée.
 _zzv = DOCS / "zz-temoin-voix.html"
 _zzv.write_text("<p>The benign twins say so before your eyes.</p>")
 _gv = subprocess.run([sys.executable, str(MAQ / "garde-voix.py"), "--docs", str(DOCS)],
                      capture_output=True, text=True)
 if _gv.returncode == 0:
-    sys.exit("GARDE CASSÉE : la garde de la voix n'a pas vu la page témoin plantée — "
+    sys.exit("GARDE CASSÉE : la garde de la voix n'a pas vu la page témoin plantée : "
              "son zéro ne vaut rien")
 _zzv.unlink()
 _gv = subprocess.run([sys.executable, str(MAQ / "garde-voix.py"), "--docs", str(DOCS)],
@@ -663,7 +663,7 @@ def liens_casses(dossier):
 temoin = DOCS / "zz-temoin.html"
 temoin.write_text('<a href="fantome-inexistant.css">x</a>')
 if not any("fantome-inexistant" in c for c in liens_casses(DOCS)):
-    sys.exit("CONTRÔLE CASSÉ : le témoin planté n'a pas été trouvé — zéro sans valeur")
+    sys.exit("CONTRÔLE CASSÉ : le témoin planté n'a pas été trouvé : zéro sans valeur")
 temoin.unlink()
 
 casses = liens_casses(DOCS)
