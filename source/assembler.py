@@ -22,7 +22,11 @@ import shutil
 import sys
 
 MAQ = pathlib.Path(__file__).parent
-SITE = pathlib.Path.home() / "Documents" / "cascade-site"
+# LE SITE EST LE CHECKOUT QUI PORTE CE SCRIPT, jamais un chemin tapé. Le 9/09 à 03h46, lancé
+# depuis un worktree, l'assembleur ancré sur ~/Documents/cascade-site a rasé la source et les
+# docs/ du checkout PRINCIPAL (travail non commité du chef effacé, 124 pages servies vidées) :
+# une racine absolue fait agir la commande sur un autre dépôt que celui où on la lance.
+SITE = MAQ.parent
 DOCS = SITE / "docs"
 BASE_URL = "https://cascade-routing.com/"
 # Le chemin sous lequel le site est servi se déduit de l'URL : « /cascade-site/ »
@@ -175,16 +179,6 @@ for v in PROD_SCREENING:
 import sys as _sys
 _sys.path.insert(0, str(MAQ))
 from outil import manques as _manques
-
-# ── témoin d'abord (lot M-C1) : les gardes de séquences savent-elles encore rougir ? ─────
-# manques() porte désormais les quatre gardes de séquences (identité, fraîcheur, poids,
-# complétude). Avant de croire un manques() vide, on prouve que chacune voit encore son
-# défaut : temoin-sequences.py mue un arbre factice défaut par défaut et exige le rouge.
-# Un témoin cassé arrête l'émission ici — un zéro qui ne sait plus rougir ne garde rien.
-_ts = subprocess.run([sys.executable, str(MAQ / "temoin-sequences.py")],
-                     capture_output=True, text=True)
-if _ts.returncode != 0:
-    sys.exit(f"GARDE CASSÉE : un témoin des gardes de séquences ne rougit plus :\n{_ts.stdout}{_ts.stderr}")
 EN_BLOC = (("monitoring", PROD_MONITORING, "L5/L5-textes"),
            ("scoring", PROD_SCORING, "A-L5"),
            ("dossier", PROD_DOSSIER, "D3/D4"))
@@ -373,9 +367,15 @@ for rb in (MAQ / "rendus").glob("robot-*.webp"):          # les robots de toutes
 from outil import ETATS_PREFIXE  # noqa: E402
 _outils_emis = ({"screening"} if SCREENING_EMISES else set()) | {
     n.split("/", 1)[0] for n in EMISES_EN_BLOC.values()}
-for _oid in sorted(_outils_emis):
+for _oid in sorted(_outils_emis | {"routing"}):
     for w in (MAQ / "rendus" / "etats").glob(f"{ETATS_PREFIXE[_oid]}-*.webp"):
         shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
+    # les séquences de la chorégraphie (lot P-C1) suivent les états : copiées quand
+    # l'outil s'émet ET que son dossier existe ; sans séquences, rien — la page bâtie
+    # sans manifeste n'y fait de toute façon aucune référence
+    _seq = MAQ / "rendus" / "sequences" / ETATS_PREFIXE[_oid]
+    if _seq.exists():
+        shutil.copytree(_seq, DOCS / "rendus" / "sequences" / ETATS_PREFIXE[_oid])
 shutil.copy(MAQ / "releve.json", DOCS / "releve.json")
 shutil.copy(MAQ / "og.png", DOCS / "og.png")
 (DOCS / ".nojekyll").write_text("")

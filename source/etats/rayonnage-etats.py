@@ -65,6 +65,8 @@ ap.add_argument("--accents", default="geography,product",
                 help="les facteurs des états 1 et 2 (findings 01 et 02 de findings-scoring.json : geography, product)")
 ap.add_argument("--demo", action="store_true", help="jeu déclaré, pour construire l'objet avant le relevé ; jamais pour le site")
 ap.add_argument("--releve", default=None, help="le relevé scellé à lire ; défaut : OUTILS['scoring']['releve'] (outil.py)")
+from scene_commune import options_sequence, rendre_sequence  # noqa: E402 — avant l'analyse des options
+options_sequence(ap)
 args = ap.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
 
 APERCU = args.qualite == "apercu"
@@ -244,7 +246,13 @@ else:
     cadre = boite_du_sujet()
 scene.lampe_cle()
 scene.sol_papier(0.0)
-scene.camera(az, el, focale=60, marge=1.07, ouverture=0.0 if APERCU else 9.0, boite=cadre)
-chemin = os.path.join(args.sortie, f"rayonnage-0{args.etat}.png")
-scene.rendre(chemin, LARGE, HAUT)
-print(f"[rayonnage] rendu → {chemin}\n[rayonnage] Le code de sortie 0 ne prouve rien : ouvrir l'image et la regarder.")
+OUVERTURE = 0.0 if APERCU else 9.0
+if args.sequence:
+    rendre_sequence(args, (az, el, 1.07),
+                    lambda a, e, m: scene.camera(a, e, focale=60, marge=m, ouverture=OUVERTURE, boite=cadre),
+                    lambda chemin: scene.rendre(chemin, LARGE, HAUT), "rayonnage")
+else:
+    scene.camera(az, el, focale=60, marge=1.07, ouverture=OUVERTURE, boite=cadre)
+    chemin = os.path.join(args.sortie, f"rayonnage-0{args.etat}.png")
+    scene.rendre(chemin, LARGE, HAUT)
+    print(f"[rayonnage] rendu → {chemin}\n[rayonnage] Le code de sortie 0 ne prouve rien : ouvrir l'image et la regarder.")
