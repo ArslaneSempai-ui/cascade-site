@@ -131,15 +131,15 @@ APPELS = [
     [
         (0.505, 0.30, 0.68, 0.05, "one chip: ten points of measured accuracy"),
         (0.21, 0.42, 0.04, 0.10, "the published pick: name goes to the large reader"),
-        (0.70, 0.70, 0.80, 0.90, "the empty row: the human tier, never sampled"),
+        (0.70, 0.70, 0.80, 0.94, "the empty row: the human tier, never sampled"),
     ],
     [
-        (0.30, 0.625, 0.09, 0.80, "name changes reader: the file-aimed pick"),
+        (0.30, 0.625, 0.09, 0.88, "name changes reader: the file-aimed pick"),
         (0.21, 0.42, 0.04, 0.10, "the published pick it replaces"),
         (0.417, 0.138, 0.60, 0.05, "a pick both routings share"),
     ],
     [
-        (0.135, 0.30, 0.05, 0.13, "an emptied cell: silence instead of a wrong value"),
+        (0.135, 0.30, 0.05, 0.09, "an emptied cell: silence instead of a wrong value"),
         (0.522, 0.172, 0.66, 0.06, "85 wrong values removed, 12 right lost"),
     ],
     [
@@ -148,7 +148,7 @@ APPELS = [
     ],
     [
         (0.47, 0.40, 0.70, 0.06, "every stack green: 16,807 routings crossed"),
-        (0.70, 0.70, 0.80, 0.90, "still empty: the human tier, never sampled"),
+        (0.70, 0.70, 0.80, 0.94, "still empty: the human tier, never sampled"),
     ],
 ]
 
@@ -178,7 +178,7 @@ def appels_html(i):
         verifier_appel(txt, f"routing, scène {i + 1}")
         # l'étiquette sur le crème, jamais sur l'objet (Arslane, 9/09) : même garde que les quatre outils
         image_v = BASE / "rendus" / "etats" / f"objet-0{i + 1}.webp"
-        if image_v.exists():
+        if image_v.exists() and (BASE / "rendus" / "sequences" / "objet" / "manifest.json").exists():
             part = etiquette_sur_objet(image_v, lx, ly)
             if part > SEUIL_OBJET:
                 sys.exit(f"routing, scène {i + 1} : l'étiquette « {txt} » couvre l'objet ({part:.0%}) : la poser sur le crème")
@@ -1306,7 +1306,7 @@ SPECS = {
     "monitoring": dict(
         lot="L5-textes",
         etats=ETATS_PREFIXE["monitoring"],   # UNE source : outil.py (la divergence bassins/rack a failli faire attendre manques() pour toujours)
-        alt_plateau="The settling basins",
+        alt_plateau="The surveillance rack",
         palette=PALETTE_LAPIS, nuit=NUIT_LAPIS,
         titre="Cascade Monitoring &#183; transaction monitoring audit",
         og_titre="Cascade Monitoring: which scenario suffices, at which threshold",

@@ -492,6 +492,12 @@ def manques_etiquettes(outil_id, base, seuil=SEUIL_OBJET):
         return []
     findings = f["findings"] if isinstance(f, dict) and "findings" in f else f
     prefixe = ETATS_PREFIXE[outil_id]
+    # La règle vaut pour les états CHORÉGRAPHIÉS (gros plans) : un plateau qui n'a pas encore ses
+    # séquences garde ses états larges d'aujourd'hui, validés et en ligne, jusqu'à sa livraison ;
+    # le juger maintenant ferait tomber trois blocs (et les liens du rideau) pour des étiquettes
+    # que la livraison remplace de toute façon. Le manifeste est le signe de la livraison.
+    if not (base / "rendus" / "sequences" / prefixe / "manifest.json").exists():
+        return []
     m = []
     for i, fd in enumerate(findings if isinstance(findings, list) else []):
         image = base / "rendus" / "etats" / f"{prefixe}-0{i + 1}.webp"
