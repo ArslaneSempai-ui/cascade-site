@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-9zkB32O7xg7DYHwcjCN+oeZFM7Sd8MuRnA44x/GdRcA=' 'unsafe-hashes' 'sha256-ogKvhph2a6LUD2Pr+pZ9rS6Ytjewm+TRvjLVOYBLELs=' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-KyiS0ojeBO5q6CxaWEGE4S1wQWz/zKhe4dzcrqYJnA4='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-fLLRiHsfLyL08DYOPAaGtiB1SAAPr2bNwrKOZiTmaP8=' 'unsafe-hashes' 'sha256-ogKvhph2a6LUD2Pr+pZ9rS6Ytjewm+TRvjLVOYBLELs=' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-KyiS0ojeBO5q6CxaWEGE4S1wQWz/zKhe4dzcrqYJnA4='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Monitoring &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/monitoring/instrument.html">
@@ -288,6 +288,11 @@
   .basse .clone .note,.reserves .term-corps .sortie{color:color-mix(in srgb,var(--accent-clair) 70%,var(--sur-pale))}
   .reserves .term-bar{background:color-mix(in srgb,var(--accent-vif) 22%,transparent)}
   .reserves .ouvrir-ligne{justify-content:flex-start;margin-top:22px}
+  /* sous les trois commandes : l'action, puis l'étape logique suivante, les tarifs (Arslane, 10/09) */
+  .clone-col .ouvrir-ligne{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+  .clone-col .ouvrir{display:inline-flex;align-items:baseline;gap:10px;font-family:var(--texte);font-weight:600;font-size:15px;
+    padding:10px 18px;border:1px solid;border-radius:8px;text-decoration:none;transition:background .2s,color .2s}
+  .clone-col .ouvrir.tarif{opacity:.85}
 </style>
 <header class="barre">
   <a class="marque" href="../index.html">CASCADE</a>
@@ -404,6 +409,8 @@
       <div><span class="ps">$</span> npm run measure:yours -- --alerts=your-alerts.csv --transactions=your-transactions.csv</div>
       <div class="note">the report and the sealed public record are written next to your file, and nowhere else</div>
     </div>
+    <div class="ouvrir-ligne"><a class="ouvrir" href="https://github.com/ArslaneSempai-ui/cascade-monitoring">Run it on your records <span class="fl" aria-hidden="true">&#8594;</span></a>
+      <a class="ouvrir tarif" href="../engagement.html">Pricing, in figures <span class="fl" aria-hidden="true">&#8594;</span></a></div>
     </aside>
   </div>
 </section>

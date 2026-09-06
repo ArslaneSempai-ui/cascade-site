@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-Fj+/3v1E8CxzIxzAohLrBRS7qdl5bVvIoE1FqcrTZ0g=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-OHwsIiniQT7MqYZ23qX2fwSHiqMyynGa2QZZCSRfqHc=' 'sha256-ymcRaC1eUjTjJ9RkgWfaxWb9/ZhMS1J8UVFf8tHuNN8=' 'sha256-P7Vi9MGuq5+qRTFktFVcYnmzuHk5AKV6fBhWbvFxLGk=' 'sha256-MZNvr/siLT80DQg4xlCokQb4hXIZBROwsFUeQ/W9bA4=' 'sha256-kahPlLiJa1REfyc64yVFR2GXo13XOpm50KlDiA1ahRc=' 'sha256-jo/MSB2jUjWPN2UTR2AWeXFGYELpW26Q4LJPzJAN0hU=' 'sha256-v9UtAzkK8rSE3j3XXFwKcOWFzBeZcFwjBVdu1ZvGmI8=' 'sha256-OIwInjP8jkxzHe+P+u3BEpdSwcVEul2atpMlPUbyx0A='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-1E1qkgmdPlQyuvKKBY3/pD5zBGwiNLt3HF/GxGixoEU=' 'sha256-z3E7bG3BkoE2VjQokP6P42t03Rx7TIdj6V0Az1VHxMY='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-3qqjkIaYmUXLHh4ORGJK81BB7M6lsKA84mEocG+GMjc=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-OHwsIiniQT7MqYZ23qX2fwSHiqMyynGa2QZZCSRfqHc=' 'sha256-ymcRaC1eUjTjJ9RkgWfaxWb9/ZhMS1J8UVFf8tHuNN8=' 'sha256-P7Vi9MGuq5+qRTFktFVcYnmzuHk5AKV6fBhWbvFxLGk=' 'sha256-MZNvr/siLT80DQg4xlCokQb4hXIZBROwsFUeQ/W9bA4=' 'sha256-kahPlLiJa1REfyc64yVFR2GXo13XOpm50KlDiA1ahRc=' 'sha256-jo/MSB2jUjWPN2UTR2AWeXFGYELpW26Q4LJPzJAN0hU=' 'sha256-v9UtAzkK8rSE3j3XXFwKcOWFzBeZcFwjBVdu1ZvGmI8=' 'sha256-OIwInjP8jkxzHe+P+u3BEpdSwcVEul2atpMlPUbyx0A='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-1E1qkgmdPlQyuvKKBY3/pD5zBGwiNLt3HF/GxGixoEU=' 'sha256-z3E7bG3BkoE2VjQokP6P42t03Rx7TIdj6V0Az1VHxMY='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Monitoring &#183; transaction monitoring audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/monitoring/">
@@ -368,6 +368,9 @@
     .ouvrir-s{display:none}}
 
 
+  .affiche-tarif{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--sur-vert-pale);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--sur-vert-pale) 40%,transparent);padding-bottom:4px}
+  .affiche-tarif:hover{color:var(--vert-clair);border-color:var(--vert-clair)}
   .instrument .h2{max-width:22ch}     /* le titre reste à gauche du robot qui penche sur l'affiche */
   .affiche-col{position:relative;margin-top:36px}
   .affiche-robot{position:absolute;right:26px;top:-206px;width:300px;height:auto;z-index:1;pointer-events:none;
@@ -634,6 +637,7 @@
       <div class="affiche-texte"><span class="ouvrir-eti">Cascade &#183; Monitoring</span><span class="ouvrir-t">Open the live instrument</span>
         <span class="ouvrir-s">Each scenario at each threshold, recall and false alerts with their intervals, live from the sealed public record, and the tool's own selection rule under your recall floor.</span><span class="fl" aria-hidden="true">&#8594;</span></div>
     </a>
+    <a class="affiche-tarif" href="../engagement.html">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>
     <p class="t-note">Measured on the 42 written suspicious cases and 42 benign
       look&#8209;alikes: recall of each scenario at each threshold. The marked cell, amount at 0.50, carries the strongest recall lower bound; under its default rule the tool retains no cell at the recall floor on these cases. The synthetic variants stay apart, on the instrument.</p>
   </div>

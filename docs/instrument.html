@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-51ptDqvcMVgSm1H+qKrX7qjYC33rSTUUXlHB5fHst1E=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-uXtQpDo3Mmzr2dIzFLn72h90+zAinacEPFFnXt5213Q='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-ASX/Pv11tqUJZcrcSfsdHbejPxm/2FDW01VqqfOCrjs=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-uXtQpDo3Mmzr2dIzFLn72h90+zAinacEPFFnXt5213Q='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/instrument.html">
@@ -159,7 +159,8 @@
   .term-corps .cmd::before{content:"$ ";color:var(--vert-vif);font-weight:600}
   .term-corps .sortie{display:block;color:var(--sur-vert-pale);opacity:.9}
   .term-corps .sortie::before{content:"# "}
-  .ouvrir-ligne{display:flex;justify-content:flex-end;margin-top:26px}
+  .ouvrir-ligne{display:flex;justify-content:flex-end;gap:14px;flex-wrap:wrap;margin-top:26px}
+  .ouvrir.tarif{opacity:.85}
   .ouvrir{display:inline-flex;align-items:baseline;gap:12px;background:transparent;
     color:var(--vert-titre);text-decoration:none;font-family:var(--texte);font-size:17px;font-weight:600;
     padding:14px 26px;border-radius:10px;border:1px solid color-mix(in srgb,var(--vert-titre) 55%,transparent);
@@ -305,6 +306,11 @@
   .basse .clone .note,.reserves .term-corps .sortie{color:color-mix(in srgb,var(--accent-clair) 70%,var(--sur-pale))}
   .reserves .term-bar{background:color-mix(in srgb,var(--accent-vif) 22%,transparent)}
   .reserves .ouvrir-ligne{justify-content:flex-start;margin-top:22px}
+  /* sous les trois commandes : l'action, puis l'étape logique suivante, les tarifs (Arslane, 10/09) */
+  .clone-col .ouvrir-ligne{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+  .clone-col .ouvrir{display:inline-flex;align-items:baseline;gap:10px;font-family:var(--texte);font-weight:600;font-size:15px;
+    padding:10px 18px;border:1px solid;border-radius:8px;text-decoration:none;transition:background .2s,color .2s}
+  .clone-col .ouvrir.tarif{opacity:.85}
 
   /* the vert names its colours differently : aliased so the shared chart rules apply */
   :root{--accent-titre:var(--vert-titre);--accent-vif:var(--vert-vif);--accent-clair:var(--vert-clair);
@@ -435,7 +441,8 @@
       <span class="sortie">nothing leaves your machine; cut the network and it still runs</span>
     </div></div>
   </div>
-  <div class="ouvrir-ligne"><a class="ouvrir" href="https://github.com/ArslaneSempai-ui/cascade-routing">Run it on your records <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+  <div class="ouvrir-ligne"><a class="ouvrir" href="https://github.com/ArslaneSempai-ui/cascade-routing">Run it on your records <span class="fl" aria-hidden="true">&#8594;</span></a>
+    <a class="ouvrir tarif" href="engagement.html">Pricing, in figures <span class="fl" aria-hidden="true">&#8594;</span></a></div>
   </aside>
 </div></section>
 

@@ -198,7 +198,8 @@ CSS = '''
   .term-corps .cmd::before{content:"$ ";color:var(--vert-vif);font-weight:600}
   .term-corps .sortie{display:block;color:var(--sur-vert-pale);opacity:.9}
   .term-corps .sortie::before{content:"# "}
-  .ouvrir-ligne{display:flex;justify-content:flex-end;margin-top:26px}
+  .ouvrir-ligne{display:flex;justify-content:flex-end;gap:14px;flex-wrap:wrap;margin-top:26px}
+  .ouvrir.tarif{opacity:.85}
   .ouvrir{display:inline-flex;align-items:baseline;gap:12px;background:transparent;
     color:var(--vert-titre);text-decoration:none;font-family:var(--texte);font-size:17px;font-weight:600;
     padding:14px 26px;border-radius:10px;border:1px solid color-mix(in srgb,var(--vert-titre) 55%,transparent);
@@ -423,7 +424,8 @@ PAGE = f'''<!doctype html><html lang="en">
       <span class="sortie">nothing leaves your machine; cut the network and it still runs</span>
     </div></div>
   </div>
-  <div class="ouvrir-ligne"><a class="ouvrir" href="{DEPOT_URL}">Run it on your records <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+  <div class="ouvrir-ligne"><a class="ouvrir" href="{DEPOT_URL}">Run it on your records <span class="fl" aria-hidden="true">&#8594;</span></a>
+    <a class="ouvrir tarif" href="ENGAGEMENT.html">Pricing, in figures <span class="fl" aria-hidden="true">&#8594;</span></a></div>
   </aside>
 </div></section>
 

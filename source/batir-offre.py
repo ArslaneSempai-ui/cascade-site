@@ -15,8 +15,10 @@ intermédiaire n'est documenté ; aucun n'est affiché.
 import pathlib
 
 BASE = pathlib.Path(__file__).parent
-from outil import SCEAU_ROUTING
+from outil import SCEAU_ROUTING, OUTILS
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
+# la barre du site (10/09) : les cinq instruments dans l'ordre du rideau, lus dans OUTILS, jamais tapés
+NAV = "".join(f'\n    <a href="{o["page_hero"]}">{o["nom"]}</a>' for o in OUTILS.values())
 DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-routing"
 
 CSS = '''
@@ -58,7 +60,11 @@ CSS = '''
 
   /* ── les trois colonnes aux filets ── */
   .cols{display:grid;grid-template-columns:1fr 1fr 1fr;margin:54px 0 10px}
-  .col{padding:8px 34px 10px;border-left:1px solid color-mix(in srgb,var(--sur-vert-pale) 18%,transparent)}
+  .col{position:relative;padding:150px 34px 10px;border-left:1px solid color-mix(in srgb,var(--sur-vert-pale) 18%,transparent)}
+  /* les robots (10/09) : une pose verte par offre, rendus réels (etats/robots-rideau.py), posés en tête de colonne */
+  .col-robot{position:absolute;top:0;right:30px;height:128px;width:auto;pointer-events:none;
+    filter:drop-shadow(0 18px 30px rgba(0,0,0,.55))}
+  .col.haute .col-robot{height:150px;top:-14px}
   .col:first-child{border-left:0;padding-left:0}
   .c-t{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
     color:var(--sur-vert-pale)}
@@ -121,9 +127,10 @@ CSS = '''
     .barre nav{display:none}
     .tete{padding-top:100px}
     .cols{grid-template-columns:1fr}
-    .col{border-left:0;padding:22px 0;
+    .col{border-left:0;padding:120px 0 22px;
       border-top:1px solid color-mix(in srgb,var(--sur-vert-pale) 18%,transparent)}
     .col:first-child{border-top:0}
+    .col-robot{right:0;height:110px}.col.haute .col-robot{height:120px;top:0}
     .c-liste{min-height:0}
     .pas{grid-template-columns:1fr 1fr}
   }
@@ -148,15 +155,11 @@ PAGE = f'''<!doctype html><html lang="en">
 <style>{CSS}</style>
 <header class="barre">
   <a class="marque" href="ACCUEIL.html">CASCADE</a>
-  <nav aria-label="Site">
-    <a href="INSTRUMENT.html">Instrument</a>
+  <nav aria-label="Site">{NAV}
     <a href="ENGAGEMENT.html" aria-current="page">Pricing</a>
-    <a href="ANNEXE-METHODE.html">Method</a>
-    <a href="ANNEXE-SECURITE.html">Security</a>
-    <a href="ANNEXE-QUESTIONS.html">Questions</a>
     <a href="CONTACT.html">Contact</a>
   </nav>
-  <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>
+  <span class="sceau">measured, then frozen</span>
 </header>
 
 <main>
@@ -170,6 +173,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <section aria-label="The three steps"><div class="colonne">
   <div class="cols">
     <div class="col">
+      <img class="col-robot" src="rendus/robot-salut.webp" alt="">
       <p class="c-t">the evaluation</p>
       <p class="c-prix">$0<small> &#183; 30 days</small></p>
       <p class="c-qui">For deciding. Your records, your machine, nothing to sign.</p>
@@ -184,6 +188,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <p class="c-fin">granted in the public licence itself</p>
     </div>
     <div class="col">
+      <img class="col-robot" src="rendus/robot-penche.webp" alt="">
       <p class="c-t">the campaign</p>
       <p class="c-prix">$12,000<small> fixed</small></p>
       <p class="c-qui">For the file your reviewers will open. One campaign, one deliverable.</p>
@@ -198,6 +203,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <p class="c-fin">one campaign &#183; one sealed deliverable</p>
     </div>
     <div class="col haute">
+      <img class="col-robot" src="rendus/robot-agrippe.webp" alt="">
       <p class="c-t">the licence</p>
       <p class="c-prix">$30,000<small> a year</small></p>
       <p class="c-qui">For running it as yours. Commercial use, updates included.</p>
@@ -223,7 +229,8 @@ PAGE = f'''<!doctype html><html lang="en">
     <div class="p-un"><span class="p-no">01</span><span class="p-t">Write</span>
       <p class="p-d"><a href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a>,
         or open an issue on the public repository. Name the figure you care about,
-        and the tool it lives in: <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b> or <b>Scoring</b>.</p></div>
+        and the tool it lives in: <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b> or <b>Scoring</b>;
+        the <b>Dossier</b> reads the four reports as one.</p></div>
     <div class="p-un"><span class="p-no">02</span><span class="p-t">Evaluate</span>
       <p class="p-d">Thirty days on your records, at your desk. Nothing to install on our side,
         because we run no service on our side.</p></div>

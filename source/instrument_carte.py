@@ -129,6 +129,11 @@ CSS_NOIR = '''
   .basse .clone .note,.reserves .term-corps .sortie{color:color-mix(in srgb,var(--accent-clair) 70%,var(--sur-pale))}
   .reserves .term-bar{background:color-mix(in srgb,var(--accent-vif) 22%,transparent)}
   .reserves .ouvrir-ligne{justify-content:flex-start;margin-top:22px}
+  /* sous les trois commandes : l'action, puis l'étape logique suivante, les tarifs (Arslane, 10/09) */
+  .clone-col .ouvrir-ligne{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+  .clone-col .ouvrir{display:inline-flex;align-items:baseline;gap:10px;font-family:var(--texte);font-weight:600;font-size:15px;
+    padding:10px 18px;border:1px solid;border-radius:8px;text-decoration:none;transition:background .2s,color .2s}
+  .clone-col .ouvrir.tarif{opacity:.85}
 '''
 
 
@@ -544,6 +549,9 @@ JS_ONYX = '''
 # ═══════════════════════════════════════════════════════════════════════════════════════════
 
 CSS_AFFICHE = '''
+  .affiche-tarif{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--sur-vert-pale);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--sur-vert-pale) 40%,transparent);padding-bottom:4px}
+  .affiche-tarif:hover{color:var(--vert-clair);border-color:var(--vert-clair)}
   .instrument .h2{max-width:22ch}     /* le titre reste à gauche du robot qui penche sur l'affiche */
   .affiche-col{position:relative;margin-top:36px}
   .affiche-robot{position:absolute;right:26px;top:-206px;width:300px;height:auto;z-index:1;pointer-events:none;
@@ -668,7 +676,7 @@ def _svg_horloge(releve):
     return f'<svg viewBox="0 0 {W} {H}" aria-hidden="true">{out}</svg>'
 
 
-def affiche_html(sorte, donnees, findings, page, eti, sous, robot, note=""):
+def affiche_html(sorte, donnees, findings, page, eti, sous, robot, note="", tarif=""):
     """L'affiche : la carte statique de l'outil (sorte : courbes | paliers | horloge), le robot
     de la couleur penché sur son bord, le bouton en valeur. `robot` est le chemin de l'image."""
     svg = {"courbes": lambda: _svg_courbes(donnees, findings),
@@ -681,6 +689,7 @@ def affiche_html(sorte, donnees, findings, page, eti, sous, robot, note=""):
       <div class="affiche-texte"><span class="ouvrir-eti">{eti}</span><span class="ouvrir-t">Open the live instrument</span>
         <span class="ouvrir-s">{sous}</span><span class="fl" aria-hidden="true">&#8594;</span></div>
     </a>
+    {f'<a class="affiche-tarif" href="{tarif}">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>' if tarif else ""}
     {f'<p class="t-note">{note}</p>' if note else ""}
   </div>'''
 

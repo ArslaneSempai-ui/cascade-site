@@ -459,6 +459,8 @@ PAGE = f'''<!doctype html><html lang="en">
       <div><span class="ps">$</span> npm run measure:yours -- --customers=your-customers.csv --reviews=your-reviews.csv</div>
       <div class="note">the report and the sealed public record are written next to your files, and nowhere else &#183; a record measured under your tables carries them: share it as you would your risk policy</div>
     </div>
+    <div class="ouvrir-ligne"><a class="ouvrir" href="{DEPOT_URL}">Run it on your records <span class="fl" aria-hidden="true">&#8594;</span></a>
+      <a class="ouvrir tarif" href="../ENGAGEMENT.html">Pricing, in figures <span class="fl" aria-hidden="true">&#8594;</span></a></div>
     </aside>
   </div>
 </section>

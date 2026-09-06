@@ -1096,7 +1096,7 @@ PAGE = f'''<!doctype html><html lang="en">
                 "rendus/robot-vert-regarde.webp",
                 note=f"Measured on {N_SOCLE:,} held-out records for rules, small and large, {N_GEN} for the generative tiers. "
                      f"The human tier is assumed at {qte(HUMAIN)} % until you measure it: "
-                     "<code>npm run measure:humans</code> grades your own reviewers. The rings mark the published routing.")}
+                     "<code>npm run measure:humans</code> grades your own reviewers. The rings mark the published routing.", tarif="ENGAGEMENT.html")}
 </div></section>
 
 <div class="couture" aria-hidden="true"><div class="colonne">
@@ -1831,7 +1831,7 @@ def batir_outil_catalogue(o, spec):
   <h2 class="h2">The live instrument, on the sealed public record.</h2>
   {affiche_html("horloge" if o["id"] == "dossier" else "courbes", RELEVE, FINDINGS, spec["instrument_page"],
                 spec["instrument_eti"], spec["instrument_sub"], "../rendus/robot-" + ICONES_COULEUR[o["id"]] + "-regarde.webp",
-                note="" if o["id"] == "dossier" else _note_outil(spec, RELEVE, FINDINGS))}
+                note="" if o["id"] == "dossier" else _note_outil(spec, RELEVE, FINDINGS), tarif=lien(o, "ENGAGEMENT.html"))}
 </div></section>
 
 <div class="couture" aria-hidden="true"><div class="colonne">
