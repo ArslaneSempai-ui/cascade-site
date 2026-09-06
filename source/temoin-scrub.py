@@ -30,6 +30,8 @@ import threading
 import urllib.request
 
 BASE = pathlib.Path(__file__).parent
+sys.path.insert(0, str(BASE))
+import outil  # noqa: E402  (manques_sequences, sceau_du_releve, taille_webp : les gardes M-C1)
 PAGES = ["HERO.html", "ACCUEIL.html", "HERO-SCREENING.html", "HERO-MONITORING.html",
          "HERO-SCORING.html", "HERO-DOSSIER.html"]
 PREFIXE = "rack"                      # l'outil porteur du factice (monitoring)
@@ -50,13 +52,20 @@ def lire_pages():
 
 
 def planter_factice():
+    """Le factice est VALIDE sous les gardes M-C1 autant que la production le permet :
+    sceau réel du relevé (fraîcheur), dernière image = l'état k au byte (identité),
+    tailles lues dans le vrai webp (complétude). Seul le budget peut le refuser tant
+    que BUDGET_SEQUENCE_KO n'est pas déclaré — et le témoin le DIT au lieu d'affirmer
+    des sœurs à l'octet que le rideau a le droit de changer."""
     SEQ.mkdir(parents=True)
     for k in range(1, 6):
         shutil.copy(BASE / "rendus" / "etats" / f"{PREFIXE}-01.webp", SEQ / f"{PREFIXE}-seq-0{k}-000.webp")
         shutil.copy(BASE / "rendus" / "etats" / f"{PREFIXE}-0{k}.webp", SEQ / f"{PREFIXE}-seq-0{k}-001.webp")
+    large, haut = outil.taille_webp(BASE / "rendus" / "etats" / f"{PREFIXE}-01.webp")
     (SEQ / "manifest.json").write_text(json.dumps({
         "prefixe": PREFIXE, "n": 2, "transitions": 5, "ext": ".webp",
-        "large": 1374, "haut": 1120, "mouvement": 0.66, "sceau": "factice-temoin"}))
+        "large": large, "haut": haut, "mouvement": 0.66,
+        "sceau": outil.sceau_du_releve("monitoring")}))
 
 
 def sonde_cdp():
@@ -99,10 +108,22 @@ try:
         f"{PAGE_CIBLE} : manifeste présent mais pas de canevas ni de scrub"
     intactes = [p for p in PAGES if p != PAGE_CIBLE]
     for p in intactes:
-        assert apres[p] == avant[p], \
-            f"{p} a changé alors que le factice ne concerne que {PREFIXE} : le scrub déborde de son outil"
-    print(f"  2/3 factice sur {PREFIXE} : canevas sur {PAGE_CIBLE} seul, "
-          f"{len(intactes)} pages sœurs à l'octet")
+        assert b"seq-manifeste" not in apres[p] and b'canvas class="film"' not in apres[p], \
+            f"{p} porte le scrub alors que le factice ne concerne que {PREFIXE} : le scrub déborde de son outil"
+    # les sœurs à l'octet, SEULEMENT quand les gardes M-C1 tiennent le factice pour prêt :
+    # tant que BUDGET_SEQUENCE_KO n'est pas déclaré, le rideau retire légitimement le pan
+    # (des séquences refusées = outil pas prêt) et les sœurs changent — le dire, pas le taire
+    gardes = outil.manques_sequences("monitoring", BASE)
+    if not gardes:
+        for p in intactes:
+            assert apres[p] == avant[p], \
+                f"{p} a changé alors que le factice passe toutes les gardes : une divergence"
+        print(f"  2/3 factice sur {PREFIXE} : canevas sur {PAGE_CIBLE} seul, "
+              f"{len(intactes)} pages sœurs à l'octet")
+    else:
+        print(f"  2/3 factice sur {PREFIXE} : canevas sur {PAGE_CIBLE} seul, aucun scrub chez "
+              f"les {len(intactes)} sœurs ; comparaison à l'octet SUSPENDUE, dit : les gardes "
+              f"M-C1 refusent le factice ({gardes[0][:80]}…)")
 
     v = sonde_cdp()
     assert v["canevas"], "la sonde ne voit pas le canevas"
