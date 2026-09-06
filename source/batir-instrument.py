@@ -249,7 +249,7 @@ JS = '''
     }
     const { cout, just } = lire(routage);
     const { cout: cp, just: jp } = lire(D.publie.routage);
-    $("#tm-rout").textContent = F.map((f) => f + ":" + routage[f]).join("  ");
+    $("#tm-rout").textContent = F.map((f) => f + ":" + routage[f]).join(" \u00b7 ");
     $("#tm-cout").textContent = fmtC(cout);
     $("#tm-just").textContent = just.toFixed(1) + "%";
     const dc = (cout - cp) * 100, dj = just - jp;
@@ -358,7 +358,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <div class="tm-barre"><i></i><i></i><i></i><span class="tm-titre">cascade &#183; live instrument</span></div>
       <div class="tm-corps">
         <p class="tm-l"><span class="ps">$</span> cascade compose --live<span class="caret" aria-hidden="true"></span></p>
-        <p class="tm-sortie">your routing &#160;<span id="tm-rout">name:large&#160;&#160;birth:rules&#160;&#160;document:rules&#160;&#160;country:rules&#160;&#160;address:gen-4b</span><br>
+        <p class="tm-sortie">your routing &#160;<span id="tm-rout">name:large &#183; birth:rules &#183; document:rules &#183; country:rules &#183; address:gen-4b</span><br>
           cost &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<b id="tm-cout">$191</b> /100k docs &#183; assumed prices<br>
           accuracy &#160;&#160;&#160;&#160;<b id="tm-just">94.4%</b> per-field mean &#183; no interval<br>
           <span id="tm-delta" class="tm-l">vs published  +$0 &#183; +0.0&nbsp;pt</span></p>

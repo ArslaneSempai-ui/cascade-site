@@ -47,8 +47,11 @@ CSS_NOIR = '''
 
   /* THE LIVE CHART : the window becomes window + side panel ; the table stays for the keyboard */
   .dessus{width:min(100%,1180px)}
-  .poste-grille{display:grid;grid-template-columns:1fr 272px;gap:22px;align-items:start}
-  @media (max-width:980px){.poste-grille{grid-template-columns:1fr}.pan{position:static}}
+  /* minmax(0,1fr) : a long unbreakable line (the vert's routing line) must not widen the column
+     (bench of the 9/09 : +394 px at 320 on the vert and the onyx) */
+  .poste-grille{display:grid;grid-template-columns:minmax(0,1fr) 272px;gap:22px;align-items:start}
+  @media (max-width:980px){.poste-grille{grid-template-columns:minmax(0,1fr)}.pan{position:static}}
+  .tm-sortie,.tm-l,.tm-preuve,.carte-aide,.lect{overflow-wrap:anywhere}
   html.js .t-scroll{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
   .carte{display:block;width:100%;height:auto;font-family:var(--mono);touch-action:none;
     user-select:none;-webkit-user-select:none;cursor:crosshair;margin:2px 0 10px}
