@@ -431,7 +431,14 @@ def lien(outil, cible):
 # une chip .ap-eti fait au plus 240 px sur 2 lignes dans une scène de ~744 px pour 1420 unités.
 IW_ANNOT = 1000.0 * (1374 / 1120)
 MX_ANNOT = (1420 - IW_ANNOT) / 2
-CHIP_DEMI = (229, 41)          # demi-largeur, demi-hauteur d'une chip pleine, en unités du viewBox
+# La chip fait 240 px FIXES (max-width) sur ~44 px de haut pour deux lignes, mais la scène rétrécit
+# avec la fenêtre : 744 px à 1440, ~477 px à 1081 (la plus petite fenêtre encore annotée, avant
+# le @media ≤ 1080 qui empile). Son empreinte en unités du viewBox est donc la plus grande sur la
+# plus PETITE scène : 240/477 × 1420 = 714 de large, 44/336 × 1000 = 131 de haut. La garde se
+# calibre là (relecture de Mesure, 9/09) : une étiquette qui passe ici passe à toutes les tailles.
+SCENE_MIN_PX = 477
+CHIP_PX = (240, 44)
+CHIP_DEMI = (round(CHIP_PX[0] / SCENE_MIN_PX * 1420 / 2), round(CHIP_PX[1] / (SCENE_MIN_PX / 1.42) * 1000 / 2))   # (357, 65)
 SEUIL_OBJET = 0.10             # part de pixels d'objet tolérée sous l'étiquette
 _ALPHAS = {}
 
@@ -442,7 +449,12 @@ def alpha_webp(chemin):
     chemin = str(chemin)
     if chemin in _ALPHAS:
         return _ALPHAS[chemin]
-    brut = subprocess.run(["dwebp", chemin, "-pam", "-o", "-"], capture_output=True, check=True).stdout
+    try:
+        brut = subprocess.run(["dwebp", chemin, "-pam", "-o", "-"], capture_output=True, check=True).stdout
+    except FileNotFoundError:
+        raise SystemExit("dwebp absent (brew install webp) : la garde des étiquettes ne peut pas lire l'alpha des états ; refus, pas de vert par absence")
+    except subprocess.CalledProcessError as e:
+        raise SystemExit(f"dwebp refuse {chemin} : {e.stderr.decode(errors='replace')[:200]}")
     fin = brut.index(b"ENDHDR\n") + 7
     tete = dict(l.split(" ", 1) for l in brut[:fin].decode().splitlines() if " " in l)
     W, H, prof = int(tete["WIDTH"]), int(tete["HEIGHT"]), int(tete["DEPTH"])
