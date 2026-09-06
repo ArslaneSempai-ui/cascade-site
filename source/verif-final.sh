@@ -1,0 +1,88 @@
+#!/bin/zsh
+# LE TÉMOIN DE BOUT EN BOUT du site servi : assemblage, serveur, banc des tailles
+# (29 pages × 12 largeurs), captures natives aux arrivées des scènes (bureau et
+# téléphone), porte mécanique (controle.mjs du skill design-arslane s'il est là).
+# Porté du scratchpad du chef (9/09) dans le dépôt, avec les leçons de la maison :
+#   - AUCUN chemin absolu : le site est le parent de ce script (l'assembleur ancré
+#     en absolu a rasé deux fois le checkout principal le 9/09) ;
+#   - le serveur se lie à 127.0.0.1 explicitement (un aperçu a déjà servi la page
+#     au wifi partagé pendant une heure et demie) ;
+#   - Chrome 9222 absent → REFUS dit (code 3), jamais un vert qui n'a pas regardé ;
+#   - controle.mjs absent → étape SAUTÉE en le disant (dépendance de machine).
+# usage: zsh verif-final.sh [outils…]     (défaut : les cinq)
+#        DRY=1 saute le banc ; PORT=8802 ; SORTIE=…/dossier (défaut .verif-final/)
+set -u
+SRC=${0:A:h}
+SITE=${SRC:h}
+SORTIE=${SORTIE:-$SITE/.verif-final}
+PORT=${PORT:-8802}
+CAP=$SRC/etats/capturer-cdp.mjs
+CTL=$HOME/.claude/skills/design-arslane/scripts/controle.mjs
+# zsh ne découpe pas un défaut dans ${@:-…} : sans argument les cinq noms devenaient
+# UN élément (« routing screening … dossier/index.html : 000 », premier tir du 9/09)
+if [ $# -gt 0 ]; then OUTILS=("$@"); else OUTILS=(routing screening monitoring scoring dossier); fi
+mkdir -p $SORTIE
+
+echo "=== chrome 9222 (le banc et les captures regardent par lui)"
+curl -s --max-time 2 http://127.0.0.1:9222/json/version > /dev/null || {
+  echo "REFUS : Chrome n'écoute pas sur 9222 — le lancer (headless, --remote-debugging-port=9222)" ;
+  echo "        un témoin qui n'a pas regardé ne rend pas de vert" ; exit 3 ; }
+
+cd $SRC || exit 1
+echo "=== assemblage $(date +%H:%M:%S)"
+python3 assembler.py > $SORTIE/assemblage.log 2>&1; code=$?
+grep -E "non émis|cassé sur|BOUGÉES|Traceback" $SORTIE/assemblage.log | cut -c1-140
+[ $code = 0 ] || { echo "assembleur : code $code, on s'arrête ($SORTIE/assemblage.log)"; exit 1; }
+
+echo "=== serveur $PORT (127.0.0.1 seulement)"
+# un serveur déjà debout ne se réutilise que s'il sert CE docs/ : la page servie n'est
+# pas la page locale (le 9/09, le 8802 du principal a failli faire capturer un autre
+# site depuis un worktree) — l'identité se vérifie au byte, elle ne se suppose pas
+if curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:$PORT/index.html | grep -q 200; then
+  curl -s http://127.0.0.1:$PORT/index.html | cmp -s - $SITE/docs/index.html || {
+    echo "REFUS : le port $PORT sert un AUTRE site que $SITE/docs (page servie ≠ page locale)" ;
+    echo "        relancer avec PORT=<libre>, ou arrêter ce serveur-là" ; exit 4 ; }
+else
+  (nohup python3 -m http.server $PORT --bind 127.0.0.1 -d $SITE/docs >/dev/null 2>&1 &) ; sleep 1
+fi
+for t in $OUTILS; do curl -s -o /dev/null -w "$t/index.html : %{http_code}\n" http://127.0.0.1:$PORT/$t/index.html; done
+
+if [ -z "${DRY:-}" ]; then
+  echo "=== banc des tailles $(date +%H:%M:%S)"
+  # chaque page réellement servie, lue de docs/ : une liste recopiée vieillit sans le dire
+  PAGES=$(cd $SITE/docs && find . -name '*.html' | sed 's#^\./##' | sort | paste -sd, -)
+  echo "  $(echo $PAGES | tr ',' '\n' | wc -l | tr -d ' ') pages × 12 largeurs"
+  PAGES=$PAGES PORT=$PORT node $SRC/sonde-site.mjs > $SORTIE/banc.log 2>&1; code=$?
+  grep -E "^DEBORD|^INDÉTERMINÉ" $SORTIE/banc.log | head -8 | cut -c1-160
+  echo "  banc : code $code ; $(tail -1 $SORTIE/banc.log | cut -c1-120)"
+  [ $code = 0 ] || echo "  → le détail vit dans $SORTIE/banc.log"
+fi
+
+echo "=== captures natives $(date +%H:%M:%S)"
+sc() { echo "(()=>{const s=document.querySelector('.colle').parentElement; window.scrollTo(0, s.offsetTop + $1*s.offsetHeight)})()"; }
+cap() { node $CAP "http://127.0.0.1:$PORT/$1" $2 $3 "$4" "$SORTIE/$5" 2>&1 | tail -1 | grep -q "$SORTIE" || echo "  capture indéterminée : $5"; }
+for t in $OUTILS; do
+  cap $t/index.html 1440 900 - $t-hero-1440.png
+  for f in 0.30 0.50 0.70; do cap $t/index.html 1440 900 "$(sc $f)" $t-scene-$f-1440.png; done
+  cap $t/index.html 375 812 - $t-hero-375.png
+  cap $t/index.html 375 812 "$(sc 0.30)" $t-scene-0.30-375.png
+  if command -v ffmpeg > /dev/null; then
+    ffmpeg -y -loglevel error -i $SORTIE/$t-hero-1440.png -i $SORTIE/$t-scene-0.30-1440.png \
+      -i $SORTIE/$t-scene-0.50-1440.png -i $SORTIE/$t-scene-0.70-1440.png \
+      -filter_complex "[0][1][2][3]hstack=4,scale=2400:-1" $SORTIE/$t-bande.png
+    echo "$t : 6 captures, bande $t-bande.png"
+  else
+    echo "$t : 6 captures (ffmpeg absent : pas de bande, dit)"
+  fi
+done
+
+echo "=== porte mécanique (controle.mjs) $(date +%H:%M:%S)"
+if [ -f $CTL ]; then
+  for t in $OUTILS; do
+    node $CTL "http://127.0.0.1:$PORT/$t/index.html" --sortie $SORTIE/ctl-$t > $SORTIE/ctl-$t.log 2>&1; code=$?
+    echo "$t : controle code $code $(grep -iE "débord|exception|manquante|contraste|morte|propre" $SORTIE/ctl-$t.log | head -2 | tr '\n' ' ' | cut -c1-160)"
+  done
+else
+  echo "SAUTÉE, dit : controle.mjs absent de cette machine ($CTL) — la porte mécanique n'a pas regardé"
+fi
+echo "=== fin $(date +%H:%M:%S) · sorties dans $SORTIE"
