@@ -54,7 +54,8 @@
           }
         ],
         "refs": "src/synthetic.ts:29 &#183; src/measure.ts:71"
-      }
+      },
+      "commun": "methode"
     },
     {
       "h2": "Wilson everywhere, scores bounded, refusals where n is small",

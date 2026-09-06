@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-d3zMMw2gUyhIiz3rJ2yT4iATHRj2I9vyDIbOTGNl1R8=' 'unsafe-hashes' 'sha256-ogKvhph2a6LUD2Pr+pZ9rS6Ytjewm+TRvjLVOYBLELs=' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-4wLhmmnS3ufAnXeO/Au5TB8dVUpOFb9sjzdhrjSbkJw='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-9zkB32O7xg7DYHwcjCN+oeZFM7Sd8MuRnA44x/GdRcA=' 'unsafe-hashes' 'sha256-ogKvhph2a6LUD2Pr+pZ9rS6Ytjewm+TRvjLVOYBLELs=' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-v81ahn91QjziPg0K+YtxXvfHGZLCJmRkSqffB8bz7uE='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Monitoring &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/monitoring/instrument.html">
@@ -8,14 +8,14 @@
 <meta name="theme-color" content="#101a30">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Monitoring: the live instrument">
-<meta property="og:description" content="Every scenario at every threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
+<meta property="og:description" content="Each scenario at each threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
 <meta property="og:url" content="https://cascade-routing.com/monitoring/instrument.html">
 <meta property="og:site_name" content="Cascade">
 <meta property="og:locale" content="en_US">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Every scenario at every threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
+<meta name="description" content="Each scenario at each threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%230a111f'/%3E%3Cpath d='M16 0v16H0z' fill='%231f3f7a'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
@@ -174,7 +174,7 @@
 
   /* THE BLACK PAGE (Arslane, 9/09) : the tool's night becomes near-black, its colour stays in
      strokes, figures and glows ; the parchment section turns black with paper ink, the clone
-     terminal too. The variables are re-declared so every rule below inherits the change. */
+     terminal too. The variables are re-declared so each rule below inherits the change. */
   :root{--nuit-a:#1a1a1f;--nuit-b:#0e0e11;--nuit-c:#08080a;
     --papier:#0e0e11;--papier-haut:#121215;--encre:#e8e6df;--demi:#a5a39a;--pale:#8f8d84;
     --filet-clair:#2c2c33;--sur:#e8e6df;--sur-pale:#9a988f;--tenu:#7fd4a0}
@@ -303,15 +303,15 @@
 
 <section class="tete">
   <div class="colonne">
-    <h1 class="h1">Which scenario, at which threshold. Live.</h1>
-    <p class="lede">Every figure on this page comes from the <b>sealed public record</b> of
+    <h1 class="h1">Each scenario at each threshold, live.</h1>
+    <p class="lede">Each figure on this page comes from the <b>sealed public record</b> of
       cascade-monitoring: cases the repository wrote itself, benign look-alikes included, measured
       by its own scenarios. No client data exists here, nothing enters and nothing leaves,
-      and the page checks its own arithmetic before your eyes.</p>
+      and each figure is recomputed from the sealed record as the page loads.</p>
   </div>
 </section>
 
-<section class="poste">
+<section class="poste" data-commun="instrument">
   <div class="colonne">
     <div class="dessus">
       <div class="t-page-halo" aria-hidden="true"></div>
@@ -326,13 +326,13 @@
             <button class="regl" id="m-synth">synthetic variants (declared)</button>
           </div>
           <p class="tm-sortie" id="g-quoi"></p>
-          <p class="carte-aide">every point is one cell of the record : hover it to read it, click it to keep it, <b>pull the floor line</b> (or the slider below) and what holds the lower bound lights up</p>
-          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="recall of every tier at every threshold of the public record, with the recall floor as a line"></svg></div>
+          <p class="carte-aide" data-commun="instrument">each point is one cell of the record : hover it to read it, click it to keep it, <b>pull the floor line</b> (or the slider below) and what holds the lower bound lights up</p>
+          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="recall of each tier at each threshold of the public record, with the recall floor as a line"></svg></div>
           <div class="t-scroll"><table class="grille">
       <caption class="sr">Pick a cell: each shows recall on confirmed suspicious cases over false alerts on benign look-alikes, at that scenario and threshold</caption>
       <thead><tr><th scope="col">scenario \ threshold</th><th scope='col'>0.50</th><th scope='col'>0.60</th><th scope='col'>0.70</th><th scope='col'>0.80</th><th scope='col'>0.85</th><th scope='col'>0.90</th><th scope='col'>0.95</th><th scope='col'>1.00</th></tr></thead>
       <tbody><tr><th scope='row'>amount</th><td><button class="cell" data-p="amount" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="amount" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="amount" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="amount" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="amount" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="amount" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="amount" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="amount" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr><tr><th scope='row'>velocity</th><td><button class="cell" data-p="velocity" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="velocity" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="velocity" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="velocity" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="velocity" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="velocity" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="velocity" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="velocity" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr><tr><th scope='row'>structuring</th><td><button class="cell" data-p="structuring" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="structuring" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="structuring" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="structuring" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="structuring" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="structuring" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="structuring" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="structuring" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr><tr><th scope='row'>round</th><td><button class="cell" data-p="round" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="round" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="round" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="round" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="round" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="round" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="round" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="round" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr><tr><th scope='row'>zscore</th><td><button class="cell" data-p="zscore" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="zscore" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="zscore" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="zscore" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="zscore" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="zscore" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="zscore" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="zscore" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr><tr><th scope='row'>passthrough</th><td><button class="cell" data-p="passthrough" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="passthrough" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="passthrough" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="passthrough" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="passthrough" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="passthrough" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="passthrough" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="passthrough" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr><tr><th scope='row'>peer</th><td><button class="cell" data-p="peer" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="peer" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="peer" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="peer" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="peer" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="peer" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="peer" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="peer" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr></tbody></table></div>
-          <p class="tm-sortie" id="g-lecture">pick a cell: recall over false alerts, with n and its 95&nbsp;% interval</p>
+          <p class="tm-sortie" id="g-lecture" data-commun="instrument">pick a cell: recall over false alerts, with n and its 95&nbsp;% interval</p>
 
           <p class="tm-l"><span class="ps">$</span> cascade optimise --recall</p>
           <div class="b-ligne">
@@ -362,7 +362,7 @@
   </div>
 </section>
 
-<section class="basse">
+<section class="basse" data-commun="instrument">
   <div class="colonne basse-grille">
     <div class="plis">
       <details class="pli"><summary>What this rests on</summary>
@@ -370,7 +370,7 @@
       <li><b>The sealed public record.</b> releve-public.json in the repository, fingerprint
         <b>692d499018e53e07</b>, measured at commit <b>2fa9f51</b>
         on 2026-09-05. The extractor that feeds this page verifies the seal,
-        then recomposes witness cells with the tool&#8217;s own interval code, and refuses to emit
+        then recomposes witness cells with the tool&#8217;s own interval code, and does not emit
         if a single figure disagrees.</li>
       <li><b>Cases the repository wrote.</b> The labelled half is authored: archetypes of suspicion
         (structuring, rapid movement, a dormant account that wakes, round-tripping) and benign
@@ -379,7 +379,7 @@
       <li><b>Synthetic variants, kept apart.</b> Generated from the written cases, nature by
         nature, and never merged with the authored half: the toggle above switches the whole
         grid, it never blends.</li>
-      <li><b>The tool&#8217;s selection rule.</b> The slider holds your recall floor at the Wilson
+      <li data-commun="instrument"><b>The tool&#8217;s selection rule.</b> The slider holds your recall floor at the Wilson
         <b>lower bound</b>, exactly as <span style="font-family:var(--mono)">npm run optimise</span>
         does: a point estimate never clears a floor here.</li>
     </ul>
@@ -389,7 +389,7 @@
       <li><b>Your data.</b> This page cannot read it: no network requests leave it
         (connect-src &#8216;none&#8217;), no third-party resource is loaded, and there is no input
         field to paste a name into.</li>
-      <li><b>Bare rates.</b> Every cell carries its n and its 95&nbsp;% interval; every scenario of the registry is present tonight; an absent one would be a named row, never a guessed column.</li>
+      <li><b>Bare rates.</b> Each cell carries its n and its 95&nbsp;% interval; each scenario of the registry is present tonight; an absent one would be a named row, never a guessed column.</li>
     </ul>
       </details>
     </div>
@@ -432,7 +432,7 @@
     for (const c of cells) {
       const cel = g[c.dataset.p][c.dataset.s];
       c.querySelector(".c-rappel").textContent = pc(cel.rappel.taux);
-      c.querySelector(".c-fp").textContent = pc(cel.fauxPositifs.taux) + " fa";
+      c.querySelector(".c-fp").textContent = pc(cel.fauxPositifs.taux);
     }
     $("#g-quoi").innerHTML = moitie === "authored"
       ? "authored cases: <b>" + D.authored.nSuspicious + " suspicious</b>, <b>" + D.authored.nBenign + " benign look-alikes</b>"

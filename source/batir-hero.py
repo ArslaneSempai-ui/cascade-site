@@ -1086,7 +1086,7 @@ PAGE = f'''<!doctype html><html lang="en">
   </div>
 </section>
 
-<section class="instrument"><div class="colonne">
+<section class="instrument" data-commun="instrument"><div class="colonne">
   <h2 class="h2">The live instrument, on the sealed record.</h2>
   {affiche_html("paliers", LANDING, [], "INSTRUMENT.html", "Cascade &#183; Routing",
                 "Each field at each tier, accuracy and cost read live from the sealed record, and a budget line you pull the way the tool chooses.",
@@ -1723,7 +1723,7 @@ def batir_outil_catalogue(o, spec):
     </div>
   </div>
 </section>
-<section class="instrument"><div class="colonne">
+<section class="instrument" data-commun="instrument"><div class="colonne">
   <h2 class="h2">The live instrument, on the sealed record.</h2>
   {affiche_html("horloge" if o["id"] == "dossier" else "courbes", RELEVE, FINDINGS, spec["instrument_page"],
                 spec["instrument_eti"], spec["instrument_sub"], "../rendus/robot-" + ICONES_COULEUR[o["id"]] + "-regarde.webp")}
@@ -1735,7 +1735,7 @@ def batir_outil_catalogue(o, spec):
   <span class="filet"></span>
 </div></div>
 {film_html(o)}
-<section class="menus"><div class="colonne">
+<nav class="menus" aria-label="Appendices"><div class="colonne">
   <h2 class="h2">The appendices your reviewers will ask for.</h2>
   <div class="grille">{tuiles_html}</div>
   <div class="rangee-fine">
@@ -1743,7 +1743,7 @@ def batir_outil_catalogue(o, spec):
     <a class="lien-fin" href="{lien(o, 'CONTACT.html')}">Contact <span aria-hidden="true">&#8594;</span></a>
     <a class="lien-fin" href="{lien(o, 'MENTIONS.html')}">The fine print <span aria-hidden="true">&#8594;</span></a>
     <a class="lien-fin" href="{o["depot"]}">The repository, public <span aria-hidden="true">&#8594;</span></a>
-  </div></div></section>
+  </div></div></nav>
 </main>
 
 <footer class="pied"><div class="colonne">

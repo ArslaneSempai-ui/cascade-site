@@ -19,7 +19,8 @@
           }
         ],
         "refs": "src/frontiere.test.ts:22 &#183; src/frontiere.test.ts:43"
-      }
+      },
+      "commun": "securite"
     },
     {
       "h2": "What crosses into the Dossier, and what never does",

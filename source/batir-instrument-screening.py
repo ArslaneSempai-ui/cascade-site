@@ -365,7 +365,7 @@ PAGE = f'''<!doctype html><html lang="en">
   </div>
 </section>
 
-<section class="poste">
+<section class="poste" data-commun="instrument">
   <div class="colonne">
     <div class="dessus">
       <div class="t-page-halo" aria-hidden="true"></div>
@@ -382,7 +382,7 @@ PAGE = f'''<!doctype html><html lang="en">
           <p class="tm-sortie" id="g-quoi"></p>
           {carte_html("threshold", "recall")}
           {table_html()}
-          <p class="tm-sortie" id="g-lecture">pick a cell: recall over false alerts, with n and its 95&nbsp;% interval</p>
+          <p class="tm-sortie" id="g-lecture" data-commun="instrument">pick a cell: recall over false alerts, with n and its 95&nbsp;% interval</p>
 
           <p class="tm-l"><span class="ps">$</span> cascade optimise --recall</p>
           <div class="b-ligne">
@@ -406,7 +406,7 @@ PAGE = f'''<!doctype html><html lang="en">
   </div>
 </section>
 
-<section class="basse">
+<section class="basse" data-commun="instrument">
   <div class="colonne basse-grille">
     <div class="plis">
       <details class="pli"><summary>What this rests on</summary>
@@ -423,7 +423,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <li><b>Synthetic variants, kept apart.</b> Generated from list-entry names, nature by
         nature, and never merged with the authored half: the toggle above switches the whole
         grid, it never blends.</li>
-      <li><b>The tool&#8217;s selection rule.</b> The slider holds your recall floor at the Wilson
+      <li data-commun="instrument"><b>The tool&#8217;s selection rule.</b> The slider holds your recall floor at the Wilson
         <b>lower bound</b>, exactly as <span style="font-family:var(--mono)">npm run optimise</span>
         does: a point estimate never clears a floor here.</li>
     </ul>

@@ -396,7 +396,8 @@ def section(sec, ouvert=False):
               f'<div class="term"><div class="term-bar">'
               f'<i></i><i></i><i></i><span>run it yourself</span></div>'
               f'<div class="term-corps">{lignes}</div></div>{refs}</div>')
-    return (f'<details{" open" if ouvert else ""}>'
+    dc = f' data-commun="{sec["commun"]}"' if sec.get("commun") else ""
+    return (f'<details{" open" if ouvert else ""}{dc}>'
             f'<summary><span class="cr" aria-hidden="true">&#9656;</span>{sec["h2"]}'
             f'</summary><div class="sec-corps">{corps}{ap}</div></details>')
 

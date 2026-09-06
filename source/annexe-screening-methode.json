@@ -38,7 +38,8 @@
           }
         ],
         "refs": "src/measure.ts:6 &#183; src/measure.ts:127 &#183; src/measure.ts:133"
-      }
+      },
+      "commun": "methode"
     },
     {
       "h2": "Wilson everywhere, and refusals where n is small",

@@ -38,7 +38,8 @@
           }
         ],
         "refs": "src/synthetic.ts:31 &#183; src/synthetic.ts:51 &#183; src/measure.ts:5"
-      }
+      },
+      "commun": "methode"
     },
     {
       "h2": "Scales are declared, never discovered in the code",

@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-vzF4/slbcasjuC71tMm3JNtu9OmYRR9+lqfPGSQQGOU=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-IBfMpx6fh8WQmy9u/OlyCG6Yh98O0RfPmyNa6ylKhas='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-51ptDqvcMVgSm1H+qKrX7qjYC33rSTUUXlHB5fHst1E=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-FlAuybSG1ayuM8Ia9PUHQrOgdop6hukOas1Q3EipeTI='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/instrument.html">
@@ -191,7 +191,7 @@
 
   /* THE BLACK PAGE (Arslane, 9/09) : the tool's night becomes near-black, its colour stays in
      strokes, figures and glows ; the parchment section turns black with paper ink, the clone
-     terminal too. The variables are re-declared so every rule below inherits the change. */
+     terminal too. The variables are re-declared so each rule below inherits the change. */
   :root{--nuit-a:#1a1a1f;--nuit-b:#0e0e11;--nuit-c:#08080a;
     --papier:#0e0e11;--papier-haut:#121215;--encre:#e8e6df;--demi:#a5a39a;--pale:#8f8d84;
     --filet-clair:#2c2c33;--sur:#e8e6df;--sur-pale:#9a988f;--tenu:#7fd4a0}
@@ -369,8 +369,8 @@
           <button class="regl actif" id="r-pub">published &#183; $191</button>
           <button class="regl" id="r-vise">file-aimed &#183; $54</button>
         </div>
-        <p class="carte-aide">every dot is one routing of the five fields, priced and scored from the sealed bricks ; the line through the bright dots is the frontier no routing beats · <b>pull the budget line</b> (or the slider below), the best routing under it lights up · hover a frontier dot to read it, click it to compose it</p>
-          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="Every routing as cost against accuracy, the frontier, and the budget as a line"><g id="carte-nuage"></g><g id="carte-vif"></g></svg></div>
+        <p class="carte-aide" data-commun="instrument">each dot is one routing of the five fields, priced and scored from the sealed bricks ; the line through the bright dots is the frontier no routing beats · <b>pull the budget line</b> (or the slider below), the best routing under it lights up · hover a frontier dot to read it, click it to compose it</p>
+          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="Each routing as cost against accuracy, the frontier, and the budget as a line"><g id="carte-nuage"></g><g id="carte-vif"></g></svg></div>
       </div>
       <div class="t-scroll"><table class="routage">
       <caption class="sr">Pick one tier per field; each cell shows measured accuracy and the price of a thousand extractions</caption>
@@ -414,13 +414,13 @@
     human tier uses an assumed pace and salary. <b>Change the assumptions and the dollars move.
     The accuracies do not.</b></p>
   <p><b>The human column is the one exception: an assumption until you measure it.</b>
-    85% on every field, declared in the tool's own source. Every other
+    85% on each field, declared in the tool's own source. Each other
     accuracy shown here was measured. <code>npm run measure:humans -- --cases=your-file.csv</code>
     grades your own reviewers: accuracy per field with intervals, agreement between reviewers,
     seconds per record. Pass the sealed result to <code>optimise</code> with <code>--humans</code>
     and the optimiser reads your measurement instead of the assumption.</p>
   <p><b>Your documents never touch this page.</b> Nothing is uploaded, nothing is fetched, and the
-    page's security policy refuses every network call.</p>
+    page's security policy refuses each network call.</p>
   <p><b>These are our sealed readings. Now test them against yours.</b> The tool clones next to
     your files and measures them there: your CSV stays where it is, the report lands beside it.</p>
     </details>
@@ -474,8 +474,8 @@ const DONNEES = {"fields": ["name", "birth", "document", "country", "address"], 
     $("#tm-delta").innerHTML = "vs published  "
       + (dc >= 0 ? "+" : "&#8722;") + "$" + Math.abs(dc).toFixed(Math.abs(dc) < 99.5 ? 1 : 0)
       + " &#183; " + (dj >= 0 ? "+" : "&#8722;") + Math.abs(dj).toFixed(1) + "&nbsp;pt";
-    const memePub = F.every((f) => routage[f] === D.publie.routage[f]);
-    const memeVise = F.every((f) => routage[f] === D.vise.routage[f]);
+    const memePub = F.each((f) => routage[f] === D.publie.routage[f]);
+    const memeVise = F.each((f) => routage[f] === D.vise.routage[f]);
     $("#r-pub").classList.toggle("actif", memePub);
     $("#r-vise").classList.toggle("actif", memeVise);
     viseV = null; dessinerV(); peindrePanneauV();     /* a change of routing reads the routing, not a stale hover */
@@ -535,7 +535,7 @@ const DONNEES = {"fields": ["name", "birth", "document", "country", "address"], 
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   let viseV = null;                          /* the frontier point under the pointer */
   const budgetDe = () => Math.pow(10, parseFloat(curseur.value)) / 100;
-  /* the cloud, drawn ONCE : every routing, thinned to one in three (the eye cannot tell) */
+  /* the cloud, drawn ONCE : each routing, thinned to one in three (the eye cannot tell) */
   (() => {
     let h = ""; let i = 0;
     const marche = (k, r, cout, just) => {
@@ -545,7 +545,7 @@ const DONNEES = {"fields": ["name", "birth", "document", "country", "address"], 
     marche(0, {}, 0, 0);
     nuageG.innerHTML = '<g class="nuage">' + h + "</g>";
   })();
-  const memeR = (a, b) => F.every((f) => a[f] === b[f]);
+  const memeR = (a, b) => F.each((f) => a[f] === b[f]);
   function dessinerV() {
     const budget = budgetDe();
     let h = "";
