@@ -176,7 +176,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <ul class="c-liste">
         <li>The whole tool, <b>on your own records</b></li>
         <li>One plan, each Cascade tool: <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b> and <b>Scoring</b> alike, and the <b>Dossier</b> that reads them</li>
-        <li>Counter starts at first use, not download</li>
+        <li>Counter starts at first use, instead of at download</li>
         <li>Results stay internal, no production</li>
         <li>No document leaves your network</li>
       </ul>
@@ -206,10 +206,10 @@ PAGE = f'''<!doctype html><html lang="en">
         <li>Commercial use for your own business</li>
         <li>The same licence covers <b>each Cascade tool</b>: Routing, Screening, Monitoring, Scoring, one paper</li>
         <li>And the <b>Dossier</b>: the cross-tool piece your regulator reads, sealed, verified without us</li>
-        <li>The <b>licensed component</b>, not published</li>
+        <li>The <b>licensed component</b>, kept unpublished</li>
         <li>Updates included for each paid term</li>
         <li><b>Recertify</b> on fresh records, re-sealed, on the rhythm you declare</li>
-        <li>One legal entity signs; affiliates named, not assumed</li>
+        <li>One legal entity signs; affiliates named, instead of assumed</li>
       </ul>
       <a class="cta" href="CONTACT.html">Talk terms <span class="fl" aria-hidden="true">&#8594;</span></a>
       <p class="c-fin">30% on signature &#183; net 60 &#183; renewal capped at the lower of CPI&#8209;U and 5%</p>

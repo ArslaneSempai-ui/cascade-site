@@ -50,7 +50,7 @@
         "cmd": [
           {
             "c": "grep -r \"the amount you invented\" your-alerts-measured.md your-alerts-measured.json",
-            "n": "finds nothing; the outputs carry verdicts, not values"
+            "n": "finds nothing; the outputs carry verdicts, instead of values"
           }
         ],
         "refs": "src/your-alerts.ts:9 &#183; src/your-alerts.ts:25"

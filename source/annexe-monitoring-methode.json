@@ -26,7 +26,7 @@
       "h2": "Generated variants, apart by construction",
       "html": [
         "<p>The synthetic half is generated from the written cases under an explicit seed, and the jitter obeys one rule above all others: <b>it must not undo the nature it varies</b>. Structuring deposits stay under the reporting threshold, round-trip amounts and loan instalments move by a common factor so their equalities survive, round savings amounts stay round. Each variant is revalidated before it exists.</p>",
-        "<p>The two halves are never blended: the record holds them under two provenances, and on cells where the generated set scores friendlier than the written one, that gap is shown on the page rather than averaged away.</p>"
+        "<p>The two halves are never blended: the record holds them under two provenances, and on cells where the generated set scores friendlier than the written one, that gap is shown on the page instead of averaged away.</p>"
       ],
       "verif": {
         "t": "Verify the separation",
@@ -43,7 +43,7 @@
     {
       "h2": "Scales are declared, never discovered in the code",
       "html": [
-        "<p>Two scenarios need a scale to turn a raw number into a score: the amount scale and the velocity scale. Both are <b>assumed values with declared bounds and provenance</b>, written in one file with the reason for each, not constants scattered where nobody reads them. Change a scale and the record must be re-measured and re-sealed: the seal makes a silent retune impossible.</p>"
+        "<p>Two scenarios need a scale to turn a raw number into a score: the amount scale and the velocity scale. Both are <b>assumed values with declared bounds and provenance</b>, written in one file with the reason for each, instead of constants scattered where nobody reads them. Change a scale and the record must be re-measured and re-sealed: the seal makes a silent retune impossible.</p>"
       ],
       "verif": {
         "t": "Verify the declarations",
@@ -60,7 +60,7 @@
     {
       "h2": "Wilson everywhere, and refusals where n is small",
       "html": [
-        "<p>Each rate travels with its Wilson interval at 95 percent and its n; below <b>twenty observations</b> a rate is noted rather than quoted. On your own history, recall is refused outright with <b>fewer than five confirmed suspicious cases</b>: the tool states this in those words instead of printing a figure that rests on almost nothing.</p>",
+        "<p>Each rate travels with its Wilson interval at 95 percent and its n; below <b>twenty observations</b> a rate is noted instead of quoted. On your own history, recall is refused outright with <b>fewer than five confirmed suspicious cases</b>: the tool states this in those words instead of printing a figure that rests on almost nothing.</p>",
         "<p>The threshold grid is shared by each scenario, 0.50 to 1.00 in steps of 0.01, and a case counts as an alert when its score is <b>at or above</b> the threshold: inclusive, so the strictest cell still means something for a scenario that answers exactly 1.</p>"
       ],
       "verif": {

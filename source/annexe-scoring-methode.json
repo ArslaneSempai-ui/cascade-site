@@ -2,13 +2,13 @@
   "_": "Method page of the amethyst tool (Scoring). Same shape as the house annexes. Every refs points at a real line of ~/Documents/cascade-scoring at main d3c3d89; the citation guard must know the fourth repository. The object render does not exist yet (the shelving; look-dev).",
   "objet": "rendus/etats/objet-scoring-methode.webp",
   "titre": "How the scoring grid is measured.",
-  "lede": "This page shows what the scoring numbers are made of: which dossiers, which factors, which declared tables, and where each figure is not quoted. No real person exists in the public record, and no official risk list was copied into it: that refusal is enforced by a test, not by discipline.",
+  "lede": "This page shows what the scoring numbers are made of: which dossiers, which factors, which declared tables, and where each figure is not quoted. No real person exists in the public record, and no official risk list was copied into it: that refusal is enforced by a test, instead of by discipline.",
   "sections": [
     {
       "h2": "Written dossiers, twin by twin",
       "html": [
         "<p>The measured half rests on dossiers <b>we wrote and we declare</b>: six escalated archetypes and, deliberately, their six maintained twins: a family company with each ownership layer named against the shell that hides them, a neighbourhood shop whose turnover sits on its declaration against the counter that outruns it, a salaried account at ratio one against the firm at ratio five, a foreign student at stipend scale against the remote newcomer at several times his declaration. What separates each twin is <b>in the fields</b>, history and ratios, never only in the label, and a test pins all six pairs structurally.</p>",
-        "<p>No official country list was copied, and a test makes the refusal structural: suspects and twins <b>share their countries of residence</b>, so no code can quietly become a list. The geography factor scores zero on this book, on both sides, and the page above states this as a finding rather than hiding it.</p>"
+        "<p>No official country list was copied, and a test makes the refusal structural: suspects and twins <b>share their countries of residence</b>, so no code can quietly become a list. The geography factor scores zero on this book, on both sides, and the page above states this as a finding instead of hiding it.</p>"
       ],
       "verif": {
         "t": "Verify the dossiers",
@@ -42,7 +42,7 @@
     {
       "h2": "Generated variants, apart whichever side they favour",
       "html": [
-        "<p>The synthetic half is generated from the written dossiers under an explicit seed, natures preserved by construction: linked factors keep the observed-over-declared ratios, cash shares stay on their side of the line, ownership layers keep their floor, the remote newcomer stays new. On this tool the generated half is <b>harsher</b> than the written one on the best factor, and it stays apart exactly as it would if it flattered: separation is a rule, not a convenience, and the page shows both numbers side by side.</p>"
+        "<p>The synthetic half is generated from the written dossiers under an explicit seed, natures preserved by construction: linked factors keep the observed-over-declared ratios, cash shares stay on their side of the line, ownership layers keep their floor, the remote newcomer stays new. On this tool the generated half is <b>harsher</b> than the written one on the best factor, and it stays apart exactly as it would if it flattered: separation is a rule, instead of a convenience, and the page shows both numbers side by side.</p>"
       ],
       "verif": {
         "t": "Verify the separation",
@@ -59,7 +59,7 @@
     {
       "h2": "Wilson everywhere, scores bounded, refusals where n is small",
       "html": [
-        "<p>Each rate travels with its Wilson interval at 95 percent and its n; below twenty observations a rate is noted rather than quoted, and recall on your own book is refused outright under five confirmed escalations. A factor's score lives in [0, 1] and a value outside it is an error named with the factor and the dossier, never a silent rounding. The threshold grid is shared and inclusive, so the strictest cell still means something for a factor that answers exactly one.</p>"
+        "<p>Each rate travels with its Wilson interval at 95 percent and its n; below twenty observations a rate is noted instead of quoted, and recall on your own book is refused outright under five confirmed escalations. A factor's score lives in [0, 1] and a value outside it is an error named with the factor and the dossier, never a silent rounding. The threshold grid is shared and inclusive, so the strictest cell still means something for a factor that answers exactly one.</p>"
       ],
       "verif": {
         "t": "Verify the refusals",

@@ -7,7 +7,7 @@
     {
       "h2": "Measured on a slice the tuning never saw",
       "html": [
-        "<p>The corpus is cut into three parts (training, dev, and held&#8209;out), and the published measurement reads <b>only the held&#8209;out slice</b>, forced in code, not by discipline. The middle slice exists because of a real mistake: a generative prompt was once tuned while reading held&#8209;out scores. The leak was caught, repaired, and the split hardened so it cannot recur silently: <b>a test fails the suite if two slices share a document or a phrasing</b>.</p>",
+        "<p>The corpus is cut into three parts (training, dev, and held&#8209;out), and the published measurement reads <b>only the held&#8209;out slice</b>, forced in code, instead of by discipline. The middle slice exists because of a real mistake: a generative prompt was once tuned while reading held&#8209;out scores. The leak was caught, repaired, and the split hardened so it cannot recur silently: <b>a test fails the suite if two slices share a document or a phrasing</b>.</p>",
         "<p>One limit, stated by the repository itself: the corpus is authored by us. The held&#8209;out slice defends against grading our own copy; it does not defend against unrealism. That is what measuring <b>your own cases</b> is for.</p>"
       ],
       "verif": {
@@ -26,7 +26,7 @@
       "h2": "Each routing, enumerated, with one asterisk",
       "html": [
         "<p>Five fields, seven tiers per field: the optimiser traverses <b>all 16&#8239;807 assignments exhaustively</b>: a recursive enumeration, no heuristic, no sampling. The count on this page is recalculated from the sources on each check, never typed in.</p>",
-        "<p>The asterisk: the seventh tier, <b>human review, is an assumption, not a measurement</b>, and the tool prints exactly that on each pass rather than letting the figure blend in with the measured six.</p>",
+        "<p>The asterisk: the seventh tier, <b>human review, is an assumption, instead of a measurement</b>, and the tool prints exactly that on each pass instead of letting the figure blend in with the measured six.</p>",
         "<p>The assumption holds only until you measure it: <code>measure:humans</code> grades your own reviewers on your own records, accuracy per field with intervals, agreement between reviewers, seconds per record. Pass the sealed result to <code>optimise</code> with <code>--humans</code> and the optimiser reads the measurement instead.</p>"
       ],
       "verif": {
@@ -48,9 +48,9 @@
     {
       "h2": "The record is frozen by a fingerprint",
       "html": [
-        "<p>The published record carries a <b>content fingerprint</b>: a SHA&#8209;256 taken over the record in canonical form and truncated to sixteen hex characters, and the reader <b>refuses</b> a record whose fingerprint is absent or no longer matches. Refuses, not warns: a hand&#8209;edited measurement fails loudly. The stamp in this site's masthead is that fingerprint.</p>",
-        "<p>You do not have to take our word for it, and you should not hash the file by hand: <b>a plain checksum of the file will not match</b>, because the fingerprint is taken over a canonical form of the record, not over its bytes. The tool recomputes it in front of you instead, and prints what it finds.</p>",
-        "<p>Two limits the sealing tool states about itself: the fingerprint covers the whole record except fingerprint keys themselves, and it proves nothing about what happened <b>before</b> sealing; the only gesture that produces a measurement is the measurement command. And one repair published rather than hidden: the git commit the reference record was measured at was later rewritten away by a history purge; the repository records the replacement commit and labels the mapping <b>&#8220;inferred, not recorded&#8221;</b>.</p>"
+        "<p>The published record carries a <b>content fingerprint</b>: a SHA&#8209;256 taken over the record in canonical form and truncated to sixteen hex characters, and the reader <b>refuses</b> a record whose fingerprint is absent or no longer matches. It refuses instead of warning: a hand&#8209;edited measurement fails loudly. The stamp in this site's masthead is that fingerprint.</p>",
+        "<p>You do not have to take our word for it, and you should not hash the file by hand: <b>a plain checksum of the file will not match</b>, because the fingerprint is taken over a canonical form of the record, instead of over its bytes. The tool recomputes it in front of you instead, and prints what it finds.</p>",
+        "<p>Two limits the sealing tool states about itself: the fingerprint covers the whole record except fingerprint keys themselves, and it proves nothing about what happened <b>before</b> sealing; the only gesture that produces a measurement is the measurement command. And one repair published instead of hidden: the git commit the reference record was measured at was later rewritten away by a history purge; the repository records the replacement commit and labels the mapping <b>&#8220;inferred, instead of recorded&#8221;</b>.</p>"
       ],
       "verif": {
         "t": "Recompute the seal",
@@ -67,7 +67,7 @@
     {
       "h2": "Intervals that refuse to flatter",
       "html": [
-        "<p>Each rate ships with a <b>Wilson interval at 95%</b>. The repository admits, in writing, that the level is an inherited default rather than a weighed choice. The interval function <b>throws</b> on impossible input instead of returning a quiet NaN, and for two tiers graded on the same cases the repository prefers a paired McNemar test to comparing Wilson intervals, which it documents as too conservative for that job.</p>"
+        "<p>Each rate ships with a <b>Wilson interval at 95%</b>. The repository admits, in writing, that the level is an inherited default instead of a weighed choice. The interval function <b>throws</b> on impossible input instead of returning a quiet NaN, and for two tiers graded on the same cases the repository prefers a paired McNemar test to comparing Wilson intervals, which it documents as too conservative for that job.</p>"
       ],
       "verif": {
         "t": "Verify the arithmetic",
@@ -89,7 +89,7 @@
       ],
       "verif": {
         "t": "Verify the retirement",
-        "p": "Rerun the bench. Below the memory floor it marks its own durations non-transportable rather than publishing them.",
+        "p": "Rerun the bench. Below the memory floor it marks its own durations non-transportable instead of publishing them.",
         "cmd": [
           {
             "c": "npm run contrainte",
