@@ -35,6 +35,8 @@ grep -E "non émis|cassé sur|BOUGÉES|Traceback" $SORTIE/assemblage.log | cut -
 [ $code = 0 ] || { echo "assembleur : code $code, on s'arrête ($SORTIE/assemblage.log)"; exit 1; }
 # le témoin de DÉBRANCHEMENT de la garde de voix : si l'assemblage vert ne porte plus la
 # ligne de la garde, quelqu'un a retiré l'appel — un vert sans la voix ne part pas
+grep -q "structure tenue" $SORTIE/assemblage.log || {
+  echo "REFUS : l'assemblage vert ne porte plus la ligne du témoin des tarifs — débranché" ; exit 5 ; }
 grep -q "témoin de l'accueil" $SORTIE/assemblage.log || {
   echo "REFUS : l'assemblage vert ne porte plus la ligne du témoin de l'accueil — débranché" ; exit 5 ; }
 grep -q "voix tenue" $SORTIE/assemblage.log || {
@@ -89,6 +91,11 @@ echo "=== les cinq instruments vivants (temoin-instrument.py) $(date +%H:%M:%S)"
 python3 $SRC/temoin-instrument.py > $SORTIE/instruments.log 2>&1; code=$?
 tail -2 $SORTIE/instruments.log | cut -c1-160
 [ $code = 0 ] || { echo "REFUS : un instrument vivant ne tourne plus ($SORTIE/instruments.log)"; exit 6; }
+
+echo "=== les tarifs au navigateur (temoin-tarifs.py) $(date +%H:%M:%S)"
+python3 $SRC/temoin-tarifs.py --docs $SITE/docs > $SORTIE/tarifs.log 2>&1; code=$?
+tail -2 $SORTIE/tarifs.log | cut -c1-160
+[ $code = 0 ] || { echo "REFUS : la page des tarifs ne tient pas ($SORTIE/tarifs.log)"; exit 6; }
 
 echo "=== porte mécanique (controle.mjs) $(date +%H:%M:%S)"
 if [ -f $CTL ]; then
