@@ -14,6 +14,7 @@ LES PAGES SERVIES, celles que le lecteur reçoit.
 """
 import http.server
 import pathlib
+import re
 import subprocess
 import sys
 import threading
@@ -21,6 +22,19 @@ import urllib.request
 
 BASE = pathlib.Path(__file__).parent
 DOCS = BASE.parent / "docs"
+# la phrase du what-if de l'onyx se LIT dans le module qui l'émet, jamais retapée :
+# la passe de copy du 11/09 a changé « rhythm » en « validity period » et le témoin,
+# qui portait la phrase en dur, a rougi sur une page juste — la troisième copie d'un
+# fait ment toujours la première
+def phrase_what_if():
+    src = (BASE / "instrument_carte.py").read_text(encoding="utf-8")
+    m = re.search(r'"(if the [a-z ]+ were) "', src)
+    if not m:
+        sys.exit("le témoin ne retrouve plus la phrase du what-if dans instrument_carte.py : "
+                 "l'aligner ici plutôt que de croire un rouge ou un vert")
+    return m.group(1)
+
+
 PAGES = [
     ("instrument.html", "vert"),
     ("screening/instrument.html", "grille"),
@@ -49,7 +63,7 @@ try:
     for page, genre in PAGES:
         print(f"── {page} ({genre})")
         r = subprocess.run(["node", str(BASE / "temoin-instrument-sonde.mjs"),
-                            f"http://127.0.0.1:{port}/{page}", genre],
+                            f"http://127.0.0.1:{port}/{page}", genre, phrase_what_if()],
                            capture_output=True, text=True, timeout=120)
         print("\n".join("  " + l for l in (r.stdout.strip().splitlines() or ["(sonde muette)"])))
         if r.returncode != 0:

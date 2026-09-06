@@ -14,7 +14,7 @@
 //   4. prefers-reduced-motion : le caret s'arrête (animation none, calculée) ;
 //   5. les chiffres lus dans le panneau au clic d'une cellule se retrouvent dans le JSON
 //      embarqué (formats de la maison recomposés côté page, jamais devinés ici).
-const [url, type] = process.argv.slice(2);
+const [url, type, phraseWhatIf] = process.argv.slice(2);
 if (!url || !["grille", "vert", "onyx"].includes(type)) {
   console.error("usage: node temoin-instrument-sonde.mjs <url> grille|vert|onyx");
   process.exit(2);
@@ -103,7 +103,8 @@ if (prise) {
   })`));
   const av = JSON.parse(avant);
   if (type === "onyx") {
-    dire(apres.t !== av.t && /if the rhythm were/.test(apres.t), `la ligne tirée réécrit son étiquette what-if : « ${apres.t.slice(0, 60)} »`);
+    // la phrase vient du module qui l'émet (argv), jamais retapée ici
+    dire(apres.t !== av.t && apres.t.includes(phraseWhatIf || "if the "), `la ligne tirée réécrit son étiquette what-if : « ${apres.t.slice(0, 60)} »`);
     dire(apres.pan !== av.pan, "le compte de fraîcheur du panneau suit la ligne");
   } else {
     dire(av.v !== null && apres.v !== av.v, `tirer la ligne change #b-curseur (${av.v} → ${apres.v})`);
