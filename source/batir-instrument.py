@@ -26,6 +26,9 @@ import sys
 
 BASE = pathlib.Path(__file__).parent
 
+sys.path.insert(0, str(BASE))
+from instrument_carte import CSS_NOIR, CSS_VERT, CARTE_VERT_HTML, PANNEAU_VERT_HTML, JS_VERT  # noqa: E402
+
 r = subprocess.run(["node", str(BASE / "extraire-instrument.mjs")],
                    capture_output=True, text=True)
 if r.returncode != 0:
@@ -257,6 +260,7 @@ JS = '''
     const memeVise = F.every((f) => routage[f] === D.vise.routage[f]);
     $("#r-pub").classList.toggle("actif", memePub);
     $("#r-vise").classList.toggle("actif", memeVise);
+    viseV = null; dessinerV(); peindrePanneauV();     /* a change of routing reads the routing, not a stale hover */
   }
   cells.forEach((c) => c.addEventListener("click", () => {
     routage[c.dataset.f] = c.dataset.t; peindre(); }));
@@ -304,6 +308,7 @@ JS = '''
       el.innerHTML = 'self-check <span class="ko">FAILED</span>: this page no longer reproduces the sealed routing; do not trust its figures';
     }
   })();
+''' + JS_VERT + '''
   peindre();
 '''
 
@@ -321,7 +326,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">
 <script>document.documentElement.classList.add("js")</script>
-<style>{CSS}</style>
+<style>{CSS}{CSS_NOIR}{CSS_VERT}</style>
 <header class="barre">
   <a class="marque" href="ACCUEIL.html">CASCADE</a>
   <nav aria-label="Site">
@@ -347,8 +352,8 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="poste">
     <span class="t-page-halo" aria-hidden="true"></span>
     <div class="dessus">
-    <img class="rb" src="rendus/robot-penche.webp"
-      alt="The Cascade robot leaning over the terminal from behind its frame">
+    <div class="poste-grille">
+    <div class="fen-robot">
     <div class="terminal">
       <div class="tm-barre"><i></i><i></i><i></i><span class="tm-titre">cascade &#183; live instrument</span></div>
       <div class="tm-corps">
@@ -361,6 +366,7 @@ PAGE = f'''<!doctype html><html lang="en">
           <button class="regl actif" id="r-pub">published &#183; $191</button>
           <button class="regl" id="r-vise">file-aimed &#183; $54</button>
         </div>
+        {CARTE_VERT_HTML}
       </div>
       {table_html()}
       <div class="tm-corps">
@@ -376,6 +382,12 @@ PAGE = f'''<!doctype html><html lang="en">
         <p class="tm-l" style="margin-top:14px"><span class="ps">$</span> cascade verify --sealed</p>
         <p class="tm-preuve" id="tm-preuve">self-check requires JavaScript; the figures above are still the sealed readings.</p>
       </div>
+    </div>
+    </div>
+    <div class="pan-col">
+    <img class="rb" src="rendus/robot-vert-regarde.webp" alt="">
+    {PANNEAU_VERT_HTML}
+    </div>
     </div>
     </div>
   </div>

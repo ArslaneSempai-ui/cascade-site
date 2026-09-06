@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-mdtc2Mmq/ybAtOguvzZuhKo9ZIjUbRP+oFFS6JXdl/A=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-gZ1wDdWVfcKSvaCPL3CpC8nCgarusJQv4x+KyiMmYfM='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-3Vn1labTe+a40Kk5nhO+iNZQxlfQ0VkAZVuWVWDfKi4=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-wbGIL62nZkfD8sF4EZRMa+scLrR2vYjvYuYllC+1XtE='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Dossier &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/dossier/instrument.html">
@@ -152,6 +152,106 @@
   @media (max-width:700px){
     .rb{display:none}
   }
+
+  /* THE BLACK PAGE (Arslane, 9/09) : the tool's night becomes near-black, its colour stays in
+     strokes, figures and glows ; the parchment section turns black with paper ink, the clone
+     terminal too. The variables are re-declared so every rule below inherits the change. */
+  :root{--nuit-a:#1a1a1f;--nuit-b:#0e0e11;--nuit-c:#08080a;
+    --papier:#0e0e11;--papier-haut:#121215;--encre:#e8e6df;--demi:#a5a39a;--pale:#8f8d84;
+    --filet-clair:#2c2c33;--sur:#e8e6df;--sur-pale:#9a988f;--tenu:#7fd4a0}
+  .tete{background:radial-gradient(120% 100% at 50% -20%,color-mix(in srgb,var(--accent-titre) 38%,#0e0e11),var(--nuit-b) 70%)}
+  /* the lede : one wide line or two, never a three-line block (Arslane : « un bloc moche ») */
+  .lede{max-width:none;text-wrap:pretty}
+  .terminal{background:linear-gradient(180deg,#131316,#0b0b0d 120px);
+    border-color:color-mix(in srgb,var(--accent-vif) 26%,transparent)}
+  .terminal::after{background:none}
+  .tm-barre{background:linear-gradient(180deg,#17171b,#101013)}
+  .basse{border-top:1px solid #1e1e23}
+  .basse li::before{background:var(--accent-vif)}
+  .clone{background:linear-gradient(163deg,#141417,#0e0e11);box-shadow:none}
+  .pied{border-top:1px solid #1e1e23}
+  /* the robot keeps leaning over the RIGHT edge of the window, left of the panel's column
+     (on the left it sat on the title and the lede, seen on the 9/09 capture) */
+  /* the robot leans over the RIGHT edge of the window and is CUT by it (z below the terminal),
+     looking down at the chart (pose « regarde », Arslane 9/09 : « faut que le robot regarde
+     l'outil et qu'il soit crop correctement avec les bords de l'outil ») */
+  .fen-robot{position:relative}
+  /* over the window's right edge the robot sat on the title (the panel took the width) : it
+     leans over the PANEL's card, at the far right, and looks left, at the chart */
+  .pan-col{position:relative}
+  .rb{right:-24px;left:auto;width:340px;top:-262px;z-index:2;
+    filter:drop-shadow(0 26px 44px rgba(0,0,0,.85)) brightness(.92)}
+  @media (max-width:980px){.rb{display:none}}
+  /* as wide as the robot allows (three lines at 1440), never the old 52ch block */
+  .lede{max-width:min(100%,800px);font-size:clamp(15px,1.15vw,16.5px)}
+
+  /* THE LIVE CHART : the window becomes window + side panel ; the table stays for the keyboard */
+  .dessus{width:min(100%,1180px)}
+  .poste-grille{display:grid;grid-template-columns:1fr 272px;gap:22px;align-items:start}
+  @media (max-width:980px){.poste-grille{grid-template-columns:1fr}.pan{position:static}}
+  html.js .t-scroll{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .carte{display:block;width:100%;height:auto;font-family:var(--mono);touch-action:none;
+    user-select:none;-webkit-user-select:none;cursor:crosshair;margin:2px 0 10px}
+  .carte .grille-h{stroke:#1c1c21;stroke-width:1}
+  .carte .ordonnee{fill:var(--sur-pale);font-size:10px;text-anchor:end}
+  .carte .seuil{fill:var(--sur-pale);font-size:10.5px;text-anchor:middle}
+  .carte .seuil.axe{fill:var(--accent-clair)}
+  .carte .zone-tenue{fill:var(--tenu);opacity:.06}
+  .carte .courbe{fill:none;stroke:#3a3a42;stroke-width:1.4}
+  .carte .courbe.axe{stroke:var(--sur);stroke-width:2}
+  .carte .fantome{fill:none;stroke:var(--accent-vif);stroke-width:1;stroke-dasharray:3 3;opacity:.55}
+  .carte .fantome-pt{fill:none;stroke:var(--accent-vif);stroke-width:1;opacity:.55}
+  .carte .pt circle{fill:var(--nuit-c);stroke:#4a4a52;stroke-width:1.5}
+  .carte .pt text{fill:var(--sur-pale);font-size:10.5px;text-anchor:middle}
+  .carte .pt.tenu circle{fill:var(--tenu);stroke:var(--tenu)}
+  .carte .pt.axe circle{stroke:var(--sur)} .carte .pt.axe text{fill:var(--sur)}
+  .carte .pt.vise circle{fill:var(--accent-vif);stroke:var(--accent-clair);stroke-width:2}
+  .carte .pt.vise text{fill:var(--accent-clair);font-size:13px;font-weight:500}
+  .carte .pt.presse circle{stroke:var(--accent-clair);stroke-width:2.5}
+  .carte .choix circle{fill:none;stroke:var(--accent-vif);stroke-width:2.5}
+  .carte .choix text{fill:var(--accent-clair);font-size:10.5px;text-anchor:middle}
+  .carte .intervalle{stroke:var(--accent-clair);stroke-width:2;opacity:.9}
+  .carte .viseur{stroke:var(--accent-vif);stroke-width:1;opacity:.7}
+  .carte .plancher-l{stroke:var(--accent-clair);stroke-width:1.5;cursor:ns-resize}
+  .carte .plancher-prise{fill:transparent;cursor:ns-resize}
+  .carte .plancher-poignee{fill:var(--nuit-c);stroke:var(--accent-clair);stroke-width:2;cursor:ns-resize}
+  .carte .plancher-t{fill:var(--accent-clair);font-size:11px;text-anchor:end}
+  .carte .legende text{font-size:11px;fill:var(--sur-pale)} .carte .legende text.axe{fill:var(--sur)}
+  .carte .legende text.fantome-t{fill:var(--accent-vif);opacity:.8}
+  /* under 700 px the chart keeps a readable width and scrolls sideways, as the grid did */
+  .carte-boite{overflow-x:auto;margin:0 -6px;padding:0 6px}
+  @media (max-width:700px){.carte{min-width:640px}}
+  .carte-aide{font-family:var(--mono);font-size:11.5px;color:var(--sur-pale);margin:0 0 12px}
+  .carte-aide b{color:var(--tenu);font-weight:500}
+
+  .pan{position:sticky;top:20px;z-index:3;border:1px solid #232328;border-left:2px solid var(--accent-vif);
+    border-radius:10px;background:#101013;padding:16px 18px 18px;font-family:var(--mono);min-height:300px}
+  .pan .qui{font-size:11px;color:var(--sur-pale);letter-spacing:.08em;text-transform:uppercase}
+  .pan .nom{font-family:var(--texte);font-size:23px;margin:6px 0 14px;color:var(--sur);line-height:1.15}
+  .pan .nom small{color:var(--sur-pale);font-size:14px}
+  .pan .gros{font-size:34px;line-height:1;color:var(--sur);margin:2px 0 4px}
+  .pan .gros small{font-size:14px;color:var(--sur-pale)}
+  .pan .leg{font-size:11.5px;color:var(--sur-pale);margin-bottom:14px;line-height:1.5}
+  .pan .plancher{font-size:12px;padding-top:12px;border-top:1px solid #2c2c33;line-height:1.6;color:var(--sur-pale)}
+  .pan .plancher b{color:var(--accent-clair);font-size:19px;font-weight:500}
+  .pan .tenu{color:var(--tenu)} .pan .pas{color:var(--accent-clair)}
+  @media (prefers-reduced-motion:reduce){.caret{animation:none}}
+
+  .carte .piste{stroke:#232328;stroke-width:1}
+  .carte .nomq{fill:var(--sur-pale);font-size:12px} .carte .nomq.axe{fill:var(--accent-clair)}
+  .carte .pierre circle{fill:var(--nuit-c);stroke:var(--sur);stroke-width:2}
+  .carte .pierre.tenu circle{fill:var(--tenu);stroke:var(--tenu)}
+  .carte .pierre.pas circle{fill:var(--nuit-c);stroke:var(--accent-clair);stroke-width:2;stroke-dasharray:3 2}
+  .carte .pierre text{fill:var(--sur);font-size:10.5px;text-anchor:middle}
+  .carte .pierre.vise circle{stroke:var(--accent-clair);stroke-width:3.5}
+  .carte .rythme{stroke:#2c2c33;stroke-width:1;stroke-dasharray:2 4}
+  .carte .abscisse{fill:var(--sur-pale);font-size:10.5px;text-anchor:middle}
+  .carte .ligne-l{stroke:var(--accent-clair);stroke-width:1.5;cursor:ew-resize}
+  .carte .ligne-prise{fill:transparent;cursor:ew-resize}
+  .carte .ligne-poignee{fill:var(--nuit-c);stroke:var(--accent-clair);stroke-width:2;cursor:ew-resize}
+  .carte .ligne-t{fill:var(--accent-clair);font-size:11px;text-anchor:middle}
+  .pan .verdicts{font-size:12px;line-height:1.7;color:var(--sur-pale);padding-top:12px;border-top:1px solid #2c2c33}
+  .pan .verdicts b{color:var(--sur);font-weight:500}
 </style>
 <header class="barre">
   <a class="marque" href="../index.html">CASCADE</a>
@@ -179,13 +279,16 @@
   <div class="colonne">
     <div class="dessus">
       <div class="t-page-halo" aria-hidden="true"></div>
-      <img class="rb" src="../rendus/robot-onyx-penche.webp" alt="">
+      <div class="poste-grille">
+      <div class="fen-robot">
       <div class="terminal">
         <div class="tm-barre"><i></i><i></i><i></i><span>cascade dossier &#183; the public dossier, live</span></div>
         <div class="tm-corps">
           <p class="tm-l"><span class="ps">$</span> cascade dossier --live<span class="caret" aria-hidden="true"></span></p>
           <p class="tm-sortie">coverage <b>4 / 4</b> questions with a sealed public record &#183;
             declared rhythm <b>90 days</b> &#183; as of <b>2026-09-05</b></p>
+          <p class="carte-aide">each stone is one question's sealed record, placed at its age in days · <b>pull the rhythm line</b> to ask what a shorter or longer rhythm would change : a stone past it would lose its « fresh » control, and the --next lines say so · hover a stone to read its five verdicts</p>
+          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 300" role="img" aria-label="The questions' seals on a time axis, with the declared rhythm as a line"></svg></div>
           <div class="t-scroll"><table class="grille">
       <caption class="sr">Pick a cell: each question of the chain against each control of the contract, held or not, with the verdict in the record's own words</caption>
       <thead><tr><th scope="col">question \ control</th><th scope='col'>present</th><th scope='col'>sealed</th><th scope='col'>signed</th><th scope='col'>fresh</th><th scope='col'>consistent</th></tr></thead>
@@ -198,6 +301,17 @@
           <p class="tm-l" style="margin-top:14px"><span class="ps">$</span> cascade verify --sealed</p>
           <p class="tm-preuve" id="tm-preuve">checking&#8230;</p>
         </div>
+      </div>
+      </div>
+      <div class="pan-col">
+      <img class="rb" src="../rendus/robot-onyx-regarde.webp" alt="">
+      <aside class="pan" id="pan" aria-live="polite">
+        <div class="qui">the question under the pointer</div>
+        <div class="nom" id="pan-nom">hover a stone</div>
+        <div class="gros" id="pan-g1"></div><div class="leg" id="pan-l1"></div>
+        <div class="verdicts" id="pan-verdicts"></div>
+      </aside>
+      </div>
       </div>
     </div>
   </div>
@@ -283,6 +397,7 @@
     $("#g-lecture").innerHTML = v === null
       ? "<b>" + q + "</b> \u00b7 <b>" + c + "</b>: not judged \u00b7 the record carries no verdict for this cell, and says so"
       : "<b>" + q + "</b> \u00b7 <b>" + c + "</b> (" + (v.tenu ? "held" : "NOT held") + "): " + v.detail;
+    viseQ = q; dessinerO(); peindrePanneauO();
   }
   cells.forEach((cel) => cel.addEventListener("click", () => lire(cel)));
 
@@ -331,4 +446,80 @@
         + (desaccords.join(" \u00b7 ") || "nothing was recomposed") + "); do not trust its lines";
     }
   })();
+
+  /* THE LIVE CHART OF THE ONYX : the seals on the clock, the rhythm line you drag (a what-if). */
+  const carte = $("#carte");
+  const CW = 900, CH = 300, CL = 100, CR = 40, CT = 30, CB = 34, XMAX = 180;
+  const noms = Object.keys(D.questions).filter((q) => D.questions[q].present);
+  const HR = (CH - CT - CB) / Math.max(1, noms.length);
+  const xd = (d) => CL + Math.min(d, XMAX) / XMAX * (CW - CL - CR);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  let rythme = D.reglages.rythmeJours, viseQ = null;
+  const frais = (q) => D.questions[q].joursDepuis <= rythme;
+  function dessinerO() {
+    let h = '<rect class="zone-tenue" x="' + CL + '" y="' + CT + '" width="' + (xd(rythme) - CL).toFixed(0) + '" height="' + (CH - CT - CB) + '"/>';
+    for (let k = 0; k <= XMAX; k += 30) h += '<text class="abscisse" x="' + xd(k).toFixed(0) + '" y="' + (CH - 8) + '">' + k + ' d</text><line class="rythme" x1="' + xd(k).toFixed(0) + '" x2="' + xd(k).toFixed(0) + '" y1="' + CT + '" y2="' + (CH - CB) + '"/>';
+    noms.forEach((q, i) => {
+      const y = CT + (i + .5) * HR, d = D.questions[q].joursDepuis;
+      h += '<text class="nomq' + (q === viseQ ? " axe" : "") + '" x="0" y="' + (y + 4).toFixed(0) + '">' + esc(q) + '</text><line class="piste" x1="' + CL + '" x2="' + (CW - CR) + '" y1="' + y.toFixed(0) + '" y2="' + y.toFixed(0) + '"/>';
+      h += '<g class="pierre ' + (frais(q) ? "tenu" : "pas") + (q === viseQ ? " vise" : "") + '"><circle cx="' + xd(d).toFixed(0) + '" cy="' + y.toFixed(0) + '" r="7"/><text x="' + xd(d).toFixed(0) + '" y="' + (y - 13).toFixed(0) + '">' + d + ' d \u00b7 ' + esc(D.questions[q].etat) + '</text></g>';
+    });
+    const xs = xd(rythme);
+    h += '<rect class="ligne-prise" x="' + (xs - 9).toFixed(0) + '" y="' + CT + '" width="18" height="' + (CH - CT - CB) + '"/>'
+       + '<line class="ligne-l" x1="' + xs.toFixed(0) + '" x2="' + xs.toFixed(0) + '" y1="' + CT + '" y2="' + (CH - CB) + '"/>'
+       + '<rect class="ligne-poignee" x="' + (xs - 7).toFixed(0) + '" y="' + (CT - 8) + '" width="14" height="14" rx="3"/>'
+       + '<text class="ligne-t" x="' + xs.toFixed(0) + '" y="' + (CT - 12) + '">' + (rythme === D.reglages.rythmeJours ? "declared rhythm " + rythme + " days" : "if the rhythm were " + rythme + " days (declared: " + D.reglages.rythmeJours + ")") + '</text>';
+    carte.innerHTML = h;
+  }
+  function peindrePanneauO() {
+    if (!viseQ) { $("#pan-nom").textContent = "hover a stone"; $("#pan-g1").textContent = ""; $("#pan-l1").textContent = ""; $("#pan-verdicts").innerHTML = "<b>" + noms.filter(frais).length + "</b> of " + noms.length + " fresh within " + rythme + " days" + (rythme === D.reglages.rythmeJours ? "" : " (what-if : the sealed verdicts below keep the declared rhythm)"); return; }
+    const d = D.questions[viseQ];
+    $("#pan-nom").innerHTML = esc(viseQ) + " <small>" + esc(d.etat) + "</small>";
+    $("#pan-g1").innerHTML = d.joursDepuis + "<small> days</small>";
+    $("#pan-l1").textContent = "since its record was measured \u00b7 seal " + String(d.sceau).slice(0, 8) + "\u2026 \u00b7 " + String(d.fichier).slice(0, 36);
+    $("#pan-verdicts").innerHTML = (d.verdicts || []).map((v) => esc(v.controle) + " <b class=\"" + (v.tenu ? "tenu" : "pas") + "\">" + (v.tenu ? "held" : "not held") + "</b>").join("<br>")
+      + "<br><span class=\"" + (frais(viseQ) ? "tenu" : "pas") + "\">" + (frais(viseQ) ? "fresh within " + rythme + " days" : "would fall out of a " + rythme + "-day rhythm") + "</span>";
+  }
+  function suivantesO() {
+    const lignes = [];
+    for (const [q, d] of Object.entries(D.questions)) {
+      if (!d.present) { lignes.push("<b>" + esc(q) + "</b>: no public record yet \u00b7 nothing judged"); continue; }
+      const tenu = Object.fromEntries((d.verdicts || []).map((v) => [v.controle, v.tenu]));
+      const suivant = ORDRE.find((c) => !(c in tenu) || !tenu[c]);
+      const jours = typeof d.joursDepuis === "number" ? " \u00b7 measured " + d.joursDepuis + " day(s) ago" : "";
+      const echeance = typeof d.joursDepuis === "number" ? (d.joursDepuis <= rythme ? " \u00b7 due in " + (rythme - d.joursDepuis) + " day(s)" : " \u00b7 <b>past a " + rythme + "-day rhythm</b>") : "";
+      if (suivant === undefined) lignes.push("<b>" + esc(q) + "</b>: every control held" + jours + echeance);
+      else { const v = verdictDe(q, suivant); lignes.push("<b>" + esc(q) + "</b>: state reached <b>" + esc(d.etat) + "</b>" + jours + " \u00b7 next, <b>" + esc(suivant) + "</b>: " + (v ? esc(v.detail) : "not judged by the record")); }
+    }
+    $("#g-suivant").innerHTML = lignes.join("<br>") + (rythme === D.reglages.rythmeJours ? "" : "<br><span class=\"tm-l\">what-if at " + rythme + " days ; the dossier's declared rhythm is " + D.reglages.rythmeJours + "</span>");
+  }
+  const pierreDe = (ev) => {
+    const r = carte.getBoundingClientRect();
+    const x = (ev.clientX - r.left) / r.width * CW, y = (ev.clientY - r.top) / r.height * CH;
+    let best = null, d0 = 1e9;
+    noms.forEach((q, i) => { const d = Math.hypot(xd(D.questions[q].joursDepuis) - x, CT + (i + .5) * HR - y); if (d < d0) { d0 = d; best = q; } });
+    return d0 < 22 ? best : null;
+  };
+  let tireO = false;
+  carte.addEventListener("pointerdown", (ev) => {
+    const r = carte.getBoundingClientRect();
+    const x = (ev.clientX - r.left) / r.width * CW;
+    if (Math.abs(x - xd(rythme)) < 12 || ev.target.classList.contains("ligne-poignee")) { tireO = true; try { carte.setPointerCapture(ev.pointerId); } catch (e) {} ev.preventDefault(); }
+  });
+  carte.addEventListener("pointermove", (ev) => {
+    if (tireO) {
+      const r = carte.getBoundingClientRect();
+      const x = (ev.clientX - r.left) / r.width * CW;
+      rythme = Math.round(Math.min(XMAX, Math.max(1, (x - CL) / (CW - CL - CR) * XMAX)));
+      dessinerO(); peindrePanneauO(); suivantesO(); return;
+    }
+    const q = pierreDe(ev);
+    if (q !== viseQ) { viseQ = q; dessinerO(); peindrePanneauO(); }
+  });
+  carte.addEventListener("pointerup", () => { tireO = false; });
+  carte.addEventListener("pointerleave", () => { if (!tireO) { viseQ = null; dessinerO(); peindrePanneauO(); } });
+  carte.addEventListener("dblclick", () => { rythme = D.reglages.rythmeJours; dessinerO(); peindrePanneauO(); suivantesO(); });
+  carte.addEventListener("click", (ev) => { if (tireO) return; const q = pierreDe(ev); if (!q) return; const cel = cells.find((x) => x.dataset.q === q && x.dataset.c === "fresh") || cells.find((x) => x.dataset.q === q); if (cel) lire(cel); });
+  dessinerO(); peindrePanneauO(); suivantesO();
+
 </script>

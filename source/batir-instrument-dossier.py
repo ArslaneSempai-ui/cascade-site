@@ -28,6 +28,9 @@ import sys
 
 BASE = pathlib.Path(__file__).parent
 
+sys.path.insert(0, str(BASE))
+from instrument_carte import CSS_NOIR, CSS_ONYX, CARTE_ONYX_HTML, PANNEAU_ONYX_HTML, JS_ONYX  # noqa: E402
+
 r = subprocess.run(["node", str(BASE / "extraire-instrument-dossier.mjs")],
                    capture_output=True, text=True)
 if r.returncode != 0:
@@ -242,6 +245,7 @@ JS = '''
     $("#g-lecture").innerHTML = v === null
       ? "<b>" + q + "</b> \\u00b7 <b>" + c + "</b>: not judged \\u00b7 the record carries no verdict for this cell, and says so"
       : "<b>" + q + "</b> \\u00b7 <b>" + c + "</b> (" + (v.tenu ? "held" : "NOT held") + "): " + v.detail;
+    viseQ = q; dessinerO(); peindrePanneauO();
   }
   cells.forEach((cel) => cel.addEventListener("click", () => lire(cel)));
 
@@ -290,6 +294,7 @@ JS = '''
         + (desaccords.join(" \\u00b7 ") || "nothing was recomposed") + "); do not trust its lines";
     }
   })();
+''' + JS_ONYX + '''
 '''
 
 CV, RG = D["couverture"], D["reglages"]
@@ -307,7 +312,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
 <script>document.documentElement.classList.add("js")</script>
-<style>{CSS}</style>
+<style>{CSS}{CSS_NOIR}{CSS_ONYX}</style>
 <header class="barre">
   <a class="marque" href="../ACCUEIL.html">CASCADE</a>
   <nav aria-label="Site">
@@ -334,13 +339,15 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="colonne">
     <div class="dessus">
       <div class="t-page-halo" aria-hidden="true"></div>
-      <img class="rb" src="../rendus/robot-onyx-penche.webp" alt="">
+      <div class="poste-grille">
+      <div class="fen-robot">
       <div class="terminal">
         <div class="tm-barre"><i></i><i></i><i></i><span>cascade dossier &#183; the public dossier, live</span></div>
         <div class="tm-corps">
           <p class="tm-l"><span class="ps">$</span> cascade dossier --live<span class="caret" aria-hidden="true"></span></p>
           <p class="tm-sortie">coverage <b>{CV["n"]} / {CV["sur"]}</b> questions with a sealed public record &#183;
             declared rhythm <b>{RG["rythmeJours"]} days</b> &#183; as of <b>{RG["auJour"]}</b></p>
+          {CARTE_ONYX_HTML}
           {table_html()}
           <p class="tm-sortie" id="g-lecture">pick a cell: the verdict in the record&#8217;s own words &#183; the outlined cell of a row is the state reached with no gap</p>
 
@@ -350,6 +357,12 @@ PAGE = f'''<!doctype html><html lang="en">
           <p class="tm-l" style="margin-top:14px"><span class="ps">$</span> cascade verify --sealed</p>
           <p class="tm-preuve" id="tm-preuve">checking&#8230;</p>
         </div>
+      </div>
+      </div>
+      <div class="pan-col">
+      <img class="rb" src="../rendus/robot-onyx-regarde.webp" alt="">
+      {PANNEAU_ONYX_HTML}
+      </div>
       </div>
     </div>
   </div>
