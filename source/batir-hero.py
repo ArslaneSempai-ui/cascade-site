@@ -854,6 +854,133 @@ def film_html(outil):
 """
 
 
+# ═══════════════════ LA CHORÉGRAPHIE AU SCROLL (lot P-C1) ═══════════════════
+# Quand rendus/sequences/<prefixe>/manifest.json existe, la page gagne un canevas
+# sous les scènes et le script du scrub ; SANS manifeste, les trois morceaux sont
+# vides et la page d'aujourd'hui sort octet pour octet — un outil sans séquence
+# n'est pas un outil cassé. Le mouvement est validé par Arslane sur le prototype
+# du rack (9/09) ; les gardes des séquences (identité, fraîcheur, poids,
+# complétude) sont le lot M-C1, dans l'assembleur.
+
+CSS_SCRUB = """
+  canvas.film{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+  .colle.film .scene .objet{visibility:hidden}
+  @media (max-width:1080px){canvas.film{display:none}}
+"""
+
+# Le contrat du geste : p vient du même calcul que surScroll ; k = floor(p·5),
+# q = p·5 − k, t = min(1, q / mouvement), image = round(t·(n−1)). q ≥ mouvement :
+# la scène k est active (annotations, fiche, jalon) ; sinon aucune, le canevas seul.
+# Une lecture par image d'animation (rAF), jamais une par événement ; la transition 0
+# entière avant le premier dessin, les suivantes derrière, dans l'ordre ; une image
+# manquante prend la voisine ; tout échec de la transition 0 rend la page d'aujourd'hui,
+# sans erreur en console. Le script tourne APRÈS le JS commun : ses classes gagnent
+# dans la même image d'animation (rAF après les écouteurs de scroll, avant la peinture).
+JS_SCRUB = """
+(() => {
+  const M = JSON.parse(document.getElementById("seq-manifeste").textContent);
+  const colle = document.querySelector(".colle");
+  const seqEl = document.querySelector(".sequence");
+  const canevas = document.querySelector("canvas.film");
+  const scenesS = [...document.querySelectorAll(".scene")];
+  const jalonsS = [...document.querySelectorAll(".jalon")];
+  if (!colle || !seqEl || !canevas || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const ctx = canevas.getContext("2d");
+  const nom = (k, i) => M.chemin + M.prefixe + "-seq-0" + (k + 1) + "-" + String(i).padStart(3, "0") + M.ext;
+  const T = [];
+  let pret = false, mort = false, demande = false, dernier = "";
+  const charge = (k, i) => new Promise((r) => {
+    const im = new Image();
+    im.onload = () => r(im);
+    im.onerror = () => r(null);
+    im.src = nom(k, i);
+  });
+  const chargeTransition = async (k) => {
+    T[k] = await Promise.all(Array.from({ length: M.n }, (_, i) => charge(k, i)));
+    return T[k].some((im) => im !== null);
+  };
+  const voisine = (k, i) => {
+    const t = T[k];
+    if (!t) return null;
+    for (let d = 0; d < M.n; d++) {
+      if (t[i - d]) return t[i - d];
+      if (t[i + d]) return t[i + d];
+    }
+    return null;
+  };
+  function peindre(force) {
+    if (mort || !pret) return;
+    if (innerWidth <= 1080) { colle.classList.remove("film"); dernier = ""; return; }
+    const r = seqEl.getBoundingClientRect();
+    const total = r.height - innerHeight;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    const brut = Math.min(M.transitions - 1e-9, p * M.transitions);
+    const k = Math.floor(brut), q = brut - k;
+    const t = Math.min(1, q / M.mouvement);
+    const i = Math.round(t * (M.n - 1));
+    const arret = q >= M.mouvement;
+    scenesS.forEach((s, x) => {
+      const a = arret && x === k;
+      s.classList.toggle("actif", a);
+      s.setAttribute("aria-hidden", a ? "false" : "true");
+    });
+    jalonsS.forEach((j, x) => j.classList.toggle("actif", arret && x === k));
+    const cle = k + ":" + i + ":" + canevas.clientWidth;
+    if (!force && cle === dernier) return;
+    dernier = cle;
+    colle.classList.add("film");
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    const lw = Math.round(canevas.clientWidth * dpr), lh = Math.round(canevas.clientHeight * dpr);
+    if (canevas.width !== lw || canevas.height !== lh) { canevas.width = lw; canevas.height = lh; }
+    const im = voisine(k, i);
+    if (!im) return;
+    const e = Math.min(canevas.width / im.naturalWidth, canevas.height / im.naturalHeight);
+    const w = im.naturalWidth * e, h = im.naturalHeight * e;
+    ctx.clearRect(0, 0, canevas.width, canevas.height);
+    ctx.drawImage(im, (canevas.width - w) / 2, (canevas.height - h) / 2, w, h);
+  }
+  const auCadre = () => {
+    if (demande) return;
+    demande = true;
+    requestAnimationFrame(() => { demande = false; peindre(false); });
+  };
+  addEventListener("scroll", auCadre, { passive: true });
+  addEventListener("resize", auCadre);
+  (async () => {
+    if (!(await chargeTransition(0))) { mort = true; return; }
+    pret = true;
+    peindre(true);
+    for (let k = 1; k < M.transitions; k++) await chargeTransition(k);
+  })();
+})();
+"""
+
+
+def sequence_scrub(prefixe):
+    """Les trois morceaux du scrub (canevas, CSS, script) quand le manifeste des
+    séquences de l'outil existe ; trois chaînes vides sinon — le repli est
+    l'ABSENCE des morceaux, pas un script qui se tait, pour que la page sans
+    séquence reste celle d'aujourd'hui octet pour octet (témoin cmp du rouge)."""
+    chemin = BASE / "rendus" / "sequences" / prefixe / "manifest.json"
+    if not chemin.exists():
+        return "", "", ""
+    m = json.loads(chemin.read_text())
+    for cle in ("prefixe", "n", "transitions", "ext", "large", "haut", "mouvement"):
+        if cle not in m:
+            sys.exit(f"manifest.json de {prefixe} : clé « {cle} » absente ; le scrub ne devine rien")
+    if m["prefixe"] != prefixe:
+        sys.exit(f"manifest.json : prefixe « {m['prefixe']} » sous le dossier {prefixe}/ : les séquences d'un autre plateau")
+    donnees = json.dumps({"prefixe": m["prefixe"], "n": m["n"], "transitions": m["transitions"],
+                          "ext": m["ext"], "mouvement": m["mouvement"],
+                          "chemin": f"../rendus/sequences/{prefixe}/"}, ensure_ascii=True)
+    canevas = f'<canvas class="film" width="{m["large"]}" height="{m["haut"]}" aria-hidden="true"></canvas>'
+    script = (f'\n<script type="application/json" id="seq-manifeste">{donnees}</script>'
+              f'\n<script>{JS_SCRUB}</script>')
+    return canevas, CSS_SCRUB, script
+
+
+_CANEVAS_V, _CSS_SCRUB_V, _SCRUB_V = sequence_scrub(ETATS_PREFIXE["routing"])
+
 PAGE = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade &#183; KYC routing audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -869,7 +996,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <link rel="stylesheet" href="fontes/roboto-mono.css">
 <script type="application/ld+json">{DONNEES_STRUCTUREES}</script>
 <script>document.documentElement.classList.add("js")</script>
-<style>{CSS}</style>
+<style>{CSS}{_CSS_SCRUB_V}</style>
 <header class="barre sur-nuit">
   <a class="marque" href="ACCUEIL.html">CASCADE</a>
   <nav aria-label="Site">
@@ -903,7 +1030,7 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="colle">
     {rail_html()}
     <div class="theatre">
-      <div class="scenes">{scenes}</div>
+      <div class="scenes">{_CANEVAS_V}{scenes}</div>
     </div>
   </div>
 </section>
@@ -944,7 +1071,7 @@ PAGE = f'''<!doctype html><html lang="en">
   <span class="sceau">120 files &#183; {N_TESTS} tests &#183; seal {SCEAU}</span>
 </div></footer>
 
-<script>{JS}</script>
+<script>{JS}</script>{_SCRUB_V}
 '''
 
 # Routing vit sous routing/ (décision A du 6/09) : chaque lien relatif de la page
@@ -1445,6 +1572,7 @@ def batir_outil_catalogue(o, spec):
         sys.exit(f"le compte de tests est introuvable dans le README de {o['outil_chemin'].name}")
     n_tests_o = _m.group(1)
 
+    canevas_o, css_scrub_o, scrub_o = sequence_scrub(spec["etats"])
     css_o = CSS.replace(PALETTE_VERTE, spec["palette"])
     assert css_o != CSS, "la palette verte n'a pas été trouvée dans le CSS : l'alias n'a rien remplacé"
     css_n = css_o.replace(NUIT_VERTE, spec["nuit"])
@@ -1514,7 +1642,7 @@ def batir_outil_catalogue(o, spec):
 <link rel="stylesheet" href="{p}fontes/roboto-mono.css">
 <script type="application/ld+json">{donnees}</script>
 <script>document.documentElement.classList.add("js")</script>
-<style>{css_o}</style>
+<style>{css_o}{css_scrub_o}</style>
 <header class="barre sur-nuit">
   <a class="marque" href="{lien(o, 'ACCUEIL.html')}">CASCADE</a>
   <nav aria-label="Site">
@@ -1543,7 +1671,7 @@ def batir_outil_catalogue(o, spec):
   <div class="colle">
     {_rail_outil(o, spec, FINDINGS)}
     <div class="theatre">
-      <div class="scenes">{scenes_o}</div>
+      <div class="scenes">{canevas_o}{scenes_o}</div>
     </div>
   </div>
 </section>
@@ -1578,7 +1706,7 @@ def batir_outil_catalogue(o, spec):
   <span class="sceau">{n_tests_o} tests &#183; seal {SCEAU_O}</span>
 </div></footer>
 
-<script>{JS}</script>
+<script>{JS}</script>{scrub_o}
 """
     assert "\u2014" not in page, "un cadratin s'est glissé dans la page"
     (BASE / o["page_hero"]).write_text(page, encoding="utf-8")
