@@ -14,6 +14,7 @@ en var(--vert-*) rend rubis sans être touché. Le jour où une palette neutre e
 voulue partout, le vert bascule sur le même mécanisme en un seul endroit : ici.
 """
 import hashlib
+import filecmp
 import json
 import pathlib
 import sys
@@ -279,12 +280,133 @@ def manques(outil_id, base):
     if outil_id in ICONES_PREFIXE:
         m += [f"rendus/etats/{ICONES_PREFIXE[outil_id]}-{n}.webp" for n in ICONES_NOMS
               if not (base / "rendus" / "etats" / f"{ICONES_PREFIXE[outil_id]}-{n}.webp").exists()]
+    m += manques_sequences(outil_id, base)
     return m
 
 
 # Le sceau du vert, LU dans son relevé scellé et vérifié : cinq bâtisseurs le tapaient à la main
 # (1151f5a1cfaae0c0) et le relevé a été re-scellé le 8/09 (marques kind/version) : un sceau
 # recopié rouille ; celui-ci suit le fichier.
+# ── les gardes des séquences (lot M-C1) ─────────────────────────────────────────
+#
+# Quatre gardes, DANS manques() — la même définition de « prêt » que le rideau, le héros
+# et l'assembleur (la divergence bassins/rack a coûté des liens morts sur tout le site) :
+#   identité    l'état k EST la dernière image de sa transition, octet pour octet — sinon
+#               l'arrêt du mouvement montrerait une autre image que celle qui porte les
+#               annotations d'Écriture ;
+#   fraîcheur   manifest.sceau == le sceau du relevé public de l'outil — des séquences
+#               rendues sur un relevé re-scellé montreraient les chiffres d'avant ;
+#   poids       la somme des images d'une page ≤ BUDGET_SEQUENCE_KO, constante déclarée —
+#               dépasser n'est pas interdit, dépasser en silence l'est ;
+#   complétude  n × 5 fichiers présents, aux pixels du manifeste — une image manquante est
+#               un refus côté bâtisseur ; la voisine, c'est le repli du NAVIGATEUR en
+#               direct, jamais une émission silencieusement trouée.
+# Un outil SANS séquence n'est pas un outil cassé : sans manifeste, aucune garde ne parle.
+
+# Le budget d'une page de séquences, en kilo-octets. AUCUN chiffre non mesuré : le chef le
+# pose après le premier rendu de livraison (mesure + date dans ce commentaire-là). Tant
+# qu'il vaut None, des séquences livrées sont REFUSÉES : un budget non écrit est une
+# intention, et une intention ne se dépasse jamais.
+BUDGET_SEQUENCE_KO = None
+
+def taille_webp(chemin):
+    """(largeur, hauteur) d'un webp, lues dans l'en-tête (VP8X / VP8L / VP8), sans
+    dépendance. Un fichier illisible rend None : la garde le dira, elle ne plantera pas."""
+    try:
+        d = pathlib.Path(chemin).read_bytes()[:30]
+    except OSError:
+        return None
+    if len(d) < 30 or d[:4] != b"RIFF" or d[8:12] != b"WEBP":
+        return None
+    quatre = d[12:16]
+    if quatre == b"VP8X":
+        return (int.from_bytes(d[24:27], "little") + 1, int.from_bytes(d[27:30], "little") + 1)
+    if quatre == b"VP8L":
+        if d[20] != 0x2F:
+            return None
+        bits = int.from_bytes(d[21:25], "little")
+        return ((bits & 0x3FFF) + 1, ((bits >> 14) & 0x3FFF) + 1)
+    if quatre == b"VP8 ":
+        if d[23:26] != b"\x9d\x01\x2a":
+            return None
+        return (int.from_bytes(d[26:28], "little") & 0x3FFF, int.from_bytes(d[28:30], "little") & 0x3FFF)
+    return None
+
+
+def sceau_du_releve(outil_id):
+    """Le sceau du relevé public d'un outil — le vert par son relevé scellé historique
+    (landing.json n'en porte pas), les quatre autres par leur releve-public.json."""
+    o = OUTILS[outil_id]
+    chemin = o["releve_scelle"] if outil_id == "routing" else o["releve"]
+    return lire_releve_scelle(chemin)["empreinte"]
+
+
+_BUDGET_DECLARE = object()   # sentinelle : « lis la constante » ; un témoin injecte la sienne
+
+def manques_sequences(outil_id, base, budget_ko=_BUDGET_DECLARE, sceau_attendu=None):
+    """Ce qui manque aux SÉQUENCES d'un outil pour être prêtes : vide = prêtes, ou pas de
+    séquences du tout. budget_ko et sceau_attendu sont injectables pour les témoins ; la
+    production passe par les défauts (BUDGET_SEQUENCE_KO, sceau_du_releve)."""
+    base = pathlib.Path(base)
+    prefixe = ETATS_PREFIXE[outil_id]
+    dossier = base / "rendus" / "sequences" / prefixe
+    ou = f"rendus/sequences/{prefixe}"
+    if not (dossier / "manifest.json").exists():
+        return []
+    m = []
+    try:
+        man = json.loads((dossier / "manifest.json").read_text())
+    except ValueError as e:
+        return [f"{ou}/manifest.json (illisible : {e})"]
+    absentes = [k for k in ("prefixe", "n", "transitions", "ext", "large", "haut", "mouvement", "sceau")
+                if k not in man]
+    if absentes:
+        return [f"{ou}/manifest.json (clé(s) absente(s) : {', '.join(absentes)})"]
+
+    # fraîcheur : des séquences rendues sur un relevé re-scellé montrent les chiffres d'avant
+    attendu = sceau_attendu if sceau_attendu is not None else sceau_du_releve(outil_id)
+    if man["sceau"] != attendu:
+        m.append(f"{ou} (sceau {man['sceau']} : le relevé porte {attendu} — séquences rendues "
+                 f"sur un autre relevé, à re-rendre)")
+
+    # complétude : n × transitions fichiers, aux pixels du manifeste
+    defauts = []
+    octets = 0
+    for k in range(1, man["transitions"] + 1):
+        for i in range(man["n"]):
+            f = dossier / f"{man['prefixe']}-seq-0{k}-{i:03d}{man['ext']}"
+            if not f.exists():
+                defauts.append(f"{ou}/{f.name} (image manquante : pas de voisine servie en silence)")
+                continue
+            octets += f.stat().st_size
+            t = taille_webp(f)
+            if t != (man["large"], man["haut"]):
+                lue = f"{t[0]}×{t[1]}" if t else "en-tête illisible"
+                defauts.append(f"{ou}/{f.name} ({lue} : le manifeste dit {man['large']}×{man['haut']})")
+    m += defauts[:6]
+    if len(defauts) > 6:
+        m.append(f"{ou} (… et {len(defauts) - 6} autre(s) défaut(s) de complétude)")
+
+    # identité : l'état k EST la dernière image de sa transition, octet pour octet
+    for k in range(1, man["transitions"] + 1):
+        etat = base / "rendus" / "etats" / f"{prefixe}-0{k}.webp"
+        derniere = dossier / f"{man['prefixe']}-seq-0{k}-{man['n'] - 1:03d}{man['ext']}"
+        if etat.exists() and derniere.exists() and not filecmp.cmp(etat, derniere, shallow=False):
+            m.append(f"rendus/etats/{prefixe}-0{k}.webp (n'est pas la dernière image de sa "
+                     f"transition : l'arrêt du mouvement montrerait une autre image que "
+                     f"l'état annoté)")
+
+    # poids : un budget non écrit est une intention, et une intention ne se dépasse jamais
+    budget = BUDGET_SEQUENCE_KO if budget_ko is _BUDGET_DECLARE else budget_ko
+    if budget is None:
+        m.append(f"{ou} (BUDGET_SEQUENCE_KO non déclaré dans outil.py : le chef le pose, "
+                 f"mesure et date à l'appui, après le premier rendu de livraison)")
+    elif octets / 1000 > budget:
+        m.append(f"{ou} ({octets / 1000:.0f} Ko de séquences : le budget déclaré est "
+                 f"{budget} Ko — dépasser se dit, il ne se constate pas en production)")
+    return m
+
+
 SCEAU_ROUTING = lire_releve_scelle(OUTILS["routing"]["releve_scelle"])["empreinte"]
 
 def lien(outil, cible):
