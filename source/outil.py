@@ -491,6 +491,37 @@ def etiquette_dans_scene(lx, ly, demi=CHIP_DEMI, tolerance=8):
             and cy - demi[1] >= -tolerance and cy + demi[1] <= 1000 + tolerance)
 
 
+# La boîte d'une chip, en unités du viewBox, ESTIMÉE sur son texte : la chip est en monospace à
+# 1,55 % de la largeur de scène (≈ 22 unités par em, ≈ 13,2 par caractère), padding .8em de chaque
+# côté, plafonnée à 2 × CHIP_DEMI[0] de large (32,3 % de la scène) ; au-delà elle passe sur deux
+# lignes. Une étiquette courte est donc plus étroite que la boîte maximale de la garde d'objet.
+UNITES_PAR_CARACTERE = 13.2
+def boite_etiquette(txt, demi=CHIP_DEMI):
+    largeur = UNITES_PAR_CARACTERE * len(txt) + 36
+    if largeur > 2 * demi[0]:
+        return 2 * demi[0], 2 * demi[1]          # deux lignes : la boîte maximale
+    return largeur, 50                           # une ligne
+
+
+def etiquettes_qui_se_recouvrent(annotations, ecart=8):
+    """Deux chips d'une MÊME scène ne doivent pas se recouvrir ni se toucher : le 9/09, sur le vert,
+    « a pick both routings share » cachait la moitié de « name changes reader… » et la garde
+    d'objet, qui juge chaque étiquette seule, laissait passer. Rend les paires fautives (a, b)
+    d'indices dans la liste (ax, ay, lx, ly, txt), avec un écart minimal exigé entre les boîtes."""
+    boites = []
+    for (ax, ay, lx, ly, txt) in annotations:
+        l, h = boite_etiquette(txt)
+        boites.append((MX_ANNOT + lx * IW_ANNOT, ly * 1000.0, l, h))
+    paires = []
+    for a in range(len(boites)):
+        for b in range(a + 1, len(boites)):
+            xa, ya, la, ha = boites[a]
+            xb, yb, lb, hb = boites[b]
+            if abs(xa - xb) < (la + lb) / 2 + ecart and abs(ya - yb) < (ha + hb) / 2 + ecart:
+                paires.append((a, b))
+    return paires
+
+
 def manques_etiquettes(outil_id, base, seuil=SEUIL_OBJET):
     """Chaque étiquette de findings-<outil>.json doit être sur le crème de SON image d'état."""
     base = pathlib.Path(base)
@@ -523,4 +554,8 @@ def manques_etiquettes(outil_id, base, seuil=SEUIL_OBJET):
             if part > seuil:
                 m.append(f"findings-{outil_id}.json, finding {fd.get('num', i + 1)} : l'étiquette « {txt[:38]}… » "
                          f"couvre l'objet ({part:.0%} de pixels d'objet sous elle) : à poser sur le crème")
+        annotations = fd.get("annotations", [])
+        for (a, b) in etiquettes_qui_se_recouvrent(annotations):
+            m.append(f"findings-{outil_id}.json, finding {fd.get('num', i + 1)} : les étiquettes « {annotations[a][4][:30]}… » "
+                     f"et « {annotations[b][4][:30]}… » se recouvrent : les écarter")
     return m

@@ -47,7 +47,7 @@ if not _m:
     sys.exit("le compte de tests est introuvable dans le README de l'outil : refus de le recopier")
 N_TESTS, N_FICHIERS = _m.group(1), _m.group(2)
 
-from outil import SCEAU_ROUTING, etiquette_sur_objet, SEUIL_OBJET
+from outil import SCEAU_ROUTING, etiquette_sur_objet, SEUIL_OBJET, etiquettes_qui_se_recouvrent
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-routing"
 
@@ -174,6 +174,11 @@ def verifier_appel(txt, ou):
 
 def appels_html(i):
     lignes, etiquettes = "", ""
+    # deux chips d'une même scène ne se recouvrent pas (9/09 : « a pick both routings share »
+    # cachait « name changes reader… » sur la scène 2 servie) : même règle que les quatre outils
+    for (a, b) in etiquettes_qui_se_recouvrent(APPELS[i]):
+        sys.exit(f"routing, scène {i + 1} : les étiquettes « {APPELS[i][a][4]} » et « {APPELS[i][b][4]} » "
+                 "se recouvrent : les écarter")
     for (ax, ay, lx, ly, txt) in APPELS[i]:
         verifier_appel(txt, f"routing, scène {i + 1}")
         # l'étiquette sur le crème, jamais sur l'objet (Arslane, 9/09) : même garde que les quatre outils

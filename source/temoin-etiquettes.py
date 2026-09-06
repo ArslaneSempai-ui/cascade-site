@@ -4,7 +4,7 @@ factice, un carré opaque au centre ; une étiquette posée sur le carré doit �
 étiquette dans un coin doit passer. Un témoin qui ne rougit plus arrête l'émission."""
 import os, subprocess, sys, tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from outil import etiquette_sur_objet, etiquette_dans_scene, SEUIL_OBJET, CHIP_DEMI, IW_ANNOT  # noqa: E402
+from outil import etiquette_sur_objet, etiquette_dans_scene, etiquettes_qui_se_recouvrent, SEUIL_OBJET, CHIP_DEMI, IW_ANNOT  # noqa: E402
 
 W, H = 1374, 1120
 px = bytearray(W * H * 4)
@@ -36,5 +36,17 @@ if not (0.03 <= cinq <= 0.07 and cinq < SEUIL_OBJET):
     sys.exit(f"témoin cassé : la chip à 5 % dans le carré donne {cinq:.0%} (échelle ou seuil dérivés)")
 if etiquette_dans_scene(0.02, 0.5) or not etiquette_dans_scene(0.12, 0.5) or etiquette_dans_scene(0.5, 0.99):
     sys.exit("témoin cassé : la boîte de la chip ne se voit plus sortir de la scène (0.02 et 0.99 doivent déborder, 0.12 tenir)")
+# deux chips d'une même scène : la paire du vert du 9/09 (recouvrement vu sur la page servie) doit
+# être refusée ; les deux mêmes chips écartées d'une demi-scène doivent passer ; deux chips courtes
+# côte à côte à 0.30 d'écart (≈ 368 unités, plus que leurs deux demi-largeurs) doivent passer aussi
+paire_vue = [(0.44, 0.53, 0.422, 0.220, "name changes reader: the file-aimed pick"),
+             (0.72, 0.28, 0.500, 0.190, "a pick both routings share")]
+paire_ecartee = [(0.44, 0.53, 0.20, 0.10, "name changes reader: the file-aimed pick"),
+                 (0.72, 0.28, 0.75, 0.90, "a pick both routings share")]
+courtes = [(0.3, 0.3, 0.30, 0.10, "the gap"), (0.6, 0.6, 0.60, 0.10, "the cost")]
+if etiquettes_qui_se_recouvrent(paire_vue) != [(0, 1)]:
+    sys.exit("témoin cassé : la paire de chips du vert (scène 2, 9/09) n'est plus vue se recouvrir")
+if etiquettes_qui_se_recouvrent(paire_ecartee) or etiquettes_qui_se_recouvrent(courtes):
+    sys.exit("témoin cassé : deux chips écartées sont refusées comme se recouvrant")
 print(f"témoin des étiquettes : sur l'objet {dessus:.0%} (vu), coin {coin:.0%}, marge {hors:.0%} (passent), "
-      f"bord 15 % → {quinze:.0%} (vu), bord 5 % → {cinq:.0%} (passe)")
+      f"bord 15 % → {quinze:.0%} (vu), bord 5 % → {cinq:.0%} (passe), recouvrement vu, chips écartées passent")
