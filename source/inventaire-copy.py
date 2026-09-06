@@ -38,15 +38,23 @@ class Cueilleur(HTMLParser):
         self.pile = []          # (tag, classes, buffer, ligne)
         self.saut = 0
         self.zones = []         # pile des zones ouvertes : (tag, nom)
+        self.communs = []       # pile des conteneurs data-commun ouverts : (tag, valeur)
         self.blocs = []         # (tag, classes, texte) — la forme de l'inventaire
-        self.blocs_situes = []  # (tag, classes, texte, ligne, zone) — pour la garde
+        self.blocs_situes = []  # (tag, classes, texte, ligne, zone, commun) — pour la garde
         self.attrs_textes = []  # alt / aria-label / title / placeholder
 
     def zone(self):
         return self.zones[-1][1] if self.zones else "corps"
 
+    def commun(self):
+        return self.communs[-1][1] if self.communs else ""
+
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
+        if a.get("data-commun", "").strip():
+            # un composant FONCTIONNEL partagé entre pages, déclaré par Écriture :
+            # identique par construction, exempté du motif 4 et compté à part
+            self.communs.append((tag, a["data-commun"].strip()))
         if tag in self.ZONES:
             self.zones.append((tag, self.ZONES[tag]))
         elif "scene" in a.get("class", "").split() or "rideau" in a.get("class", "").split():
@@ -60,6 +68,8 @@ class Cueilleur(HTMLParser):
             self.pile.append([tag, a.get("class", ""), [], self.getpos()[0]])
 
     def handle_endtag(self, tag):
+        if self.communs and self.communs[-1][0] == tag:
+            self.communs.pop()
         if self.zones and self.zones[-1][0] == tag:
             self.zones.pop()
         if tag in SAUT and self.saut:
@@ -69,7 +79,7 @@ class Cueilleur(HTMLParser):
             texte = re.sub(r"\s+", " ", "".join(buf)).strip()
             if texte:
                 self.blocs.append((t, cls, texte))
-                self.blocs_situes.append((t, cls, texte, ligne, self.zone()))
+                self.blocs_situes.append((t, cls, texte, ligne, self.zone(), self.commun()))
             if self.pile:                      # nested text also counts for the parent
                 self.pile[-1][2].append(" " + texte + " ")
 

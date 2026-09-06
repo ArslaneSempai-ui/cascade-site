@@ -77,14 +77,14 @@ def blocs_du_dossier(docs):
         rel = str(page.relative_to(docs))
         c = Cueilleur()
         c.feed(page.read_text(encoding="utf-8"))
-        for tag, cls, texte, ligne, zone in c.blocs_situes:
+        for tag, cls, texte, ligne, zone, commun in c.blocs_situes:
             if len(texte) < 3:
                 continue
-            tous.append((rel, ligne, zone, tag, cls, _ic.sorte(tag, cls, texte), texte))
+            tous.append((rel, ligne, zone, tag, cls, _ic.sorte(tag, cls, texte), texte, commun))
         # les attributs alt/aria restent hors des motifs 1-6 (exemptés par le contrat) ;
         # le motif 7 les couvre : une sincérité affichée dans un alt reste de la copy
         for tag, k, texte in c.attrs_textes:
-            tous.append((rel, 0, f"attribut-{k}", tag, "", f"attribut {k}", texte))
+            tous.append((rel, 0, f"attribut-{k}", tag, "", f"attribut {k}", texte, ""))
     return tous
 
 
@@ -99,15 +99,16 @@ def blocs_findings(source):
                 if k in ("source", "annotations") or not isinstance(v, str) or not v.strip():
                     continue
                 genre = "titre-finding" if k in ("titre", "title") else "fiche"
-                tous.append((f.name, f"fiche {num} · {k}", "corps", "json", "fiche", genre, v.strip()))
+                tous.append((f.name, f"fiche {num} · {k}", "corps", "json", "fiche", genre, v.strip(), ""))
             for a in fd.get("annotations", []):
                 if isinstance(a, (list, tuple)) and len(a) == 5 and str(a[4]).strip():
-                    tous.append((f.name, f"fiche {num} · étiquette", "corps", "json", "ap-eti", "étiquette-3D", str(a[4]).strip()))
+                    tous.append((f.name, f"fiche {num} · étiquette", "corps", "json", "ap-eti", "étiquette-3D", str(a[4]).strip(), ""))
     return tous
 
 
 def relever(docs, source):
     refus = []
+    communs = {}                # valeur data-commun → pages où elle apparaît
 
     def dire(motif, page, ou, quoi):
         refus.append((motif, page, ou, quoi))
@@ -116,7 +117,7 @@ def relever(docs, source):
     pages = sorted({b[0] for b in blocs if b[0].endswith(".html")})
 
     # motifs 1, 2, 5, 6, 7 : bloc par bloc
-    for page, ligne, zone, tag, cls, sorte_t, texte in blocs:
+    for page, ligne, zone, tag, cls, sorte_t, texte, commun in blocs:
         est_alt = zone.startswith("attribut-")
         titre = sorte_t == "titre-finding" or (not est_alt and est_titre(tag, cls, sorte_t))
         eti_fiche = sorte_t in ("étiquette-3D", "fiche") or (not est_alt and est_etiquette_ou_fiche(cls, sorte_t))
@@ -150,29 +151,42 @@ def relever(docs, source):
         if mots and absolus * 80 > mots:
             dire(3, p, "page", f"{absolus} absolus pour {mots} mots (plus de 1 pour 80)")
 
-    # motif 4 : les répétitions entre pages, hors nav et hors pied
+    # motif 4 : les répétitions entre pages, hors nav et hors pied. Un composant
+    # FONCTIONNEL partagé (l'aide de la carte, le bloc des trois commandes, le
+    # paragraphe allowlist des pages sécurité) est identique PAR CONSTRUCTION :
+    # Écriture le déclare data-commun="…" sur son conteneur ; la garde l'exempte
+    # et le compte à part — une répétition NON déclarée reste un refus
     par_texte = {}
-    for page, ligne, zone, tag, cls, sorte_t, texte in blocs:
+    for page, ligne, zone, tag, cls, sorte_t, texte, commun in blocs:
         if not page.endswith(".html") or zone in ("nav", "pied") or zone.startswith("attribut-") or len(texte) <= 30:
+            continue
+        if commun:
+            communs.setdefault(commun, set()).add(page)
             continue
         par_texte.setdefault(texte, set()).add(page)
     for texte, ou in sorted(par_texte.items()):
         if len(ou) > 2:
             dire(4, f"{len(ou)} pages", ", ".join(sorted(ou)[:4]) + ("…" if len(ou) > 4 else ""),
                  f"bloc repris tel quel : « {texte[:70]} »")
-    return refus
+    return refus, communs
 
 
 def temoin():
     """Les deux pages factices : la fautive doit déclencher les SEPT motifs, la saine
     aucun. Un motif muet = garde cassée, aucun relevé n'est rendu."""
     d = BASE / "temoin-voix"
-    fautifs = relever(d / "fautive", None)
+    fautifs, communs_f = relever(d / "fautive", None)
     vus = {m for m, *_ in fautifs}
     if vus != {1, 2, 3, 4, 5, 6, 7}:
         sys.exit(f"GARDE CASSÉE : la page fautive du témoin ne déclenche que les motifs "
                  f"{sorted(vus)} sur les sept — aucun relevé n'est rendu (code 2)")
-    sains = relever(d / "saine", None)
+    if "commande" not in communs_f:
+        sys.exit("GARDE CASSÉE : le bloc data-commun de la fautive n'est pas compté à part "
+                 "— l'exemption déclarée ne fonctionne plus (code 2)")
+    if any(m == 4 and "declared shared" in quoi for m, _, _, quoi in fautifs):
+        sys.exit("GARDE CASSÉE : le bloc DÉCLARÉ data-commun de la fautive est refusé au "
+                 "motif 4 — l'exemption ne s'applique plus (code 2)")
+    sains, _ = relever(d / "saine", None)
     if sains:
         sys.exit("GARDE CASSÉE : la page saine du témoin déclenche "
                  f"{[(m, q[:60]) for m, _, _, q in sains[:3]]} — la garde rougit sur du propre (code 2)")
@@ -183,7 +197,10 @@ if __name__ == "__main__":
     docs = pathlib.Path(sys.argv[sys.argv.index("--docs") + 1]) if "--docs" in sys.argv else BASE.parent / "docs"
     n_temoin = temoin()
     print(f"  témoin : les sept motifs mordent ({n_temoin} refus sur la fautive, 0 sur la saine)")
-    refus = relever(docs, BASE)
+    refus, communs = relever(docs, BASE)
+    if communs:
+        print("  communs déclarés : " + " ; ".join(
+            f"{k} sur {len(v)} page(s)" for k, v in sorted(communs.items())))
     if not refus:
         print(f"voix tenue : 0 refus sur {len(list(docs.rglob('*.html')))} pages servies "
               f"(et le témoin a prouvé que les sept motifs regardent)")
