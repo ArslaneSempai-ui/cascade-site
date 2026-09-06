@@ -786,11 +786,13 @@ def outils_vivants():
     suivant entre TOUT SEUL le jour où ses findings ET son robot de rideau existent
     — la promesse « le rideau gagne le pan tout seul », tenue par un test
     d'existence plutôt que par une liste à retoucher."""
+    # AUCUN cas particulier « en ligne » : le rouge en avait un ici (« ses pièces
+    # sont commitées ») pendant que l'assembleur le faisait passer par manques() —
+    # le pan du rouge restait au rideau quand son bloc tombait (étiquettes E-C1 en
+    # cours), et l'assemblage finissait sur LIENS CASSÉS. La loi vaut pour tous,
+    # le vert compris : un outil dont les pièces manquent perd son pan, et le dit.
     vivants = []
     for o in OUTILS.values():
-        if o["id"] in ("routing", "screening"):
-            vivants.append(o)      # en ligne : leurs pièces sont commitées
-            continue
         m = manques(o["id"], BASE)
         if not m:
             vivants.append(o)
