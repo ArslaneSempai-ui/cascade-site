@@ -40,7 +40,8 @@ ICI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(ICI))
 sys.path.insert(0, ICI)
 from outil import OUTILS, lire_releve_scelle      # noqa: E402
-from scene_commune import Scene, matiere, matiere_pierre, boite, cylindre, tore, trace, pose, boite_du_sujet  # noqa: E402
+from scene_commune import Scene, matiere, matiere_pierre, boite, cylindre, tore, trace, pose, boite_du_sujet  # noqa: E402, boite_des
+from scene_commune import boite_des  # noqa: E402 — les cibles nommées (9/09)
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--etat", type=int, required=True, choices=[1, 2, 3, 4, 5])
@@ -231,12 +232,32 @@ scene.sol_papier(-0.12)
 # la boîte commune : le socle porte tout, y compris la place du galet d'ivoire de l'état 5
 OUVERTURE = 0.0 if APERCU else 9.0
 BOITE = boite_du_sujet()
+# ── les cibles (9/09) : tout | marche:<k> (0..4) | lutrin ──
+def boite_cible(nom):
+    if nom == "tout":
+        return BOITE
+    if nom.startswith("marche:"):
+        k = int(nom.split(":", 1)[1])
+        if not 0 <= k <= 4:
+            sys.exit(f"[escalier] cible inconnue : {nom} (marches 0..4)")
+        b = boite_des([f"marche_{k}", f"nez_{k}", f"giron_{k}"], air=(0.15, 0.2, 0.05))
+        # les galets posés sur la marche : de l'air au-dessus
+        return (b[0], Vector((b[1].x, b[1].y, b[1].z + 0.35)))
+    if nom == "lutrin":
+        return boite_des(["lutrin_", "pupitre", "page_", "reliure", "ligne_"], air=(0.2, 0.2, 0.15))
+    if nom == "votre":
+        # le galet d'ivoire au pied de l'escalier (état 5) : votre chaîne, pas encore mesurée
+        return boite_des(["votre"], air=(0.35, 0.35, 0.3))
+    sys.exit(f"[escalier] cible inconnue : {nom}")
+arrivee_boite = boite_cible(args.cible)
+MARGE_ARRIVEE = 1.07 if args.cible == "tout" else 1.0
 if args.sequence:
-    rendre_sequence(args, (args.azimut, args.elevation, 1.07),
-                    lambda a, e, m: scene.camera(a, e, focale=60, marge=m, ouverture=OUVERTURE, boite=BOITE),
-                    lambda chemin: scene.rendre(chemin, LARGE, HAUT), "escalier")
+    rendre_sequence(args, (args.azimut, args.elevation, MARGE_ARRIVEE),
+                    lambda a, e, m, b: scene.camera(a, e, focale=60, marge=m, ouverture=OUVERTURE, boite=b),
+                    lambda chemin: scene.rendre(chemin, LARGE, HAUT), "escalier",
+                    boite_depart=boite_cible(args.cible_depart or args.cible), boite_arrivee=arrivee_boite)
 else:
-    scene.camera(args.azimut, args.elevation, focale=60, marge=1.07, ouverture=OUVERTURE, boite=BOITE)
+    scene.camera(args.azimut, args.elevation, focale=60, marge=MARGE_ARRIVEE, ouverture=OUVERTURE, boite=arrivee_boite)
     chemin = os.path.join(args.sortie, f"escalier-0{args.etat}.png")
     scene.rendre(chemin, LARGE, HAUT)
     print(f"[escalier] rendu → {chemin}\n[escalier] Le code de sortie 0 ne prouve rien : ouvrir l'image et la regarder.")

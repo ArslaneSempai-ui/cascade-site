@@ -48,7 +48,8 @@ ICI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(ICI))          # source/ : outil.py
 sys.path.insert(0, ICI)                           # etats/ : scene_commune.py
 from outil import OUTILS, lire_releve_scelle      # noqa: E402
-from scene_commune import Scene, matiere, boite, cylindre, boite_du_sujet  # noqa: E402
+from scene_commune import Scene, matiere, boite, cylindre, boite_du_sujet  # noqa: E402, boite_des
+from scene_commune import boite_des  # noqa: E402 — les cibles nommées (9/09)
 
 DEPOT = os.path.join(os.path.expanduser("~"), "Documents", "cascade-scoring")
 
@@ -247,12 +248,37 @@ else:
 scene.lampe_cle()
 scene.sol_papier(0.0)
 OUVERTURE = 0.0 if APERCU else 9.0
+# ── les cibles (9/09) : tout | travee:<palier> | tablette | archives ──
+def boite_cible(nom):
+    if nom == "tout" or args.etat == 4:
+        return cadre
+    # une travée se cadre par la GÉOMÉTRIE du meuble, pas par ses dossiers : la travée de geography
+    # est vide (le facteur ne retient rien), et une boîte d'objets n'y désignerait rien
+    pas_t = (L - 0.16) / N_TRAVEES
+    def travee(i):
+        x = -(L - 0.16) / 2 + pas_t * (i + 0.5)
+        return (Vector((x - pas_t / 2 - 0.1, cadre[0].y - 0.3, -0.05)), Vector((x + pas_t / 2 + 0.1, cadre[1].y, H + 0.1)))
+    if nom.startswith("travee:"):
+        palier = nom.split(":", 1)[1]
+        if palier not in PALIERS:
+            sys.exit(f"[rayonnage] cible inconnue : {nom} (paliers : {', '.join(PALIERS)})")
+        return travee(PALIERS.index(palier))
+    if nom == "tablette":
+        # la tablette sur trois travées (toute sa longueur ferait reculer la caméra)
+        t = boite_des(["tablette"]); a, c = travee(0), travee(2)
+        return (Vector((a[0].x, t[0].y - 0.3, t[0].z - 0.3)), Vector((c[1].x, cadre[1].y, t[1].z + 0.3)))
+    if nom == "archives":
+        return boite_des(["boite_archives", "etiquette"], air=(0.15, 0.3, 0.15))
+    sys.exit(f"[rayonnage] cible inconnue : {nom}")
+arrivee_boite = boite_cible(args.cible)
+MARGE_ARRIVEE = 1.07 if args.cible == "tout" or args.etat == 4 else 1.0
 if args.sequence:
-    rendre_sequence(args, (az, el, 1.07),
-                    lambda a, e, m: scene.camera(a, e, focale=60, marge=m, ouverture=OUVERTURE, boite=cadre),
-                    lambda chemin: scene.rendre(chemin, LARGE, HAUT), "rayonnage")
+    rendre_sequence(args, (az, el, MARGE_ARRIVEE),
+                    lambda a, e, m, b: scene.camera(a, e, focale=60, marge=m, ouverture=OUVERTURE, boite=b),
+                    lambda chemin: scene.rendre(chemin, LARGE, HAUT), "rayonnage",
+                    boite_depart=boite_cible(args.cible_depart or args.cible), boite_arrivee=arrivee_boite)
 else:
-    scene.camera(az, el, focale=60, marge=1.07, ouverture=OUVERTURE, boite=cadre)
+    scene.camera(az, el, focale=60, marge=MARGE_ARRIVEE, ouverture=OUVERTURE, boite=arrivee_boite)
     chemin = os.path.join(args.sortie, f"rayonnage-0{args.etat}.png")
     scene.rendre(chemin, LARGE, HAUT)
     print(f"[rayonnage] rendu → {chemin}\n[rayonnage] Le code de sortie 0 ne prouve rien : ouvrir l'image et la regarder.")

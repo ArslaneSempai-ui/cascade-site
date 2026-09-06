@@ -307,7 +307,10 @@ def manques(outil_id, base):
 # pose après le premier rendu de livraison (mesure + date dans ce commentaire-là). Tant
 # qu'il vaut None, des séquences livrées sont REFUSÉES : un budget non écrit est une
 # intention, et une intention ne se dépasse jamais.
-BUDGET_SEQUENCE_KO = None
+# MESURÉ le 9/09/2026 sur la première livraison : le rack, 5 transitions × 24 images webp (q 92,
+# 1374×1120, plumées) = 10 156 ko. Le budget est cette mesure plus 8 % de marge ; une page
+# au-dessus refuse d'être assemblée (garde « poids », M-C1). À revoir si l'on replume plus léger.
+BUDGET_SEQUENCE_KO = 11000
 
 def taille_webp(chemin):
     """(largeur, hauteur) d'un webp, lues dans l'en-tête (VP8X / VP8L / VP8), sans

@@ -371,6 +371,10 @@ def options_sequence(ap):
     ap.add_argument("--sequence", type=int, default=0, help="nombre d'images de la transition ; 0 = l'état seul")
     ap.add_argument("--depart", default="", help="caméra de départ : azimut,elevation,marge")
     ap.add_argument("--via", default="", help="point de contrôle azimut,elevation,marge (aller-retour)")
+    ap.add_argument("--cible", default="tout", help="la pièce cadrée à l'arrivée (l'état) ; « tout » = l'objet entier")
+    ap.add_argument("--cible-depart", default="", help="la pièce cadrée au départ de la transition ; défaut : la cible d'arrivée")
+    ap.add_argument("--echantillons", type=int, default=0, help="échantillons Cycles des images de passage ; 0 = ceux de la qualité")
+    ap.add_argument("--echantillons-arrivee", type=int, default=0, help="échantillons de la DERNIÈRE image (l'état) ; 0 = comme les autres")
 
 
 def lire_camera(texte):
@@ -395,7 +399,26 @@ def adoucir(i, n):
     return 0.5 - 0.5 * math.cos(math.pi * i / max(1, n - 1))
 
 
-def rendre_sequence(args, arrivee, placer, rendre_image, prefixe):
+def boite_des(prefixes, air=(0.1, 0.1, 0.1)):
+    """La boîte englobante des objets dont le nom commence par l'un des préfixes, avec de l'air :
+    la CIBLE d'un gros plan (tranché par Arslane le 9/09 : des travellings vers les pièces)."""
+    mn = Vector((1e9, 1e9, 1e9)); mx = Vector((-1e9, -1e9, -1e9)); n = 0
+    for o in bpy.context.scene.objects:
+        if o.type != "MESH" and o.type != "FONT":
+            continue
+        if not any(o.name.startswith(p) for p in prefixes):
+            continue
+        n += 1
+        for c in o.bound_box:
+            w = o.matrix_world @ Vector(c)
+            mn = Vector((min(mn.x, w.x), min(mn.y, w.y), min(mn.z, w.z)))
+            mx = Vector((max(mx.x, w.x), max(mx.y, w.y), max(mx.z, w.z)))
+    if n == 0:
+        raise SystemExit(f"[cible] aucun objet ne commence par {prefixes} : la cible ne désigne rien")
+    return (mn - Vector(air), mx + Vector(air))
+
+
+def rendre_sequence(args, arrivee, placer, rendre_image, prefixe, boite_depart=None, boite_arrivee=None):
     """La scène est bâtie une fois ; la caméra se replace à chaque image (placer(az, el, marge)
     rend l'objet caméra, retiré avant la suivante) ; rendre_image(chemin) écrit l'image."""
     if not args.depart:
@@ -403,8 +426,17 @@ def rendre_sequence(args, arrivee, placer, rendre_image, prefixe):
     depart, via = lire_camera(args.depart), (lire_camera(args.via) if args.via else None)
     n = max(2, args.sequence)
     for i in range(n):
-        az, el, marge = chemin_camera(depart, arrivee, via, adoucir(i, n))
-        cam = placer(az, el, marge)
+        t = adoucir(i, n)
+        az, el, marge = chemin_camera(depart, arrivee, via, t)
+        # les images de passage au réglage mesuré, l'image d'arrêt (l'état) en qualité pleine
+        base = getattr(args, "echantillons", 0) or bpy.context.scene.cycles.samples
+        bpy.context.scene.cycles.samples = (getattr(args, "echantillons_arrivee", 0) or base) if i == n - 1 else base
+        if boite_depart is not None and boite_arrivee is not None:
+            # le travelling glisse d'une pièce à l'autre : la boîte cadrée s'interpole aussi
+            boite_t = (boite_depart[0].lerp(boite_arrivee[0], t), boite_depart[1].lerp(boite_arrivee[1], t))
+            cam = placer(az, el, marge, boite_t)
+        else:
+            cam = placer(az, el, marge)
         rendre_image(os.path.join(args.sortie, f"{prefixe}-seq-0{args.etat}-{i:03d}.png"))
         bpy.data.objects.remove(cam, do_unlink=True)
     print(f"[{prefixe}] séquence : {n} images vers l'état {args.etat} dans {args.sortie} (la dernière = le cadrage de l'état)")

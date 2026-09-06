@@ -22,6 +22,13 @@ import tempfile
 MARGE = 90       # largeur de la rampe, en pixels, depuis chaque bord (--marge N pour un objet cadré serré)
 SEUIL = 6        # alpha (sur 255) sous lequel un pixel est éteint
 OPAQUE = 200     # un pixel au-dessus est « de l'objet » : il ne doit pas être dans la marge
+# --coupe : la coupe est VOULUE (un gros plan sur une pièce, chorégraphie du 9/09) ; l'objet
+# peut toucher le bord : aucun refus, et la rampe ne touche pas les pixels d'objet — elle plume
+# encore le voile du capteur d'ombre et l'ombre jusqu'au bord.
+COUPE = False
+if "--coupe" in sys.argv:
+    COUPE = True
+    sys.argv.remove("--coupe")
 if "--marge" in sys.argv:
     # le rack lapis remplit son cadre (rack-etats.py, marge caméra 1.07) : à 90 px de rampe
     # il serait refusé, à 40 le voile s'efface encore sans contour (vu sur le parchemin)
@@ -60,9 +67,12 @@ for y in range(H):
             objet_en_marge += 1
         if a < OPAQUE:   # l'objet garde son alpha ; seuls l'ombre et le voile sont ré-étalés
             a = max(0, a - PLANCHER) * 255 // (255 - PLANCHER)
-        a = int(a * f)
+        # coupe voulue : la rampe plume le voile et l'ombre jusqu'au bord, JAMAIS l'objet ; une
+        # image de gros plan et une image large se plument donc de la même façon (pas de saut
+        # de bord d'une image à l'autre dans une séquence)
+        a = int(a * f) if not (COUPE and a >= OPAQUE) else a
         px[i] = 0 if a < SEUIL else a
-if objet_en_marge:
+if objet_en_marge and not COUPE:
     sys.exit(f"{src.name} : {objet_en_marge} pixels d'objet dans la marge de {MARGE} px : "
              "le cadrage est trop serré, reculer la caméra plutôt que de plumer l'objet")
 
@@ -75,4 +85,4 @@ if not shutil.which("cwebp"):
     sys.exit("cwebp absent (brew install webp)")
 subprocess.run(["cwebp", "-quiet", "-q", "92", str(tmp), "-o", str(dst)], check=True)
 tmp.unlink()
-print(f"{src.name} → {dst} ({dst.stat().st_size} o), rampe {MARGE} px, seuil {SEUIL}")
+print(f"{src.name} → {dst} ({dst.stat().st_size} o), " + (f"coupe voulue, rampe {MARGE} px hors objet" if COUPE else f"rampe {MARGE} px") + f", seuil {SEUIL}")

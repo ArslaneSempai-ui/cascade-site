@@ -77,11 +77,32 @@ ap.add_argument("--sequence", type=int, default=0, help="nombre d'images de la t
 ap.add_argument("--depart", default="-20,34,1.45", help="caméra de départ de la transition : azimut,elevation,marge")
 ap.add_argument("--via", default="", help="point de contrôle (azimut,elevation,marge) : la caméra s'en approche à mi-course "
                 "(Bézier quadratique) — pour un aller-retour quand l'état d'arrivée garde la caméra du départ")
+# LES CIBLES (tranché par Arslane le 9/09, 04h15 : « des travellings vers des parties de l'outil,
+# avec les explications ») : la caméra se cadre sur la boîte d'UNE pièce, pas sur le rack entier.
+#   tout            le rack entier (le cadrage historique)
+#   lame:<scenario> une lame (amount, velocity, …) ; lame:8 = la vôtre, tirée à l'état 5
+#   ligne           la ligne de laiton du plancher, sur toute la longueur
+# La transition interpole la boîte du départ vers celle de l'arrivée : le travelling glisse
+# d'une pièce à l'autre au lieu de tourner autour du tout.
+ap.add_argument("--cible", default="tout", help="la pièce cadrée à l'arrivée (l'état) : tout | lame:<scenario> | lame:8 | ligne")
+ap.add_argument("--cible-depart", default="", help="la pièce cadrée au départ de la transition ; défaut : la cible d'arrivée")
+# LE COÛT (Arslane, 9/09 : « on a pas moyen de faire ça plus rapidement ? ») : les images de passage
+# ne sont vues qu'en mouvement ; on peut les rendre avec moins d'échantillons et plus petites que
+# l'état où l'on s'arrête. Ces deux réglages surchargent la qualité choisie, pour MESURER.
+ap.add_argument("--echantillons", type=int, default=0, help="échantillons Cycles ; 0 = ceux de la qualité (48 aperçu, 256 livraison)")
+ap.add_argument("--large", type=int, default=0, help="largeur de l'image ; 0 = celle de la qualité (916 aperçu, 1374 livraison)")
+ap.add_argument("--echantillons-arrivee", type=int, default=0, help="échantillons de la DERNIÈRE image (l'état, où l'on s'arrête) ; 0 = comme les autres")
+# LE CHANGEMENT DE FINDING SANS SAUT : à la coupe entre deux états, la lame qui était sortie rentre et
+# la suivante sort d'un coup (vu sur la planche du 9/09). --avant-depart <scenario> : cette lame part
+# sortie et rentre pendant les premiers 40 % des images, tandis que la lame en avant de l'état sort.
+ap.add_argument("--avant-depart", default="", help="le scénario dont la lame était sortie à l'état précédent (glisse pendant la transition)")
 args = ap.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
 
 APERCU = args.qualite == "apercu"
 LARGE, HAUT = (916, 747) if APERCU else (1374, 1120)      # le cadre des états verts et rouges
-ECHANTILLONS = 48 if APERCU else 256
+if args.large:
+    LARGE, HAUT = args.large, round(args.large * 1120 / 1374)
+ECHANTILLONS = args.echantillons or (48 if APERCU else 256)
 P_PAPIER = "#dbd7c5"
 
 # ── LES DONNÉES : lues, scellées, jamais tapées ──────────────────────────────
@@ -470,8 +491,34 @@ def rendre():
     # marge 1.07 : le rack remplit le cadre (à 1.17 les diodes étaient des points) ; plumer.py
     # se lance alors avec --marge 40, la rampe suffit à effacer le voile du capteur d'ombre
     ouverture = 0.0 if APERCU else 9.0
+    # ── les boîtes des cibles : calculées de la même géométrie que les objets ──
+    def boite_cible(nom):
+        if nom == "tout" or args.etat == 4:
+            return (Vector(mn), Vector(mx))
+        air = 0.10
+        if nom == "ligne":
+            # la ligne sur toute la longueur ferait reculer la caméra (le rack redevenait petit,
+            # vu le 9/09) : le gros plan cadre les trois lames du milieu que la ligne traverse
+            zp = ZB + PLANCHER * HB
+            # les trois lames de GAUCHE (amount, velocity, structuring) : la plus haute barre est
+            # celle du montant, et le finding la nomme ; la ligne les traverse toutes
+            x0 = -PAS * (N_LAMES - 1) / 2
+            return (Vector((x0 - LAME_L / 2 - 0.08, YF - 0.30, zp - 0.20)), Vector((x0 + 2 * PAS + LAME_L / 2 + 0.08, mx.y, zp + 0.20)))
+        if nom.startswith("lame:"):
+            quoi = nom.split(":", 1)[1]
+            if quoi == "8":
+                i = len(D)
+            else:
+                i = next((k for k, d in enumerate(D) if d["p"] == quoi), None)
+                if i is None:
+                    sys.exit(f"[rack] cible inconnue : {nom} (scénarios : {', '.join(d['p'] for d in D)}, 8)")
+            x = -PAS * (N_LAMES - 1) / 2 + i * PAS
+            tiree = 0.16 if (i == len(D) and args.etat == 5) else (0.06 if (i < len(D) and AVANT == D[i]["p"]) else 0.0)
+            return (Vector((x - LAME_L / 2 - air, YF - 0.30 - tiree, -0.05)), Vector((x + LAME_L / 2 + air, mx.y, H + 0.10)))
+        sys.exit(f"[rack] cible inconnue : {nom}")
+    arrivee_boite = boite_cible(args.cible)
     if not args.sequence:
-        camera(az, el, (mn, mx), focale=focale, marge=1.07, ouverture=ouverture)
+        camera(az, el, arrivee_boite, focale=focale, marge=1.07 if args.cible == "tout" else 1.0, ouverture=ouverture)
         sc.render.filepath = os.path.join(args.sortie, f"rack-0{args.etat}.png")
         bpy.ops.render.render(write_still=True)
         print(f"[rack] rendu → {sc.render.filepath}\n[rack] Le code de sortie 0 ne prouve rien : ouvrir l'image et la regarder.")
@@ -481,7 +528,8 @@ def rendre():
     # l'objet ne saute pas d'une image à l'autre. Adoucie aux deux bouts (cosinus) : un
     # scroll qui s'arrête n'arrive jamais en plein élan. --via = point de contrôle (Bézier).
     az0, el0, marge0 = (float(x) for x in args.depart.split(","))
-    arrivee = (az, el, 1.07)
+    arrivee = (az, el, 1.07 if args.cible == "tout" else 1.0)
+    depart_boite = boite_cible(args.cible_depart or args.cible)
     via = tuple(float(x) for x in args.via.split(",")) if args.via else None
     def chemin(t, k):
         a, b = (az0, el0, marge0)[k], arrivee[k]
@@ -490,9 +538,35 @@ def rendre():
         c = via[k]                                    # Bézier quadratique : passe PRÈS du via
         return (1 - t) ** 2 * a + 2 * (1 - t) * t * c + t ** 2 * b
     n = max(2, args.sequence)
+    # les lames qui glissent : celle de l'état précédent (sortie → rentrée) et celle de l'état (rentrée → sortie)
+    def objets_de_lame(i):
+        pref = (f"lame_{i}", f"rainure_{i}", f"barre_{i}", f"led_{i}_")
+        return [o for o in bpy.context.scene.objects if o.name.startswith(pref)]
+    glissent = []
+    if args.avant_depart and args.etat != 4:
+        i_av = next((k for k, d in enumerate(D) if d["p"] == args.avant_depart), None)
+        if i_av is None:
+            sys.exit(f"[rack] --avant-depart inconnu : {args.avant_depart}")
+        i_nouv = next((k for k, d in enumerate(D) if d["p"] == AVANT), None) if AVANT is not None else None
+        objs = objets_de_lame(i_av)
+        glissent.append((objs, [o.location.y for o in objs], +1))
+        if i_nouv is not None and i_nouv != i_av:
+            objs = objets_de_lame(i_nouv)
+            glissent.append((objs, [o.location.y for o in objs], -1))
+    def glisser(t):
+        # u : 1 → 0 sur les premiers 40 % de la course. Les objets sont bâtis à leur place D'ÉTAT : la lame
+        # d'avant y est rentrée (on la sort de 0,06·u), la nouvelle y est sortie (on la rentre de 0,06·u)
+        u = 1.0 - min(1.0, t / 0.4)
+        for objs, y0, sens in glissent:
+            for o, y in zip(objs, y0):
+                o.location.y = y - 0.06 * u if sens == +1 else y + 0.06 * u
     for i in range(n):
         t = 0.5 - 0.5 * math.cos(math.pi * i / (n - 1))
-        cam = camera(chemin(t, 0), chemin(t, 1), (mn, mx), focale=focale, marge=chemin(t, 2), ouverture=ouverture)
+        glisser(t)
+        boite_t = (depart_boite[0].lerp(arrivee_boite[0], t), depart_boite[1].lerp(arrivee_boite[1], t))
+        cam = camera(chemin(t, 0), chemin(t, 1), boite_t, focale=focale, marge=chemin(t, 2), ouverture=ouverture)
+        # l'image d'arrêt porte l'annotation : elle seule mérite la qualité pleine
+        sc.cycles.samples = (args.echantillons_arrivee or ECHANTILLONS) if i == n - 1 else ECHANTILLONS
         sc.render.filepath = os.path.join(args.sortie, f"rack-seq-0{args.etat}-{i:03d}.png")
         bpy.ops.render.render(write_still=True)
         bpy.data.objects.remove(cam, do_unlink=True)

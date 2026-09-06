@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-g4OONOAiUD6KooBaV4CMcjGfbWYGzBkeQlfUBFRDIFQ=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-LxGnZjph/AfwntOAAiQNScpSFqc/yGEYncKnI1l31zM=' 'sha256-YczU/WDJnhn0yzQJDgaqoirsAERiesJxh1mREFikaxU=' 'sha256-xEiFb0sCny3wv74NOQYCNLvyc4NjCjH252XKQUeb8Hs=' 'sha256-MFknzNiaJeN2RZocvND1CD4ZjSR5IHVEqRn+CGBN/QY=' 'sha256-Tm7Qfl6P2M9CpNUdILd2bk4HpHue5yxfbPiM1cIFjbY=' 'sha256-APp0B3PHy0PGjpTjamOz7dVfa6/B0MhiUmZBXQKvXi0=' 'sha256-zrd9I22PIpiWV8w0zi5/7bekUk45BYcYtLn2s4hYT5Q=' 'sha256-xguusUYeMFj34NPywjQkBUNAYTdkLv2HOD/Voi7ooDY=' 'sha256-g7v4jtunVZHb2jbJimaISsr+/yB0iK50+OQBiSw1mrQ=' 'sha256-NpWKFwnJFS6wzgCqcsVAN+HxWrvLlS9i+EzCMS8FVps='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-+c9OIIf3a/MlOgV31/mIGgYHsEh169DqCjo4btkWXFw='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-7lfsfZPpHZ3UYVGxDqsh6JdoTiZKOxzXXEBYarVC8Uk=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-LxGnZjph/AfwntOAAiQNScpSFqc/yGEYncKnI1l31zM=' 'sha256-YczU/WDJnhn0yzQJDgaqoirsAERiesJxh1mREFikaxU=' 'sha256-xEiFb0sCny3wv74NOQYCNLvyc4NjCjH252XKQUeb8Hs=' 'sha256-MFknzNiaJeN2RZocvND1CD4ZjSR5IHVEqRn+CGBN/QY=' 'sha256-Tm7Qfl6P2M9CpNUdILd2bk4HpHue5yxfbPiM1cIFjbY=' 'sha256-APp0B3PHy0PGjpTjamOz7dVfa6/B0MhiUmZBXQKvXi0=' 'sha256-zrd9I22PIpiWV8w0zi5/7bekUk45BYcYtLn2s4hYT5Q=' 'sha256-xguusUYeMFj34NPywjQkBUNAYTdkLv2HOD/Voi7ooDY=' 'sha256-g7v4jtunVZHb2jbJimaISsr+/yB0iK50+OQBiSw1mrQ=' 'sha256-NpWKFwnJFS6wzgCqcsVAN+HxWrvLlS9i+EzCMS8FVps='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-+c9OIIf3a/MlOgV31/mIGgYHsEh169DqCjo4btkWXFw=' 'sha256-4ft3XHsdWxyG+ZqRWIHCRfl92uf9ifgWtged+TpTIx4='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Monitoring &#183; transaction monitoring audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/monitoring/">
@@ -439,6 +439,10 @@
 
   @media (prefers-reduced-motion:reduce){
     *{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+  canvas.film{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+  .colle.film .scene .objet{visibility:hidden}
+  @media (max-width:1080px){canvas.film{display:none}}
 </style>
 <header class="barre sur-nuit">
   <a class="marque" href="../index.html">CASCADE</a>
@@ -495,7 +499,7 @@
         <span class="j-num">05</span><span class="j-corps"><span class="j-titre">Your history, your scenarios.</span>
         <span class="j-cote">yours replace both</span></span></button></li></ul></nav>
     <div class="theatre">
-      <div class="scenes">
+      <div class="scenes"><canvas class="film" width="1374" height="1120" aria-hidden="true"></canvas>
     <div class="scene actif" id="scene-0" data-i="0">
       <img class="objet" src="../rendus/etats/rack-01.webp"
         alt="The settling basins, state 01: The naked amount catches nearly everything.">
@@ -711,4 +715,83 @@
               behavior: reduit ? "auto" : "smooth"});
   }));
   poser(0); surScroll();
+</script>
+<script type="application/json" id="seq-manifeste">{"prefixe": "rack", "n": 24, "transitions": 5, "ext": ".webp", "mouvement": 0.66, "chemin": "../rendus/sequences/rack/"}</script>
+<script>
+(() => {
+  const M = JSON.parse(document.getElementById("seq-manifeste").textContent);
+  const colle = document.querySelector(".colle");
+  const seqEl = document.querySelector(".sequence");
+  const canevas = document.querySelector("canvas.film");
+  const scenesS = [...document.querySelectorAll(".scene")];
+  const jalonsS = [...document.querySelectorAll(".jalon")];
+  if (!colle || !seqEl || !canevas || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const ctx = canevas.getContext("2d");
+  const nom = (k, i) => M.chemin + M.prefixe + "-seq-0" + (k + 1) + "-" + String(i).padStart(3, "0") + M.ext;
+  const T = [];
+  let pret = false, mort = false, demande = false, dernier = "";
+  const charge = (k, i) => new Promise((r) => {
+    const im = new Image();
+    im.onload = () => r(im);
+    im.onerror = () => r(null);
+    im.src = nom(k, i);
+  });
+  const chargeTransition = async (k) => {
+    T[k] = await Promise.all(Array.from({ length: M.n }, (_, i) => charge(k, i)));
+    return T[k].some((im) => im !== null);
+  };
+  const voisine = (k, i) => {
+    const t = T[k];
+    if (!t) return null;
+    for (let d = 0; d < M.n; d++) {
+      if (t[i - d]) return t[i - d];
+      if (t[i + d]) return t[i + d];
+    }
+    return null;
+  };
+  function peindre(force) {
+    if (mort || !pret) return;
+    if (innerWidth <= 1080) { colle.classList.remove("film"); dernier = ""; return; }
+    const r = seqEl.getBoundingClientRect();
+    const total = r.height - innerHeight;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    const brut = Math.min(M.transitions - 1e-9, p * M.transitions);
+    const k = Math.floor(brut), q = brut - k;
+    const t = Math.min(1, q / M.mouvement);
+    const i = Math.round(t * (M.n - 1));
+    const arret = q >= M.mouvement;
+    scenesS.forEach((s, x) => {
+      const a = arret && x === k;
+      s.classList.toggle("actif", a);
+      s.setAttribute("aria-hidden", a ? "false" : "true");
+    });
+    jalonsS.forEach((j, x) => j.classList.toggle("actif", arret && x === k));
+    const cle = k + ":" + i + ":" + canevas.clientWidth;
+    if (!force && cle === dernier) return;
+    dernier = cle;
+    colle.classList.add("film");
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    const lw = Math.round(canevas.clientWidth * dpr), lh = Math.round(canevas.clientHeight * dpr);
+    if (canevas.width !== lw || canevas.height !== lh) { canevas.width = lw; canevas.height = lh; }
+    const im = voisine(k, i);
+    if (!im) return;
+    const e = Math.min(canevas.width / im.naturalWidth, canevas.height / im.naturalHeight);
+    const w = im.naturalWidth * e, h = im.naturalHeight * e;
+    ctx.clearRect(0, 0, canevas.width, canevas.height);
+    ctx.drawImage(im, (canevas.width - w) / 2, (canevas.height - h) / 2, w, h);
+  }
+  const auCadre = () => {
+    if (demande) return;
+    demande = true;
+    requestAnimationFrame(() => { demande = false; peindre(false); });
+  };
+  addEventListener("scroll", auCadre, { passive: true });
+  addEventListener("resize", auCadre);
+  (async () => {
+    if (!(await chargeTransition(0))) { mort = true; return; }
+    pret = true;
+    peindre(true);
+    for (let k = 1; k < M.transitions; k++) await chargeTransition(k);
+  })();
+})();
 </script>
