@@ -243,7 +243,7 @@ JS = '''
     const q = cel.dataset.q, c = cel.dataset.c;
     const v = verdictDe(q, c);
     $("#g-lecture").innerHTML = v === null
-      ? "<b>" + q + "</b> \\u00b7 <b>" + c + "</b>: not judged \\u00b7 the record carries no verdict for this cell, and says so"
+      ? "<b>" + q + "</b> \\u00b7 <b>" + c + "</b>: not judged \\u00b7 the record carries no verdict for this cell"
       : "<b>" + q + "</b> \\u00b7 <b>" + c + "</b> (" + (v.tenu ? "held" : "NOT held") + "): " + v.detail;
     viseQ = q; dessinerO(); peindrePanneauO();
   }

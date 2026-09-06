@@ -78,6 +78,28 @@ def deux_temps(texte):
     return 0 < len(seconde) < 6
 
 
+def phrases_de_script(html):
+    """Les phrases que le JavaScript compose (les cinq états des tarifs, les lectures
+    des instruments) échappent au cueilleur, qui saute <script> : le chef les relisait
+    À LA MAIN (12/09). Cette passe extrait les littéraux de chaîne d'au moins 25
+    caractères qui ressemblent à de la prose (au moins quatre mots) des scripts
+    inline, pour que les motifs 1, 2, 5, 6, 7 les lisent comme le reste de la copy.
+    Les sélecteurs, classes et formats restent en dessous du seuil : pas de faux
+    rouge sur du code."""
+    phrases = []
+    for m in re.finditer(r"<script(?:\s[^>]*)?>(.*?)</script>", html, re.S | re.I):
+        script = m.group(1)
+        if not script.strip() or script.strip().startswith("{"):   # les JSON embarqués ont leurs témoins
+            continue
+        ligne0 = html[:m.start()].count("\n") + 1
+        for lit in re.finditer(r"([\"'])((?:\\.|(?!\1).)*)\1|`((?:\\.|[^`])*)`", script):
+            texte = (lit.group(2) or lit.group(3) or "").replace("\\u00b7", "·").replace("\\u2192", "→")
+            if len(texte) < 25 or len(re.findall(r"[A-Za-z''’-]+", texte)) < 4:
+                continue
+            phrases.append((ligne0 + script[:lit.start()].count("\n"), texte))
+    return phrases
+
+
 def blocs_du_dossier(docs):
     """[(page, ligne, zone, tag, cls, sorte, texte)] pour chaque page servie, plus les
     findings (page = le fichier json, ligne = le numéro de fiche)."""
@@ -94,6 +116,11 @@ def blocs_du_dossier(docs):
         # le motif 7 les couvre : une sincérité affichée dans un alt reste de la copy
         for tag, k, texte in c.attrs_textes:
             tous.append((rel, 0, f"attribut-{k}", tag, "", f"attribut {k}", texte, ""))
+        for ligne, texte in phrases_de_script(page.read_text(encoding="utf-8")):
+            # zone « script » : hors motifs 3 (densité par page) et 4 (répétitions —
+            # le JS partagé des bâtisseurs se répète par construction) ; les motifs
+            # de bloc (1, 2, 5, 6, 7) s'appliquent comme à la prose
+            tous.append((rel, ligne, "script", "script", "", "phrase-de-script", texte, ""))
     return tous
 
 
@@ -153,7 +180,7 @@ def relever(docs, source):
 
     # motifs 2-prose et 3 : à la page
     for p in pages:
-        du_p = [b for b in blocs if b[0] == p and not b[2].startswith("attribut-")]
+        du_p = [b for b in blocs if b[0] == p and not b[2].startswith("attribut-") and b[2] != "script"]
         prose = [b for b in du_p
                  if not (b[5] in ("titre-finding", "étiquette-3D", "fiche")
                          or est_titre(b[3], b[4], b[5]) or est_etiquette_ou_fiche(b[4], b[5]))]
@@ -172,7 +199,7 @@ def relever(docs, source):
     # et le compte à part — une répétition NON déclarée reste un refus
     par_texte = {}
     for page, ligne, zone, tag, cls, sorte_t, texte, commun in blocs:
-        if not page.endswith(".html") or zone in ("nav", "pied") or zone.startswith("attribut-") or len(texte) <= 30:
+        if not page.endswith(".html") or zone in ("nav", "pied", "script") or zone.startswith("attribut-") or len(texte) <= 30:
             continue
         if commun:
             communs.setdefault(commun, set()).add(page)
@@ -205,6 +232,10 @@ def temoin():
                  "home) n'est plus vu (code 2)")
     if not any(m == 7 and "hors des pages Routing" in quoi for m, _, _, quoi in fautifs):
         sys.exit("GARDE CASSÉE : le « tier » planté sous screening/ n'est plus vu (code 2)")
+    if not any(ou == "script" or (isinstance(ou, int) and False) for _, _, ou, _ in []) and \
+       not any(m == 7 and "walks" in quoi and "sieve" in quoi for m, _, _, quoi in fautifs):
+        sys.exit("GARDE CASSÉE : la phrase de script plantée (honestly walks…) n'est plus vue "
+                 "— la copy du <script> échappe de nouveau à la garde (code 2)")
     sains, _ = relever(d / "saine", None)
     if sains:
         sys.exit("GARDE CASSÉE : la page saine du témoin déclenche "
