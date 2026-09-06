@@ -32,11 +32,18 @@ CSS_NOIR = '''
   .pied{border-top:1px solid #1e1e23}
   /* the robot keeps leaning over the RIGHT edge of the window, left of the panel's column
      (on the left it sat on the title and the lede, seen on the 9/09 capture) */
-  .rb{right:-20px;left:auto;width:300px;top:-280px;filter:drop-shadow(0 26px 44px rgba(0,0,0,.85)) brightness(.92)}
-  /* the robot stands over the panel's column, so the panel starts under its feet */
-  @media (min-width:981px){.pan{margin-top:176px}}
+  /* the robot leans over the RIGHT edge of the window and is CUT by it (z below the terminal),
+     looking down at the chart (pose « regarde », Arslane 9/09 : « faut que le robot regarde
+     l'outil et qu'il soit crop correctement avec les bords de l'outil ») */
+  .fen-robot{position:relative}
+  /* over the window's right edge the robot sat on the title (the panel took the width) : it
+     leans over the PANEL's card, at the far right, and looks left, at the chart */
+  .pan-col{position:relative}
+  .rb{right:-24px;left:auto;width:340px;top:-262px;z-index:2;
+    filter:drop-shadow(0 26px 44px rgba(0,0,0,.85)) brightness(.92)}
+  @media (max-width:980px){.rb{display:none}}
   /* as wide as the robot allows (three lines at 1440), never the old 52ch block */
-  .lede{max-width:min(100%,860px);font-size:clamp(15px,1.15vw,16.5px)}
+  .lede{max-width:min(100%,800px);font-size:clamp(15px,1.15vw,16.5px)}
 
   /* THE LIVE CHART : the window becomes window + side panel ; the table stays for the keyboard */
   .dessus{width:min(100%,1180px)}
@@ -77,8 +84,8 @@ CSS_NOIR = '''
   .carte-aide{font-family:var(--mono);font-size:11.5px;color:var(--sur-pale);margin:0 0 12px}
   .carte-aide b{color:var(--tenu);font-weight:500}
 
-  .pan{position:sticky;top:20px;border-left:2px solid var(--accent-vif);padding:4px 0 6px 18px;
-    font-family:var(--mono);min-height:300px}
+  .pan{position:sticky;top:20px;z-index:3;border:1px solid #232328;border-left:2px solid var(--accent-vif);
+    border-radius:10px;background:#101013;padding:16px 18px 18px;font-family:var(--mono);min-height:300px}
   .pan .qui{font-size:11px;color:var(--sur-pale);letter-spacing:.08em;text-transform:uppercase}
   .pan .nom{font-family:var(--texte);font-size:23px;margin:6px 0 14px;color:var(--sur);line-height:1.15}
   .pan .nom small{color:var(--sur-pale);font-size:14px}

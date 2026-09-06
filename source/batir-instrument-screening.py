@@ -369,8 +369,8 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="colonne">
     <div class="dessus">
       <div class="t-page-halo" aria-hidden="true"></div>
-      <img class="rb" src="../rendus/robot-rubis-penche.webp" alt="">
       <div class="poste-grille">
+      <div class="fen-robot">
       <div class="terminal">
         <div class="tm-barre"><i></i><i></i><i></i><span>cascade screening &#183; the public record, live</span></div>
         <div class="tm-corps">
@@ -396,7 +396,11 @@ PAGE = f'''<!doctype html><html lang="en">
           <p class="tm-preuve" id="tm-preuve">checking&#8230;</p>
         </div>
       </div>
+      </div>
+      <div class="pan-col">
+      <img class="rb" src="../rendus/robot-rubis-regarde.webp" alt="">
       {PANNEAU_HTML}
+      </div>
       </div>
     </div>
   </div>

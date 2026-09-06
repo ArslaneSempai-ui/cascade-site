@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-HKEzZRPFegB+8O/SOW9xX70nbQvL2RVyP0wyNFChe9w=' 'unsafe-hashes' 'sha256-ogKvhph2a6LUD2Pr+pZ9rS6Ytjewm+TRvjLVOYBLELs=' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-G6ZiFEZtNEcr9iM+/iaN7KA93oxIPKsftawOZIfM/4Q='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-Y3ymVZky1fwbDxzQgQr8hfsXygR4UHK6FzlNLuShEs4=' 'unsafe-hashes' 'sha256-ogKvhph2a6LUD2Pr+pZ9rS6Ytjewm+TRvjLVOYBLELs=' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-G6ZiFEZtNEcr9iM+/iaN7KA93oxIPKsftawOZIfM/4Q='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Screening &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/screening/instrument.html">
@@ -191,11 +191,18 @@
   .pied{border-top:1px solid #1e1e23}
   /* the robot keeps leaning over the RIGHT edge of the window, left of the panel's column
      (on the left it sat on the title and the lede, seen on the 9/09 capture) */
-  .rb{right:-20px;left:auto;width:300px;top:-280px;filter:drop-shadow(0 26px 44px rgba(0,0,0,.85)) brightness(.92)}
-  /* the robot stands over the panel's column, so the panel starts under its feet */
-  @media (min-width:981px){.pan{margin-top:176px}}
+  /* the robot leans over the RIGHT edge of the window and is CUT by it (z below the terminal),
+     looking down at the chart (pose « regarde », Arslane 9/09 : « faut que le robot regarde
+     l'outil et qu'il soit crop correctement avec les bords de l'outil ») */
+  .fen-robot{position:relative}
+  /* over the window's right edge the robot sat on the title (the panel took the width) : it
+     leans over the PANEL's card, at the far right, and looks left, at the chart */
+  .pan-col{position:relative}
+  .rb{right:-24px;left:auto;width:340px;top:-262px;z-index:2;
+    filter:drop-shadow(0 26px 44px rgba(0,0,0,.85)) brightness(.92)}
+  @media (max-width:980px){.rb{display:none}}
   /* as wide as the robot allows (three lines at 1440), never the old 52ch block */
-  .lede{max-width:min(100%,860px);font-size:clamp(15px,1.15vw,16.5px)}
+  .lede{max-width:min(100%,800px);font-size:clamp(15px,1.15vw,16.5px)}
 
   /* THE LIVE CHART : the window becomes window + side panel ; the table stays for the keyboard */
   .dessus{width:min(100%,1180px)}
@@ -236,8 +243,8 @@
   .carte-aide{font-family:var(--mono);font-size:11.5px;color:var(--sur-pale);margin:0 0 12px}
   .carte-aide b{color:var(--tenu);font-weight:500}
 
-  .pan{position:sticky;top:20px;border-left:2px solid var(--accent-vif);padding:4px 0 6px 18px;
-    font-family:var(--mono);min-height:300px}
+  .pan{position:sticky;top:20px;z-index:3;border:1px solid #232328;border-left:2px solid var(--accent-vif);
+    border-radius:10px;background:#101013;padding:16px 18px 18px;font-family:var(--mono);min-height:300px}
   .pan .qui{font-size:11px;color:var(--sur-pale);letter-spacing:.08em;text-transform:uppercase}
   .pan .nom{font-family:var(--texte);font-size:23px;margin:6px 0 14px;color:var(--sur);line-height:1.15}
   .pan .nom small{color:var(--sur-pale);font-size:14px}
@@ -275,8 +282,8 @@
   <div class="colonne">
     <div class="dessus">
       <div class="t-page-halo" aria-hidden="true"></div>
-      <img class="rb" src="../rendus/robot-rubis-penche.webp" alt="">
       <div class="poste-grille">
+      <div class="fen-robot">
       <div class="terminal">
         <div class="tm-barre"><i></i><i></i><i></i><span>cascade screening &#183; the public record, live</span></div>
         <div class="tm-corps">
@@ -306,6 +313,9 @@
           <p class="tm-preuve" id="tm-preuve">checking&#8230;</p>
         </div>
       </div>
+      </div>
+      <div class="pan-col">
+      <img class="rb" src="../rendus/robot-rubis-regarde.webp" alt="">
       <aside class="pan" id="pan" aria-live="polite">
         <div class="qui">the cell under the pointer</div>
         <div class="nom" id="pan-nom">hover a point</div>
@@ -313,6 +323,7 @@
         <div class="gros" id="pan-g2"></div><div class="leg" id="pan-l2"></div>
         <div class="plancher" id="pan-plancher"></div>
       </aside>
+      </div>
       </div>
     </div>
   </div>

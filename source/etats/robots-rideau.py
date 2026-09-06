@@ -23,7 +23,7 @@ import galet    # noqa: E402
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--outil", required=True, choices=["routing", "screening", "monitoring", "scoring", "dossier"])
-ap.add_argument("--pose", default=None, choices=[None, "penche"],
+ap.add_argument("--pose", default=None, choices=[None, "penche", "regarde"],
                 help="penche : la pose de l'instrument (derrière le terminal), même pour toutes les couleurs")
 ap.add_argument("--sortie", default="/tmp/robots")
 ap.add_argument("--large", type=int, default=1400)
@@ -114,8 +114,11 @@ POSES = {
 }
 # la pose « penché » de l'instrument (poses-rubis.py), la même pour toutes les couleurs
 PENCHE = dict(corps=(16, 0, 0), tete=(22, 0, 0), bg=(-55, -14, 0), bd=(-55, 14, 0))
-poser(**(PENCHE if args.pose == "penche" else POSES[args.outil]))
+# « regarde » (Arslane, 9/09 : « faut que le robot regarde l'outil ») : la même pose penchée sur le
+# bord de la fenêtre, la tête basculée vers le bas pour lire l'instrument, les mains au bord
+REGARDE = dict(corps=(22, 0, 0), tete=(34, 0, -18), bg=(-58, -14, 0), bd=(-58, 14, 0))   # la tête vers la carte, à sa gauche
+poser(**({"penche": PENCHE, "regarde": REGARDE}[args.pose] if args.pose else POSES[args.outil]))
 os.makedirs(args.sortie, exist_ok=True)
-sc.render.filepath = os.path.join(args.sortie, f"robot-{args.outil}{'-penche' if args.pose else ''}.png")
+sc.render.filepath = os.path.join(args.sortie, f"robot-{args.outil}{('-' + args.pose) if args.pose else ''}.png")
 bpy.ops.render.render(write_still=True)
 print(f"robot {args.outil} : {sc.render.filepath}")
