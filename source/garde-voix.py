@@ -43,6 +43,15 @@ TITRES_TAGS = {"h1", "h2", "h3"}
 MOTS_OBJET = re.compile(r"\b(sieve|blade|brass|stone|ivory|lectern|shelf|pile|bay|keystone|house|seam|amethyst|onyx|lapis|ruby)s?\b", re.I)
 ABSOLUS = re.compile(r"\b(every|nothing|never|always)\b", re.I)
 SINCERITE = re.compile(r"before your eyes|says so|in its own words|\bhonest\b|\bwalks\b|refuses to", re.I)
+# les RESTES de la passe de copy (compteur du chef, 10/09, versé au motif 7) : les mots
+# de la maison que VOIX.md a bannis et que la relecture humaine n'a plus à chercher
+RESTES = re.compile(r"\btwins?\b|look-?alikes?|\barchetypes?\b|\brhythms?\b|\bfiche|\btonight\b"
+                    r"|named row|the walk\b|\bhonestly\b|\bplainly\b|content content"
+                    r"|verified by you\b|measured at home|photographs?|buy the bigger model", re.I)
+# « tier » appartient aux pages Routing (VOIX §4) : ailleurs, un refus — sauf la forme
+# définie « model tier », qui est la définition que VOIX impose
+TIER = re.compile(r"\btiers?\b", re.I)
+PAGES_NON_ROUTING = ("screening/", "monitoring/", "scoring/", "dossier/")
 NUS = re.compile(r"\b(fa|fp)\b")
 OPPOSITION = re.compile(r", not\b|\brather than\b", re.I)
 # un nombre entier « nu » dans une étiquette ou une fiche : ni décimal (0.90 est un
@@ -136,6 +145,11 @@ def relever(docs, source):
                 dire(6, page, ligne, f"nombre sans unité ni pour cent « {m.group(1)} » : « {texte[:70]} »")
         if SINCERITE.search(texte):
             dire(7, page, ligne, f"sincérité affichée « {SINCERITE.search(texte).group(0)} » : « {texte[:70]} »")
+        if RESTES.search(texte):
+            dire(7, page, ligne, f"reste de la maison « {RESTES.search(texte).group(0)} » : « {texte[:70]} »")
+        if (page.startswith(PAGES_NON_ROUTING) and TIER.search(texte)
+                and "model tier" not in texte.lower()):
+            dire(7, page, ligne, f"« tier » hors des pages Routing : « {texte[:70]} »")
 
     # motifs 2-prose et 3 : à la page
     for p in pages:
@@ -186,6 +200,11 @@ def temoin():
     if any(m == 4 and "declared shared" in quoi for m, _, _, quoi in fautifs):
         sys.exit("GARDE CASSÉE : le bloc DÉCLARÉ data-commun de la fautive est refusé au "
                  "motif 4 — l'exemption ne s'applique plus (code 2)")
+    if not any(m == 7 and "reste de la maison" in quoi for m, _, _, quoi in fautifs):
+        sys.exit("GARDE CASSÉE : le reste de la maison planté (twins/archetypes/measured at "
+                 "home) n'est plus vu (code 2)")
+    if not any(m == 7 and "hors des pages Routing" in quoi for m, _, _, quoi in fautifs):
+        sys.exit("GARDE CASSÉE : le « tier » planté sous screening/ n'est plus vu (code 2)")
     sains, _ = relever(d / "saine", None)
     if sains:
         sys.exit("GARDE CASSÉE : la page saine du témoin déclenche "

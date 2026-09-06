@@ -612,6 +612,25 @@ verifier_citations(sorted((DOCS / "dossier").glob("*.html")) if (DOCS / "dossier
                    MAQ / "ancres-citations-dossier.json",
                    pathlib.Path.home() / "Documents" / "cascade-dossier", "dossier")
 
+# ── la garde de la voix (VOIX.md) : la copy SERVIE, motif par motif ──────────
+# Témoin planté d'abord, comme pour les liens : une page zz aux restes bannis DOIT
+# rougir avant qu'un zéro soit cru ; puis la vraie passe, et un refus arrête
+# l'assemblage en nommant page et ligne. garde-voix.py joue en plus son propre
+# témoin interne (fixtures fautive/saine) à chaque lancement — code 2 = garde cassée.
+_zzv = DOCS / "zz-temoin-voix.html"
+_zzv.write_text("<p>The benign twins say so before your eyes.</p>")
+_gv = subprocess.run([sys.executable, str(MAQ / "garde-voix.py"), "--docs", str(DOCS)],
+                     capture_output=True, text=True)
+if _gv.returncode == 0:
+    sys.exit("GARDE CASSÉE : la garde de la voix n'a pas vu la page témoin plantée — "
+             "son zéro ne vaut rien")
+_zzv.unlink()
+_gv = subprocess.run([sys.executable, str(MAQ / "garde-voix.py"), "--docs", str(DOCS)],
+                     capture_output=True, text=True)
+if _gv.returncode != 0:
+    sys.exit("LA VOIX N'EST PAS TENUE (garde-voix, VOIX.md) :\n" + _gv.stdout[-2400:])
+print("  " + next(l.strip() for l in _gv.stdout.splitlines() if "voix tenue" in l))
+
 # ── le contrôle de liens, témoin d'abord ─────────────────────────────────────
 def liens_casses(dossier):
     casses = []
