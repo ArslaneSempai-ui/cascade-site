@@ -11,7 +11,7 @@ Objects, along X (one unit of the axis = 0.04 Blender units, the stage runs 0..6
   as the days pass) at day 30 ; at the signature (45) the engagement letter and the commercial
   licence land ; the invoice on signature stands behind them ; the sealed report at 76 ; the
   balance invoice at 105 ; the renewal card at 150. The faces of the papers are printed textures
-  (scratchpad/tarifs-scene/faces/*.png). Same softboxes, same film, the camera pulled back.
+  (etats/faces-tarifs/*.png, captured from the .html beside them). Same softboxes, same film, the camera pulled back.
 """
 import argparse, math, os, sys
 
@@ -24,7 +24,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--unite", type=float, default=None)
 ap.add_argument("--sequence", type=int, default=0)
 ap.add_argument("--sortie", default="/tmp/scene")
-ap.add_argument("--faces", default=os.path.join("/private/tmp/claude-501/-Users-arslanechr-Downloads-atlas-final-en-fr/9eaa6456-ea12-48c5-bd77-6279f40c9def/scratchpad/tarifs-scene/faces"))
+ap.add_argument("--faces", default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "faces-tarifs"))
 ap.add_argument("--large", type=int, default=1800)
 ap.add_argument("--haut", type=int, default=680)
 ap.add_argument("--taa", type=int, default=48)
