@@ -277,11 +277,12 @@ def renommer_liens(t, page_sous_dossier):
 _SCELLE_DEF = " (hashed, then frozen: its content hash is checked before a figure is shown)"
 _SCELLE_TERMES = ("sealed public records", "sealed public record", "sealed public dossiers",
                   "sealed public dossier", "sealed records", "sealed record")
-# les zones où « sealed » ne se définit PAS : le rideau et ses pans, la nav, le pied, les
-# boutons, les étiquettes (le chef, 10/09) — la définition va dans la prose du corps.
+# les zones où « sealed » ne se définit PAS : le HÉROS et son lede (l'accroche reste
+# légère — le chef, 10/09), le rideau et ses pans, la nav, le pied, les boutons, les
+# étiquettes — la définition se pose sur la première mention APRÈS le héros, dans la prose.
 _SCELLE_SAUT_TAGS = {"nav", "footer", "button"}
-_SCELLE_SAUT_CLS = ("rideau", "pan", "ap-eti", "j-titre", "j-cote", "j-num", "note",
-                    "cue", "marque", "sceau", "rail", "affiche")
+_SCELLE_SAUT_CLS = ("hero", "lede", "rideau", "pan", "ap-eti", "j-titre", "j-cote", "j-num",
+                    "note", "cue", "marque", "sceau", "rail", "affiche")
 _VOID = {"img", "br", "input", "meta", "link", "hr", "source", "path", "circle", "line", "use", "col"}
 def definir_sealed(t):
     """Insère l'incise à la PREMIÈRE mention d'un terme scellé qui vit dans la PROSE DU
