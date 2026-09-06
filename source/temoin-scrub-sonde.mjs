@@ -46,12 +46,12 @@ const sonde = `(async () => {
     return {
       p,
       actif: [...document.querySelectorAll(".scene")].findIndex((s) => s.classList.contains("actif")),
-      film: document.querySelector(".colle").classList.contains("film"),
+      scrub: document.querySelector(".colle").classList.contains("scrub"),
     };
   };
   await new Promise((r) => setTimeout(r, 1500));
   return JSON.stringify({
-    canevas: !!document.querySelector("canvas.film"),
+    canevas: !!document.querySelector("canvas.scrub"),
     mouvement: await lire(0.05),
     arret0: await lire(0.14),
     arret2: await lire(0.55),

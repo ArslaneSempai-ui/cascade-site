@@ -90,25 +90,34 @@ def sonde_cdp():
 
 
 avant = None
+etat0 = None
 try:
+    # l'état RÉEL du moment, rebâti et photographié AVANT de garer quoi que ce soit :
+    # depuis que de vraies séquences existent (le rack), les pages du départ portent
+    # leur scrub, et c'est CET état que la remise en état doit reproduire — comparer
+    # au « sans manifeste » du témoin serait exiger le retour à une page qui n'est
+    # plus celle du site (constaté le 9/09 à l'arrivée des séquences du rack)
+    batir()
+    etat0 = lire_pages()
+
     if SEQ.exists():
         SEQ.rename(GARE)              # les séquences réelles se garent, jamais écrasées
 
     batir()
     avant = lire_pages()
     for p, contenu in avant.items():
-        assert b"seq-manifeste" not in contenu and b"canvas class=\"film\"" not in contenu, \
+        assert b"seq-manifeste" not in contenu and b"canvas class=\"scrub\"" not in contenu, \
             f"{p} porte le scrub SANS manifeste : le repli n'est pas l'absence"
     print(f"  1/3 sans manifeste : aucun scrub dans les {len(PAGES)} pages")
 
     planter_factice()
     batir()
     apres = lire_pages()
-    assert b"seq-manifeste" in apres[PAGE_CIBLE] and b'canvas class="film"' in apres[PAGE_CIBLE], \
+    assert b"seq-manifeste" in apres[PAGE_CIBLE] and b'canvas class="scrub"' in apres[PAGE_CIBLE], \
         f"{PAGE_CIBLE} : manifeste présent mais pas de canevas ni de scrub"
     intactes = [p for p in PAGES if p != PAGE_CIBLE]
     for p in intactes:
-        assert b"seq-manifeste" not in apres[p] and b'canvas class="film"' not in apres[p], \
+        assert b"seq-manifeste" not in apres[p] and b'canvas class="scrub"' not in apres[p], \
             f"{p} porte le scrub alors que le factice ne concerne que {PREFIXE} : le scrub déborde de son outil"
     # les sœurs à l'octet, SEULEMENT quand les gardes M-C1 tiennent le factice pour prêt :
     # tant que BUDGET_SEQUENCE_KO n'est pas déclaré, le rideau retire légitimement le pan
@@ -127,7 +136,7 @@ try:
 
     v = sonde_cdp()
     assert v["canevas"], "la sonde ne voit pas le canevas"
-    assert v["mouvement"]["actif"] == -1 and v["mouvement"]["film"], \
+    assert v["mouvement"]["actif"] == -1 and v["mouvement"]["scrub"], \
         f"q < mouvement : une scène est active ({v['mouvement']}) ; le contrat veut le canevas seul"
     assert v["arret0"]["actif"] == 0, f"q >= mouvement en k=0 : la scène 0 n'est pas active ({v['arret0']})"
     assert v["arret2"]["actif"] == 2, f"q >= mouvement en k=2 : la scène 2 n'est pas active ({v['arret2']})"
@@ -144,10 +153,10 @@ finally:
         dossier.rmdir()
     batir()
 
-# la remise en état est vérifiée, pas supposée : les pages re-bâties sans factice
-# doivent être celles du départ, au byte
-if avant is not None:
+# la remise en état est vérifiée, pas supposée : les pages re-bâties après la
+# restauration doivent être celles du DÉPART RÉEL (séquences comprises), au byte
+if etat0 is not None:
     for p, contenu in lire_pages().items():
-        assert contenu == avant[p], f"{p} ne revient pas à l'octet après le témoin : il a laissé une trace"
-    print("  remise en état : les six pages reviennent à l'octet")
+        assert contenu == etat0[p], f"{p} ne revient pas à l'octet après le témoin : il a laissé une trace"
+    print("  remise en état : les six pages reviennent à l'octet du départ réel")
 print("témoin du scrub : vert, et il a regardé")

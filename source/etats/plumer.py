@@ -29,6 +29,13 @@ COUPE = False
 if "--coupe" in sys.argv:
     COUPE = True
     sys.argv.remove("--coupe")
+# --q N : la qualité webp (92 par défaut) ; les images de passage d'une séquence se lisent en mouvement,
+# 80 les allège d'un cinquième sans que l'œil le voie au scroll (mesuré sur le tamis, 9/09)
+QUALITE = 92
+if "--q" in sys.argv:
+    k = sys.argv.index("--q"); QUALITE = int(sys.argv[k + 1]); del sys.argv[k:k + 2]
+    if not 50 <= QUALITE <= 100:
+        sys.exit(f"--q {QUALITE} : entre 50 et 100")
 if "--marge" in sys.argv:
     # le rack lapis remplit son cadre (rack-etats.py, marge caméra 1.07) : à 90 px de rampe
     # il serait refusé, à 40 le voile s'efface encore sans contour (vu sur le parchemin)
@@ -83,6 +90,6 @@ subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rg
 dst.parent.mkdir(parents=True, exist_ok=True)
 if not shutil.which("cwebp"):
     sys.exit("cwebp absent (brew install webp)")
-subprocess.run(["cwebp", "-quiet", "-q", "92", str(tmp), "-o", str(dst)], check=True)
+subprocess.run(["cwebp", "-quiet", "-q", str(QUALITE), str(tmp), "-o", str(dst)], check=True)
 tmp.unlink()
 print(f"{src.name} → {dst} ({dst.stat().st_size} o), " + (f"coupe voulue, rampe {MARGE} px hors objet" if COUPE else f"rampe {MARGE} px") + f", seuil {SEUIL}")

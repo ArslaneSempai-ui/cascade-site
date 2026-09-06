@@ -85,6 +85,35 @@ PROD = {
 # ses entrées détruisait docs/ puis plantait, puisque source/ ne portait pas
 # les pages bâties. Ordre tenu : bâtir, vérifier, seulement ensuite effacer.
 import subprocess
+
+# ── les pièces ne doivent pas bouger SOUS l'assemblage ───────────────────────
+# Le 9/09, un pan de rideau vers HERO-SCORING est resté dans les pages émises alors
+# que l'émission refusait le bloc : la définition de « prêt » (manques()) est bien
+# unique, mais elle est LUE deux fois — par batir-hero au bâti, par la porte à
+# l'émission — et entre les deux, une livraison d'états en cours l'a fait changer.
+# Le contrôle de liens attrapait le symptôme (liens cassés) ; ceci nomme la cause.
+import sys as _sys0
+_sys0.path.insert(0, str(MAQ))
+from outil import OUTILS as _OUTILS0, manques as _manques0
+
+def photo_pieces():
+    return {oid: tuple(_manques0(oid, MAQ)) for oid in _OUTILS0}
+
+def verifier_pieces_stables(avant, apres):
+    """Refus nommé si « prêt » a changé entre le bâti et l'émission : les deux
+    lectures décriraient deux sites différents, et les pages émises porteraient
+    des pans vers des blocs refusés (ou l'inverse). Relancer l'assemblage UNE
+    FOIS les livraisons posées ; rien d'autre à corriger."""
+    bouges = [oid for oid in avant if bool(avant[oid]) != bool(apres[oid])]
+    if bouges:
+        detail = "; ".join(f"{oid}: {len(avant[oid])} pièce(s) manquante(s) avant, "
+                           f"{len(apres[oid])} après" for oid in bouges)
+        sys.exit(f"PIÈCES BOUGÉES PENDANT L'ASSEMBLAGE ({detail}) : les rideaux bâtis et "
+                 "la porte d'émission ne décrivent plus le même site — une livraison est "
+                 "passée sous l'assemblage ; la poser entière, puis relancer")
+
+_PIECES_AVANT = photo_pieces()
+
 for batisseur in ("batir-hero.py", "batir-instrument.py", "batir-instrument-screening.py",
                   "batir-instrument-monitoring.py", "batir-instrument-scoring.py",
                   "batir-instrument-dossier.py",
@@ -193,7 +222,13 @@ for v in PROD_SCREENING:
 import sys as _sys
 _sys.path.insert(0, str(MAQ))
 from outil import manques as _manques
-EN_BLOC = (("monitoring", PROD_MONITORING, "L5/L5-textes"),
+verifier_pieces_stables(_PIECES_AVANT, photo_pieces())
+
+# Le rouge aussi (9/09) : il s'émettait dès que ses pages existaient, sans passer par manques() ;
+# depuis que ses états et ses séquences changent (chorégraphie), « prêt » a une seule définition
+# pour lui comme pour les trois autres.
+EN_BLOC = (("screening", PROD_SCREENING, "S2/S3"),
+           ("monitoring", PROD_MONITORING, "L5/L5-textes"),
            ("scoring", PROD_SCORING, "A-L5"),
            ("dossier", PROD_DOSSIER, "D3/D4"))
 EMISES_EN_BLOC = {}
@@ -217,7 +252,7 @@ for _oid, _prod, _lots in EN_BLOC:
                   f"({', '.join(_mq[:4])}{'…' if len(_mq) > 4 else ''})")
     else:
         EMISES_EN_BLOC.update(_prod)
-SOUS_DOSSIER_EMISES = {**SCREENING_EMISES, **EMISES_EN_BLOC}
+SOUS_DOSSIER_EMISES = {**EMISES_EN_BLOC}      # le rouge y entre par EN_BLOC, comme les autres
 
 
 def renommer_liens(t, page_sous_dossier):
@@ -379,8 +414,7 @@ for rb in (MAQ / "rendus").glob("robot-*.webp"):          # les robots de toutes
 # le PRÉFIXE des états vit dans outil.py seul (ETATS_PREFIXE) : le 8/09, « bassins » ici
 # quand le héros disait « rack » a publié cinq liens morts, attrapés par le contrôle
 from outil import ETATS_PREFIXE  # noqa: E402
-_outils_emis = ({"screening"} if SCREENING_EMISES else set()) | {
-    n.split("/", 1)[0] for n in EMISES_EN_BLOC.values()}
+_outils_emis = {n.split("/", 1)[0] for n in EMISES_EN_BLOC.values()}
 for _oid in sorted(_outils_emis | {"routing"}):
     for w in (MAQ / "rendus" / "etats").glob(f"{ETATS_PREFIXE[_oid]}-*.webp"):
         shutil.copy(w, DOCS / "rendus" / "etats" / w.name)
