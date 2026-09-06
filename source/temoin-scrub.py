@@ -90,7 +90,16 @@ def sonde_cdp():
 
 
 avant = None
+etat0 = None
 try:
+    # l'état RÉEL du moment, rebâti et photographié AVANT de garer quoi que ce soit :
+    # depuis que de vraies séquences existent (le rack), les pages du départ portent
+    # leur scrub, et c'est CET état que la remise en état doit reproduire — comparer
+    # au « sans manifeste » du témoin serait exiger le retour à une page qui n'est
+    # plus celle du site (constaté le 9/09 à l'arrivée des séquences du rack)
+    batir()
+    etat0 = lire_pages()
+
     if SEQ.exists():
         SEQ.rename(GARE)              # les séquences réelles se garent, jamais écrasées
 
@@ -144,10 +153,10 @@ finally:
         dossier.rmdir()
     batir()
 
-# la remise en état est vérifiée, pas supposée : les pages re-bâties sans factice
-# doivent être celles du départ, au byte
-if avant is not None:
+# la remise en état est vérifiée, pas supposée : les pages re-bâties après la
+# restauration doivent être celles du DÉPART RÉEL (séquences comprises), au byte
+if etat0 is not None:
     for p, contenu in lire_pages().items():
-        assert contenu == avant[p], f"{p} ne revient pas à l'octet après le témoin : il a laissé une trace"
-    print("  remise en état : les six pages reviennent à l'octet")
+        assert contenu == etat0[p], f"{p} ne revient pas à l'octet après le témoin : il a laissé une trace"
+    print("  remise en état : les six pages reviennent à l'octet du départ réel")
 print("témoin du scrub : vert, et il a regardé")
