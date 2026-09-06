@@ -700,27 +700,29 @@ CSS_ACCUEIL = '''
   body{background:var(--nuit-b)}
   .hero{background:radial-gradient(120% 90% at 30% -10%,color-mix(in srgb,var(--vert-titre) 34%,#0e0e11),var(--nuit-b) 65%);
     min-height:auto;padding:150px 0 80px}
-  .hero-grille{display:grid;grid-template-columns:minmax(0,1fr) 600px;gap:56px;align-items:center;
-    max-width:1300px;margin:0 auto;padding:0 48px;position:relative;text-align:left}
+  /* la grille du premier écran, SYMÉTRIQUE (Arslane, 10/09) : deux colonnes de largeur connue, centrées
+     ensemble, un gouffre entre elles plus large que tout espace interne ; les marges extérieures se valent */
+  .hero-grille{display:grid;grid-template-columns:minmax(360px,460px) minmax(0,600px);gap:clamp(48px,7.4vw,106px);
+    align-items:center;justify-content:center;max-width:none;margin:0 auto;padding:0 65px 0 48px;position:relative;text-align:left}
   .hero-grille .marque-h,.hero-grille .h1,.hero-grille .lede{text-align:left;margin-left:0;margin-right:0}
   .hero-grille .h1{max-width:14ch;font-size:clamp(30px,3.6vw,54px)}
-  .hero-grille .lede{max-width:44ch;font-size:18px}
+  .hero-grille .lede{max-width:44ch;font-size:18px;margin-top:28px}
   .hero{min-height:0;padding:96px 24px 64px}
   .hero-texte{position:relative;z-index:2}
-  .hero-cue{margin-top:34px;display:flex;gap:14px;align-items:center;font-family:var(--mono);font-size:11.5px;
+  .hero-cue{margin-top:46px;display:flex;gap:14px;align-items:center;font-family:var(--mono);font-size:11.5px;
     letter-spacing:.18em;text-transform:uppercase;color:var(--sur-vert-pale)}
   .hero-cue .fil{width:60px;height:1px;background:var(--sur-vert-pale);opacity:.6}
 
   /* l'éventail : cinq cartes empilées, chacune dans SES couleurs, la survolée sort du paquet */
-  .eventail{position:relative;height:480px;perspective:1600px}
-  .carte-ev{position:absolute;left:50%;top:50%;width:420px;aspect-ratio:1.5/1;margin:-140px 0 0 -210px;
+  .eventail{position:relative;height:min(480px,34vw);perspective:1600px}
+  .carte-ev{position:absolute;left:50%;top:calc(50% - 20px);width:min(420px,30vw);aspect-ratio:1.5/1;margin:0;
     display:block;border-radius:14px;overflow:hidden;text-decoration:none;color:var(--sur-vert);
     background:linear-gradient(180deg,color-mix(in srgb,var(--ev-nuit-a) 80%,#000),color-mix(in srgb,var(--ev-nuit-c) 92%,#000));
     border:1px solid color-mix(in srgb,var(--ev-vif) 45%,transparent);
     box-shadow:0 30px 70px rgba(0,0,0,.6),inset 0 1px 0 color-mix(in srgb,var(--ev-vif) 25%,transparent);
-    transform:translate(var(--dx),var(--dy)) rotate(var(--rot));transform-origin:50% 120%;
+    transform:translate(calc(var(--dx) - 50%),calc(var(--dy) - 50%)) rotate(var(--rot));transform-origin:50% 120%;
     transition:transform .5s var(--montee),box-shadow .5s var(--montee),border-color .3s;z-index:var(--z)}
-  .carte-ev:hover,.carte-ev:focus-visible{transform:translate(var(--dx),calc(var(--dy) - 36px)) rotate(0deg) scale(1.04);
+  .carte-ev:hover,.carte-ev:focus-visible{transform:translate(calc(var(--dx) - 50%),calc(var(--dy) - 50% - 36px)) rotate(0deg) scale(1.04);
     z-index:10;border-color:var(--ev-vif);box-shadow:0 50px 110px rgba(0,0,0,.7),0 0 0 1px var(--ev-vif)}
   .carte-ev .ev-svg{padding:14px 16px 4px}
   .carte-ev svg{display:block;width:100%;height:auto;font-family:var(--mono)}
@@ -738,7 +740,7 @@ CSS_ACCUEIL = '''
   .carte-ev .pierre{fill:var(--ev-vif);stroke:var(--ev-clair);stroke-width:2}
   .carte-ev .ev-pied{display:flex;justify-content:space-between;align-items:baseline;padding:6px 16px 14px;
     font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ev-vif)}
-  .carte-ev .ev-pied b{font-weight:500;color:var(--sur-vert);letter-spacing:.06em;text-transform:none;font-size:12.5px}
+  .carte-ev .ev-pied b{font-weight:500;color:var(--sur-vert);letter-spacing:.06em;text-transform:none;font-size:12.5px;white-space:nowrap}
   @media (max-width:1100px){.hero-grille{grid-template-columns:minmax(0,1fr)}.eventail{height:auto;padding:24px 0}
     .carte-ev{position:relative;left:auto;top:auto;margin:0 0 14px;width:100%;transform:none;aspect-ratio:auto}
     .carte-ev:hover{transform:none}.carte-ev .ev-pied{flex-wrap:wrap;gap:6px 14px}.carte-ev .ev-pied b{white-space:nowrap;margin-left:auto}}
