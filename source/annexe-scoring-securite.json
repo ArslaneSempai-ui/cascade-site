@@ -42,7 +42,7 @@
     {
       "h2": "Your two files stay yours, and the outputs carry no value",
       "html": [
-        "<p>measure:yours reads your dispositioned reviews and your customer attributes, rebuilds each dossier in memory, and writes its outputs <b>next to your files and nowhere else</b>: counts, rates, intervals and verdicts by your review id. Never a customer id, never a country, never an amount of yours. Your review ids do survive as verdict keys, so choose them opaque.</p>",
+        "<p>The measurement runs at your desk: it reads your dispositioned reviews and customer attributes in memory and writes its outputs <b>next to your files and nowhere else</b>: counts, rates, intervals and verdicts by your review id. No customer id, no country and no amount of yours leave the machine. Your review ids do survive as verdict keys, so choose them opaque.</p>",
         "<p>There is no callback, no telemetry, no account to create. The whole measurement is a local process reading two CSV files at your desk.</p>"
       ],
       "verif": {

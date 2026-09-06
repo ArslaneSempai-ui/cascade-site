@@ -4,12 +4,12 @@
   "findings": [
     {
       "num": "01",
-      "titre": "Exact matching raises no false alert and misses most confirmed matches.",
-      "phrase": "Exact matching, after normalisation, raises no false alert on the 60 pairs of non-matches, and finds 21.7% of the confirmed matches.",
+      "titre": "Exact matching raises no false alert and finds few confirmed matches.",
+      "phrase": "Exact matching, after normalisation, raises no false alert on the 60 pairs of hard negatives, and finds 21.7% of the confirmed matches.",
       "a": "21.7%",
-      "leg_a": "recall 21.7% on 60 pairs, interval 13% to 34%, at any threshold",
+      "leg_a": "recall 21.7% on 60 pairs of confirmed matches, interval 13% to 34%, at any threshold",
       "b": "0%",
-      "leg_b": "false alerts 0% on 60 pairs, interval 0% to 6%",
+      "leg_b": "false alerts 0% on 60 pairs of hard negatives, interval 0% to 6%",
       "cote": "recall 21.7%",
       "source": {
         "a": {
@@ -38,18 +38,18 @@
           0.93,
           0.108,
           0.92,
-          "loosest matching: recall 100%"
+          "hard negatives: false alerts 0%"
         ]
       ]
     },
     {
       "num": "02",
-      "titre": "The loosest threshold finds each match and alerts on most non-matches.",
-      "phrase": "At the loosest threshold the matcher finds each confirmed match on the 60 pairs, and alerts on 85% of the non-matches; each false alert is analyst time.",
+      "titre": "Jaro-winkler at 0.50 finds every match and alerts on most non-matches.",
+      "phrase": "Jaro-winkler at threshold 0.50 finds every one of the 60 pairs of matches, and alerts on 85% of the 60 pairs of hard negatives.",
       "a": "100%",
-      "leg_a": "recall 100% at the loosest threshold, interval 94% to 100%, 60 pairs",
+      "leg_a": "recall 100% for jaro-winkler at 0.50, interval 94% to 100%, 60 pairs of matches",
       "b": "85%",
-      "leg_b": "false alerts 85% at the same threshold, interval 74% to 92%, 60 pairs",
+      "leg_b": "false alerts 85% at the same cell, interval 74% to 92%, 60 pairs of hard negatives",
       "cote": "false alerts 85%",
       "source": {
         "a": {
@@ -71,25 +71,25 @@
           0.62,
           0.814,
           0.88,
-          "loosest threshold: recall 100%"
+          "jaro-winkler 0.50: recall 100%"
         ],
         [
           0.4,
           0.6,
           0.186,
           0.88,
-          "false alerts 85% on non-matches"
+          "hard negatives: false alerts 85%"
         ]
       ]
     },
     {
       "num": "03",
       "titre": "The best trade-off keeps 98.3% recall at 76.7% false alerts.",
-      "phrase": "The tool keeps the recall floor at 90%, then reads the cost. Across each model tier and threshold, the embedding included, the best trade-off is jaro-winkler at 0.56, at recall 98.3% and 76.7% false alerts.",
+      "phrase": "The tool holds the Wilson lower bound of recall at 90%, then takes the fewest false alerts. Across every matcher and threshold, the embedding included, that cell is jaro-winkler at 0.56, at recall 98.3% and 76.7% false alerts.",
       "a": "98.3%",
-      "leg_a": "recall 98.3% at jaro-winkler 0.56, interval 91% to 100%, 60 pairs",
+      "leg_a": "recall 98.3% for jaro-winkler at 0.56, interval 91% to 100%, 60 pairs of matches",
       "b": "76.7%",
-      "leg_b": "false alerts 76.7% at the same cell, interval 65% to 86%",
+      "leg_b": "false alerts 76.7% at the same cell, interval 65% to 86%, 60 pairs of hard negatives",
       "cote": "recall 98.3%",
       "source": {
         "a": {
@@ -118,18 +118,18 @@
           0.8,
           0.814,
           0.13,
-          "false alerts 76.7% at that cell"
+          "that cell: false alerts 76.7%"
         ]
       ]
     },
     {
       "num": "04",
-      "titre": "Fabricated variants score 17.2% false alerts against 76.7% on written pairs.",
-      "phrase": "The same cell reads 76.7% false alerts on 60 pairs, all written, and 17.2% on 360 pairs, all fabricated. The fabricated set is easier, so it is measured on its own and kept out of the headline rate.",
+      "titre": "The best cell scores 17.2% false alerts on generated pairs against 76.7% on written pairs.",
+      "phrase": "The same cell reads 76.7% false alerts on 60 pairs of written hard negatives and 17.2% on 360 pairs of generated ones. The generated set is easier, so the tool measures it on its own and keeps it out of the headline rate.",
       "a": "76.7%",
-      "leg_a": "false alerts 76.7% at the best cell on 60 pairs, interval 65% to 86%",
+      "leg_a": "false alerts 76.7% at the best cell on 60 pairs of hard negatives, interval 65% to 86%",
       "b": "17.2%",
-      "leg_b": "false alerts 17.2% at the same cell on 360 pairs, interval 14% to 21%",
+      "leg_b": "false alerts 17.2% at the same cell on 360 pairs of generated hard negatives, interval 14% to 21%",
       "cote": "measured apart",
       "source": {
         "a": {
@@ -151,26 +151,26 @@
           0.4,
           0.186,
           0.2,
-          "written pairs: false alerts 76.7%"
+          "written hard negatives: 76.7%"
         ],
         [
           0.72,
           0.49,
           0.814,
           0.2,
-          "fabricated variants: false alerts 17.2%"
+          "generated hard negatives: 17.2%"
         ]
       ]
     },
     {
       "num": "05",
-      "titre": "The public record holds written pairs and fabricated variants.",
-      "phrase": "Each pair behind these findings is in the public record: 60 pairs written and declared, 360 pairs fabricated and labelled. One command reruns the full sweep on your alert history at your desk.",
+      "titre": "Measure the whole sweep on your own alert history.",
+      "phrase": "Every rate here comes from the public record: 60 pairs of confirmed matches and 60 of hard negatives, written and declared, with 360 pairs generated of each. One command reruns the sweep on your alert history and writes the report beside your file.",
       "a": "60 pairs",
-      "leg_a": "written pairs behind the measured rates, declared by typology",
+      "leg_a": "60 pairs of matches and 60 of hard negatives, written and declared, behind the rates",
       "b": "360 pairs",
-      "leg_b": "fabricated pairs behind the separate rates, labelled and measured apart",
-      "cote": "written and fabricated",
+      "leg_b": "360 pairs of each, generated under a seed and measured apart",
+      "cote": "yours replace ours",
       "source": {
         "a": {
           "table": "authored",
@@ -187,14 +187,14 @@
           0.28,
           0.5,
           0.13,
-          "written pairs behind the rates"
+          "120 pairs written"
         ],
         [
           0.55,
           0.87,
           0.578,
           0.96,
-          "fabricated pairs, measured apart"
+          "720 pairs generated"
         ]
       ]
     }

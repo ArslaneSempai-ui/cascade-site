@@ -1064,7 +1064,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <main>
 <section class="hero">
   <h1 class="h1 entree">Which model tier reads each identity field?</h1>
-  <p class="lede entree">Seven tiers, from a regular expression to a human, measured on your own records.<br>
+  <p class="lede entree">Seven model tiers, from a regular expression to a human, measured on your own records.<br>
     The answer is rarely &ldquo;buy the bigger model&rdquo;, and each figure
     <b>can be verified by you</b>.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
@@ -1335,7 +1335,7 @@ SPECS = {
         instrument_eti="Cascade &#183; Screening",
         instrument_sub="Each matcher at each threshold, recall and false alerts with their intervals, "
                        "live from the sealed record, and the tool's own selection rule under your recall floor.",
-        annexe_methode=("Method &amp; what is measured", "What the frontier reads, and what it refuses.",
+        annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
                         "ANNEXE-SCREENING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "The lists, the seal, and what never leaves.",
                          "ANNEXE-SCREENING-SECURITE.html"),
@@ -1371,7 +1371,7 @@ SPECS = {
         instrument_eti="Cascade &#183; Monitoring",
         instrument_sub="Each scenario at each threshold, recall and false alerts with their intervals, "
                        "live from the sealed record, and the tool's own selection rule under your recall floor.",
-        annexe_methode=("Method &amp; what is measured", "What the frontier reads, and what it refuses.",
+        annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
                         "ANNEXE-MONITORING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "What is rebuilt, what is assumed, and what never leaves.",
                          "ANNEXE-MONITORING-SECURITE.html"),
@@ -1407,7 +1407,7 @@ SPECS = {
         instrument_eti="Cascade &#183; Scoring",
         instrument_sub="Each risk factor at each threshold, recall and false alerts with their intervals, "
                        "live from the sealed record, and the tool's own selection rule under your recall floor.",
-        annexe_methode=("Method &amp; what is measured", "What the frontier reads, and what it refuses.",
+        annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
                         "ANNEXE-SCORING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "The declared tables, the seal, and what never leaves.",
                          "ANNEXE-SCORING-SECURITE.html"),

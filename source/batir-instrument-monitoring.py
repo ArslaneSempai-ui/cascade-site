@@ -380,7 +380,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <div class="terminal">
         <div class="tm-barre"><i></i><i></i><i></i><span>cascade monitoring &#183; the public record, live</span></div>
         <div class="tm-corps">
-          <p class="tm-l"><span class="ps">$</span> cascade screen --live<span class="caret" aria-hidden="true"></span></p>
+          <p class="tm-l"><span class="ps">$</span> cascade monitor --live<span class="caret" aria-hidden="true"></span></p>
           <div class="regls" role="group" aria-label="Which half of the record">
             <button class="regl actif" id="m-auth">written cases (authored)</button>
             <button class="regl" id="m-synth">synthetic variants (declared)</button>
@@ -434,7 +434,7 @@ PAGE = f'''<!doctype html><html lang="en">
         does: a point estimate does not clear a floor here.</li>
     </ul>
       </details>
-      <details class="pli"><summary>What this refuses</summary>
+      <details class="pli"><summary>What this page cannot do</summary>
     <ul>
       <li><b>Your data.</b> This page cannot read it: no network requests leave it
         (connect-src &#8216;none&#8217;), no third-party resource is loaded, and there is no input

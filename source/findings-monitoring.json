@@ -5,11 +5,11 @@
     {
       "num": "01",
       "titre": "The amount scenario alone reaches 95.2% recall at 16.7% false alerts.",
-      "phrase": "Scoring only the largest amount in the window reaches 95.2% recall on the 42 cases. It alerts on 16.7% of the benign twins, and each of those is a one-off family purchase the history explains.",
+      "phrase": "Scoring only the largest amount in the window reaches 95.2% recall on the 42 cases marked suspicious. It alerts on 16.7% of the 42 cases marked benign, each a one-off family purchase the history explains.",
       "a": "95.2%",
-      "leg_a": "recall 95.2% for the amount scenario at 0.50, interval 84% to 99%, 42 cases",
+      "leg_a": "recall 95.2% for the amount scenario at 0.50, interval 84% to 99%, 42 cases, all suspicious",
       "b": "16.7%",
-      "leg_b": "false alerts 16.7% on 42 cases of benign twins, interval 8% to 31%",
+      "leg_b": "false alerts 16.7% at 0.50, interval 8% to 31%, 42 cases, all benign",
       "cote": "recall 95.2%",
       "source": {
         "a": {
@@ -38,18 +38,18 @@
           0.74,
           0.48,
           0.94,
-          "false alerts 16.7% on twins"
+          "benign cases: false alerts 16.7%"
         ]
       ]
     },
     {
       "num": "02",
-      "titre": "The velocity scenario reaches 28.6% recall and alerts on half the twins.",
-      "phrase": "Counting transactions reaches 28.6% recall, since most written cases are not the busiest accounts. The same count alerts on half the benign twins, which are payroll, seasonal trade and monthly savings.",
+      "titre": "The velocity scenario reaches 28.6% recall and alerts on half the benign cases.",
+      "phrase": "Counting transactions reaches 28.6% recall, since most suspicious cases are not the busiest accounts. The same count alerts on half the 42 cases marked benign: payroll, seasonal trade and monthly savings.",
       "a": "28.6%",
-      "leg_a": "recall 28.6% for the velocity scenario at 0.50, interval 17% to 44%",
+      "leg_a": "recall 28.6% for the velocity scenario at 0.50, interval 17% to 44%, 42 cases, all suspicious",
       "b": "50%",
-      "leg_b": "false alerts 50% at the same threshold, interval 36% to 64%, 42 cases",
+      "leg_b": "false alerts 50% at 0.50, interval 36% to 64%, 42 cases, all benign",
       "cote": "false alerts 50%",
       "source": {
         "a": {
@@ -78,14 +78,14 @@
           0.735,
           0.48,
           0.94,
-          "false alerts 50% on benign twins"
+          "benign cases: false alerts 50%"
         ]
       ]
     },
     {
       "num": "03",
-      "titre": "No single scenario reaches the 90% recall floor.",
-      "phrase": "The tool asks the lower bound of measured recall to reach 90%. On the 42 cases no single scenario reaches it: the best lower bound is 84.2% for amount, the next 75% for peer. More than one scenario is needed.",
+      "titre": "No scenario's recall lower bound reaches the 90% floor.",
+      "phrase": "The tool holds the Wilson lower bound of recall at 90%, then takes the fewest false alerts. On the 42 cases no single scenario reaches that floor: the best lower bound is 84.2% for amount, the next 75% for peer.",
       "a": "84.2%",
       "leg_a": "highest recall lower bound, amount at 0.50: 84.2%, interval 84% to 99%",
       "b": "75%",
@@ -113,7 +113,7 @@
           0.53,
           0.64,
           0.13,
-          "recall floor 90%: unmet by any scenario"
+          "recall floor 90%: no scenario reaches it"
         ],
         [
           0.21,
@@ -126,12 +126,12 @@
     },
     {
       "num": "04",
-      "titre": "The amount scenario scores 100% recall on variants against 95.2% on written cases.",
-      "phrase": "The same cell scores 95.2% recall on 42 cases, all written, and 100% on 126 cases, all generated. The generated set is easier, so it is measured on its own and kept out of the headline rate.",
+      "titre": "The amount scenario scores 100% recall on generated cases against 95.2% on written ones.",
+      "phrase": "The same cell scores 95.2% recall on 42 cases written and 100% on 126 cases generated. The generated set is easier, so the tool measures it on its own and keeps it out of the headline rate.",
       "a": "95.2%",
-      "leg_a": "recall 95.2% for amount at 0.50 on 42 cases, interval 84% to 99%",
+      "leg_a": "recall 95.2% for amount at 0.50 on 42 cases written, interval 84% to 99%",
       "b": "100%",
-      "leg_b": "recall 100% at the same cell on 126 cases, interval 97% to 100%",
+      "leg_b": "recall 100% at the same cell on 126 cases generated, interval 97% to 100%",
       "cote": "measured apart",
       "source": {
         "a": {
@@ -160,19 +160,19 @@
           0.395,
           0.72,
           0.07,
-          "generated variants: recall 100%"
+          "generated cases: recall 100%"
         ]
       ]
     },
     {
       "num": "05",
-      "titre": "The public record holds written cases and generated variants.",
-      "phrase": "Each case behind these findings is in the public record: 42 cases written, seven per typology, and 126 cases generated under a seed. Two files from your systems, alerts and transactions, rerun the full grid at your desk.",
+      "titre": "Measure the whole grid on your own alert history.",
+      "phrase": "Every rate here comes from the public record: 42 cases marked suspicious and 42 cases marked benign, seven per typology, with 126 cases generated of each. Two files from your systems rerun the grid, and the report lands next to your files.",
       "a": "42 cases",
-      "leg_a": "written suspicious cases behind the measured rates, seven per typology",
+      "leg_a": "42 cases suspicious and 42 cases benign, written and declared, seven per typology",
       "b": "126 cases",
-      "leg_b": "generated variants behind the separate rates, typologies preserved by construction",
-      "cote": "written and generated",
+      "leg_b": "126 cases of each, generated under a seed and measured apart",
+      "cote": "yours replace ours",
       "source": {
         "a": {
           "table": "authored",
@@ -189,14 +189,14 @@
           0.55,
           0.72,
           0.13,
-          "your cases rerun at your desk"
+          "84 cases written"
         ],
         [
           0.805,
           0.62,
           0.72,
           0.82,
-          "written and generated cases"
+          "252 cases generated"
         ]
       ]
     }

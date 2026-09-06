@@ -44,7 +44,7 @@
     {
       "h2": "Wilson everywhere, and refusals where n is small",
       "html": [
-        "<p>Each rate on the red pages travels with its Wilson interval at 95 percent and its n. Below <b>twenty observations</b> a rate is not quoted as a number: the interval spans too much of the scale to separate anything, and a figure that looks like a measurement would be the worst way to say so.</p>",
+        "<p>Each rate on the screening pages travels with its Wilson interval at 95 percent and its n. Below <b>twenty observations</b> a rate is not quoted as a number: the interval spans too much of the scale to separate anything, and a figure that looks like a measurement would be the worst way to say so.</p>",
         "<p>The same refusal guards recall on your own history: with <b>fewer than five confirmed matches</b> in your export, the tool says recall cannot be bounded and shows the synthetic tables apart, instead of printing a recall that rests on almost nothing.</p>"
       ],
       "verif": {

@@ -7,7 +7,7 @@
     {
       "h2": "The network allowlist is empty, and a test traverses each file",
       "html": [
-        "<p>The green tool downloads model weights once; the red one downloads public sanctions lists. The blue one downloads <b>nothing</b>: its public record is built from written cases and seeded variants, so the allowlist of modules that may touch the network is empty, with the comment saying exactly that. A structural test traverses each source file for network sites (fetch, node:http and kin, WebSockets) and <b>fails the suite if any module grows one</b>; the detector first proves it can see a planted call, so its zero means looked and found none.</p>"
+        "<p>Routing downloads model weights once; Screening downloads public sanctions lists. Monitoring downloads <b>no file</b>: its public record is built from written cases and seeded variants, so the allowlist of modules that may touch the network is empty, with the comment saying exactly that. A structural test traverses each source file for network sites (fetch, node:http and kin, WebSockets) and <b>fails the suite if any module grows one</b>; the detector first proves it can see a planted call, so its zero means looked and found none.</p>"
       ],
       "verif": {
         "t": "Verify the frontier",
@@ -42,7 +42,7 @@
     {
       "h2": "Your two files stay yours, and the outputs carry no value",
       "html": [
-        "<p>measure:yours reads your dispositioned alerts and your transactions, rebuilds each case in memory, and writes its outputs <b>next to your files and nowhere else</b>: counts, rates, intervals and verdicts by your alert id. Never an account id, never an amount, never a transaction date, never a country from your data. Your alert ids do survive as verdict keys, so choose them opaque.</p>",
+        "<p>The measurement runs at your desk: it reads your dispositioned alerts and transactions in memory and writes its outputs <b>next to your files and nowhere else</b>: counts, rates, intervals and verdicts by your alert id. No account id, no amount, no transaction date and no country from your data leave the machine. Your alert ids do survive as verdict keys, so choose them opaque.</p>",
         "<p>There is no callback, no telemetry, no account to create. The whole measurement is a local process reading two CSV files at your desk.</p>"
       ],
       "verif": {

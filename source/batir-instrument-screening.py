@@ -428,7 +428,7 @@ PAGE = f'''<!doctype html><html lang="en">
         does: a point estimate does not clear a floor here.</li>
     </ul>
       </details>
-      <details class="pli"><summary>What this refuses</summary>
+      <details class="pli"><summary>What this page cannot do</summary>
     <ul>
       <li><b>Your data.</b> This page cannot read it: no network requests leave it
         (connect-src &#8216;none&#8217;), no third-party resource is loaded, and there is no input

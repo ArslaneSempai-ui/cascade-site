@@ -134,7 +134,7 @@ CSS_NOIR = '''
 
 def carte_html(x_titre, y_titre):
     """The chart and its side panel, empty : the JS draws both from the embedded record."""
-    return f'''<p class="carte-aide" data-commun="instrument">each point is one cell of the record : hover it to read it, click it to keep it, <b>pull the floor line</b> (or the slider below) and what holds the lower bound lights up</p>
+    return f'''<p class="carte-aide" data-commun="instrument">each point is one cell of the public record; <b>pull the floor line</b> or the slider, and the cells whose recall lower bound clears the floor turn green</p>
           <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="{y_titre} of each tier at each {x_titre} of the public record, with the recall floor as a line"></svg></div>'''
 
 

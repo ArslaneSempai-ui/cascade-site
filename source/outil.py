@@ -105,7 +105,7 @@ OUTILS = {
         # Routing vit sous routing/ comme Screening sous screening/
         "sous_dossier": "routing/",
         "prefixe_racine": "../",
-        "question": "Which model tier reads each identity field?",
+        "question": "Which model tier reads each field?",
         "palette": PALETTE_VERTE,
         "favicon_accent": "%2323543f",
         "robots": ("robot-penche.webp", "robot-agrippe.webp"),

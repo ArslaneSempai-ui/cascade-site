@@ -5,11 +5,11 @@
     {
       "num": "01",
       "titre": "Geography scores zero recall and zero false alerts here.",
-      "phrase": "Each file in the record resides in an ordinary Union country, because no official country list was copied into the data. The geography factor therefore scores 0% recall and 0% false alerts, and risk lives in the declared facts while the country plays no part.",
+      "phrase": "Every file in the record sits in an ordinary Union country, because no official country list was copied into the data. The geography factor therefore scores 0% recall and 0% false alerts: the factor a vendor sells hardest carries no weight here, by construction.",
       "a": "0%",
-      "leg_a": "recall 0% for the geography factor on 42 files, interval 0% to 8%",
+      "leg_a": "recall 0% for the geography factor at 0.50, interval 0% to 8%, 42 files, all escalated",
       "b": "0%",
-      "leg_b": "false alerts 0% on 42 files, interval 0% to 8%",
+      "leg_b": "false alerts 0% at 0.50, interval 0% to 8%, 42 files, all retained",
       "cote": "geography: 0% both sides",
       "source": {
         "a": {
@@ -38,18 +38,18 @@
           0.7,
           0.5,
           0.96,
-          "geography factor: false alerts 0%"
+          "retained files: false alerts 0%"
         ]
       ]
     },
     {
       "num": "02",
-      "titre": "The product factor reaches 92.9% recall at 23.8% false alerts.",
-      "phrase": "Scoring only the products a client holds reaches 92.9% recall, since correspondent accounts, private banking and crypto rails carry the signal. The same factor alerts on 23.8% of the retained files, and each one is a review.",
+      "titre": "The product factor reaches 92.9% recall at 23.8% false alerts, at threshold 0.50.",
+      "phrase": "Scoring only the products a client holds reaches 92.9% recall at threshold 0.50: correspondent accounts, private banking and crypto rails carry the signal. The same factor alerts on 23.8% of the retained files, each one a review.",
       "a": "92.9%",
-      "leg_a": "recall 92.9% for the product factor at 0.50, interval 81% to 98%, 42 files",
+      "leg_a": "recall 92.9% for the product factor at 0.50, interval 81% to 98%, 42 files, all escalated",
       "b": "23.8%",
-      "leg_b": "false alerts 23.8% on 42 files, interval 13% to 39%",
+      "leg_b": "false alerts 23.8% at 0.50, interval 13% to 39%, 42 files, all retained",
       "cote": "recall 92.9%",
       "source": {
         "a": {
@@ -78,18 +78,18 @@
           0.82,
           0.5,
           0.96,
-          "false alerts 23.8% on retained files"
+          "retained files: false alerts 23.8%"
         ]
       ]
     },
     {
       "num": "03",
-      "titre": "No single factor reaches the 90% recall floor.",
-      "phrase": "The tool asks the lower bound of measured recall to reach 90%. On the 42 files no factor reaches it: the best lower bound is 81% for product, and behaviour, with no false alert, reaches only 52%. Scoring on more than one factor is needed.",
+      "titre": "No factor's recall lower bound reaches the 90% floor.",
+      "phrase": "The tool holds the Wilson lower bound of recall at 90%, then takes the fewest false alerts. On the 42 files no factor reaches that floor: product's lower bound is 81%, and behaviour, at 66.7% recall with no false alert, has a lower bound of 52%.",
       "a": "81%",
       "leg_a": "highest recall lower bound, product at 0.50: 81%, interval 81% to 98%",
       "b": "52%",
-      "leg_b": "cleanest factor, behaviour at 0.50: 52%, zero false alerts, interval 52% to 79%",
+      "leg_b": "cleanest factor, behaviour at 0.50: recall lower bound 52%, with zero false alerts",
       "cote": "best bound 81%",
       "source": {
         "a": {
@@ -113,25 +113,25 @@
           0.53,
           0.186,
           0.2,
-          "recall floor 90%: unmet by any factor"
+          "recall floor 90%: no factor reaches it"
         ],
         [
           0.67,
           0.72,
           0.814,
           0.2,
-          "behaviour: recall 52%, 0 false alerts"
+          "behaviour: recall lower bound 52%"
         ]
       ]
     },
     {
       "num": "04",
-      "titre": "The product factor scores 79.4% recall on variants against 92.9% on written files.",
-      "phrase": "The same cell scores 92.9% recall on 42 files, all written, and 79.4% on 126 files, all generated. Here the generated set is harder, and it is still measured on its own and kept out of the headline rate.",
+      "titre": "The product factor scores 79.4% recall on generated files against 92.9% on written ones.",
+      "phrase": "The same cell scores 92.9% recall on 42 files written and 79.4% on 126 files generated. Here the generated set is harder, and the tool still measures it on its own and keeps it out of the headline rate.",
       "a": "92.9%",
-      "leg_a": "recall 92.9% for product at 0.50 on 42 files, interval 81% to 98%",
+      "leg_a": "recall 92.9% for product at 0.50 on 42 files written, interval 81% to 98%",
       "b": "79.4%",
-      "leg_b": "recall 79.4% at the same cell on 126 files, interval 71% to 86%",
+      "leg_b": "recall 79.4% at the same cell on 126 files generated, interval 71% to 86%",
       "cote": "measured apart",
       "source": {
         "a": {
@@ -160,19 +160,19 @@
           0.62,
           0.892,
           0.96,
-          "generated variants: recall 79.4%"
+          "generated files: recall 79.4%"
         ]
       ]
     },
     {
       "num": "05",
-      "titre": "The public record holds written files and generated variants.",
-      "phrase": "Each file behind these findings is in the public record: 42 files written, seven per typology, and 126 files generated under a seed. Two files from your systems, reviews and customer attributes, rerun the full grid at your desk.",
+      "titre": "Measure the whole grid on your own review outcomes.",
+      "phrase": "Every rate here comes from the public record: 84 files written, 42 files escalated and 42 files retained, with 252 files generated. Two files from your systems rerun the grid, and the report lands next to your files.",
       "a": "42 files",
-      "leg_a": "written escalated files behind the measured rates, seven per typology",
+      "leg_a": "84 files written, 42 files escalated and 42 files retained, seven per typology",
       "b": "126 files",
-      "leg_b": "generated variants behind the separate rates, typologies preserved by construction",
-      "cote": "written and generated",
+      "leg_b": "252 files generated, 126 files escalated and 126 files retained, measured apart",
+      "cote": "yours replace ours",
       "source": {
         "a": {
           "table": "authored",
@@ -189,14 +189,14 @@
           0.6,
           0.892,
           0.84,
-          "your files rerun at your desk"
+          "84 files written"
         ],
         [
           0.32,
           0.66,
           0.265,
           0.8,
-          "written and generated files"
+          "252 files generated"
         ]
       ]
     }

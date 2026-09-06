@@ -83,7 +83,7 @@
     {
       "h2": "&#8220;What if the answer is: change nothing?&#8221;",
       "html": [
-        "<p>Then the report states this. Your current chain enters the record <b>as a tier</b>, ranked with the others, and when it wins, the output prints that it wins outright on this sample. Under 20 observations the tool <b>does not recommend anything at all</b> instead of dress up noise as advice.</p>",
+        "<p>Then the report states this. Your current chain enters the record <b>as a tier</b>, ranked with the others, and when it wins, the output prints that it wins outright on this sample. Under 20 observations the tool <b>does not recommend anything at all</b>; it will not dress up noise as advice.</p>",
         "<p>The repository leans into this: its own README says the answer is rarely &#8220;buy the bigger model&#8221;, the validation dossier has a mandatory <i>What gets worse</i> section, and on the measured corpus <b>3 of the 5 fields are already carried by regexes at zero cost</b>. The cheapest recommendation is on the table from the first line.</p>"
       ]
     },

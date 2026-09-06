@@ -528,7 +528,7 @@
 
 <nav class="rideau" id="tools" aria-label="The instruments">
   <span class="rideau-titre">Cascade &#183; five instruments, one method</span>
-  <a class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" href="../routing/index.html"><span class="p-eti">Routing &#183; identity-field extraction</span><img src="../rendus/robot-salut.webp" alt=""><span class="p-h">Which model tier reads each identity field?</span><span class="p-d">Seven model tiers per field, from a regular expression to a human, measured on sealed records.</span><span class="p-ouvrir">Open Routing <span aria-hidden="true">&#8594;</span></span></a>
+  <a class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" href="../routing/index.html"><span class="p-eti">Routing &#183; identity-field extraction</span><img src="../rendus/robot-salut.webp" alt=""><span class="p-h">Which model tier reads each field?</span><span class="p-d">Seven model tiers per field, from a regular expression to a human, measured on sealed records.</span><span class="p-ouvrir">Open Routing <span aria-hidden="true">&#8594;</span></span></a>
   <div class="pan cote-g" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" aria-current="page"><span class="p-eti">Screening &#183; name matching</span><img src="../rendus/robot-rubis-curieux.webp" alt=""><span class="p-h">Which matcher suffices, at which threshold?</span><span class="p-d">Seven matchers, from strict equality to a multilingual embedding, measured on your own alert history.</span><span class="p-ouvrir">You are here &#183; Screening</span></div>
   <a class="pan cote-g" style="--pan-vif:#4f8ae0;--pan-a:#16213a;--pan-b:#101a30;--pan-c:#0a111f" href="../monitoring/index.html"><span class="p-eti">Monitoring &#183; transaction monitoring</span><img src="../rendus/robot-lapis-montre.webp" alt=""><span class="p-h">Which scenario suffices, at which threshold?</span><span class="p-d">Seven scenarios, from a bare amount to a peer profile, measured on your own dispositioned alerts.</span><span class="p-ouvrir">Open Monitoring <span aria-hidden="true">&#8594;</span></span></a>
   <a class="pan cote-d" style="--pan-vif:#9b6fe0;--pan-a:#241a3a;--pan-b:#1a1230;--pan-c:#100b1f" href="../scoring/index.html"><span class="p-eti">Scoring &#183; risk rating</span><img src="../rendus/robot-amethyste-pese.webp" alt=""><span class="p-h">Which risk factor suffices, at which threshold?</span><span class="p-d">Seven risk factors, from a country list to the deviation from the declared profile, measured on your own periodic-review outcomes.</span><span class="p-ouvrir">Open Scoring <span aria-hidden="true">&#8594;</span></span></a>
@@ -537,86 +537,86 @@
 
 <section class="sequence" aria-label="The five findings">
   <div class="colle">
-    <nav class="rail" aria-label="Findings"><span class="jauge" aria-hidden="true"><i></i></span><ul><li><button class="jalon actif" data-i="0" aria-label="Go to finding 01: Exact matching raises no false alert and misses most confirmed matches.">
+    <nav class="rail" aria-label="Findings"><span class="jauge" aria-hidden="true"><i></i></span><ul><li><button class="jalon actif" data-i="0" aria-label="Go to finding 01: Exact matching raises no false alert and finds few confirmed matches.">
         <img class="j-vig" src="../rendus/etats/tamis-01.webp" alt="">
-        <span class="j-num">01</span><span class="j-corps"><span class="j-titre">Exact matching raises no false alert and misses most confirmed matches.</span>
-        <span class="j-cote">recall 21.7%</span></span></button></li><li><button class="jalon" data-i="1" aria-label="Go to finding 02: The loosest threshold finds each match and alerts on most non-matches.">
+        <span class="j-num">01</span><span class="j-corps"><span class="j-titre">Exact matching raises no false alert and finds few confirmed matches.</span>
+        <span class="j-cote">recall 21.7%</span></span></button></li><li><button class="jalon" data-i="1" aria-label="Go to finding 02: Jaro-winkler at 0.50 finds every match and alerts on most non-matches.">
         <img class="j-vig" src="../rendus/etats/tamis-02.webp" alt="">
-        <span class="j-num">02</span><span class="j-corps"><span class="j-titre">The loosest threshold finds each match and alerts on most non-matches.</span>
+        <span class="j-num">02</span><span class="j-corps"><span class="j-titre">Jaro-winkler at 0.50 finds every match and alerts on most non-matches.</span>
         <span class="j-cote">false alerts 85%</span></span></button></li><li><button class="jalon" data-i="2" aria-label="Go to finding 03: The best trade-off keeps 98.3% recall at 76.7% false alerts.">
         <img class="j-vig" src="../rendus/etats/tamis-03.webp" alt="">
         <span class="j-num">03</span><span class="j-corps"><span class="j-titre">The best trade-off keeps 98.3% recall at 76.7% false alerts.</span>
-        <span class="j-cote">recall 98.3%</span></span></button></li><li><button class="jalon" data-i="3" aria-label="Go to finding 04: Fabricated variants score 17.2% false alerts against 76.7% on written pairs.">
+        <span class="j-cote">recall 98.3%</span></span></button></li><li><button class="jalon" data-i="3" aria-label="Go to finding 04: The best cell scores 17.2% false alerts on generated pairs against 76.7% on written pairs.">
         <img class="j-vig" src="../rendus/etats/tamis-04.webp" alt="">
-        <span class="j-num">04</span><span class="j-corps"><span class="j-titre">Fabricated variants score 17.2% false alerts against 76.7% on written pairs.</span>
-        <span class="j-cote">measured apart</span></span></button></li><li><button class="jalon" data-i="4" aria-label="Go to finding 05: The public record holds written pairs and fabricated variants.">
+        <span class="j-num">04</span><span class="j-corps"><span class="j-titre">The best cell scores 17.2% false alerts on generated pairs against 76.7% on written pairs.</span>
+        <span class="j-cote">measured apart</span></span></button></li><li><button class="jalon" data-i="4" aria-label="Go to finding 05: Measure the whole sweep on your own alert history.">
         <img class="j-vig" src="../rendus/etats/tamis-05.webp" alt="">
-        <span class="j-num">05</span><span class="j-corps"><span class="j-titre">The public record holds written pairs and fabricated variants.</span>
-        <span class="j-cote">written and fabricated</span></span></button></li></ul></nav>
+        <span class="j-num">05</span><span class="j-corps"><span class="j-titre">Measure the whole sweep on your own alert history.</span>
+        <span class="j-cote">yours replace ours</span></span></button></li></ul></nav>
     <div class="theatre">
       <div class="scenes"><canvas class="scrub" width="1374" height="1120" aria-hidden="true"></canvas>
     <div class="scene actif" id="scene-0" data-i="0">
       <img class="objet" src="../rendus/etats/tamis-01.webp"
-        alt="The sieve tower, state 01: Exact matching raises no false alert and misses most confirmed matches.">
-      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="200" x2="710" y2="550" pathLength="1"/><circle cx="710" cy="550" r="4"/><line x1="229" y1="920" x2="685" y2="930" pathLength="1"/><circle cx="685" cy="930" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:20.0%">exact matching: recall 21.7%</span><span class="ap-eti" style="left:16.1%;top:92.0%">loosest matching: recall 100%</span>
+        alt="The sieve tower, state 01: Exact matching raises no false alert and finds few confirmed matches.">
+      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="200" x2="710" y2="550" pathLength="1"/><circle cx="710" cy="550" r="4"/><line x1="229" y1="920" x2="685" y2="930" pathLength="1"/><circle cx="685" cy="930" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:20.0%">exact matching: recall 21.7%</span><span class="ap-eti" style="left:16.1%;top:92.0%">hard negatives: false alerts 0%</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 01</span><span class="ft-cote">recall 21.7%</span></figcaption>
-        <p class="fiche-phrase">Exact matching, after normalisation, raises no false alert on the 60 pairs of non-matches, and finds 21.7% of the confirmed matches.</p>
+        <p class="fiche-phrase">Exact matching, after normalisation, raises no false alert on the 60 pairs of hard negatives, and finds 21.7% of the confirmed matches.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">21.7%</span><span class="leg">recall 21.7% on 60 pairs, interval 13% to 34%, at any threshold</span></div>
-          <div class="val"><span class="chiffre vert-v">0%</span><span class="leg">false alerts 0% on 60 pairs, interval 0% to 6%</span></div>
+          <div class="val"><span class="chiffre pale-v">21.7%</span><span class="leg">recall 21.7% on 60 pairs of confirmed matches, interval 13% to 34%, at any threshold</span></div>
+          <div class="val"><span class="chiffre vert-v">0%</span><span class="leg">false alerts 0% on 60 pairs of hard negatives, interval 0% to 6%</span></div>
         </div>
       </figure>
     </div>
     <div class="scene" id="scene-1" data-i="1">
       <img class="objet" src="../rendus/etats/tamis-02.webp"
-        alt="The sieve tower, state 02: The loosest threshold finds each match and alerts on most non-matches.">
-      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="1095" y1="880" x2="735" y2="620" pathLength="1"/><circle cx="735" cy="620" r="4"/><line x1="325" y1="880" x2="587" y2="600" pathLength="1"/><circle cx="587" cy="600" r="4"/></svg><span class="ap-eti" style="left:77.1%;top:88.0%">loosest threshold: recall 100%</span><span class="ap-eti" style="left:22.9%;top:88.0%">false alerts 85% on non-matches</span>
+        alt="The sieve tower, state 02: Jaro-winkler at 0.50 finds every match and alerts on most non-matches.">
+      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="1095" y1="880" x2="735" y2="620" pathLength="1"/><circle cx="735" cy="620" r="4"/><line x1="325" y1="880" x2="587" y2="600" pathLength="1"/><circle cx="587" cy="600" r="4"/></svg><span class="ap-eti" style="left:77.1%;top:88.0%">jaro-winkler 0.50: recall 100%</span><span class="ap-eti" style="left:22.9%;top:88.0%">hard negatives: false alerts 85%</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 02</span><span class="ft-cote">false alerts 85%</span></figcaption>
-        <p class="fiche-phrase">At the loosest threshold the matcher finds each confirmed match on the 60 pairs, and alerts on 85% of the non-matches; each false alert is analyst time.</p>
+        <p class="fiche-phrase">Jaro-winkler at threshold 0.50 finds every one of the 60 pairs of matches, and alerts on 85% of the 60 pairs of hard negatives.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">100%</span><span class="leg">recall 100% at the loosest threshold, interval 94% to 100%, 60 pairs</span></div>
-          <div class="val"><span class="chiffre vert-v">85%</span><span class="leg">false alerts 85% at the same threshold, interval 74% to 92%, 60 pairs</span></div>
+          <div class="val"><span class="chiffre pale-v">100%</span><span class="leg">recall 100% for jaro-winkler at 0.50, interval 94% to 100%, 60 pairs of matches</span></div>
+          <div class="val"><span class="chiffre vert-v">85%</span><span class="leg">false alerts 85% at the same cell, interval 74% to 92%, 60 pairs of hard negatives</span></div>
         </div>
       </figure>
     </div>
     <div class="scene" id="scene-2" data-i="2">
       <img class="objet" src="../rendus/etats/tamis-03.webp"
         alt="The sieve tower, state 03: The best trade-off keeps 98.3% recall at 76.7% false alerts.">
-      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="325" y1="130" x2="710" y2="580" pathLength="1"/><circle cx="710" cy="580" r="4"/><line x1="1095" y1="130" x2="710" y2="800" pathLength="1"/><circle cx="710" cy="800" r="4"/></svg><span class="ap-eti" style="left:22.9%;top:13.0%">best trade-off: recall 98.3%</span><span class="ap-eti" style="left:77.1%;top:13.0%">false alerts 76.7% at that cell</span>
+      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="325" y1="130" x2="710" y2="580" pathLength="1"/><circle cx="710" cy="580" r="4"/><line x1="1095" y1="130" x2="710" y2="800" pathLength="1"/><circle cx="710" cy="800" r="4"/></svg><span class="ap-eti" style="left:22.9%;top:13.0%">best trade-off: recall 98.3%</span><span class="ap-eti" style="left:77.1%;top:13.0%">that cell: false alerts 76.7%</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 03</span><span class="ft-cote">recall 98.3%</span></figcaption>
-        <p class="fiche-phrase">The tool keeps the recall floor at 90%, then reads the cost. Across each model tier and threshold, the embedding included, the best trade-off is jaro-winkler at 0.56, at recall 98.3% and 76.7% false alerts.</p>
+        <p class="fiche-phrase">The tool holds the Wilson lower bound of recall at 90%, then takes the fewest false alerts. Across every matcher and threshold, the embedding included, that cell is jaro-winkler at 0.56, at recall 98.3% and 76.7% false alerts.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">98.3%</span><span class="leg">recall 98.3% at jaro-winkler 0.56, interval 91% to 100%, 60 pairs</span></div>
-          <div class="val"><span class="chiffre vert-v">76.7%</span><span class="leg">false alerts 76.7% at the same cell, interval 65% to 86%</span></div>
+          <div class="val"><span class="chiffre pale-v">98.3%</span><span class="leg">recall 98.3% for jaro-winkler at 0.56, interval 91% to 100%, 60 pairs of matches</span></div>
+          <div class="val"><span class="chiffre vert-v">76.7%</span><span class="leg">false alerts 76.7% at the same cell, interval 65% to 86%, 60 pairs of hard negatives</span></div>
         </div>
       </figure>
     </div>
     <div class="scene" id="scene-3" data-i="3">
       <img class="objet" src="../rendus/etats/tamis-04.webp"
-        alt="The sieve tower, state 04: Fabricated variants score 17.2% false alerts against 76.7% on written pairs.">
-      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="325" y1="200" x2="465" y2="400" pathLength="1"/><circle cx="465" cy="400" r="4"/><line x1="1095" y1="200" x2="980" y2="490" pathLength="1"/><circle cx="980" cy="490" r="4"/></svg><span class="ap-eti" style="left:22.9%;top:20.0%">written pairs: false alerts 76.7%</span><span class="ap-eti" style="left:77.1%;top:20.0%">fabricated variants: false alerts 17.2%</span>
+        alt="The sieve tower, state 04: The best cell scores 17.2% false alerts on generated pairs against 76.7% on written pairs.">
+      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="325" y1="200" x2="465" y2="400" pathLength="1"/><circle cx="465" cy="400" r="4"/><line x1="1095" y1="200" x2="980" y2="490" pathLength="1"/><circle cx="980" cy="490" r="4"/></svg><span class="ap-eti" style="left:22.9%;top:20.0%">written hard negatives: 76.7%</span><span class="ap-eti" style="left:77.1%;top:20.0%">generated hard negatives: 17.2%</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 04</span><span class="ft-cote">measured apart</span></figcaption>
-        <p class="fiche-phrase">The same cell reads 76.7% false alerts on 60 pairs, all written, and 17.2% on 360 pairs, all fabricated. The fabricated set is easier, so it is measured on its own and kept out of the headline rate.</p>
+        <p class="fiche-phrase">The same cell reads 76.7% false alerts on 60 pairs of written hard negatives and 17.2% on 360 pairs of generated ones. The generated set is easier, so the tool measures it on its own and keeps it out of the headline rate.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">76.7%</span><span class="leg">false alerts 76.7% at the best cell on 60 pairs, interval 65% to 86%</span></div>
-          <div class="val"><span class="chiffre vert-v">17.2%</span><span class="leg">false alerts 17.2% at the same cell on 360 pairs, interval 14% to 21%</span></div>
+          <div class="val"><span class="chiffre pale-v">76.7%</span><span class="leg">false alerts 76.7% at the best cell on 60 pairs of hard negatives, interval 65% to 86%</span></div>
+          <div class="val"><span class="chiffre vert-v">17.2%</span><span class="leg">false alerts 17.2% at the same cell on 360 pairs of generated hard negatives, interval 14% to 21%</span></div>
         </div>
       </figure>
     </div>
     <div class="scene" id="scene-4" data-i="4">
       <img class="objet" src="../rendus/etats/tamis-05.webp"
-        alt="The sieve tower, state 05: The public record holds written pairs and fabricated variants.">
-      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="130" x2="710" y2="280" pathLength="1"/><circle cx="710" cy="280" r="4"/><line x1="806" y1="960" x2="771" y2="870" pathLength="1"/><circle cx="771" cy="870" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:13.0%">written pairs behind the rates</span><span class="ap-eti" style="left:56.7%;top:96.0%">fabricated pairs, measured apart</span>
+        alt="The sieve tower, state 05: Measure the whole sweep on your own alert history.">
+      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="130" x2="710" y2="280" pathLength="1"/><circle cx="710" cy="280" r="4"/><line x1="806" y1="960" x2="771" y2="870" pathLength="1"/><circle cx="771" cy="870" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:13.0%">120 pairs written</span><span class="ap-eti" style="left:56.7%;top:96.0%">720 pairs generated</span>
       <figure class="fiche">
-        <figcaption class="fiche-t"><span>finding 05</span><span class="ft-cote">written and fabricated</span></figcaption>
-        <p class="fiche-phrase">Each pair behind these findings is in the public record: 60 pairs written and declared, 360 pairs fabricated and labelled. One command reruns the full sweep on your alert history at your desk.</p>
+        <figcaption class="fiche-t"><span>finding 05</span><span class="ft-cote">yours replace ours</span></figcaption>
+        <p class="fiche-phrase">Every rate here comes from the public record: 60 pairs of confirmed matches and 60 of hard negatives, written and declared, with 360 pairs generated of each. One command reruns the sweep on your alert history and writes the report beside your file.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">60 pairs</span><span class="leg">written pairs behind the measured rates, declared by typology</span></div>
-          <div class="val"><span class="chiffre vert-v">360 pairs</span><span class="leg">fabricated pairs behind the separate rates, labelled and measured apart</span></div>
+          <div class="val"><span class="chiffre pale-v">60 pairs</span><span class="leg">60 pairs of matches and 60 of hard negatives, written and declared, behind the rates</span></div>
+          <div class="val"><span class="chiffre vert-v">360 pairs</span><span class="leg">360 pairs of each, generated under a seed and measured apart</span></div>
         </div>
       </figure>
     </div></div>
@@ -661,7 +661,7 @@
       <a class="tuile" href="method.html">
         <span class="tuile-img"><img src="../rendus/etats/objet-screening-methode.webp" alt=""></span>
         <span class="tuile-corps"><span class="tuile-t">Method &amp; what is measured</span>
-        <span class="tuile-d">What the frontier reads, and what it refuses.</span></span>
+        <span class="tuile-d">What the method measures, and what it withholds.</span></span>
         <span class="tuile-fl" aria-hidden="true">&#8594;</span>
       </a>
       <a class="tuile" href="security.html">
