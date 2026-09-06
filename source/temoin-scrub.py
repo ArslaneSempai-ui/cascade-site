@@ -97,18 +97,18 @@ try:
     batir()
     avant = lire_pages()
     for p, contenu in avant.items():
-        assert b"seq-manifeste" not in contenu and b"canvas class=\"film\"" not in contenu, \
+        assert b"seq-manifeste" not in contenu and b"canvas class=\"scrub\"" not in contenu, \
             f"{p} porte le scrub SANS manifeste : le repli n'est pas l'absence"
     print(f"  1/3 sans manifeste : aucun scrub dans les {len(PAGES)} pages")
 
     planter_factice()
     batir()
     apres = lire_pages()
-    assert b"seq-manifeste" in apres[PAGE_CIBLE] and b'canvas class="film"' in apres[PAGE_CIBLE], \
+    assert b"seq-manifeste" in apres[PAGE_CIBLE] and b'canvas class="scrub"' in apres[PAGE_CIBLE], \
         f"{PAGE_CIBLE} : manifeste présent mais pas de canevas ni de scrub"
     intactes = [p for p in PAGES if p != PAGE_CIBLE]
     for p in intactes:
-        assert b"seq-manifeste" not in apres[p] and b'canvas class="film"' not in apres[p], \
+        assert b"seq-manifeste" not in apres[p] and b'canvas class="scrub"' not in apres[p], \
             f"{p} porte le scrub alors que le factice ne concerne que {PREFIXE} : le scrub déborde de son outil"
     # les sœurs à l'octet, SEULEMENT quand les gardes M-C1 tiennent le factice pour prêt :
     # tant que BUDGET_SEQUENCE_KO n'est pas déclaré, le rideau retire légitimement le pan
@@ -127,7 +127,7 @@ try:
 
     v = sonde_cdp()
     assert v["canevas"], "la sonde ne voit pas le canevas"
-    assert v["mouvement"]["actif"] == -1 and v["mouvement"]["film"], \
+    assert v["mouvement"]["actif"] == -1 and v["mouvement"]["scrub"], \
         f"q < mouvement : une scène est active ({v['mouvement']}) ; le contrat veut le canevas seul"
     assert v["arret0"]["actif"] == 0, f"q >= mouvement en k=0 : la scène 0 n'est pas active ({v['arret0']})"
     assert v["arret2"]["actif"] == 2, f"q >= mouvement en k=2 : la scène 2 n'est pas active ({v['arret2']})"
