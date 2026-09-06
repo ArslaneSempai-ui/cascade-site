@@ -1,5 +1,5 @@
 {
-  "_": "The five findings of the lapis (Monitoring) hero, in the exact keys of findings-screening.json. Provenance: every figure in a/b/cote is a cell of ~/Documents/cascade-monitoring/releve-public.json at seal `sceau`; the builder refuses to build if the record on disk no longer matches. Each figure keeps its cell address in `source` ({table, palier, seuil, mesure} or {table, compte}); the optional `champ` names which field of the Rate is displayed when it is not `taux` (finding 03 displays lower bounds: champ = 'bas'). Builders may ignore `source`; reviewers and guards re-derive every number from it. The tool's rule behind finding 03 is the same as the whole suite: Wilson lower bound of recall at or above 0.90, then the fewest false alerts. Twin attributions in the phrases are measured, not assumed: at 0.50 the seven false alerts of `amount` are all one-off purchases, and `velocity` trips on payroll, seasonal trade and savings transfers. `annotations` are provisional fractions of the cascading-basins tray (anchor x, anchor y, label x, label y, text): positions and texts were reread against the delivered renders (parchemin-01..05, the rack chosen by Arslane): states 2 and 3 are steep side views, so the missed-diodes detail was replaced by what those frames actually show, the bars against the brass line. Every label is 60 characters or fewer, per the builder's rule.",
+  "_": "The five findings of the lapis (Monitoring) hero, in the exact keys of findings-screening.json. Provenance: every figure in a/b/cote is a cell of ~/Documents/cascade-monitoring/releve-public.json at seal `sceau`; the builder refuses to build if the record on disk no longer matches. Each figure keeps its cell address in `source` ({table, palier, seuil, mesure} or {table, compte}); the optional `champ` names which field of the Rate is displayed when it is not `taux` (finding 03 displays lower bounds: champ = 'bas'). Builders may ignore `source`; reviewers and guards re-derive every number from it. The tool's rule behind finding 03 is the same as the whole suite: Wilson lower bound of recall at or above 0.90, then the fewest false alerts. Twin attributions in the phrases are measured, not assumed: at 0.50 the seven false alerts of `amount` are all one-off purchases, and `velocity` trips on payroll, seasonal trade and savings transfers. `annotations` are fractions of the delivered close-up of each state (anchor x, anchor y, label x, label y, text): positions and texts were remeasured against the delivered close-ups (rack-01..05, the travellings' arrival frames arbitrated by Arslane): 01 the amount blade pulled out, 02 the counting blade, 03 the brass line over the three left blades, 04 the written and synthetic pair, 05 the whole rack with the eighth, ivory piece pulled. Two labels changed because the framed piece changed what a viewer can count: in 01 the amount blade half-hides its own amber row, so the label no longer counts seven diodes, and in 02 the false alerts read as a grid, not a row. Every label is 60 characters or fewer, per the builder's rule.",
   "sceau": "692d499018e53e07",
   "findings": [
     {
@@ -27,18 +27,18 @@
       },
       "annotations": [
         [
-          0.19,
-          0.36,
-          0.08,
-          0.15,
+          0.445,
+          0.45,
+          0.48,
+          0.13,
           "one number, one blade: its bar stops under the brass line"
         ],
         [
-          0.235,
-          0.52,
-          0.1,
+          0.575,
           0.74,
-          "seven amber diodes, all the same explained purchase"
+          0.48,
+          0.94,
+          "the amber behind the blade: all one-off purchases"
         ]
       ]
     },
@@ -67,18 +67,18 @@
       },
       "annotations": [
         [
-          0.375,
-          0.42,
+          0.445,
+          0.55,
+          0.48,
           0.13,
-          0.2,
           "the counting blade: most archetypes pass under it, unlit"
         ],
         [
-          0.405,
-          0.52,
-          0.14,
-          0.78,
-          "half the amber row burns: payday, season, savings"
+          0.575,
+          0.735,
+          0.48,
+          0.94,
+          "half this amber grid burns: payday, season, savings"
         ]
       ]
     },
@@ -109,17 +109,17 @@
       },
       "annotations": [
         [
-          0.52,
-          0.52,
-          0.79,
-          0.22,
+          0.55,
+          0.53,
+          0.64,
+          0.13,
           "the brass line at ninety: no bar reaches it alone"
         ],
         [
-          0.315,
-          0.31,
-          0.08,
-          0.74,
+          0.21,
+          0.545,
+          0.02,
+          0.13,
           "the tallest bar is amount's, and it stops short"
         ]
       ]
@@ -150,16 +150,16 @@
       "annotations": [
         [
           0.3,
-          0.35,
-          0.11,
-          0.09,
+          0.32,
+          0.08,
+          0.07,
           "the same blade twice: written cases, then variants"
         ],
         [
-          0.595,
-          0.38,
-          0.83,
-          0.11,
+          0.59,
+          0.395,
+          0.72,
+          0.07,
           "only the variants' bar crosses the line: kept apart"
         ]
       ]
@@ -185,16 +185,16 @@
       },
       "annotations": [
         [
-          0.805,
-          0.52,
-          0.6,
-          0.18,
+          0.852,
+          0.55,
+          0.72,
+          0.13,
           "the eighth blade is yours: unlit until measured"
         ],
         [
-          0.82,
-          0.6,
-          0.68,
+          0.805,
+          0.62,
+          0.72,
           0.82,
           "an ivory card, two files, your own alert history"
         ]
