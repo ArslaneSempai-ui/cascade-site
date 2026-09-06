@@ -360,3 +360,51 @@ def planche_html(titre, sous_titre, formes, dossier, accent="#4f8ae0", nuit="#0f
     with open(chemin, "w", encoding="utf-8") as f:
         f.write(html)
     return chemin
+
+
+# ── LA CHORÉGRAPHIE AU SCROLL (lot du 9/09, validée par Arslane sur le rack) ─────────────
+# Une transition = n images d'une caméra qui va de `depart` à `arrivee` (azimut, élévation,
+# marge), adoucie aux deux bouts ; `via` = un point de contrôle (Bézier quadratique) pour un
+# aller-retour quand l'état d'arrivée garde la caméra du départ. La DERNIÈRE image est le
+# cadrage de l'état : les annotations posées sur l'état restent justes à l'arrivée.
+def options_sequence(ap):
+    ap.add_argument("--sequence", type=int, default=0, help="nombre d'images de la transition ; 0 = l'état seul")
+    ap.add_argument("--depart", default="", help="caméra de départ : azimut,elevation,marge")
+    ap.add_argument("--via", default="", help="point de contrôle azimut,elevation,marge (aller-retour)")
+
+
+def lire_camera(texte):
+    return tuple(float(x) for x in texte.split(","))
+
+
+def chemin_camera(depart, arrivee, via, t):
+    """(azimut, élévation, marge) à l'instant t ∈ [0, 1] : droite, ou Bézier près de `via`."""
+    out = []
+    for k in range(3):
+        a, b = depart[k], arrivee[k]
+        if via is None:
+            out.append(a + (b - a) * t)
+        else:
+            c = via[k]
+            out.append((1 - t) ** 2 * a + 2 * (1 - t) * t * c + t ** 2 * b)
+    return tuple(out)
+
+
+def adoucir(i, n):
+    """0 → 1 en cosinus : un scroll qui s'arrête n'arrive jamais en plein élan."""
+    return 0.5 - 0.5 * math.cos(math.pi * i / max(1, n - 1))
+
+
+def rendre_sequence(args, arrivee, placer, rendre_image, prefixe):
+    """La scène est bâtie une fois ; la caméra se replace à chaque image (placer(az, el, marge)
+    rend l'objet caméra, retiré avant la suivante) ; rendre_image(chemin) écrit l'image."""
+    if not args.depart:
+        raise SystemExit(f"[{prefixe}] --sequence exige --depart=azimut,elevation,marge")
+    depart, via = lire_camera(args.depart), (lire_camera(args.via) if args.via else None)
+    n = max(2, args.sequence)
+    for i in range(n):
+        az, el, marge = chemin_camera(depart, arrivee, via, adoucir(i, n))
+        cam = placer(az, el, marge)
+        rendre_image(os.path.join(args.sortie, f"{prefixe}-seq-0{args.etat}-{i:03d}.png"))
+        bpy.data.objects.remove(cam, do_unlink=True)
+    print(f"[{prefixe}] séquence : {n} images vers l'état {args.etat} dans {args.sortie} (la dernière = le cadrage de l'état)")

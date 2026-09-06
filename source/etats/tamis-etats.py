@@ -56,6 +56,9 @@ ap.add_argument("--elevation", type=float, default=27.0)
 ap.add_argument("--frontiere", default="jaro-winkler:0.56",
                 help="la cellule retenue par la règle de l'outil (optimise : borne basse du "
                      "rappel >= 0,90, puis le moins de fausses alertes), palier:seuil")
+sys.path.insert(0, ICI)                            # etats/ : scene_commune.py
+from scene_commune import options_sequence, rendre_sequence  # noqa: E402
+options_sequence(ap)
 args = ap.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
 
 APERCU = args.qualite == "apercu"
@@ -465,7 +468,19 @@ def rendre():
     sc.render.image_settings.color_mode = "RGBA"
     sc.render.film_transparent = (args.fond != "papier")
     os.makedirs(args.sortie, exist_ok=True)
-    camera(position, boite, focale=72, ouverture=0.0 if APERCU else 11.0, marge=1.09)
+    ouverture = 0.0 if APERCU else 11.0
+    if args.sequence:
+        el_etat = args.elevation if args.etat != 4 else 40.0
+        def placer(a, e, m):
+            a, e = math.radians(a), math.radians(e)
+            camera((math.cos(e) * math.cos(a) * r, math.cos(e) * math.sin(a) * r, math.sin(e) * r), boite, focale=72, ouverture=ouverture, marge=m)
+            return bpy.context.scene.camera
+        def rendre_image(chemin):
+            sc.render.filepath = chemin
+            bpy.ops.render.render(write_still=True)
+        rendre_sequence(args, (args.azimut, el_etat, 1.09), placer, rendre_image, "tamis")
+        return
+    camera(position, boite, focale=72, ouverture=ouverture, marge=1.09)
     sc.render.filepath = os.path.join(args.sortie, f"tamis-0{args.etat}.png")
     bpy.ops.render.render(write_still=True)
     print(f"[tamis] rendu → {sc.render.filepath}\n[tamis] Le code de sortie 0 ne prouve rien : ouvrir l'image et la regarder.")

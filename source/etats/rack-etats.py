@@ -69,6 +69,14 @@ ap.add_argument("--frontiere", default="none",
                 help="la cellule que la règle de l'outil retient, palier:seuil ; « none » = ce que "
                      "`npm run measure` a imprimé (aucune ne tient le plancher). REFUSÉE si sa cellule ne tient pas.")
 ap.add_argument("--accents", default="amount,velocity", help="les scénarios des états 1 et 2 (findings 01 et 02)")
+# LA CHORÉGRAPHIE AU SCROLL (lot du 9/09, tranché par Arslane : séquence pré-rendue, scrubbée) :
+# N images d'UNE transition de caméra, de --depart "azimut,elevation,marge" à la caméra de
+# l'état demandé, adoucie aux deux bouts ; la dernière image EST le cadrage de l'état
+# (les annotations posées sur l'état restent justes à l'arrivée). Sans --sequence : une image.
+ap.add_argument("--sequence", type=int, default=0, help="nombre d'images de la transition ; 0 = l'état seul")
+ap.add_argument("--depart", default="-20,34,1.45", help="caméra de départ de la transition : azimut,elevation,marge")
+ap.add_argument("--via", default="", help="point de contrôle (azimut,elevation,marge) : la caméra s'en approche à mi-course "
+                "(Bézier quadratique) — pour un aller-retour quand l'état d'arrivée garde la caméra du départ")
 args = ap.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
 
 APERCU = args.qualite == "apercu"
@@ -461,10 +469,34 @@ def rendre():
     os.makedirs(args.sortie, exist_ok=True)
     # marge 1.07 : le rack remplit le cadre (à 1.17 les diodes étaient des points) ; plumer.py
     # se lance alors avec --marge 40, la rampe suffit à effacer le voile du capteur d'ombre
-    camera(az, el, (mn, mx), focale=focale, marge=1.07, ouverture=0.0 if APERCU else 9.0)
-    sc.render.filepath = os.path.join(args.sortie, f"rack-0{args.etat}.png")
-    bpy.ops.render.render(write_still=True)
-    print(f"[rack] rendu → {sc.render.filepath}\n[rack] Le code de sortie 0 ne prouve rien : ouvrir l'image et la regarder.")
+    ouverture = 0.0 if APERCU else 9.0
+    if not args.sequence:
+        camera(az, el, (mn, mx), focale=focale, marge=1.07, ouverture=ouverture)
+        sc.render.filepath = os.path.join(args.sortie, f"rack-0{args.etat}.png")
+        bpy.ops.render.render(write_still=True)
+        print(f"[rack] rendu → {sc.render.filepath}\n[rack] Le code de sortie 0 ne prouve rien : ouvrir l'image et la regarder.")
+        return
+    # la transition : la scène est bâtie une fois, la caméra se replace à chaque image ; le
+    # cadrage se recalcule sur la même boîte (camera() ajuste la distance à la marge), donc
+    # l'objet ne saute pas d'une image à l'autre. Adoucie aux deux bouts (cosinus) : un
+    # scroll qui s'arrête n'arrive jamais en plein élan. --via = point de contrôle (Bézier).
+    az0, el0, marge0 = (float(x) for x in args.depart.split(","))
+    arrivee = (az, el, 1.07)
+    via = tuple(float(x) for x in args.via.split(",")) if args.via else None
+    def chemin(t, k):
+        a, b = (az0, el0, marge0)[k], arrivee[k]
+        if via is None:
+            return a + (b - a) * t
+        c = via[k]                                    # Bézier quadratique : passe PRÈS du via
+        return (1 - t) ** 2 * a + 2 * (1 - t) * t * c + t ** 2 * b
+    n = max(2, args.sequence)
+    for i in range(n):
+        t = 0.5 - 0.5 * math.cos(math.pi * i / (n - 1))
+        cam = camera(chemin(t, 0), chemin(t, 1), (mn, mx), focale=focale, marge=chemin(t, 2), ouverture=ouverture)
+        sc.render.filepath = os.path.join(args.sortie, f"rack-seq-0{args.etat}-{i:03d}.png")
+        bpy.ops.render.render(write_still=True)
+        bpy.data.objects.remove(cam, do_unlink=True)
+    print(f"[rack] séquence : {n} images vers l'état {args.etat} dans {args.sortie} (la dernière = le cadrage de l'état)")
 
 
 rendre()

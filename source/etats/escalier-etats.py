@@ -51,6 +51,8 @@ ap.add_argument("--azimut", type=float, default=-58.0)
 ap.add_argument("--elevation", type=float, default=34.0)
 ap.add_argument("--demo", action="store_true")
 ap.add_argument("--releve", default=None, help="le relevé scellé à lire ; défaut : OUTILS['dossier']['releve'] (outil.py)")
+from scene_commune import options_sequence, rendre_sequence  # noqa: E402 — avant l'analyse des options
+options_sequence(ap)
 args = ap.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
 
 APERCU = args.qualite == "apercu"
@@ -227,7 +229,14 @@ socle(M)
 scene.lampe_cle()
 scene.sol_papier(-0.12)
 # la boîte commune : le socle porte tout, y compris la place du galet d'ivoire de l'état 5
-scene.camera(args.azimut, args.elevation, focale=60, marge=1.07, ouverture=0.0 if APERCU else 9.0, boite=boite_du_sujet())
-chemin = os.path.join(args.sortie, f"escalier-0{args.etat}.png")
-scene.rendre(chemin, LARGE, HAUT)
-print(f"[escalier] rendu → {chemin}\n[escalier] Le code de sortie 0 ne prouve rien : ouvrir l'image et la regarder.")
+OUVERTURE = 0.0 if APERCU else 9.0
+BOITE = boite_du_sujet()
+if args.sequence:
+    rendre_sequence(args, (args.azimut, args.elevation, 1.07),
+                    lambda a, e, m: scene.camera(a, e, focale=60, marge=m, ouverture=OUVERTURE, boite=BOITE),
+                    lambda chemin: scene.rendre(chemin, LARGE, HAUT), "escalier")
+else:
+    scene.camera(args.azimut, args.elevation, focale=60, marge=1.07, ouverture=OUVERTURE, boite=BOITE)
+    chemin = os.path.join(args.sortie, f"escalier-0{args.etat}.png")
+    scene.rendre(chemin, LARGE, HAUT)
+    print(f"[escalier] rendu → {chemin}\n[escalier] Le code de sortie 0 ne prouve rien : ouvrir l'image et la regarder.")
