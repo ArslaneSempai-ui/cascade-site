@@ -1,6 +1,6 @@
 {
   "_": "Contenu de la page Security and data handling. Chaque affirmation a été retrouvée dans ~/Documents/cascade par la passe de vérification du 31 août 2026 (chemins:lignes dans le rapport d'agent). Les trois phrases interdites par cette passe : « ~308 Mo de modèles », « les modèles ne sont jamais téléchargés », « l'outil n'écrit rien hors de son dossier de travail ».",
-  "titre": "Where your data can go, and where it cannot.",
+  "titre": "What runs on your machine, and what reaches the network.",
   "lede": "This page names each place the tool touches: the one network call it makes, the two places it writes, the packages it ships, and what an audit cannot promise. Where a claim lives in the source, its path is on this page.",
   "sections": [
     {

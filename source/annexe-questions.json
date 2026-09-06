@@ -1,7 +1,7 @@
 {
   "_": "Contenu de la page Questions. Huit objections d'un acheteur bancaire, réponses retrouvées dans le dépôt par la passe du 31 août 2026 (tasks/w7nrsoqna.output). Interdit par cette passe : « chemins remplacés dans les rapports » (non retrouvé pour ce chemin-là : le caviardage existe côté egress/serveur, c'est la page Privacy qui le porte).",
   "objet": "rendus/etats/objet-questions.webp",
-  "titre": "Answers to a compliance team's questions.",
+  "titre": "What a compliance team asks, answered with figures.",
   "lede": "Eight objections, the ones a bank's reviewers actually raise. Each answer below is not a promise: it is a mechanism in the source: where it lives, its path is on this page, and where a mechanism has a limit, the limit is here too.",
   "sections": [
     {

@@ -1063,10 +1063,9 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <main>
 <section class="hero">
-  <h1 class="h1 entree">Which model tier reads each identity field?</h1>
+  <h1 class="h1 entree">Measure each model tier's accuracy and cost, field by field.</h1>
   <p class="lede entree">Seven model tiers, from a regular expression to a human, measured on your own records.<br>
-    The answer is rarely &ldquo;buy the bigger model&rdquo;, and each figure
-    <b>can be verified by you</b>.</p>
+    The answer is rarely &ldquo;buy the bigger model&rdquo;; each figure carries its base and its n.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
     <code class="ln">node src/premiere-reponse.mjs</code>
@@ -1159,7 +1158,7 @@ def batir_accueil():
     donnees = json.dumps({"@context": "https://schema.org", "@graph": graphe}, ensure_ascii=True)
     description = ("Cascade: instruments for compliance decisions, one method. Each tier "
                    "measured on sealed records, the frontier read with its interval, rerun on "
-                   "your own machine. Nothing of yours goes up.")
+                   "your own machine.")
     page = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade &#183; measured instruments for compliance</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -1189,10 +1188,10 @@ def batir_accueil():
 <main>
 <section class="hero">
   <span class="marque-h entree">Cascade &#183; {n} instruments, one method</span>
-  <h1 class="h1 entree">Which tier suffices?</h1>
-  <p class="lede entree">Instruments for compliance decisions, and one method behind all of them:
-    each tier is measured on sealed records, the frontier is read with its interval,
-    and the whole sweep reruns on your own machine. <b>Nothing of yours goes up.</b></p>
+  <h1 class="h1 entree">Measure each model tier's accuracy and cost, on your own records.</h1>
+  <p class="lede entree">Cascade routes each identity field to a model tier, from a regular expression to a
+    human, and measures the accuracy and cost of every routing on a sealed public record. The same run
+    repeats on your own files, at your desk.</p>
   <div class="cue" aria-hidden="true"><span>choose</span><span class="fil"></span></div>
 </section>
 
@@ -1318,18 +1317,18 @@ SPECS = {
         titre="Cascade Screening &#183; sanctions screening audit",
         og_titre="Cascade Screening: which matcher suffices, at which threshold",
         description="A sanctions-screening audit: which name matcher suffices, at which threshold, "
-                    "measured on your own alert history. Nothing of yours goes up.",
+                    "measured on your own alert history.",
         app="Cascade Screening",
         app_desc="A sanctions-screening audit: which name matcher suffices, "
-                 "at which threshold, measured on your own alert history. "
-                 "Nothing of yours goes up.",
+                 "at which threshold, measured on your own alert history. ",
         offre="Thirty-day evaluation on your own alert history, granted in the public licence.",
+        h1="Measure each matcher's recall against its false alerts, on your own alert history.",
         lede="Seven name matchers, from strict equality to a multilingual embedding, swept across "
              "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
              "and each figure\n    <b>can be verified by you</b>.",
         aria_commande="The measurement on your own alert history",
         commandes=["npm ci --ignore-scripts", "npm run measure:yours -- --alerts=your-alerts.csv"],
-        note_commande="Your alert history, measured on your machine. Nothing of yours goes up.",
+        note_commande="Your alert history, measured on your machine.",
         instrument_h2="Pick any cell, read what your threshold costs.",
         instrument_page="INSTRUMENT-SCREENING.html",
         instrument_eti="Cascade &#183; Screening",
@@ -1353,19 +1352,19 @@ SPECS = {
         titre="Cascade Monitoring &#183; transaction monitoring audit",
         og_titre="Cascade Monitoring: which scenario suffices, at which threshold",
         description="A transaction-monitoring audit: which scenario suffices, at which threshold, "
-                    "measured on your own dispositioned alerts. Nothing of yours goes up.",
+                    "measured on your own dispositioned alerts.",
         app="Cascade Monitoring",
         app_desc="A transaction-monitoring audit: which scenario suffices, "
-                 "at which threshold, measured on your own dispositioned alerts. "
-                 "Nothing of yours goes up.",
+                 "at which threshold, measured on your own dispositioned alerts. ",
         offre="Thirty-day evaluation on your own dispositioned alerts, granted in the public licence.",
+        h1="Measure each scenario's recall against its false alerts, on your own alerts.",
         lede="Seven scenarios, from a bare amount to the deviation from a peer profile, swept across "
              "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
              "and each figure\n    <b>can be verified by you</b>.",
         aria_commande="The measurement on your own dispositioned alerts",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --alerts=your-alerts.csv --transactions=your-transactions.csv"],
-        note_commande="Your dispositioned alerts, measured on your machine. Nothing of yours goes up.",
+        note_commande="Your dispositioned alerts, measured on your machine.",
         instrument_h2="Pick any cell, read what your threshold costs.",
         instrument_page="INSTRUMENT-MONITORING.html",
         instrument_eti="Cascade &#183; Monitoring",
@@ -1389,19 +1388,19 @@ SPECS = {
         titre="Cascade Scoring &#183; customer risk rating audit",
         og_titre="Cascade Scoring: which risk factor suffices, at which threshold",
         description="A customer risk-rating audit: which risk factor suffices, at which threshold, "
-                    "measured on your own periodic-review outcomes. Nothing of yours goes up.",
+                    "measured on your own periodic-review outcomes.",
         app="Cascade Scoring",
         app_desc="A customer risk-rating audit: which risk factor suffices, "
-                 "at which threshold, measured on your own periodic-review outcomes. "
-                 "Nothing of yours goes up.",
+                 "at which threshold, measured on your own periodic-review outcomes. ",
         offre="Thirty-day evaluation on your own review outcomes, granted in the public licence.",
+        h1="Measure each risk factor's recall against its false alerts, on your own reviews.",
         lede="Seven risk factors, from a country list to the deviation from the declared profile, swept across "
              "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
              "and each figure\n    <b>can be verified by you</b>.",
         aria_commande="The measurement on your own periodic-review outcomes",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --customers=your-customers.csv --reviews=your-reviews.csv"],
-        note_commande="Your review outcomes, measured on your machine. Nothing of yours goes up.",
+        note_commande="Your review outcomes, measured on your machine.",
         instrument_h2="Pick any cell, read what your threshold costs.",
         instrument_page="INSTRUMENT-SCORING.html",
         instrument_eti="Cascade &#183; Scoring",
@@ -1425,20 +1424,20 @@ SPECS = {
         titre="Cascade Dossier &#183; the assembled audit trail",
         og_titre="Cascade Dossier: is the whole chain measured, sealed and fresh",
         description="One dossier over the suite&#8217;s four sealed answers: coverage, seals, "
-                    "signatures, freshness and coherence, verified on your machine. "
-                    "Nothing of yours goes up.",
+                    "signatures, freshness and coherence, verified on your machine. ",
         app="Cascade Dossier",
         app_desc="One dossier over the suite&#8217;s four sealed answers: coverage, "
                  "seals, signatures, freshness and coherence, verified on your "
-                 "machine. Nothing of yours goes up.",
+                 "machine.",
         offre="Thirty-day evaluation on your own sealed reports, granted in the public licence.",
-        lede="Four questions (the reader, the matcher, the scenario, the factor), "
+        h1="Check the four tool reports for coverage, hashes, signatures, validity and consistency.",
+        lede="Four questions, one per tool, checked against five controls, "
              "five controls each.<br>\n    The Dossier reads the sealed reports and answers "
              "as one piece, and each line\n    <b>can be verified by you</b>.",
         aria_commande="The dossier over your own sealed reports",
         commandes=["npm ci --ignore-scripts",
                    "npm run dossier -- --reports=a-measured.json,b-measured.json"],
-        note_commande="Your sealed reports, read on your machine. Nothing of yours goes up.",
+        note_commande="Your sealed reports, read on your machine.",
         instrument_h2="Read the whole chain in one table.",
         instrument_page="INSTRUMENT-DOSSIER.html",
         instrument_eti="Cascade &#183; Dossier",
@@ -1729,10 +1728,10 @@ def batir_outil_catalogue(o, spec):
 
 <main>
 <section class="hero">
-  <h1 class="h1 entree">{o["question"]}</h1>
+  <h1 class="h1 entree">{spec["h1"]}</h1>
   <p class="lede entree">{spec["lede"]}</p>
   <div class="commande entree" role="group" aria-label="{spec["aria_commande"]}">
-    {commandes_html}<span class="note">{spec["note_commande"]}</span>
+    {commandes_html}
   </div>
   <div class="cue" aria-hidden="true"><span>scroll</span><span class="fil"></span></div>
 </section>
