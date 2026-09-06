@@ -129,26 +129,26 @@ LEGS = [
 # Chaque phrase sort du site ou de l'outil publiés, rien d'inventé.
 APPELS = [
     [
-        (0.505, 0.30, 0.68, 0.05, "one chip: ten points of measured accuracy"),
-        (0.21, 0.42, 0.04, 0.10, "the published pick: name goes to the large reader"),
-        (0.70, 0.70, 0.80, 0.94, "the empty row: the human tier, never sampled"),
+        (0.830, 0.330, 0.814, 0.160, "one chip: ten points of measured accuracy"),
+        (0.470, 0.520, 0.343, 0.220, "the published pick: name goes to the large reader"),
+        (0.780, 0.250, 0.343, 0.052, "the empty row: the human tier, never sampled"),
     ],
     [
-        (0.30, 0.625, 0.09, 0.88, "name changes reader: the file-aimed pick"),
-        (0.21, 0.42, 0.04, 0.10, "the published pick it replaces"),
-        (0.417, 0.138, 0.60, 0.05, "a pick both routings share"),
+        (0.440, 0.530, 0.422, 0.220, "name changes reader: the file-aimed pick"),
+        (0.270, 0.550, 0.265, 0.052, "the published pick it replaces"),
+        (0.720, 0.280, 0.500, 0.190, "a pick both routings share"),
     ],
     [
-        (0.135, 0.30, 0.05, 0.09, "an emptied cell: silence instead of a wrong value"),
-        (0.522, 0.172, 0.66, 0.06, "85 wrong values removed, 12 right lost"),
+        (0.820, 0.520, 0.814, 0.220, "an emptied cell: silence instead of a wrong value"),
+        (0.480, 0.380, 0.343, 0.220, "85 wrong values removed, 12 right lost"),
     ],
     [
-        (0.33, 0.86, 0.10, 0.95, "run twice: every count identical, to the digit"),
-        (0.55, 0.35, 0.73, 0.08, "nothing turns green: the durations moved, withheld"),
+        (0.520, 0.480, 0.500, 0.160, "run twice: every count identical, to the digit"),
+        (0.600, 0.350, 0.892, 0.780, "nothing turns green: the durations moved, withheld"),
     ],
     [
-        (0.47, 0.40, 0.70, 0.06, "every stack green: 16,807 routings crossed"),
-        (0.70, 0.70, 0.80, 0.94, "still empty: the human tier, never sampled"),
+        (0.500, 0.450, 0.500, 0.160, "every stack green: 16,807 routings crossed"),
+        (0.800, 0.520, 0.892, 0.780, "still empty: the human tier, never sampled"),
     ],
 ]
 
