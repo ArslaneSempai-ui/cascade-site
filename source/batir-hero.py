@@ -280,7 +280,7 @@ CSS = '''
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{background:var(--papier);color:var(--encre);font-family:var(--texte);line-height:1.55}
-  img{max-width:100%;display:block}
+  img{max-width:100%;height:auto;display:block}
   ::selection{background:var(--vert-titre);color:var(--sur-vert)}
   html{caret-color:var(--vert-vif);scrollbar-color:var(--vert-titre) var(--papier-bas)}
   a{text-underline-offset:4px;color:inherit}

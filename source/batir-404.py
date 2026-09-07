@@ -20,6 +20,7 @@ CSS = '''
     --sans:ui-sans-serif,-apple-system,"Helvetica Neue",sans-serif;
     --montee:cubic-bezier(.16,.84,.32,1)}
   *{box-sizing:border-box;margin:0}
+  img{max-width:100%;height:auto}
   body{min-height:100vh;display:flex;flex-direction:column;align-items:center;
     justify-content:center;gap:8px;padding:40px 24px;text-align:center;
     background:radial-gradient(120% 100% at 50% -10%,var(--nuit-a),var(--nuit-b) 55%,var(--nuit-c));

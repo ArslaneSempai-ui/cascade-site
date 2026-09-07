@@ -95,7 +95,7 @@ CSS = '''
     scrollbar-color:var(--accent-vif) var(--nuit-c)}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{background:var(--nuit-b);color:var(--sur);font-family:var(--texte);line-height:1.55}
-  img{max-width:100%;display:block}
+  img{max-width:100%;height:auto;display:block}
   ::selection{background:var(--accent-vif);color:var(--nuit-c)}
   a{text-underline-offset:4px;color:inherit}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}

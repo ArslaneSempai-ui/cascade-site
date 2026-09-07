@@ -26,6 +26,10 @@ CSS = '''
     --vert-titre:#23543f;--vert-vif:#57b184;--vert-clair:#a5f7cb;--papier:#dbd7c5;--encre:#1b1d18;
     --texte:"Literata",Georgia,serif;--mono:"Roboto Mono",ui-monospace,Menlo,monospace;--montee:cubic-bezier(.16,.84,.32,1)}
   *{box-sizing:border-box;margin:0}
+  /* les attributs width/height des images sont des indications de PRÉSENTATION : sans
+     cette ligne, la hauteur naturelle gagne sur l'aspect-ratio du CSS. Une vignette de
+     60 px a rendu à 1083 px de haut en production le 13/09. */
+  img{max-width:100%;height:auto}
   html{scroll-behavior:smooth;caret-color:var(--vert-vif);scrollbar-color:var(--vert-titre) var(--noir-b)}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{background:var(--noir);color:var(--sur);font-family:var(--texte);line-height:1.6;overflow-x:hidden;position:relative}

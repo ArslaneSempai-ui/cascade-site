@@ -460,11 +460,42 @@ _EAGER = (('<section class="hero"', "section"), ('<nav class="rideau"', "nav"),
           ('<div class="eventail"', "div"))
 
 
+# LA RÈGLE QUI DOIT ACCOMPAGNER LES DIMENSIONS, ET SANS LAQUELLE ELLES CASSENT LA PAGE.
+#
+# `width` et `height` sur un <img> sont des INDICATIONS DE PRÉSENTATION : elles posent
+# `height: 1152px` dans la feuille de l'agent. Une règle qui ne fixe que la largeur, comme
+# `.j-vig{width:60px;aspect-ratio:1.42/1}`, laisse donc la hauteur naturelle gagner, et
+# l'aspect-ratio est ignoré puisque aucune dimension n'est plus automatique.
+#
+# Mesuré le 13/09, en production, sur les vignettes du rail : 56x1083 au lieu de 56x39. Le
+# rail passait de 618 px à 5896 et débordait par le HAUT sur le rideau, puis sur toute la
+# hauteur du site. Le banc ne l'a pas vu : il mesure le débord horizontal.
+#
+# `img{height:auto}` a la spécificité (0,0,1) : elle bat l'indication de présentation et perd
+# contre toute règle de composant. C'est la seule ligne qui rend les dimensions sûres, et la
+# passe REFUSE de tourner sans elle plutôt que de casser une page en silence.
+def _regle_hauteur_auto(t):
+    import re as _re
+    for m in _re.finditer(r"<style[^>]*>(.*?)</style>", t, _re.S):
+        # en DÉBUT DE LIGNE : c'est la forme de la règle de base dans ces feuilles, et cela
+        # écarte `.pan img{...}` qui est un composant. Première version : elle exigeait `}` ou
+        # `,` avant, et ne trouvait plus la règle dès qu'un commentaire la précédait.
+        if _re.search(r"^\s*img\s*\{[^}]*height\s*:\s*auto", m.group(1), _re.M):
+            return True
+    return False
+
+
 def images_pretes(t, page):
     """Chaque <img> servie reçoit sa taille réelle, son décodage asynchrone et son mode de
     chargement. Rend le texte et le compte des images vues, pour que l'appelant refuse un
     balayage qui n'a rien fait."""
     tot = [0, 0]                                    # [dimensionnées, différées]
+    if not _regle_hauteur_auto(t):
+        sys.exit(f"{page} : pas de règle `img{{height:auto}}` dans sa feuille.\n"
+                 "  Poser des attributs width/height sans elle laisse la HAUTEUR NATURELLE de\n"
+                 "  l'image gagner sur l'aspect-ratio du CSS : une vignette de 60 px a rendu à\n"
+                 "  1083 px de haut en production le 13/09, et le rail a débordé sur tout le site.\n"
+                 "  Ajouter `height:auto` à la règle `img` de base du bâtisseur de cette page.")
     zones = [z for z in (_etendue(t, o, b) for o, b in _EAGER) if z]
     # Les fichiers ne sont copiés dans docs/ qu'APRÈS cette passe : on résout l'adresse
     # servie, puis on va lire l'octet dans l'arbre SOURCE. Première version : elle lisait
