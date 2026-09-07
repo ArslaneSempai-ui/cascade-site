@@ -61,7 +61,7 @@
             "n": "already sealed, and the seal matches: dbf26abec438515e"
           }
         ],
-        "refs": "src/measure.ts:299 &#183; src/sceller.ts:12"
+        "refs": "src/empreinte.ts:58 &#183; src/sceller.ts:12"
       }
     },
     {
@@ -126,7 +126,7 @@
             "n": "fresh records against the sealed baseline: verdict per field, report re-sealed"
           }
         ],
-        "refs": "src/measure.ts:969 &#183; src/your-cases.ts:1455"
+        "refs": "src/measure.ts:944 &#183; src/your-cases.ts:1455"
       }
     }
   ],

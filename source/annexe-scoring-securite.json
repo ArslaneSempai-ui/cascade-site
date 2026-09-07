@@ -18,7 +18,7 @@
             "n": "fails if any module touches the network; the allowlist is empty"
           }
         ],
-        "refs": "src/frontiere.test.ts:22 &#183; src/frontiere.test.ts:43"
+        "refs": "src/frontiere.test.ts:30 &#183; src/frontiere.test.ts:51"
       },
       "commun": "securite"
     },
@@ -58,7 +58,7 @@
             "n": "says: already sealed, and the seal matches"
           }
         ],
-        "refs": "src/sceller.ts:42 &#183; src/dossier.ts:11"
+        "refs": "src/sceller.ts:50 &#183; src/dossier.ts:11"
       }
     }
   ]

@@ -8,11 +8,11 @@
     "src/dossiers-etiquetes.test.ts:65": "test(\"aucune liste officielle recopiée : les faits de risque vivent dans les champs, pas dans les pays\", () => {",
     "src/facteur.ts:55": "/** Un score hors [0, 1] est une erreur nommée, jamais un arrondi silencieux. */",
     "src/facteur.ts:56": "export function exigerScore(s: number, id: string, d: Dossier): Score {",
-    "src/frontiere.test.ts:22": "const AUTORISES: Record<string, string> = {",
-    "src/frontiere.test.ts:43": "test(\"aucun module ne touche le réseau\", () => {",
+    "src/frontiere.test.ts:30": "const AUTORISES: Record<string, string> = {",
+    "src/frontiere.test.ts:51": "test(\"aucun module ne touche le réseau\", () => {",
     "src/interval.ts:102": "export const ENOUGH = 20;",
     "src/measure.ts:71": "rappel: cellule(rate(escalades.filter((x) => x.score >= seuil).length, escalades.length)),",
-    "src/sceller.ts:42": "console.log(`  ${cible}\\n  already sealed, and the seal matches: ${apres}. Nothing to do.`);",
+    "src/sceller.ts:50": "console.log(`  ${cible}\\n  already sealed, and the seal matches: ${apres}. Nothing to do.`);",
     "src/synthetic.ts:29": "export const NATURES_ESCALATED = [",
     "src/synthetic.ts:50": "export const PAYS_ORDINAIRES = [\"FR\", \"DE\", \"ES\", \"IT\", \"BE\", \"NL\", \"PT\", \"PL\", \"AT\", \"IE\", \"DK\", \"SE\"] as const;"
   }

@@ -6,12 +6,12 @@
     "src/controles/index.ts:15": "export function registre(): Registre {",
     "src/controles/index.ts:24": "export function absents(r: Registre = registre()): ControleId[] {",
     "src/dossier.ts:9": "* (sceaux, dates, signature, règle : jamais une valeur client) ; les cinq contrôles jugent",
-    "src/empreinte.ts:26": "export function empreinteDuReleve(releve: unknown): string {",
-    "src/empreinte.ts:31": "export function scelleIntact(releve: Record<string, unknown>): boolean {",
-    "src/frontiere.test.ts:22": "const AUTORISES: Record<string, string> = {",
-    "src/frontiere.test.ts:43": "test(\"aucun module ne touche le réseau\", () => {",
+    "src/empreinte.ts:58": "export function empreinteDuReleve(releve: unknown): string {",
+    "src/empreinte.ts:63": "export function scelleIntact(releve: Record<string, unknown>): boolean {",
+    "src/frontiere.test.ts:30": "const AUTORISES: Record<string, string> = {",
+    "src/frontiere.test.ts:51": "test(\"aucun module ne touche le réseau\", () => {",
     "src/measure.ts:93": "export function mesurePublique(reglages: Reglages): {",
     "src/measure.ts:98": "reglages: Reglages;",
-    "src/sceller.ts:42": "console.log(`  ${cible}\\n  already sealed, and the seal matches: ${apres}. Nothing to do.`);"
+    "src/sceller.ts:50": "console.log(`  ${cible}\\n  already sealed, and the seal matches: ${apres}. Nothing to do.`);"
   }
 }
