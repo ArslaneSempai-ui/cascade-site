@@ -302,7 +302,7 @@ def js_carte(mot_x, mot_y, mot_fp):
 #          enumerates) as a cloud of cost x accuracy, the best trade-off drawn, the BUDGET a vertical
 #          line you drag ; the best routing under it lights up and the panel names it field by
 #          field ; hovering a frontier point reads its routing, clicking it composes it.
-#   ONYX : the questions' seals on a time axis (days since measured), the declared RHYTHM a
+#   ONYX : the questions' seals on a time axis (days since measured), the declared VALIDITY
 #          vertical line you drag (a what-if, said as such) ; a seal past it would lose « fresh »
 #          and the --next lines say so ; the panel reads the five sealed verdicts of the
 #          question under the pointer.

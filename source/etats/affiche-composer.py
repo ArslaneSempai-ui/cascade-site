@@ -51,7 +51,7 @@ def paume(c):
         total = len(R["questions"])
         return dict(chiffre=str(n), pourcent=False,
                     etiquette=f"questions {'holding' if cv['tenu'] else 'not holding'} {cv['controle']}",
-                    sous=f"of {total} questions &#183; rhythm {R['reglages']['rythmeJours']} days", cle=(cv["controle"], cv["tenu"]))
+                    sous=f"of {total} questions &#183; validity period {R['reglages']['rythmeJours']} days", cle=(cv["controle"], cv["tenu"]))
     rate = R[c["table"]]["tables"][c["palier"]][c["seuil"]][c["mesure"]]
     champ = c.get("champ", "taux")
     chiffre = f"{rate[champ] * 100:.1f}".rstrip("0").rstrip(".")
