@@ -16,6 +16,7 @@ dépôt-là, à décider séparément.
 Contrôle de liens avec témoin positif : avant de croire « zéro lien cassé »,
 le contrôle doit attraper un lien cassé planté exprès.
 """
+import json
 import pathlib
 import re
 import shutil
@@ -84,6 +85,7 @@ PROD = {
 # L'audit du 31/08 a montré l'inverse en danger : un rmtree AVANT de vérifier
 # ses entrées détruisait docs/ puis plantait, puisque source/ ne portait pas
 # les pages bâties. Ordre tenu : bâtir, vérifier, seulement ensuite effacer.
+import datetime
 import subprocess
 
 # ── les pièces ne doivent pas bouger SOUS l'assemblage ───────────────────────
@@ -194,9 +196,15 @@ def entete_prod(t, neuf):
              else "#101a30" if neuf.startswith("monitoring/")
              else "#1a1230" if neuf.startswith("scoring/")
              else "#0c0c10" if neuf.startswith("dossier/") else "#14251e")
+    # Le fil d'Ariane se pose ICI et pas avant </head> : ces pages n'en ont pas. Elles sont
+    # écrites en tête implicite (doctype, html, puis les métas), et une injection cherchant
+    # </head> ne trouvait rien et se taisait. Ici, la ligne canonique est notre propre point
+    # d'accroche, posé deux lignes plus haut, et csp() qui suit prend l'empreinte du bloc.
+    fil = _fil_ariane(neuf, adresse)
     extra = (f'<link rel="canonical" href="{adresse}">\n'
              f'<link rel="apple-touch-icon" href="{PREFIXE}apple-touch-icon.png">\n'
-             f'<meta name="theme-color" content="{theme}">')
+             f'<meta name="theme-color" content="{theme}">'
+             + (f'\n{fil}' if fil else ''))
     t = t.replace('<meta name="viewport" content="width=device-width,initial-scale=1">',
                   '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
                   + extra, 1)
@@ -207,6 +215,39 @@ def entete_prod(t, neuf):
                   '<meta property="og:image:height" content="630">\n'
                   '<meta name="twitter:card" content="summary_large_image">', 1)
     return t
+
+
+# ── le fil d'Ariane des pages imbriquées ─────────────────────────────────────
+#
+# Vingt-deux des vingt-huit pages vivent sous un outil (screening/method.html), et un résultat
+# de recherche les affichait comme une adresse nue. Un BreadcrumbList dit la place : Cascade
+# puis l'outil puis la page, et le moteur l'affiche à la place de l'URL.
+#
+# Les noms ne sont PAS retapés : le nom de l'outil se lit dans outils.json, le nom de la page
+# dans son propre <title>, après le point médian. Une troisième copie d'un fait ment toujours
+# la première, et un fil qui contredit le titre de la page est pire que pas de fil.
+_NOM_OUTIL = {"routing": "Routing", "screening": "Screening", "monitoring": "Monitoring",
+              "scoring": "Scoring", "dossier": "Dossier"}
+
+
+def _fil_ariane(page, adresse):
+    if "/" not in page:
+        return None
+    dossier = page.split("/", 1)[0]
+    nom = _NOM_OUTIL.get(dossier)
+    if not nom:
+        return None
+    elements = [{"@type": "ListItem", "position": 1, "name": "Cascade", "item": BASE_URL},
+                {"@type": "ListItem", "position": 2, "name": nom, "item": f"{BASE_URL}{dossier}/"}]
+    if not page.endswith("/index.html"):
+        feuille = {"method.html": "Method", "security.html": "Security",
+                   "instrument.html": "Instrument"}.get(page.split("/", 1)[1])
+        if not feuille:
+            return None
+        elements.append({"@type": "ListItem", "position": 3, "name": feuille, "item": adresse})
+    bloc = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": elements}
+    return ('<script type="application/ld+json">'
+            + json.dumps(bloc, ensure_ascii=False, separators=(",", ":")) + "</script>")
 
 
 SCREENING_EMISES = {v: n for v, n in PROD_SCREENING.items() if (MAQ / v).exists()}
@@ -322,6 +363,119 @@ def definir_sealed(t):
     return t
 
 
+
+# ── les images servies : dimensions déclarées, chargement différé ────────────
+#
+# Relevé du 13/09 sur les pages servies : 23 balises <img> par page d'outil, AUCUNE avec
+# width/height, AUCUNE avec loading. Conséquences mesurées :
+#   - 1,5 Mo d'images tirées d'un coup à l'ouverture, dont la moitié à trois écrans plus bas ;
+#   - la place de chaque image inconnue avant son arrivée, donc la page saute pendant qu'elle
+#     se remplit (le décalage cumulé, que Google mesure et compte).
+#
+# La règle : toute image sert avec ses dimensions RÉELLES, lues sur le fichier, jamais tapées.
+# Les images du premier et du deuxième écran (le héros, le rideau, l'éventail) se chargent
+# tout de suite, parce qu'on ATTERRIT sur le rideau depuis le 13/09 ; tout le reste attend
+# d'approcher. `decoding="async"` partout : décoder une image ne doit pas retenir le texte.
+def _dimensions(chemin):
+    """La taille en pixels, lue dans l'en-tête du fichier. webp, png et jpeg suffisent ici."""
+    try:
+        b = chemin.read_bytes()
+    except OSError:
+        return None
+    if b[:4] == b"RIFF" and b[8:12] == b"WEBP":
+        f = b[12:16]
+        if f == b"VP8X":
+            return (int.from_bytes(b[24:27], "little") + 1, int.from_bytes(b[27:30], "little") + 1)
+        if f == b"VP8 ":
+            return (int.from_bytes(b[26:28], "little") & 0x3fff, int.from_bytes(b[28:30], "little") & 0x3fff)
+        if f == b"VP8L":
+            n = int.from_bytes(b[21:25], "little")
+            return ((n & 0x3fff) + 1, ((n >> 14) & 0x3fff) + 1)
+        return None
+    if b[:8] == b"\x89PNG\r\n\x1a\n":
+        return (int.from_bytes(b[16:20], "big"), int.from_bytes(b[20:24], "big"))
+    if b[:2] == b"\xff\xd8":
+        i = 2
+        while i + 9 < len(b):
+            if b[i] != 0xFF:
+                i += 1
+                continue
+            m = b[i + 1]
+            if m in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
+                return (int.from_bytes(b[i + 7:i + 9], "big"), int.from_bytes(b[i + 5:i + 7], "big"))
+            if m in (0xD8, 0xD9) or 0xD0 <= m <= 0xD7:
+                i += 2
+                continue
+            i += 2 + int.from_bytes(b[i + 2:i + 4], "big")
+        return None
+    return None
+
+
+def _etendue(t, ouverture, balise):
+    """Le début et la fin d'un conteneur, par comptage de balises : pas d'analyseur HTML
+    pour trois conteneurs connus, mais pas de regex naïve non plus (elle s'arrêterait au
+    premier </section> imbriqué et la moitié du héros deviendrait paresseuse)."""
+    d = t.find(ouverture)
+    if d < 0:
+        return None
+    i, profondeur = d + len(ouverture), 1
+    while profondeur and i < len(t):
+        o, f = t.find(f"<{balise}", i), t.find(f"</{balise}", i)
+        if f < 0:
+            return None
+        if 0 <= o < f:
+            profondeur += 1
+            i = o + 1
+        else:
+            profondeur -= 1
+            i = f + len(balise) + 3
+    return (d, i)
+
+
+_EAGER = (('<section class="hero"', "section"), ('<nav class="rideau"', "nav"),
+          ('<div class="eventail"', "div"))
+
+
+def images_pretes(t, page):
+    """Chaque <img> servie reçoit sa taille réelle, son décodage asynchrone et son mode de
+    chargement. Rend le texte et le compte des images vues, pour que l'appelant refuse un
+    balayage qui n'a rien fait."""
+    tot = [0, 0]                                    # [dimensionnées, différées]
+    zones = [z for z in (_etendue(t, o, b) for o, b in _EAGER) if z]
+    # Les fichiers ne sont copiés dans docs/ qu'APRÈS cette passe : on résout l'adresse
+    # servie, puis on va lire l'octet dans l'arbre SOURCE. Première version : elle lisait
+    # docs/ et ne trouvait rien, et son refus l'a dit tout de suite.
+    base = (DOCS / page).parent
+
+    def une(m):
+        balise, deb = m.group(0), m.start()
+        if "width=" in balise and "height=" in balise:
+            return balise
+        src = re.search(r'src="([^"]+)"', balise)
+        if not src or src.group(1).startswith(("data:", "http")):
+            return balise
+        servie = (base / src.group(1)).resolve()
+        try:
+            d = _dimensions(MAQ / servie.relative_to(DOCS.resolve()))
+        except ValueError:
+            return balise
+        if not d:
+            return balise
+        tot[0] += 1
+        # La PREMIÈRE image d'une page ne se diffère jamais : sur les pages sans héros ni
+        # rideau (les tarifs, un instrument), c'est elle qu'on voit d'abord, et c'est donc
+        # elle que Google chronomètre. Mesuré le 13/09 : deux pages la donnaient en paresseuse.
+        tot_haut = tot[0] == 1 or any(a <= deb < b for a, b in zones)
+        ajouts = f' width="{d[0]}" height="{d[1]}" decoding="async"'
+        if not tot_haut:
+            ajouts += ' loading="lazy"'
+            tot[1] += 1
+        return balise[:-1].rstrip() + ajouts + ">"
+
+    return re.sub(r"<img\b[^>]*>", une, t), tot
+
+
+_vues, _differees = 0, 0
 for vieux, neuf in {**PROD, **SOUS_DOSSIER_EMISES}.items():
     t = (MAQ / vieux).read_text()
     t = definir_sealed(t)
@@ -332,7 +486,19 @@ for vieux, neuf in {**PROD, **SOUS_DOSSIER_EMISES}.items():
         # doivent se résoudre depuis la racine du site, pas depuis le chemin raté
         t = t.replace('<meta charset="utf-8">',
                       f'<meta charset="utf-8"><base href="{PREFIXE}">', 1)
+    t, _compte = images_pretes(t, neuf)
+    _vues += _compte[0]
+    _differees += _compte[1]
     (DOCS / neuf).write_text(csp(entete_prod(t, neuf)))
+
+if _vues < 100 or _differees < 40 or _differees >= _vues:
+    sys.exit(f"LA PASSE DES IMAGES N'A PAS FAIT SON TRAVAIL : {_vues} dimensionnée(s), "
+             f"{_differees} différée(s).\n  Elle doit voir toutes les images servies, en "
+             "différer une bonne part, et en garder d'urgentes (héros, rideau, éventail).\n"
+             "  Un de ces trois comptes qui s'effondre veut dire que le balayage a raté les "
+             "conteneurs ou les fichiers.")
+print(f"  images servies : {_vues} dimensionnées sur leur fichier, {_differees} différées "
+      f"(héros, rideau et éventail restent immédiats)")
 
 # ── le refus du « placeholder » en production, témoin d'abord ────────────────
 # Une page rouge bâtie sur le plateau vert porte un commentaire « placeholder » ;
@@ -426,8 +592,15 @@ for page in sorted(DOCS.rglob("*.html")):
                          "vivent en clair sur la page engagement, pas ici")
         blocs_vus.setdefault(str(page.relative_to(DOCS)), []).append(donnees)
 
-noeuds_index = blocs_vus.get("index.html", [{}])[0].get("@graph", [])
-types_index = {n.get("@type") for n in noeuds_index}
+# Le socle se cherche PARMI les blocs de la page, jamais dans « le premier ».
+# Le fil d'Ariane s'insère près de la ligne canonique, donc avant lui, et la garde qui lisait
+# blocs_vus[page][0] a aussitôt vu un BreadcrumbList sans @graph et déclaré le socle absent
+# (13/09). Une garde qui dépend de l'ordre des blocs se casse au premier bloc ajouté.
+def _types_du_graphe(page):
+    return {n.get("@type") for b in blocs_vus.get(page, []) for n in b.get("@graph", [])}
+
+
+types_index = _types_du_graphe("index.html")
 if not {"Organization", "SoftwareApplication"} <= types_index:
     sys.exit(f"index.html : Organization + SoftwareApplication attendus dans le "
              f"@graph, vu {sorted(t for t in types_index if t)}")
@@ -444,16 +617,14 @@ if publiees != attendues:
              f"{sorted(set(attendues) ^ set(publiees))}")
 
 # le héros vert, sous routing/, porte le même socle de graphe que la racine
-types_v = {noeud.get("@type")
-           for noeud in blocs_vus.get("routing/index.html", [{}])[0].get("@graph", [])}
+types_v = _types_du_graphe("routing/index.html")
 if not {"Organization", "SoftwareApplication"} <= types_v:
     sys.exit(f"routing/index.html : Organization + SoftwareApplication attendus, "
              f"vu {sorted(x for x in types_v if x)}")
 # le héros rouge, quand il est émis, porte le même socle de graphe que le vert
 for sous_index in ("screening/index.html", "monitoring/index.html"):
     if sous_index in blocs_vus:
-        types_r = {noeud.get("@type")
-                   for noeud in blocs_vus[sous_index][0].get("@graph", [])}
+        types_r = _types_du_graphe(sous_index)
         if not {"Organization", "SoftwareApplication"} <= types_r:
             sys.exit(f"{sous_index} : Organization + SoftwareApplication attendus, "
                      f"vu {sorted(x for x in types_r if x)}")
@@ -524,12 +695,59 @@ if not HOTE.endswith(".github.io"):
 shutil.copy(MAQ / "apple-touch-icon.png", DOCS / "apple-touch-icon.png")
 publiques = ([n for n in PROD.values() if n != "404.html"]
              + [n for n in SOUS_DOSSIER_EMISES.values()])
+# ── le sitemap porte une DATE, et c'est celle du dépôt ───────────────────────
+#
+# Sans <lastmod>, un robot doit redemander les vingt-huit pages pour savoir laquelle a bougé.
+# La date se LIT dans git, jamais « aujourd'hui » : dater du jour vingt-huit pages dont deux
+# ont changé est un chiffre faux, et un sitemap qui ment sur ses dates finit ignoré. Un
+# fichier modifié mais pas encore commité rend la date de son dernier commit : en retard,
+# jamais en avance, ce qui est le sens sûr.
+# La date se lit sur la PAGE SERVIE, pas sur son intermédiaire : les HERO-*.html et
+# ANNEXE-*.html sont engendrés et gitignorés, ils n'ont pas d'histoire. docs/ en a une, et
+# c'est justement celle que <lastmod> décrit. Si les octets bâtis à l'instant diffèrent de
+# ceux du dernier commit, la page change AUJOURD'HUI et le dit ; sinon elle garde la date de
+# son dernier vrai changement. Aucune date n'est donc inventée ni avancée.
+def _git(args):
+    try:
+        r = subprocess.run(["git"] + args, cwd=str(MAQ.parent), capture_output=True, check=True)
+        return r.stdout
+    except Exception:
+        return None
+
+
+def _date_de(page, aujourdhui):
+    chemin = f"docs/{page}"
+    engagee = _git(["show", f"HEAD:{chemin}"])
+    if engagee is None:
+        return aujourdhui                      # page neuve : elle paraît aujourd'hui
+    if engagee != (DOCS / page).read_bytes():
+        return aujourdhui
+    d = _git(["log", "-1", "--format=%cI", "--", chemin])
+    jour = (d or b"").decode(errors="replace").strip().split("T")[0]
+    return jour or aujourdhui
+
+
+_AUJOURDHUI = datetime.date.today().isoformat()
+_lignes, _datees = [], 0
+for n in publiques:
+    url = BASE_URL + ('' if n == 'index.html'
+                      else n.removesuffix('index.html') if n.endswith('/index.html') else n)
+    d = _date_de(n, _AUJOURDHUI)
+    if d:
+        _datees += 1
+        _lignes.append(f"  <url><loc>{url}</loc><lastmod>{d}</lastmod></url>\n")
+    else:
+        _lignes.append(f"  <url><loc>{url}</loc></url>\n")
+if _datees < len(publiques):
+    sys.exit(f"SITEMAP SANS DATE sur {len(publiques) - _datees} page(s) : la date se lit dans "
+             "git,\n  et une page dont la source n'est pas suivie n'en a pas. Inscrire la "
+             "source, ou dire ici pourquoi elle n'en a pas.")
 (DOCS / "sitemap.xml").write_text(
     '<?xml version="1.0" encoding="UTF-8"?>\n'
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    + "".join(f"  <url><loc>{BASE_URL}{'' if n == 'index.html' else n.removesuffix('index.html') if n.endswith('/index.html') else n}</loc></url>\n"
-              for n in publiques)
+    + "".join(_lignes)
     + "</urlset>\n")
+print(f"  sitemap : {len(publiques)} pages, {_datees} datées sur leur dernier commit")
 
 # ── la garde de dérive : le compte de tests que le site PUBLIE ───────────────
 # Le 31 août, le dépôt est passé de 584/65 à 595/66 en une heure et le site a
