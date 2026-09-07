@@ -362,6 +362,11 @@ CSS = '''
   @view-transition{navigation:auto}
   ::view-transition-old(root),::view-transition-new(root){animation-duration:.5s}
   @media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
+  /* le rideau porte un NOM de traversée : les deux pages le reconnaissent comme le même objet
+     et il se déplace au lieu de disparaître puis reparaître. Avec l'ancre #tools, le robot
+     choisi reste sous le curseur et c'est le dessous qui change (Arslane, 13/09). */
+  .rideau{view-transition-name:rideau}
+  .rideau-titre{view-transition-name:rideau-titre}
   .rideau{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));
     position:relative;color:var(--sur-vert)}
   /* cinq pierres : à 340 px de pan minimum, 1440 n'en range que quatre et le cinquième
@@ -387,6 +392,20 @@ CSS = '''
     margin-top:auto;padding:10px 16px;border-radius:8px;transition:background .2s,color .2s;
     border:1px solid color-mix(in srgb,var(--sur-vert) 30%,transparent)}
   a.pan:hover .p-ouvrir,a.pan:focus-visible .p-ouvrir{background:var(--sur-vert);color:var(--nuit-c)}
+  /* LE RIDEAU DOIT TENIR DANS L'ÉCRAN, parce qu'on y ATTERRIT maintenant (l'ancre #tools,
+     13/09). Sur un écran de 900 px de haut, le pan mesurait 1040 : les cinq boutons « Open »
+     tombaient sous le pli, à moitié coupés, et c'était la première chose qu'on voyait en
+     changeant d'outil. Vu en capture native à 1440x900, la taille du portable le plus courant.
+     Le banc des largeurs ne l'aurait jamais dit : il mesure le débord horizontal.
+     On resserre par la HAUTEUR, pas par la largeur : le robot et la question gardent leurs
+     proportions, c'est l'air autour qui cède. */
+  @media (max-height:960px){
+    .pan{padding:124px 32px 56px;gap:12px}
+    .pan img{height:clamp(120px,19vh,190px)}
+    .pan .p-h{font-size:clamp(24px,2.9vw,42px);min-height:2.8em}
+    .pan .p-d{font-size:14px;line-height:1.45}}
+  /* le titre du rideau ne remonte PAS avec le reste : la barre posée mesure 77 px, et à
+     70 il passait dessous (vu en capture, 13/09). Il reste à 84. */
   .pan[aria-current] .p-ouvrir{border-style:dashed;color:var(--sur-vert-pale)}
   /* le survol d'un pan (Arslane, 6/09) : un halo de SA couleur qui suit la souris,
      le robot qui se soulève, la question qui monte d'un souffle, l'autre pan qui
@@ -714,6 +733,23 @@ JS = '''
   // le rideau s'écarte puis l'outil s'ouvre sur sa page (mouvement réduit : lien nu)
   const rideau = document.querySelector(".rideau");
   if (rideau) {
+    /*
+     * L'ATTERRISSAGE SUR LE RIDEAU EST INSTANTANÉ, ET C'EST TOUT L'INTÉRÊT DE L'ANCRE.
+     *
+     * `html` porte `scroll-behavior:smooth` pour les ancres de la page. Au CHARGEMENT, ce
+     * même réglage anime le saut vers `#tools` : la page s'ouvre en haut, puis descend toute
+     * seule. Deux défauts d'un coup : on voit le héros qu'on ne voulait pas revoir, et la
+     * traversée fondue prend son instantané pendant que ça bouge encore. Mesuré le 13/09.
+     *
+     * On force donc le comportement immédiat pour ce seul saut, puis on le rend. La page
+     * s'ouvre AU RIDEAU, les robots sont déjà à leur place, et seul le dessous a changé.
+     */
+    if (location.hash === "#tools") {
+      const avant = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = "auto";
+      rideau.scrollIntoView({block: "start"});
+      document.documentElement.style.scrollBehavior = avant;
+    }
     if (!reduit && "IntersectionObserver" in window) {
       const io = new IntersectionObserver((entrees) => {
         if (entrees.some((e) => e.isIntersecting)) { rideau.classList.add("vu"); io.disconnect(); }
@@ -728,8 +764,14 @@ JS = '''
       // le rideau s'écarte sur la nuit de l'outil choisi : la page qui suit commence dans cette nuit
       rideau.style.setProperty("--ouverture", getComputedStyle(pan).getPropertyValue("--pan-b"));
       rideau.classList.add("ouvre");
-      // 380 ms d'écart, puis la page de l'outil (son héros, en haut) ; la traversée est fondue par
-      // @view-transition : plus de « rafraîchissement » (Arslane, 10/09), plus d'ancre #tools
+      // 380 ms d'écart, puis la page de l'outil OUVERTE SUR SON RIDEAU (#tools).
+      //
+      // L'ancre avait été retirée le 10/09 au profit du seul fondu, et l'outil suivant s'ouvrait
+      // sur son héros : on repartait donc du haut à chaque choix de robot. « ça nous remet tout
+      // au-dessus, ce n'est pas pratique » (Arslane, 13/09). Elle revient : les pans s'écartent,
+      // la page suivante s'ouvre au même endroit de l'écran, les robots reviennent à leur place
+      // et SEUL LE DESSOUS a changé. La docstring de choix_outils() promettait déjà cette ancre
+      // pendant que le code ne la posait plus.
       setTimeout(() => { location.href = pan.href; }, 380);
     }));
   }
@@ -855,7 +897,7 @@ def choix_outils(outil):
             pans += (f'\n  <div class="pan {cote}" style="{style}" aria-current="page">{corps}'
                      f'<span class="p-ouvrir">You are here &#183; {o["nom"]}</span></div>')
         else:
-            pans += (f'\n  <a class="pan {cote}" style="{style}" href="{prefixe}{o["page_hero"]}">{corps}'
+            pans += (f'\n  <a class="pan {cote}" style="{style}" href="{prefixe}{o["page_hero"]}#tools">{corps}'
                      f'<span class="p-ouvrir">Open {o["nom"]} <span aria-hidden="true">&#8594;</span></span></a>')
     n = NOMBRES.get(len(outils), str(len(outils)))
     return (f'<nav class="rideau" id="tools" aria-label="The instruments">'
