@@ -3,6 +3,7 @@
   "objet": "rendus/etats/objet-screening-securite.webp",
   "titre": "Where screening runs, and what stays local.",
   "lede": "Screening handles the most sensitive strings a bank holds: the names it checks. This page says what touches the network, what never does, and how both are enforced by tests and not promised by sentences.",
+  "description": "Screening handles the most sensitive strings a bank holds: the names it checks. What touches the network and what does not, enforced by tests.",
   "sections": [
     {
       "h2": "One file may touch the network, and a test traverses all the others",

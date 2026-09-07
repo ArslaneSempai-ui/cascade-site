@@ -3,6 +3,7 @@
   "objet": "rendus/etats/objet-privacy.webp",
   "titre": "Where your data can and cannot go, itemised.",
   "lede": "This page is an inventory of where your data can and cannot go: the tests that pin the network shut, the folder that never enters a repository, the scrubbing on everything that travels, and the limits of each mechanism, stated here because the source states them.",
+  "description": "An inventory of where your data can and cannot go: the tests that pin the network shut, the folder no repository sees, and the limit of each one.",
   "sections": [
     {
       "h2": "No telemetry, enforced by a test and not by a policy",

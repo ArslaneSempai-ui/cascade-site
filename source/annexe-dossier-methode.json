@@ -3,6 +3,7 @@
   "objet": "rendus/etats/objet-dossier-methode.webp",
   "titre": "How the Dossier checks the four reports.",
   "lede": "This page shows what the Dossier is made of: which reports it reads, which five controls it runs on each, what its own public measure covers, and where it does not guess. The Dossier is the audit piece of the suite: it proves the chain, or it names what is missing.",
+  "description": "Which reports the Dossier reads, the five controls it runs on each, what its own public measure covers, and the places where it declines to guess.",
   "sections": [
     {
       "h2": "Five controls, run in order, refusals named",

@@ -3,6 +3,7 @@
   "objet": "rendus/etats/objet-scoring-securite.webp",
   "titre": "Where scoring runs, and what stays local.",
   "lede": "Customer risk scoring touches the most personal table a bank holds. This tool's answer is structural: its public data is written and generated with no real person in it, no official risk list was copied anywhere, and not one module is allowed to reach the network.",
+  "description": "Customer risk scoring touches the most personal table a bank holds. Its public data is written, with no real person and no official list copied in.",
   "sections": [
     {
       "h2": "The network allowlist is empty, and a test traverses each file",

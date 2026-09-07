@@ -3,6 +3,7 @@
   "objet": "rendus/etats/objet-questions.webp",
   "titre": "What a compliance team asks, answered with figures.",
   "lede": "Eight objections, the ones a bank's reviewers actually raise. Each answer below is not a promise: it is a mechanism in the source: where it lives, its path is on this page, and where a mechanism has a limit, the limit is here too.",
+  "description": "Eight objections a bank's reviewers actually raise. Each answer points to a mechanism in the source, gives its path, and names the limit it has.",
   "sections": [
     {
       "h2": "&#8220;What if our fields are not your five?&#8221;",

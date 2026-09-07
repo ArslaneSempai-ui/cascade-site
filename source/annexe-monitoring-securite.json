@@ -3,6 +3,7 @@
   "objet": "rendus/etats/objet-monitoring-securite.webp",
   "titre": "Where monitoring runs, and what stays local.",
   "lede": "Transaction monitoring handles the most sensitive table a bank holds. This tool's answer is structural: its public data is written and generated, so not one module is allowed to reach the network, and the two files you measure with never leave your machine.",
+  "description": "Transaction monitoring handles the most sensitive table a bank holds. No module here may reach the network, and your two files stay on your machine.",
   "sections": [
     {
       "h2": "The network allowlist is empty, and a test traverses each file",

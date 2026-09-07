@@ -3,6 +3,7 @@
   "objet": "rendus/etats/objet-screening-methode.webp",
   "titre": "How the screening sweep is measured.",
   "lede": "This page shows what the screening numbers are made of: which pairs, which matchers, which thresholds, and where each figure is not quoted. Each claim lives in the source at a path your reviewers can open, and each step reruns on your machine.",
+  "description": "Which pairs, which matchers, which thresholds, and where a figure is not quoted. Each claim sits in the source at a path your reviewers can open.",
   "sections": [
     {
       "h2": "Written pairs, declared nature by nature",

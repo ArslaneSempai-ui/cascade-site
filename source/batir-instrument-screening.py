@@ -335,10 +335,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Screening: the live instrument">
-<meta property="og:description" content="Each matcher at each threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
+<meta property="og:description" content="Matcher by matcher, threshold by threshold, on the sealed public record: recall against false alerts, with intervals, and where it cannot say.">
 <meta property="og:url" content="https://cascade-routing.com/screening/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Each matcher at each threshold on the sealed public record: recall against false alerts, intervals everywhere, the tool's own selection rule under your recall floor.">
+<meta name="description" content="Matcher by matcher, threshold by threshold, on the sealed public record: recall against false alerts, with intervals, and where it cannot say.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23180b0f'/%3E%3Cpath d='M16 0v16H0z' fill='%237a1f2e'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">

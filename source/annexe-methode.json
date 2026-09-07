@@ -3,6 +3,7 @@
   "objet": "rendus/etats/objet-methode.webp",
   "titre": "How each figure is measured, and frozen.",
   "lede": "This page shows the whole method: what is measured, on which slice of the corpus, how the routing is chosen, and how the record is frozen. Each claim lives in the source at a path your reviewers can open, and each step reruns on your machine, so the comparison is yours to make.",
+  "description": "What is measured, on which slice of the corpus, how the routing is chosen, and how the record is frozen. Each step reruns on your own machine.",
   "sections": [
     {
       "h2": "Measured on a slice the tuning never saw",

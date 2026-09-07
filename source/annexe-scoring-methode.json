@@ -3,6 +3,7 @@
   "objet": "rendus/etats/objet-scoring-methode.webp",
   "titre": "How the scoring grid is measured.",
   "lede": "This page shows what the scoring numbers are made of: which dossiers, which factors, which declared tables, and where each figure is not quoted. No real person exists in the sealed public record, and no official risk list was copied into it: that refusal is enforced by a test and not by discipline.",
+  "description": "Which dossiers, which factors, which declared tables, and where a figure is not quoted. No real person is in the record, and a test enforces that.",
   "sections": [
     {
       "h2": "Written dossiers, file by file",

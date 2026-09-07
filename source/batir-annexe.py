@@ -431,7 +431,7 @@ for lettre, page in zip(LETTRES, PAGES):
     (BASE / page["html"]).write_text(f"""<!doctype html><html lang="en">
 <meta charset="utf-8"><title>{page["titre_onglet"]}</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-{og(page["titre_onglet"], faits["lede"], page["html"])}
+{og(page["titre_onglet"], faits.get("description", faits["lede"]), page["html"])}
 <link rel="icon" href="{FAVICON}">
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">{donnees}
@@ -470,7 +470,7 @@ for page in PLOMBERIE["pages"]:
     (BASE / page["html"]).write_text(f"""<!doctype html><html lang="en">
 <meta charset="utf-8"><title>{page["titre_onglet"]}</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-{og(page["titre_onglet"], page["lede"], page["html"])}
+{og(page["titre_onglet"], page.get("description", page["lede"]), page["html"])}
 <link rel="icon" href="{FAVICON}">
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">
@@ -621,7 +621,7 @@ def batir_annexes_outil(o, pages, palette, nuit, tete_sombre, accent, lot, instr
         (BASE / page["html"]).write_text(f"""<!doctype html><html lang="en">
 <meta charset="utf-8"><title>{page["titre_onglet"]}</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-{og(page["titre_onglet"], faits["lede"], page["html"])}
+{og(page["titre_onglet"], faits.get("description", faits["lede"]), page["html"])}
 <link rel="icon" href="{favicon_o}">
 <link rel="stylesheet" href="{lien(o, "fontes/literata.css")}">
 <link rel="stylesheet" href="{lien(o, "fontes/roboto-mono.css")}">

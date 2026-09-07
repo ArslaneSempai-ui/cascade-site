@@ -305,10 +305,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Dossier: the live instrument">
-<meta property="og:description" content="The four questions of the chain against the contract's five controls, states and verdicts live from the sealed public dossier, and what the next control still needs.">
+<meta property="og:description" content="The four questions of the chain set against the contract's five controls, with states and verdicts read live from the sealed public dossier.">
 <meta property="og:url" content="https://cascade-routing.com/dossier/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="The four questions of the chain against the contract's five controls, states and verdicts live from the sealed public dossier, and what the next control still needs.">
+<meta name="description" content="The four questions of the chain set against the contract's five controls, with states and verdicts read live from the sealed public dossier.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23070709'/%3E%3Cpath d='M16 0v16H0z' fill='%231c1c22'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">

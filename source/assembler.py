@@ -208,12 +208,36 @@ def entete_prod(t, neuf):
     t = t.replace('<meta name="viewport" content="width=device-width,initial-scale=1">',
                   '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
                   + extra, 1)
+    # ── LA CARTE DE PARTAGE PORTE UNE IMAGE, ET SES VRAIES MESURES ──
+    #
+    # Deux défauts mesurés le 13/09. Les quatre pages d'instrument (screening, monitoring,
+    # scoring, dossier) n'avaient PAS d'og:image : partagées, elles arrivaient en lien nu.
+    # Et les dimensions étaient écrites en dur, 1200x630, sur toutes les pages : vraies pour
+    # og.png, fausses dès qu'une autre image sert. Un chiffre tapé à côté d'un fichier finit
+    # toujours par mentir sur le fichier.
+    #
+    # L'affiche de l'outil existe déjà, rendue et servie : c'est elle que reçoit sa page
+    # d'instrument. Les mesures se lisent sur le fichier, comme celles des images de la page.
+    image = re.search(r'<meta[^>]+property="og:image"[^>]+content="([^"]+)"', t)
+    if image is None and "/" in neuf:
+        affiche = MAQ / "rendus" / f"affiche-{neuf.split('/', 1)[0]}.jpg"
+        if affiche.exists():
+            t = t.replace('<meta name="twitter:card"',
+                          f'<meta property="og:image" content="{BASE_URL}rendus/{affiche.name}">\n'
+                          '<meta name="twitter:card"', 1)
+            image = re.search(r'<meta[^>]+property="og:image"[^>]+content="([^"]+)"', t)
+    mesures = ""
+    if image:
+        fichier = MAQ / image.group(1).removeprefix(BASE_URL)
+        d = _dimensions(fichier)
+        if d:
+            mesures = (f'<meta property="og:image:width" content="{d[0]}">\n'
+                       f'<meta property="og:image:height" content="{d[1]}">\n')
     t = t.replace('<meta name="twitter:card" content="summary_large_image">',
                   '<meta property="og:site_name" content="Cascade">\n'
                   '<meta property="og:locale" content="en_US">\n'
-                  '<meta property="og:image:width" content="1200">\n'
-                  '<meta property="og:image:height" content="630">\n'
-                  '<meta name="twitter:card" content="summary_large_image">', 1)
+                  + mesures
+                  + '<meta name="twitter:card" content="summary_large_image">', 1)
     return t
 
 

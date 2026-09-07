@@ -208,11 +208,11 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade: what an engagement buys">
-<meta property="og:description" content="Evaluate free for thirty days on your own records. Then one sealed measurement campaign at a fixed price, or the annual licence. Nothing here asks for trust before measurement.">
+<meta property="og:description" content="Evaluate free for thirty days on your own records. Then one sealed measurement campaign at a fixed price, or the annual licence for the suite.">
 <meta property="og:url" content="https://cascade-routing.com/engagement.html">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Evaluate free for thirty days on your own records. Then one sealed measurement campaign at a fixed price, or the annual licence. Nothing here asks for trust before measurement.">
+<meta name="description" content="Evaluate free for thirty days on your own records. Then one sealed measurement campaign at a fixed price, or the annual licence for the suite.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">

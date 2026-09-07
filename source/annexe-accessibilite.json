@@ -3,6 +3,7 @@
   "objet": "rendus/etats/objet-accessibilite.webp",
   "titre": "Contrast, keyboard and semantics, measured on this page.",
   "lede": "This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site's own stylesheet and structure, and wherever a gesture can check a claim right now, on the page you are reading, the gesture is here.",
+  "description": "Contrast, keyboard and semantics measured on this page itself: the figures are computed from the site's own stylesheet, and each claim is checkable here.",
   "sections": [
     {
       "h2": "The keyboard is a first-class door",

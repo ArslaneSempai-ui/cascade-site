@@ -1251,9 +1251,8 @@ def batir_accueil():
     acc_champ = re.sub(r"<[^>]+>", "", SCENES[0]["a"])
     acc_fichier = re.sub(r"<[^>]+>", "", SCENES[0]["b"])
     moins_cher = SCENES[1]["cote"]
-    description = ("Cascade: instruments for compliance decisions, one method. Each tier "
-                   "measured on sealed public records, the best trade-off read with its interval, rerun on "
-                   "your own machine.")
+    description = ("Cascade: five instruments, one method. Each tier measured on sealed public "
+                   "records, the best trade-off read with its interval, rerun on your machine.")
     page = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade &#183; measured instruments for compliance</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">

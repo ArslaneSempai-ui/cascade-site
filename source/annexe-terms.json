@@ -3,6 +3,7 @@
   "objet": "rendus/etats/objet-terms.webp",
   "titre": "What the licence grants, and for how long.",
   "lede": "The terms below are short because they are real: a thirty-day grant written into the licence file, a public licence anyone can read, a deliverable anyone can verify, and a commitment that the answer may go against us. Where a term lives in the source, its path is on this page.",
+  "description": "A thirty-day grant written into the licence file, a public licence anyone can read, a deliverable anyone can verify, and the path to each term.",
   "sections": [
     {
       "h2": "Thirty days, in writing",

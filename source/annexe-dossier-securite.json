@@ -3,6 +3,7 @@
   "objet": "rendus/etats/objet-dossier-securite.webp",
   "titre": "What the Dossier reads, and what stays local.",
   "lede": "The Dossier is the piece your regulator reads, so its own discipline is the strictest of the suite: it reads seals, dates, versions and verdicts from the other tools' reports, and no value of yours, and it touches no network at all.",
+  "description": "The Dossier reads seals, dates, versions and verdicts from the other tools' reports, never a value of yours, and it touches no network at all.",
   "sections": [
     {
       "h2": "The network allowlist is empty, and a test traverses each file",
