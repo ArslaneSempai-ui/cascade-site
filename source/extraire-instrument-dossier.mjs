@@ -80,6 +80,11 @@ const sortie = {
   reglages: releve.reglages,
 };
 
+/* Le fichier de données reprend les verdicts TELS QUE LE RELEVÉ SCELLÉ les écrit,
+   cadratins compris (4 aujourd'hui) : une trace intermédiaire fidèle au sceau, comme
+   les ancres de citations. Il n'est JAMAIS servi — le bâtisseur assainit la typographie
+   au moment d'embarquer, et la garde de l'assembleur tient la frontière de docs/
+   (aucun U+2014, brut ou échappé, quel que soit le fichier). */
 writeFileSync(join(ICI, "instrument-dossier-donnees.json"), JSON.stringify(sortie, null, 1) + "\n");
 console.log(`instrument-dossier-donnees.json: ${Object.keys(releve.questions).length} question(s), `
   + `${CONTROLES.length} controls, ${recomposes} state(s) recomposed, coverage ${releve.couverture.n}/${releve.couverture.sur}, `

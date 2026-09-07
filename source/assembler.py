@@ -355,11 +355,34 @@ if brouillons:
     sys.exit(f"PLACEHOLDER en production : {brouillons} : la page attend ses vrais "
              "rendus (tamis-0*.webp) : elle ne part pas comme ça")
 
-# ── le refus du cadratin : décision du 3 septembre, aucune page ne le porte ──
-fautives = [str(p.relative_to(DOCS)) for p in sorted(DOCS.rglob("*.html"))
-            if any(m in p.read_text() for m in ("\u2014", "&#8212;", "&mdash;"))]
+# ── le refus du cadratin : décision du 3 septembre, élargie le 13 ──────────────
+# Élargi après le fait mesuré du 13/09 : « counts \\u2014 term frequency only » vivait
+# dans les DONNÉES JS de l'instrument rouge — un cadratin ÉCHAPPÉ, dans un blob, que ni
+# ce refus (html + formes brutes) ni la garde de voix (la prose) ne lisaient. La règle
+# devient : aucun U+2014, brut, échappé (\\u2014) ou en entité, dans docs/ quel que soit
+# le fichier servi. Témoin planté d'abord : un zéro qui n'a pas vu le témoin ne vaut rien.
+_FORMES_CADRATIN = ("\u2014", "\\u2014", "&#8212;", "&mdash;")
+
+def _cadratins(dossier):
+    fautives = []
+    for p in sorted(dossier.rglob("*")):
+        if not p.is_file() or p.suffix not in (".html", ".js", ".json", ".xml", ".txt", ".css", ".svg"):
+            continue
+        t = p.read_text(errors="replace")
+        for forme in _FORMES_CADRATIN:
+            if forme in t:
+                fautives.append(f"{p.relative_to(dossier)} ({forme!r})")
+                break
+    return fautives
+
+_tc = DOCS / "zz-temoin-cadratin.js"
+_tc.write_text('const x = "counts \\u2014 term frequency only";')
+if not _cadratins(DOCS):
+    sys.exit("GARDE CASSÉE : le cadratin échappé planté n'a pas été vu — zéro sans valeur")
+_tc.unlink()
+fautives = _cadratins(DOCS)
 if fautives:
-    sys.exit(f"CADRATIN dans les pages bâties : {fautives} : réécrire la source, pas la page")
+    sys.exit(f"CADRATIN dans docs/ (brut, échappé ou entité) : {fautives} : réécrire la source, pas la page")
 
 # ── les données structurées : lisibles, exactes, sans mensonge SEO ───────────
 # Trois refus : un bloc ld+json qui ne parse pas ; une clé de notation
