@@ -12,7 +12,7 @@
     "rapports/2026-08-22-contrainte-de-sortie.md:17": "**Every count is identical to the digit across both passes. Every duration moved,",
     "src/cascade.test.ts:1065": "const SORTIES_AUTORISEES = [",
     "src/cascade.test.ts:1094": "* Un `fetch` ajouté demain vers un point de télémétrie ne se verrait pas : il compilerait,",
-    "src/cascade.test.ts:3510": "test(\"aucune valeur du client n'entre dans le fichier que l'outil lui rend\", async (t) => {",
+    "src/cascade.test.ts:3530": "test(\"aucune valeur du client n'entre dans le fichier que l'outil lui rend\", async (t) => {",
     "src/cascade.test.ts:47": "test(\"les trois moitiés du corpus ne partagent aucune formulation\", () => {",
     "src/corpus.ts:164": "export type Split = \"training\" | \"dev\" | \"heldout\";",
     "src/egress.ts:341": "return a.includes(\"/\") && !a.startsWith(\"src/\") ? \"<file>\" : a;",
