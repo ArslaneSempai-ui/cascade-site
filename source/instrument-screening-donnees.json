@@ -1,9 +1,9 @@
 {
  "provenance": {
   "releve": "releve-public.json",
-  "empreinte": "74a18ebf30d05515",
-  "commit": "e86a139",
-  "date": "2026-09-05",
+  "empreinte": "556bb39ec055a091",
+  "commit": "318916d",
+  "date": "2026-09-07",
   "note": "every figure below comes from the sealed public record of cascade-screening, recomposed with the tool's own rate() before this file was allowed to exist; the recommended cell applies the tool's rule: recall LOWER BOUND holds the floor, then fewest false alerts, then the cheaper tier, then the higher threshold"
  },
  "seuils": [

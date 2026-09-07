@@ -1,9 +1,9 @@
 {
  "provenance": {
   "releve": "releve-public.json",
-  "empreinte": "37f8e511de19c842",
-  "commit": "e95f0a0",
-  "date": "2026-09-05",
+  "empreinte": "db0fff0b257f7ffe",
+  "commit": "53b0b30",
+  "date": "2026-09-07",
   "note": "every line below comes from the sealed public dossier of cascade-dossier: each question's state was recomposed from its own verdicts by the contract's no-gap rule, and the coverage recounted, before this file was allowed to exist"
  },
  "controles": {
@@ -21,7 +21,7 @@
    "present": true,
    "fichier": "profiles-2026-08-20-coeur-rendu.json",
    "etat": "consistent",
-   "joursDepuis": 16,
+   "joursDepuis": 18,
    "sceau": "dbf26abec438515e",
    "signee": true,
    "verdicts": [
@@ -43,7 +43,7 @@
     {
      "controle": "fresh",
      "tenu": true,
-     "detail": "profiles-2026-08-20-coeur-rendu.json: measured 16 day(s) before 2026-09-05, rhythm 90 — fresh"
+     "detail": "profiles-2026-08-20-coeur-rendu.json: measured 18 day(s) before 2026-09-07, rhythm 90: fresh"
     },
     {
      "controle": "consistent",
@@ -57,28 +57,28 @@
    "fichier": "releve-public.json",
    "etat": "consistent",
    "joursDepuis": 0,
-   "sceau": "74a18ebf30d05515",
+   "sceau": "556bb39ec055a091",
    "signee": true,
    "verdicts": [
     {
      "controle": "present",
      "tenu": true,
-     "detail": "releve-public.json: a screening report, measured 2026-09-05, version 1"
+     "detail": "releve-public.json: a screening report, measured 2026-09-07, version 1"
     },
     {
      "controle": "sealed",
      "tenu": true,
-     "detail": "releve-public.json: seal 74a18ebf30d05515 recomputed and matching"
+     "detail": "releve-public.json: seal 556bb39ec055a091 recomputed and matching"
     },
     {
      "controle": "signed",
      "tenu": true,
-     "detail": "releve-public.json: cited record 74a18ebf30d05515, Ed25519 signature verified against cle-publique.pem"
+     "detail": "releve-public.json: cited record 556bb39ec055a091, Ed25519 signature verified against cle-publique.pem"
     },
     {
      "controle": "fresh",
      "tenu": true,
-     "detail": "releve-public.json: measured 0 day(s) before 2026-09-05, rhythm 90 — fresh"
+     "detail": "releve-public.json: measured 0 day(s) before 2026-09-07, rhythm 90: fresh"
     },
     {
      "controle": "consistent",
@@ -92,28 +92,28 @@
    "fichier": "releve-public.json",
    "etat": "consistent",
    "joursDepuis": 0,
-   "sceau": "692d499018e53e07",
+   "sceau": "5e2a96e22fa0b59c",
    "signee": true,
    "verdicts": [
     {
      "controle": "present",
      "tenu": true,
-     "detail": "releve-public.json: a monitoring report, measured 2026-09-05, version 1"
+     "detail": "releve-public.json: a monitoring report, measured 2026-09-07, version 1"
     },
     {
      "controle": "sealed",
      "tenu": true,
-     "detail": "releve-public.json: seal 692d499018e53e07 recomputed and matching"
+     "detail": "releve-public.json: seal 5e2a96e22fa0b59c recomputed and matching"
     },
     {
      "controle": "signed",
      "tenu": true,
-     "detail": "releve-public.json: cited record 692d499018e53e07, Ed25519 signature verified against cle-publique.pem"
+     "detail": "releve-public.json: cited record 5e2a96e22fa0b59c, Ed25519 signature verified against cle-publique.pem"
     },
     {
      "controle": "fresh",
      "tenu": true,
-     "detail": "releve-public.json: measured 0 day(s) before 2026-09-05, rhythm 90 — fresh"
+     "detail": "releve-public.json: measured 0 day(s) before 2026-09-07, rhythm 90: fresh"
     },
     {
      "controle": "consistent",
@@ -127,28 +127,28 @@
    "fichier": "releve-public.json",
    "etat": "consistent",
    "joursDepuis": 0,
-   "sceau": "f51ff169dbc4fd15",
+   "sceau": "3cee43edfa7c0064",
    "signee": true,
    "verdicts": [
     {
      "controle": "present",
      "tenu": true,
-     "detail": "releve-public.json: a scoring report, measured 2026-09-05, version 1"
+     "detail": "releve-public.json: a scoring report, measured 2026-09-07, version 1"
     },
     {
      "controle": "sealed",
      "tenu": true,
-     "detail": "releve-public.json: seal f51ff169dbc4fd15 recomputed and matching"
+     "detail": "releve-public.json: seal 3cee43edfa7c0064 recomputed and matching"
     },
     {
      "controle": "signed",
      "tenu": true,
-     "detail": "releve-public.json: cited record f51ff169dbc4fd15, Ed25519 signature verified against cle-publique.pem"
+     "detail": "releve-public.json: cited record 3cee43edfa7c0064, Ed25519 signature verified against cle-publique.pem"
     },
     {
      "controle": "fresh",
      "tenu": true,
-     "detail": "releve-public.json: measured 0 day(s) before 2026-09-05, rhythm 90 — fresh"
+     "detail": "releve-public.json: measured 0 day(s) before 2026-09-07, rhythm 90: fresh"
     },
     {
      "controle": "consistent",
@@ -165,6 +165,6 @@
  "reglages": {
   "rythmeJours": 90,
   "staleApres": 2,
-  "auJour": "2026-09-05"
+  "auJour": "2026-09-07"
  }
 }

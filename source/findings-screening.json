@@ -1,6 +1,6 @@
 {
   "_": "The five findings of the red (Screening) hero, in the EXACT keys lot S1 declared (message of the night of 5 to 6). Provenance: every figure in a/b/cote is a cell of ~/Documents/cascade-screening/releve-public.json at seal `sceau`; S1 refuses to build if the record on disk no longer matches that seal, and this file names each figure's cell in `source` beside it: {table, palier, seuil, mesure} reads releve[table].tables[palier][seuil][mesure] ({succes, n, taux, bas, haut}); {table, compte} reads releve[table][compte]. `source` is provenance for reviewers and future guards; builders may ignore it. Intervals in legends are Wilson 95% from the same cells, en dash, never an em dash. The rule behind finding 03 is the tool's own default (optimise: Wilson lower bound of recall >= 0.90, then the fewest false alerts), the same rule the live instrument applies: one rule on the whole site, chosen, not measured, and said on the fiche. `annotations` are fractions of the rendered tower box (anchor x, anchor y, label x, label y, text), placed by the chef on the rendered states.",
-  "sceau": "74a18ebf30d05515",
+  "sceau": "556bb39ec055a091",
   "findings": [
     {
       "num": "01",

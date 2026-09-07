@@ -1,203 +1,203 @@
 {
-  "_": "The five findings of the onyx (Dossier) hero, filled from the sealed record ~/Documents/cascade-dossier/releve-public.json at seal `sceau`. Address grammar in `source`: {cle, champ} reads releve[cle][champ] (`mesure: longueur` takes a list's length); {compte-verdicts: {controle, tenu}} counts verdicts across questions[*].verdicts; {question, champ} reads releve.questions[question][champ]. Every figure derived from the record at writing time and re-verified mechanically at displayed precision. The fiches are themed to the five stair states as arbitrated at re-render: 01 coverage, 02 seals, 03 signatures, 04 freshness, 05 yours. The record now tells the closed loop: on day one the Dossier printed zero verifiable signatures across its own house; the constats were acted on, every record is signed, the green gained a family record, and all four questions stand at consistent, five controls of five. `annotations` were rewritten for the re-rendered stair (four stones on the golden CONSISTENT step, ivory at the foot): the framing is fixed and the anchors reuse positions measured on the previous frames; each label will be checked against the delivered previews and adjusted if any falls badly on the object.",
-  "pret": true,
-  "sceau": "37f8e511de19c842",
-  "findings": [
-    {
-      "num": "01",
-      "titre": "The Dossier reads all four tool reports as one audit file.",
-      "phrase": "A reviewer does not want four files. The Dossier reads all four public records and reports on them as one. In this Dossier, all four reports are present, and all four hold the top control, consistent.",
-      "a": "4",
-      "leg_a": "tool reports present, of the 4 the suite produces",
-      "b": "4",
-      "leg_b": "reports at the top control, consistent",
-      "cote": "4 of 4 present",
-      "source": {
-        "a": {
-          "cle": "couverture",
-          "champ": "n"
-        },
-        "b": {
-          "compte-verdicts": {
-            "controle": "consistent",
-            "tenu": true
-          }
-        }
-      },
-      "annotations": [
-        [
-          0.5,
-          0.56,
-          0.696,
-          0.25,
-          "reports present: 4 of 4"
-        ],
-        [
-          0.13,
-          0.585,
-          0.108,
-          0.25,
-          "consistent control: 4 of 4"
-        ]
-      ],
-      "rail": "Four reports, one audit file"
+ "_": "The five findings of the onyx (Dossier) hero, filled from the sealed record ~/Documents/cascade-dossier/releve-public.json at seal `sceau`. Address grammar in `source`: {cle, champ} reads releve[cle][champ] (`mesure: longueur` takes a list's length); {compte-verdicts: {controle, tenu}} counts verdicts across questions[*].verdicts; {question, champ} reads releve.questions[question][champ]. Every figure derived from the record at writing time and re-verified mechanically at displayed precision. The fiches are themed to the five stair states as arbitrated at re-render: 01 coverage, 02 seals, 03 signatures, 04 freshness, 05 yours. The record now tells the closed loop: on day one the Dossier printed zero verifiable signatures across its own house; the constats were acted on, every record is signed, the green gained a family record, and all four questions stand at consistent, five controls of five. `annotations` were rewritten for the re-rendered stair (four stones on the golden CONSISTENT step, ivory at the foot): the framing is fixed and the anchors reuse positions measured on the previous frames; each label will be checked against the delivered previews and adjusted if any falls badly on the object.",
+ "pret": true,
+ "sceau": "db0fff0b257f7ffe",
+ "findings": [
+  {
+   "num": "01",
+   "titre": "The Dossier reads all four tool reports as one audit file.",
+   "phrase": "A reviewer does not want four files. The Dossier reads all four public records and reports on them as one. In this Dossier, all four reports are present, and all four hold the top control, consistent.",
+   "a": "4",
+   "leg_a": "tool reports present, of the 4 the suite produces",
+   "b": "4",
+   "leg_b": "reports at the top control, consistent",
+   "cote": "4 of 4 present",
+   "source": {
+    "a": {
+     "cle": "couverture",
+     "champ": "n"
     },
-    {
-      "num": "02",
-      "titre": "The Dossier recomputes each content hash and checks it matches.",
-      "phrase": "The Dossier recomputes the content hash of each report and checks it against the stored value. One dataset cannot carry two hashes, and a report from an unknown tool version is named in the output.",
-      "a": "4",
-      "leg_a": "content hashes recomputed and matching, on the 4 reports read",
-      "b": "5",
-      "leg_b": "controls each report passes: present, hash, signature, validity, consistency",
-      "cote": "4 hashes recomputed",
-      "source": {
-        "a": {
-          "compte-verdicts": {
-            "controle": "sealed",
-            "tenu": true
-          }
-        },
-        "b": {
-          "cle": "controles",
-          "champ": "presents",
-          "mesure": "longueur"
-        }
-      },
-      "annotations": [
-        [
-          0.35,
-          0.7,
-          0.108,
-          0.25,
-          "content hash recomputed: 4 of 4"
-        ],
-        [
-          0.6,
-          0.4,
-          0.696,
-          0.22,
-          "five controls per report"
-        ]
-      ],
-      "rail": "Each content hash recomputed"
-    },
-    {
-      "num": "03",
-      "titre": "Every public record now carries a verifiable signature.",
-      "phrase": "On its first run the Dossier verified zero signatures across the suite, one refusal per report, because an unverified signature does not count as valid. The records were signed, and today the Dossier verifies all four with no refusal left.",
-      "a": "4",
-      "leg_a": "public-record signatures verified, of the 4 reports read",
-      "b": "0",
-      "leg_b": "signature refusals remaining across the 4 reports",
-      "cote": "0 signature refusals",
-      "source": {
-        "a": {
-          "compte-verdicts": {
-            "controle": "signed",
-            "tenu": true
-          }
-        },
-        "b": {
-          "compte-verdicts": {
-            "controle": "signed",
-            "tenu": false
-          }
-        }
-      },
-      "annotations": [
-        [
-          0.2,
-          0.2,
-          0.304,
-          0.047,
-          "signatures verified: 4 of 4"
-        ],
-        [
-          0.5,
-          0.4,
-          0.759,
-          0.22,
-          "signature refusals: 0"
-        ]
-      ],
-      "rail": "Every record now signed"
-    },
-    {
-      "num": "04",
-      "titre": "All four measurements fall within the declared validity period.",
-      "phrase": "The Dossier dates each measurement against a validity period the record declares, 90 days by default. In this Dossier, all four fall within it, and the oldest, routing, is 16 days old.",
-      "a": "4",
-      "leg_a": "measurements within the declared validity period, on the day of this Dossier",
-      "b": "16 days",
-      "leg_b": "days since the oldest measurement, routing, within the period",
-      "cote": "oldest 16 days",
-      "source": {
-        "a": {
-          "compte-verdicts": {
-            "controle": "fresh",
-            "tenu": true
-          }
-        },
-        "b": {
-          "question": "routing",
-          "champ": "joursDepuis"
-        }
-      },
-      "annotations": [
-        [
-          0.5,
-          0.5,
-          0.304,
-          0.19,
-          "within validity: 4 of 4"
-        ],
-        [
-          0.68,
-          0.62,
-          0.892,
-          0.25,
-          "oldest measurement: 16 days"
-        ]
-      ],
-      "rail": "All four within validity"
-    },
-    {
-      "num": "05",
-      "titre": "Your reviewer verifies the Dossier without us.",
-      "phrase": "The Dossier is written next to your files and carries a content hash from the same algorithm the suite uses. It checks each measurement against a validity period of 90 days the record declares. Your reviewer confirms the verdict without any service of ours.",
-      "a": "4",
-      "leg_a": "questions the Dossier answers as one, for the whole suite",
-      "b": "90 days",
-      "leg_b": "days of the declared validity period it checks freshness against",
-      "cote": "verifiable at your desk",
-      "source": {
-        "a": {
-          "cle": "couverture",
-          "champ": "sur"
-        },
-        "b": {
-          "cle": "reglages",
-          "champ": "rythmeJours"
-        }
-      },
-      "annotations": [
-        [
-          0.27,
-          0.72,
-          0.233,
-          0.86,
-          "4 questions answered as one"
-        ],
-        [
-          0.73,
-          0.52,
-          0.759,
-          0.25,
-          "validity period: 90 days"
-        ]
-      ],
-      "rail": "Verified by your reviewer"
+    "b": {
+     "compte-verdicts": {
+      "controle": "consistent",
+      "tenu": true
+     }
     }
-  ]
+   },
+   "annotations": [
+    [
+     0.5,
+     0.56,
+     0.696,
+     0.25,
+     "reports present: 4 of 4"
+    ],
+    [
+     0.13,
+     0.585,
+     0.108,
+     0.25,
+     "consistent control: 4 of 4"
+    ]
+   ],
+   "rail": "Four reports, one audit file"
+  },
+  {
+   "num": "02",
+   "titre": "The Dossier recomputes each content hash and checks it matches.",
+   "phrase": "The Dossier recomputes the content hash of each report and checks it against the stored value. One dataset cannot carry two hashes, and a report from an unknown tool version is named in the output.",
+   "a": "4",
+   "leg_a": "content hashes recomputed and matching, on the 4 reports read",
+   "b": "5",
+   "leg_b": "controls each report passes: present, hash, signature, validity, consistency",
+   "cote": "4 hashes recomputed",
+   "source": {
+    "a": {
+     "compte-verdicts": {
+      "controle": "sealed",
+      "tenu": true
+     }
+    },
+    "b": {
+     "cle": "controles",
+     "champ": "presents",
+     "mesure": "longueur"
+    }
+   },
+   "annotations": [
+    [
+     0.35,
+     0.7,
+     0.108,
+     0.25,
+     "content hash recomputed: 4 of 4"
+    ],
+    [
+     0.6,
+     0.4,
+     0.696,
+     0.22,
+     "five controls per report"
+    ]
+   ],
+   "rail": "Each content hash recomputed"
+  },
+  {
+   "num": "03",
+   "titre": "Every public record now carries a verifiable signature.",
+   "phrase": "On its first run the Dossier verified zero signatures across the suite, one refusal per report, because an unverified signature does not count as valid. The records were signed, and today the Dossier verifies all four with no refusal left.",
+   "a": "4",
+   "leg_a": "public-record signatures verified, of the 4 reports read",
+   "b": "0",
+   "leg_b": "signature refusals remaining across the 4 reports",
+   "cote": "0 signature refusals",
+   "source": {
+    "a": {
+     "compte-verdicts": {
+      "controle": "signed",
+      "tenu": true
+     }
+    },
+    "b": {
+     "compte-verdicts": {
+      "controle": "signed",
+      "tenu": false
+     }
+    }
+   },
+   "annotations": [
+    [
+     0.2,
+     0.2,
+     0.304,
+     0.047,
+     "signatures verified: 4 of 4"
+    ],
+    [
+     0.5,
+     0.4,
+     0.759,
+     0.22,
+     "signature refusals: 0"
+    ]
+   ],
+   "rail": "Every record now signed"
+  },
+  {
+   "num": "04",
+   "titre": "All four measurements fall within the declared validity period.",
+   "phrase": "The Dossier dates each measurement against a validity period the record declares, 90 days by default. In this Dossier, all four fall within it, and the oldest, routing, is 18 days old.",
+   "a": "4",
+   "leg_a": "measurements within the declared validity period, on the day of this Dossier",
+   "b": "18 days",
+   "leg_b": "days since the oldest measurement, routing, within the period",
+   "cote": "oldest 18 days",
+   "source": {
+    "a": {
+     "compte-verdicts": {
+      "controle": "fresh",
+      "tenu": true
+     }
+    },
+    "b": {
+     "question": "routing",
+     "champ": "joursDepuis"
+    }
+   },
+   "annotations": [
+    [
+     0.5,
+     0.5,
+     0.304,
+     0.19,
+     "within validity: 4 of 4"
+    ],
+    [
+     0.68,
+     0.62,
+     0.892,
+     0.25,
+     "oldest measurement: 18 days"
+    ]
+   ],
+   "rail": "All four within validity"
+  },
+  {
+   "num": "05",
+   "titre": "Your reviewer verifies the Dossier without us.",
+   "phrase": "The Dossier is written next to your files and carries a content hash from the same algorithm the suite uses. It checks each measurement against a validity period of 90 days the record declares. Your reviewer confirms the verdict without any service of ours.",
+   "a": "4",
+   "leg_a": "questions the Dossier answers as one, for the whole suite",
+   "b": "90 days",
+   "leg_b": "days of the declared validity period it checks freshness against",
+   "cote": "verifiable at your desk",
+   "source": {
+    "a": {
+     "cle": "couverture",
+     "champ": "sur"
+    },
+    "b": {
+     "cle": "reglages",
+     "champ": "rythmeJours"
+    }
+   },
+   "annotations": [
+    [
+     0.27,
+     0.72,
+     0.233,
+     0.86,
+     "4 questions answered as one"
+    ],
+    [
+     0.73,
+     0.52,
+     0.759,
+     0.25,
+     "validity period: 90 days"
+    ]
+   ],
+   "rail": "Verified by your reviewer"
+  }
+ ]
 }
