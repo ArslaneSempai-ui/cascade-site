@@ -1,7 +1,7 @@
 {
  "_": "The five findings of the onyx (Dossier) hero, filled from the sealed record ~/Documents/cascade-dossier/releve-public.json at seal `sceau`. Address grammar in `source`: {cle, champ} reads releve[cle][champ] (`mesure: longueur` takes a list's length); {compte-verdicts: {controle, tenu}} counts verdicts across questions[*].verdicts; {question, champ} reads releve.questions[question][champ]. Every figure derived from the record at writing time and re-verified mechanically at displayed precision. The fiches are themed to the five stair states as arbitrated at re-render: 01 coverage, 02 seals, 03 signatures, 04 freshness, 05 yours. The record now tells the closed loop: on day one the Dossier printed zero verifiable signatures across its own house; the constats were acted on, every record is signed, the green gained a family record, and all four questions stand at consistent, five controls of five. `annotations` were rewritten for the re-rendered stair (four stones on the golden CONSISTENT step, ivory at the foot): the framing is fixed and the anchors reuse positions measured on the previous frames; each label will be checked against the delivered previews and adjusted if any falls badly on the object.",
  "pret": true,
- "sceau": "db0fff0b257f7ffe",
+ "sceau": "040d9dce4db3da33",
  "findings": [
   {
    "num": "01",

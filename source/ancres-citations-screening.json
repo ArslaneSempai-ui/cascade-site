@@ -5,7 +5,7 @@
     "src/frontiere.test.ts:45": "test(\"aucun module ne touche le réseau, hors le téléchargeur de listes\", () => {",
     "src/interval.ts:102": "export const ENOUGH = 20;",
     "src/listes.ts:238": "function ecrireManifeste(m: Manifeste): void {",
-    "src/listes.ts:262": "throw new Error(`${source}: the file on disk does not match the manifest fingerprint\\n`",
+    "src/listes.ts:262": "throw new Error(`${source}: the file on disk does not match the manifest content hash\\n`",
     "src/listes.ts:319": "if (veutFetch && process.env.CASCADE_OFFLINE === \"1\") {",
     "src/listes.ts:70": "const JETON_UE_GENERIQUE_PUBLIC = \"dG9rZW4tMjAxNw\";",
     "src/matcher.ts:43": "export const SEUILS: readonly number[] = Array.from({ length: 51 }, (_, i) => Math.round((0.5 + i * 0.01) * 100) / 100);",

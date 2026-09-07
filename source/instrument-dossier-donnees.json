@@ -1,8 +1,8 @@
 {
  "provenance": {
   "releve": "releve-public.json",
-  "empreinte": "db0fff0b257f7ffe",
-  "commit": "53b0b30",
+  "empreinte": "040d9dce4db3da33",
+  "commit": "e2cc8de",
   "date": "2026-09-07",
   "note": "every line below comes from the sealed public dossier of cascade-dossier: each question's state was recomposed from its own verdicts by the contract's no-gap rule, and the coverage recounted, before this file was allowed to exist"
  },
@@ -48,7 +48,7 @@
     {
      "controle": "consistent",
      "tenu": true,
-     "detail": "profiles-2026-08-20-coeur-rendu.json: alone on the routing question, source fingerprint not carried (nothing to cross-check)"
+     "detail": "profiles-2026-08-20-coeur-rendu.json: alone on the routing question, source content hash not carried (nothing to cross-check)"
     }
    ]
   },
@@ -83,7 +83,7 @@
     {
      "controle": "consistent",
      "tenu": true,
-     "detail": "releve-public.json: alone on the screening question, source fingerprint not carried (nothing to cross-check)"
+     "detail": "releve-public.json: alone on the screening question, source content hash not carried (nothing to cross-check)"
     }
    ]
   },
@@ -118,7 +118,7 @@
     {
      "controle": "consistent",
      "tenu": true,
-     "detail": "releve-public.json: alone on the monitoring question, source fingerprint not carried (nothing to cross-check)"
+     "detail": "releve-public.json: alone on the monitoring question, source content hash not carried (nothing to cross-check)"
     }
    ]
   },
@@ -153,7 +153,7 @@
     {
      "controle": "consistent",
      "tenu": true,
-     "detail": "releve-public.json: alone on the scoring question, source fingerprint not carried (nothing to cross-check)"
+     "detail": "releve-public.json: alone on the scoring question, source content hash not carried (nothing to cross-check)"
     }
    ]
   }
