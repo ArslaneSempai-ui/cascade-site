@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-SGnT4VNphiURg7hGb6qL1v1p+P0aTYDNi0lesTBA9LU=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-oqSHbAvqS+tXc12Do4qxvEB7Q2Zg+unoLKm4zeSB4oY=' 'sha256-RsYxumAh9nfPWTmIlrgVCjiNkhGgnCcljYhs9mtE4XU=' 'sha256-1u/oLzsbSwtV2qAjDUM+GUhu+UtAl5l6B/92RBCDqZs=' 'sha256-4Cr/W1Ty3qpZzxTisCv3JSkcsIXMraspPJQa9hLwT68=' 'sha256-ra2A1gypctBMmnXRW2s5TnMyKZn6Igh62FqoGc2LGjk=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-BZRsrTPl4run2ogTuZKKWAgqCtd4t16xLVU3Mk0jYn8='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-CuYA3pPVws39AT+yCp8ZUXv70epbU2pD6k/n4p6s8PM=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-oqSHbAvqS+tXc12Do4qxvEB7Q2Zg+unoLKm4zeSB4oY=' 'sha256-RsYxumAh9nfPWTmIlrgVCjiNkhGgnCcljYhs9mtE4XU=' 'sha256-1u/oLzsbSwtV2qAjDUM+GUhu+UtAl5l6B/92RBCDqZs=' 'sha256-4Cr/W1Ty3qpZzxTisCv3JSkcsIXMraspPJQa9hLwT68=' 'sha256-ra2A1gypctBMmnXRW2s5TnMyKZn6Igh62FqoGc2LGjk=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-BZRsrTPl4run2ogTuZKKWAgqCtd4t16xLVU3Mk0jYn8='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; measured instruments for compliance</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/">
@@ -127,7 +127,16 @@
      tombe seul sur une deuxième rangée (vu le 8/09 sur toutes les pages). Dès 1200 px les
      cinq tiennent sur une rangée à 240 px ; en dessous, trois puis deux (rangées entières). */
   @media (min-width:1200px){.rideau{grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr))}}
-  .rideau-titre{position:absolute;top:84px;left:0;right:0;z-index:2;text-align:center;padding:0 24px;
+  /*
+   * LE TITRE SE CENTRE DANS LA BANDE QU'ON VOIT, ET ELLE COMMENCE SOUS LA BARRE.
+   *
+   * Arslane le voulait « au milieu entre le bord haut et l'étiquette au-dessus des robots »
+   * (08/09). Mesuré avant de bouger : la barre posée occupe les 77 premiers pixels et elle
+   * est opaque sur le rideau, donc le titre ne peut pas monter plus haut sans disparaître
+   * dessous. La bande réellement visible va de 77 à l'étiquette (150), et le titre fait 18 px :
+   * son sommet se pose donc à 77 + (150 - 77 - 18) / 2 = 104.
+   */
+  .rideau-titre{position:absolute;top:104px;left:0;right:0;z-index:2;text-align:center;padding:0 24px;
     font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--sur-vert-pale)}
   /* les cinq boutons « Open… » sur UNE ligne : les pans partent du haut et le bouton est
@@ -154,10 +163,20 @@
      On resserre par la HAUTEUR, pas par la largeur : le robot et la question gardent leurs
      proportions, c'est l'air autour qui cède. */
   @media (max-height:960px){
-    .pan{padding:124px 32px 56px;gap:12px}
+    /* le haut reste à 150 : c'est lui qui donne sa bande au titre, et la mesure du 08/09
+       montrait 56 px de marge inutilisée sous les boutons à 728 px de haut. On resserre donc
+       le BAS et les tailles, jamais le haut. */
+    .pan{padding:150px 32px 56px;gap:12px}
     .pan img{height:clamp(120px,19vh,190px)}
     .pan .p-h{font-size:clamp(24px,2.9vw,42px);min-height:2.8em}
     .pan .p-d{font-size:14px;line-height:1.45}}
+  /* SOUS 700 PX DE HAUT, le haut se resserre quand même, et le titre suit sa bande : à 640
+     les boutons dépassaient déjà de 12 px avant le 08/09, et rendre l'air aux étiquettes
+     sans cette exception les aurait poussés à 38. On ne rend jamais pire ce qui était déjà
+     juste. Le titre se recentre sur la nouvelle bande : 77 + (124 - 77 - 18) / 2 = 91. */
+  @media (max-height:700px){
+    .pan{padding:124px 32px 48px}
+    .rideau-titre{top:91px}}
   /* le titre du rideau ne remonte PAS avec le reste : la barre posée mesure 77 px, et à
      70 il passait dessous (vu en capture, 13/09). Il reste à 84. */
   .pan[aria-current] .p-ouvrir{border-style:dashed;color:var(--sur-vert-pale)}
@@ -227,7 +246,11 @@
   .j-cote{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
     text-transform:uppercase;color:var(--vert-vif);margin-top:6px;opacity:0;max-height:0;
     overflow:hidden;transition:opacity .3s,max-height .3s}
-  .jalon.actif .j-cote{opacity:1;max-height:2em}
+  /* 2em coupait « GEOGRAPHY: 0% BOTH SIDES » en plein mot dès que la ligne passait sur deux
+     lignes (Arslane, 08/09, vu sur Scoring et sur le Dossier). La plus longue fait 24
+     caractères ; 5em laisse la place à quatre lignes et ne prend AUCUNE hauteur de plus que
+     le texte, puisque c'est un maximum. La transition reste animable. */
+  .jalon.actif .j-cote{opacity:1;max-height:5em}
   .theatre{flex:1;min-width:0;position:relative;display:flex;flex-direction:column;gap:20px}
   .scenes{position:relative;aspect-ratio:1.42/1;width:auto;margin:0 auto 0 0;container-type:inline-size;
     height:min(62vh,calc((min(100vw,1400px) - min(290px,22vw) - 366px)/1.42))}
@@ -529,7 +552,11 @@
      grilles des cartes, la commande en dernière ; le bloc pend du haut de l'éventail (le panel des
      cinq regards : un bloc centré à côté d'un objet est le héros de gabarit) */
   .hero-grille .h1{text-align:left;margin:0;max-width:14ch;font-size:clamp(30px,3.1vw,44px);line-height:1.06;letter-spacing:-.015em}
-  .hero-texte{padding-top:72px}
+  /* le titre monte (Arslane, 08/09). Mesuré avant de bouger : la barre finit à 77, l'éventail
+     commence à 96, et le titre tombait à 168 parce que la colonne de texte s'enfonçait de 72.
+     À 36, il se pose à 132 : trente-six pixels plus haut, toujours quarante-cinq sous la
+     barre, et il reste plus bas que le haut de l'éventail, qui garde la main. */
+  .hero-texte{padding-top:36px}
   .ledger{margin:26px 0 0}
   .ledger div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;min-height:38px;padding:9px 0;
     border-bottom:1px solid color-mix(in srgb,var(--sur-vert) 10%,transparent)}
@@ -633,7 +660,6 @@
     <a href="engagement.html">Pricing</a>
     <a href="contact.html">Contact</a>
   </nav>
-  <span class="sceau">measured, then frozen</span>
 </header>
 
 <main>

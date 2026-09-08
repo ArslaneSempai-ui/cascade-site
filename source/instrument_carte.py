@@ -717,7 +717,11 @@ CSS_ACCUEIL = '''
      grilles des cartes, la commande en dernière ; le bloc pend du haut de l'éventail (le panel des
      cinq regards : un bloc centré à côté d'un objet est le héros de gabarit) */
   .hero-grille .h1{text-align:left;margin:0;max-width:14ch;font-size:clamp(30px,3.1vw,44px);line-height:1.06;letter-spacing:-.015em}
-  .hero-texte{padding-top:72px}
+  /* le titre monte (Arslane, 08/09). Mesuré avant de bouger : la barre finit à 77, l'éventail
+     commence à 96, et le titre tombait à 168 parce que la colonne de texte s'enfonçait de 72.
+     À 36, il se pose à 132 : trente-six pixels plus haut, toujours quarante-cinq sous la
+     barre, et il reste plus bas que le haut de l'éventail, qui garde la main. */
+  .hero-texte{padding-top:36px}
   .ledger{margin:26px 0 0}
   .ledger div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;min-height:38px;padding:9px 0;
     border-bottom:1px solid color-mix(in srgb,var(--sur-vert) 10%,transparent)}

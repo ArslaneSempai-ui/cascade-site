@@ -373,7 +373,16 @@ CSS = '''
      tombe seul sur une deuxième rangée (vu le 8/09 sur toutes les pages). Dès 1200 px les
      cinq tiennent sur une rangée à 240 px ; en dessous, trois puis deux (rangées entières). */
   @media (min-width:1200px){.rideau{grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr))}}
-  .rideau-titre{position:absolute;top:84px;left:0;right:0;z-index:2;text-align:center;padding:0 24px;
+  /*
+   * LE TITRE SE CENTRE DANS LA BANDE QU'ON VOIT, ET ELLE COMMENCE SOUS LA BARRE.
+   *
+   * Arslane le voulait « au milieu entre le bord haut et l'étiquette au-dessus des robots »
+   * (08/09). Mesuré avant de bouger : la barre posée occupe les 77 premiers pixels et elle
+   * est opaque sur le rideau, donc le titre ne peut pas monter plus haut sans disparaître
+   * dessous. La bande réellement visible va de 77 à l'étiquette (150), et le titre fait 18 px :
+   * son sommet se pose donc à 77 + (150 - 77 - 18) / 2 = 104.
+   */
+  .rideau-titre{position:absolute;top:104px;left:0;right:0;z-index:2;text-align:center;padding:0 24px;
     font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--sur-vert-pale)}
   /* les cinq boutons « Open… » sur UNE ligne : les pans partent du haut et le bouton est
@@ -400,10 +409,20 @@ CSS = '''
      On resserre par la HAUTEUR, pas par la largeur : le robot et la question gardent leurs
      proportions, c'est l'air autour qui cède. */
   @media (max-height:960px){
-    .pan{padding:124px 32px 56px;gap:12px}
+    /* le haut reste à 150 : c'est lui qui donne sa bande au titre, et la mesure du 08/09
+       montrait 56 px de marge inutilisée sous les boutons à 728 px de haut. On resserre donc
+       le BAS et les tailles, jamais le haut. */
+    .pan{padding:150px 32px 56px;gap:12px}
     .pan img{height:clamp(120px,19vh,190px)}
     .pan .p-h{font-size:clamp(24px,2.9vw,42px);min-height:2.8em}
     .pan .p-d{font-size:14px;line-height:1.45}}
+  /* SOUS 700 PX DE HAUT, le haut se resserre quand même, et le titre suit sa bande : à 640
+     les boutons dépassaient déjà de 12 px avant le 08/09, et rendre l'air aux étiquettes
+     sans cette exception les aurait poussés à 38. On ne rend jamais pire ce qui était déjà
+     juste. Le titre se recentre sur la nouvelle bande : 77 + (124 - 77 - 18) / 2 = 91. */
+  @media (max-height:700px){
+    .pan{padding:124px 32px 48px}
+    .rideau-titre{top:91px}}
   /* le titre du rideau ne remonte PAS avec le reste : la barre posée mesure 77 px, et à
      70 il passait dessous (vu en capture, 13/09). Il reste à 84. */
   .pan[aria-current] .p-ouvrir{border-style:dashed;color:var(--sur-vert-pale)}
@@ -473,7 +492,11 @@ CSS = '''
   .j-cote{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
     text-transform:uppercase;color:var(--vert-vif);margin-top:6px;opacity:0;max-height:0;
     overflow:hidden;transition:opacity .3s,max-height .3s}
-  .jalon.actif .j-cote{opacity:1;max-height:2em}
+  /* 2em coupait « GEOGRAPHY: 0% BOTH SIDES » en plein mot dès que la ligne passait sur deux
+     lignes (Arslane, 08/09, vu sur Scoring et sur le Dossier). La plus longue fait 24
+     caractères ; 5em laisse la place à quatre lignes et ne prend AUCUNE hauteur de plus que
+     le texte, puisque c'est un maximum. La transition reste animable. */
+  .jalon.actif .j-cote{opacity:1;max-height:5em}
   .theatre{flex:1;min-width:0;position:relative;display:flex;flex-direction:column;gap:20px}
   .scenes{position:relative;aspect-ratio:1.42/1;width:auto;margin:0 auto 0 0;container-type:inline-size;
     height:min(62vh,calc((min(100vw,1400px) - min(290px,22vw) - 366px)/1.42))}
@@ -1022,6 +1045,23 @@ JS_SCRUB = """
       s.setAttribute("aria-hidden", a ? "false" : "true");
     });
     jalonsS.forEach((j, x) => j.classList.toggle("actif", arret && x === k));
+    /*
+     * UNE TRANSITION QUI N'EST PAS ENCORE ARRIVÉE NE FIGE PLUS L'OBJET.
+     *
+     * Avant : `if (!im) return` sortait sans rien peindre, et le canevas gardait l'image du
+     * palier PRÉCÉDENT. On défilait, le texte changeait, l'objet restait immobile, et rien
+     * ne disait pourquoi. Mesuré le 08/09 à 5 Mbit/s, un débit de bureau ordinaire : la
+     * deuxième transition arrive à 9 s sur routing, et 48 images sur 120 seulement sont là
+     * au bout de douze secondes. C'est là tout le « le scroll n'est pas pratique », et il
+     * est d'autant plus long que le jeu d'images est lourd (13 Mo sur routing, 8 sur scoring).
+     *
+     * Maintenant : on rend la main à l'IMAGE FIXE de la scène, qui existe déjà dans la page
+     * et que `.colle.scrub .scene .objet{visibility:hidden}` cachait. On voit donc toujours
+     * le bon objet du bon palier, immobile mais juste, et le calcul reprend dès que ses
+     * images sont là.
+     */
+    const im = voisine(k, i);
+    if (!im) { colle.classList.remove("scrub"); dernier = ""; return; }
     const cle = k + ":" + i + ":" + canevas.clientWidth;
     if (!force && cle === dernier) return;
     dernier = cle;
@@ -1029,8 +1069,6 @@ JS_SCRUB = """
     const dpr = Math.min(2, devicePixelRatio || 1);
     const lw = Math.round(canevas.clientWidth * dpr), lh = Math.round(canevas.clientHeight * dpr);
     if (canevas.width !== lw || canevas.height !== lh) { canevas.width = lw; canevas.height = lh; }
-    const im = voisine(k, i);
-    if (!im) return;
     const e = Math.min(canevas.width / im.naturalWidth, canevas.height / im.naturalHeight);
     const w = im.naturalWidth * e, h = im.naturalHeight * e;
     ctx.clearRect(0, 0, canevas.width, canevas.height);
@@ -1043,11 +1081,35 @@ JS_SCRUB = """
   };
   addEventListener("scroll", auCadre, { passive: true });
   addEventListener("resize", auCadre);
+  /*
+   * LES TRANSITIONS ARRIVENT PAR PROXIMITÉ AVEC LÀ OÙ ON LIT, pas dans l'ordre des fichiers.
+   *
+   * L'ordre naïf 1,2,3,4 fait attendre la transition qu'on REGARDE derrière celles qu'on a
+   * déjà dépassées : quelqu'un qui descend vite jusqu'au quatrième palier attendait le
+   * chargement des deuxième et troisième avant la sienne. On choisit donc à chaque fois la
+   * plus proche de la position de lecture, et on repeint dès qu'elle est là.
+   */
+  const prochaine = () => {
+    const r = seqEl.getBoundingClientRect();
+    const total = r.height - innerHeight;
+    const p = Math.min(1, Math.max(0, -r.top / total));
+    const ici = Math.min(M.transitions - 1, Math.floor(p * M.transitions));
+    let choix = -1, plusPres = Infinity;
+    for (let k = 1; k < M.transitions; k++) {
+      if (T[k]) continue;
+      const d = Math.abs(k - ici);
+      if (d < plusPres) { plusPres = d; choix = k; }
+    }
+    return choix;
+  };
   (async () => {
     if (!(await chargeTransition(0))) { mort = true; return; }
     pret = true;
     peindre(true);
-    for (let k = 1; k < M.transitions; k++) await chargeTransition(k);
+    for (let k = prochaine(); k >= 0; k = prochaine()) {
+      await chargeTransition(k);
+      peindre(true);
+    }
   })();
 })();
 """
@@ -1276,7 +1338,6 @@ def batir_accueil():
     <a href="ENGAGEMENT.html">Pricing</a>
     <a href="CONTACT.html">Contact</a>
   </nav>
-  <span class="sceau">measured, then frozen</span>
 </header>
 
 <main>

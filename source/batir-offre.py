@@ -229,7 +229,6 @@ PAGE = f'''<!doctype html><html lang="en">
     <a href="ENGAGEMENT.html" aria-current="page">Pricing</a>
     <a href="CONTACT.html">Contact</a>
   </nav>
-  <span class="sceau">measured, then frozen</span>
 </header>
 
 <main>

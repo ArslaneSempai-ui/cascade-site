@@ -574,9 +574,16 @@ def barre_site(courant=None, sceau=None, racine="", nuit=True):
     courante, Pricing ou Contact). `sceau` : l'empreinte de l'outil, sinon la devise seule."""
     nav = "".join(f'<a href="{racine + c}"' + (' aria-current="page"' if c == courant else "") + f'>{n}</a>'
                   for c, n in NAV_SITE)
-    devise = f"content hash {sceau} &#183; measured, then frozen" if sceau else "measured, then frozen"
+    # « measured, then frozen » N'EST PLUS DANS LA BARRE (Arslane, 08/09 : « il n'a rien à
+    # faire avec la barre d'accueil »). Il vit en bas à droite, dans le pied, où il était
+    # déjà : la barre le répétait. Ce qui reste ici est l'empreinte, qui identifie la
+    # version servie et n'a pas d'autre endroit. Sans empreinte, pas de span du tout : un
+    # élément vide laisse sa gouttière et se voit.
+    devise = f"content hash {sceau}" if sceau else ""
     return (f'<header class="barre{" sur-nuit" if nuit else ""}">\n  <a class="marque" href="{racine}ACCUEIL.html">CASCADE</a>\n'
-            f'  <nav aria-label="Site">{nav}</nav>\n  <span class="sceau">{devise}</span>\n</header>')
+            f'  <nav aria-label="Site">{nav}</nav>\n'
+            + (f'  <span class="sceau">{devise}</span>\n' if devise else "")
+            + '</header>')
 
 
 CSS_BARRE_SITE = '''
