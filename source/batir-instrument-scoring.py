@@ -30,7 +30,7 @@ BASE = pathlib.Path(__file__).parent
 
 sys.path.insert(0, str(BASE))
 from instrument_carte import CSS_NOIR, carte_html, PANNEAU_HTML, js_carte  # noqa: E402  (the live chart, shared)
-from outil import OUTILS, barre_site, CSS_BARRE_SITE
+from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_promesse
 
 r = subprocess.run(["node", str(BASE / "extraire-instrument-scoring.mjs")],
                    capture_output=True, text=True)
@@ -455,8 +455,8 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <footer class="pied">
   <div class="colonne">
-    <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
-    <span class="sceau"<content hash {D["provenance"]["empreinte"]} &#183; measured, then frozen &#183; <a href="{DEPOT_URL}">repository</a></span>
+    {pied_promesse("../")}
+    <span class="sceau">content hash {D["provenance"]["empreinte"]} &#183; measured, then frozen &#183; <a href="{DEPOT_URL}">repository</a></span>
   </div>
 </footer>
 

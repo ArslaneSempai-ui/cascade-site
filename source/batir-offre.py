@@ -15,7 +15,7 @@ intermédiaire n'est documenté ; aucun n'est affiché.
 import pathlib
 
 BASE = pathlib.Path(__file__).parent
-from outil import SCEAU_ROUTING, OUTILS
+from outil import SCEAU_ROUTING, OUTILS, pied_promesse
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 # la barre du site (10/09) : les cinq instruments dans l'ordre du rideau, lus dans OUTILS, jamais tapés
 NAV = "".join(f'\n    <a href="{o["page_hero"]}">{o["nom"]}</a>' for o in OUTILS.values())
@@ -330,7 +330,7 @@ PAGE = f'''<!doctype html><html lang="en">
 </main>
 
 <footer class="pied"><div class="colonne">
-  <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
+  {pied_promesse()}
   <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>
 </div></footer>
 {JS}

@@ -38,7 +38,7 @@ D = json.loads((BASE / "instrument-donnees.json").read_text())
 
 FIELDS, TIERS = D["fields"], D["tiers"]
 from outil import SCEAU_ROUTING
-from outil import OUTILS, barre_site, CSS_BARRE_SITE
+from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_promesse
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-routing"
 
@@ -420,7 +420,7 @@ PAGE = f'''<!doctype html><html lang="en">
 </div></section>
 
 <footer class="pied"><div class="colonne">
-  <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
+  {pied_promesse()}
   <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>
 </div></footer>
 

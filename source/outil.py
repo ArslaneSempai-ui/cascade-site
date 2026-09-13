@@ -131,7 +131,9 @@ OUTILS = {
         "sous_dossier": "screening/",
         "prefixe_racine": "../",
         # pas d'insécable ici : « which threshold? » d'un bloc déborde à 320 px (mesuré)
-        "question": "Which matcher suffices, at which threshold?",
+        # 13/09 : la question prend les mots de l'outil (décision d'Arslane) ; le moule
+        # « Which X suffices, at which threshold? » se lisait comme un gabarit généré
+        "question": "Which name matcher, and where do you set the bar?",
         "palette": PALETTE_RUBIS,
         "favicon_accent": "%237a1f2e",
         "robots": ("robot-rubis-penche.webp", "robot-rubis-agrippe.webp"),
@@ -155,7 +157,7 @@ OUTILS = {
         "nom": "Monitoring",
         "sous_dossier": "monitoring/",
         "prefixe_racine": "../",
-        "question": "Which scenario suffices, at which threshold?",
+        "question": "Which scenario earns its alerts?",
         "palette": PALETTE_LAPIS,
         "favicon_accent": "%231f3f7a",
         "robots": ("robot-lapis-penche.webp", "robot-lapis-montre.webp"),
@@ -183,7 +185,7 @@ OUTILS = {
         "nom": "Scoring",
         "sous_dossier": "scoring/",
         "prefixe_racine": "../",
-        "question": "Which risk factor suffices, at which threshold?",
+        "question": "Which risk factors sort your customers?",
         "palette": PALETTE_AMETHYSTE,
         "favicon_accent": "%234b2a7a",
         "robots": ("robot-amethyste-penche.webp", "robot-amethyste-pese.webp"),
@@ -422,6 +424,26 @@ def lien(outil, cible):
     sous-dossier quand il y en a un. Les liens entre pages d'un même outil ne
     passent pas ici : ils restent nus, sœurs de dossier."""
     return outil["prefixe_racine"] + cible
+
+
+# ── LE PIED RENVOIE À SA PREUVE (Arslane, 13/09) ─────────────────────────────
+# « Your records stay on your machine, and no data leaves the network. » affirmait deux
+# fois la même chose et se répétait sur 28 pages : le panel l'a lu comme un refrain. La
+# ligne dit maintenant la chose UNE fois et montre où elle se vérifie. Le lien porte la
+# couleur d'accent par l'<em> que .pied-p stylait déjà, et son soulignement vient de la
+# règle globale des liens : aucune feuille de style à toucher dans les sept bâtisseurs.
+# UNE seule source, comme la question du rideau : la ligne ne peut plus diverger.
+PIED_PROMESSE = "Nothing of yours leaves your machine."
+
+def pied_promesse(prefixe="", sur_privacy=False):
+    """Le paragraphe du pied. `prefixe` sort du sous-dossier d'un outil (« ../ ») ;
+    vide à la racine. Les pages d'un outil passent outil["prefixe_racine"].
+    Sur la page Privacy elle-même, la phrase reste seule : le renvoi mènerait ici."""
+    if sur_privacy:
+        return f'<p class="pied-p">{PIED_PROMESSE}</p>'
+    return (f'<p class="pied-p">{PIED_PROMESSE} '
+            f'<a href="{prefixe}ANNEXE-PRIVACY.html"><em>How we prove it</em> '
+            f'<span aria-hidden="true">&#8594;</span></a></p>')
 
 
 # ── LES ÉTIQUETTES SUR LE CRÈME, JAMAIS SUR L'OBJET (Arslane, 9/09 : « les infos directement

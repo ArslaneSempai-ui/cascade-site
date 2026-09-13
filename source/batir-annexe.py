@@ -28,7 +28,7 @@ spec = importlib.util.spec_from_file_location("bn", BASE / "batir-nav.py")
 bn = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(bn)
 
-from outil import SCEAU_ROUTING, barre_site, CSS_BARRE_SITE
+from outil import SCEAU_ROUTING, barre_site, CSS_BARRE_SITE, pied_promesse
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 
 # ── les six annexes : une lettre, une source, un objet, une sortie ───────────
@@ -364,8 +364,7 @@ def pied_html(courante):
         + f'>{n}</a>' for h, n in liens)
     return (f'<footer class="pied"><div class="colonne">\n'
             f'  <div class="pied-h">\n'
-            f'    <p class="pied-p">Your records stay on your machine, and '
-            f'<em>no data leaves the network.</em></p>\n'
+            f'    {pied_promesse(sur_privacy=courante == "ANNEXE-PRIVACY.html")}\n'
             f'    <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>\n'
             f'  </div>\n'
             f'  <nav class="annexes" aria-label="Appendices">{rang}</nav>\n'
@@ -593,8 +592,7 @@ def pied_outil(o, pages, courante, sceau):
         + f'>{n}</a>' for h, n in liens)
     return (f'<footer class="pied"><div class="colonne">\n'
             f'  <div class="pied-h">\n'
-            f'    <p class="pied-p">Your records stay on your machine, and '
-            f'<em>no data leaves the network.</em></p>\n'
+            f'    {pied_promesse(o["prefixe_racine"])}\n'
             f'    <span class="sceau">content hash {sceau} &#183; measured, then frozen</span>\n'
             f'  </div>\n'
             f'  <nav class="annexes" aria-label="Appendices">{rang}</nav>\n'

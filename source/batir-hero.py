@@ -47,7 +47,7 @@ if not _m:
     sys.exit("le compte de tests est introuvable dans le README de l'outil : refus de le recopier")
 N_TESTS, N_FICHIERS = _m.group(1), _m.group(2)
 
-from outil import SCEAU_ROUTING, etiquette_sur_objet, SEUIL_OBJET, etiquettes_qui_se_recouvrent, barre_site, CSS_BARRE_SITE, OUTILS
+from outil import SCEAU_ROUTING, etiquette_sur_objet, SEUIL_OBJET, etiquettes_qui_se_recouvrent, barre_site, CSS_BARRE_SITE, OUTILS, pied_promesse
 from instrument_carte import (CSS_AFFICHE, affiche_html, CSS_ACCUEIL, eventail_html, methode_html,   # l'affiche (10/09), l'accueil (10/09)
                               _svg_courbes, _svg_paliers, _svg_horloge)
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
@@ -1242,7 +1242,7 @@ PAGE = f'''<!doctype html><html lang="en">
 </main>
 
 <footer class="pied"><div class="colonne">
-  <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
+  {pied_promesse()}
   <span class="sceau">120 files &#183; {N_TESTS} tests &#183; content hash {SCEAU}</span>
 </div></footer>
 
@@ -1400,7 +1400,11 @@ def batir_accueil():
     </div>
   </div>
   <nav class="methode-liens" aria-label="The house">
-    <a href="ENGAGEMENT.html">Pricing, in figures</a>
+    <!-- « Pricing, in figures » était la faute nommée par la relecture du 8/09 (règle 7),
+         et le motif 8 ne la voyait pas : il ne regarde que lien-fin / affiche-tarif /
+         ouvrir, et cette rangée n'a pas de classe. Ses cinq voisins sont des NOMS de
+         pages, pas des actions : le nom est « Pricing », comme dans la barre du haut. -->
+    <a href="ENGAGEMENT.html">Pricing</a>
     <a href="ANNEXE-TERMS.html">Terms of engagement</a>
     <a href="ANNEXE-PRIVACY.html">Privacy</a>
     <a href="ANNEXE-ACCESSIBILITE.html">Accessibility</a>
@@ -1412,7 +1416,7 @@ def batir_accueil():
 </main>
 
 <footer class="pied"><div class="colonne">
-  <p class="pied-p">Your records stay on your machine, and <em>no data leaves the network.</em></p>
+  {pied_promesse()}
   <span class="sceau">measured, then frozen</span>
 </div></footer>
 
@@ -1520,12 +1524,12 @@ SPECS = {
         alt_plateau="The sieve tower",
         palette=PALETTE_RUBIS, nuit=NUIT_RUBIS,
         titre="Cascade Screening &#183; sanctions screening audit",
-        og_titre="Cascade Screening: which matcher suffices, at which threshold",
-        description="A sanctions-screening audit: which name matcher suffices, at which threshold, "
+        og_titre="Cascade Screening: which name matcher, and where to set the bar",
+        description="A sanctions-screening audit: which name matcher, and where you set the bar, "
                     "measured on your own alert history.",
         app="Cascade Screening",
-        app_desc="A sanctions-screening audit: which name matcher suffices, "
-                 "at which threshold, measured on your own alert history. ",
+        app_desc="A sanctions-screening audit: which name matcher, and where you set "
+                 "the bar, measured on your own alert history. ",
         offre="Thirty-day evaluation on your own alert history, granted in the public licence.",
         h1="See what your screening catches, and what it flags wrongly.",
         lede="Screening thresholds are set once and rarely re-measured.<br>\n    This compares names seven ways, at every threshold, over alerts your analysts already closed.",
@@ -1544,7 +1548,6 @@ SPECS = {
         table_ligne="matcher",
         table_caption="Recall over false alerts of each matcher at each threshold, on the written pairs",
         table_note_unites='Measured on {nMatch} matching pairs and {nDifferent} near-matches\n      we wrote',
-        pied="Your records stay on your machine, and <em>no data leaves the network.</em>",
     ),
     "monitoring": dict(
         lot="L5-textes",
@@ -1552,12 +1555,12 @@ SPECS = {
         alt_plateau="The surveillance rack",
         palette=PALETTE_LAPIS, nuit=NUIT_LAPIS,
         titre="Cascade Monitoring &#183; transaction monitoring audit",
-        og_titre="Cascade Monitoring: which scenario suffices, at which threshold",
-        description="A transaction-monitoring audit: which scenario suffices, at which threshold, "
-                    "measured on your own dispositioned alerts.",
+        og_titre="Cascade Monitoring: which scenario earns its alerts",
+        description="A transaction-monitoring audit: which scenario earns its alerts, "
+                    "measured on the cases your analysts already closed.",
         app="Cascade Monitoring",
-        app_desc="A transaction-monitoring audit: which scenario suffices, "
-                 "at which threshold, measured on your own dispositioned alerts. ",
+        app_desc="A transaction-monitoring audit: which scenario earns its alerts, "
+                 "measured on the cases your analysts already closed. ",
         offre="Thirty-day evaluation on your own dispositioned alerts, granted in the public licence.",
         h1="See what your scenarios catch, and what they flag wrongly.",
         lede="Monitoring scenarios are tuned at go-live and rarely re-measured.<br>\n    This runs seven of them at every threshold, over alerts your analysts already closed.",
@@ -1577,7 +1580,6 @@ SPECS = {
         table_ligne="scenario",
         table_caption="Recall over false alerts of each scenario at each threshold, on the written cases",
         table_note_unites='Measured on {nMatch} suspicious cases and {nDifferent} benign cases\n      we wrote',
-        pied="Your records stay on your machine, and <em>no data leaves the network.</em>",
     ),
     "scoring": dict(
         lot="A-L5-textes",
@@ -1585,12 +1587,12 @@ SPECS = {
         alt_plateau="The shelving of weights",
         palette=PALETTE_AMETHYSTE, nuit=NUIT_AMETHYSTE,
         titre="Cascade Scoring &#183; customer risk rating audit",
-        og_titre="Cascade Scoring: which risk factor suffices, at which threshold",
-        description="A customer risk-rating audit: which risk factor suffices, at which threshold, "
-                    "measured on your own periodic-review outcomes.",
+        og_titre="Cascade Scoring: which risk factors sort your customers",
+        description="A customer risk-rating audit: which risk factors actually sort your "
+                    "customers, measured on your own periodic-review outcomes.",
         app="Cascade Scoring",
-        app_desc="A customer risk-rating audit: which risk factor suffices, "
-                 "at which threshold, measured on your own periodic-review outcomes. ",
+        app_desc="A customer risk-rating audit: which risk factors actually sort your "
+                 "customers, measured on your own periodic-review outcomes. ",
         offre="Thirty-day evaluation on your own review outcomes, granted in the public licence.",
         h1="See which risk factors actually sort your customers.",
         lede="Risk-factor weights usually come from policy.<br>\n    This scores seven factors at every threshold, over the reviews your analysts already decided.",
@@ -1610,7 +1612,6 @@ SPECS = {
         table_ligne="factor",
         table_caption="Recall over false alerts of each risk factor at each threshold, on the written files",
         table_note_unites='Measured on {nMatch} escalated files and {nDifferent} files kept at their\n      rating, all written by us',
-        pied="Your records stay on your machine, and <em>no data leaves the network.</em>",
     ),
     "dossier": dict(
         lot="D3",
@@ -1645,7 +1646,6 @@ SPECS = {
         table_caption="State reached by each question of the chain under the contract&#8217;s five controls, on our public test sets",
         table=_table_dossier,
         refaire=_refaire_dossier,
-        pied="Your records stay on your machine, and <em>no data leaves the network.</em>",
     ),
 }
 
@@ -1955,7 +1955,7 @@ def batir_outil_catalogue(o, spec):
 </main>
 
 <footer class="pied"><div class="colonne">
-  <p class="pied-p">{spec["pied"]}</p>
+  {pied_promesse(o["prefixe_racine"])}
   <span class="sceau">{n_tests_o} tests &#183; content hash {SCEAU_O}</span>
 </div></footer>
 

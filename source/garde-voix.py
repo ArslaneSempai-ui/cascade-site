@@ -188,8 +188,15 @@ def relever(docs, source):
             dire(7, page, ligne, f"« tier » hors des pages Routing : « {texte[:70]} »")
 
     # motifs 2-prose et 3 : à la page
+    # le PIED sort du compte du motif 3 depuis le 13/09, pour la raison qui l'avait déjà
+    # sorti du motif 4 : il est identique sur les 28 pages. Quand Arslane y a mis « Nothing
+    # of yours leaves your machine. », ce seul mot a fait basculer cinq pages qui tenaient,
+    # dont privacy.html — une ANNEXE, que la passe de voix n'a pas le droit de raccourcir.
+    # Une constante partagée qui décide du verdict d'une page ne mesure plus cette page.
+    # Le témoin saine/pied-court.html le prouve : comptée, sa ligne de pied le refuserait.
     for p in pages:
-        du_p = [b for b in blocs if b[0] == p and not b[2].startswith("attribut-") and b[2] != "script"]
+        du_p = [b for b in blocs if b[0] == p and not b[2].startswith("attribut-")
+                and b[2] not in ("script", "pied")]
         prose = [b for b in du_p
                  if not (b[5] in ("titre-finding", "étiquette-3D", "fiche")
                          or est_titre(b[3], b[4], b[5]) or est_etiquette_ou_fiche(b[4], b[5]))]
@@ -247,6 +254,9 @@ def temoin():
        not any(m == 7 and "walks" in quoi and "sieve" in quoi for m, _, _, quoi in fautifs):
         sys.exit("GARDE CASSÉE : la phrase de script plantée (honestly walks…) n'est plus vue "
                  "— la copy du <script> échappe de nouveau à la garde (code 2)")
+    if not (d / "saine" / "pied-court.html").exists():
+        sys.exit("GARDE CASSÉE : la page courte qui prouve l'exemption du pied au motif 3 a "
+                 "disparu — sans elle, rien ne dit que le pied sort encore du compte (code 2)")
     sains, _ = relever(d / "saine", None)
     if sains:
         sys.exit("GARDE CASSÉE : la page saine du témoin déclenche "
