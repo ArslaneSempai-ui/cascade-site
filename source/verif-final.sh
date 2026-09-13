@@ -67,6 +67,10 @@ if [ -z "${DRY:-}" ]; then
   [ $code = 0 ] || echo "  → le détail vit dans $SORTIE/banc.log"
 fi
 
+echo "=== le pli du rideau (temoin-rideau.mjs) $(date +%H:%M:%S)"
+# on atterrit sur le rideau : ses cinq boutons doivent être dans l'écran à 900 et à 700 de haut (13/09)
+node $SRC/temoin-rideau.mjs "http://127.0.0.1:$PORT/routing/index.html#tools" || { echo "REFUS : les boutons du rideau passent sous le pli" ; exit 6 ; }
+
 echo "=== captures natives $(date +%H:%M:%S)"
 sc() { echo "(()=>{const s=document.querySelector('.colle').parentElement; window.scrollTo(0, s.offsetTop + $1*s.offsetHeight)})()"; }
 cap() { node $CAP "http://127.0.0.1:$PORT/$1" $2 $3 "$4" "$SORTIE/$5" 2>&1 | tail -1 | grep -q "$SORTIE" || echo "  capture indéterminée : $5"; }
