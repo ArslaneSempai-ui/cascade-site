@@ -1218,9 +1218,9 @@ PAGE = f'''<!doctype html><html lang="en">
   {affiche_html("paliers", LANDING, [], "INSTRUMENT.html", "Cascade &#183; Routing",
                 "See every field, tier, accuracy and cost, live from our public test set. Set the budget and watch the tool choose.",
                 "rendus/robot-vert-regarde.webp",
-                note=f"Measured on {N_SOCLE:,} held-out records for the rules, small and large tiers, and {N_GEN} for the generative tiers. "
-                     f"Human accuracy is assumed at {qte(HUMAIN)} % until you measure your own reviewers. "
-                     "Rings mark the published routing.", tarif="ENGAGEMENT.html")}
+                note=f"Measured on {N_SOCLE:,} held-out records for the rules, small and large tiers, and {N_GEN} for the generative tiers, "
+                     "with a ring on the published routing of each field. "
+                     f"Human accuracy is assumed at {qte(HUMAIN)} % until you measure your own reviewers.", tarif="ENGAGEMENT.html")}
 </div></section>
 
 <div class="couture" aria-hidden="true"><div class="colonne">
@@ -1733,16 +1733,15 @@ def _note_outil(spec, releve, findings):
         nMatch=auth.get("nMatch", auth.get("nSuspicious", auth.get("nEscalated"))),
         nDifferent=auth.get("nDifferent", auth.get("nBenign", auth.get("nMaintained"))))
     champ_cite = src.get("champ", "taux")
+    # deux phrases au plus, sur toute la largeur de l'affiche (Arslane, 13/09)
     if palier_f and champ_cite == "taux":
-        choix = f"A ring marks the cell the tool picks by default, {palier_f} at {seuil_f}."
+        choix = f"with a ring on the cell the tool picks by default, {palier_f} at {seuil_f}"
     elif palier_f:
-        choix = (f"The marked cell, {palier_f} at {seuil_f}, comes closest to the 90% floor we set. "
-                 "None reaches it, so the tool picks none on these cases.")
+        choix = f"and the marked cell, {palier_f} at {seuil_f}, comes closest to the 90% floor we set, which none reaches"
     else:
-        choix = "No setting reaches the 90% floor we set, so the tool picks none."
-    return (f"{unites}: what each {spec.get('table_ligne_nom', spec['table_ligne'])} catches at each "
-            f"threshold. {choix} Generated {_NOM_JEU[spec['table_ligne']]} are counted on their own, "
-            f"and the live instrument shows them.")
+        choix = "and no setting reaches the 90% floor we set"
+    return (f"{unites}, at every threshold, {choix}. "
+            f"Generated {_NOM_JEU[spec['table_ligne']]} are counted on their own, and the live instrument shows them.")
 
 
 def _table_outil(spec, releve, findings):

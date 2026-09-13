@@ -452,8 +452,11 @@ def pied_promesse(prefixe="", sur_privacy=False):
     Sur la page Privacy elle-même, la phrase reste seule : le renvoi mènerait ici."""
     if sur_privacy:
         return f'<p class="pied-p">{PIED_PROMESSE}</p>'
+    # le renvoi parle la langue des liens d'action de la maison (mono, capitales, filet), pas
+    # l'italique souligné dans la phrase (Arslane, 13/09 : « c'est dégueulasse ») ; sa règle
+    # vit dans CSS_BARRE_SITE, que les sept bâtisseurs incluent
     return (f'<p class="pied-p">{PIED_PROMESSE} '
-            f'<a href="{prefixe}ANNEXE-PRIVACY.html"><em>See how we prove it</em> '
+            f'<a class="pied-preuve" href="{prefixe}ANNEXE-PRIVACY.html">See how we prove it '
             f'<span aria-hidden="true">&#8594;</span></a></p>')
 
 
@@ -626,6 +629,13 @@ CSS_BARRE_SITE = '''
   /* posée (beige), la barre gardait le lien courant en clair : illisible (relecture du 8/09).
      Il prend la couleur de titre de SA page : vert routing, rubis screening, lapis, améthyste, onyx. */
   .barre.posee nav a[aria-current]{color:var(--vert-titre,#23543f)}
+  /* the footer's pointer to its proof, in the house's action-link language (mono, capitals, a
+     hairline), never an italic underlined clause inside the sentence (Arslane, 13/09) */
+  .pied-preuve{display:inline-block;margin-left:22px;font:400 11.5px/1 var(--mono,ui-monospace,monospace);letter-spacing:.14em;
+    text-transform:uppercase;color:inherit;opacity:.78;text-decoration:none;white-space:nowrap;vertical-align:baseline;
+    padding-bottom:5px;border-bottom:1px solid color-mix(in srgb,currentColor 40%,transparent);transition:opacity .2s,border-color .2s}
+  .pied-preuve:hover,.pied-preuve:focus-visible{opacity:1;border-color:currentColor}
+  @media (max-width:700px){.pied-preuve{display:block;margin:10px 0 0;width:max-content}}
   /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
      colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
   @media (max-width:1080px){

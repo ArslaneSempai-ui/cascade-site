@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-N4+e+dTvzd+4J9rAm5TELANOexdf64tvPHPVSl926Aw='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-TH6Arr8Qvl1YyH0FPJrv9WemQy3KXu1Vnl79rSlIYqc='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-5j9SHT+GtCsN8d9yBw6xdfQVXmZkPf3YcyMmEJFmwgw='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-TH6Arr8Qvl1YyH0FPJrv9WemQy3KXu1Vnl79rSlIYqc='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Monitoring &#183; security</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/monitoring/security.html">
@@ -227,6 +227,13 @@
   /* posée (beige), la barre gardait le lien courant en clair : illisible (relecture du 8/09).
      Il prend la couleur de titre de SA page : vert routing, rubis screening, lapis, améthyste, onyx. */
   .barre.posee nav a[aria-current]{color:var(--vert-titre,#23543f)}
+  /* the footer's pointer to its proof, in the house's action-link language (mono, capitals, a
+     hairline), never an italic underlined clause inside the sentence (Arslane, 13/09) */
+  .pied-preuve{display:inline-block;margin-left:22px;font:400 11.5px/1 var(--mono,ui-monospace,monospace);letter-spacing:.14em;
+    text-transform:uppercase;color:inherit;opacity:.78;text-decoration:none;white-space:nowrap;vertical-align:baseline;
+    padding-bottom:5px;border-bottom:1px solid color-mix(in srgb,currentColor 40%,transparent);transition:opacity .2s,border-color .2s}
+  .pied-preuve:hover,.pied-preuve:focus-visible{opacity:1;border-color:currentColor}
+  @media (max-width:700px){.pied-preuve{display:block;margin:10px 0 0;width:max-content}}
   /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
      colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
   @media (max-width:1080px){
@@ -263,7 +270,7 @@
 
 <footer class="pied"><div class="colonne">
   <div class="pied-h">
-    <p class="pied-p">Nothing of yours leaves your machine. <a href="../privacy.html"><em>See how we prove it</em> <span aria-hidden="true">&#8594;</span></a></p>
+    <p class="pied-p">Nothing of yours leaves your machine. <a class="pied-preuve" href="../privacy.html">See how we prove it <span aria-hidden="true">&#8594;</span></a></p>
     <span class="sceau">content hash 5e2a96e22fa0b59c &#183; measured, then frozen</span>
   </div>
   <nav class="annexes" aria-label="Appendices"><a href="method.html">Method and reproducibility</a><a href="security.html" aria-current="true">Security and data handling</a><a href="../terms.html">Terms of engagement</a><a href="../privacy.html">Privacy</a><a href="../accessibility.html">Accessibility</a><a href="../contact.html">Contact</a><a href="../colophon.html">The fine print</a></nav>

@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-6kbo0QsazdHddeXrNnBV31mImYTlq63h0k7y5Mz44ak=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-be2yXVTaVBWSNuCq6PvwG3InbXZVyeg1IbWxO4Yozy8='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-zfm4sWOk7ofnQ7J0rfrNm6k/X6Cjy2jaOKuSPn9Nn/o=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-be2yXVTaVBWSNuCq6PvwG3InbXZVyeg1IbWxO4Yozy8='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Scoring &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/scoring/instrument.html">
@@ -302,6 +302,13 @@
   /* posée (beige), la barre gardait le lien courant en clair : illisible (relecture du 8/09).
      Il prend la couleur de titre de SA page : vert routing, rubis screening, lapis, améthyste, onyx. */
   .barre.posee nav a[aria-current]{color:var(--vert-titre,#23543f)}
+  /* the footer's pointer to its proof, in the house's action-link language (mono, capitals, a
+     hairline), never an italic underlined clause inside the sentence (Arslane, 13/09) */
+  .pied-preuve{display:inline-block;margin-left:22px;font:400 11.5px/1 var(--mono,ui-monospace,monospace);letter-spacing:.14em;
+    text-transform:uppercase;color:inherit;opacity:.78;text-decoration:none;white-space:nowrap;vertical-align:baseline;
+    padding-bottom:5px;border-bottom:1px solid color-mix(in srgb,currentColor 40%,transparent);transition:opacity .2s,border-color .2s}
+  .pied-preuve:hover,.pied-preuve:focus-visible{opacity:1;border-color:currentColor}
+  @media (max-width:700px){.pied-preuve{display:block;margin:10px 0 0;width:max-content}}
   /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
      colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
   @media (max-width:1080px){
@@ -432,7 +439,7 @@
 
 <footer class="pied">
   <div class="colonne">
-    <p class="pied-p">Nothing of yours leaves your machine. <a href="../privacy.html"><em>See how we prove it</em> <span aria-hidden="true">&#8594;</span></a></p>
+    <p class="pied-p">Nothing of yours leaves your machine. <a class="pied-preuve" href="../privacy.html">See how we prove it <span aria-hidden="true">&#8594;</span></a></p>
     <span class="sceau">content hash 3cee43edfa7c0064 &#183; measured, then frozen &#183; <a href="https://github.com/ArslaneSempai-ui/cascade-scoring">repository</a></span>
   </div>
 </footer>

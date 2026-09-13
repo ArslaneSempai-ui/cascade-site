@@ -578,7 +578,7 @@ CSS_AFFICHE = '''
   .affiche-carte .nom{fill:var(--sur-vert-pale);font-size:11px}
   .affiche-carte .nom.fort{fill:var(--sur-vert)}
   .affiche-carte .pierre{fill:var(--vert-vif);stroke:var(--vert-clair);stroke-width:2}
-  .affiche-col .t-note{margin:18px 4px 0;max-width:80ch}
+  .affiche-col .t-note{margin:18px 4px 0;max-width:none}   /* toute la largeur de l'affiche, jamais un bloc à gauche (Arslane, 13/09) */
   .affiche-texte{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
   .affiche-texte .ouvrir-t{font-size:clamp(24px,2.6vw,36px)}
   /* LE BOUTON DE L'AFFICHE (Arslane, 10/09 : « juste la flèche c'est trop simple » ; 13/09 : un
