@@ -331,9 +331,9 @@ ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
 # la phrase suit l'état du registre : des parenthèses vides « () » se sont affichées
 # le soir où le septième palier est arrivé (relu sur capture)
 PHRASE_ABSENTS = (
-    f"a scenario missing from the registry ({ABSENTS}) shows as a labelled blank"
+    f"a scenario missing from that list ({ABSENTS}) shows as a labelled blank"
     if ABSENTS else
-    "Every scenario in the registry appears in the record, and one that is missing shows as a "
+    "Every scenario the tool ships with appears in our test set, and a missing one shows as a "
     "labelled blank")
 
 PAGE = f'''<!doctype html><html lang="en">
@@ -405,11 +405,11 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="basse" data-commun="instrument">
   <div class="colonne basse-grille">
     <div class="plis">
-      <details class="pli"><summary>What this rests on</summary>
+      <details class="pli"><summary>What this rests on, for your IT auditor</summary>
     <ul>
-      <li><b>Our public test set.</b> releve-public.json in the repository, content hash
+      <li><b>Our public test set.</b> releve-public.json in the repository, with a content hash (a checksum) of
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
-        on {D["provenance"]["date"]}. Before this page is built, the extractor checks
+        on {D["provenance"]["date"]}. Before the page is built, that script checks
         that hash and recomputes every figure. If one of them disagrees, nothing is
         published.</li>
       <li><b>The cases we wrote.</b> The labelled half is written by hand: typologies of suspicion
@@ -420,22 +420,21 @@ PAGE = f'''<!doctype html><html lang="en">
         time, and kept apart from the written half: the toggle above switches the whole
         grid, and the two stay separate.</li>
       <li data-commun="instrument"><b>How the tool picks.</b> The slider sets the share of true cases you want caught.
-        A setting counts only when its worst case clears it, and the tool then takes the
-        fewest false alerts.</li>
+        A setting counts only if the low end of its interval clears that share. The tool then takes the fewest false alerts.</li>
     </ul>
       </details>
       <details class="pli"><summary>What this page cannot do</summary>
     <ul>
-      <li><b>Your data.</b> This page cannot read it: no network requests leave it
-        (connect-src &#8216;none&#8217;), no third-party resource is loaded, and there is no input
+      <li><b>Your data.</b> This page cannot read it: no network request leaves it
+        (the page&#8217;s security policy forbids them), nothing is loaded from elsewhere, and there is no input
         field to paste an alert into.</li>
-      <li><b>A rate without the number of cases behind it.</b> Every cell shows both, with its 95&nbsp;% interval. {PHRASE_ABSENTS}.</li>
+      <li><b>A rate without the number of cases behind it.</b> Each cell shows both, with its 95&nbsp;% interval. {PHRASE_ABSENTS}.</li>
     </ul>
       </details>
     </div>
     <aside class="clone-col">
     <h2>Measure your own alert history</h2>
-    <p>The instrument shows our record. The measurement runs at your desk, and no data
+    <p>The instrument shows our record. The measurement runs on your machine, and no data
       about your file leaves your machine.</p>
     <span class="clone-t">The three commands, exactly as they run</span>
     <div class="clone" role="group" aria-label="The three commands that measure your own alert history">

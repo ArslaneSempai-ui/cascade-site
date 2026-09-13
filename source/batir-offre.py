@@ -189,9 +189,9 @@ JS = r'''<script>
     document.querySelectorAll('.pap').forEach(p => { const d = parseFloat(p.style.getPropertyValue('--d')); p.classList.toggle('vu', u >= d - 0.5); });
     const pl = document.querySelector('.anneau .plein'); if (pl) pl.style.strokeDashoffset = 100.5 * (1 - Math.min(30, j) / 30);
     let s;
-    if (j <= 30) s = '<b>Day ' + j + ' of the thirty.</b> The counter runs at your desk and results stay internal. No data has reached us, and nothing is owed.';
+    if (j <= 30) s = '<b>Day ' + j + ' of the thirty.</b> The counter runs on your machine and results stay internal. No data has reached us, and nothing is owed.';
     else if (j < 45) s = '<b>Day ' + j + '.</b> The thirty days have run. Nothing is owed until you sign; your legal team can read the papers now.';
-    else if (j < 105) s = '<b>Day ' + j + '.</b> Signed ' + (j - 45 === 0 ? 'today' : (j - 45) + ' days ago') + '. Campaign: the invoice (' + fmt(CAMP) + ', fixed) is settled and the sealed report is at your desk. Licence: 30% paid (' + fmt(LIC * PART) + '); the balance (' + fmt(LIC * (1 - PART)) + ') falls due in ' + (105 - j) + ' days.';
+    else if (j < 105) s = '<b>Day ' + j + '.</b> Signed ' + (j - 45 === 0 ? 'today' : (j - 45) + ' days ago') + '. Campaign: the invoice (' + fmt(CAMP) + ', fixed) is settled and the sealed report is on your machine. Licence: 30% paid (' + fmt(LIC * PART) + '); the balance (' + fmt(LIC * (1 - PART)) + ') falls due in ' + (105 - j) + ' days.';
     else if (j < 365) s = '<b>Day ' + j + '.</b> The balance is settled. The licence year runs on all five instruments, updates included, with recertification on fresh records over the period you declare.';
     else s = '<b>The twelfth month.</b> Renewal capped at the lower of CPI-U and 5% above this year.';
     etat.innerHTML = s; };
@@ -244,15 +244,15 @@ PAGE = f'''<!doctype html><html lang="en">
       <img class="col-robot" src="rendus/robot-salut.webp" alt="">
       <p class="c-t">the evaluation</p>
       <p class="c-prix">$0<small> &#183; 30 days</small></p>
-      <p class="c-qui">A thirty-day trial on your own records. Nothing to sign.</p>
+      <p class="c-qui">You get thirty days on your own records, and you sign nothing.</p>
       <ul class="c-liste">
         <li>The whole tool, <b>on your own records</b></li>
         <li>Every Cascade tool: <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b>, <b>Scoring</b>, and the <b>Dossier</b> that reads them</li>
         <li>Your thirty days start the first time you run the tool. Downloading it does not start the clock</li>
-        <li>Results stay internal. No production use</li>
+        <li>Results stay internal, and you may not use them in live operations</li>
       </ul>
       <a class="cta" href="{DEPOT_URL}"><span class="b">Clone and run <span class="fl" aria-hidden="true">&#8594;</span></span></a>
-      <p class="c-fin">The public licence grants it</p>
+      <p class="c-fin">The public licence already grants these thirty days</p>
     </div>
     <div class="col">
       <img class="col-robot" src="rendus/robot-penche.webp" alt="">
@@ -261,7 +261,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <p class="c-qui">For the file your reviewers will open. One campaign, one deliverable.</p>
       <p class="c-plus">everything in the evaluation, plus</p>
       <ul class="c-liste">
-        <li><b>What suffices, tool by tool</b>: field by field on Routing, matcher and threshold on Screening, scenario and threshold on Monitoring, factor and threshold on Scoring; the Dossier binds the four</li>
+        <li><b>What each tool settles</b>: the model tier for each field on Routing, the matcher and threshold on Screening, the scenario and threshold on Monitoring, the risk factor and threshold on Scoring. The Dossier reports on all four.</li>
         <li>Every rate with its interval. No rate quoted under twenty cases</li>
         <li>A <b>signed report</b> your audit team can check on its own</li>
         <li>Your data stays with you, and we do not read it</li>
@@ -278,7 +278,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <ul class="c-liste">
         <li>Commercial use for your own business</li>
         <li>One licence covers <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b> and <b>Scoring</b></li>
-        <li>And the <b>Dossier</b>: the piece across tools your regulator reads and can check itself</li>
+        <li>And the <b>Dossier</b>: the report your regulator can check</li>
         <li>The <b>licensed component</b>, which is not in the public repository</li>
         <li>Updates included for each paid term</li>
         <li><b>Re-measure</b> on fresh records on the schedule you set, and the report is signed again</li>
@@ -305,7 +305,7 @@ PAGE = f'''<!doctype html><html lang="en">
         <div class="voie" style="--t:1" data-l="camp"><span class="v-nom">The campaign</span>
           <i class="barre-v pointille" style="--a:45;--b:76"></i>
           <span class="pap" style="--d:45;--tx:0"><span>engagement letter</span><b>$12,000 fixed</b></span>
-          <span class="pap" style="--d:76;--tx:12px"><span>signed report</span><b>at your desk, yours to check</b></span>
+          <span class="pap" style="--d:76;--tx:12px"><span>signed report</span><b>on your machine, yours to check</b></span>
         </div>
         <div class="voie" style="--t:2" data-l="lic"><span class="v-nom">The licence</span>
           <i class="barre-v" style="--a:45;--b:150"></i>
@@ -322,10 +322,10 @@ PAGE = f'''<!doctype html><html lang="en">
       <div class="curseur" id="curseur" role="slider" aria-valuemin="0" aria-valuemax="365" aria-valuenow="12" tabindex="0" aria-label="Day"><span id="jour">Day 12</span></div>
     </div>
   </div>
-    <p class="etat" id="etat">Thirty days on your records before anything is signed. What you buy afterwards is delivered at your desk, and you can check it there.</p>
+    <p class="etat" id="etat">Thirty days on your records before anything is signed. What you buy afterwards is delivered on your machine, and you can check it there.</p>
     <div class="commande-jour"><span>drag the day, or</span><button type="button" id="courir">show the whole year</button></div>
   </div>
-  <p class="note-fin">One person answers, at <a href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a>. Nothing is signed during the thirty days, and your vendor onboarding can run in the meantime. <b>What none of this certifies:</b> the report proves what was measured and no more, you may not publish the results of an engagement outside your own bank, and the full terms are on <a href="ANNEXE-TERMS.html">the terms page</a>, in the same words as the licence.</p>
+  <p class="note-fin">One person answers, at <a href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a>. Nothing is signed during the thirty days, and your vendor onboarding can run in the meantime. <b>What none of this certifies:</b> the report proves what was measured and no more. You may not publish the results of an engagement outside your own bank. The full terms are on <a href="ANNEXE-TERMS.html">the terms page</a>, in the same words as the licence.</p>
 </div></section>
 </main>
 

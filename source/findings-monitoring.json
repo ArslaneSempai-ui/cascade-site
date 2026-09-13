@@ -135,7 +135,7 @@
       "leg_a": "recall 95.2% for amount at 0.50 on 42 cases written, interval 84% to 99%",
       "b": "100%",
       "leg_b": "recall 100% at the same cell on 126 cases generated, interval 97% to 100%",
-      "cote": "measured apart",
+      "cote": "kept separate",
       "source": {
         "a": {
           "table": "authored",
@@ -166,16 +166,16 @@
           "generated cases: recall 100%"
         ]
       ],
-      "rail": "Generated cases, measured apart from the written ones"
+      "rail": "Generated cases, kept separate from the written ones"
     },
     {
       "num": "05",
       "titre": "Measure the whole grid on your own alert history.",
-      "phrase": "Every rate here comes from our public test set: 42 cases marked suspicious and 42 cases marked benign, seven per typology, with 126 cases generated of each. Two CSV files from your systems, your dispositioned alerts and their transactions, rerun the grid, and the report lands next to them.",
+      "phrase": "Every rate here comes from our public test set: 42 cases marked suspicious and 42 cases marked benign, seven per typology, and another 126 cases of each kind, generated. Two CSV files from your systems, your dispositioned alerts and their transactions, rerun the grid, and the report is written next to them.",
       "a": "42 cases",
       "leg_a": "42 cases suspicious and 42 cases benign, written by us, seven per typology",
       "b": "126 cases",
-      "leg_b": "126 cases of each, generated under a seed and measured apart",
+      "leg_b": "another 126 cases of each kind, generated under a seed, and kept separate",
       "cote": "your own figures",
       "source": {
         "a": {

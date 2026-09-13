@@ -5,9 +5,9 @@
     {
       "num": "01",
       "titre": "Exact matching raises no false alert and finds few confirmed matches.",
-      "phrase": "Exact matching, after normalisation, raises no false alert on the 60 pairs of near-matches, and finds 21.7% of the confirmed matches.",
+      "phrase": "The tool keeps the settings that catch at least 90% of true matches, then takes the fewest false alerts. Exact matching catches 21.7% and raises no false alert on the 60 pairs of near-matches.",
       "a": "21.7%",
-      "leg_a": "recall 21.7% on 60 pairs of confirmed matches, interval 13% to 34%, at any threshold",
+      "leg_a": "recall, the share of true matches found: 21.7% on 60 pairs of confirmed matches, interval 13% to 34%",
       "b": "0%",
       "leg_b": "false alerts 0% on 60 pairs of near-matches, interval 0% to 6%",
       "cote": "recall 21.7%",
@@ -86,8 +86,8 @@
     },
     {
       "num": "03",
-      "titre": "The best trade-off keeps 98.3% recall at 76.7% false alerts.",
-      "phrase": "The tool keeps the settings that catch at least 90% of true matches, then picks the fewest false alerts. Across every matcher and threshold, the embedding included, that is jaro-winkler at 0.56: 98.3% caught, 76.7% flagged wrongly.",
+      "titre": "Catching almost every true match costs a great many false alerts.",
+      "phrase": "This setting finds 98.3% of the true matches. It also flags 76.7% of the near-matches, which were written to be hard to tell apart. Your own alerts will give your own rate.",
       "a": "98.3%",
       "leg_a": "recall 98.3% for jaro-winkler at 0.56, interval 91% to 100%, 60 pairs of matches",
       "b": "76.7%",
@@ -123,17 +123,17 @@
           "that cell: false alerts 76.7%"
         ]
       ],
-      "rail": "Best trade-off: 98.3% recall, 76.7% false alerts"
+      "rail": "Best setting: catches 98.3%, flags 76.7% wrongly"
     },
     {
       "num": "04",
       "titre": "The best cell scores 17.2% false alerts on generated pairs against 76.7% on written pairs.",
-      "phrase": "The same cell reads 76.7% false alerts on the 60 pairs of near-matches we wrote and 17.2% on the 360 pairs a program generated. The generated set is easier, so the tool measures it separately and the headline rate does not include it.",
+      "phrase": "The same cell reads 76.7% false alerts on the 60 pairs of near-matches we wrote and 17.2% on the 360 pairs we generated. The generated set is easier, so the tool measures it separately and the headline rate does not include it.",
       "a": "76.7%",
       "leg_a": "false alerts 76.7% at the best cell on 60 pairs of near-matches we wrote, interval 65% to 86%",
       "b": "17.2%",
       "leg_b": "false alerts 17.2% at the same cell on 360 pairs of generated near-matches, interval 14% to 21%",
-      "cote": "measured apart",
+      "cote": "kept separate",
       "source": {
         "a": {
           "table": "authored",
@@ -164,16 +164,16 @@
           "generated near-matches: 17.2%"
         ]
       ],
-      "rail": "Generated pairs, measured apart from the written ones"
+      "rail": "Generated pairs, kept separate from the written ones"
     },
     {
       "num": "05",
       "titre": "Measure the whole sweep on your own alert history.",
-      "phrase": "Every rate here comes from our public test set: 60 pairs of confirmed matches and 60 pairs of near-matches, written by us, with 360 pairs generated of each. Run it once on your own alert history and the report lands beside your file.",
+      "phrase": "Every rate here comes from our public test set: 60 pairs of confirmed matches and 60 pairs of near-matches, written by us, and another 360 pairs of each kind, generated. Run it once on your own alert history and the report is written next to your file.",
       "a": "60 pairs",
       "leg_a": "60 pairs of confirmed matches and 60 pairs of near-matches, written by us, behind the rates",
       "b": "360 pairs",
-      "leg_b": "360 pairs of each, generated under a seed and measured apart",
+      "leg_b": "another 360 pairs of each kind, generated under a seed, and kept separate",
       "cote": "your own figures",
       "source": {
         "a": {

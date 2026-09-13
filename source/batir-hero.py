@@ -242,7 +242,7 @@ def menus_html():
         <span class="tuile-fl" aria-hidden="true">&#8594;</span>
       </a>''' for cle, titre, desc, href in MENUS)
     return f'''<nav class="menus" aria-label="Appendices"><div class="colonne">
-      <h2 class="h2">The appendices your reviewers will ask for.</h2>
+      <h2 class="h2">Appendices</h2>
       <div class="grille">{tuiles}</div>
       <div class="rangee-fine">
         <a class="lien-fin" href="ENGAGEMENT.html">See pricing <span aria-hidden="true">&#8594;</span></a>
@@ -1188,7 +1188,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <main>
 <section class="hero">
   <h1 class="h1 entree">See which model tier each field actually needs.</h1>
-  <p class="lede entree">You pay the big model for every field. Most do not need it.<br>
+  <p class="lede entree">Sending every field to the biggest model is the default.<br>
     On our test set, three of the five fields are handled by regular expressions, at no cost.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
@@ -1305,7 +1305,7 @@ def batir_accueil():
         ("02 · SEAL", "Hashed, then frozen",
          ["Each record carries its content hash.", "A page checks it before a figure is shown.", "A record that changed after sealing", "is not used."],
          f"content hash {SCEAU_ROUTING[:8]}… (reader)"),
-        ("03 · RERUN", "On your own files, at your desk",
+        ("03 · RERUN", "On your own files, on your machine",
          ["One command reruns the whole sweep on", "your records. The report is written next", "to your file, and no data leaves the", "network."],
          "3 commands, no account, no upload"),
         ("04 · DOSSIER", "Signed, current, verifiable",
@@ -1528,7 +1528,7 @@ SPECS = {
                  "at which threshold, measured on your own alert history. ",
         offre="Thirty-day evaluation on your own alert history, granted in the public licence.",
         h1="See what your screening catches, and what it flags wrongly.",
-        lede="Nobody can say why your screening threshold sits where it does.<br>\n    Test seven matchers across fifty&#8209;one thresholds on your own alerts. Every rate carries the cases behind it.",
+        lede="Screening thresholds are set once and rarely re-measured.<br>\n    This compares names seven ways, at every threshold, over alerts your analysts already closed.",
         aria_commande="The measurement on your own alert history",
         commandes=["npm ci --ignore-scripts", "npm run measure:yours -- --alerts=your-alerts.csv"],
         note_commande="Your alert history, measured on your machine.",
@@ -1536,9 +1536,9 @@ SPECS = {
         instrument_page="INSTRUMENT-SCREENING.html",
         instrument_eti="Cascade &#183; Screening",
         instrument_sub="Each matcher at each threshold, with what it catches and what it flags wrongly, live from our public test set.",
-        annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
+        annexe_methode=("Method &amp; what is measured", "What the method measures, and what it does not.",
                         "ANNEXE-SCREENING-METHODE.html"),
-        annexe_securite=("Security &amp; data handling", "The lists, the seal, and what never leaves.",
+        annexe_securite=("Security &amp; data handling", "The lists, the checksum, and what stays on your machine.",
                          "ANNEXE-SCREENING-SECURITE.html"),
         icone_prefixe="objet-screening",
         table_ligne="matcher",
@@ -1560,7 +1560,7 @@ SPECS = {
                  "at which threshold, measured on your own dispositioned alerts. ",
         offre="Thirty-day evaluation on your own dispositioned alerts, granted in the public licence.",
         h1="See what your scenarios catch, and what they flag wrongly.",
-        lede="Your scenarios were tuned once, and nobody has re-measured them since.<br>\n    Test seven across fifty&#8209;one thresholds on alerts your analysts already closed. Each rate shows how many cases it rests on.",
+        lede="Monitoring scenarios are tuned at go-live and rarely re-measured.<br>\n    This runs seven of them at every threshold, over alerts your analysts already closed.",
         aria_commande="The measurement on your own dispositioned alerts",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --alerts=your-alerts.csv --transactions=your-transactions.csv"],
@@ -1569,9 +1569,9 @@ SPECS = {
         instrument_page="INSTRUMENT-MONITORING.html",
         instrument_eti="Cascade &#183; Monitoring",
         instrument_sub="Each scenario at each threshold, with what it catches and what it flags wrongly, live from our public test set.",
-        annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
+        annexe_methode=("Method &amp; what is measured", "What the method measures, and what it does not.",
                         "ANNEXE-MONITORING-METHODE.html"),
-        annexe_securite=("Security &amp; data handling", "What is rebuilt, what is assumed, and what never leaves.",
+        annexe_securite=("Security &amp; data handling", "What is rebuilt, what is assumed, and what stays on your machine.",
                          "ANNEXE-MONITORING-SECURITE.html"),
         icone_prefixe="objet-monitoring",
         table_ligne="scenario",
@@ -1593,7 +1593,7 @@ SPECS = {
                  "at which threshold, measured on your own periodic-review outcomes. ",
         offre="Thirty-day evaluation on your own review outcomes, granted in the public licence.",
         h1="See which risk factors actually sort your customers.",
-        lede="Your risk factors carry weights nobody has tested against outcomes.<br>\n    Test seven across fifty&#8209;one thresholds on reviews your analysts already decided. You see how many files each rate rests on.",
+        lede="Risk-factor weights usually come from policy.<br>\n    This scores seven factors at every threshold, over the reviews your analysts already decided.",
         aria_commande="The measurement on your own periodic-review outcomes",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --customers=your-customers.csv --reviews=your-reviews.csv"],
@@ -1602,9 +1602,9 @@ SPECS = {
         instrument_page="INSTRUMENT-SCORING.html",
         instrument_eti="Cascade &#183; Scoring",
         instrument_sub="Each risk factor at each threshold, with what it catches and what it flags wrongly, live from our public test set.",
-        annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
+        annexe_methode=("Method &amp; what is measured", "What the method measures, and what it does not.",
                         "ANNEXE-SCORING-METHODE.html"),
-        annexe_securite=("Security &amp; data handling", "The declared tables, the seal, and what never leaves.",
+        annexe_securite=("Security &amp; data handling", "The tables, the checksum, and what stays on your machine.",
                          "ANNEXE-SCORING-SECURITE.html"),
         icone_prefixe=ICONES_PREFIXE["scoring"],
         table_ligne="factor",
@@ -1638,7 +1638,7 @@ SPECS = {
         instrument_sub="The four questions against the five controls, with states, seals and dates live from our public test set.",
         annexe_methode=("Method &amp; what is verified", "What the five controls hold, and what a gap means.",
                         "ANNEXE-DOSSIER-METHODE.html"),
-        annexe_securite=("Security &amp; data handling", "What is read, what is derived, and what never leaves.",
+        annexe_securite=("Security &amp; data handling", "What is read, what is derived, and what stays on your machine.",
                          "ANNEXE-DOSSIER-SECURITE.html"),
         icone_prefixe=ICONES_PREFIXE["dossier"],
         table_ligne="question",
@@ -1944,7 +1944,7 @@ def batir_outil_catalogue(o, spec):
 </div></div>
 {film_html(o)}
 <nav class="menus" aria-label="Appendices"><div class="colonne">
-  <h2 class="h2">The appendices your reviewers will ask for.</h2>
+  <h2 class="h2">Appendices</h2>
   <div class="grille">{tuiles_html}</div>
   <div class="rangee-fine">
     <a class="lien-fin" href="{lien(o, 'ENGAGEMENT.html')}">See pricing <span aria-hidden="true">&#8594;</span></a>

@@ -135,7 +135,7 @@
       "leg_a": "recall 92.9% for product at 0.50 on 42 files written, interval 81% to 98%",
       "b": "79.4%",
       "leg_b": "recall 79.4% at the same cell on 126 files generated, interval 71% to 86%",
-      "cote": "measured apart",
+      "cote": "kept separate",
       "source": {
         "a": {
           "table": "authored",
@@ -166,16 +166,16 @@
           "generated files: recall 79.4%"
         ]
       ],
-      "rail": "Generated files, measured apart from the written ones"
+      "rail": "Generated files, kept separate from the written ones"
     },
     {
       "num": "05",
       "titre": "Measure the whole grid on your own review outcomes.",
-      "phrase": "Every rate here comes from our public test set: 84 files written, 42 files escalated and 42 files kept at their rating, with 252 files generated. Two CSV files from your systems, your review outcomes and the customer attributes, rerun the grid, and the report lands next to them.",
+      "phrase": "Every rate here comes from our public test set: 84 files written, 42 files escalated and 42 files kept at their rating, with 252 files generated. Two CSV files from your systems, your review outcomes and the customer attributes, rerun the grid, and the report is written next to them.",
       "a": "42 files",
       "leg_a": "84 files written, 42 files escalated and 42 files kept at their rating, seven per typology",
       "b": "126 files",
-      "leg_b": "252 files generated, 126 files escalated and 126 files kept at their rating, measured apart",
+      "leg_b": "252 files generated, 126 files escalated and 126 files kept at their rating, all kept separate",
       "cote": "your own figures",
       "source": {
         "a": {

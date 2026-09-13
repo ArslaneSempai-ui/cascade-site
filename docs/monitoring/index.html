@@ -626,8 +626,8 @@
 <main>
 <section class="hero">
   <h1 class="h1 entree h1-long">See what your scenarios catch, and what they flag wrongly.</h1>
-  <p class="lede entree">Your scenarios were tuned once, and nobody has re-measured them since.<br>
-    Test seven across fifty&#8209;one thresholds on alerts your analysts already closed. Each rate shows how many cases it rests on.</p>
+  <p class="lede entree">Monitoring scenarios are tuned at go-live and rarely re-measured.<br>
+    This runs seven of them at every threshold, over alerts your analysts already closed.</p>
   <div class="commande entree" role="group" aria-label="The measurement on your own dispositioned alerts">
     <code class="ln">git clone https://github.com/ArslaneSempai-ui/cascade-monitoring</code>
     <code class="ln">npm ci --ignore-scripts</code>
@@ -639,11 +639,11 @@
 
 <nav class="rideau" id="tools" aria-label="The instruments">
   <span class="rideau-titre">Cascade &#183; five instruments, one method</span>
-  <a class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" href="../routing/index.html#tools"><span class="p-eti">Routing &#183; identity-field extraction</span><img src="../rendus/robot-salut.webp" alt="" width="855" height="962" decoding="async"><span class="p-h">Which model tier reads each field?</span><span class="p-d">Most fields do not need the biggest model. This tells you which ones do.</span><span class="p-ouvrir">Open Routing <span aria-hidden="true">&#8594;</span></span></a>
-  <a class="pan cote-g" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" href="../screening/index.html#tools"><span class="p-eti">Screening &#183; name matching</span><img src="../rendus/robot-rubis-curieux.webp" alt="" width="1023" height="961" decoding="async"><span class="p-h">Which matcher suffices, at which threshold?</span><span class="p-d">Your threshold came from the vendor. Test seven matchers on your own alert history.</span><span class="p-ouvrir">Open Screening <span aria-hidden="true">&#8594;</span></span></a>
-  <div class="pan cote-g" style="--pan-vif:#4f8ae0;--pan-a:#16213a;--pan-b:#101a30;--pan-c:#0a111f" aria-current="page"><span class="p-eti">Monitoring &#183; transaction monitoring</span><img src="../rendus/robot-lapis-montre.webp" alt="" width="916" height="940" decoding="async"><span class="p-h">Which scenario suffices, at which threshold?</span><span class="p-d">Your scenarios have thresholds nobody re-measured. Test seven on alerts you already closed.</span><span class="p-ouvrir">You are here &#183; Monitoring</span></div>
-  <a class="pan cote-d" style="--pan-vif:#9b6fe0;--pan-a:#241a3a;--pan-b:#1a1230;--pan-c:#100b1f" href="../scoring/index.html#tools"><span class="p-eti">Scoring &#183; risk rating</span><img src="../rendus/robot-amethyste-pese.webp" alt="" width="1061" height="968" decoding="async"><span class="p-h">Which risk factor suffices, at which threshold?</span><span class="p-d">Your risk factors were weighted by habit. Test seven against reviews you already decided.</span><span class="p-ouvrir">Open Scoring <span aria-hidden="true">&#8594;</span></span></a>
-  <a class="pan cote-d" style="--pan-vif:#8a8a96;--pan-a:#121216;--pan-b:#0c0c10;--pan-c:#070709" href="../dossier/index.html#tools"><span class="p-eti">Dossier &#183; the audit dossier</span><img src="../rendus/robot-onyx-tient.webp" alt="" width="926" height="963" decoding="async"><span class="p-h">Is the whole chain measured, signed and current?</span><span class="p-d">Four reports, five checks, one dossier your reviewer can open and verify.</span><span class="p-ouvrir">Open Dossier <span aria-hidden="true">&#8594;</span></span></a>
+  <a class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" href="../routing/index.html#tools"><span class="p-eti">Routing &#183; identity-field extraction</span><img src="../rendus/robot-salut.webp" alt="" width="855" height="962" decoding="async"><span class="p-h">Which model tier reads each field?</span><span class="p-d">A regular expression reads some fields. This shows which ones still need a model.</span><span class="p-ouvrir">Open Routing <span aria-hidden="true">&#8594;</span></span></a>
+  <a class="pan cote-g" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" href="../screening/index.html#tools"><span class="p-eti">Screening &#183; name matching</span><img src="../rendus/robot-rubis-curieux.webp" alt="" width="1023" height="961" decoding="async"><span class="p-h">Which matcher suffices, at which threshold?</span><span class="p-d">Screening thresholds are usually set once and left there. This shows what yours catches.</span><span class="p-ouvrir">Open Screening <span aria-hidden="true">&#8594;</span></span></a>
+  <div class="pan cote-g" style="--pan-vif:#4f8ae0;--pan-a:#16213a;--pan-b:#101a30;--pan-c:#0a111f" aria-current="page"><span class="p-eti">Monitoring &#183; transaction monitoring</span><img src="../rendus/robot-lapis-montre.webp" alt="" width="916" height="940" decoding="async"><span class="p-h">Which scenario suffices, at which threshold?</span><span class="p-d">Monitoring scenarios are tuned at go-live and rarely re-measured. This shows what yours catch.</span><span class="p-ouvrir">You are here &#183; Monitoring</span></div>
+  <a class="pan cote-d" style="--pan-vif:#9b6fe0;--pan-a:#241a3a;--pan-b:#1a1230;--pan-c:#100b1f" href="../scoring/index.html#tools"><span class="p-eti">Scoring &#183; risk rating</span><img src="../rendus/robot-amethyste-pese.webp" alt="" width="1061" height="968" decoding="async"><span class="p-h">Which risk factor suffices, at which threshold?</span><span class="p-d">Risk-factor weights usually come from policy. This shows what yours actually find.</span><span class="p-ouvrir">Open Scoring <span aria-hidden="true">&#8594;</span></span></a>
+  <a class="pan cote-d" style="--pan-vif:#8a8a96;--pan-a:#121216;--pan-b:#0c0c10;--pan-c:#070709" href="../dossier/index.html#tools"><span class="p-eti">Dossier &#183; the audit dossier</span><img src="../rendus/robot-onyx-tient.webp" alt="" width="926" height="963" decoding="async"><span class="p-h">Is the whole chain measured, signed and current?</span><span class="p-d">The Dossier reads the four reports and checks five things on each.</span><span class="p-ouvrir">Open Dossier <span aria-hidden="true">&#8594;</span></span></a>
 </nav>
 
 <section class="sequence" aria-label="The five findings">
@@ -659,8 +659,8 @@
         <span class="j-num">03</span><span class="j-corps"><span class="j-titre">No scenario reaches the 90% floor</span>
         <span class="j-cote">closest 84.2%</span></span></button></li><li><button class="jalon" data-i="3" aria-label="Go to finding 04: The amount scenario scores 100% recall on generated cases against 95.2% on written ones.">
         <img class="j-vig" src="../rendus/etats/rack-04.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
-        <span class="j-num">04</span><span class="j-corps"><span class="j-titre">Generated cases, measured apart from the written ones</span>
-        <span class="j-cote">measured apart</span></span></button></li><li><button class="jalon" data-i="4" aria-label="Go to finding 05: Measure the whole grid on your own alert history.">
+        <span class="j-num">04</span><span class="j-corps"><span class="j-titre">Generated cases, kept separate from the written ones</span>
+        <span class="j-cote">kept separate</span></span></button></li><li><button class="jalon" data-i="4" aria-label="Go to finding 05: Measure the whole grid on your own alert history.">
         <img class="j-vig" src="../rendus/etats/rack-05.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">05</span><span class="j-corps"><span class="j-titre">Your own alert history</span>
         <span class="j-cote">your own figures</span></span></button></li></ul></nav>
@@ -710,7 +710,7 @@
         alt="The surveillance rack, state 04: The amount scenario scores 100% recall on generated cases against 95.2% on written ones." width="1374" height="1120" decoding="async" loading="lazy">
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="232" y1="70" x2="465" y2="320" pathLength="1"/><circle cx="465" cy="320" r="4"/><line x1="980" y1="70" x2="820" y2="395" pathLength="1"/><circle cx="820" cy="395" r="4"/></svg><span class="ap-eti" style="left:16.3%;top:7.0%">written cases: recall 95.2%</span><span class="ap-eti" style="left:69.0%;top:7.0%">generated cases: recall 100%</span>
       <figure class="fiche">
-        <figcaption class="fiche-t"><span>finding 04</span><span class="ft-cote">measured apart</span></figcaption>
+        <figcaption class="fiche-t"><span>finding 04</span><span class="ft-cote">kept separate</span></figcaption>
         <p class="fiche-phrase">The same cell scores 95.2% recall on 42 cases written and 100% on 126 cases generated. The generated set is easier, so the tool measures it separately and the headline rate does not include it.</p>
         <div class="paire">
           <div class="val"><span class="chiffre pale-v">95.2%</span><span class="leg">recall 95.2% for amount at 0.50 on 42 cases written, interval 84% to 99%</span></div>
@@ -724,10 +724,10 @@
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="980" y1="130" x2="1142" y2="550" pathLength="1"/><circle cx="1142" cy="550" r="4"/><line x1="980" y1="820" x2="1084" y2="620" pathLength="1"/><circle cx="1084" cy="620" r="4"/></svg><span class="ap-eti" style="left:69.0%;top:13.0%">84 cases written</span><span class="ap-eti" style="left:69.0%;top:82.0%">252 cases generated</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 05</span><span class="ft-cote">your own figures</span></figcaption>
-        <p class="fiche-phrase">Every rate here comes from our public test set: 42 cases marked suspicious and 42 cases marked benign, seven per typology, with 126 cases generated of each. Two CSV files from your systems, your dispositioned alerts and their transactions, rerun the grid, and the report lands next to them.</p>
+        <p class="fiche-phrase">Every rate here comes from our public test set: 42 cases marked suspicious and 42 cases marked benign, seven per typology, and another 126 cases of each kind, generated. Two CSV files from your systems, your dispositioned alerts and their transactions, rerun the grid, and the report is written next to them.</p>
         <div class="paire">
           <div class="val"><span class="chiffre pale-v">42 cases</span><span class="leg">42 cases suspicious and 42 cases benign, written by us, seven per typology</span></div>
-          <div class="val"><span class="chiffre vert-v">126 cases</span><span class="leg">126 cases of each, generated under a seed and measured apart</span></div>
+          <div class="val"><span class="chiffre vert-v">126 cases</span><span class="leg">another 126 cases of each kind, generated under a seed, and kept separate</span></div>
         </div>
       </figure>
     </div></div>
@@ -768,18 +768,18 @@
 </div></section>
 
 <nav class="menus" aria-label="Appendices"><div class="colonne">
-  <h2 class="h2">The appendices your reviewers will ask for.</h2>
+  <h2 class="h2">Appendices</h2>
   <div class="grille">
       <a class="tuile" href="method.html">
         <span class="tuile-img"><img src="../rendus/etats/objet-monitoring-methode.webp" alt="" width="497" height="408" decoding="async" loading="lazy"></span>
         <span class="tuile-corps"><span class="tuile-t">Method &amp; what is measured</span>
-        <span class="tuile-d">What the method measures, and what it withholds.</span></span>
+        <span class="tuile-d">What the method measures, and what it does not.</span></span>
         <span class="tuile-fl" aria-hidden="true">&#8594;</span>
       </a>
       <a class="tuile" href="security.html">
         <span class="tuile-img"><img src="../rendus/etats/objet-monitoring-securite.webp" alt="" width="373" height="515" decoding="async" loading="lazy"></span>
         <span class="tuile-corps"><span class="tuile-t">Security &amp; data handling</span>
-        <span class="tuile-d">What is rebuilt, what is assumed, and what never leaves.</span></span>
+        <span class="tuile-d">What is rebuilt, what is assumed, and what stays on your machine.</span></span>
         <span class="tuile-fl" aria-hidden="true">&#8594;</span>
       </a>
       <a class="tuile" href="../terms.html">

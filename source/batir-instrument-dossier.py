@@ -361,11 +361,11 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="basse">
   <div class="colonne basse-grille">
     <div class="plis">
-      <details class="pli"><summary>What this rests on</summary>
+      <details class="pli"><summary>What this rests on, for your IT auditor</summary>
     <ul>
-      <li><b>Our public test set.</b> releve-public.json in the repository, content hash
+      <li><b>Our public test set.</b> releve-public.json in the repository, with a content hash (a checksum) of
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
-        on {D["provenance"]["date"]}. The extractor checks that hash first. It then
+        on {D["provenance"]["date"]}. The script that builds this page checks that checksum first. It then
         rebuilds each question&#8217;s state from its own answers, in the order the contract
         sets, and publishes nothing if one line disagrees.</li>
       <li><b>The suite&#8217;s own public test sets.</b> The reports judged here are the public
@@ -382,8 +382,8 @@ PAGE = f'''<!doctype html><html lang="en">
       </details>
       <details class="pli"><summary>What this page cannot do</summary>
     <ul>
-      <li><b>Your data.</b> This page cannot read it: no network requests leave it
-        (connect-src &#8216;none&#8217;), no third-party resource is loaded, and there is no input
+      <li><b>Your data.</b> This page cannot read it: no network request leaves it
+        (the page&#8217;s security policy forbids them), nothing is loaded from elsewhere, and there is no input
         field to paste a report into.</li>
       <li><b>A verdict without its sentence.</b> Each cell opens into the record&#8217;s own
         words: what was checked, on which file, and what the next control still needs.</li>
@@ -393,7 +393,7 @@ PAGE = f'''<!doctype html><html lang="en">
     <aside class="clone-col">
     <h2>Assemble the dossier of your own reports</h2>
     <p>The instrument shows our dossier, over our public test sets. Yours is assembled at home,
-      by the tool, from the signed reports the suite&#8217;s tools left at your desk, and nothing
+      by the tool, from the signed reports the suite&#8217;s tools left on your machine, and nothing
       about them leaves your machine.</p>
     <span class="clone-t">The three commands, exactly as they run</span>
     <div class="clone" role="group" aria-label="The three commands that assemble the dossier of your own reports">

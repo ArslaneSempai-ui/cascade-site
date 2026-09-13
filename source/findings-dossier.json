@@ -170,7 +170,7 @@
    "leg_a": "questions the Dossier answers as one, for the whole suite",
    "b": "90 days",
    "leg_b": "days of the declared validity period it checks freshness against",
-   "cote": "verifiable at your desk",
+   "cote": "verifiable on your machine",
    "source": {
     "a": {
      "cle": "couverture",
