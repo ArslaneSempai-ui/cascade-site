@@ -56,7 +56,7 @@ NUS = re.compile(r"\b(fa|fp)\b")
 OPPOSITION = re.compile(r", not\b|\brather than\b", re.I)
 # un nombre entier « nu » dans une étiquette ou une fiche : ni décimal (0.90 est un
 # seuil), ni suivi d'une unité ou d'un %, ni collé à un mot-unité de la maison
-UNITES = r"(?:%|percent|days?|d\b|files?|pairs?|cases?|words?|tests?|pages?|blocks?|controls?|questions?|ko\b|kb\b|px\b|s\b|ms\b|of\b|×|x\b|matchers?|scenarios?|factors?|tiers?|thresholds?|routings?|seals?|alerts?|escalations?|reviews?|char(?:acter)?s?)"
+UNITES = r"(?:%|percent|days?|d\b|files?|pairs?|cases?|words?|tests?|pages?|blocks?|controls?|questions?|ko\b|kb\b|px\b|s\b|ms\b|of\b|×|x\b|matchers?|scenarios?|factors?|tiers?|thresholds?|routings?|seals?|alerts?|escalations?|reviews?|char(?:acter)?s?|near-?matche?s?|matche?s?|records?|documents?|reports?|fields?|values?)"
 # « finding 01 » et les ordinaux à zéro de tête (01..05) sont des numéros de fiche,
 # pas des mesures sans unité : le motif 6 vise le chiffre qui PRÉTEND mesurer
 # le séparateur de milliers fait partie du nombre : « 16,807 routings » porte son unité, « 16,807 » nu non

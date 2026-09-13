@@ -333,7 +333,7 @@ ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
 PHRASE_ABSENTS = (
     f"a scenario missing from the registry ({ABSENTS}) shows as a labelled blank"
     if ABSENTS else
-    "every scenario in the registry appears in the record, and one that is missing shows as a "
+    "Every scenario in the registry appears in the record, and one that is missing shows as a "
     "labelled blank")
 
 PAGE = f'''<!doctype html><html lang="en">
@@ -372,8 +372,8 @@ PAGE = f'''<!doctype html><html lang="en">
         <div class="tm-corps">
           <p class="tm-l"><span class="ps">$</span> cascade monitor --live<span class="caret" aria-hidden="true"></span></p>
           <div class="regls" role="group" aria-label="Which half of the record">
-            <button class="regl actif" id="m-auth">written cases (authored)</button>
-            <button class="regl" id="m-synth">synthetic variants (declared)</button>
+            <button class="regl actif" id="m-auth">written cases</button>
+            <button class="regl" id="m-synth">generated cases</button>
           </div>
           <p class="tm-sortie" id="g-quoi"></p>
           {carte_html("threshold", "recall", "scenario")}
@@ -416,8 +416,8 @@ PAGE = f'''<!doctype html><html lang="en">
         (structuring, rapid movement, a dormant account that wakes, round-tripping) and benign
         cases (payroll, seasonal trade, loan repayments) that resemble them. The labels ship with the
         cases, debatable ones with their reasons.</li>
-      <li><b>Synthetic variants, kept apart.</b> Generated from the written cases, nature by
-        nature, and kept apart from the authored half: the toggle above switches the whole
+      <li><b>Synthetic variants, kept apart.</b> Generated from the written cases, one kind of change at a
+        time, and kept apart from the written half: the toggle above switches the whole
         grid, and the two stay separate.</li>
       <li data-commun="instrument"><b>How the tool picks.</b> The slider sets the share of true cases you want caught.
         A setting counts only when its worst case clears it, and the tool then takes the

@@ -964,7 +964,7 @@ def film_html(outil):
                   f'<img src="{lien(outil, "rendus/" + outil["robots"][0])}" alt=""></span>')
     return f"""
 <section class="film"><div class="colonne">
-  <h2 class="h2">Watch Cascade {outil["nom"]} in five minutes.</h2>
+  <h2 class="h2">Cascade {outil["nom"]}, the film.</h2>
   <p class="film-duree">The five {outil["nom"]} findings, in order.</p>
   <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film of Cascade {outil["nom"]}, opens on YouTube">
     {visuel}
@@ -1543,7 +1543,7 @@ SPECS = {
         icone_prefixe="objet-screening",
         table_ligne="matcher",
         table_caption="Recall over false alerts of each matcher at each threshold, on the written pairs",
-        table_note_unites='Measured on the {nMatch} written match pairs and {nDifferent} hard\n      negatives',
+        table_note_unites='Measured on {nMatch} matching pairs and {nDifferent} near-matches\n      we wrote',
         pied="Your records stay on your machine, and <em>no data leaves the network.</em>",
     ),
     "monitoring": dict(
@@ -1576,7 +1576,7 @@ SPECS = {
         icone_prefixe="objet-monitoring",
         table_ligne="scenario",
         table_caption="Recall over false alerts of each scenario at each threshold, on the written cases",
-        table_note_unites='Measured on the {nMatch} written suspicious cases and {nDifferent} benign\n      look&#8209;alikes',
+        table_note_unites='Measured on {nMatch} suspicious cases and {nDifferent} benign cases\n      we wrote',
         pied="Your records stay on your machine, and <em>no data leaves the network.</em>",
     ),
     "scoring": dict(
@@ -1609,7 +1609,7 @@ SPECS = {
         icone_prefixe=ICONES_PREFIXE["scoring"],
         table_ligne="factor",
         table_caption="Recall over false alerts of each risk factor at each threshold, on the written files",
-        table_note_unites='Measured on the {nMatch} written escalated files and {nDifferent} maintained\n      look&#8209;alikes',
+        table_note_unites='Measured on {nMatch} escalated files and {nDifferent} files kept at their\n      rating, all written by us',
         pied="Your records stay on your machine, and <em>no data leaves the network.</em>",
     ),
     "dossier": dict(
@@ -1727,12 +1727,12 @@ def _note_outil(spec, releve, findings):
         nDifferent=auth.get("nDifferent", auth.get("nBenign", auth.get("nMaintained"))))
     champ_cite = src.get("champ", "taux")
     if palier_f and champ_cite == "taux":
-        choix = f"The ring marks the cell the tool retains under its default rule, {palier_f} at {seuil_f}."
+        choix = f"The ring marks the setting the tool picks by default, {palier_f} at {seuil_f}."
     elif palier_f:
         choix = (f"The marked cell, {palier_f} at {seuil_f}, comes closest to the 90% recall floor. "
-                 "None reaches it, so the tool keeps no cell on these cases.")
+                 "None reaches it, so the tool picks none on these cases.")
     else:
-        choix = "No cell reaches the 90% recall floor, so the tool keeps none on these cases."
+        choix = "No setting reaches the 90% recall floor, so the tool picks none."
     return (f"{unites}: recall of each {spec['table_ligne']} at each threshold. {choix} "
             f"Generated {_NOM_JEU[spec['table_ligne']]} are measured apart, and the instrument shows them.")
 
