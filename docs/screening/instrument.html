@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-1kPLvynUuL8FyxLz8Ri+RXrO2cm2BLY5ox+GudWXZ2E=' 'unsafe-hashes' 'sha256-ogKvhph2a6LUD2Pr+pZ9rS6Ytjewm+TRvjLVOYBLELs=' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-MbUspOmM1WJXTuCZgrZpXUQJC1tD9dnL5c4BHTSa8PA='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-9BELLkSyAMZSvZHr24EPmGaBiSGuzBAnKVRPjx+XUDM=' 'unsafe-hashes' 'sha256-ogKvhph2a6LUD2Pr+pZ9rS6Ytjewm+TRvjLVOYBLELs=' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-MbUspOmM1WJXTuCZgrZpXUQJC1tD9dnL5c4BHTSa8PA='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Screening &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/screening/instrument.html">
@@ -299,6 +299,9 @@
   /* the current link, marked the same way on every page (the heroes had no rule, the instruments
      only brightened it, the house pages only weighted it) */
   .barre nav a[aria-current]{color:var(--sur,var(--sur-vert,#e4ecdf));font-weight:600}
+  /* posée (beige), la barre gardait le lien courant en clair : illisible (relecture du 8/09).
+     Il prend la couleur de titre de SA page : vert routing, rubis screening, lapis, améthyste, onyx. */
+  .barre.posee nav a[aria-current]{color:var(--vert-titre,#23543f)}
   /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
      colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
   @media (max-width:1080px){
@@ -420,7 +423,7 @@
       <div class="note">the report and the sealed public record are written next to your file, and nowhere else</div>
     </div>
     <div class="ouvrir-ligne"><a class="ouvrir" href="https://github.com/ArslaneSempai-ui/cascade-screening">Run it on your records <span class="fl" aria-hidden="true">&#8594;</span></a>
-      <a class="ouvrir tarif" href="../engagement.html">Pricing, in figures <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+      <a class="ouvrir tarif" href="../engagement.html">See pricing <span class="fl" aria-hidden="true">&#8594;</span></a></div>
     </aside>
   </div>
 </section>

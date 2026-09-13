@@ -87,9 +87,9 @@ def table_html():
     return f'''<div class="t-scroll"><table class="routage">
       <caption class="sr">Accuracy of each tier on each field, measured on held-out records</caption>
       <thead><tr><th scope="col">field</th>{tetes}</tr></thead><tbody>{lignes}</tbody></table></div>
-      <p class="t-note">Measured on {N_SOCLE:,} held-out records for rules, small, large; {N_GEN} for the
-      generative tiers. *The human tier is assumed at {qte(HUMAIN)}% until you measure it:
-      <code>npm run measure:humans</code> grades your own reviewers. Green cells mark the
+      <p class="t-note">Measured on {N_SOCLE:,} held-out records for the rules, small and large tiers, and
+      {N_GEN} for the generative tiers. *Human accuracy is assumed at {qte(HUMAIN)}% until you measure
+      your own reviewers with <code>npm run measure:humans</code>. Green cells mark the
       published routing.</p>'''
 
 
@@ -98,31 +98,31 @@ SCENES = [
     dict(num="01", titre="94.4% per field, 76.7% per file",
          phrase="The same published routing reads 94.4% accuracy averaged per field and 76.7% as the per-file rate, 92 of 120 files, 17.7 points apart.",
          a="94.4<small>%</small>", b="76.7<small>%</small>", cote="17.7 points apart"),
-    dict(num="02", titre="A routing 3.5&#215; cheaper, same accuracy",
-         phrase="The file-aimed routing costs 3.5 times less than the published one, at the same accuracy.",
-         a="$191", b="$54", cote="3.5&#215; cheaper"),
-    dict(num="03", titre="Abstention: 85 wrong values removed, 12 right lost",
-         phrase="Delivering every value gives 30% accuracy; staying silent instead of guessing gives 62.3%.",
+    dict(num="02", titre="Same accuracy at 3.5&#215; lower cost",
+         phrase="File-aimed routing delivers the same accuracy at 3.5&#215; lower cost.",
+         a="$191", b="$54", cote="3.5&#215; lower cost"),
+    dict(num="03", titre="Abstention: 85 wrong values removed, 12 correct values withheld",
+         phrase="Knowing when not to answer more than doubles accuracy.",
          a="30<small>%</small>", b="62.3<small>%</small>", cote="after abstention"),
-    dict(num="04", titre="Two passes: every count identical, durations withheld",
-         phrase="Two passes give identical counts, while the durations move 16% to 60%, so the tool withholds them.",
+    dict(num="04", titre="Identical counts across two passes; unstable durations withheld",
+         phrase="Two passes produce identical counts. Durations vary, so they&#8217;re withheld.",
          a="identical", b="16&#8211;60<small>%</small>", cote="withheld"),
-    dict(num="05", titre="Every routing enumerated",
-         phrase="The tool enumerates every routing of the five fields and writes one report you can dispute line by line.",
+    dict(num="05", titre="Every possible routing tested",
+         phrase="Every possible routing tested, with a report you can inspect line by line. Nothing left to sampling.",
          a="16,807", b="120<small>&nbsp;files</small>", cote="the full span"),
 ]
 
 LEGS = [
     ("mean accuracy over the five fields",
-     "files with all five fields correct, 92 of 120"),
-    ("What the published routing costs, per 100,000 documents.",
-     "The routing aimed at the file. No file comes out worse."),
-    ("When each value is delivered, right or wrong.",
-     "When the tool stays silent instead of guessing."),
-    ("Each count, run twice, to the digit.",
-     "Every duration moved, so the durations stay withheld."),
-    ("Every routing tried, end to end, not just a sample.",
-     f"Held out and frozen, {N_TESTS} tests counted on your machine."),
+     "files with all five fields correct (92 of 120)"),
+    ("Published routing, per 100,000 documents.",
+     "File-aimed routing, per 100,000 documents."),
+    ("Accuracy when every value is returned, right or wrong.",
+     "Accuracy when the tool abstains instead of guessing."),
+    ("Every count matches exactly across both runs.",
+     "Duration variance across runs: too unstable to report."),
+    ("Every routing tested, end to end.",
+     f"Held out and frozen, producing {N_TESTS} tests on your machine."),
 ]
 
 # ── les annotations du plateau : géométrie vérifiée sur les rendus ───────────
@@ -133,24 +133,24 @@ APPELS = [
     [
         (0.830, 0.330, 0.814, 0.160, "published routing: 94.4% accuracy per field"),
         (0.470, 0.520, 0.343, 0.220, "per-file rate: 76.7%, 92 of 120 files"),
-        (0.780, 0.250, 0.343, 0.052, "human tier: assumed 85%, not sampled"),
+        (0.780, 0.250, 0.343, 0.052, "human tier: 85% assumed, not sampled"),
     ],
     [
-        (0.440, 0.530, 0.500, 0.220, "file-aimed routing: 3.5&#215; cheaper"),
+        (0.440, 0.530, 0.500, 0.220, "file-aimed routing: 3.5&#215; lower cost"),
         (0.270, 0.550, 0.108, 0.260, "published routing: the pick it replaces"),
         (0.720, 0.280, 0.696, 0.052, "a tier both routings share"),
     ],
     [
         (0.820, 0.520, 0.814, 0.220, "an emptied cell: a blank held for re-reading"),
-        (0.480, 0.380, 0.343, 0.220, "abstention: 85 of the wrong dropped, 12 of the right"),
+        (0.480, 0.380, 0.343, 0.220, "abstention: 85 wrong values removed, 12 correct withheld"),
     ],
     [
-        (0.520, 0.480, 0.500, 0.160, "run twice: counts identical to the digit"),
-        (0.600, 0.350, 0.892, 0.780, "durations move 16% to 60%, withheld"),
+        (0.520, 0.480, 0.500, 0.160, "two runs, identical counts"),
+        (0.600, 0.350, 0.892, 0.780, "durations vary 16 to 60%, so withheld"),
     ],
     [
-        (0.500, 0.450, 0.500, 0.160, "all 16807 routings crossed, none sampled"),
-        (0.800, 0.520, 0.892, 0.780, "human tier: assumed 85%, not sampled"),
+        (0.500, 0.450, 0.500, 0.160, "all 16,807 routings tested, none sampled"),
+        (0.800, 0.520, 0.892, 0.780, "human tier: 85% assumed, not sampled"),
     ],
 ]
 
@@ -245,10 +245,10 @@ def menus_html():
       <h2 class="h2">The appendices your reviewers will ask for.</h2>
       <div class="grille">{tuiles}</div>
       <div class="rangee-fine">
-        <a class="lien-fin" href="ENGAGEMENT.html">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>
-        <a class="lien-fin" href="CONTACT.html">Contact <span aria-hidden="true">&#8594;</span></a>
-        <a class="lien-fin" href="MENTIONS.html">The fine print <span aria-hidden="true">&#8594;</span></a>
-        <a class="lien-fin" href="{DEPOT_URL}">The repository, public <span aria-hidden="true">&#8594;</span></a>
+        <a class="lien-fin" href="ENGAGEMENT.html">See pricing <span aria-hidden="true">&#8594;</span></a>
+        <a class="lien-fin" href="CONTACT.html">Get in touch <span aria-hidden="true">&#8594;</span></a>
+        <a class="lien-fin" href="MENTIONS.html">Read the fine print <span aria-hidden="true">&#8594;</span></a>
+        <a class="lien-fin" href="{DEPOT_URL}">View the public repository <span aria-hidden="true">&#8594;</span></a>
       </div></div></nav>'''
 
 
@@ -382,13 +382,22 @@ CSS = '''
    * dessous. La bande réellement visible va de 77 à l'étiquette (150), et le titre fait 18 px :
    * son sommet se pose donc à 77 + (150 - 77 - 18) / 2 = 104.
    */
-  .rideau-titre{position:absolute;top:104px;left:0;right:0;z-index:2;text-align:center;padding:0 24px;
-    font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
-    color:var(--sur-vert-pale)}
+  /* UN TITRE, PAS UNE ÉTIQUETTE (relecture du 8/09 : « make the header larger and a different font
+     to make it stand out from the 5 instruments »). Literata 22 px, comme les autres titres de la
+     page. LA CAUSE DES TROIS RATÉS DU 13/09 (« trop bas », « trop haut », « toujours pas ») : le
+     rideau réservait 77 px pour la barre posée, en haut. Juste quand on ARRIVE par un robot (la
+     barre recouvre le haut du rideau), faux quand on y DESCEND en défilant : la barre ne recouvre
+     rien, et ces 77 px sont du vide au-dessus du titre. Désormais le rideau ne réserve rien et
+     l'ancre #tools se pose SOUS la barre (scroll-margin-top) : dans les deux cas la bande visible
+     va du bord haut du rideau aux étiquettes (160), et le titre de 27 est au milieu :
+     (160 - 27) / 2 = 66. Centré sur l'axe, il n'en bouge pas. */
+  .rideau-titre{position:absolute;top:66px;left:0;right:0;z-index:2;text-align:center;padding:0 24px;
+    font-family:var(--texte);font-size:22px;font-weight:600;letter-spacing:-.01em;line-height:1.2;
+    color:var(--sur-vert)}
   /* les cinq boutons « Open… » sur UNE ligne : les pans partent du haut et le bouton est
      poussé en bas (Arslane, 10/09 : « mets-les à la même ligne, là c'est éparpillé ») */
   .pan{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;
-    gap:16px;min-height:100vh;padding:150px 40px 90px;text-decoration:none;color:inherit;outline-offset:-6px;
+    gap:16px;min-height:calc(100vh - 77px);padding:160px 40px 90px;text-decoration:none;color:inherit;outline-offset:-6px;
     background:radial-gradient(120% 100% at 50% -10%,var(--pan-a),var(--pan-b) 55%,var(--pan-c))}
   .pan img{height:clamp(150px,24vh,230px);width:auto;filter:drop-shadow(0 20px 36px rgba(0,0,0,.55));
     transition:transform .35s var(--montee)}
@@ -412,7 +421,7 @@ CSS = '''
     /* le haut reste à 150 : c'est lui qui donne sa bande au titre, et la mesure du 08/09
        montrait 56 px de marge inutilisée sous les boutons à 728 px de haut. On resserre donc
        le BAS et les tailles, jamais le haut. */
-    .pan{padding:150px 32px 56px;gap:12px}
+    .pan{padding:160px 32px 56px;gap:12px}
     .pan img{height:clamp(120px,19vh,190px)}
     .pan .p-h{font-size:clamp(24px,2.9vw,42px);min-height:2.8em}
     .pan .p-d{font-size:14px;line-height:1.45}}
@@ -420,9 +429,13 @@ CSS = '''
      les boutons dépassaient déjà de 12 px avant le 08/09, et rendre l'air aux étiquettes
      sans cette exception les aurait poussés à 38. On ne rend jamais pire ce qui était déjà
      juste. Le titre se recentre sur la nouvelle bande : 77 + (124 - 77 - 18) / 2 = 91. */
+  /* Mesuré le 13/09 à 1440x700 : le pan faisait 776 (750 avant le titre) pour 700 d'écran, les boutons
+     « Open » sous le pli. Le haut cède 10, le bas 12, le robot 28, la question 38 : 688, et tout se voit. */
   @media (max-height:700px){
-    .pan{padding:124px 32px 48px}
-    .rideau-titre{top:91px}}
+    .pan{padding:120px 32px 30px}
+    .pan img{height:clamp(100px,15vh,150px)}
+    .pan .p-h{font-size:clamp(22px,2.4vw,34px);min-height:2.6em}
+    .rideau-titre{top:46px}}   /* (120 - 27) / 2 ; le pan fait 621 pour 623 d'écran sous la barre */
   /* le titre du rideau ne remonte PAS avec le reste : la barre posée mesure 77 px, et à
      70 il passait dessous (vu en capture, 13/09). Il reste à 84. */
   .pan[aria-current] .p-ouvrir{border-style:dashed;color:var(--sur-vert-pale)}
@@ -449,6 +462,10 @@ CSS = '''
      entre dans la vue, et s'écartent au clic avant d'ouvrir l'outil ; sans script,
      rien ne bouge et les pans sont des liens */
   .rideau{overflow:hidden;background:var(--ouverture,var(--papier))}   /* derrière les pans : la nuit de l'outil qu'on ouvre */
+  /* l'ancre #tools se pose SOUS la barre posée (77 px), pas dessous : le rideau entier se voit en
+     arrivant par un robot, comme en descendant depuis l'accueil ; sous 1080 la barre est dans le
+     flux et ne recouvre rien, l'ancre reprend le bord */
+  @media (min-width:1081px){.rideau{scroll-margin-top:77px}}
   .pan{transition:transform .8s var(--montee),opacity .8s var(--montee)}
   .rideau .p-h,.rideau img,.rideau .p-d,.rideau .p-ouvrir,.rideau .p-eti{transition:transform .9s var(--montee),opacity .9s}
   html.js .rideau:not(.vu) .cote-g{transform:translateX(-18%);opacity:0}
@@ -696,11 +713,13 @@ CSS = '''
     .barre{padding:12px 18px;gap:14px}
     .barre nav{display:none}
     .pan{min-height:62vh;padding:130px 24px 56px}
+    .rideau-titre{top:51px}     /* (130 - 27) / 2 : la barre est dans le flux, la bande part du bord */
   }
   /* sous 700 px les pans s'empilent : seul le premier laisse la place au titre */
   @media (max-width:700px){
     .rideau{grid-template-columns:1fr}
     .pan{padding-top:84px}
+    .rideau-titre{top:39px;font-size:19px}   /* deux lignes de 23 (46) dans 124 : 39 dessus, 39 dessous */
     .rideau-titre+.pan{padding-top:124px}
     /* au téléphone, une commande coupée par un ascenseur horizontal se lit
        comme une commande cassée : elle se replie, entière */
@@ -946,7 +965,7 @@ def film_html(outil):
     return f"""
 <section class="film"><div class="colonne">
   <h2 class="h2">Cascade {outil["nom"]}, on film.</h2>
-  <p class="film-duree">The five findings, explained</p>
+  <p class="film-duree">The five findings</p>
   <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film of Cascade {outil["nom"]}, opens on YouTube">
     {visuel}
     <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
@@ -969,6 +988,10 @@ def film_html(outil):
 CSS_SCRUB = """
   canvas.scrub{position:absolute;inset:0;width:100%;height:100%;z-index:0}
   .colle.scrub .scene .objet{visibility:hidden}
+  /* pendant le mouvement, la fiche et le jalon restent ; les étiquettes et leurs lignes attendent
+     que l'objet soit posé (elles pointent des pièces de l'état d'arrivée) */
+  .colle.mouv .scene .ap-eti{opacity:0;transition:none}
+  .colle.mouv .scene .appels line{stroke-dashoffset:1;transition:none}
   /* les aimants : un point d'accroche au milieu de chaque palier d'arrivée ; « proximity »
      ramène le défilement dessus quand il s'arrête près, et laisse filer sinon */
   html.js{scroll-snap-type:y proximity}
@@ -978,8 +1001,11 @@ CSS_SCRUB = """
 """
 
 # Le contrat du geste : p vient du même calcul que surScroll ; k = floor(p·5),
-# q = p·5 − k, t = min(1, q / mouvement), image = round(t·(n−1)). q ≥ mouvement :
-# la scène k est active (annotations, fiche, jalon) ; sinon aucune, le canevas seul.
+# q = p·5 − k, t = min(1, q / mouvement), image = round(t·(n−1)). La scène k est active
+# (fiche, jalon) sur TOUT le palier k ; ses annotations n'apparaissent qu'à l'arrêt
+# (q ≥ mouvement), quand l'objet est posé là où elles pointent. Avant le 13/09, rien
+# n'était actif pendant le mouvement : 12 positions sur 51 sans fiche ni jalon, mesuré
+# au défilement seul, et la relecture disait « sometimes the findings don't appear ».
 # Une lecture par image d'animation (rAF), jamais une par événement ; la transition 0
 # entière avant le premier dessin, les suivantes derrière, dans l'ordre ; une image
 # manquante prend la voisine ; tout échec de la transition 0 rend la page d'aujourd'hui,
@@ -1040,11 +1066,12 @@ JS_SCRUB = """
     const i = Math.round(t * (M.n - 1));
     const arret = q >= MOUV;
     scenesS.forEach((s, x) => {
-      const a = arret && x === k;
+      const a = x === k;
       s.classList.toggle("actif", a);
       s.setAttribute("aria-hidden", a ? "false" : "true");
     });
-    jalonsS.forEach((j, x) => j.classList.toggle("actif", arret && x === k));
+    jalonsS.forEach((j, x) => j.classList.toggle("actif", x === k));
+    colle.classList.toggle("mouv", !arret);
     /*
      * UNE TRANSITION QUI N'EST PAS ENCORE ARRIVÉE NE FIGE PLUS L'OBJET.
      *
@@ -1166,7 +1193,7 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
     <code class="ln">node src/premiere-reponse.mjs</code>
-    <span class="note">The conclusion, from the sealed public records. Before npm install, under a second.</span>
+    <span class="note">The conclusion, generated from the sealed public records in under one second. Before npm install.</span>
   </div>
   <div class="cue" aria-hidden="true"><span>scroll</span><span class="fil"></span></div>
 </section>
@@ -1183,13 +1210,13 @@ PAGE = f'''<!doctype html><html lang="en">
 </section>
 
 <section class="instrument" data-commun="instrument"><div class="colonne">
-  <h2 class="h2">The live instrument, on the sealed public record.</h2>
+  <h2 class="h2">The live instrument, tested against sealed public records.</h2>
   {affiche_html("paliers", LANDING, [], "INSTRUMENT.html", "Cascade &#183; Routing",
-                "Each field at each tier, accuracy and cost read live from the sealed public record, and a budget line you pull the way the tool chooses.",
+                "See every field, tier, accuracy and cost, live from the sealed public record. Set the budget and watch the tool choose the route.",
                 "rendus/robot-vert-regarde.webp",
-                note=f"Measured on {N_SOCLE:,} held-out records for rules, small and large, {N_GEN} for the generative tiers. "
-                     f"The human tier is assumed at {qte(HUMAIN)} % until you measure it: "
-                     "<code>npm run measure:humans</code> grades your own reviewers. The rings mark the published routing.", tarif="ENGAGEMENT.html")}
+                note=f"Measured on {N_SOCLE:,} held-out records for the rules, small and large tiers, and {N_GEN} for the generative tiers. "
+                     f"Human accuracy is assumed at {qte(HUMAIN)} % until you measure your own reviewers with "
+                     "<code>npm run measure:humans</code>. Rings mark the published routing.", tarif="ENGAGEMENT.html")}
 </div></section>
 
 <div class="couture" aria-hidden="true"><div class="colonne">
@@ -1199,8 +1226,8 @@ PAGE = f'''<!doctype html><html lang="en">
 </div></div>
 
 <section class="film"><div class="colonne">
-  <h2 class="h2">Cascade, in 57 seconds.</h2>
-  <p class="film-duree">The five findings, explained</p>
+  <h2 class="h2">Cascade, proven in 57 seconds.</h2>
+  <p class="film-duree">The five findings</p>
   <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film: 57 seconds, opens on YouTube">
     <img src="rendus/affiche-film.jpg" alt="The Cascade robot, palms up, projecting the two rates: the dashboard 94.4%, your desk 76.7%">
     <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
@@ -1344,12 +1371,12 @@ def batir_accueil():
 <section class="hero">
   <div class="hero-grille">
     <div class="hero-texte">
-      <h1 class="h1 entree">Five instruments for compliance decisions.</h1>
+      <h1 class="h1 entree">Compliance decisions you can prove.</h1>
       <dl class="ledger entree" aria-label="The routing instrument, in figures">
         <div><dt><i class="pt" aria-hidden="true"></i>routing, mean accuracy per field</dt><dd>{acc_champ}</dd></div>
         <div><dt>accuracy per file</dt><dd>{acc_fichier}</dd></div>
         <div><dt>sealed public records</dt><dd>{N_SOCLE:,}</dd></div>
-        <div><dt>cost at equal accuracy</dt><dd>{moins_cher}</dd></div>
+        <div><dt>at equal accuracy</dt><dd>{moins_cher}</dd></div>
         <div><dt>content hash</dt><dd>{SCEAU_ROUTING}</dd></div>
         <div class="cmd"><dt>rerun on your own files</dt><dd class="c1">node src/premiere-reponse.mjs</dd>
           <small class="c2">git clone {OUTILS["routing"]["depot"]}</small></div>
@@ -1909,7 +1936,7 @@ def batir_outil_catalogue(o, spec):
   </div>
 </section>
 <section class="instrument" data-commun="instrument"><div class="colonne">
-  <h2 class="h2">The live instrument, on the sealed public record.</h2>
+  <h2 class="h2">The live instrument, tested against sealed public records.</h2>
   {affiche_html("horloge" if o["id"] == "dossier" else "courbes", RELEVE, FINDINGS, spec["instrument_page"],
                 spec["instrument_eti"], spec["instrument_sub"], "../rendus/robot-" + ICONES_COULEUR[o["id"]] + "-regarde.webp",
                 note="" if o["id"] == "dossier" else _note_outil(spec, RELEVE, FINDINGS), tarif=lien(o, "ENGAGEMENT.html"))}
@@ -1925,10 +1952,10 @@ def batir_outil_catalogue(o, spec):
   <h2 class="h2">The appendices your reviewers will ask for.</h2>
   <div class="grille">{tuiles_html}</div>
   <div class="rangee-fine">
-    <a class="lien-fin" href="{lien(o, 'ENGAGEMENT.html')}">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="{lien(o, 'CONTACT.html')}">Contact <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="{lien(o, 'MENTIONS.html')}">The fine print <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="{o["depot"]}">The repository, public <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="{lien(o, 'ENGAGEMENT.html')}">See pricing <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="{lien(o, 'CONTACT.html')}">Get in touch <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="{lien(o, 'MENTIONS.html')}">Read the fine print <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="{o["depot"]}">View the public repository <span aria-hidden="true">&#8594;</span></a>
   </div></div></nav>
 </main>
 

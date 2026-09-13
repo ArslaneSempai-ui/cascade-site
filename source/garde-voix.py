@@ -59,7 +59,14 @@ OPPOSITION = re.compile(r", not\b|\brather than\b", re.I)
 UNITES = r"(?:%|percent|days?|d\b|files?|pairs?|cases?|words?|tests?|pages?|blocks?|controls?|questions?|ko\b|kb\b|px\b|s\b|ms\b|of\b|×|x\b|matchers?|scenarios?|factors?|tiers?|thresholds?|routings?|seals?|alerts?|escalations?|reviews?|char(?:acter)?s?)"
 # « finding 01 » et les ordinaux à zéro de tête (01..05) sont des numéros de fiche,
 # pas des mesures sans unité : le motif 6 vise le chiffre qui PRÉTEND mesurer
-NOMBRE_NU = re.compile(r"(?<![\d.])(?<!finding )(?<!seq-)(\d{2,})(?!\.\d)(?!\s*" + UNITES + r")(?!\d)", re.I)
+# le séparateur de milliers fait partie du nombre : « 16,807 routings » porte son unité, « 16,807 » nu non
+NOMBRE_NU = re.compile(r"(?<![\d.])(?<!finding )(?<!seq-)(\d{2,}(?:,\d{3})*)(?!\.\d)(?!,\d)(?!\s*" + UNITES + r")(?!\d)", re.I)
+# motif 8 (la relecture du 8/09, versée le 13/09) : un lien d'ACTION commence par un verbe.
+# « Pricing, in figures » disait où l'on va ; « See pricing » dit ce qu'on fait. Les classes
+# d'action de la maison : la rangée fine des annexes, le lien sous l'affiche, les boutons
+# « ouvrir » des instruments. Le verbe est en tête, à l'impératif, dans cette liste.
+CTA_CLS = ("lien-fin", "affiche-tarif", "ouvrir")
+VERBE_CTA = re.compile(r"^(see|get|read|view|open|run|rerun|watch|measure|download|clone|start|try|compare|check|verify|browse|explore|go|contact|ask|book)\b", re.I)
 
 
 def est_titre(tag, cls, sorte_texte):
@@ -172,6 +179,8 @@ def relever(docs, source):
                 dire(6, page, ligne, f"nombre sans unité ni pour cent « {m.group(1)} » : « {texte[:70]} »")
         if SINCERITE.search(texte):
             dire(7, page, ligne, f"sincérité affichée « {SINCERITE.search(texte).group(0)} » : « {texte[:70]} »")
+        if tag == "a" and any(c in cls for c in CTA_CLS) and not VERBE_CTA.match(texte.strip()):
+            dire(8, page, ligne, f"lien d'action sans verbe en tête : « {texte[:70]} »")
         if RESTES.search(texte):
             dire(7, page, ligne, f"reste de la maison « {RESTES.search(texte).group(0)} » : « {texte[:70]} »")
         if (page.startswith(PAGES_NON_ROUTING) and TIER.search(texte)
@@ -213,14 +222,16 @@ def relever(docs, source):
 
 
 def temoin():
-    """Les deux pages factices : la fautive doit déclencher les SEPT motifs, la saine
+    """Les deux pages factices : la fautive doit déclencher les HUIT motifs, la saine
     aucun. Un motif muet = garde cassée, aucun relevé n'est rendu."""
     d = BASE / "temoin-voix"
     fautifs, communs_f = relever(d / "fautive", None)
     vus = {m for m, *_ in fautifs}
-    if vus != {1, 2, 3, 4, 5, 6, 7}:
+    if vus != {1, 2, 3, 4, 5, 6, 7, 8}:
         sys.exit(f"GARDE CASSÉE : la page fautive du témoin ne déclenche que les motifs "
-                 f"{sorted(vus)} sur les sept — aucun relevé n'est rendu (code 2)")
+                 f"{sorted(vus)} sur les huit — aucun relevé n'est rendu (code 2)")
+    if not any(m == 8 and "Pricing, in figures" in quoi for m, _, _, quoi in fautifs):
+        sys.exit("GARDE CASSÉE : le lien d'action sans verbe planté (Pricing, in figures) n'est plus vu (code 2)")
     if "commande" not in communs_f:
         sys.exit("GARDE CASSÉE : le bloc data-commun de la fautive n'est pas compté à part "
                  "— l'exemption déclarée ne fonctionne plus (code 2)")
@@ -246,14 +257,14 @@ def temoin():
 if __name__ == "__main__":
     docs = pathlib.Path(sys.argv[sys.argv.index("--docs") + 1]) if "--docs" in sys.argv else BASE.parent / "docs"
     n_temoin = temoin()
-    print(f"  témoin : les sept motifs mordent ({n_temoin} refus sur la fautive, 0 sur la saine)")
+    print(f"  témoin : les huit motifs mordent ({n_temoin} refus sur la fautive, 0 sur la saine)")
     refus, communs = relever(docs, BASE)
     if communs:
         print("  communs déclarés : " + " ; ".join(
             f"{k} sur {len(v)} page(s)" for k, v in sorted(communs.items())))
     if not refus:
         print(f"voix tenue : 0 refus sur {len(list(docs.rglob('*.html')))} pages servies "
-              f"(et le témoin a prouvé que les sept motifs regardent)")
+              f"(et le témoin a prouvé que les huit motifs regardent)")
         sys.exit(0)
     par_motif = {}
     for m, page, ou, quoi in refus:

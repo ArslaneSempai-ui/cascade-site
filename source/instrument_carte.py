@@ -550,7 +550,7 @@ JS_ONYX = '''
 
 CSS_AFFICHE = '''
   .affiche-tarif{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--sur-vert-pale);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--sur-vert-pale) 40%,transparent);padding-bottom:4px}
+    color:var(--sur-vert-pale);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--sur-vert-pale) 40%,transparent);padding:6px 0 4px}   /* 29 px de haut : la cible faisait 23 (ergonomie.mjs, 13/09) */
   .affiche-tarif:hover{color:var(--vert-clair);border-color:var(--vert-clair)}
   .instrument .h2{max-width:22ch}     /* le titre reste à gauche du robot qui penche sur l'affiche */
   .affiche-col{position:relative;margin-top:36px}
@@ -581,10 +581,39 @@ CSS_AFFICHE = '''
   .affiche-col .t-note{margin:18px 4px 0;max-width:80ch}
   .affiche-texte{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
   .affiche-texte .ouvrir-t{font-size:clamp(24px,2.6vw,36px)}
-  .affiche-texte .fl{margin:14px 0 0;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;
-    font-family:var(--sans);font-size:36px;color:var(--vert-clair);border:1px solid color-mix(in srgb,var(--vert-vif) 55%,transparent);
-    background:color-mix(in srgb,var(--vert-vif) 10%,transparent);transition:transform .4s var(--montee),background .3s}
-  .affiche:hover .fl,.affiche:focus-visible .fl{transform:translateX(8px);background:color-mix(in srgb,var(--vert-vif) 22%,transparent)}
+  /* LE BOUTON DE L'AFFICHE (Arslane, 10/09 : « juste la flèche c'est trop simple » ; 13/09 : un
+     rectangle, animé, et rien d'autre ne bouge sur l'affiche). Une touche sombre, à la place
+     exacte du rond fléché (même marge, même alignement) ; un filet de lumière qui fait le tour de
+     son bord en continu, parce que l'instrument est vivant avant qu'on le touche ; le libellé et
+     la flèche. Au survol le bord s'allume en entier, l'intérieur se teinte, la flèche glisse ; à
+     l'appui la touche s'enfonce. Mouvement réduit : le filet ne tourne pas, le bord reste posé.
+     26 + 60 = 14 + 72 : la touche occupe la hauteur exacte du rond, l'affiche garde ses 356 px.
+     Le filet : un carré en dégradé conique (::before) qui tourne sous une plaque sombre (::after)
+     posée à 1 px du bord : seul l'anneau de 1 px laisse passer la lumière. Transform seul :
+     rien ne refait la mise en page. Le bouton est aria-hidden : l'affiche entière est le lien. */
+  .affiche-texte .bt{position:relative;isolation:isolate;overflow:hidden;margin:26px 0 0;align-self:flex-start;
+    display:inline-flex;align-items:center;justify-content:space-between;gap:22px;min-width:236px;height:60px;
+    padding:0 20px 0 22px;border-radius:10px;font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;
+    text-transform:uppercase;white-space:nowrap;color:var(--vert-clair);
+    background:color-mix(in srgb,var(--vert-vif) 34%,transparent);
+    box-shadow:0 1px 0 rgba(0,0,0,.55),0 14px 30px rgba(0,0,0,.35);
+    transition:transform .3s var(--montee),color .3s,background .3s,box-shadow .3s var(--montee)}
+  .affiche-texte .bt::before{content:"";position:absolute;left:50%;top:50%;width:620px;height:620px;z-index:-2;
+    transform:translate(-50%,-50%) rotate(0deg);
+    background:conic-gradient(from 0deg,transparent 0 62%,color-mix(in srgb,var(--vert-clair) 55%,transparent) 84%,var(--vert-clair) 96%,transparent 100%)}
+  .affiche-texte .bt::after{content:"";position:absolute;inset:1px;z-index:-1;border-radius:9px;
+    background:linear-gradient(180deg,color-mix(in srgb,var(--nuit-a) 60%,var(--nuit-c)),var(--nuit-c));
+    box-shadow:inset 0 1px 0 color-mix(in srgb,var(--sur-vert) 9%,transparent);transition:background .3s}
+  .affiche-texte .bt-f{font-family:var(--sans);font-size:20px;line-height:1;letter-spacing:0;transition:transform .35s var(--montee)}
+  @media (prefers-reduced-motion:no-preference){
+    .affiche-texte .bt::before{animation:bt-tour 3.6s linear infinite}
+    @keyframes bt-tour{to{transform:translate(-50%,-50%) rotate(360deg)}}}
+  .affiche:hover .bt,.affiche:focus-visible .bt{color:var(--sur-vert);background:var(--vert-vif);transform:translateY(-1px);
+    box-shadow:0 2px 0 rgba(0,0,0,.55),0 18px 40px color-mix(in srgb,var(--vert-vif) 28%,transparent)}
+  .affiche:hover .bt::before,.affiche:focus-visible .bt::before{animation-play-state:paused;opacity:0}
+  .affiche:hover .bt::after,.affiche:focus-visible .bt::after{background:linear-gradient(180deg,color-mix(in srgb,var(--vert-vif) 22%,var(--nuit-b)),color-mix(in srgb,var(--vert-vif) 12%,var(--nuit-c)))}
+  .affiche:hover .bt-f,.affiche:focus-visible .bt-f{transform:translateX(6px)}
+  .affiche:active .bt{transform:translateY(1px);box-shadow:0 0 0 rgba(0,0,0,.55),0 6px 16px rgba(0,0,0,.35);transition-duration:.08s}
   @media (max-width:980px){.affiche{grid-template-columns:minmax(0,1fr)}.affiche-robot{display:none}}
 '''
 
@@ -631,7 +660,10 @@ def _svg_paliers(landing):
     landing ne les porte pas par champ, l'instrument les calcule."""
     F, tiers = list(landing["fields"]), [t["id"] for t in landing["tiers"]]
     pub = landing["routing"]["fields"]
-    W, H, L, R, T, B = 720, 300, 40, 20, 18, 28
+    # T à 36, pas 18 : à 18 l'étiquette « the published routing… » (posée 4 px au-dessus du tracé)
+    # traversait l'anneau de la première colonne, dont le rayon monte à 8 px au-dessus de 100
+    # (vu par la relecture du 8/09). Le tracé commence 18 px plus bas ; la boîte ne change pas.
+    W, H, L, R, T, B = 720, 300, 40, 20, 36, 28
     x = lambda i: L + i / max(1, len(tiers) - 1) * (W - L - R)
     y = lambda v: (H - B) - v / 100 * (H - B - T)
     out = ""
@@ -652,7 +684,7 @@ def _svg_paliers(landing):
                 out += f'<circle class="anneau" cx="{x(i):.0f}" cy="{y(a):.0f}" r="8"/>'
     for i, t in enumerate(tiers):
         out += f'<text class="ax" x="{x(i):.0f}" y="{H - 8}" text-anchor="middle">{t}</text>'
-    out += f'<text class="eti" x="{L}" y="{T - 4}">the published routing, one ring per field · {landing["routing"]["accuracy"]} % mean accuracy</text>'
+    out += f'<text class="eti" x="{L}" y="{T - 20}">the published routing, one ring per field · {landing["routing"]["accuracy"]} % mean accuracy</text>'
     return f'<svg viewBox="0 0 {W} {H}" aria-hidden="true">{out}</svg>'
 
 
@@ -687,9 +719,9 @@ def affiche_html(sorte, donnees, findings, page, eti, sous, robot, note="", tari
     <a class="affiche" href="{page}">
       <div class="affiche-carte">{svg}</div>
       <div class="affiche-texte"><span class="ouvrir-eti">{eti}</span><span class="ouvrir-t">Open the live instrument</span>
-        <span class="ouvrir-s">{sous}</span><span class="fl" aria-hidden="true">&#8594;</span></div>
+        <span class="ouvrir-s">{sous}</span><span class="bt" aria-hidden="true"><span class="bt-l">Open the instrument</span><span class="bt-f">&#8594;</span></span></div>
     </a>
-    {f'<a class="affiche-tarif" href="{tarif}">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>' if tarif else ""}
+    {f'<a class="affiche-tarif" href="{tarif}">See pricing <span aria-hidden="true">&#8594;</span></a>' if tarif else ""}
     {f'<p class="t-note">{note}</p>' if note else ""}
   </div>'''
 

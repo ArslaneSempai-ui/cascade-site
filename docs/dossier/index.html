@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-+G1uMSXd1CfB/bbslarTJxkqyRZ1kP5wGK2dBSgDbBs=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-mOyl6x9YzzIyW0KgKTCP176LRPW58h2QDc+H7M/sNLU=' 'sha256-tjFO5ptmdld+VyTooNVrS+UnydTC+ts3f6k0z22Jqxc=' 'sha256-9/lwJejrIxYOssOdIiOgKy/Yeg15T3Mef8gWttLd860=' 'sha256-kv3Sv2Sj8Qeh5H/NNQJtJE1V1TxnvFd2Fe+Y6wrzglQ=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg=' 'sha256-/vYkeP6dXt+l11vONzlXfD8Zv2L2CaEuHLfU62Zvubo=' 'sha256-J3jtxzWdxaAXGj10v/+vK9Lq4f+yS3hCawGN7iBV9xg=' 'sha256-94u25WhXvMAHah9HuVfk6QNXg8h1t8c1QmH2t/TagZw='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-BZRsrTPl4run2ogTuZKKWAgqCtd4t16xLVU3Mk0jYn8=' 'sha256-sN29ClHI1d0nJo5cGHZrNSwJJny4lglh8z8gB0IV3JE='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-Z7So4glnzIop4mTt6fdhFiM8zHVTtOnRbqBeI0aCz3A=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-mOyl6x9YzzIyW0KgKTCP176LRPW58h2QDc+H7M/sNLU=' 'sha256-tjFO5ptmdld+VyTooNVrS+UnydTC+ts3f6k0z22Jqxc=' 'sha256-9/lwJejrIxYOssOdIiOgKy/Yeg15T3Mef8gWttLd860=' 'sha256-kv3Sv2Sj8Qeh5H/NNQJtJE1V1TxnvFd2Fe+Y6wrzglQ=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg=' 'sha256-/vYkeP6dXt+l11vONzlXfD8Zv2L2CaEuHLfU62Zvubo=' 'sha256-J3jtxzWdxaAXGj10v/+vK9Lq4f+yS3hCawGN7iBV9xg=' 'sha256-94u25WhXvMAHah9HuVfk6QNXg8h1t8c1QmH2t/TagZw='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-BZRsrTPl4run2ogTuZKKWAgqCtd4t16xLVU3Mk0jYn8=' 'sha256-h3XEPagyHXWX+lAAdHX4nj8uMkrYERyFotOSvQQK39s='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Dossier &#183; the assembled audit trail</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/dossier/">
@@ -137,13 +137,22 @@
    * dessous. La bande réellement visible va de 77 à l'étiquette (150), et le titre fait 18 px :
    * son sommet se pose donc à 77 + (150 - 77 - 18) / 2 = 104.
    */
-  .rideau-titre{position:absolute;top:104px;left:0;right:0;z-index:2;text-align:center;padding:0 24px;
-    font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
-    color:var(--sur-vert-pale)}
+  /* UN TITRE, PAS UNE ÉTIQUETTE (relecture du 8/09 : « make the header larger and a different font
+     to make it stand out from the 5 instruments »). Literata 22 px, comme les autres titres de la
+     page. LA CAUSE DES TROIS RATÉS DU 13/09 (« trop bas », « trop haut », « toujours pas ») : le
+     rideau réservait 77 px pour la barre posée, en haut. Juste quand on ARRIVE par un robot (la
+     barre recouvre le haut du rideau), faux quand on y DESCEND en défilant : la barre ne recouvre
+     rien, et ces 77 px sont du vide au-dessus du titre. Désormais le rideau ne réserve rien et
+     l'ancre #tools se pose SOUS la barre (scroll-margin-top) : dans les deux cas la bande visible
+     va du bord haut du rideau aux étiquettes (160), et le titre de 27 est au milieu :
+     (160 - 27) / 2 = 66. Centré sur l'axe, il n'en bouge pas. */
+  .rideau-titre{position:absolute;top:66px;left:0;right:0;z-index:2;text-align:center;padding:0 24px;
+    font-family:var(--texte);font-size:22px;font-weight:600;letter-spacing:-.01em;line-height:1.2;
+    color:var(--sur-vert)}
   /* les cinq boutons « Open… » sur UNE ligne : les pans partent du haut et le bouton est
      poussé en bas (Arslane, 10/09 : « mets-les à la même ligne, là c'est éparpillé ») */
   .pan{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;
-    gap:16px;min-height:100vh;padding:150px 40px 90px;text-decoration:none;color:inherit;outline-offset:-6px;
+    gap:16px;min-height:calc(100vh - 77px);padding:160px 40px 90px;text-decoration:none;color:inherit;outline-offset:-6px;
     background:radial-gradient(120% 100% at 50% -10%,var(--pan-a),var(--pan-b) 55%,var(--pan-c))}
   .pan img{height:clamp(150px,24vh,230px);width:auto;filter:drop-shadow(0 20px 36px rgba(0,0,0,.55));
     transition:transform .35s var(--montee)}
@@ -167,7 +176,7 @@
     /* le haut reste à 150 : c'est lui qui donne sa bande au titre, et la mesure du 08/09
        montrait 56 px de marge inutilisée sous les boutons à 728 px de haut. On resserre donc
        le BAS et les tailles, jamais le haut. */
-    .pan{padding:150px 32px 56px;gap:12px}
+    .pan{padding:160px 32px 56px;gap:12px}
     .pan img{height:clamp(120px,19vh,190px)}
     .pan .p-h{font-size:clamp(24px,2.9vw,42px);min-height:2.8em}
     .pan .p-d{font-size:14px;line-height:1.45}}
@@ -175,9 +184,13 @@
      les boutons dépassaient déjà de 12 px avant le 08/09, et rendre l'air aux étiquettes
      sans cette exception les aurait poussés à 38. On ne rend jamais pire ce qui était déjà
      juste. Le titre se recentre sur la nouvelle bande : 77 + (124 - 77 - 18) / 2 = 91. */
+  /* Mesuré le 13/09 à 1440x700 : le pan faisait 776 (750 avant le titre) pour 700 d'écran, les boutons
+     « Open » sous le pli. Le haut cède 10, le bas 12, le robot 28, la question 38 : 688, et tout se voit. */
   @media (max-height:700px){
-    .pan{padding:124px 32px 48px}
-    .rideau-titre{top:91px}}
+    .pan{padding:120px 32px 30px}
+    .pan img{height:clamp(100px,15vh,150px)}
+    .pan .p-h{font-size:clamp(22px,2.4vw,34px);min-height:2.6em}
+    .rideau-titre{top:46px}}   /* (120 - 27) / 2 ; le pan fait 621 pour 623 d'écran sous la barre */
   /* le titre du rideau ne remonte PAS avec le reste : la barre posée mesure 77 px, et à
      70 il passait dessous (vu en capture, 13/09). Il reste à 84. */
   .pan[aria-current] .p-ouvrir{border-style:dashed;color:var(--sur-vert-pale)}
@@ -204,6 +217,10 @@
      entre dans la vue, et s'écartent au clic avant d'ouvrir l'outil ; sans script,
      rien ne bouge et les pans sont des liens */
   .rideau{overflow:hidden;background:var(--ouverture,var(--papier))}   /* derrière les pans : la nuit de l'outil qu'on ouvre */
+  /* l'ancre #tools se pose SOUS la barre posée (77 px), pas dessous : le rideau entier se voit en
+     arrivant par un robot, comme en descendant depuis l'accueil ; sous 1080 la barre est dans le
+     flux et ne recouvre rien, l'ancre reprend le bord */
+  @media (min-width:1081px){.rideau{scroll-margin-top:77px}}
   .pan{transition:transform .8s var(--montee),opacity .8s var(--montee)}
   .rideau .p-h,.rideau img,.rideau .p-d,.rideau .p-ouvrir,.rideau .p-eti{transition:transform .9s var(--montee),opacity .9s}
   html.js .rideau:not(.vu) .cote-g{transform:translateX(-18%);opacity:0}
@@ -412,7 +429,7 @@
 
 
   .affiche-tarif{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--sur-vert-pale);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--sur-vert-pale) 40%,transparent);padding-bottom:4px}
+    color:var(--sur-vert-pale);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--sur-vert-pale) 40%,transparent);padding:6px 0 4px}   /* 29 px de haut : la cible faisait 23 (ergonomie.mjs, 13/09) */
   .affiche-tarif:hover{color:var(--vert-clair);border-color:var(--vert-clair)}
   .instrument .h2{max-width:22ch}     /* le titre reste à gauche du robot qui penche sur l'affiche */
   .affiche-col{position:relative;margin-top:36px}
@@ -443,10 +460,39 @@
   .affiche-col .t-note{margin:18px 4px 0;max-width:80ch}
   .affiche-texte{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
   .affiche-texte .ouvrir-t{font-size:clamp(24px,2.6vw,36px)}
-  .affiche-texte .fl{margin:14px 0 0;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;
-    font-family:var(--sans);font-size:36px;color:var(--vert-clair);border:1px solid color-mix(in srgb,var(--vert-vif) 55%,transparent);
-    background:color-mix(in srgb,var(--vert-vif) 10%,transparent);transition:transform .4s var(--montee),background .3s}
-  .affiche:hover .fl,.affiche:focus-visible .fl{transform:translateX(8px);background:color-mix(in srgb,var(--vert-vif) 22%,transparent)}
+  /* LE BOUTON DE L'AFFICHE (Arslane, 10/09 : « juste la flèche c'est trop simple » ; 13/09 : un
+     rectangle, animé, et rien d'autre ne bouge sur l'affiche). Une touche sombre, à la place
+     exacte du rond fléché (même marge, même alignement) ; un filet de lumière qui fait le tour de
+     son bord en continu, parce que l'instrument est vivant avant qu'on le touche ; le libellé et
+     la flèche. Au survol le bord s'allume en entier, l'intérieur se teinte, la flèche glisse ; à
+     l'appui la touche s'enfonce. Mouvement réduit : le filet ne tourne pas, le bord reste posé.
+     26 + 60 = 14 + 72 : la touche occupe la hauteur exacte du rond, l'affiche garde ses 356 px.
+     Le filet : un carré en dégradé conique (::before) qui tourne sous une plaque sombre (::after)
+     posée à 1 px du bord : seul l'anneau de 1 px laisse passer la lumière. Transform seul :
+     rien ne refait la mise en page. Le bouton est aria-hidden : l'affiche entière est le lien. */
+  .affiche-texte .bt{position:relative;isolation:isolate;overflow:hidden;margin:26px 0 0;align-self:flex-start;
+    display:inline-flex;align-items:center;justify-content:space-between;gap:22px;min-width:236px;height:60px;
+    padding:0 20px 0 22px;border-radius:10px;font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;
+    text-transform:uppercase;white-space:nowrap;color:var(--vert-clair);
+    background:color-mix(in srgb,var(--vert-vif) 34%,transparent);
+    box-shadow:0 1px 0 rgba(0,0,0,.55),0 14px 30px rgba(0,0,0,.35);
+    transition:transform .3s var(--montee),color .3s,background .3s,box-shadow .3s var(--montee)}
+  .affiche-texte .bt::before{content:"";position:absolute;left:50%;top:50%;width:620px;height:620px;z-index:-2;
+    transform:translate(-50%,-50%) rotate(0deg);
+    background:conic-gradient(from 0deg,transparent 0 62%,color-mix(in srgb,var(--vert-clair) 55%,transparent) 84%,var(--vert-clair) 96%,transparent 100%)}
+  .affiche-texte .bt::after{content:"";position:absolute;inset:1px;z-index:-1;border-radius:9px;
+    background:linear-gradient(180deg,color-mix(in srgb,var(--nuit-a) 60%,var(--nuit-c)),var(--nuit-c));
+    box-shadow:inset 0 1px 0 color-mix(in srgb,var(--sur-vert) 9%,transparent);transition:background .3s}
+  .affiche-texte .bt-f{font-family:var(--sans);font-size:20px;line-height:1;letter-spacing:0;transition:transform .35s var(--montee)}
+  @media (prefers-reduced-motion:no-preference){
+    .affiche-texte .bt::before{animation:bt-tour 3.6s linear infinite}
+    @keyframes bt-tour{to{transform:translate(-50%,-50%) rotate(360deg)}}}
+  .affiche:hover .bt,.affiche:focus-visible .bt{color:var(--sur-vert);background:var(--vert-vif);transform:translateY(-1px);
+    box-shadow:0 2px 0 rgba(0,0,0,.55),0 18px 40px color-mix(in srgb,var(--vert-vif) 28%,transparent)}
+  .affiche:hover .bt::before,.affiche:focus-visible .bt::before{animation-play-state:paused;opacity:0}
+  .affiche:hover .bt::after,.affiche:focus-visible .bt::after{background:linear-gradient(180deg,color-mix(in srgb,var(--vert-vif) 22%,var(--nuit-b)),color-mix(in srgb,var(--vert-vif) 12%,var(--nuit-c)))}
+  .affiche:hover .bt-f,.affiche:focus-visible .bt-f{transform:translateX(6px)}
+  .affiche:active .bt{transform:translateY(1px);box-shadow:0 0 0 rgba(0,0,0,.55),0 6px 16px rgba(0,0,0,.35);transition-duration:.08s}
   @media (max-width:980px){.affiche{grid-template-columns:minmax(0,1fr)}.affiche-robot{display:none}}
 
   /* les annexes en tuiles */
@@ -489,11 +535,13 @@
     .barre{padding:12px 18px;gap:14px}
     .barre nav{display:none}
     .pan{min-height:62vh;padding:130px 24px 56px}
+    .rideau-titre{top:51px}     /* (130 - 27) / 2 : la barre est dans le flux, la bande part du bord */
   }
   /* sous 700 px les pans s'empilent : seul le premier laisse la place au titre */
   @media (max-width:700px){
     .rideau{grid-template-columns:1fr}
     .pan{padding-top:84px}
+    .rideau-titre{top:39px;font-size:19px}   /* deux lignes de 23 (46) dans 124 : 39 dessus, 39 dessous */
     .rideau-titre+.pan{padding-top:124px}
     /* au téléphone, une commande coupée par un ascenseur horizontal se lit
        comme une commande cassée : elle se replie, entière */
@@ -541,6 +589,10 @@
 
   canvas.scrub{position:absolute;inset:0;width:100%;height:100%;z-index:0}
   .colle.scrub .scene .objet{visibility:hidden}
+  /* pendant le mouvement, la fiche et le jalon restent ; les étiquettes et leurs lignes attendent
+     que l'objet soit posé (elles pointent des pièces de l'état d'arrivée) */
+  .colle.mouv .scene .ap-eti{opacity:0;transition:none}
+  .colle.mouv .scene .appels line{stroke-dashoffset:1;transition:none}
   /* les aimants : un point d'accroche au milieu de chaque palier d'arrivée ; « proximity »
      ramène le défilement dessus quand il s'arrête près, et laisse filer sinon */
   html.js{scroll-snap-type:y proximity}
@@ -551,6 +603,9 @@
   /* the current link, marked the same way on every page (the heroes had no rule, the instruments
      only brightened it, the house pages only weighted it) */
   .barre nav a[aria-current]{color:var(--sur,var(--sur-vert,#e4ecdf));font-weight:600}
+  /* posée (beige), la barre gardait le lien courant en clair : illisible (relecture du 8/09).
+     Il prend la couleur de titre de SA page : vert routing, rubis screening, lapis, améthyste, onyx. */
+  .barre.posee nav a[aria-current]{color:var(--vert-titre,#23543f)}
   /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
      colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
   @media (max-width:1080px){
@@ -680,15 +735,15 @@
   </div>
 </section>
 <section class="instrument" data-commun="instrument"><div class="colonne">
-  <h2 class="h2">The live instrument, on the sealed public record.</h2>
+  <h2 class="h2">The live instrument, tested against sealed public records.</h2>
   <div class="affiche-col">
     <img class="affiche-robot" src="../rendus/robot-onyx-regarde.webp" alt="" width="786" height="832" decoding="async" loading="lazy">
     <a class="affiche" href="instrument.html">
       <div class="affiche-carte"><svg viewBox="0 0 720 300" aria-hidden="true"><rect class="zone" x="100" y="26" width="295" height="246"/><text class="ax" x="100" y="292" text-anchor="middle">0 d</text><line class="gr" x1="100" x2="100" y1="26" y2="272"/><text class="ax" x="198" y="292" text-anchor="middle">30 d</text><line class="gr" x1="198" x2="198" y1="26" y2="272"/><text class="ax" x="297" y="292" text-anchor="middle">60 d</text><line class="gr" x1="297" x2="297" y1="26" y2="272"/><text class="ax" x="395" y="292" text-anchor="middle">90 d</text><line class="gr" x1="395" x2="395" y1="26" y2="272"/><text class="ax" x="493" y="292" text-anchor="middle">120 d</text><line class="gr" x1="493" x2="493" y1="26" y2="272"/><text class="ax" x="592" y="292" text-anchor="middle">150 d</text><line class="gr" x1="592" x2="592" y1="26" y2="272"/><text class="ax" x="690" y="292" text-anchor="middle">180 d</text><line class="gr" x1="690" x2="690" y1="26" y2="272"/><text class="nom" x="0" y="61">routing</text><line class="gr" x1="100" x2="690" y1="57" y2="57"/><circle class="pierre" cx="159" cy="57" r="7"/><text class="ax" x="159" y="45" text-anchor="middle">18 d · consistent</text><text class="nom" x="0" y="122">screening</text><line class="gr" x1="100" x2="690" y1="118" y2="118"/><circle class="pierre" cx="100" cy="118" r="7"/><text class="ax" x="100" y="106" text-anchor="middle">0 d · consistent</text><text class="nom" x="0" y="184">monitoring</text><line class="gr" x1="100" x2="690" y1="180" y2="180"/><circle class="pierre" cx="100" cy="180" r="7"/><text class="ax" x="100" y="168" text-anchor="middle">0 d · consistent</text><text class="nom" x="0" y="245">scoring</text><line class="gr" x1="100" x2="690" y1="241" y2="241"/><circle class="pierre" cx="100" cy="241" r="7"/><text class="ax" x="100" y="229" text-anchor="middle">0 d · consistent</text><line class="ligne" x1="395" x2="395" y1="26" y2="272"/><text class="eti" x="395" y="18" text-anchor="middle">declared validity period 90 days</text></svg></div>
       <div class="affiche-texte"><span class="ouvrir-eti">Cascade &#183; Dossier</span><span class="ouvrir-t">Open the live instrument</span>
-        <span class="ouvrir-s">The four questions against the five controls, states, seals and freshness live from the sealed public dossier, and what the next control still needs.</span><span class="fl" aria-hidden="true">&#8594;</span></div>
+        <span class="ouvrir-s">The four questions against the five controls, states, seals and freshness live from the sealed public dossier, and what the next control still needs.</span><span class="bt" aria-hidden="true"><span class="bt-l">Open the instrument</span><span class="bt-f">&#8594;</span></span></div>
     </a>
-    <a class="affiche-tarif" href="../engagement.html">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>
+    <a class="affiche-tarif" href="../engagement.html">See pricing <span aria-hidden="true">&#8594;</span></a>
     
   </div>
 </div></section>
@@ -701,7 +756,7 @@
 
 <section class="film"><div class="colonne">
   <h2 class="h2">Cascade Dossier, on film.</h2>
-  <p class="film-duree">The five findings, explained</p>
+  <p class="film-duree">The five findings</p>
   <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film of Cascade Dossier, opens on YouTube">
     <img src="../rendus/affiche-dossier.jpg" alt="The onyx Cascade robot, palms up, projecting two counts from the sealed public dossier: the questions holding the fresh control on the left, those not holding it on the right." width="1280" height="720" decoding="async" loading="lazy">
     <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
@@ -745,10 +800,10 @@
         <span class="tuile-fl" aria-hidden="true">&#8594;</span>
       </a></div>
   <div class="rangee-fine">
-    <a class="lien-fin" href="../engagement.html">Pricing, in figures <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="../contact.html">Contact <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="../colophon.html">The fine print <span aria-hidden="true">&#8594;</span></a>
-    <a class="lien-fin" href="https://github.com/ArslaneSempai-ui/cascade-dossier">The repository, public <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="../engagement.html">See pricing <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="../contact.html">Get in touch <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="../colophon.html">Read the fine print <span aria-hidden="true">&#8594;</span></a>
+    <a class="lien-fin" href="https://github.com/ArslaneSempai-ui/cascade-dossier">View the public repository <span aria-hidden="true">&#8594;</span></a>
   </div></div></nav>
 </main>
 
@@ -908,11 +963,12 @@
     const i = Math.round(t * (M.n - 1));
     const arret = q >= MOUV;
     scenesS.forEach((s, x) => {
-      const a = arret && x === k;
+      const a = x === k;
       s.classList.toggle("actif", a);
       s.setAttribute("aria-hidden", a ? "false" : "true");
     });
-    jalonsS.forEach((j, x) => j.classList.toggle("actif", arret && x === k));
+    jalonsS.forEach((j, x) => j.classList.toggle("actif", x === k));
+    colle.classList.toggle("mouv", !arret);
     /*
      * UNE TRANSITION QUI N'EST PAS ENCORE ARRIVÉE NE FIGE PLUS L'OBJET.
      *

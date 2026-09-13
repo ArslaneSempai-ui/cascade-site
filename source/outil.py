@@ -590,6 +590,9 @@ CSS_BARRE_SITE = '''
   /* the current link, marked the same way on every page (the heroes had no rule, the instruments
      only brightened it, the house pages only weighted it) */
   .barre nav a[aria-current]{color:var(--sur,var(--sur-vert,#e4ecdf));font-weight:600}
+  /* posée (beige), la barre gardait le lien courant en clair : illisible (relecture du 8/09).
+     Il prend la couleur de titre de SA page : vert routing, rubis screening, lapis, améthyste, onyx. */
+  .barre.posee nav a[aria-current]{color:var(--vert-titre,#23543f)}
   /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
      colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
   @media (max-width:1080px){

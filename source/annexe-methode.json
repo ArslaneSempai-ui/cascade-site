@@ -24,7 +24,7 @@
       }
     },
     {
-      "h2": "Each routing, enumerated, with one asterisk",
+      "h2": "Every routing tested, with one asterisk",
       "html": [
         "<p>Five fields, seven tiers per field: the optimiser traverses <b>all 16&#8239;807 assignments exhaustively</b>: a recursive enumeration, no heuristic, no sampling. The count on this page is recalculated from the sources on each check, never typed in.</p>",
         "<p>The asterisk: the seventh tier, <b>human review, is an assumption and not a measurement</b>, and the tool prints exactly that on each pass, and does not let the figure blend in with the measured six.</p>",
