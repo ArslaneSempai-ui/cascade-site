@@ -442,7 +442,7 @@ def pied_promesse(prefixe="", sur_privacy=False):
     if sur_privacy:
         return f'<p class="pied-p">{PIED_PROMESSE}</p>'
     return (f'<p class="pied-p">{PIED_PROMESSE} '
-            f'<a href="{prefixe}ANNEXE-PRIVACY.html"><em>How we prove it</em> '
+            f'<a href="{prefixe}ANNEXE-PRIVACY.html"><em>See how we prove it</em> '
             f'<span aria-hidden="true">&#8594;</span></a></p>')
 
 
