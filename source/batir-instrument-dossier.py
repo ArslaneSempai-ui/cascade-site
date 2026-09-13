@@ -365,9 +365,9 @@ PAGE = f'''<!doctype html><html lang="en">
     <ul>
       <li><b>Our public test set.</b> releve-public.json in the repository, content hash
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
-        on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
-        then recomposes each question&#8217;s state from its own verdicts with the contract&#8217;s
-        no-gap rule, and publishes nothing if one line disagrees.</li>
+        on {D["provenance"]["date"]}. The extractor checks that hash first. It then
+        rebuilds each question&#8217;s state from its own answers, in the order the contract
+        sets, and publishes nothing if one line disagrees.</li>
       <li><b>The suite&#8217;s own public test sets.</b> The reports judged here are the public
         records of Cascade&#8217;s tools (the reader, the matcher, the scenario, the factor):
         published, sealed, verifiable by anyone. A question without one is shown as a labelled blank,

@@ -218,7 +218,7 @@ OUTILS = {
         "robot_rideau": "robot-onyx-tient.webp",        # il tient la pièce
         "affiche": "affiche-dossier.jpg",
         "affiche_encre": "#2a2a31",                    # le gris vif de l'onyx s'efface sur la plaque : l'encre projetée est plus sombre
-        "affiche_alt": "The onyx Cascade robot, palms up, projecting two counts from the sealed public dossier: "
+        "affiche_alt": "The onyx Cascade robot, palms up, projecting two counts from our public test set: "
                        "the questions holding the fresh control on the left, those not holding it on the right.",
         "vif": "#8a8a96",
         "nuit": ("#121216", "#0c0c10", "#070709"),

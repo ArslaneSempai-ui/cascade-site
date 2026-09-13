@@ -964,8 +964,8 @@ def film_html(outil):
                   f'<img src="{lien(outil, "rendus/" + outil["robots"][0])}" alt=""></span>')
     return f"""
 <section class="film"><div class="colonne">
-  <h2 class="h2">Cascade {outil["nom"]}, on film.</h2>
-  <p class="film-duree">The five findings</p>
+  <h2 class="h2">Watch Cascade {outil["nom"]} in five minutes.</h2>
+  <p class="film-duree">The five {outil["nom"]} findings, in order.</p>
   <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film of Cascade {outil["nom"]}, opens on YouTube">
     {visuel}
     <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
@@ -1509,6 +1509,10 @@ def _table_dossier(spec, releve, findings):
       <p class="t-note">{note}</p>'''
 
 
+# le nom courant du jeu de chaque outil : « generated pairs / cases / files », pour que
+# la note d'affiche ne soit pas la même phrase sur trois pages (panel, 13/09)
+_NOM_JEU = {"matcher": "pairs", "scenario": "cases", "factor": "files", "question": "reports"}
+
 SPECS = {
     "screening": dict(
         lot="S3",
@@ -1611,7 +1615,7 @@ SPECS = {
     "dossier": dict(
         lot="D3",
         etats=ETATS_PREFIXE["dossier"],
-        alt_plateau="The staircase of seals",
+        alt_plateau="The five checks",
         palette=PALETTE_ONYX, nuit=NUIT_ONYX,
         titre="Cascade Dossier &#183; the assembled audit trail",
         og_titre="Cascade Dossier: is the whole chain measured, sealed and fresh",
@@ -1725,11 +1729,12 @@ def _note_outil(spec, releve, findings):
     if palier_f and champ_cite == "taux":
         choix = f"The ring marks the cell the tool retains under its default rule, {palier_f} at {seuil_f}."
     elif palier_f:
-        choix = (f"The marked cell, {palier_f} at {seuil_f}, carries the strongest recall lower bound; "
-                 "under its default rule the tool retains no cell at the recall floor on these cases.")
+        choix = (f"The marked cell, {palier_f} at {seuil_f}, comes closest to the 90% recall floor. "
+                 "None reaches it, so the tool keeps no cell on these cases.")
     else:
-        choix = "Under its default rule the tool retains no cell at the recall floor on these cases."
-    return f"{unites}: recall of each {spec['table_ligne']} at each threshold. {choix} The synthetic variants stay apart, on the instrument."
+        choix = "No cell reaches the 90% recall floor, so the tool keeps none on these cases."
+    return (f"{unites}: recall of each {spec['table_ligne']} at each threshold. {choix} "
+            f"Generated {_NOM_JEU[spec['table_ligne']]} are measured apart, and the instrument shows them.")
 
 
 def _table_outil(spec, releve, findings):
@@ -1771,7 +1776,7 @@ def _table_outil(spec, releve, findings):
     return f'''<div class="t-scroll"><table class="routage">
       <caption class="sr">{spec["table_caption"]}</caption>
       <thead><tr><th scope="col">{spec["table_ligne"]}</th>{tetes}</tr></thead><tbody>{lignes}</tbody></table></div>
-      <p class="t-note">{unites}: recall on top, false alerts below. {frontiere} The synthetic variants stay apart, on the instrument.</p>'''
+      <p class="t-note">{unites}: recall on top, false alerts below. {frontiere} Generated {_NOM_JEU[spec["table_ligne"]]} are measured apart, and the instrument shows them.</p>'''
 
 
 

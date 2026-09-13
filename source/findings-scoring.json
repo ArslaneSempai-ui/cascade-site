@@ -5,11 +5,11 @@
     {
       "num": "01",
       "titre": "Geography scores zero recall and zero false alerts here.",
-      "phrase": "Every file in the record sits in an ordinary Union country, because no official country list was copied into the data. The geography factor therefore scores 0% recall and 0% false alerts: the factor a vendor sells hardest carries no weight here, by construction.",
+      "phrase": "Every file in our test set sits in an ordinary EU country, because no official country list was copied into the data. The geography factor therefore scores 0% recall and 0% false alerts: the factor a vendor sells hardest carries no weight here, by construction.",
       "a": "0%",
       "leg_a": "recall 0% for the geography factor at 0.50, interval 0% to 8%, 42 files, all escalated",
       "b": "0%",
-      "leg_b": "false alerts 0% at 0.50, interval 0% to 8%, 42 files, all retained",
+      "leg_b": "false alerts 0% at 0.50, interval 0% to 8%, 42 files, all kept at their rating",
       "cote": "geography: 0% both sides",
       "source": {
         "a": {
@@ -38,7 +38,7 @@
           0.7,
           0.5,
           0.96,
-          "retained files: false alerts 0%"
+          "kept files: false alerts 0%"
         ]
       ],
       "rail": "Geography: 0% recall, 0% false alerts"
@@ -46,11 +46,11 @@
     {
       "num": "02",
       "titre": "The product factor reaches 92.9% recall at 23.8% false alerts, at threshold 0.50.",
-      "phrase": "Scoring only the products a client holds reaches 92.9% recall at threshold 0.50: correspondent accounts, private banking and crypto rails carry the signal. The same factor alerts on 23.8% of the retained files, each one a review.",
+      "phrase": "Scoring only the products a client holds reaches 92.9% recall at threshold 0.50: correspondent accounts, private banking and crypto rails carry the signal. The same factor alerts on 23.8% of the files that were kept at their rating, and each alert is a review to run.",
       "a": "92.9%",
       "leg_a": "recall 92.9% for the product factor at 0.50, interval 81% to 98%, 42 files, all escalated",
       "b": "23.8%",
-      "leg_b": "false alerts 23.8% at 0.50, interval 13% to 39%, 42 files, all retained",
+      "leg_b": "false alerts 23.8% at 0.50, interval 13% to 39%, 42 files, all kept at their rating",
       "cote": "recall 92.9%",
       "source": {
         "a": {
@@ -79,7 +79,7 @@
           0.82,
           0.5,
           0.96,
-          "retained files: false alerts 23.8%"
+          "kept files: false alerts 23.8%"
         ]
       ],
       "rail": "Product: 92.9% recall, 23.8% false alerts"
@@ -87,12 +87,12 @@
     {
       "num": "03",
       "titre": "No factor's recall lower bound reaches the 90% floor.",
-      "phrase": "The tool keeps settings that catch at least 90% of true files, then takes the fewest false alerts. No factor reaches that on the 42 files: product holds down to 81%, behaviour catches 66.7% but holds to 51.6%.",
+      "phrase": "The tool keeps settings that catch at least 90% of true files, then takes the fewest false alerts. No factor reaches that on the 42 files: product comes closest at 81%, and behaviour, which raises no false alert, at 51.6%.",
       "a": "81%",
-      "leg_a": "highest recall lower bound, product at 0.50: 81%, interval 81% to 98%",
+      "leg_a": "product at 0.50 comes closest: 81%, interval 81% to 98%",
       "b": "51.6%",
-      "leg_b": "cleanest factor, behaviour at 0.50: recall lower bound 51.6%, with zero false alerts",
-      "cote": "best bound 81%",
+      "leg_b": "behaviour at 0.50: 51.6%, with no false alert",
+      "cote": "closest 81%",
       "source": {
         "a": {
           "table": "authored",
@@ -122,15 +122,15 @@
           0.72,
           0.814,
           0.2,
-          "behaviour: recall lower bound 51.6%"
+          "behaviour: 51.6%, no false alert"
         ]
       ],
-      "rail": "No factor's lower bound reaches 90%"
+      "rail": "No factor reaches the 90% floor"
     },
     {
       "num": "04",
       "titre": "The product factor scores 79.4% recall on generated files against 92.9% on written ones.",
-      "phrase": "The same cell scores 92.9% recall on 42 files written and 79.4% on 126 files generated. Here the generated set is harder, and the tool still measures it on its own and keeps it out of the headline rate.",
+      "phrase": "The same cell scores 92.9% recall on 42 files written and 79.4% on 126 files generated. Here the generated set is harder, and the tool still measures it separately, outside the headline rate.",
       "a": "92.9%",
       "leg_a": "recall 92.9% for product at 0.50 on 42 files written, interval 81% to 98%",
       "b": "79.4%",
@@ -166,17 +166,17 @@
           "generated files: recall 79.4%"
         ]
       ],
-      "rail": "Generated vs written, measured apart"
+      "rail": "Generated files, measured apart from the written ones"
     },
     {
       "num": "05",
       "titre": "Measure the whole grid on your own review outcomes.",
-      "phrase": "Every rate here comes from the public record: 84 files written, 42 files escalated and 42 files retained, with 252 files generated. Two files from your systems rerun the grid, and the report lands next to your files.",
+      "phrase": "Every rate here comes from our public test set: 84 files written, 42 files escalated and 42 files kept at their rating, with 252 files generated. Two CSV files from your systems, your review outcomes and the customer attributes, rerun the grid, and the report lands next to them.",
       "a": "42 files",
-      "leg_a": "84 files written, 42 files escalated and 42 files retained, seven per typology",
+      "leg_a": "84 files written, 42 files escalated and 42 files kept at their rating, seven per typology",
       "b": "126 files",
-      "leg_b": "252 files generated, 126 files escalated and 126 files retained, measured apart",
-      "cote": "yours replace ours",
+      "leg_b": "252 files generated, 126 files escalated and 126 files kept at their rating, measured apart",
+      "cote": "your own figures",
       "source": {
         "a": {
           "table": "authored",

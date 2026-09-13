@@ -325,10 +325,10 @@ ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
 # la phrase suit l'état du registre : des parenthèses vides « () » se sont affichées
 # le soir où le septième palier est arrivé (relu sur capture)
 PHRASE_ABSENTS = (
-    f"a matcher absent from tonight&#8217;s registry ({ABSENTS}) is shown as a labelled blank"
+    f"a matcher missing from the registry ({ABSENTS}) shows as a labelled blank"
     if ABSENTS else
-    "each matcher of the registry is present in the record; an absent one is shown as a labelled blank "
-    "and no guessed column")
+    "every matcher in the registry appears in the record, and one that is missing shows as a "
+    "labelled blank")
 
 PAGE = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade Screening &#183; live instrument</title>
@@ -370,9 +370,9 @@ PAGE = f'''<!doctype html><html lang="en">
             <button class="regl" id="m-synth">synthetic variants (declared)</button>
           </div>
           <p class="tm-sortie" id="g-quoi"></p>
-          {carte_html("threshold", "recall")}
+          {carte_html("threshold", "recall", "matcher")}
           {table_html()}
-          <p class="tm-sortie" id="g-lecture" data-commun="instrument">pick a cell: recall over false alerts, with n and its 95&nbsp;% interval</p>
+          <p class="tm-sortie" id="g-lecture" data-commun="instrument">pick a cell: what it catches over what it flags wrongly, with the number of pairs and the interval</p>
 
           <p class="tm-l"><span class="ps">$</span> cascade optimise --recall</p>
           <div class="b-ligne">
@@ -403,9 +403,9 @@ PAGE = f'''<!doctype html><html lang="en">
     <ul>
       <li><b>Our public test set.</b> releve-public.json in the repository, content hash
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
-        on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
-        then rebuilds every figure with the tool&#8217;s own code, and publishes nothing
-        if one figure disagrees.</li>
+        on {D["provenance"]["date"]}. The extractor checks that hash, rebuilds every
+        figure with the tool&#8217;s own code, and publishes nothing if one of them
+        disagrees.</li>
       <li><b>The pairs we wrote.</b> The labelled half is written by hand: true correspondences
         (transliterations, token order, initials, typos, particles) and near-matches
         (siblings, partial homonyms, near-strings that are not the same person). The labels
@@ -423,7 +423,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <li><b>Your data.</b> This page cannot read it: no network requests leave it
         (connect-src &#8216;none&#8217;), no third-party resource is loaded, and there is no input
         field to paste a name into.</li>
-      <li><b>Bare rates.</b> Each cell carries its n and its 95&nbsp;% interval; {PHRASE_ABSENTS}.</li>
+      <li><b>A rate without the number of pairs behind it.</b> Each cell carries that number and its 95&nbsp;% interval. {PHRASE_ABSENTS}.</li>
     </ul>
       </details>
     </div>

@@ -331,10 +331,10 @@ ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
 # la phrase suit l'état du registre : des parenthèses vides « () » se sont affichées
 # le soir où le septième palier est arrivé (relu sur capture)
 PHRASE_ABSENTS = (
-    f"a factor absent from tonight&#8217;s registry ({ABSENTS}) is shown as a labelled blank"
+    f"a factor missing from the registry ({ABSENTS}) shows as a labelled blank"
     if ABSENTS else
-    "each factor of the registry is present in the record; an absent one is shown as a labelled blank "
-    "and no guessed column")
+    "every factor in the registry appears in the record, and one that is missing shows as a "
+    "labelled blank")
 
 PAGE = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade Scoring &#183; live instrument</title>
@@ -376,9 +376,9 @@ PAGE = f'''<!doctype html><html lang="en">
             <button class="regl" id="m-synth">synthetic variants (declared)</button>
           </div>
           <p class="tm-sortie" id="g-quoi"></p>
-          {carte_html("threshold", "recall")}
+          {carte_html("threshold", "recall", "factor")}
           {table_html()}
-          <p class="tm-sortie" id="g-lecture" data-commun="instrument">pick a cell: recall over false alerts, with n and its 95&nbsp;% interval</p>
+          <p class="tm-sortie" id="g-lecture" data-commun="instrument">pick a cell: what it catches over what it flags wrongly, with the number of files and the interval</p>
 
           <p class="tm-l"><span class="ps">$</span> cascade optimise --recall</p>
           <div class="b-ligne">
@@ -409,9 +409,9 @@ PAGE = f'''<!doctype html><html lang="en">
     <ul>
       <li><b>Our public test set.</b> releve-public.json in the repository, content hash
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
-        on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
-        then rebuilds every figure with the tool&#8217;s own code, and publishes nothing
-        if one figure disagrees.</li>
+        on {D["provenance"]["date"]}. The extractor checks the hash first, then
+        recomputes each figure from the record. A single disagreement stops the
+        page.</li>
       <li><b>The files we wrote.</b> The labelled half is written by hand: typologies of risk
         (shell layers, a PEP relative, cash-intensive trade, an offshore structure, undeclared
         turnover) and benign cases (a local shop, a salaried resident, a domestic SME,
@@ -434,7 +434,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <li><b>Your data.</b> This page cannot read it: no network requests leave it
         (connect-src &#8216;none&#8217;), no third-party resource is loaded, and there is no input
         field to paste a customer file into.</li>
-      <li><b>Bare rates.</b> Each cell carries its n and its 95&nbsp;% interval; {PHRASE_ABSENTS}.</li>
+      <li><b>A rate without the number of files behind it.</b> Both appear in each cell, next to the 95&nbsp;% interval. {PHRASE_ABSENTS}.</li>
     </ul>
       </details>
     </div>

@@ -235,8 +235,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="tete"><div class="colonne">
   <h1 class="h1">What an engagement buys.</h1>
   <p class="lede"><b>Test any of the five instruments for thirty days on your own records.</b><br>
-    Run one sealed campaign when you are ready. Then license it for the year, when the results
-    make the case.</p>
+    Run one measurement campaign when you are ready, then licence it for the year.</p>
 </div></section>
 
 <section aria-label="The three steps"><div class="colonne">
@@ -245,15 +244,15 @@ PAGE = f'''<!doctype html><html lang="en">
       <img class="col-robot" src="rendus/robot-salut.webp" alt="">
       <p class="c-t">the evaluation</p>
       <p class="c-prix">$0<small> &#183; 30 days</small></p>
-      <p class="c-qui">For deciding. Your records, your machine, nothing to sign.</p>
+      <p class="c-qui">A thirty-day trial on your own records. Nothing to sign.</p>
       <ul class="c-liste">
         <li>The whole tool, <b>on your own records</b></li>
-        <li>One plan, each Cascade tool: <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b> and <b>Scoring</b> alike, and the <b>Dossier</b> that reads them</li>
+        <li>Every Cascade tool: <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b>, <b>Scoring</b>, and the <b>Dossier</b> that reads them</li>
         <li>Your thirty days start the first time you run the tool. Downloading it does not start the clock</li>
-        <li>Results stay internal, no production</li>
+        <li>Results stay internal. No production use</li>
       </ul>
       <a class="cta" href="{DEPOT_URL}"><span class="b">Clone and run <span class="fl" aria-hidden="true">&#8594;</span></span></a>
-      <p class="c-fin">granted in the public licence itself</p>
+      <p class="c-fin">The public licence grants it</p>
     </div>
     <div class="col">
       <img class="col-robot" src="rendus/robot-penche.webp" alt="">
@@ -263,7 +262,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <p class="c-plus">everything in the evaluation, plus</p>
       <ul class="c-liste">
         <li><b>What suffices, tool by tool</b>: field by field on Routing, matcher and threshold on Screening, scenario and threshold on Monitoring, factor and threshold on Scoring; the Dossier binds the four</li>
-        <li>Intervals, refusals under twenty observations</li>
+        <li>Every rate with its interval. No rate quoted under twenty cases</li>
         <li>A <b>signed report</b> your audit team can check on its own</li>
         <li>Your data stays with you, and we do not read it</li>
       </ul>
@@ -274,13 +273,13 @@ PAGE = f'''<!doctype html><html lang="en">
       <img class="col-robot" src="rendus/robot-vert-tient.webp" alt="">
       <p class="c-t">the licence</p>
       <p class="c-prix">$30,000<small> a year</small></p>
-      <p class="c-qui">For running it as yours. Commercial use, updates included.</p>
+      <p class="c-qui">For using it in your own operations. Commercial use, updates included.</p>
       <p class="c-plus">everything in the campaign, plus</p>
       <ul class="c-liste">
         <li>Commercial use for your own business</li>
-        <li>The same licence covers <b>each Cascade tool</b>: Routing, Screening, Monitoring, Scoring, one paper</li>
+        <li>One licence covers <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b> and <b>Scoring</b></li>
         <li>And the <b>Dossier</b>: the piece across tools your regulator reads and can check itself</li>
-        <li>The <b>licensed component</b>, kept unpublished</li>
+        <li>The <b>licensed component</b>, which is not in the public repository</li>
         <li>Updates included for each paid term</li>
         <li><b>Recertify</b> on fresh records, re-sealed, on the validity period you declare</li>
         <li>One legal entity signs, and every affiliate it covers is named</li>
@@ -293,7 +292,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section class="jours" aria-label="The days"><div class="colonne">
   <p class="jours-t">The days.</p>
-  <p class="jours-l">Thirty days to decide, on your own records. Then a signature, sixty days to the balance, and the year.</p>
+  <p class="jours-l">Thirty days to decide, on your own records. Then a signature, sixty days to pay the balance, and the licence year starts.</p>
   <div class="axe-boite"><div class="axe-defile">
     <div class="axe" id="axe">
       <div class="voies">
@@ -324,9 +323,9 @@ PAGE = f'''<!doctype html><html lang="en">
     </div>
   </div>
     <p class="etat" id="etat">Thirty days on your records before anything is signed. What you buy afterwards is delivered at your desk, and you can check it there.</p>
-    <div class="commande-jour"><span>drag the day, or</span><button type="button" id="courir">run the year</button></div>
+    <div class="commande-jour"><span>drag the day, or</span><button type="button" id="courir">show the whole year</button></div>
   </div>
-  <p class="note-fin">One person answers, at <a href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a>. Nothing is signed during the thirty days, and your vendor onboarding can run while they pass. <b>What none of this certifies:</b> the report proves what was measured and no more, external publication of engagement results is excluded from the first day, and the full terms are on <a href="ANNEXE-TERMS.html">the terms page</a>, in the same words the paper uses.</p>
+  <p class="note-fin">One person answers, at <a href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a>. Nothing is signed during the thirty days, and your vendor onboarding can run in the meantime. <b>What none of this certifies:</b> the report proves what was measured and no more, you may not publish the results of an engagement outside your own bank, and the full terms are on <a href="ANNEXE-TERMS.html">the terms page</a>, in the same words as the licence.</p>
 </div></section>
 </main>
 

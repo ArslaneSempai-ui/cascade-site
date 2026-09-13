@@ -6,7 +6,7 @@
   {
    "num": "01",
    "titre": "The Dossier reads all four tool reports as one audit file.",
-   "phrase": "A reviewer does not want four files. The Dossier reads all four public records and reports on them as one. In this Dossier, all four reports are present, and all four hold the top control, consistent.",
+   "phrase": "A reviewer does not want four files. The Dossier reads all four reports and answers on them as one. In this Dossier, all four reports are present, and all four hold the top control, consistent.",
    "a": "4",
    "leg_a": "tool reports present, of the 4 the suite produces",
    "b": "4",
@@ -84,7 +84,7 @@
   },
   {
    "num": "03",
-   "titre": "Every public record now carries a verifiable signature.",
+   "titre": "Every report now carries a verifiable signature.",
    "phrase": "On its first run the Dossier verified zero signatures across the suite, one refusal per report, because an unverified signature does not count as valid. The records were signed, and today the Dossier verifies all four with no refusal left.",
    "a": "4",
    "leg_a": "public-record signatures verified, of the 4 reports read",
@@ -165,7 +165,7 @@
   {
    "num": "05",
    "titre": "Your reviewer can check the Dossier alone.",
-   "phrase": "The Dossier is written next to your files and carries a content hash from the same algorithm the suite uses. It checks each measurement against a validity period of 90 days the record declares. Your reviewer confirms the result with no help from us.",
+   "phrase": "The Dossier is written next to your files and carries the same content hash the suite uses. Your reviewer confirms the result with no help from us.",
    "a": "4",
    "leg_a": "questions the Dossier answers as one, for the whole suite",
    "b": "90 days",

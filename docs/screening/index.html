@@ -659,36 +659,36 @@
         <span class="j-num">03</span><span class="j-corps"><span class="j-titre">Best trade-off: 98.3% recall, 76.7% false alerts</span>
         <span class="j-cote">recall 98.3%</span></span></button></li><li><button class="jalon" data-i="3" aria-label="Go to finding 04: The best cell scores 17.2% false alerts on generated pairs against 76.7% on written pairs.">
         <img class="j-vig" src="../rendus/etats/tamis-04.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
-        <span class="j-num">04</span><span class="j-corps"><span class="j-titre">Generated vs written, measured apart</span>
+        <span class="j-num">04</span><span class="j-corps"><span class="j-titre">Generated pairs, measured apart from the written ones</span>
         <span class="j-cote">measured apart</span></span></button></li><li><button class="jalon" data-i="4" aria-label="Go to finding 05: Measure the whole sweep on your own alert history.">
         <img class="j-vig" src="../rendus/etats/tamis-05.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">05</span><span class="j-corps"><span class="j-titre">Your own alert history</span>
-        <span class="j-cote">yours replace ours</span></span></button></li></ul></nav>
+        <span class="j-cote">your own figures</span></span></button></li></ul></nav>
     <div class="theatre">
       <div class="scenes"><canvas class="scrub" width="1374" height="1120" aria-hidden="true"></canvas>
     <div class="scene actif" id="scene-0" data-i="0">
       <img class="objet" src="../rendus/etats/tamis-01.webp"
         alt="The sieve tower, state 01: Exact matching raises no false alert and finds few confirmed matches." width="1374" height="1120" decoding="async" loading="lazy">
-      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="200" x2="710" y2="550" pathLength="1"/><circle cx="710" cy="550" r="4"/><line x1="229" y1="920" x2="685" y2="930" pathLength="1"/><circle cx="685" cy="930" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:20.0%">exact matching: recall 21.7%</span><span class="ap-eti" style="left:16.1%;top:92.0%">hard negatives: false alerts 0%</span>
+      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="200" x2="710" y2="550" pathLength="1"/><circle cx="710" cy="550" r="4"/><line x1="229" y1="920" x2="685" y2="930" pathLength="1"/><circle cx="685" cy="930" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:20.0%">exact matching: recall 21.7%</span><span class="ap-eti" style="left:16.1%;top:92.0%">near-matches: false alerts 0%</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 01</span><span class="ft-cote">recall 21.7%</span></figcaption>
-        <p class="fiche-phrase">Exact matching, after normalisation, raises no false alert on the 60 pairs of hard negatives, and finds 21.7% of the confirmed matches.</p>
+        <p class="fiche-phrase">Exact matching, after normalisation, raises no false alert on the 60 pairs of near-matches, and finds 21.7% of the confirmed matches.</p>
         <div class="paire">
           <div class="val"><span class="chiffre pale-v">21.7%</span><span class="leg">recall 21.7% on 60 pairs of confirmed matches, interval 13% to 34%, at any threshold</span></div>
-          <div class="val"><span class="chiffre vert-v">0%</span><span class="leg">false alerts 0% on 60 pairs of hard negatives, interval 0% to 6%</span></div>
+          <div class="val"><span class="chiffre vert-v">0%</span><span class="leg">false alerts 0% on 60 pairs of near-matches, interval 0% to 6%</span></div>
         </div>
       </figure>
     </div>
     <div class="scene" id="scene-1" data-i="1">
       <img class="objet" src="../rendus/etats/tamis-02.webp"
         alt="The sieve tower, state 02: Jaro-winkler at 0.50 finds every match and alerts on most non-matches." width="1374" height="1120" decoding="async" loading="lazy">
-      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="1095" y1="880" x2="735" y2="620" pathLength="1"/><circle cx="735" cy="620" r="4"/><line x1="325" y1="880" x2="587" y2="600" pathLength="1"/><circle cx="587" cy="600" r="4"/></svg><span class="ap-eti" style="left:77.1%;top:88.0%">jaro-winkler 0.50: recall 100%</span><span class="ap-eti" style="left:22.9%;top:88.0%">hard negatives: false alerts 85%</span>
+      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="1095" y1="880" x2="735" y2="620" pathLength="1"/><circle cx="735" cy="620" r="4"/><line x1="325" y1="880" x2="587" y2="600" pathLength="1"/><circle cx="587" cy="600" r="4"/></svg><span class="ap-eti" style="left:77.1%;top:88.0%">jaro-winkler 0.50: recall 100%</span><span class="ap-eti" style="left:22.9%;top:88.0%">near-matches: false alerts 85%</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 02</span><span class="ft-cote">false alerts 85%</span></figcaption>
-        <p class="fiche-phrase">Jaro-winkler at threshold 0.50 finds every one of the 60 pairs of matches, and alerts on 85% of the 60 pairs of hard negatives.</p>
+        <p class="fiche-phrase">Jaro-winkler at threshold 0.50 finds every one of the 60 pairs of confirmed matches, and alerts on 85% of the 60 pairs of near-matches.</p>
         <div class="paire">
           <div class="val"><span class="chiffre pale-v">100%</span><span class="leg">recall 100% for jaro-winkler at 0.50, interval 94% to 100%, 60 pairs of matches</span></div>
-          <div class="val"><span class="chiffre vert-v">85%</span><span class="leg">false alerts 85% at the same cell, interval 74% to 92%, 60 pairs of hard negatives</span></div>
+          <div class="val"><span class="chiffre vert-v">85%</span><span class="leg">false alerts 85% at the same cell, interval 74% to 92%, 60 pairs of near-matches</span></div>
         </div>
       </figure>
     </div>
@@ -701,20 +701,20 @@
         <p class="fiche-phrase">The tool keeps the settings that catch at least 90% of true matches, then picks the fewest false alerts. Across every matcher and threshold, the embedding included, that is jaro-winkler at 0.56: 98.3% caught, 76.7% flagged wrongly.</p>
         <div class="paire">
           <div class="val"><span class="chiffre pale-v">98.3%</span><span class="leg">recall 98.3% for jaro-winkler at 0.56, interval 91% to 100%, 60 pairs of matches</span></div>
-          <div class="val"><span class="chiffre vert-v">76.7%</span><span class="leg">false alerts 76.7% at the same cell, interval 65% to 86%, 60 pairs of hard negatives</span></div>
+          <div class="val"><span class="chiffre vert-v">76.7%</span><span class="leg">false alerts 76.7% at the same cell, interval 65% to 86%, 60 pairs of near-matches</span></div>
         </div>
       </figure>
     </div>
     <div class="scene" id="scene-3" data-i="3">
       <img class="objet" src="../rendus/etats/tamis-04.webp"
         alt="The sieve tower, state 04: The best cell scores 17.2% false alerts on generated pairs against 76.7% on written pairs." width="1374" height="1120" decoding="async" loading="lazy">
-      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="325" y1="200" x2="465" y2="400" pathLength="1"/><circle cx="465" cy="400" r="4"/><line x1="1095" y1="200" x2="980" y2="490" pathLength="1"/><circle cx="980" cy="490" r="4"/></svg><span class="ap-eti" style="left:22.9%;top:20.0%">written hard negatives: 76.7%</span><span class="ap-eti" style="left:77.1%;top:20.0%">generated hard negatives: 17.2%</span>
+      <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="325" y1="200" x2="465" y2="400" pathLength="1"/><circle cx="465" cy="400" r="4"/><line x1="1095" y1="200" x2="980" y2="490" pathLength="1"/><circle cx="980" cy="490" r="4"/></svg><span class="ap-eti" style="left:22.9%;top:20.0%">written near-matches: 76.7%</span><span class="ap-eti" style="left:77.1%;top:20.0%">generated near-matches: 17.2%</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 04</span><span class="ft-cote">measured apart</span></figcaption>
-        <p class="fiche-phrase">The same cell reads 76.7% false alerts on 60 pairs of written hard negatives and 17.2% on 360 pairs of generated ones. The generated set is easier, so the tool measures it on its own and keeps it out of the headline rate.</p>
+        <p class="fiche-phrase">The same cell reads 76.7% false alerts on the 60 pairs of near-matches we wrote and 17.2% on the 360 pairs a program generated. The generated set is easier, so the tool measures it separately and the headline rate does not include it.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">76.7%</span><span class="leg">false alerts 76.7% at the best cell on 60 pairs of hard negatives, interval 65% to 86%</span></div>
-          <div class="val"><span class="chiffre vert-v">17.2%</span><span class="leg">false alerts 17.2% at the same cell on 360 pairs of generated hard negatives, interval 14% to 21%</span></div>
+          <div class="val"><span class="chiffre pale-v">76.7%</span><span class="leg">false alerts 76.7% at the best cell on 60 pairs of near-matches we wrote, interval 65% to 86%</span></div>
+          <div class="val"><span class="chiffre vert-v">17.2%</span><span class="leg">false alerts 17.2% at the same cell on 360 pairs of generated near-matches, interval 14% to 21%</span></div>
         </div>
       </figure>
     </div>
@@ -723,10 +723,10 @@
         alt="The sieve tower, state 05: Measure the whole sweep on your own alert history." width="1374" height="1120" decoding="async" loading="lazy">
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="130" x2="710" y2="280" pathLength="1"/><circle cx="710" cy="280" r="4"/><line x1="806" y1="960" x2="771" y2="870" pathLength="1"/><circle cx="771" cy="870" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:13.0%">120 pairs written</span><span class="ap-eti" style="left:56.7%;top:96.0%">720 pairs generated</span>
       <figure class="fiche">
-        <figcaption class="fiche-t"><span>finding 05</span><span class="ft-cote">yours replace ours</span></figcaption>
-        <p class="fiche-phrase">Every rate here comes from the public record: 60 pairs of confirmed matches and 60 of hard negatives, written and declared, with 360 pairs generated of each. One command reruns the sweep on your alert history and writes the report beside your file.</p>
+        <figcaption class="fiche-t"><span>finding 05</span><span class="ft-cote">your own figures</span></figcaption>
+        <p class="fiche-phrase">Every rate here comes from our public test set: 60 pairs of confirmed matches and 60 pairs of near-matches, written by us, with 360 pairs generated of each. Run it once on your own alert history and the report lands beside your file.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">60 pairs</span><span class="leg">60 pairs of matches and 60 of hard negatives, written and declared, behind the rates</span></div>
+          <div class="val"><span class="chiffre pale-v">60 pairs</span><span class="leg">60 pairs of confirmed matches and 60 pairs of near-matches, written by us, behind the rates</span></div>
           <div class="val"><span class="chiffre vert-v">360 pairs</span><span class="leg">360 pairs of each, generated under a seed and measured apart</span></div>
         </div>
       </figure>
@@ -745,7 +745,7 @@
     </a>
     <a class="affiche-tarif" href="../engagement.html">See pricing <span aria-hidden="true">&#8594;</span></a>
     <p class="t-note">Measured on the 60 written match pairs and 60 hard
-      negatives: recall of each matcher at each threshold. The ring marks the cell the tool retains under its default rule, jaro-winkler at 0.56. The synthetic variants stay apart, on the instrument.</p>
+      negatives: recall of each matcher at each threshold. The ring marks the cell the tool retains under its default rule, jaro-winkler at 0.56. Generated pairs are measured apart, and the instrument shows them.</p>
   </div>
 </div></section>
 
@@ -756,8 +756,8 @@
 </div></div>
 
 <section class="film"><div class="colonne">
-  <h2 class="h2">Cascade Screening, on film.</h2>
-  <p class="film-duree">The five findings</p>
+  <h2 class="h2">Watch Cascade Screening in five minutes.</h2>
+  <p class="film-duree">The five Screening findings, in order.</p>
   <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film of Cascade Screening, opens on YouTube">
     <img src="../rendus/affiche-screening.jpg" alt="The ruby Cascade robot, palms up, projecting the two rates of the best-trade-off cell: recall on the left, false alerts on the right." width="1280" height="720" decoding="async" loading="lazy">
     <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>

@@ -87,12 +87,12 @@
     {
       "num": "03",
       "titre": "No scenario's recall lower bound reaches the 90% floor.",
-      "phrase": "The tool keeps the settings that catch at least 90% of true cases, then picks the fewest false alerts. No scenario reaches it on the 42 cases: amount holds down to 84.2%, peer to 75%.",
+      "phrase": "The tool keeps the settings that catch at least 90% of true cases, then picks the fewest false alerts. No scenario reaches it on the 42 cases: amount comes closest, at 84.2%, then peer at 75%.",
       "a": "84.2%",
-      "leg_a": "highest recall lower bound, amount at 0.50: 84.2%, interval 84% to 99%",
+      "leg_a": "amount at 0.50 comes closest: 84.2%, interval 84% to 99%",
       "b": "75%",
-      "leg_b": "next best lower bound, peer at 0.50: 75%, interval 75% to 95%",
-      "cote": "best bound 84.2%",
+      "leg_b": "peer at 0.50 comes next: 75%, interval 75% to 95%",
+      "cote": "closest 84.2%",
       "source": {
         "a": {
           "table": "authored",
@@ -122,15 +122,15 @@
           0.545,
           0.12,
           0.13,
-          "amount: recall lower bound 84.2%"
+          "amount: closest at 84.2%"
         ]
       ],
-      "rail": "No scenario's lower bound reaches 90%"
+      "rail": "No scenario reaches the 90% floor"
     },
     {
       "num": "04",
       "titre": "The amount scenario scores 100% recall on generated cases against 95.2% on written ones.",
-      "phrase": "The same cell scores 95.2% recall on 42 cases written and 100% on 126 cases generated. The generated set is easier, so the tool measures it on its own and keeps it out of the headline rate.",
+      "phrase": "The same cell scores 95.2% recall on 42 cases written and 100% on 126 cases generated. The generated set is easier, so the tool measures it separately and the headline rate does not include it.",
       "a": "95.2%",
       "leg_a": "recall 95.2% for amount at 0.50 on 42 cases written, interval 84% to 99%",
       "b": "100%",
@@ -166,17 +166,17 @@
           "generated cases: recall 100%"
         ]
       ],
-      "rail": "Generated vs written, measured apart"
+      "rail": "Generated cases, measured apart from the written ones"
     },
     {
       "num": "05",
       "titre": "Measure the whole grid on your own alert history.",
-      "phrase": "Every rate here comes from the public record: 42 cases marked suspicious and 42 cases marked benign, seven per typology, with 126 cases generated of each. Two files from your systems rerun the grid, and the report lands next to your files.",
+      "phrase": "Every rate here comes from our public test set: 42 cases marked suspicious and 42 cases marked benign, seven per typology, with 126 cases generated of each. Two CSV files from your systems, your dispositioned alerts and their transactions, rerun the grid, and the report lands next to them.",
       "a": "42 cases",
-      "leg_a": "42 cases suspicious and 42 cases benign, written and declared, seven per typology",
+      "leg_a": "42 cases suspicious and 42 cases benign, written by us, seven per typology",
       "b": "126 cases",
       "leg_b": "126 cases of each, generated under a seed and measured apart",
-      "cote": "yours replace ours",
+      "cote": "your own figures",
       "source": {
         "a": {
           "table": "authored",
