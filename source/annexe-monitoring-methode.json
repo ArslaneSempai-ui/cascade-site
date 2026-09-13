@@ -1,37 +1,37 @@
 {
   "_": "Method page of the lapis tool (Monitoring). Same shape as the red annexes. Every refs points at a real line of ~/Documents/cascade-monitoring at main 9f77ea2; the citation guard must know the third repository. The object render does not exist yet (look-dev).",
   "objet": "rendus/etats/objet-monitoring-methode.webp",
-  "titre": "How the monitoring grid is measured.",
-  "lede": "This page shows what the monitoring numbers are made of: which cases, which scenarios, which scales, and where each figure is not quoted. No real transaction exists in the sealed public record, and the page states this before anything else: the measurement that counts is yours, on your own dispositioned alerts, at your desk.",
-  "description": "Which cases, which scenarios, which scales, and where a figure is not quoted. No real transaction is in the record: the measure that counts is yours.",
+  "titre": "What the Monitoring figures are made of.",
+  "lede": "Before anything else: our public test set holds no real transaction. It is a file we froze, its content hash checked before any figure is shown. The measure that counts is yours, on alerts your analysts already closed, at your desk. Below: the cases, scenarios and scales behind each figure, and where one is not quoted.",
+  "description": "Cases, scenarios, scales, and where a figure is not quoted: our public test set holds no real transaction, so the measure that counts is yours.",
   "sections": [
     {
-      "h2": "Written cases, case by case",
+      "h2": "Written cases and their benign counterparts",
       "html": [
-        "<p>The measured half rests on cases <b>we wrote and we declare</b>: six suspicious typologies (structuring, rapid movement, dormant burst, round-tripping, cash-intensive, layering fan-out) and, deliberately, their six benign cases: payroll that moves money fast, a market season that looks like a dormant account waking, a loan instalment that repeats the same amount to the last unit, rents that cluster like structuring. What separates each case from its typology is <b>in the data</b>, history and validity period, never only in the label, and a test pins that structurally.</p>",
-        "<p>A set without cases would flatter each scenario: anything alarms when the benign cases are easy. The cases are the point, and the findings above say which scenario trips on which case, measured.</p>"
+        "<p>The measured half of our public test set rests on cases <b>we wrote and mark as ours in the data</b>: six suspicious typologies (structuring, rapid movement, dormant burst, round-tripping, cash-intensive, layering fan-out) and, deliberately, their six benign cases. Payroll moves money fast. A market season looks like a dormant account waking. A loan instalment repeats the same amount to the last unit. Rents cluster like structuring. What tells each benign case apart from its typology is <b>in the data</b>, history and validity period, and a test checks that structure. The label alone never carries it.</p>",
+        "<p>A set without these benign cases would flatter each scenario, because any scenario looks good when the benign cases are easy. The cases are what the measurement is for, and the findings above say which scenario fires on which case, as measured.</p>"
       ],
       "verif": {
         "t": "Verify the cases",
-        "p": "The suite revalidates each written case, its nature and its window, and the case structure itself.",
+        "p": "The test suite validates each written case again, its nature, its window and its structure.",
         "cmd": [
           {
             "c": "npm test",
-            "n": "84 cases revalidated, case invariants pinned"
+            "n": "84 cases validated again, case invariants under test"
           }
         ],
         "refs": "src/cas-etiquetes.test.ts:11 &#183; src/cas-etiquetes.test.ts:41 &#183; src/cas.ts:47"
       }
     },
     {
-      "h2": "Generated variants, apart by construction",
+      "h2": "Generated variants, kept apart by construction",
       "html": [
-        "<p>The synthetic half is generated from the written cases under an explicit seed, and the jitter obeys one rule above all others: <b>it must not undo the nature it varies</b>. Structuring deposits stay under the reporting threshold, round-trip amounts and loan instalments move by a common factor so their equalities survive, round savings amounts stay round. Each variant is revalidated before it exists.</p>",
-        "<p>The two halves are never blended: the record holds them under two provenances, and on cells where the generated set scores friendlier than the written one, that gap is shown on the page and not averaged away.</p>"
+        "<p>The generated half comes from the written cases under a stated seed, the fixed number that starts the random draw. The variation obeys one rule above all others. <b>It must not undo the nature it varies</b>. Structuring deposits stay under the reporting threshold. Round-trip amounts and loan instalments move by one common factor, so their equal amounts stay equal. Round savings amounts stay round. Each variant passes the case checks before it is added.</p>",
+        "<p>The two halves are never blended. The set holds them in two blocks, each with its source in the data. When a scenario scores better on the generated half than on the written one, the page shows that gap. It does not average it away.</p>"
       ],
       "verif": {
-        "t": "Verify the separation",
-        "p": "Open the record: the two blocks carry their provenance in the data itself.",
+        "t": "Check the separation",
+        "p": "Open the public test set. Each block carries its source in the data.",
         "cmd": [
           {
             "c": "python3 -c \"import json; d=json.load(open('releve-public.json')); print(d['authored']['provenance'], '/', d['synthetic']['provenance'])\"",
@@ -43,35 +43,35 @@
       "commun": "methode"
     },
     {
-      "h2": "Scales are declared, never discovered in the code",
+      "h2": "Scales are stated in one file, never buried in the code",
       "html": [
-        "<p>Two scenarios need a scale to turn a raw number into a score: the amount scale and the velocity scale. Both are <b>assumed values with declared bounds and provenance</b>, written in one file with the reason for each, not as constants scattered where nobody reads them. Change a scale and the record must be re-measured and re-sealed: the seal makes a silent retune impossible.</p>"
+        "<p>Two scenarios need a scale to turn a raw number into a score: the amount scale and the velocity scale. Both are <b>assumed values with stated bounds and a stated source</b>, written in one file with the reason for each. Neither is a constant buried in the code. Change a scale and the public test set must be measured again and signed again, and the content hash makes a silent retune impossible.</p>"
       ],
       "verif": {
-        "t": "Verify the declarations",
-        "p": "The scales file carries value, provenance and bounds for each assumption.",
+        "t": "Check the stated values",
+        "p": "The scales file carries the value, the source and the bounds of each assumption.",
         "cmd": [
           {
             "c": "npm test",
-            "n": "the assumptions cases pin provenance and bounds"
+            "n": "the assumption tests check source and bounds"
           }
         ],
         "refs": "src/assumptions.ts:29 &#183; src/assumptions.ts:76 &#183; src/assumptions.ts:97"
       }
     },
     {
-      "h2": "Wilson everywhere, and refusals where n is small",
+      "h2": "A confidence interval on each rate, and no number where the count is small",
       "html": [
-        "<p>Each rate travels with its Wilson interval at 95 percent and its n; below <b>twenty observations</b> a rate is noted and not quoted as a number. On your own history, recall is refused outright with <b>fewer than five confirmed suspicious cases</b>: the tool states this in those words and does not print a figure that rests on almost nothing.</p>",
-        "<p>The threshold grid is shared by each scenario, 0.50 to 1.00 in steps of 0.01, and a case counts as an alert when its score is <b>at or above</b> the threshold: inclusive, so the strictest cell still means something for a scenario that answers exactly 1.</p>"
+        "<p>Each rate comes with its Wilson confidence interval at 95 percent (the range the true rate is likely to sit in) and the count it was measured on. Below <b>twenty observations</b> a rate is noted, and no number is quoted for it. Recall is the share of true suspicious cases a scenario catches. On your own history the tool refuses recall outright with <b>fewer than five confirmed suspicious cases</b>. It prints the refusal and no figure.</p>",
+        "<p>The threshold, the score at which a scenario fires, sits on one grid shared by each scenario, 0.50 to 1.00 in steps of 0.01. A case counts as an alert when its score is <b>at or above</b> the threshold. The comparison is inclusive, so the strictest threshold still means something for a scenario that scores exactly 1.</p>"
       ],
       "verif": {
-        "t": "Verify the refusals",
-        "p": "Both thresholds live in code, and the suite exercises them.",
+        "t": "Check the refusals",
+        "p": "Both cut-offs are written in the code, and the test suite exercises both.",
         "cmd": [
           {
             "c": "npm test",
-            "n": "interval and refusal cases run with the rest"
+            "n": "interval and refusal tests run with the rest"
           }
         ],
         "refs": "src/interval.ts:102 &#183; src/optimise.ts:170 &#183; src/rapport.ts:25 &#183; src/measure.ts:71"

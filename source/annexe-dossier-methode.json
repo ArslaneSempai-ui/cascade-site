@@ -2,18 +2,19 @@
   "_": "Method page of the onyx tool (Dossier). Same shape as the house annexes. Every refs points at a real line of ~/Documents/cascade-dossier at main 74a3a2f; the citation guard must know the fifth repository. The object render does not exist yet (the onyx stair; look-dev).",
   "objet": "rendus/etats/objet-dossier-methode.webp",
   "titre": "How the Dossier checks the four reports.",
-  "lede": "This page shows what the Dossier is made of: which reports it reads, which five controls it runs on each, what its own public measure covers, and where it does not guess. The Dossier is the audit piece of the suite: it proves the chain, or it names what is missing.",
-  "description": "Which reports the Dossier reads, the five controls it runs on each, what its own public measure covers, and the places where it declines to guess.",
+  "lede": "This page shows what the Dossier is made of: the reports it reads, the five controls run on each, and where it does not guess. It also shows what its own public test set holds, a frozen file of measurements that carries its content hash. The Dossier is the audit piece of the suite. It proves the chain, or it names what is missing.",
+  "description": "Which reports the Dossier reads, the five controls it runs on each, what its own public test set covers, and where it does not guess.",
   "sections": [
     {
-      "h2": "Five controls, run in order, refusals named",
+      "h2": "The Dossier runs five controls in order and names each refusal",
       "html": [
-        "<p>Each report the Dossier reads passes the same five controls: <b>present</b> (a readable report from a named tool), <b>sealed</b> (the content hash it carries is the content hash of its content), <b>signed</b> (the sealed public record it cites carries the tool's signature), <b>fresh</b> (measured within the declared validity period; due under two validity periods, stale beyond), <b>consistent</b> (one dataset, one seal; an unknown tool version is named and not guessed). The registry derives the list from code: an absent control is computed, never recited.</p>",
-        "<p>Each verdict carries its reason in words. A report that cannot state its measurement day is not called stale: it is named as unjudgeable, which is a different and worse fact, and the Dossier says it.</p>"
+        "<p>Each report the Dossier reads passes the same five controls. <b>Present</b> means a readable report from a named tool. <b>Sealed</b> means the content hash written in the report matches a hash recomputed from its content. <b>Signed</b> means the public test set the report cites carries the tool's signature. <b>Fresh</b> means the report was measured within the declared validity period. Past that, it is marked due, and past two validity periods it is marked stale. <b>Consistent</b> means the report names one dataset and one content hash. If the tool version is unknown, the Dossier writes unknown. It does not guess a version.</p>",
+        "<p>The Dossier builds its list of controls from the code that declares them, so a missing control is computed. No hand-written list is recited.</p>",
+        "<p>Each answer carries its reason in words. A report that cannot state its measurement day is not called stale. The Dossier marks it unjudgeable and prints that, which is a different and worse fact.</p>"
       ],
       "verif": {
         "t": "Verify the controls",
-        "p": "The suite exercises each control in both directions, refusals included.",
+        "p": "The test suite checks each control on a report it should accept and on one it should refuse.",
         "cmd": [
           {
             "c": "npm test",
@@ -24,34 +25,34 @@
       }
     },
     {
-      "h2": "Its own public measure: the suite, judged by the Dossier",
+      "h2": "Its own public test set is the suite judged by the Dossier",
       "html": [
-        "<p>The Dossier's sealed public record is the suite judging itself: it runs on the sealed public records of the other tools and prints coverage, seals, signatures and freshness as it finds them on the day of the measure. On day one that meant three questions of four covered with the fourth named missing, two seals recomputed, and <b>zero verifiable signatures, printed and not waved through</b>. A Dossier that flattered its own suite would be worth nothing to a reviewer.</p>"
+        "<p>To build its own public test set, the Dossier runs on the other tools' public test sets. It prints coverage, content hashes, signatures and freshness as it finds them on the day of the measure. A Dossier that flattered its own suite would be of no use to a reviewer. On day one that meant three questions of four covered, with the fourth named missing, and two content hashes recomputed. It also meant <b>zero verifiable signatures, printed in the file and recorded as a failed control</b>.</p>"
       ],
       "verif": {
-        "t": "Verify the record",
-        "p": "The sealed public record is sealed; recompute the content hash with the repository's own tool.",
+        "t": "Verify the public test set",
+        "p": "The public test set carries its content hash. Recompute it with the repository's own tool.",
         "cmd": [
           {
             "c": "npm run sceller -- releve-public.json",
-            "n": "says: already sealed, and the seal matches"
+            "n": "prints \"already sealed, and the seal matches\""
           }
         ],
         "refs": "src/measure.ts:93 &#183; src/sceller.ts:50"
       }
     },
     {
-      "h2": "The validity period is declared, and age is counted against it",
+      "h2": "You declare the validity period, and the Dossier counts age against it",
       "html": [
-        "<p>Freshness only means something against a validity period, and the validity period is yours: ninety days by default, named in the record as a declaration, changed with a flag an auditor can see. The record records the settings it was measured under, so two Dossiers can be compared knowing whether the rule moved between them.</p>"
+        "<p>Freshness only means something against a validity period, and you declare it. It is ninety days by default, written in the public test set as a declaration. You change it with a flag, and an auditor can see that flag because the file stores the settings it was measured under. So two Dossiers can be compared knowing whether the rule moved between them.</p>"
       ],
       "verif": {
         "t": "Verify the settings",
-        "p": "The record carries its settings block, validity period included.",
+        "p": "The public test set carries its settings block, validity period included.",
         "cmd": [
           {
             "c": "python3 -c \"import json; r=json.load(open('releve-public.json'))['reglages']; print(r['rythmeJours'], 'days, stale beyond', r['staleApres'], 'validity periods')\"",
-            "n": "prints the declared validity period the verdicts were judged under"
+            "n": "prints the declared validity period the freshness answers were judged against"
           }
         ],
         "refs": "src/controles/fresh.ts:22 &#183; src/measure.ts:98"

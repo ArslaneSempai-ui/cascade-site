@@ -1,22 +1,22 @@
 {
   "_": "Security page of the amethyst tool (Scoring). Same shape as the house annexes. Every refs points at a real line of ~/Documents/cascade-scoring at main d3c3d89. The object render does not exist yet (look-dev).",
   "objet": "rendus/etats/objet-scoring-securite.webp",
-  "titre": "Where scoring runs, and what stays local.",
-  "lede": "Customer risk scoring touches the most personal table a bank holds. This tool's answer is structural: its public data is written and generated with no real person in it, no official risk list was copied anywhere, and not one module is allowed to reach the network.",
-  "description": "Customer risk scoring touches the most personal table a bank holds. Its public data is written, with no real person and no official list copied in.",
+  "titre": "Where Scoring runs, and what stays on your machine.",
+  "lede": "Customer risk scoring reads the most personal table a bank holds. Its public data was written and generated with no real person in it, and no official risk list was copied anywhere. No module is allowed to reach the network.",
+  "description": "Customer risk scoring reads a bank's most personal table. Its public data was written and generated with no real person or official list in it.",
   "sections": [
     {
-      "h2": "The network allowlist is empty, and a test traverses each file",
+      "h2": "No module may touch the network, and a test checks each source file",
       "html": [
-        "<p>Like Monitoring and the Dossier, Scoring downloads <b>nothing</b>: the allowlist of modules that may touch the network is empty, and a structural test traverses each source file for network sites and fails the suite if one appears. The detector proves it can see a planted call before its zero is believed.</p>"
+        "<p>Like its sister tools Monitoring and the Dossier, Scoring downloads <b>nothing</b>. The allowlist, the modules allowed to touch the network, is empty. A structural test reads each source file as text and fails the suite if a line touches the network. It first plants a network call and checks that it sees it, so its zero can be trusted.</p>"
       ],
       "verif": {
-        "t": "Verify the best trade-off",
-        "p": "Run the suite; the test fails if any file gains a network site.",
+        "t": "Verify nothing touches the network",
+        "p": "Run the suite, which fails if any file gains such a line.",
         "cmd": [
           {
             "c": "npm test",
-            "n": "fails if any module touches the network; the allowlist is empty"
+            "n": "fails if any module touches the network, and the allowlist is empty"
           }
         ],
         "refs": "src/frontiere.test.ts:30 &#183; src/frontiere.test.ts:51"
@@ -24,39 +24,40 @@
       "commun": "securite"
     },
     {
-      "h2": "No real person, and no official list, anywhere public",
+      "h2": "The public data holds no real person and no official list",
       "html": [
-        "<p>Each dossier in the sealed public record was <b>written for the typology it illustrates</b> or generated from those dossiers under a seed. No anonymised customer data, because the customer data is simply absent. And no official risk list was copied into the data: a test requires suspects and retained files to <b>share their countries</b>, so the record cannot smuggle a list in through its examples, and the geography factor's zero on this book is printed as a finding.</p>"
+        "<p>Our public test set is a file we no longer change. Each customer file was <b>written for the typology it illustrates</b>, a named pattern of risk, or generated from those files under a seed. It holds no customer data, anonymised or otherwise.</p>",
+        "<p>No official risk list was copied in either. A test requires the suspect files and the retained ones, those not escalated, to <b>share their countries</b>. So the test set cannot bring a list in by its examples. The geography factor, which reads the country, is zero here, and the tool prints that zero as a finding.</p>"
       ],
       "verif": {
-        "t": "Verify the provenance",
-        "p": "The dossiers file declares itself, file by file, and the no-list rule is a test.",
+        "t": "Check the data's source",
+        "p": "The data file states its source, and a test checks that no official list was copied in.",
         "cmd": [
           {
             "c": "python3 -c \"import json; d=json.load(open('src/dossiers-etiquetes.json')); print(d['provenance'], len(d['dossiers']), 'dossiers, each with a written reason')\"",
-            "n": "prints: authored 84 dossiers, each with a written reason"
+            "n": "prints: authored 84 dossiers, each with a written reason (source, then customer files)"
           }
         ],
         "refs": "src/dossiers-etiquetes.json:2 &#183; src/dossiers-etiquetes.test.ts:65"
       }
     },
     {
-      "h2": "Your two files stay yours, and the outputs carry no value",
+      "h2": "Your two files stay yours, and the outputs carry no value from them",
       "html": [
-        "<p>The measurement runs at your desk: it reads your dispositioned reviews and customer attributes in memory and writes its outputs <b>next to your files and nowhere else</b>: counts, rates, intervals and verdicts by your review id. No customer id, no country and no amount of yours leave the machine. Your review ids do survive as verdict keys, so choose them opaque.</p>",
-        "<p>There is no callback, no telemetry, no account to create. The whole measurement is a local process reading two CSV files at your desk.</p>"
+        "<p>The measurement is a local process at your desk, reading your two CSV files. It loads the reviews your analysts already closed and your customer attributes into memory and writes its outputs <b>next to your files and nowhere else</b>. They are counts, rates, confidence intervals (the range the true rate is likely to sit in) and one answer per review, keyed by review id. Your customer ids, countries and amounts do not leave the machine. Your review ids survive as those keys, so choose opaque ids.</p>",
+        "<p>The tool has no callback and no telemetry, so it opens no connection to us and sends no usage data. There is no account to create.</p>"
       ],
       "verif": {
-        "t": "Verify the seal, offline",
-        "p": "Cut the network, run everything, then recompute the sealed public record's seal.",
+        "t": "Check the test set offline",
+        "p": "Cut the network, run everything, then recompute the content hash (the fingerprint of its bytes) of our public test set.",
         "cmd": [
           {
             "c": "CASCADE_OFFLINE=1 npm test",
-            "n": "the whole suite, network cut"
+            "n": "the whole suite with the network cut"
           },
           {
             "c": "npm run sceller -- releve-public.json",
-            "n": "says: already sealed, and the seal matches"
+            "n": "prints \"already sealed, and the seal matches\" and the content hash"
           }
         ],
         "refs": "src/sceller.ts:50 &#183; src/dossier.ts:11"

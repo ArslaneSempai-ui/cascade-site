@@ -1,23 +1,23 @@
 {
   "_": "Contenu de la page Questions. Huit objections d'un acheteur bancaire, réponses retrouvées dans le dépôt par la passe du 31 août 2026 (tasks/w7nrsoqna.output). Interdit par cette passe : « chemins remplacés dans les rapports » (non retrouvé pour ce chemin-là : le caviardage existe côté egress/serveur, c'est la page Privacy qui le porte).",
   "objet": "rendus/etats/objet-questions.webp",
-  "titre": "What a compliance team asks, answered with figures.",
-  "lede": "Eight objections, the ones a bank's reviewers actually raise. Each answer below is not a promise: it is a mechanism in the source: where it lives, its path is on this page, and where a mechanism has a limit, the limit is here too.",
-  "description": "Eight objections a bank's reviewers actually raise. Each answer points to a mechanism in the source, gives its path, and names the limit it has.",
+  "titre": "The eight questions a bank's reviewers ask, and what the source does about each.",
+  "lede": "Eight objections, the ones a bank's reviewers actually raise. None of the answers below is a promise. Each one describes a mechanism in the source, and the page names its file. Where a mechanism has a limit, the limit is here too.",
+  "description": "The eight objections a bank's reviewers actually raise, each answered by a mechanism in the source, with the file it lives in and its limit.",
   "sections": [
     {
       "h2": "&#8220;What if our fields are not your five?&#8221;",
       "html": [
-        "<p>The fields come from <b>your file</b>. In the CSV you pass to the measuring command, each column beyond the first two is a field to extract, named by its header, nothing else to configure. The question put to the models is built from the column name, so a field this repository has never seen gets asked about without anyone writing code.</p>",
-        "<p>Your own rules enter as regexes and become <b>a tier measured like any other</b>. Regexes only: your arbitrary rule code stays yours, and the tool says it cannot see it. A filled&#8209;in questionnaire becomes the assumptions of a run.</p>"
+        "<p>The fields come from <b>your file</b>. In the CSV you pass to the measuring command, the first two columns are an identifier and the input. Each later column is a field to extract, named by its header. No other setting is needed. The question put to the models comes from the column name, so a field new to this repository is asked about without anyone writing code.</p>",
+        "<p>Your own rules enter as regexes, text patterns, and become <b>a tier measured like any other</b>, one of the methods the tool ranks. Only regexes are accepted. Other rule code stays with you, and the tool reports that it cannot see it. The answers of a filled&#8209;in questionnaire become the assumptions of the run.</p>"
       ],
       "verif": {
         "t": "Try it on one file",
-        "p": "One CSV, one flag. Add your regexes as a free tier with a second flag.",
+        "p": "You pass one CSV with one flag. A second flag adds your regexes as a tier at zero cost.",
         "cmd": [
           {
             "c": "npm run measure:yours -- --cases=your-file.csv --rules=rules.json",
-            "n": "your fields, your rules, measured as tiers"
+            "n": "measures your fields and your rules as tiers"
           }
         ],
         "refs": "src/your-cases.ts:18 &#183; src/your-cases.ts:334"
@@ -26,16 +26,16 @@
     {
       "h2": "&#8220;Which models run, and which call out?&#8221;",
       "html": [
-        "<p>Two extractive encoder models run <b>inside the process</b>, pinned by revision, plus two embedding models for classification; three generative models run through a <b>local Ollama</b>, pinned by digest, and they are optional. On your own file, <code>measure:yours</code> measures the two extractive tiers by default, your regexes as a free tier when you pass <code>--rules</code>, and the three generative tiers when you pass <code>--llm</code>: up to six measured tiers; the human tier is an assumption until you measure it, and <code>measure:humans</code> does exactly that on your own reviewers. The only network call on the measurement path is the generative host, and it is <b>verified local immediately before each call</b>; pointing it at a remote machine makes the tool refuse to start unless an explicit override flag is typed by hand.</p>",
-        "<p>The watching is published too: an egress run observed <b>0 connections over 21 samples</b> during a whole pass on client cases. Its own file states the limit: sampling is a sampling floor and no kernel capture.</p>"
+        "<p>Two extractive encoder models run <b>inside the process</b>, pinned by revision, which locks them to one version, plus two embedding models for classification. Three generative models run through a <b>local Ollama</b>, pinned by digest, a checksum, and optional. On your own file, <code>measure:yours</code> measures the two extractive tiers by default. It adds your regexes as a tier at zero cost when you pass <code>--rules</code>, and the three generative tiers when you pass <code>--llm</code>. Up to six tiers are measured. The human tier is an assumption until you measure it, which <code>measure:humans</code> does on your own reviewers. The only network call on the measurement path goes to the generative host, and the tool <b>checks that it is local immediately before each call</b>. Pointed at a remote machine, it will not start unless you pass the override flag yourself.</p>",
+        "<p>An egress run samples the open connections during a pass, and its file is published. One whole pass on client cases showed <b>0 connections over 21 samples</b>. The file records its own limit. Sampling can miss a connection between two samples, so the count is a floor. There is no capture at kernel level.</p>"
       ],
       "verif": {
         "t": "Watch it run",
-        "p": "The egress command samples open connections during a pass and publishes hosts and verdict.",
+        "p": "The egress command samples the open connections during a pass, then publishes the hosts it saw and whether any connection went out.",
         "cmd": [
           {
             "c": "npm run egress",
-            "n": "observes the pass; the committed record shows 0 connections"
+            "n": "watches the pass, and the committed file shows 0 connections"
           }
         ],
         "refs": "src/tiers.ts:556 &#183; egress.json:12"
@@ -44,12 +44,12 @@
     {
       "h2": "&#8220;Do we need a connection?&#8221;",
       "html": [
-        "<p>Almost only once. The first measurement downloads 1.3 GB of pinned model weights from huggingface.co and states this before doing it. After that, nothing: the one call that remained, a tokenizer configuration the model library asked for at revision <code>main</code> on each load, is served from the cache, because the loader places the pinned file under the key the library reads. The test suite downloads nothing, and the public benchmark is the one command that fetches a dataset: it comes down, <b>nothing of yours goes up</b>.</p>",
-        "<p>Closed network: the weights export to a USB drive on one machine and import on yours, <b>each file checked against its SHA&#8209;256 and pinned revision before anything is written</b>, tokenizer configuration included. Under the offline flag the encoder tiers run fully air&#8209;gapped: measured, and held by the suite; a missing model is a <b>named refusal before anything is attempted</b>, never a break mid&#8209;run.</p>"
+        "<p>You need one for the first measurement, and for the public benchmark if you run it. The first measurement downloads 1.3 GB of pinned model weights from huggingface.co, and it tells you before it starts. After that, nothing goes out. One call used to remain: at each load the model library asked for a tokenizer configuration at revision <code>main</code>. The local cache now answers it, because the loader places the pinned file under the key the library reads. The test suite makes no download. The public benchmark is the one command that fetches a dataset. <b>Nothing of yours goes up</b>.</p>",
+        "<p>On a closed network, the weights export to a USB drive on one machine and import on yours. <b>Each file is checked against its SHA&#8209;256 checksum and its pinned revision before anything is written</b>, tokenizer configuration included. Under the offline flag the encoder tiers run air&#8209;gapped, with no network at all. This was measured, and a test holds it. When a model is missing, the tool <b>names it and stops before anything is attempted</b>. The tool does not break mid&#8209;run.</p>"
       ],
       "verif": {
         "t": "Cross the air gap",
-        "p": "Export on a connected machine, import on the closed one; the offline flag seals it.",
+        "p": "Export on a connected machine, import on the closed one. The offline flag keeps the run off the network.",
         "cmd": [
           {
             "c": "npm run poids -- --export /media/usb/cascade-weights",
@@ -57,7 +57,7 @@
           },
           {
             "c": "npm run poids -- --import /media/usb/cascade-weights",
-            "n": "verifies hash and revision before writing"
+            "n": "checks hash and revision before writing"
           }
         ],
         "refs": "README.md:102 &#183; README.md:113"
@@ -66,12 +66,12 @@
     {
       "h2": "&#8220;Who sees our records?&#8221;",
       "html": [
-        "<p>Nobody. Measurements on your data live in a folder git ignores, so nothing measured can travel into a repository. The file the tool hands back contains <b>aggregates only</b>, and a test holds it: the suite runs the tool on sentinel values and <b>fails if any of them appears in the output</b>.</p>",
-        "<p>The reverse direction holds too: when your own chain is graded, the outcomes file carries <b>verdicts, never the values</b>.</p>"
+        "<p>Nobody sees them. Measurements on your data live in a folder that git ignores, so no measurement can travel into a repository. The file the tool hands back contains <b>aggregates only</b>, and a test holds it. The suite plants sentinel values, runs the tool, and <b>fails if any of them appears in the output</b>.</p>",
+        "<p>The same holds when the tool grades your own chain, the way you extract these fields today. The outcomes file carries <b>a right or wrong for each answer, never the values</b>.</p>"
       ],
       "verif": {
-        "t": "Verify the witness",
-        "p": "The sentinel test is in the suite: plant values, run the tool, fail if one leaks into the output.",
+        "t": "Check the test",
+        "p": "The sentinel test is part of the suite. It plants values, runs the tool, and fails if one of them leaks into the output.",
         "cmd": [
           {
             "c": "npm test",
@@ -84,23 +84,23 @@
     {
       "h2": "&#8220;What if the answer is: change nothing?&#8221;",
       "html": [
-        "<p>Then the report states this. Your current chain enters the record <b>as a tier</b>, ranked with the others, and when it wins, the output prints that it wins outright on this sample. Under 20 observations the tool <b>does not recommend anything at all</b> at all.</p>",
-        "<p>The repository leans into this: its own README shows the cheapest tier often suffices, the validation dossier has a mandatory <i>What gets worse</i> section, and on the measured corpus <b>3 of the 5 fields are already carried by regexes at zero cost</b>. The cheapest recommendation is on the table from the first line.</p>"
+        "<p>Then that is what the report prints. Your current chain enters the measurement record <b>as a tier</b> and is ranked with the others. When it wins, the output prints that it wins outright on this sample. Under 20 observations the tool <b>makes no recommendation</b>.</p>",
+        "<p>The cheapest recommendation is an option from the start, and the repository points that way. Its own README shows the cheapest tier often suffices. The validation dossier has a mandatory <i>What gets worse</i> section. On the measured corpus, <b>regexes already carry 3 of the 5 fields at zero cost</b>.</p>"
       ]
     },
     {
       "h2": "&#8220;How long, and what lands on our machines?&#8221;",
       "html": [
-        "<p>The evaluation grant runs <b>30 days</b> on your own data, internally. What installs: Node 24 or newer on macOS or Linux (Windows is not claimed), then about 400 MB of packages and 1.3 GB of weights on first measurement. The published pass took <b>32 minutes of measurement</b> on the machine named in the sealed public record. The generative tier is 8 GB more, and optional.</p>",
-        "<p>And before installing anything at all: one script with zero dependencies reads the sealed public records on a fresh clone and prints the conclusion <b>in under a second</b>.</p>"
+        "<p>The evaluation grant runs <b>30 days</b> on your own data, inside your organisation. You install Node 24 or newer on macOS or Linux, then about 400 MB of packages and 1.3 GB of weights on the first measurement. We make no claim for Windows. The published pass took <b>32 minutes of measurement</b> on the machine named in our public test set. That test set is a file we froze, and its content hash is checked. The generative tier is 8 GB more, and optional.</p>",
+        "<p>Before any install, one script with no dependencies reads our public test set from a fresh copy of the repository. It prints the conclusion <b>in under a second</b>.</p>"
       ],
       "verif": {
-        "t": "The one-second version",
-        "p": "On a fresh clone, before npm install, the first answer is already reproducible.",
+        "t": "Read the answer in one second",
+        "p": "On a fresh copy, before npm install, you can already reproduce the first answer.",
         "cmd": [
           {
             "c": "node src/premiere-reponse.mjs",
-            "n": "the conclusion, from the sealed public records, no install"
+            "n": "prints the conclusion from our public test set, with no install"
           }
         ],
         "refs": "src/premiere-reponse.mjs:10 &#183; README.md:163"
@@ -109,23 +109,23 @@
     {
       "h2": "&#8220;What happens to the tool after the engagement?&#8221;",
       "html": [
-        "<p>The licence has three tiers, and the third is paid. Anyone, with no time limit, may read, study, fork and use the code noncommercially. An evaluating organisation runs it 30 days on its own data. Commercial use is a separately negotiated licence: the public licence <b>is not what a client buys</b>. Stated: it is not an OSI&#8209;approved licence, and some organisations exclude such licences from spontaneous adoption by policy; that has no effect on a negotiated engagement.</p>",
-        "<p>The dependency surface after you fork: <b>50 permissive packages, 1 with obligations, 0 blocking</b>; the one obligation only bites the day the tool ships as a sealed binary, which it does not.</p>"
+        "<p>The licence has three levels, and the third is paid. Anyone may read, study, fork and use the code noncommercially, with no time limit. An evaluating organisation runs it for 30 days on its own data. Commercial use is a separately negotiated licence, so the public licence <b>is not what a client buys</b>. The repository states that this is not an OSI&#8209;approved licence (OSI is the Open Source Initiative). Some organisations bar such licences from adoption without a contract, which has no effect on a negotiated engagement.</p>",
+        "<p>After you fork, the dependency surface is <b>50 permissive packages, 1 with obligations, 0 blocking</b>. Permissive means the licence asks only that you keep its notice. The one obligation applies only if the tool ships as a closed binary. It is not shipped that way.</p>"
       ]
     },
     {
       "h2": "&#8220;Why should we believe these figures?&#8221;",
       "html": [
-        "<p>Because they are <b>recomputed, sealed, signed, and retracted when wrong</b>. The test suite first checks that the README, the landing record and the dossier still match the code, then runs <b>663 tests across 78 files, counted from the sources</b>. The security and licence documents are generated, marked as such, and fail the suite when they drift. Measurement records carry a content hash, and a hand&#8209;edited one is refused. Reports are signed; the public key lives in the repository and a bundled script verifies any report without trusting us, and an example report, issued on cascade's own held-out corpus with that key, ships in the repository as <code>rapport-exemple.html</code>, so the verification can be tried before anything is bought.</p>",
-        "<p>The uncomfortable parts are published too: a retraction file lists <b>each published conclusion that turned out to be wrong</b>, and the secret sweep across 633 commits reports 0 undeclared secrets reachable from HEAD: zero among the 20 forms the sweep looks for, which is what the sweep reports.</p>"
+        "<p>Because they are <b>recomputed, locked by a content hash, signed, and retracted when wrong</b>. The test suite first checks that the README, the record behind the landing page and the validation dossier still match the code. It then runs <b>663 tests across 78 files, counted from the sources</b>. The security and licence documents are generated, marked as such, and fail the suite when they drift. Each measurement record carries a content hash, and a hand&#8209;edited one is refused. Reports are signed, the public key lives in the repository, and a script there checks any report against it without depending on us. An example report ships in the repository as <code>rapport-exemple.html</code>, so the check can be run before anything is bought. It was issued with that key on cascade's own held-out corpus, the cases we keep apart for testing.</p>",
+        "<p>A retraction file lists <b>each published conclusion that turned out to be wrong</b>. The secret sweep goes through 633 commits and looks for 20 forms of secret. It reports 0 undeclared secrets reachable from HEAD, the current state of the repository.</p>"
       ],
       "verif": {
         "t": "Verify a report",
-        "p": "Any signed report checks against the repository's public key, by your audit team, not by us.",
+        "p": "Your audit team checks any signed report against the repository's public key. The check does not need us.",
         "cmd": [
           {
             "c": "node src/verifier-rapport.mjs rapport.html",
-            "n": "proves origin and integrity, and nothing about correctness"
+            "n": "proves origin and integrity, and says nothing about correctness"
           },
           {
             "c": "npm test",

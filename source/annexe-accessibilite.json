@@ -1,43 +1,43 @@
 {
   "_": "Contenu de la page Accessibility. Les faits portent sur CE site : ratios de contraste calculés depuis les couleurs de la charte (script du 31 août 2026, pire paire 5,65:1 arrondie vers le bas), navigation :target sans script, details natifs, garde prefers-reduced-motion présente dans les deux bâtisseurs. La dernière section refuse de certifier ce qui n'a pas été audité : c'est le registre de la maison.",
   "objet": "rendus/etats/objet-accessibilite.webp",
-  "titre": "Contrast, keyboard and semantics, measured on this page.",
-  "lede": "This page holds the site to the same rule as the product: nothing promised, only measured. The figures below are computed from this site's own stylesheet and structure, and wherever a gesture can check a claim right now, on the page you are reading, the gesture is here.",
-  "description": "Contrast, keyboard and semantics measured on this page itself: the figures are computed from the site's own stylesheet, and each claim is checkable here.",
+  "titre": "Accessibility, measured on this site.",
+  "lede": "This page holds the site to the same rule as the product, which is that nothing on it is promised and each claim was measured. The figures below come from this site's stylesheet and structure, and wherever you can check a claim yourself, right now, on the page you are reading, we say how.",
+  "description": "Contrast, keyboard and semantics measured on this page, with the figures computed from the site's stylesheet and each claim checkable here.",
   "sections": [
     {
-      "h2": "The keyboard is a first-class door",
+      "h2": "The whole instrument works from the keyboard",
       "html": [
-        "<p>Each finding on the main screen is a plain address: a link to an anchor. The whole instrument navigates by keyboard alone: <b>Tab reaches each control, Enter opens it</b>, and the browser's back button retraces your trail, because each state you visit is a real place in the address bar.</p>",
-        "<p>The one small script on that screen only synchronises the animation clock and the tab title. <b>Switch JavaScript off and each state still opens</b>: the navigation is the address, with no handler.</p>",
-        "<p><i>Try it now: press Tab until the findings rail takes focus, then Enter. Then press Back.</i></p>"
+        "<p>Each finding on the main screen is a plain address, a link to an anchor. The whole instrument navigates by keyboard alone. <b>Tab reaches each control, Enter opens it</b>, and the browser's back button retraces your steps, because each state you visit is a real place in the address bar.</p>",
+        "<p>The one small script on that screen only keeps the animation clock and the tab title in step. <b>Switch JavaScript off and each state still opens</b>, because the navigation is the address itself and no script handles the click.</p>",
+        "<p><i>To check this, press Tab until a finding on the main screen takes focus, then press Enter, then press Back.</i></p>"
       ]
     },
     {
-      "h2": "Contrast, measured",
+      "h2": "Each text pairing clears the contrast floor",
       "html": [
-        "<p>Computed from this site's own palette, not asserted: body ink on this paper measures <b>11.1:1</b>. The weakest text pairing anywhere on the site measures <b>5.6:1</b>. The accessibility floor for body text is 4.5:1; each pairing here clears it with room to spare.</p>",
-        "<p>And colour never carries a meaning alone: wherever the green marks something (a shackle, a plateau, a signature), <b>a word or a shape carries the same meaning beside it</b>.</p>"
+        "<p>We computed these ratios from this site's palette. None of them is an assertion. Body text against the page background measures <b>11.1:1</b>. The weakest text pairing anywhere on the site measures <b>5.6:1</b>. The accessibility floor for body text is 4.5:1, so each pairing on the site clears it with room to spare.</p>",
+        "<p>Colour does not carry a meaning on its own. Wherever the green marks something (a shackle, a plateau, a signature), <b>a word or a shape carries the same meaning beside it</b>.</p>"
       ]
     },
     {
-      "h2": "Native parts, native semantics",
+      "h2": "Each section is a native browser element",
       "html": [
-        "<p>The sections of each appendix are <b>native disclosure elements</b>: the browser provides the keyboard behaviour and the screen&#8209;reader semantics, so there is no script of ours to get them wrong. Focus is always visible: each interactive element carries a <b>focus ring drawn in the site's own ink</b>, never suppressed.</p>",
-        "<p><i>Try it now: Tab through this very page: each section header announces itself and toggles with Enter or Space.</i></p>"
+        "<p>The sections of each appendix are <b>native disclosure elements</b>. The browser provides their keyboard behaviour and their screen&#8209;reader semantics, so there is no script of ours to get them wrong. Focus is always visible: each interactive element carries a <b>focus ring drawn in the site's text colour</b>, and no rule suppresses it.</p>",
+        "<p><i>Tab through this page: each section header opens or closes with Enter or Space, and with a screen reader on, each one is read out.</i></p>"
       ]
     },
     {
-      "h2": "Motion that asks permission",
+      "h2": "Animations stop when your system prefers reduced motion",
       "html": [
-        "<p>Each transition on this site sits behind the reduced&#8209;motion media query. <b>When your system asks for less motion, the cascade holds still</b>: the same figures, the same states, without the movement.</p>",
-        "<p><i>Try it now: switch on your system's Reduce Motion setting and reload: the page arrives already settled.</i></p>"
+        "<p>Each transition on this site sits behind the reduced&#8209;motion media query. <b>When your system prefers reduced motion, the animations on this site stop</b>. The same figures and states remain, without the movement.</p>",
+        "<p><i>Switch on Reduce Motion in your system settings and reload, and the page loads with nothing moving.</i></p>"
       ]
     },
     {
       "h2": "What this page does not claim",
       "html": [
-        "<p>These claims are mechanical (ratios computed, anchors counted, media queries present), so we make them. What we do not certify is the lived experience: this site has not been through an audit by a person who uses a screen reader daily, <b>and that is the only audit of that experience that counts</b>. If your team runs one and finds a fault, it will be fixed and this page will say it was.</p>"
+        "<p>We make the claims above because they are mechanical: the ratios were computed, the anchors were counted and the media queries are present. We do not certify what it is like to use the site with a screen reader. This site has not been through an audit by a person who uses a screen reader daily, <b>and that is the only audit of that experience that counts</b>. If your team runs one and finds a fault, we will fix it and this page will say so.</p>"
       ]
     }
   ],

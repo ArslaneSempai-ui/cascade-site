@@ -2,21 +2,21 @@
   "_": "Security page of the onyx tool (Dossier). Same shape as the house annexes. Every refs points at a real line of ~/Documents/cascade-dossier at main 74a3a2f. The object render does not exist yet (look-dev).",
   "objet": "rendus/etats/objet-dossier-securite.webp",
   "titre": "What the Dossier reads, and what stays local.",
-  "lede": "The Dossier is the piece your regulator reads, so its own discipline is the strictest of the suite: it reads seals, dates, versions and verdicts from the other tools' reports, and no value of yours, and it touches no network at all.",
-  "description": "The Dossier reads seals, dates, versions and verdicts from the other tools' reports, never a value of yours, and it touches no network at all.",
+  "lede": "The Dossier is the piece your regulator reads, so its rules are the strictest in the suite. It reads content hashes (a number computed from a file's bytes), dates, versions and answers from the other tools' reports. An answer is what one control returns. It reads no client value of yours and touches no network at all.",
+  "description": "The Dossier reads content hashes, dates, versions and answers from the other tools' reports. It reads no client value of yours and touches no network at all.",
   "sections": [
     {
-      "h2": "The network allowlist is empty, and a test traverses each file",
+      "h2": "The network allowlist is empty and a test over each file checks it",
       "html": [
-        "<p>Like Monitoring and Scoring, the Dossier downloads <b>nothing</b>: the allowlist of modules that may touch the network is empty, and a structural test traverses each source file for network sites and fails the suite if one appears. The detector proves it can see a planted call before its zero is believed.</p>"
+        "<p>Like Monitoring and Scoring, two other tools of the suite, the Dossier downloads <b>nothing</b>. The allowlist, the list of modules that may touch the network, is empty. A structural test reads each source file for network calls and fails the suite if one appears. Its detector proves it can see a planted call before its zero is believed.</p>"
       ],
       "verif": {
-        "t": "Verify the best trade-off",
-        "p": "Run the suite; the test fails if any file gains a network site.",
+        "t": "Verify the empty allowlist",
+        "p": "Run the suite. The test fails if any file gains a network call.",
         "cmd": [
           {
             "c": "npm test",
-            "n": "fails if any module touches the network; the allowlist is empty"
+            "n": "fails if any module touches the network, and the allowlist is empty"
           }
         ],
         "refs": "src/frontiere.test.ts:30 &#183; src/frontiere.test.ts:51"
@@ -24,18 +24,18 @@
       "commun": "securite"
     },
     {
-      "h2": "What crosses into the Dossier, and what stays out",
+      "h2": "What the Dossier reads from a report",
       "html": [
-        "<p>The Dossier reads the other tools' signed reports: seals, dates, versions, rule settings, verdict counts. It never reads, stores or reprints a client value: <b>no name, no amount, no account, no country of yours</b> exists in any report of the suite in the first place, and the Dossier cites reports by their content hashes and their verdicts, by review identifiers only.</p>",
-        "<p>The piece it writes lands next to your files and nowhere else, carrying the same content hash arithmetic as each record of the suite, and the verification command ships on the page that announces it.</p>"
+        "<p>The Dossier reads the other tools' signed reports: their content hashes, dates, versions, rule settings and answer counts. It never reads, stores or reprints a client value, because <b>no name, no amount, no account, no country of yours</b> exists in any report of the suite. It cites a report by its content hash and its answers, and names the review by its identifier only.</p>",
+        "<p>The document the Dossier writes is saved next to your files and in no other place. Its content hash is computed like that of each tool's results file in the suite, and the command that checks it is printed on the page that presents it.</p>"
       ],
       "verif": {
-        "t": "Verify on the record itself",
-        "p": "The sealed public record holds verdicts, seals, dates and counts; search it for anything else.",
+        "t": "Verify on the results file itself",
+        "p": "The public results file, releve-public.json, carries its own content hash and holds answers, content hashes, dates and counts. Search it for anything else.",
         "cmd": [
           {
             "c": "python3 -c \"import json; d=json.load(open('releve-public.json')); print(sorted(d), '/', sorted(d['questions']))\"",
-            "n": "prints the record's whole surface: controls, coverage, questions, settings, seal"
+            "n": "prints the file's top-level keys (controls, coverage, questions, settings, seal, the content hash) and its questions"
           }
         ],
         "refs": "src/dossier.ts:9 &#183; src/empreinte.ts:58 &#183; src/empreinte.ts:63"
@@ -44,15 +44,15 @@
     {
       "h2": "A signature is checked before it is trusted",
       "html": [
-        "<p>A signature that cannot be checked is not treated as informally fine: the control fails and the verdict says why, one refusal per report. On day one that produced a suite-wide zero on signatures, printed on the public page. An unverified signature is not treated as valid.</p>"
+        "<p>A signature that cannot be checked is not treated as informally fine, and it does not count as valid. The control fails and its answer states the reason, which we call a refusal, one per report. On day one that produced a zero on signatures across the whole suite, printed on the public page.</p>"
       ],
       "verif": {
         "t": "Verify a refusal",
-        "p": "Read any signed verdict in the sealed public record: it carries its reason.",
+        "p": "Read any answer of the signed control in the public results file, listed under verdicts. It carries its reason.",
         "cmd": [
           {
             "c": "python3 -c \"import json; q=json.load(open('releve-public.json'))['questions']['screening']; print([v['detail'] for v in q['verdicts'] if v['controle']=='signed'][0])\"",
-            "n": "prints the refusal, in the tool's own words"
+            "n": "prints the refusal text as the tool recorded it"
           }
         ],
         "refs": "src/controles/index.ts:15 &#183; src/controles/fresh.ts:5"

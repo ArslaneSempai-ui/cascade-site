@@ -2,21 +2,21 @@
   "_": "Security page of the lapis tool (Monitoring). Same shape as the red annexes. Every refs points at a real line of ~/Documents/cascade-monitoring at main 9f77ea2; the citation guard must know the third repository. The object render does not exist yet (look-dev).",
   "objet": "rendus/etats/objet-monitoring-securite.webp",
   "titre": "Where monitoring runs, and what stays local.",
-  "lede": "Transaction monitoring handles the most sensitive table a bank holds. This tool's answer is structural: its public data is written and generated, so not one module is allowed to reach the network, and the two files you measure with never leave your machine.",
+  "lede": "Transaction monitoring handles the most sensitive table a bank holds. This tool's public data is written and generated, so no module needs the network, and none may reach it. The two files you measure with, your alerts and your transactions, never leave your machine.",
   "description": "Transaction monitoring handles the most sensitive table a bank holds. No module here may reach the network, and your two files stay on your machine.",
   "sections": [
     {
-      "h2": "The network allowlist is empty, and a test traverses each file",
+      "h2": "The network allowlist is empty, and a test reads each file",
       "html": [
-        "<p>Routing downloads model weights once; Screening downloads public sanctions lists. Monitoring downloads <b>no file</b>: its sealed public record is built from written cases and seeded variants, so the allowlist of modules that may touch the network is empty, with the comment saying exactly that. A structural test traverses each source file for network sites (fetch, node:http and kin, WebSockets) and <b>fails the suite if any module grows one</b>; the detector first proves it can see a planted call, so its zero means looked and found none.</p>"
+        "<p>Routing, a sister tool, fetches model weights once and Screening fetches public sanctions lists. Monitoring downloads <b>no file</b>. Its public test set, a frozen file whose content hash (a fingerprint of its exact contents) is checked, is built from written cases and seeded variants, so the allowlist of modules that may touch the network is empty. A source comment beside that list records the same. A structural test reads each source file for network calls (fetch, node:http, WebSockets and the like) and <b>fails the suite if any module gains one</b>. The detector first proves it can see a planted call. So its zero means it looked and found none.</p>"
       ],
       "verif": {
-        "t": "Verify the best trade-off",
-        "p": "Run the suite: the test fails if any file gains a network site.",
+        "t": "Verify the network test",
+        "p": "Run the suite. The test fails if any file gains a network call.",
         "cmd": [
           {
             "c": "npm test",
-            "n": "fails if any module touches the network; the allowlist is empty"
+            "n": "fails if any module touches the network, and asserts the allowlist is empty"
           }
         ],
         "refs": "src/frontiere.test.ts:30 &#183; src/frontiere.test.ts:51"
@@ -24,13 +24,13 @@
       "commun": "securite"
     },
     {
-      "h2": "No real transaction, no real person, anywhere public",
+      "h2": "No real transaction and no real person appear anywhere public",
       "html": [
-        "<p>Each account, amount and date in the sealed public record was <b>written for the typology it illustrates</b> or generated from those cases under a seed. There is no anonymised customer data, because the customer data is simply absent. The file that holds the cases states this in its own header, and each case carries the one-sentence reason it was written.</p>"
+        "<p>Each account, amount and date in the public test set was <b>written for the typology it illustrates</b> or generated from those cases under a seed. Nothing in it is anonymised customer data, because customer data is absent altogether. The cases file records this in its own header, and each case carries the one-sentence reason it was written.</p>"
       ],
       "verif": {
         "t": "Verify the provenance",
-        "p": "The cases file declares itself, case by case.",
+        "p": "The cases file gives its provenance, where each case came from.",
         "cmd": [
           {
             "c": "python3 -c \"import json; d=json.load(open('src/cas-etiquetes.json')); print(d['provenance'], len(d['cas']), 'cases, each with a written reason')\"",
@@ -43,8 +43,8 @@
     {
       "h2": "Your two files stay yours, and the outputs carry no value",
       "html": [
-        "<p>The measurement runs at your desk: it reads your dispositioned alerts and transactions in memory and writes its outputs <b>next to your files and nowhere else</b>: counts, rates, intervals and verdicts by your alert id. No account id, no amount, no transaction date and no country from your data leave the machine. Your alert ids do survive as verdict keys, so choose them opaque.</p>",
-        "<p>There is no callback, no telemetry, no account to create. The whole measurement is a local process reading two CSV files at your desk.</p>"
+        "<p>The measurement runs at your desk. It reads, in memory, your dispositioned alerts (those your analysts already decided) and your transactions, and writes its outputs <b>next to your files and nowhere else</b>. The outputs hold counts, rates, confidence intervals (the range the true rate likely sits in) and verdicts by your alert id. A verdict is the tool's answer on one alert. None of your account ids, amounts, transaction dates or countries leave the machine. Your alert ids do survive as verdict keys, so choose opaque ones.</p>",
+        "<p>It makes no callback, sends no telemetry and needs no account. The whole measurement is a local process reading two CSV files (plain text tables) on your machine.</p>"
       ],
       "verif": {
         "t": "Verify on your own decoy",
@@ -52,20 +52,20 @@
         "cmd": [
           {
             "c": "grep -r \"the amount you invented\" your-alerts-measured.md your-alerts-measured.json",
-            "n": "finds nothing; the outputs carry verdicts and no values"
+            "n": "finds no match, because the outputs carry verdicts and none of your values"
           }
         ],
         "refs": "src/your-alerts.ts:9 &#183; src/your-alerts.ts:25"
       }
     },
     {
-      "h2": "Sealed, offline, and re-measured only out loud",
+      "h2": "The test set is hashed, the suite runs offline, and re-measuring needs a visible flag",
       "html": [
-        "<p>The sealed public record is sealed by a content hash; a hand-edited figure fails loudly, and re-measuring over an existing record requires an explicit flag on the command line, where an auditor can see it. The whole suite runs with the network cut, which for this tool is the only behaviour it has.</p>"
+        "<p>The public test set is sealed by a content hash, so a figure edited by hand fails loudly. Re-measuring over an existing test set requires an explicit flag on the command line, where an auditor can see it. The whole suite runs with the network cut, and for this tool that is the only way it runs.</p>"
       ],
       "verif": {
-        "t": "Verify the seal, offline",
-        "p": "Cut the network, run everything, then recompute the seal.",
+        "t": "Verify the content hash, offline",
+        "p": "Cut the network, run everything, then recompute the content hash.",
         "cmd": [
           {
             "c": "CASCADE_OFFLINE=1 npm test",
@@ -73,7 +73,7 @@
           },
           {
             "c": "npm run sceller -- releve-public.json",
-            "n": "says: already sealed, and the seal matches"
+            "n": "prints \"already sealed, and the seal matches\""
           }
         ],
         "refs": "src/sceller.ts:50 &#183; src/measure.ts:5"

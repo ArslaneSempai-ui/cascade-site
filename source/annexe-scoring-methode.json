@@ -2,56 +2,56 @@
   "_": "Method page of the amethyst tool (Scoring). Same shape as the house annexes. Every refs points at a real line of ~/Documents/cascade-scoring at main d3c3d89; the citation guard must know the fourth repository. The object render does not exist yet (the shelving; look-dev).",
   "objet": "rendus/etats/objet-scoring-methode.webp",
   "titre": "How the scoring grid is measured.",
-  "lede": "This page shows what the scoring numbers are made of: which dossiers, which factors, which declared tables, and where each figure is not quoted. No real person exists in the sealed public record, and no official risk list was copied into it: that refusal is enforced by a test and not by discipline.",
-  "description": "Which dossiers, which factors, which declared tables, and where a figure is not quoted. No real person is in the record, and a test enforces that.",
+  "lede": "This page shows what the scoring numbers are made of. It names the customer files, the factors, the tables of stated values, and where a figure is not quoted. Our public test set is a file we froze, and its content hash, a fingerprint of its bytes, is checked before any figure is shown. No real person is in it, and no official risk list was copied into it. A test enforces both refusals, so neither rests on discipline.",
+  "description": "Which customer files, factors and stated tables make the numbers, and where a figure is not quoted. No real person is in the test set, and a test enforces that.",
   "sections": [
     {
-      "h2": "Written dossiers, file by file",
+      "h2": "The customer files we wrote, pair by pair",
       "html": [
-        "<p>The measured half rests on dossiers <b>we wrote and we declare</b>: six escalated typologies and, deliberately, their six retained files: a family company with each ownership layer named against the shell that hides them, a neighbourhood shop whose turnover sits on its declaration against the counter that outruns it, a salaried account at ratio one against the firm at ratio five, a foreign student at stipend scale against the remote newcomer at several times his declaration. What separates each file is <b>in the fields</b>, history and ratios, never only in the label, and a test pins all six pairs structurally.</p>",
-        "<p>No official country list was copied, and a test makes the refusal structural: escalated and retained files <b>share their countries of residence</b>, so no code can quietly become a list. The geography factor scores zero on this book, on both sides, and the page above states this as a finding and does not hide it.</p>"
+        "<p>The test set has a written half and a generated half. The written one rests on customer files <b>we wrote and state as ours</b>. Six escalated typologies come with six retained files, written on purpose to match them. Escalated means an analyst sent the file up for review, and retained is its clean counterpart. A family company with each ownership layer named is paired with the shell that hides them. A neighbourhood shop whose turnover sits on its declaration is paired with one whose cash takings run past it. A salaried account at a ratio of one, observed flows over declared, is paired with a firm at a ratio of five. A foreign student at stipend scale is paired with a newly onboarded customer, opened remotely, at several times his declaration. The two files of a pair differ <b>in the fields</b>, the history and the ratios. The tag alone never separates them. A test checks that all six pairs keep this structure.</p>",
+        "<p>No official country list was copied, and a test makes that refusal structural, part of the test set's own shape. Escalated and retained files <b>share their countries of residence</b>, so no country code can stand in for a list. The geography factor scores zero on this test set, on both sides. The Scoring page above this one reports that zero as a finding and does not hide it.</p>"
       ],
       "verif": {
-        "t": "Verify the dossiers",
-        "p": "The suite revalidates each written dossier, the six file pairs, and the country-sharing rule.",
+        "t": "Check the customer files",
+        "p": "The suite rechecks each written customer file, the six pairs and the shared-country rule.",
         "cmd": [
           {
             "c": "npm test",
-            "n": "84 dossiers revalidated, file invariants and the no-list rule pinned"
+            "n": "checks the 84 customer files again, each file's rules and the no-list rule"
           }
         ],
         "refs": "src/dossiers-etiquetes.test.ts:65 &#183; src/synthetic.ts:29 &#183; src/synthetic.ts:50"
       }
     },
     {
-      "h2": "Each table is declared, and declared as an assumption",
+      "h2": "Each table is stated, and stated as an assumption",
       "html": [
-        "<p>A scoring factor needs tables: which activities weigh what, which products, which channels. Each table in this tool is written in one file with <b>provenance, unit and bounds</b>, and each one carries the same one-word status: assumed. That is the thesis of Scoring: the tables your vendor calls calibration are declarations, and the only way to know what they are worth is to measure them against your own dispositioned reviews.</p>"
+        "<p>A scoring factor needs tables that say how much weight each activity, each product and each channel carries. Each table in this tool sits in one file with its <b>source, unit and bounds</b>, and each carries the same one-word status, assumed. That status is the point of Scoring. The tables your vendor calls calibration are values someone stated. The only way to know what they are worth is to measure them against your own reviews that already reached a decision.</p>"
       ],
       "verif": {
-        "t": "Verify the declarations",
-        "p": "The tables file carries value, provenance and bounds for each assumption.",
+        "t": "Check the assumptions",
+        "p": "The tables file carries a value, a source and bounds for each assumption.",
         "cmd": [
           {
             "c": "npm test",
-            "n": "the assumptions cases pin provenance and bounds"
+            "n": "the assumption tests check source and bounds"
           }
         ],
         "refs": "src/assumptions.ts:81 &#183; src/assumptions.ts:113"
       }
     },
     {
-      "h2": "Generated variants, apart whichever side they favour",
+      "h2": "Generated variants are reported apart, whichever side they favour",
       "html": [
-        "<p>The synthetic half is generated from the written dossiers under an explicit seed, natures preserved by construction: linked factors keep the observed-over-declared ratios, cash shares stay on their side of the line, ownership layers keep their floor, the remote newcomer stays new. On this tool the generated half is <b>harsher</b> than the written one on the best factor, and it stays apart exactly as it would if it flattered: separation is a rule and not a convenience, and the page shows both numbers side by side.</p>"
+        "<p>The generated half comes from the written customer files under a stated seed, the number that fixes the random draw. The generator is built so that it cannot change a file's nature. Factors that depend on each other keep their observed-over-declared ratios. A file's cash share stays on the side of the limit it started on. Ownership layers keep their minimum count. The newly onboarded, remotely opened customer keeps that status. On this tool the generated half is <b>harsher</b> than the written one on the best factor, which means a lower figure there. It is reported apart whether it comes out worse or better. Separation is a rule. It is not a convenience. The page shows both numbers side by side.</p>"
       ],
       "verif": {
-        "t": "Verify the separation",
-        "p": "Open the record: the two blocks carry their provenance in the data itself.",
+        "t": "Check the separation",
+        "p": "Open the public test set. The two blocks carry their source in the data itself.",
         "cmd": [
           {
             "c": "python3 -c \"import json; d=json.load(open('releve-public.json')); print(d['authored']['provenance'][:24], '/', d['synthetic']['provenance'][:22])\"",
-            "n": "prints the two provenance declarations: written by hand, seeded variants"
+            "n": "prints the two source statements: written by hand, then seeded variants"
           }
         ],
         "refs": "src/synthetic.ts:29 &#183; src/measure.ts:71"
@@ -59,17 +59,17 @@
       "commun": "methode"
     },
     {
-      "h2": "Wilson everywhere, scores bounded, refusals where n is small",
+      "h2": "A confidence interval on each rate, scores kept within bounds, and no number when the count is small",
       "html": [
-        "<p>Each rate travels with its Wilson interval at 95 percent and its n; below twenty observations a rate is noted and not quoted, and recall on your own book is refused outright under five confirmed escalations. A factor's score lives in [0, 1] and a value outside it is an error named with the factor and the dossier, never a silent rounding. The threshold grid is shared and inclusive, so the strictest cell still means something for a factor that answers exactly one.</p>"
+        "<p>Each rate travels with its 95 percent Wilson confidence interval, the range the true rate is likely to sit in, and the count it was measured on. Below twenty observations the rate is recorded but not shown. Recall on your own customer files, the share of your confirmed escalations it catches, is refused outright under five confirmed escalations. A factor's score is between 0 and 1, both ends included. A value outside that range is an error named with the factor and the customer file, never a silent rounding. The threshold grid, the set of score cut-offs, is shared and inclusive. Each cut-off includes its own value, so the strictest cell still means something for a factor that scores exactly one.</p>"
       ],
       "verif": {
-        "t": "Verify the refusals",
-        "p": "The bounds and refusals live in code, and the suite exercises them.",
+        "t": "Check the refusals",
+        "p": "The bounds and refusals live in code, and the test suite runs them.",
         "cmd": [
           {
             "c": "npm test",
-            "n": "interval, score-bound and refusal cases run with the rest"
+            "n": "the interval, score-bound and refusal tests run with the rest"
           }
         ],
         "refs": "src/interval.ts:102 &#183; src/facteur.ts:55 &#183; src/facteur.ts:56"

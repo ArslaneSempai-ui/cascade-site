@@ -2,18 +2,18 @@
   "_": "Security page of the red tool (Screening). Same shape as annexe-securite.json (green). Every refs points at a real line of ~/Documents/cascade-screening at main c0ed214; Portfolio: the citation guard must learn the second repository. The object render does not exist yet (Chef's look-dev).",
   "objet": "rendus/etats/objet-screening-securite.webp",
   "titre": "Where screening runs, and what stays local.",
-  "lede": "Screening handles the most sensitive strings a bank holds: the names it checks. This page says what touches the network, what never does, and how both are enforced by tests and not promised by sentences.",
-  "description": "Screening handles the most sensitive strings a bank holds: the names it checks. What touches the network and what does not, enforced by tests.",
+  "lede": "Screening handles the most sensitive data a bank holds, the names it checks. This page says which part of the tool touches the network and which part never does. It names the test that enforces each rule, because a sentence on its own promises nothing.",
+  "description": "Screening handles the most sensitive data a bank holds, the names it checks: what touches the network, what never does, and the tests that enforce both.",
   "sections": [
     {
-      "h2": "One file may touch the network, and a test traverses all the others",
+      "h2": "One module may reach the network, and a test checks that no other one does",
       "html": [
-        "<p>Exactly one module is allowed to reach the network: the downloader of the public sanctions lists. The permission is a <b>named allowlist with its reason</b>, and a structural test traverses each source file for network sites (fetch, node:http and kin, WebSockets) and <b>fails the suite</b> if any other module grows one. The detector carries its own witness: it first proves it can see a planted call, so its zero means looked and found none.</p>",
-        "<p>What the one allowed file does is one-directional: the list comes down, nothing goes up. No name you screen exists yet at that point; the downloader moves public documents only.</p>"
+        "<p>Exactly one module may reach the network, the downloader of the public sanctions lists. The permission is a <b>named allowlist with its reason</b>: the files that may call out, each with the reason it may. A test reads the source of each module for network call sites (fetch, node:http and its relatives, WebSockets). It <b>fails the suite</b> (npm test) if any other module grows one. That test first proves it can see a call planted for it, so its zero means it looked and found none.</p>",
+        "<p>The downloader only pulls the list down and sends no data up. When it runs, no name you screen exists yet. The downloader moves public documents only.</p>"
       ],
       "verif": {
-        "t": "Verify the best trade-off",
-        "p": "Run the suite: the test fails if a network site appears outside the allowlist.",
+        "t": "Verify the network boundary",
+        "p": "Run the suite. The test fails if a network call site appears outside the allowlist.",
         "cmd": [
           {
             "c": "npm test",
@@ -24,45 +24,45 @@
       }
     },
     {
-      "h2": "The lists are content hashed, and a changed file is refused",
+      "h2": "Each list carries a content hash, and a changed file is refused",
       "html": [
-        "<p>npm run listes -- --fetch downloads OFAC SDN and the UN consolidated list, and writes a committed manifest: source, URL, date, sha256, byte and entry counts. The data itself stays out of git. When the tool later reads a list from disk, it recomputes the content hash and <b>refuses a file that no longer matches the manifest</b>, naming both content hashes: screening against a list that is not the one recorded certifies nothing.</p>",
-        "<p>OFAC announces its own record count inside the file, and the parser is checked against it on each fetch; the UN address is the one the Security Council page publishes. Without the flag, npm run listes reports what is on disk and touches nothing.</p>"
+        "<p>npm run listes -- --fetch downloads OFAC SDN and the UN consolidated list. It writes a manifest and commits it to git. The manifest holds the source, the URL, the date, the sha256 (the content hash of the file), the byte and entry counts. The list data itself stays out of the repository. When the tool later reads a list from disk, it recomputes the content hash. Screening against a list other than the recorded one certifies nothing. So the tool <b>refuses a file that no longer matches the manifest</b> and names both content hashes.</p>",
+        "<p>OFAC states its own record count inside the file, and on each fetch the tool checks the entries it read against that count. The UN address is the one the Security Council page publishes. Without the --fetch flag, npm run listes reports what is on disk and touches nothing.</p>"
       ],
       "verif": {
         "t": "Verify without the network",
-        "p": "The no-flag form reads the disk against the manifest and states this.",
+        "p": "The no-flag form reads the disk against the manifest and reports that it touched no network.",
         "cmd": [
           {
             "c": "npm run listes",
-            "n": "reports date, content hash state and entry counts; no network touched"
+            "n": "reports date, content hash state and entry counts, with no network touched"
           }
         ],
         "refs": "src/listes.ts:238 &#183; src/listes.ts:262"
       }
     },
     {
-      "h2": "The EU list, unavailable today",
+      "h2": "The EU list is unavailable today",
       "html": [
-        "<p>The EU consolidated financial sanctions list is served through a token-gated endpoint. On the day this record was built, each file endpoint answered an error with the generic public token the Commission's own RSS still advertises, so the manifest records the fact with its date <b>and does not hide the source</b>: which list, which URL, which error, and the way out.</p>",
-        "<p>The way out is one environment variable: a personal EU Login token through CASCADE_EU_TOKEN, same URL, fetch again. Until then the tool screens against OFAC and the UN and the manifest says exactly that; a report cannot cite three lists while holding two.</p>"
+        "<p>The EU consolidated financial sanctions list is served through an endpoint that requires an access token. On the day the manifest was built, each file endpoint answered an error with the generic public token the Commission's own RSS still advertises. So the manifest records the failure with its date <b>and its source</b>: the list, the URL, the error and the way out.</p>",
+        "<p>The way out is one environment variable, a setting your shell passes to the tool. Put a personal EU Login token in CASCADE_EU_TOKEN, keep the same URL and fetch again. Until then the tool screens against OFAC and the UN. A report cannot cite three lists while holding two, so the manifest says exactly that.</p>"
       ],
       "verif": {
         "t": "Verify the manifest entry",
-        "p": "The committed manifest carries the EU line, its error and its issue.",
+        "p": "The committed manifest carries the EU line, its error and its issue field, the fix.",
         "cmd": [
           {
             "c": "python3 -c \"import json; l=[x for x in json.load(open('listes-manifest.json'))['listes'] if x['source']=='EU'][0]; print(l['disponible'], l.get('erreur',''), l.get('issue','')[:40])\"",
-            "n": "prints the recorded unavailability and the way out"
+            "n": "prints the recorded unavailability and what to do about it"
           }
         ],
         "refs": "src/listes.ts:70 &#183; src/listes.ts:319"
       }
     },
     {
-      "h2": "Offline, everything still runs, and states this",
+      "h2": "With the network cut, the whole tool still runs and reports the cut",
       "html": [
-        "<p>CASCADE_OFFLINE=1 cuts the network for the whole tool. The suite passes under it, the measure runs under it, and the one command that needs the network refuses under it <b>by naming the flag and the way out</b> and not by failing into a stack trace.</p>"
+        "<p>CASCADE_OFFLINE=1 cuts the network for the whole tool. Under it the suite passes and the measurement of your alert history runs. The one command that needs the network refuses, <b>naming the flag and the way out</b>. It prints no stack trace, the raw dump a crash leaves.</p>"
       ],
       "verif": {
         "t": "Verify offline",
@@ -70,21 +70,21 @@
         "cmd": [
           {
             "c": "CASCADE_OFFLINE=1 npm test",
-            "n": "the whole suite, network cut"
+            "n": "runs the whole suite with the network cut, and it passes"
           },
           {
             "c": "CASCADE_OFFLINE=1 npm run listes -- --fetch",
-            "n": "refuses, names the flag, names the way out, writes nothing"
+            "n": "refuses, names the flag and what to do next, writes nothing"
           }
         ],
         "refs": "src/listes.ts:319"
       }
     },
     {
-      "h2": "Never a screened name in an output",
+      "h2": "No screened name appears in anything the tool writes",
       "html": [
-        "<p>When you measure on your own alert history, the outputs are written <b>next to your file and nowhere else</b>: a report and a sealed public record holding counts, rates, intervals and verdicts by your alert id. No screened name, no list entry you matched and no path with your username leave the machine. Your identifiers do survive as verdict keys, so choose them opaque: an id that is an account number stays an account number.</p>",
-        "<p>The screening itself runs on your machine against local lists; there is no callback, no telemetry, no account. The evaluation needs nothing from us but the repository.</p>"
+        "<p>When you measure your own alert history, the outputs are written <b>next to your file and nowhere else</b>. They are a report and a public results file with its content hash. That file holds counts, rates, confidence intervals (the range a true rate likely sits in) and the answers keyed by your alert id. No screened name, no list entry you matched and no path with your username leaves the machine. Your identifiers do survive as those keys, so choose ones that carry no meaning. An account number used as an id stays in the outputs.</p>",
+        "<p>The screening itself runs on your machine against the lists on disk. There is no callback to us, no telemetry (usage data sent back) and no account. The only thing the evaluation needs from us is the repository, the code itself.</p>"
       ],
       "verif": {
         "t": "Verify on a decoy",
@@ -92,7 +92,7 @@
         "cmd": [
           {
             "c": "grep -r \"the name you invented\" your-export-measured.md your-export-measured.json",
-            "n": "finds nothing; the outputs carry verdicts and no names"
+            "n": "finds nothing, since the outputs hold answers keyed by id and the names stay out"
           }
         ],
         "refs": "src/your-alerts.ts:24 &#183; src/your-alerts.ts:395"
