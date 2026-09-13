@@ -349,10 +349,23 @@ _SCELLE_SAUT_TAGS = {"nav", "footer", "button"}
 _SCELLE_SAUT_CLS = ("hero", "lede", "rideau", "pan", "ap-eti", "j-titre", "j-cote", "j-num",
                     "note", "cue", "marque", "sceau", "rail", "affiche")
 _VOID = {"img", "br", "input", "meta", "link", "hr", "source", "path", "circle", "line", "use", "col"}
-def definir_sealed(t):
+# les ÉCRANS retravaillés à la voix (Arslane, 13/09) : ils disent « our public test set »,
+# pas « sealed public record », donc l'incise n'a plus rien à y définir. Les annexes de
+# méthode et de sécurité gardent le mot ET sa définition, qui est leur place.
+_SCELLE_ECRANS = frozenset({
+    "index.html", "engagement.html", "contact.html", "404.html", "instrument.html",
+    "routing/index.html", "screening/index.html", "monitoring/index.html",
+    "scoring/index.html", "dossier/index.html",
+    "screening/instrument.html", "monitoring/instrument.html",
+    "scoring/instrument.html", "dossier/instrument.html",
+})
+def definir_sealed(t, page=None):
     """Insère l'incise à la PREMIÈRE mention d'un terme scellé qui vit dans la PROSE DU
     CORPS : dans un <p>, hors rideau/pan, hors nav/pied, hors boutons, titres et étiquettes
-    (le chef, 10/09 : jamais dans un titre, une carte, un pied, un lien)."""
+    (le chef, 10/09 : jamais dans un titre, une carte, un pied, un lien). Depuis le 13/09,
+    rien ne se définit sur un écran retravaillé (_SCELLE_ECRANS)."""
+    if page in _SCELLE_ECRANS:
+        return t
     saut = 0      # profondeur dans une zone sautée (rideau, nav, pied, bouton, étiquette)
     pp = 0        # profondeur de <p> : on ne définit que dans un paragraphe
     for m in re.finditer(r'<[^>]+>|[^<]+', t):
@@ -533,7 +546,7 @@ def images_pretes(t, page):
 _vues, _differees = 0, 0
 for vieux, neuf in {**PROD, **SOUS_DOSSIER_EMISES}.items():
     t = (MAQ / vieux).read_text()
-    t = definir_sealed(t)
+    t = definir_sealed(t, neuf)
     t = renommer_liens(t, neuf.split("/", 1)[0] + "/" if "/" in neuf else None)
     (DOCS / neuf).parent.mkdir(parents=True, exist_ok=True)
     if neuf == "404.html":

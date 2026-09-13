@@ -6,7 +6,7 @@
       "titre_onglet": "Cascade &#183; contact",
       "fno": "Contact",
       "titre": "How to reach us about a figure.",
-      "lede": "The right first message names a figure with its source: each number on this site carries a declared source, so a dispute can start precisely. And it attaches no file: this tool exists so your documents stay with you, and that starts here.",
+      "lede": "Name the figure you are questioning and where you saw it. Every number here has a source, so we start from the same one. No attachments.",
       "description": "A first message that names a figure and its source starts a real discussion. Attach no file: this tool exists so your documents stay with you.",
       "sections": [
         {
@@ -18,13 +18,13 @@
         {
           "h2": "What to bring",
           "html": [
-            "<p>The page you are on and the figure you dispute: each one here has a declared source, so we can meet at it. If you disagree with a measurement, better than an argument: the record is sealed and the command is public, so <b>bring your own rerun</b>. If you measured your own cases, bring the report the tool wrote beside your CSV: it contains rates and intervals, and no values from your documents.</p>"
+            "<p>The page you are on and the figure you dispute: each one here has a declared source, so we can meet at it. If you disagree with a measurement, <b>bring your own rerun</b>. The record is frozen and the command is public, so you can reproduce it. If you measured your own cases, bring the report the tool wrote beside your CSV: it contains rates and intervals, and no values from your documents.</p>"
           ]
         },
         {
           "h2": "What to keep out",
           "html": [
-            "<p><b>We receive none of your records, not even a sample.</b> The tool exists so your documents never leave your machine; a sample attached to a public issue is published, and a clone, once made, cannot be recalled. If your question needs your data, the answer is a command that runs where the data lives, and we will point you to it.</p>"
+            "<p><b>We receive none of your records. We do not want a sample either.</b> The tool exists so your documents never leave your machine; a sample attached to a public issue is published, and a clone, once made, cannot be recalled. If your question needs your data, the answer is a command that runs where the data lives, and we will point you to it.</p>"
           ]
         },
         {

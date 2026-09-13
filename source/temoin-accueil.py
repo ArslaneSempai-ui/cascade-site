@@ -11,7 +11,7 @@ Il lit la page SERVIE (docs/index.html) et tient les affirmations du premier éc
   B. l'éventail : cinq cartes vivantes, une par outil, dans l'ordre du rideau
      (OUTILS d'outil.py, jamais une liste retapée), chacune portant son SVG ;
   C. la méthode : quatre stations numérotées, la station 03 porte le terminal aux
-     TROIS commandes, la station 01 définit « sealed » dans son paragraphe ;
+     TROIS commandes, la station 02 explique le scellé par son content hash ;
   D. la scène : l'escalier-01 avec DEUX annotations dont les textes sont ceux
      PUBLIÉS de findings-dossier.json (fiche 01), et la note est la phrase de la
      fiche — l'accueil cite le dossier, il ne le paraphrase pas ;
@@ -100,8 +100,12 @@ def relever(html, hero_routing, findings_dossier):
         n_cmd = len(re.findall(r"<code[^>]*>", lis[2])) if len(lis) >= 3 else 0
         if n_cmd != 3:
             dire(f"le terminal de la station 03 porte {n_cmd} commandes, la maison en montre trois")
-        if lis and "sealed" not in _nu(lis[0]):
-            dire("la station 01 ne définit pas « sealed » dans son paragraphe")
+        # 13/09 : « sealed public record » a quitté les ÉCRANS (décision d'Arslane) ; la
+        # station 01 dit « our public test set ». Le scellé se DÉFINIT désormais à la
+        # station 02 (« SEAL · Hashed, then frozen »), et c'est elle qu'on garde : l'accueil
+        # doit toujours EXPLIQUER le scellé, pas seulement en porter le mot.
+        if len(lis) >= 2 and "content hash" not in _nu(lis[1]):
+            dire("la station 02 (SEAL) n'explique pas le scellé par son content hash")
 
     # D. la scène de l'escalier et ses annotations PUBLIÉES
     if not re.search(r'class="objet"[^>]*src="[^"]*escalier-01\.webp"', html):

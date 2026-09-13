@@ -87,7 +87,7 @@
     {
       "num": "03",
       "titre": "The best trade-off keeps 98.3% recall at 76.7% false alerts.",
-      "phrase": "The tool holds the Wilson lower bound of recall at 90%, then takes the fewest false alerts. Across every matcher and threshold, the embedding included, that cell is jaro-winkler at 0.56, at recall 98.3% and 76.7% false alerts.",
+      "phrase": "The tool keeps the settings that catch at least 90% of true matches, then picks the fewest false alerts. Across every matcher and threshold, the embedding included, that is jaro-winkler at 0.56: 98.3% caught, 76.7% flagged wrongly.",
       "a": "98.3%",
       "leg_a": "recall 98.3% for jaro-winkler at 0.56, interval 91% to 100%, 60 pairs of matches",
       "b": "76.7%",

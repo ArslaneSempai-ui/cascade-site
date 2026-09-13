@@ -1172,11 +1172,11 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade: routing audit, KYC extraction">
-<meta property="og:description" content="A routing audit for KYC extraction: measured on sealed public records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
+<meta property="og:description" content="A routing audit for KYC extraction: measured on our public test set, rerun on your machine. On your records, on your machine: nothing leaves the network.">
 <meta property="og:url" content="https://cascade-routing.com/routing/">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="A routing audit for KYC extraction: measured on sealed public records, rerun on your machine. On your records, on your machine: nothing leaves the network.">
+<meta name="description" content="A routing audit for KYC extraction: measured on our public test set, rerun on your machine. On your records, on your machine: nothing leaves the network.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">
@@ -1187,13 +1187,13 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <main>
 <section class="hero">
-  <h1 class="h1 entree h1-long">Measure each model tier's accuracy and cost, field by field.</h1>
-  <p class="lede entree">Seven model tiers, from a regular expression to a human, measured on your own records.<br>
-    On the measured corpus, three of the five fields are already carried by regexes at zero cost.</p>
+  <h1 class="h1 entree">See which model tier each field actually needs.</h1>
+  <p class="lede entree">You pay the big model for every field. Most do not need it.<br>
+    On our test set, three of the five fields are handled by regular expressions, at no cost.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
     <code class="ln">node src/premiere-reponse.mjs</code>
-    <span class="note">The conclusion, generated from the sealed public records in under one second. Before npm install.</span>
+    <span class="note">The conclusion, generated from our public test sets in under one second. Before npm install.</span>
   </div>
   <div class="cue" aria-hidden="true"><span>scroll</span><span class="fil"></span></div>
 </section>
@@ -1210,13 +1210,13 @@ PAGE = f'''<!doctype html><html lang="en">
 </section>
 
 <section class="instrument" data-commun="instrument"><div class="colonne">
-  <h2 class="h2">The live instrument, tested against sealed public records.</h2>
+  <h2 class="h2">Try the Routing instrument on our public test set.</h2>
   {affiche_html("paliers", LANDING, [], "INSTRUMENT.html", "Cascade &#183; Routing",
-                "See every field, tier, accuracy and cost, live from the sealed public record. Set the budget and watch the tool choose the route.",
+                "See every field, tier, accuracy and cost, live from our public test set. Set the budget and watch the tool choose.",
                 "rendus/robot-vert-regarde.webp",
                 note=f"Measured on {N_SOCLE:,} held-out records for the rules, small and large tiers, and {N_GEN} for the generative tiers. "
-                     f"Human accuracy is assumed at {qte(HUMAIN)} % until you measure your own reviewers with "
-                     "<code>npm run measure:humans</code>. Rings mark the published routing.", tarif="ENGAGEMENT.html")}
+                     f"Human accuracy is assumed at {qte(HUMAIN)} % until you measure your own reviewers. "
+                     "Rings mark the published routing.", tarif="ENGAGEMENT.html")}
 </div></section>
 
 <div class="couture" aria-hidden="true"><div class="colonne">
@@ -1299,17 +1299,17 @@ def batir_accueil():
     # LA MÉTHODE : quatre stations, chaque chiffre lu dans un relevé
     dossier_r = lire_releve_scelle(OUTILS["dossier"]["releve"])
     stations = [
-        ("01 · MEASURE", "On sealed public records",
-         ["Each tool measures every tier on the", "repository's own sealed public records: 1,000", "held-out records for the reader, 60 + 60 pairs,", "42 + 42 cases, 84 files. Intervals on every rate."],
+        ("01 · MEASURE", "On our public test set",
+         ["Each tool measures every tier on the", "tool&#8217;s own public test set: 1,000", "held-out records for the reader, 60 + 60 pairs,", "42 + 42 cases, 84 files. Intervals on every rate."],
          f"{N_SOCLE:,} records · {N_GEN} for the generative tiers"),
         ("02 · SEAL", "Hashed, then frozen",
-         ["Each record carries its content hash.", "A page checks it before a figure is shown;", "a record that changed after sealing", "is not used."],
+         ["Each record carries its content hash.", "A page checks it before a figure is shown.", "A record that changed after sealing", "is not used."],
          f"content hash {SCEAU_ROUTING[:8]}… (reader)"),
         ("03 · RERUN", "On your own files, at your desk",
          ["One command reruns the whole sweep on", "your records. The report is written next", "to your file, and no data leaves the", "network."],
          "3 commands, no account, no upload"),
         ("04 · DOSSIER", "Signed, current, verifiable",
-         ["Four reports against five controls:", "present, sealed, signed, fresh, consistent.", "A reviewer verifies the dossier without", "us, from the hashes and signatures."],
+         ["Four reports against five controls:", "present, sealed, signed, fresh, consistent.", "A reviewer checks the dossier from the", "hashes and signatures alone."],
          f"{dossier_r['couverture']['n']} of {dossier_r['couverture']['sur']} reports · {len(dossier_r['controles']['presents'])} controls"),
     ]
     # LA SCÈNE DE LA MÉTHODE : le gros plan 01 du dossier avec ses étiquettes PUBLIÉES (les mêmes
@@ -1340,8 +1340,8 @@ def batir_accueil():
     acc_champ = re.sub(r"<[^>]+>", "", SCENES[0]["a"])
     acc_fichier = re.sub(r"<[^>]+>", "", SCENES[0]["b"])
     moins_cher = SCENES[1]["cote"]
-    description = ("Cascade: five instruments, one method. Each tier measured on sealed public "
-                   "records, the best trade-off read with its interval, rerun on your machine.")
+    description = ("Cascade: five instruments, one method. Each tier measured on our public test set, "
+                   "the best trade-off read with its interval, rerun on your machine.")
     page = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade &#183; measured instruments for compliance</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -1372,11 +1372,11 @@ def batir_accueil():
   <div class="hero-grille">
     <div class="hero-texte">
       <h1 class="h1 entree">Compliance decisions you can prove.</h1>
-      <p class="lede entree">Cascade turns compliance decisions into measurable evidence: tested against sealed public records, reproducible on your own data, and open to inspection.</p>
+      <p class="lede entree">Cascade turns compliance decisions into measurable evidence: tested against our public test set, reproducible on your own data, and open to inspection.</p>
       <dl class="ledger entree" aria-label="The routing instrument, in figures">
         <div><dt><i class="pt" aria-hidden="true"></i>routing, mean accuracy per field</dt><dd>{acc_champ}</dd></div>
         <div><dt>accuracy per file</dt><dd>{acc_fichier}</dd></div>
-        <div><dt>sealed public records</dt><dd>{N_SOCLE:,}</dd></div>
+        <div><dt>records in our public test set</dt><dd>{N_SOCLE:,}</dd></div>
         <div><dt>at equal accuracy</dt><dd>{moins_cher}</dd></div>
         <div><dt>content hash</dt><dd>{SCEAU_ROUTING}</dd></div>
         <div class="cmd"><dt>rerun on your own files</dt><dd class="c1">node src/premiere-reponse.mjs</dd>
@@ -1484,7 +1484,7 @@ def _table_dossier(spec, releve, findings):
     for nom_q, q in releve["questions"].items():
         if not q.get("present"):
             lignes += (f"<tr><th scope='row'>{nom_q}</th><td class='cell' colspan='{len(ordre)}'>"
-                       f"<small>no sealed public record yet: nothing judged, and said</small></td></tr>")
+                       f"<small>no public test set yet: nothing judged, and said</small></td></tr>")
             continue
         verd = {v["controle"]: v["tenu"] for v in q.get("verdicts", [])}
         etat = q.get("etat")
@@ -1499,7 +1499,7 @@ def _table_dossier(spec, releve, findings):
                 cells += "<td class='cell'><span>&#215;</span><br><small>not held</small></td>"
         lignes += f"<tr><th scope='row'>{nom_q}</th>{cells}</tr>"
     cv, rg = releve["couverture"], releve["reglages"]
-    note = (f"{cv['n']} of the {cv['sur']} questions carry a sealed public record. In each row the "
+    note = (f"{cv['n']} of the {cv['sur']} questions carry a public test set. In each row the "
             "marked cell is the state reached with no gap in the contract&#8217;s order; a row "
             "without one reaches none, and the record states this. The declared validity period is "
             f"{rg['rythmeJours']} days, as of {rg['auJour']}.")
@@ -1523,18 +1523,15 @@ SPECS = {
         app_desc="A sanctions-screening audit: which name matcher suffices, "
                  "at which threshold, measured on your own alert history. ",
         offre="Thirty-day evaluation on your own alert history, granted in the public licence.",
-        h1="Measure each matcher's recall against its false alerts, on your own alert history.",
-        lede="Seven name matchers, from strict equality to a multilingual embedding, swept across "
-             "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
-             "and each figure carries its 95% interval and its n.",
+        h1="See what your screening catches, and what it flags wrongly.",
+        lede="Nobody can say why your screening threshold sits where it does.<br>\n    Test seven matchers across fifty&#8209;one thresholds on your own alerts. Every rate carries the cases behind it.",
         aria_commande="The measurement on your own alert history",
         commandes=["npm ci --ignore-scripts", "npm run measure:yours -- --alerts=your-alerts.csv"],
         note_commande="Your alert history, measured on your machine.",
-        instrument_h2="Pick any cell, read what your threshold costs.",
+        instrument_h2="See what each threshold costs you.",
         instrument_page="INSTRUMENT-SCREENING.html",
         instrument_eti="Cascade &#183; Screening",
-        instrument_sub="Each matcher at each threshold, recall and false alerts with their intervals, "
-                       "live from the sealed public record, and the tool's own selection rule under your recall floor.",
+        instrument_sub="Each matcher at each threshold, with what it catches and what it flags wrongly, live from our public test set.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
                         "ANNEXE-SCREENING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "The lists, the seal, and what never leaves.",
@@ -1558,19 +1555,16 @@ SPECS = {
         app_desc="A transaction-monitoring audit: which scenario suffices, "
                  "at which threshold, measured on your own dispositioned alerts. ",
         offre="Thirty-day evaluation on your own dispositioned alerts, granted in the public licence.",
-        h1="Measure each scenario's recall against its false alerts, on your own alerts.",
-        lede="Seven scenarios, from a bare amount to the deviation from a peer profile, swept across "
-             "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
-             "and each figure carries its 95% interval and its n.",
+        h1="See what your scenarios catch, and what they flag wrongly.",
+        lede="Your scenarios were tuned once, and nobody has re-measured them since.<br>\n    Test seven across fifty&#8209;one thresholds on alerts your analysts already closed. Each rate shows how many cases it rests on.",
         aria_commande="The measurement on your own dispositioned alerts",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --alerts=your-alerts.csv --transactions=your-transactions.csv"],
         note_commande="Your dispositioned alerts, measured on your machine.",
-        instrument_h2="Pick any cell, read what your threshold costs.",
+        instrument_h2="Read what a threshold change costs.",
         instrument_page="INSTRUMENT-MONITORING.html",
         instrument_eti="Cascade &#183; Monitoring",
-        instrument_sub="Each scenario at each threshold, recall and false alerts with their intervals, "
-                       "live from the sealed public record, and the tool's own selection rule under your recall floor.",
+        instrument_sub="Each scenario at each threshold, with what it catches and what it flags wrongly, live from our public test set.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
                         "ANNEXE-MONITORING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "What is rebuilt, what is assumed, and what never leaves.",
@@ -1594,19 +1588,16 @@ SPECS = {
         app_desc="A customer risk-rating audit: which risk factor suffices, "
                  "at which threshold, measured on your own periodic-review outcomes. ",
         offre="Thirty-day evaluation on your own review outcomes, granted in the public licence.",
-        h1="Measure each risk factor's recall against its false alerts, on your own reviews.",
-        lede="Seven risk factors, from a country list to the deviation from the declared profile, swept across "
-             "fifty&#8209;one thresholds.<br>\n    Recall and false alerts carry their intervals, "
-             "and each figure carries its 95% interval and its n.",
+        h1="See which risk factors actually sort your customers.",
+        lede="Your risk factors carry weights nobody has tested against outcomes.<br>\n    Test seven across fifty&#8209;one thresholds on reviews your analysts already decided. You see how many files each rate rests on.",
         aria_commande="The measurement on your own periodic-review outcomes",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --customers=your-customers.csv --reviews=your-reviews.csv"],
         note_commande="Your review outcomes, measured on your machine.",
-        instrument_h2="Pick any cell, read what your threshold costs.",
+        instrument_h2="See what each factor and threshold gives you.",
         instrument_page="INSTRUMENT-SCORING.html",
         instrument_eti="Cascade &#183; Scoring",
-        instrument_sub="Each risk factor at each threshold, recall and false alerts with their intervals, "
-                       "live from the sealed public record, and the tool's own selection rule under your recall floor.",
+        instrument_sub="Each risk factor at each threshold, with what it catches and what it flags wrongly, live from our public test set.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it withholds.",
                         "ANNEXE-SCORING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "The declared tables, the seal, and what never leaves.",
@@ -1632,8 +1623,7 @@ SPECS = {
                  "machine.",
         offre="Thirty-day evaluation on your own signed reports, granted in the public licence.",
         h1="Check each report: present, sealed, signed, fresh, consistent.",
-        lede="Four questions, one per tool, each checked against five controls.<br>\n    The Dossier reads the signed reports and answers "
-             "as one piece, each line carrying its base.",
+        lede="A reviewer asks whether the whole chain still holds.<br>\n    The Dossier reads the four signed reports, checks five things on each, and says which ones hold today.",
         aria_commande="The dossier over your own signed reports",
         commandes=["npm ci --ignore-scripts",
                    "npm run dossier -- --reports=a-measured.json,b-measured.json"],
@@ -1641,15 +1631,14 @@ SPECS = {
         instrument_h2="Read the whole chain in one table.",
         instrument_page="INSTRUMENT-DOSSIER.html",
         instrument_eti="Cascade &#183; Dossier",
-        instrument_sub="The four questions against the five controls, states, seals and freshness "
-                       "live from the sealed public dossier, and what the next control still needs.",
+        instrument_sub="The four questions against the five controls, with states, seals and dates live from our public test set.",
         annexe_methode=("Method &amp; what is verified", "What the five controls hold, and what a gap means.",
                         "ANNEXE-DOSSIER-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "What is read, what is derived, and what never leaves.",
                          "ANNEXE-DOSSIER-SECURITE.html"),
         icone_prefixe=ICONES_PREFIXE["dossier"],
         table_ligne="question",
-        table_caption="State reached by each question of the chain under the contract&#8217;s five controls, on the sealed public records",
+        table_caption="State reached by each question of the chain under the contract&#8217;s five controls, on our public test sets",
         table=_table_dossier,
         refaire=_refaire_dossier,
         pied="Your records stay on your machine, and <em>no data leaves the network.</em>",
@@ -1937,7 +1926,7 @@ def batir_outil_catalogue(o, spec):
   </div>
 </section>
 <section class="instrument" data-commun="instrument"><div class="colonne">
-  <h2 class="h2">The live instrument, tested against sealed public records.</h2>
+  <h2 class="h2">Try the {o["nom"]} instrument on our public test set.</h2>
   {affiche_html("horloge" if o["id"] == "dossier" else "courbes", RELEVE, FINDINGS, spec["instrument_page"],
                 spec["instrument_eti"], spec["instrument_sub"], "../rendus/robot-" + ICONES_COULEUR[o["id"]] + "-regarde.webp",
                 note="" if o["id"] == "dossier" else _note_outil(spec, RELEVE, FINDINGS), tarif=lien(o, "ENGAGEMENT.html"))}

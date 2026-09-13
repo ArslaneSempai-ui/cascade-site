@@ -120,7 +120,7 @@ OUTILS = {
         # palette et que le pan vert doit y rester vert
         "page_hero": "HERO.html",
         "etiquette": "Routing &#183; identity-field extraction",
-        "pitch": "Seven model tiers per field, from a regular expression to a human, measured on sealed public records.",
+        "pitch": "Most fields do not need the biggest model. This tells you which ones do.",
         "robot_rideau": "robot-salut.webp",           # il salue (etats/robots-rideau.py)
         "vif": "#57b184",
         "nuit": ("#1b3229", "#14251e", "#0e1a15"),
@@ -140,7 +140,7 @@ OUTILS = {
         "depot": "https://github.com/ArslaneSempai-ui/cascade-screening",
         "page_hero": "HERO-SCREENING.html",
         "etiquette": "Screening &#183; name matching",
-        "pitch": "Seven matchers, from strict equality to a multilingual embedding, measured on your own alert history.",
+        "pitch": "Your threshold came from the vendor. Test seven matchers on your own alert history.",
         "robot_rideau": "robot-rubis-curieux.webp",   # il se penche, curieux (etats/robots-rideau.py)
         # l'affiche du film : la plaque 3D (etats/affiche-plaque.py) + la carte des deux
         # chiffres de la frontière lus dans le relevé (etats/affiche-composer.py)
@@ -166,7 +166,7 @@ OUTILS = {
         "depot": "https://github.com/ArslaneSempai-ui/cascade-monitoring",
         "page_hero": "HERO-MONITORING.html",
         "etiquette": "Monitoring &#183; transaction monitoring",
-        "pitch": "Seven scenarios, from a bare amount to a peer profile, measured on your own dispositioned alerts.",
+        "pitch": "Your scenarios have thresholds nobody re-measured. Test seven on alerts you already closed.",
         "robot_rideau": "robot-lapis-montre.webp",    # il montre (rendu du chef)
         # l'affiche : plaque lapis (affiche-plaque.py --accent lapis) + les deux chiffres
         # de la fiche 03 lus dans le relevé (ici deux BORNES BASSES, champ « bas » :
@@ -192,7 +192,7 @@ OUTILS = {
         "depot": "https://github.com/ArslaneSempai-ui/cascade-scoring",
         "page_hero": "HERO-SCORING.html",
         "etiquette": "Scoring &#183; risk rating",
-        "pitch": "Seven risk factors, from a country list to the deviation from the declared profile, measured on your own periodic-review outcomes.",
+        "pitch": "Your risk factors were weighted by habit. Test seven against reviews you already decided.",
         "robot_rideau": "robot-amethyste-pese.webp",    # il pèse : sa pose à lui
         "affiche": "affiche-scoring.jpg",
         "affiche_alt": "The amethyst Cascade robot, palms up, projecting the two lower bounds of recall "
@@ -214,7 +214,7 @@ OUTILS = {
         "depot": "https://github.com/ArslaneSempai-ui/cascade-dossier",
         "page_hero": "HERO-DOSSIER.html",
         "etiquette": "Dossier &#183; the audit dossier",
-        "pitch": "Four signed reports, five controls, one dossier a reviewer verifies without us.",
+        "pitch": "Four reports, five checks, one dossier your reviewer can open and verify.",
         "robot_rideau": "robot-onyx-tient.webp",        # il tient la pièce
         "affiche": "affiche-dossier.jpg",
         "affiche_encre": "#2a2a31",                    # le gris vif de l'onyx s'efface sur la plaque : l'encre projetée est plus sombre

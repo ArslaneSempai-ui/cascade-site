@@ -291,7 +291,7 @@ JS = '''
     const sortie = $("#b-lecture");
     if (!c) {
       sortie.innerHTML = "no cell holds a recall LOWER BOUND of <b>" + plancher.toFixed(2)
-        + "</b> on the sealed public record \\u00b7 the tool would say the same, and name the strongest bound available";
+        + "</b> on our public test set \\u00b7 the tool would say the same, and name the strongest bound available";
     } else {
       sortie.innerHTML = "under a recall floor of <b>" + plancher.toFixed(2) + "</b> (lower bound, the tool's rule): "
         + "<b>" + c.palier + "</b> at threshold <b>" + c.seuil.toFixed(2) + "</b>"
@@ -341,10 +341,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Monitoring: the live instrument">
-<meta property="og:description" content="Each scenario at each threshold on the sealed public record: recall against false alerts, with intervals everywhere, under the recall floor you set.">
+<meta property="og:description" content="Each scenario at each threshold on our public test set: recall against false alerts, with intervals everywhere, under the recall floor you set.">
 <meta property="og:url" content="https://cascade-routing.com/monitoring/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Each scenario at each threshold on the sealed public record: recall against false alerts, with intervals everywhere, under the recall floor you set.">
+<meta name="description" content="Each scenario at each threshold on our public test set: recall against false alerts, with intervals everywhere, under the recall floor you set.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%230a111f'/%3E%3Cpath d='M16 0v16H0z' fill='%231f3f7a'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
@@ -355,10 +355,9 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">Each scenario at each threshold, live.</h1>
-    <p class="lede">Each figure on this page comes from the <b>sealed public record</b> of
-      cascade-monitoring: cases the repository wrote itself, benign cases included, measured
-      by its own scenarios. No client data exists here, none enters and none leaves,
-      and each figure is recomputed from the sealed public record as the page loads.</p>
+    <p class="lede">The figures on this page come from <b>our public test set</b>: cases we
+      wrote ourselves, benign ones included, run through the scenarios. Nothing here comes from a
+      real bank. The page recomputes them as it loads.</p>
   </div>
 </section>
 
@@ -369,7 +368,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <div class="poste-grille">
       <div class="fen-robot">
       <div class="terminal">
-        <div class="tm-barre"><i></i><i></i><i></i><span>cascade monitoring &#183; the sealed public record, live</span></div>
+        <div class="tm-barre"><i></i><i></i><i></i><span>cascade monitoring &#183; our public test set, live</span></div>
         <div class="tm-corps">
           <p class="tm-l"><span class="ps">$</span> cascade monitor --live<span class="caret" aria-hidden="true"></span></p>
           <div class="regls" role="group" aria-label="Which half of the record">
@@ -408,21 +407,21 @@ PAGE = f'''<!doctype html><html lang="en">
     <div class="plis">
       <details class="pli"><summary>What this rests on</summary>
     <ul>
-      <li><b>The sealed public record.</b> releve-public.json in the repository, content hash
+      <li><b>Our public test set.</b> releve-public.json in the repository, content hash
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
         on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
-        then recomposes witness cells with the tool&#8217;s own interval code, and does not emit
-        if a single figure disagrees.</li>
-      <li><b>Cases the repository wrote.</b> The labelled half is authored: typologies of suspicion
+        then rebuilds every figure with the tool&#8217;s own code, and publishes nothing
+        if one figure disagrees.</li>
+      <li><b>The cases we wrote.</b> The labelled half is written by hand: typologies of suspicion
         (structuring, rapid movement, a dormant account that wakes, round-tripping) and benign
         cases (payroll, seasonal trade, loan repayments) that resemble them. The labels ship with the
         cases, debatable ones with their reasons.</li>
       <li><b>Synthetic variants, kept apart.</b> Generated from the written cases, nature by
         nature, and kept apart from the authored half: the toggle above switches the whole
         grid, and the two stay separate.</li>
-      <li data-commun="instrument"><b>The tool&#8217;s selection rule.</b> The slider holds your recall floor at the Wilson
-        <b>lower bound</b>, exactly as <span style="font-family:var(--mono)">npm run optimise</span>
-        does: a point estimate does not clear a floor here.</li>
+      <li data-commun="instrument"><b>How the tool picks.</b> The slider sets the share of true cases you want caught.
+        A setting counts only when its worst case clears it, and the tool then takes the
+        fewest false alerts.</li>
     </ul>
       </details>
       <details class="pli"><summary>What this page cannot do</summary>
@@ -443,7 +442,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <div><span class="ps">$</span> git clone {DEPOT_URL}.git</div>
       <div><span class="ps">$</span> npm ci --ignore-scripts</div>
       <div><span class="ps">$</span> npm run measure:yours -- --alerts=your-alerts.csv --transactions=your-transactions.csv</div>
-      <div class="note">the report and the sealed public record are written next to your file, and nowhere else</div>
+      <div class="note">the report and the record are written next to your file, and nowhere else</div>
     </div>
     <div class="ouvrir-ligne"><a class="ouvrir" href="{DEPOT_URL}">Run it on your records <span class="fl" aria-hidden="true">&#8594;</span></a>
       <a class="ouvrir tarif" href="../ENGAGEMENT.html">See pricing <span class="fl" aria-hidden="true">&#8594;</span></a></div>

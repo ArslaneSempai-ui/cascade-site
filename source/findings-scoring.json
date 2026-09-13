@@ -87,7 +87,7 @@
     {
       "num": "03",
       "titre": "No factor's recall lower bound reaches the 90% floor.",
-      "phrase": "The tool holds the Wilson lower bound of recall at 90%, then takes the fewest false alerts. On the 42 files no factor reaches that floor: product's lower bound is 81%, and behaviour, at 66.7% recall with no false alert, has a lower bound of 51.6%.",
+      "phrase": "The tool keeps settings that catch at least 90% of true files, then takes the fewest false alerts. No factor reaches that on the 42 files: product holds down to 81%, behaviour catches 66.7% but holds to 51.6%.",
       "a": "81%",
       "leg_a": "highest recall lower bound, product at 0.50: 81%, interval 81% to 98%",
       "b": "51.6%",

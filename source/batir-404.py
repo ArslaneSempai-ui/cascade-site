@@ -63,11 +63,10 @@ PAGE = f'''<!doctype html><html lang="en">
     alt="The Cascade robot in front of the blank record card, arms out, with nothing to present">
 </div>
 <h1>No measurement lives at this address.</h1>
-<p>This address holds no measurement, no seal, no published record:
-  the address is wrong, or the page has moved.</p>
+<p>The address is wrong, or the page has moved.</p>
 <nav class="portes" aria-label="Ways out">
-  <a class="porte" href="ACCUEIL.html">The question &#8594;</a>
-  <a class="porte" href="INSTRUMENT.html">The instrument &#8594;</a>
+  <a class="porte" href="ACCUEIL.html">Start at the home page &#8594;</a>
+  <a class="porte" href="INSTRUMENT.html">Open the instrument &#8594;</a>
   <a class="porte" href="CONTACT.html">Say a figure is missing &#8594;</a>
 </nav>
 <span class="sceau">content hash {SCEAU}</span>

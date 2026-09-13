@@ -291,7 +291,7 @@ JS = '''
     const sortie = $("#b-lecture");
     if (!c) {
       sortie.innerHTML = "no cell holds a recall LOWER BOUND of <b>" + plancher.toFixed(2)
-        + "</b> on the sealed public record \\u00b7 the tool would say the same, and name the strongest bound available";
+        + "</b> on our public test set \\u00b7 the tool would say the same, and name the strongest bound available";
     } else {
       sortie.innerHTML = "under a recall floor of <b>" + plancher.toFixed(2) + "</b> (lower bound, the tool's rule): "
         + "<b>" + c.palier + "</b> at threshold <b>" + c.seuil.toFixed(2) + "</b>"
@@ -341,10 +341,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Scoring: the live instrument">
-<meta property="og:description" content="Each risk factor, at each threshold, read from the sealed public record: recall against false alerts, and the interval that comes with each cell.">
+<meta property="og:description" content="Each risk factor, at each threshold, read from our public test set: recall against false alerts, and the interval that comes with each cell.">
 <meta property="og:url" content="https://cascade-routing.com/scoring/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Each risk factor, at each threshold, read from the sealed public record: recall against false alerts, and the interval that comes with each cell.">
+<meta name="description" content="Each risk factor, at each threshold, read from our public test set: recall against false alerts, and the interval that comes with each cell.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23100b1f'/%3E%3Cpath d='M16 0v16H0z' fill='%234b2a7a'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
@@ -355,10 +355,9 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">Each risk factor at each threshold, live.</h1>
-    <p class="lede">Each figure on this page comes from the <b>sealed public record</b> of
-      cascade-scoring: customer files the repository wrote itself, benign cases included,
-      measured by its own risk factors. No client data exists here, none enters and none leaves,
-      and each figure is recomputed from the sealed public record as the page loads.</p>
+    <p class="lede">These figures come from <b>our public test set</b>: customer files we wrote
+      ourselves, retained ones included, run through the risk factors. No real customer file is in
+      it. They are recomputed each time the page loads.</p>
   </div>
 </section>
 
@@ -369,7 +368,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <div class="poste-grille">
       <div class="fen-robot">
       <div class="terminal">
-        <div class="tm-barre"><i></i><i></i><i></i><span>cascade scoring &#183; the sealed public record, live</span></div>
+        <div class="tm-barre"><i></i><i></i><i></i><span>cascade scoring &#183; our public test set, live</span></div>
         <div class="tm-corps">
           <p class="tm-l"><span class="ps">$</span> cascade score --live<span class="caret" aria-hidden="true"></span></p>
           <div class="regls" role="group" aria-label="Which half of the record">
@@ -408,12 +407,12 @@ PAGE = f'''<!doctype html><html lang="en">
     <div class="plis">
       <details class="pli"><summary>What this rests on</summary>
     <ul>
-      <li><b>The sealed public record.</b> releve-public.json in the repository, content hash
+      <li><b>Our public test set.</b> releve-public.json in the repository, content hash
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
         on {D["provenance"]["date"]}. The extractor that feeds this page verifies the seal,
-        then recomposes witness cells with the tool&#8217;s own interval code, and does not emit
-        if a single figure disagrees.</li>
-      <li><b>Files the repository wrote.</b> The labelled half is authored: typologies of risk
+        then rebuilds every figure with the tool&#8217;s own code, and publishes nothing
+        if one figure disagrees.</li>
+      <li><b>The files we wrote.</b> The labelled half is written by hand: typologies of risk
         (shell layers, a PEP relative, cash-intensive trade, an offshore structure, undeclared
         turnover) and benign cases (a local shop, a salaried resident, a domestic SME,
         a retiree) that resemble them. The labels ship with the files, debatable ones with
@@ -421,9 +420,9 @@ PAGE = f'''<!doctype html><html lang="en">
       <li><b>Synthetic variants, kept apart.</b> Generated from the written cases, nature by
         nature, and kept apart from the authored half: the toggle above switches the whole
         grid, and the two stay separate.</li>
-      <li data-commun="instrument"><b>The tool&#8217;s selection rule.</b> The slider holds your recall floor at the Wilson
-        <b>lower bound</b>, exactly as <span style="font-family:var(--mono)">npm run optimise</span>
-        does: a point estimate does not clear a floor here.</li>
+      <li data-commun="instrument"><b>How the tool picks.</b> The slider sets the share of true files you want caught.
+        Settings count only if their worst case clears it, and the tool then picks the one
+        with the fewest false alerts.</li>
       <li><b>The declared tables, sealed in.</b> Each weight the factors read (the country
         list, the activity and product tables, the exposure, structure, behaviour and tenure
         settings) is recorded in the public record this page reads: a figure stays tied to the tables
@@ -448,7 +447,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <div><span class="ps">$</span> git clone {DEPOT_URL}.git</div>
       <div><span class="ps">$</span> npm ci --ignore-scripts</div>
       <div><span class="ps">$</span> npm run measure:yours -- --customers=your-customers.csv --reviews=your-reviews.csv</div>
-      <div class="note">the report and the sealed public record are written next to your files, and nowhere else &#183; a record measured under your tables carries them: share it as you would your risk policy</div>
+      <div class="note">the report and the record are written next to your files, and nowhere else &#183; a record measured under your tables carries them: share it as you would your risk policy</div>
     </div>
     <div class="ouvrir-ligne"><a class="ouvrir" href="{DEPOT_URL}">Run it on your records <span class="fl" aria-hidden="true">&#8594;</span></a>
       <a class="ouvrir tarif" href="../ENGAGEMENT.html">See pricing <span class="fl" aria-hidden="true">&#8594;</span></a></div>

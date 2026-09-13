@@ -249,7 +249,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <ul class="c-liste">
         <li>The whole tool, <b>on your own records</b></li>
         <li>One plan, each Cascade tool: <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b> and <b>Scoring</b> alike, and the <b>Dossier</b> that reads them</li>
-        <li>Counter starts at first use, instead of at download</li>
+        <li>Your thirty days start the first time you run the tool. Downloading it does not start the clock</li>
         <li>Results stay internal, no production</li>
       </ul>
       <a class="cta" href="{DEPOT_URL}"><span class="b">Clone and run <span class="fl" aria-hidden="true">&#8594;</span></span></a>
@@ -264,11 +264,11 @@ PAGE = f'''<!doctype html><html lang="en">
       <ul class="c-liste">
         <li><b>What suffices, tool by tool</b>: field by field on Routing, matcher and threshold on Screening, scenario and threshold on Monitoring, factor and threshold on Scoring; the Dossier binds the four</li>
         <li>Intervals, refusals under twenty observations</li>
-        <li>A <b>sealed, signed report</b> your audit team verifies without us</li>
-        <li>Your data stays with you; we do not read it</li>
+        <li>A <b>signed report</b> your audit team can check on its own</li>
+        <li>Your data stays with you, and we do not read it</li>
       </ul>
       <a class="cta" href="CONTACT.html"><span class="b">Start with a message <span class="fl" aria-hidden="true">&#8594;</span></span></a>
-      <p class="c-fin">one campaign &#183; one sealed deliverable</p>
+      <p class="c-fin">one campaign &#183; one signed deliverable</p>
     </div>
     <div class="col haute">
       <img class="col-robot" src="rendus/robot-vert-tient.webp" alt="">
@@ -279,11 +279,11 @@ PAGE = f'''<!doctype html><html lang="en">
       <ul class="c-liste">
         <li>Commercial use for your own business</li>
         <li>The same licence covers <b>each Cascade tool</b>: Routing, Screening, Monitoring, Scoring, one paper</li>
-        <li>And the <b>Dossier</b>: the cross-tool piece your regulator reads, sealed, verified without us</li>
+        <li>And the <b>Dossier</b>: the piece across tools your regulator reads and can check itself</li>
         <li>The <b>licensed component</b>, kept unpublished</li>
         <li>Updates included for each paid term</li>
         <li><b>Recertify</b> on fresh records, re-sealed, on the validity period you declare</li>
-        <li>One legal entity signs; affiliates named, instead of assumed</li>
+        <li>One legal entity signs, and every affiliate it covers is named</li>
       </ul>
       <a class="cta" href="CONTACT.html"><span class="b">Talk terms <span class="fl" aria-hidden="true">&#8594;</span></span></a>
       <p class="c-fin">30% on signature &#183; net 60 &#183; renewal capped at the lower of CPI&#8209;U and 5%</p>
@@ -306,7 +306,7 @@ PAGE = f'''<!doctype html><html lang="en">
         <div class="voie" style="--t:1" data-l="camp"><span class="v-nom">The campaign</span>
           <i class="barre-v pointille" style="--a:45;--b:76"></i>
           <span class="pap" style="--d:45;--tx:0"><span>engagement letter</span><b>$12,000 fixed</b></span>
-          <span class="pap" style="--d:76;--tx:12px"><span>sealed report</span><b>at your desk, verified without us</b></span>
+          <span class="pap" style="--d:76;--tx:12px"><span>signed report</span><b>at your desk, yours to check</b></span>
         </div>
         <div class="voie" style="--t:2" data-l="lic"><span class="v-nom">The licence</span>
           <i class="barre-v" style="--a:45;--b:150"></i>
@@ -323,10 +323,10 @@ PAGE = f'''<!doctype html><html lang="en">
       <div class="curseur" id="curseur" role="slider" aria-valuemin="0" aria-valuemax="365" aria-valuenow="12" tabindex="0" aria-label="Day"><span id="jour">Day 12</span></div>
     </div>
   </div>
-    <p class="etat" id="etat">Thirty days on your records before anything is signed; what is bought afterwards is delivered at your desk and verified there, without us.</p>
+    <p class="etat" id="etat">Thirty days on your records before anything is signed. What you buy afterwards is delivered at your desk, and you can check it there.</p>
     <div class="commande-jour"><span>drag the day, or</span><button type="button" id="courir">run the year</button></div>
   </div>
-  <p class="note-fin">One person answers, at <a href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a>; nothing is signed during the thirty days, and your vendor onboarding can run while they pass. <b>What none of this certifies:</b> the report proves what was measured and no more, external publication of engagement results is excluded from the first day, and the full terms are on <a href="ANNEXE-TERMS.html">the terms page</a>, in the same words the paper uses.</p>
+  <p class="note-fin">One person answers, at <a href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a>. Nothing is signed during the thirty days, and your vendor onboarding can run while they pass. <b>What none of this certifies:</b> the report proves what was measured and no more, external publication of engagement results is excluded from the first day, and the full terms are on <a href="ANNEXE-TERMS.html">the terms page</a>, in the same words the paper uses.</p>
 </div></section>
 </main>
 

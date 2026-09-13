@@ -87,7 +87,7 @@
     {
       "num": "03",
       "titre": "No scenario's recall lower bound reaches the 90% floor.",
-      "phrase": "The tool holds the Wilson lower bound of recall at 90%, then takes the fewest false alerts. On the 42 cases no single scenario reaches that floor: the best lower bound is 84.2% for amount, the next 75% for peer.",
+      "phrase": "The tool keeps the settings that catch at least 90% of true cases, then picks the fewest false alerts. No scenario reaches it on the 42 cases: amount holds down to 84.2%, peer to 75%.",
       "a": "84.2%",
       "leg_a": "highest recall lower bound, amount at 0.50: 84.2%, interval 84% to 99%",
       "b": "75%",

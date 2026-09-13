@@ -333,7 +333,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <main>
 <section class="tete"><div class="colonne">
-  <h1 class="h1">Test the routing on the sealed public record, live.</h1>
+  <h1 class="h1">Test the routing on our public test set, live.</h1>
   <p class="lede">One tier per field. Click any cell to see what your routing costs and how often it
     gets it right. Or set your budget and let the enumeration choose, the way the tool does:
     <b>highest accuracy first, cheaper on a tie</b>.</p>
@@ -371,7 +371,7 @@ PAGE = f'''<!doctype html><html lang="en">
           <p class="b-lecture" id="b-lecture">slide to read the best routing under your budget</p>
         </div>
         <p class="tm-l" style="margin-top:14px"><span class="ps">$</span> cascade verify --sealed</p>
-        <p class="tm-preuve" id="tm-preuve">self-check requires JavaScript; the figures above are still the sealed readings.</p>
+        <p class="tm-preuve" id="tm-preuve">self-check requires JavaScript. The figures above are still our frozen readings.</p>
       </div>
     </div>
     </div>
@@ -399,7 +399,7 @@ PAGE = f'''<!doctype html><html lang="en">
     and the optimiser reads your measurement instead of the assumption.</p>
   <p><b>Your documents never touch this page.</b> Nothing is uploaded, nothing is fetched, and the
     page's security policy refuses each network call.</p>
-  <p><b>These are our sealed readings. Now test them against yours.</b> The tool clones next to
+  <p><b>These are our readings. Now test them against yours.</b> The tool clones next to
     your files and measures them there: your CSV stays where it is, the report lands beside it.</p>
     </details>
   </div>

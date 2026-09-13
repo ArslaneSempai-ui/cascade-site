@@ -164,8 +164,8 @@
   },
   {
    "num": "05",
-   "titre": "Your reviewer verifies the Dossier without us.",
-   "phrase": "The Dossier is written next to your files and carries a content hash from the same algorithm the suite uses. It checks each measurement against a validity period of 90 days the record declares. Your reviewer confirms the verdict without any service of ours.",
+   "titre": "Your reviewer can check the Dossier alone.",
+   "phrase": "The Dossier is written next to your files and carries a content hash from the same algorithm the suite uses. It checks each measurement against a validity period of 90 days the record declares. Your reviewer confirms the result with no help from us.",
    "a": "4",
    "leg_a": "questions the Dossier answers as one, for the whole suite",
    "b": "90 days",

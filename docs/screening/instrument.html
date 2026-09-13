@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-9BELLkSyAMZSvZHr24EPmGaBiSGuzBAnKVRPjx+XUDM=' 'unsafe-hashes' 'sha256-ogKvhph2a6LUD2Pr+pZ9rS6Ytjewm+TRvjLVOYBLELs=' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-MbUspOmM1WJXTuCZgrZpXUQJC1tD9dnL5c4BHTSa8PA='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-9BELLkSyAMZSvZHr24EPmGaBiSGuzBAnKVRPjx+XUDM=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-5naqMimIM8HzmWOKjePtsl3huy8vcpNmDI/NbjICWac='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Screening &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/screening/instrument.html">
@@ -9,7 +9,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Cascade","item":"https://cascade-routing.com/"},{"@type":"ListItem","position":2,"name":"Screening","item":"https://cascade-routing.com/screening/"},{"@type":"ListItem","position":3,"name":"Instrument","item":"https://cascade-routing.com/screening/instrument.html"}]}</script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade Screening: the live instrument">
-<meta property="og:description" content="Matcher by matcher, threshold by threshold, on the sealed public record: recall against false alerts, with intervals, and where it cannot say.">
+<meta property="og:description" content="Matcher by matcher and threshold by threshold, on our public test set: what each one catches, what it flags wrongly, and where it cannot say.">
 <meta property="og:url" content="https://cascade-routing.com/screening/instrument.html">
 <meta property="og:image" content="https://cascade-routing.com/rendus/affiche-screening.jpg">
 <meta property="og:site_name" content="Cascade">
@@ -17,7 +17,7 @@
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="720">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Matcher by matcher, threshold by threshold, on the sealed public record: recall against false alerts, with intervals, and where it cannot say.">
+<meta name="description" content="Matcher by matcher and threshold by threshold, on our public test set: what each one catches, what it flags wrongly, and where it cannot say.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23180b0f'/%3E%3Cpath d='M16 0v16H0z' fill='%237a1f2e'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../fontes/literata.css">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
@@ -322,10 +322,9 @@
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">Each matcher at each threshold, live.</h1>
-    <p class="lede">Each figure on this page comes from the <b>sealed public record</b> of
-      cascade-screening: pairs the repository wrote itself, hard negatives included, measured
-      by its own matchers. No client data exists here, none enters and none leaves,
-      and each figure is recomputed from the sealed public record as the page loads.</p>
+    <p class="lede">Every figure here comes from <b>our public test set</b>: name pairs we
+      wrote ourselves, near-matches included, run through the matchers. No customer data is
+      on this page. The figures are recomputed as the page loads.</p>
   </div>
 </section>
 
@@ -336,7 +335,7 @@
       <div class="poste-grille">
       <div class="fen-robot">
       <div class="terminal">
-        <div class="tm-barre"><i></i><i></i><i></i><span>cascade screening &#183; the sealed public record, live</span></div>
+        <div class="tm-barre"><i></i><i></i><i></i><span>cascade screening &#183; our public test set, live</span></div>
         <div class="tm-corps">
           <p class="tm-l"><span class="ps">$</span> cascade screen --live<span class="caret" aria-hidden="true"></span></p>
           <div class="regls" role="group" aria-label="Which half of the record">
@@ -344,10 +343,10 @@
             <button class="regl" id="m-synth">synthetic variants (declared)</button>
           </div>
           <p class="tm-sortie" id="g-quoi"></p>
-          <p class="carte-aide" data-commun="instrument">each point is one cell of the sealed public record (hashed, then frozen: its content hash is checked before a figure is shown); <b>pull the floor line</b> or the slider, and the cells whose recall lower bound clears the floor turn green</p>
+          <p class="carte-aide" data-commun="instrument">each point is one setting from our public test set; <b>pull the floor line</b> or the slider, and the cells whose recall lower bound clears the floor turn green</p>
           <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="recall of each row at each threshold of the sealed public record, with the recall floor as a line"></svg></div>
           <div class="t-scroll"><table class="grille">
-      <caption class="sr">Pick a cell: each shows recall on confirmed matches over false alerts on hard negatives, at that matcher and threshold</caption>
+      <caption class="sr">Pick a cell: each shows what the matcher catches on confirmed matches, over what it flags wrongly on near-matches, at that threshold</caption>
       <thead><tr><th scope="col">matcher \ threshold</th><th scope='col'>0.50</th><th scope='col'>0.60</th><th scope='col'>0.70</th><th scope='col'>0.80</th><th scope='col'>0.85</th><th scope='col'>0.90</th><th scope='col'>0.95</th><th scope='col'>1.00</th></tr></thead>
       <tbody><tr><th scope='row'>exact</th><td><button class="cell" data-p="exact" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="exact" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="exact" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="exact" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="exact" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="exact" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="exact" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="exact" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr><tr><th scope='row'>tokens</th><td><button class="cell" data-p="tokens" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="tokens" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="tokens" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="tokens" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="tokens" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="tokens" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="tokens" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="tokens" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr><tr><th scope='row'>jaro-winkler</th><td><button class="cell" data-p="jaro-winkler" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="jaro-winkler" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="jaro-winkler" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="jaro-winkler" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="jaro-winkler" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="jaro-winkler" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="jaro-winkler" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="jaro-winkler" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr><tr><th scope='row'>damerau</th><td><button class="cell" data-p="damerau" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="damerau" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="damerau" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="damerau" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="damerau" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="damerau" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="damerau" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="damerau" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr><tr><th scope='row'>phonetic</th><td><button class="cell" data-p="phonetic" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="phonetic" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="phonetic" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="phonetic" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="phonetic" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="phonetic" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="phonetic" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="phonetic" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr><tr><th scope='row'>ngrams</th><td><button class="cell" data-p="ngrams" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="ngrams" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="ngrams" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="ngrams" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="ngrams" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="ngrams" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="ngrams" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="ngrams" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr><tr><th scope='row'>embed</th><td><button class="cell" data-p="embed" data-s="0.50" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="embed" data-s="0.60" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="embed" data-s="0.70" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="embed" data-s="0.80" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="embed" data-s="0.85" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="embed" data-s="0.90" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="embed" data-s="0.95" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td><td><button class="cell" data-p="embed" data-s="1.00" aria-pressed="false"><span class="c-rappel"></span><span class="c-fp"></span></button></td></tr></tbody></table></div>
           <p class="tm-sortie" id="g-lecture" data-commun="instrument">pick a cell: recall over false alerts, with n and its 95&nbsp;% interval</p>
@@ -385,21 +384,21 @@
     <div class="plis">
       <details class="pli"><summary>What this rests on</summary>
     <ul>
-      <li><b>The sealed public record.</b> releve-public.json in the repository, content hash
+      <li><b>Our public test set.</b> releve-public.json in the repository, content hash
         <b>556bb39ec055a091</b>, measured at commit <b>318916d</b>
         on 2026-09-07. The extractor that feeds this page verifies the seal,
-        then recomposes witness cells with the tool&#8217;s own interval code, and does not emit
-        if a single figure disagrees.</li>
-      <li><b>Pairs the repository wrote.</b> The labelled half is authored: true correspondences
-        (transliterations, token order, initials, typos, particles) and hard negatives
+        then rebuilds every figure with the tool&#8217;s own code, and publishes nothing
+        if one figure disagrees.</li>
+      <li><b>The pairs we wrote.</b> The labelled half is written by hand: true correspondences
+        (transliterations, token order, initials, typos, particles) and near-matches
         (siblings, partial homonyms, near-strings that are not the same person). The labels
         ship with the pairs, debatable ones with their reasons.</li>
       <li><b>Synthetic variants, kept apart.</b> Generated from list-entry names, nature by
         nature, and kept apart from the authored half: the toggle above switches the whole
         grid, and the two stay separate.</li>
-      <li data-commun="instrument"><b>The tool&#8217;s selection rule.</b> The slider holds your recall floor at the Wilson
-        <b>lower bound</b>, exactly as <span style="font-family:var(--mono)">npm run optimise</span>
-        does: a point estimate does not clear a floor here.</li>
+      <li data-commun="instrument"><b>How the tool picks.</b> The slider sets the share of true matches you want
+        caught. The tool keeps only the settings whose worst case clears it, then takes the
+        fewest false alerts.</li>
     </ul>
       </details>
       <details class="pli"><summary>What this page cannot do</summary>
@@ -420,7 +419,7 @@
       <div><span class="ps">$</span> git clone https://github.com/ArslaneSempai-ui/cascade-screening.git</div>
       <div><span class="ps">$</span> npm ci --ignore-scripts</div>
       <div><span class="ps">$</span> npm run measure:yours -- --alerts=your-alerts.csv</div>
-      <div class="note">the report and the sealed public record are written next to your file, and nowhere else</div>
+      <div class="note">the report and the record are written next to your file, and nowhere else</div>
     </div>
     <div class="ouvrir-ligne"><a class="ouvrir" href="https://github.com/ArslaneSempai-ui/cascade-screening">Run it on your records <span class="fl" aria-hidden="true">&#8594;</span></a>
       <a class="ouvrir tarif" href="../engagement.html">See pricing <span class="fl" aria-hidden="true">&#8594;</span></a></div>
@@ -455,7 +454,7 @@
       c.querySelector(".c-fp").textContent = pc(cel.fauxPositifs.taux);
     }
     $("#g-quoi").innerHTML = moitie === "authored"
-      ? "authored pairs: <b>" + D.authored.nMatch + " match</b>, <b>" + D.authored.nDifferent + " hard negatives</b>"
+      ? "pairs we wrote: <b>" + D.authored.nMatch + " match</b>, <b>" + D.authored.nDifferent + " near-matches</b>"
       : "synthetic variants, declared and kept apart: <b>" + D.synthetic.nMatch + " match</b>, <b>" + D.synthetic.nDifferent + " different</b>";
   }
   function lire(c) {
@@ -503,7 +502,7 @@
     const sortie = $("#b-lecture");
     if (!c) {
       sortie.innerHTML = "no cell holds a recall LOWER BOUND of <b>" + plancher.toFixed(2)
-        + "</b> on the sealed public record \u00b7 the tool would say the same, and name the strongest bound available";
+        + "</b> on our public test set \u00b7 the tool would say the same, and name the strongest bound available";
     } else {
       sortie.innerHTML = "under a recall floor of <b>" + plancher.toFixed(2) + "</b> (lower bound, the tool's rule): "
         + "<b>" + c.palier + "</b> at threshold <b>" + c.seuil.toFixed(2) + "</b>"

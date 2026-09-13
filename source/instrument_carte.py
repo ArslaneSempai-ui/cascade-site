@@ -139,7 +139,7 @@ CSS_NOIR = '''
 
 def carte_html(x_titre, y_titre):
     """The chart and its side panel, empty : the JS draws both from the embedded record."""
-    return f'''<p class="carte-aide" data-commun="instrument">each point is one cell of the sealed public record; <b>pull the floor line</b> or the slider, and the cells whose recall lower bound clears the floor turn green</p>
+    return f'''<p class="carte-aide" data-commun="instrument">each point is one setting from our public test set; <b>pull the floor line</b> or the slider, and the cells whose recall lower bound clears the floor turn green</p>
           <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="{y_titre} of each row at each {x_titre} of the sealed public record, with the recall floor as a line"></svg></div>'''
 
 
@@ -352,7 +352,7 @@ CSS_ONYX = '''
   .pan .verdicts b{color:var(--sur);font-weight:500}
 '''
 
-CARTE_VERT_HTML = '''<p class="carte-aide" data-commun="instrument">each dot is one routing of the five fields, priced and scored from the sealed bricks ; the line through the bright dots is the best trade-off no routing beats · <b>pull the budget line</b> (or the slider below), the best routing under it lights up · hover a frontier dot to read it, click it to compose it</p>
+CARTE_VERT_HTML = '''<p class="carte-aide" data-commun="instrument">each dot is one routing of the five fields, priced and scored from our frozen readings. The line through the bright dots is the best trade-off no routing beats · <b>pull the budget line</b> (or the slider below), the best routing under it lights up · hover a frontier dot to read it, click it to compose it</p>
           <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="Each routing as cost against accuracy, the best trade-off, and the budget as a line"><g id="carte-nuage"></g><g id="carte-vif"></g></svg></div>'''
 
 PANNEAU_VERT_HTML = '''<aside class="pan" id="pan" aria-live="polite">
@@ -363,7 +363,7 @@ PANNEAU_VERT_HTML = '''<aside class="pan" id="pan" aria-live="polite">
         <div class="plancher" id="pan-plancher"></div>
       </aside>'''
 
-CARTE_ONYX_HTML = '''<p class="carte-aide" data-commun="instrument">each dot is one question's sealed public record, placed at its age in days · <b>pull the validity line</b> to ask what a shorter or longer validity period would change : a dot past it would lose its « fresh » control, and the --next lines state it · hover a dot to read its five verdicts</p>
+CARTE_ONYX_HTML = '''<p class="carte-aide" data-commun="instrument">each dot is one question from our public test set, placed at its age in days · <b>pull the validity line</b> to ask what a shorter or longer validity period would change : a dot past it would lose its « fresh » control, and the --next lines state it · hover a dot to read its five verdicts</p>
           <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 300" role="img" aria-label="The questions' seals on a time axis, with the declared validity period as a line"></svg></div>'''
 
 PANNEAU_ONYX_HTML = '''<aside class="pan" id="pan" aria-live="polite">
