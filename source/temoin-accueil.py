@@ -15,7 +15,7 @@ Il lit la page SERVIE (docs/index.html) et tient les affirmations du premier éc
   D. la scène : l'escalier-01 avec DEUX annotations dont les textes sont ceux
      PUBLIÉS de findings-dossier.json (fiche 01), et la note est la phrase de la
      fiche — l'accueil cite le dossier, il ne le paraphrase pas ;
-  E. les six liens de la méthode existent dans docs/ ;
+  E. la méthode ne porte plus sa rangée de liens (le pied la porte, Arslane 13/09) ;
   F. le premier écran : UN lede sous le titre (rouvert le 13/09 : la relecture du 8/09 le
      propose, Arslane le reprend), sans cadratin ; ni hero-cue, ni robot avant le rideau.
 
@@ -122,11 +122,10 @@ def relever(html, hero_routing, findings_dossier):
         dire("la note de la méthode n'est pas la phrase publiée de la fiche 01 : "
              "l'accueil cite le dossier, il ne le paraphrase pas")
 
-    # E. les six liens de la méthode
-    liens = re.search(r'<nav class="methode-liens"[^>]*>(.*?)</nav>', html, re.S)
-    n_liens = len(re.findall(r"<a ", liens.group(1))) if liens else 0
-    if n_liens != 6:
-        dire(f"la barre de la méthode porte {n_liens} liens, la décision en met six")
+    # E. la rangée de liens de la méthode a disparu (Arslane, 13/09 : « c'est bizarre d'avoir
+    # les mêmes boutons » ; le rang du pied porte les pages, une fois)
+    if re.search(r'<nav class="methode-liens"', html):
+        dire("la méthode porte encore sa rangée de liens : le pied la porte depuis le 13/09")
 
     # F. le premier écran : un lede, et lui seul
     avant_rideau = html.split('class="rideau"')[0]
@@ -143,7 +142,7 @@ def relever(html, hero_routing, findings_dossier):
 
 
 def temoin(html, hero, fd):
-    """La page réelle, mutée cinq fois : chaque mutation doit rougir sur la bonne
+    """La page réelle, mutée six fois : chaque mutation doit rougir sur la bonne
     affirmation, et la page intacte doit passer."""
     intacte = relever(html, hero, fd)
     if intacte:
@@ -156,6 +155,7 @@ def temoin(html, hero, fd):
         (html.replace("94.4", "93.4") if "94.4" in html else html.replace("1,000", "9,999"),
          "ne se retrouve pas sur le héros routing", "le chiffre déplacé"),
         (re.sub(r'<p class="lede[^"]*"[^>]*>.*?</p>', "", html, count=1, flags=re.S), "lede", "le lede retiré"),
+        (html.replace("</main>", '<nav class="methode-liens"><a href="x">x</a></nav></main>', 1), "rangée de liens", "la rangée remise"),
     ]
     for mue, attendu, nom in mutations:
         fautes = relever(mue, hero, fd)
@@ -176,4 +176,4 @@ if __name__ == "__main__":
             print("  ROUGE", f)
         sys.exit(f"{len(fautes)} refus : l'accueil ne tient pas ses affirmations")
     print("témoin de l'accueil : le grand livre recompose son sceau, l'éventail suit le rideau, "
-          "la méthode cite le dossier — et les cinq mutations rougissent encore")
+          "la méthode cite le dossier — et les six mutations rougissent encore")
