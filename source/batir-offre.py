@@ -52,8 +52,7 @@ CSS = '''
   .barre nav{display:flex;gap:16px;margin-left:auto}
   .barre nav a{font-size:14.5px;text-decoration:none;color:var(--sur-pale);padding:13px 6px}
   .barre nav a:hover{color:var(--sur);text-decoration:underline;text-decoration-color:var(--vert-vif);text-decoration-thickness:1.5px}
-  .barre nav a[aria-current]{color:var(--sur)}
-  .sceau{font-family:var(--mono);font-size:11px;color:var(--sur-pale);letter-spacing:.04em}
+  .barre nav a[aria-current]{color:var(--sur);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:7px;text-decoration-color:currentColor}
 
   .tete{padding:150px 0 20px}
   .h1{font-size:clamp(38px,5vw,66px);font-weight:600;letter-spacing:-.02em;line-height:1.04;text-wrap:balance}

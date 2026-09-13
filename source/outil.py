@@ -685,9 +685,10 @@ def manques_etiquettes(outil_id, base, seuil=SEUIL_OBJET):
 NAV_SITE = [(o["page_hero"], o["nom"]) for o in OUTILS.values()] + [("ENGAGEMENT.html", "Pricing"), ("CONTACT.html", "Contact")]
 
 
-def barre_site(courant=None, sceau=None, racine="", nuit=True):
+def barre_site(courant=None, racine="", nuit=True):
     """`racine` : « ../ » depuis un sous-dossier ; `courant` marque le lien du site (la page d'outil
-    courante, Pricing ou Contact). `sceau` : l'empreinte de l'outil, sinon la devise seule."""
+    courante, Pricing ou Contact). L'empreinte n'est plus dans la barre (Arslane, 13/09 : « enlève
+    le content hash en haut à droite ») : le pied la porte, une fois, sur chaque page."""
     nav = "".join(f'<a href="{racine + c}"' + (' aria-current="page"' if c == courant else "") + f'>{n}</a>'
                   for c, n in NAV_SITE)
     # « measured, then frozen » N'EST PLUS DANS LA BARRE (Arslane, 08/09 : « il n'a rien à
@@ -695,17 +696,18 @@ def barre_site(courant=None, sceau=None, racine="", nuit=True):
     # déjà : la barre le répétait. Ce qui reste ici est l'empreinte, qui identifie la
     # version servie et n'a pas d'autre endroit. Sans empreinte, pas de span du tout : un
     # élément vide laisse sa gouttière et se voit.
-    devise = f"content hash {sceau}" if sceau else ""
     return (f'<header class="barre{" sur-nuit" if nuit else ""}">\n  <a class="marque" href="{racine}ACCUEIL.html">CASCADE</a>\n'
             f'  <nav aria-label="Site">{nav}</nav>\n'
-            + (f'  <span class="sceau">{devise}</span>\n' if devise else "")
             + '</header>')
 
 
 CSS_BARRE_SITE = '''
   /* the current link, marked the same way on every page (the heroes had no rule, the instruments
      only brightened it, the house pages only weighted it) */
-  .barre nav a[aria-current]{color:var(--sur,var(--sur-vert,#e4ecdf));font-weight:600}
+  /* marked by colour and a rule, never by weight : a bold link widens and shifts its neighbours
+     from one page to the next (Arslane, 13/09 : « les titres changent de place et de taille ») */
+  .barre nav a[aria-current]{color:var(--sur,var(--sur-vert,#e4ecdf));text-decoration:underline;
+    text-decoration-thickness:1.5px;text-underline-offset:7px;text-decoration-color:currentColor}
   /* posée (beige), la barre gardait le lien courant en clair : illisible (relecture du 8/09).
      Il prend la couleur de titre de SA page : vert routing, rubis screening, lapis, améthyste, onyx. */
   .barre.posee nav a[aria-current]{color:var(--vert-titre,#23543f)}
@@ -715,8 +717,7 @@ CSS_BARRE_SITE = '''
     .barre{position:static;padding:12px 18px 8px;flex-wrap:wrap}
     html:not(.js) .barre{position:static}
     .barre.sur-nuit,.barre.sur-nuit.posee{background:var(--nuit-c,#0e1a15);box-shadow:none;backdrop-filter:none}
-    .barre.sur-nuit .marque{color:var(--sur-vert,#e4ecdf)}.barre.sur-nuit .sceau{color:var(--sur-vert-pale,#a9bdaf)}
-    .barre .sceau{order:5;flex-basis:100%;font-size:10px;margin-top:2px}
+    .barre.sur-nuit .marque{color:var(--sur-vert,#e4ecdf)}
     .tete{padding-top:36px}.hero{padding-top:40px}
   }
 ''' + CSS_PIED_SITE

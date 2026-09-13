@@ -298,17 +298,14 @@ CSS = '''
   .barre.sur-nuit .marque{color:var(--sur-vert)}
   .barre.sur-nuit nav a{color:var(--sur-vert-pale)}
   .barre.sur-nuit nav a:hover{color:var(--sur-vert)}
-  .barre.sur-nuit .sceau{color:var(--sur-vert-pale)}
   .marque{font-weight:700;font-size:19px;letter-spacing:.01em;text-decoration:none;padding:10px 0}
   .barre nav{display:flex;gap:16px;margin-left:auto}
   .barre nav a{font-size:14.5px;text-decoration:none;color:var(--demi);padding:13px 6px}
   .barre nav a:hover{color:var(--encre);text-decoration:underline;
     text-decoration-color:var(--vert-vif);text-decoration-thickness:1.5px}
-  .sceau{font-family:var(--mono);font-size:11px;color:var(--pale);letter-spacing:.04em}
   html:not(.js) .barre{position:absolute}
   html:not(.js) .barre .marque{color:var(--sur-vert)}
   html:not(.js) .barre nav a{color:var(--sur-vert-pale)}
-  html:not(.js) .barre .sceau{color:var(--sur-vert-pale)}
 
   /* le héros */
   .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -965,8 +962,8 @@ def film_html(outil):
                   f'<img src="{lien(outil, "rendus/" + outil["robots"][0])}" alt=""></span>')
     return f"""
 <section class="film"><div class="colonne">
-  <h2 class="h2">Cascade {outil["nom"]}, the film.</h2>
-  <p class="film-duree">The five {outil["nom"]} findings, in order.</p>
+  <h2 class="h2">Cascade, explained.</h2>
+  <p class="film-duree">The five {outil["nom"]} findings</p>
   <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film of Cascade {outil["nom"]}, opens on YouTube">
     {visuel}
     <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
@@ -1184,7 +1181,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <script type="application/ld+json">{DONNEES_STRUCTUREES}</script>
 <script>document.documentElement.classList.add("js")</script>
 <style>{CSS}{_CSS_SCRUB_V}{CSS_BARRE_SITE}</style>
-{barre_site(courant="HERO.html", sceau=SCEAU)}
+{barre_site(courant="HERO.html")}
 
 <main>
 <section class="hero">
@@ -1534,7 +1531,7 @@ SPECS = {
         instrument_h2="See what each threshold costs you.",
         instrument_page="INSTRUMENT-SCREENING.html",
         instrument_eti="Cascade &#183; Screening",
-        instrument_sub="Each way of comparing names, at each threshold, with what it catches and what it costs in false alerts, live from our public test set.",
+        instrument_sub="Each way of comparing names, at each threshold: the real matches it catches, and the false alerts it raises. A false alert is a name flagged as a match that is not one, and each one costs an analyst the time to close it. Live from our public test set.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it does not.",
                         "ANNEXE-SCREENING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "The lists, the checksum, and what stays on your machine.",
@@ -1902,7 +1899,7 @@ def batir_outil_catalogue(o, spec):
 <script type="application/ld+json">{donnees}</script>
 <script>document.documentElement.classList.add("js")</script>
 <style>{css_o}{css_scrub_o}{CSS_BARRE_SITE}</style>
-{barre_site(courant=o["page_hero"], sceau=SCEAU_O, racine=o["prefixe_racine"])}
+{barre_site(courant=o["page_hero"], racine=o["prefixe_racine"])}
 
 <main>
 <section class="hero">

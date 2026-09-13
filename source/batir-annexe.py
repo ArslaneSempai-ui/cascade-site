@@ -175,19 +175,15 @@ CSS = """
   .barre.sur-nuit .marque{color:var(--sur-vert)}
   .barre.sur-nuit nav a{color:var(--sur-vert-pale)}
   .barre.sur-nuit nav a:hover{color:var(--sur-vert)}
-  .barre.sur-nuit .sceau{color:var(--sur-vert-pale)}
   .marque{font-weight:700;font-size:19px;letter-spacing:.01em;text-decoration:none;
     padding:10px 0;color:var(--encre)}
   .barre nav{display:flex;gap:16px;margin-left:auto}
   .barre nav a{font-size:14.5px;text-decoration:none;color:var(--demi);padding:13px 6px}
   .barre nav a:hover{color:var(--encre);text-decoration:underline;
     text-decoration-color:var(--vert-vif);text-decoration-thickness:1.5px}
-  .barre nav a[aria-current]{font-weight:600}
-  .sceau{font-family:var(--mono);font-size:11px;color:var(--pale);letter-spacing:.04em}
   html:not(.js) .barre{position:absolute}
   html:not(.js) .barre .marque{color:var(--sur-vert)}
   html:not(.js) .barre nav a{color:var(--sur-vert-pale)}
-  html:not(.js) .barre .sceau{color:var(--sur-vert-pale)}
 
   /* ── la tête : nuit dès le premier pixel, titre à gauche, objet à droite ── */
   .tete-nuit{position:relative;padding:132px 0 48px;color:var(--sur-vert);
@@ -546,7 +542,7 @@ PAGES_ONYX = [
 
 def barre_outil(o, pages, instrument, courante, sceau):
     """Les pages d'un outil : la barre du site, l'outil courant marqué, son empreinte dans le sceau."""
-    return barre_site(courant=o["page_hero"], sceau=sceau, racine=o["prefixe_racine"])
+    return barre_site(courant=o["page_hero"], racine=o["prefixe_racine"])
 
 
 def batir_annexes_outil(o, pages, palette, nuit, tete_sombre, accent, lot, instrument, hero, nom):

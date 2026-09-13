@@ -100,7 +100,6 @@ CSS = '''
   .barre nav a:hover{color:var(--sur);text-decoration:underline;
     text-decoration-color:var(--accent-vif);text-decoration-thickness:1.5px}
   .barre nav a[aria-current]{color:var(--sur)}
-  .sceau{font-family:var(--mono);font-size:11px;color:var(--sur-pale);letter-spacing:.04em}
 
   .tete{padding:192px 0 30px;
     background:radial-gradient(120% 100% at 50% -20%,#2a1f42,var(--nuit-b) 70%)}
@@ -348,7 +347,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <link rel="stylesheet" href="../fontes/roboto-mono.css">
 <script>document.documentElement.classList.add("js")</script>
 <style>{CSS}{CSS_NOIR}{CSS_BARRE_SITE}</style>
-{barre_site(courant=OUTILS["scoring"]["page_hero"], sceau=D["provenance"]["empreinte"], racine="../")}
+{barre_site(courant=OUTILS["scoring"]["page_hero"], racine="../")}
 
 <section class="tete">
   <div class="colonne">
