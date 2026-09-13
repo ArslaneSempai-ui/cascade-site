@@ -261,7 +261,7 @@ PAGE = f'''<!doctype html><html lang="en">
         <li>A <b>signed report</b> your audit team can check on its own</li>
         <li>The tool runs on your machine, so your records never reach us</li>
       </ul>
-      <a class="cta" href="CONTACT.html"><span class="b">Start with a message <span class="fl" aria-hidden="true">&#8594;</span></span></a>
+      <a class="cta" href="CONTACT.html"><span class="b">Contact us <span class="fl" aria-hidden="true">&#8594;</span></span></a>
       <p class="c-fin">one campaign &#183; one signed deliverable</p>
     </div>
     <div class="col haute">
