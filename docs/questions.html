@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-uWLJ7z6w6WzFeM6825Iqo/TQ2HAaaOEAO6avHYddtKs='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-TH6Arr8Qvl1YyH0FPJrv9WemQy3KXu1Vnl79rSlIYqc='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-ljhiPOqy56gOO0ARhjxPTSWAz3PXCOU3rpg2eUhzkaQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-TH6Arr8Qvl1YyH0FPJrv9WemQy3KXu1Vnl79rSlIYqc='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; questions</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/questions.html">
@@ -161,21 +161,7 @@
 
   /* ── le pied : celui des pages principales, plus le rang des annexes ────── */
   .pied{background:var(--nuit-c);color:var(--sur-vert);padding:44px 0;margin-top:56px}
-  .pied .colonne{display:flex;flex-direction:column;gap:18px}
-  .pied-h{display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;
-    align-items:baseline}
   .pied-p{font-size:clamp(17px,1.8vw,23px);font-weight:600}
-  .pied-p em{font-style:italic;color:var(--vert-clair)}
-  .pied .sceau{color:var(--sur-vert-pale)}
-  .annexes{display:flex;gap:4px 18px;flex-wrap:wrap;
-    border-top:1px solid color-mix(in srgb,var(--sur-vert-pale) 22%,transparent);
-    padding-top:16px}
-  .annexes a{font-size:13.5px;text-decoration:none;color:var(--sur-vert-pale);
-    padding:6px 2px}
-  .annexes a:hover{color:var(--sur-vert);text-decoration:underline;
-    text-decoration-color:var(--vert-vif)}
-  .annexes a[aria-current="true"]{color:var(--sur-vert);font-weight:600;
-    box-shadow:0 1.5px 0 var(--vert-vif)}
 
   @media (prefers-reduced-motion:reduce){
     summary .cr,summary,.barre{transition:none}
@@ -205,7 +191,7 @@
   /* ── l'impression : le mémo qu'un comité fait circuler ───────────────────── */
   @media print{
     body{background:#fff;color:#1b1d18}
-    .barre,.plaque,.retour,.annexes{display:none}
+    .barre,.plaque,.retour,.pied-liens,.pied-preuve{display:none}
     .tete-nuit{background:none;color:#1b1d18;padding:12px 0 4px}
     h1{color:#1b1d18;max-width:none;font-size:26pt}
     h1 .deux{color:#23543f}
@@ -213,8 +199,7 @@
     .ariane .fti{color:#55523f}
     .pied{background:none;color:#1b1d18;margin-top:20px;padding:10px 0;
       border-top:1px solid #999}
-    .pied-p em{color:#23543f}
-    .pied .sceau{color:#55523f}
+    .pied-meta,.pied-meta b{color:#55523f}
     .sec-corps{columns:1;max-width:none}
     details,.pl-sec{break-inside:avoid}
     .term{box-shadow:none}
@@ -227,13 +212,6 @@
   /* posée (beige), la barre gardait le lien courant en clair : illisible (relecture du 8/09).
      Il prend la couleur de titre de SA page : vert routing, rubis screening, lapis, améthyste, onyx. */
   .barre.posee nav a[aria-current]{color:var(--vert-titre,#23543f)}
-  /* the footer's pointer to its proof, in the house's action-link language (mono, capitals, a
-     hairline), never an italic underlined clause inside the sentence (Arslane, 13/09) */
-  .pied-preuve{display:inline-block;margin-left:22px;font:400 11.5px/1 var(--mono,ui-monospace,monospace);letter-spacing:.14em;
-    text-transform:uppercase;color:inherit;opacity:.78;text-decoration:none;white-space:nowrap;vertical-align:baseline;
-    padding-bottom:5px;border-bottom:1px solid color-mix(in srgb,currentColor 40%,transparent);transition:opacity .2s,border-color .2s}
-  .pied-preuve:hover,.pied-preuve:focus-visible{opacity:1;border-color:currentColor}
-  @media (max-width:700px){.pied-preuve{display:block;margin:10px 0 0;width:max-content}}
   /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
      colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
   @media (max-width:1080px){
@@ -243,6 +221,36 @@
     .barre.sur-nuit .marque{color:var(--sur-vert,#e4ecdf)}.barre.sur-nuit .sceau{color:var(--sur-vert-pale,#a9bdaf)}
     .barre .sceau{order:5;flex-basis:100%;font-size:10px;margin-top:2px}
     .tete{padding-top:36px}.hero{padding-top:40px}
+  }
+
+  /* the footer, drawn once for every builder (Arslane, 13/09: the promise and its proof button
+     on the left, the count and the hash on the right, the pages in a row under a hairline) */
+  footer.pied .colonne{display:block}
+  footer.pied .pied-h{display:flex;align-items:center;justify-content:space-between;gap:22px 32px;flex-wrap:wrap}
+  footer.pied .pied-g{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+  footer.pied .pied-p,footer.pied .pied-meta{margin:0}
+  .pied-preuve{display:inline-block;font:400 11px/1 var(--mono,ui-monospace,monospace);letter-spacing:.16em;
+    text-transform:uppercase;color:inherit;text-decoration:none;white-space:nowrap;padding:12px 18px;border-radius:8px;
+    border:1px solid color-mix(in srgb,currentColor 30%,transparent);transition:background .2s,color .2s,border-color .2s}
+  .pied-preuve:hover,.pied-preuve:focus-visible{background:var(--sur-vert,var(--sur,#e4ecdf));
+    color:var(--nuit-c,var(--noir-b,#0e1a15));border-color:transparent}
+  .pied-meta{text-align:right;font:400 11px/1.9 var(--mono,ui-monospace,monospace);letter-spacing:.04em;
+    color:var(--sur-vert-pale,var(--sur-pale,#a9bdaf))}
+  .pied-meta b{display:block;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--sur-vert,var(--sur,#e4ecdf))}
+  .pied-liens{display:flex;align-items:baseline;gap:6px 22px;flex-wrap:wrap;margin-top:28px;padding-top:16px;
+    border-top:1px solid color-mix(in srgb,currentColor 14%,transparent);
+    font:400 11px/1 var(--mono,ui-monospace,monospace);letter-spacing:.14em;text-transform:uppercase}
+  .pied-liens a{color:var(--sur-vert-pale,var(--sur-pale,#a9bdaf));text-decoration:none;padding:7px 0;transition:color .2s}
+  .pied-liens a:hover,.pied-liens a:focus-visible{color:var(--sur-vert,var(--sur,#e4ecdf))}
+  .pied-liens a[aria-current]{color:var(--sur-vert,var(--sur,#e4ecdf));box-shadow:0 1.5px 0 currentColor}
+  @media (max-width:700px){
+    footer.pied .pied-h,footer.pied .pied-g{flex-direction:column;align-items:flex-start}
+    footer.pied .pied-g{gap:18px}
+    .pied-meta{text-align:left}
+    /* on a phone the row wraps on three lines : each link becomes a 36 px target, and the
+       rows no longer add their own gap on top of it */
+    .pied-liens{gap:0 22px;padding-top:6px}
+    .pied-liens a{padding:12px 0}
   }
 </style>
 <header class="barre sur-nuit">
@@ -269,10 +277,11 @@
 
 <footer class="pied"><div class="colonne">
   <div class="pied-h">
-    <p class="pied-p">Nothing of yours leaves your machine. <a class="pied-preuve" href="privacy.html">See how we prove it <span aria-hidden="true">&#8594;</span></a></p>
-    <span class="sceau">content hash dbf26abec438515e &#183; measured, then frozen</span>
+    <div class="pied-g"><p class="pied-p">Nothing of yours leaves your machine.</p>
+      <a class="pied-preuve" href="privacy.html">See how we prove it <span aria-hidden="true">&#8594;</span></a></div>
+    <p class="pied-meta"><b>measured, then frozen</b>content hash dbf26abec438515e</p>
   </div>
-  <nav class="annexes" aria-label="Appendices"><a href="method.html">Method and reproducibility</a><a href="security.html">Security and data handling</a><a href="questions.html" aria-current="true">Questions</a><a href="terms.html">Terms of engagement</a><a href="privacy.html">Privacy</a><a href="accessibility.html">Accessibility</a><a href="contact.html">Contact</a><a href="colophon.html">The fine print</a></nav>
+  <nav class="pied-liens" aria-label="Pages"><a href="method.html">Method</a><a href="security.html">Security</a><a href="questions.html" aria-current="true">Questions</a><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="accessibility.html">Accessibility</a><a href="contact.html">Contact</a><a href="colophon.html">The fine print</a></nav>
 </div></footer>
 <script>
 const barre = document.querySelector(".barre");

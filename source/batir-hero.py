@@ -47,7 +47,7 @@ if not _m:
     sys.exit("le compte de tests est introuvable dans le README de l'outil : refus de le recopier")
 N_TESTS, N_FICHIERS = _m.group(1), _m.group(2)
 
-from outil import SCEAU_ROUTING, etiquette_sur_objet, SEUIL_OBJET, etiquettes_qui_se_recouvrent, barre_site, CSS_BARRE_SITE, OUTILS, pied_promesse
+from outil import SCEAU_ROUTING, etiquette_sur_objet, SEUIL_OBJET, etiquettes_qui_se_recouvrent, barre_site, CSS_BARRE_SITE, CSS_PIED_SITE, OUTILS, pied_html, n_tests
 from instrument_carte import (CSS_AFFICHE, affiche_html, CSS_ACCUEIL, eventail_html, methode_html,   # l'affiche (10/09), l'accueil (10/09)
                               _svg_courbes, _svg_paliers, _svg_horloge)
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
@@ -703,10 +703,7 @@ CSS = '''
 
   /* le pied */
   .pied{background:var(--nuit-c);color:var(--sur-vert);padding:64px 0}
-  .pied .colonne{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:baseline}
   .pied-p{font-size:clamp(18px,2vw,26px);font-weight:600;letter-spacing:-.01em}
-  .pied-p em{font-style:italic;color:var(--vert-clair)}
-  .pied .sceau{color:var(--sur-vert-pale)}
 
   @media (max-width:960px){
     .colonne{padding:0 22px}
@@ -1245,10 +1242,7 @@ PAGE = f'''<!doctype html><html lang="en">
 {menus_html()}
 </main>
 
-<footer class="pied"><div class="colonne">
-  {pied_promesse()}
-  <span class="sceau">120 files &#183; {N_TESTS} tests &#183; content hash {SCEAU}</span>
-</div></footer>
+{pied_html(outil=OUTILS["routing"], sceau=SCEAU, tests=N_TESTS)}
 
 <script>{JS}</script>{_SCRUB_V}
 '''
@@ -1361,7 +1355,7 @@ def batir_accueil():
 <link rel="stylesheet" href="fontes/roboto-mono.css">
 <script type="application/ld+json">{donnees}</script>
 <script>document.documentElement.classList.add("js")</script>
-<style>{CSS}{CSS_ACCUEIL}.methode{{{tokens_papier}}}</style>
+<style>{CSS}{CSS_ACCUEIL}{CSS_PIED_SITE}.methode{{{tokens_papier}}}</style>
 <header class="barre sur-nuit">
   <a class="marque" href="ACCUEIL.html">CASCADE</a>
   <nav aria-label="Site">
@@ -1419,10 +1413,7 @@ def batir_accueil():
 </section>
 </main>
 
-<footer class="pied"><div class="colonne">
-  {pied_promesse()}
-  <span class="sceau">measured, then frozen</span>
-</div></footer>
+{pied_html()}
 
 <script>{JS}</script>
 '''
@@ -1838,11 +1829,7 @@ def batir_outil_catalogue(o, spec):
                          f"« {affiche} » ne contient aucune écriture du chiffre refait depuis le "
                          f"relevé ({', '.join(attendus)}) : le chiffre affiché a dérivé de sa cellule")
 
-    _m = re.search(r"\*\*(\d+) tests\*\* across (\d+) files",
-                   (o["outil_chemin"] / "README.md").read_text())
-    if not _m:
-        sys.exit(f"le compte de tests est introuvable dans le README de {o['outil_chemin'].name}")
-    n_tests_o = _m.group(1)
+    n_tests_o = n_tests(o)
 
     canevas_o, css_scrub_o, scrub_o = sequence_scrub(spec["etats"])
     css_o = CSS.replace(PALETTE_VERTE, spec["palette"])
@@ -1961,10 +1948,7 @@ def batir_outil_catalogue(o, spec):
   </div></div></nav>
 </main>
 
-<footer class="pied"><div class="colonne">
-  {pied_promesse(o["prefixe_racine"])}
-  <span class="sceau">{n_tests_o} tests &#183; content hash {SCEAU_O}</span>
-</div></footer>
+{pied_html(outil=o, sceau=SCEAU_O, tests=n_tests_o)}
 
 <script>{JS}</script>{scrub_o}
 """

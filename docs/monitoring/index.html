@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-VcxhVzX/zKbk4Y5UbCN/bRCeml3a/gLmugl3tru7QeM=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-OHwsIiniQT7MqYZ23qX2fwSHiqMyynGa2QZZCSRfqHc=' 'sha256-ymcRaC1eUjTjJ9RkgWfaxWb9/ZhMS1J8UVFf8tHuNN8=' 'sha256-P7Vi9MGuq5+qRTFktFVcYnmzuHk5AKV6fBhWbvFxLGk=' 'sha256-MZNvr/siLT80DQg4xlCokQb4hXIZBROwsFUeQ/W9bA4=' 'sha256-kahPlLiJa1REfyc64yVFR2GXo13XOpm50KlDiA1ahRc=' 'sha256-jo/MSB2jUjWPN2UTR2AWeXFGYELpW26Q4LJPzJAN0hU=' 'sha256-v9UtAzkK8rSE3j3XXFwKcOWFzBeZcFwjBVdu1ZvGmI8=' 'sha256-OIwInjP8jkxzHe+P+u3BEpdSwcVEul2atpMlPUbyx0A='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-BZRsrTPl4run2ogTuZKKWAgqCtd4t16xLVU3Mk0jYn8=' 'sha256-h3XEPagyHXWX+lAAdHX4nj8uMkrYERyFotOSvQQK39s='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-M00LZVdXsQZmWWDyhUusTenFmlWKyXP39GNTgkSdnOI=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-OHwsIiniQT7MqYZ23qX2fwSHiqMyynGa2QZZCSRfqHc=' 'sha256-ymcRaC1eUjTjJ9RkgWfaxWb9/ZhMS1J8UVFf8tHuNN8=' 'sha256-P7Vi9MGuq5+qRTFktFVcYnmzuHk5AKV6fBhWbvFxLGk=' 'sha256-MZNvr/siLT80DQg4xlCokQb4hXIZBROwsFUeQ/W9bA4=' 'sha256-kahPlLiJa1REfyc64yVFR2GXo13XOpm50KlDiA1ahRc=' 'sha256-jo/MSB2jUjWPN2UTR2AWeXFGYELpW26Q4LJPzJAN0hU=' 'sha256-v9UtAzkK8rSE3j3XXFwKcOWFzBeZcFwjBVdu1ZvGmI8=' 'sha256-OIwInjP8jkxzHe+P+u3BEpdSwcVEul2atpMlPUbyx0A='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-BZRsrTPl4run2ogTuZKKWAgqCtd4t16xLVU3Mk0jYn8=' 'sha256-h3XEPagyHXWX+lAAdHX4nj8uMkrYERyFotOSvQQK39s='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Monitoring &#183; transaction monitoring audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/monitoring/">
@@ -525,10 +525,7 @@
 
   /* le pied */
   .pied{background:var(--nuit-c);color:var(--sur-vert);padding:64px 0}
-  .pied .colonne{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:baseline}
   .pied-p{font-size:clamp(18px,2vw,26px);font-weight:600;letter-spacing:-.01em}
-  .pied-p em{font-style:italic;color:var(--vert-clair)}
-  .pied .sceau{color:var(--sur-vert-pale)}
 
   @media (max-width:960px){
     .colonne{padding:0 22px}
@@ -606,13 +603,6 @@
   /* posée (beige), la barre gardait le lien courant en clair : illisible (relecture du 8/09).
      Il prend la couleur de titre de SA page : vert routing, rubis screening, lapis, améthyste, onyx. */
   .barre.posee nav a[aria-current]{color:var(--vert-titre,#23543f)}
-  /* the footer's pointer to its proof, in the house's action-link language (mono, capitals, a
-     hairline), never an italic underlined clause inside the sentence (Arslane, 13/09) */
-  .pied-preuve{display:inline-block;margin-left:22px;font:400 11.5px/1 var(--mono,ui-monospace,monospace);letter-spacing:.14em;
-    text-transform:uppercase;color:inherit;opacity:.78;text-decoration:none;white-space:nowrap;vertical-align:baseline;
-    padding-bottom:5px;border-bottom:1px solid color-mix(in srgb,currentColor 40%,transparent);transition:opacity .2s,border-color .2s}
-  .pied-preuve:hover,.pied-preuve:focus-visible{opacity:1;border-color:currentColor}
-  @media (max-width:700px){.pied-preuve{display:block;margin:10px 0 0;width:max-content}}
   /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
      colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
   @media (max-width:1080px){
@@ -622,6 +612,36 @@
     .barre.sur-nuit .marque{color:var(--sur-vert,#e4ecdf)}.barre.sur-nuit .sceau{color:var(--sur-vert-pale,#a9bdaf)}
     .barre .sceau{order:5;flex-basis:100%;font-size:10px;margin-top:2px}
     .tete{padding-top:36px}.hero{padding-top:40px}
+  }
+
+  /* the footer, drawn once for every builder (Arslane, 13/09: the promise and its proof button
+     on the left, the count and the hash on the right, the pages in a row under a hairline) */
+  footer.pied .colonne{display:block}
+  footer.pied .pied-h{display:flex;align-items:center;justify-content:space-between;gap:22px 32px;flex-wrap:wrap}
+  footer.pied .pied-g{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+  footer.pied .pied-p,footer.pied .pied-meta{margin:0}
+  .pied-preuve{display:inline-block;font:400 11px/1 var(--mono,ui-monospace,monospace);letter-spacing:.16em;
+    text-transform:uppercase;color:inherit;text-decoration:none;white-space:nowrap;padding:12px 18px;border-radius:8px;
+    border:1px solid color-mix(in srgb,currentColor 30%,transparent);transition:background .2s,color .2s,border-color .2s}
+  .pied-preuve:hover,.pied-preuve:focus-visible{background:var(--sur-vert,var(--sur,#e4ecdf));
+    color:var(--nuit-c,var(--noir-b,#0e1a15));border-color:transparent}
+  .pied-meta{text-align:right;font:400 11px/1.9 var(--mono,ui-monospace,monospace);letter-spacing:.04em;
+    color:var(--sur-vert-pale,var(--sur-pale,#a9bdaf))}
+  .pied-meta b{display:block;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--sur-vert,var(--sur,#e4ecdf))}
+  .pied-liens{display:flex;align-items:baseline;gap:6px 22px;flex-wrap:wrap;margin-top:28px;padding-top:16px;
+    border-top:1px solid color-mix(in srgb,currentColor 14%,transparent);
+    font:400 11px/1 var(--mono,ui-monospace,monospace);letter-spacing:.14em;text-transform:uppercase}
+  .pied-liens a{color:var(--sur-vert-pale,var(--sur-pale,#a9bdaf));text-decoration:none;padding:7px 0;transition:color .2s}
+  .pied-liens a:hover,.pied-liens a:focus-visible{color:var(--sur-vert,var(--sur,#e4ecdf))}
+  .pied-liens a[aria-current]{color:var(--sur-vert,var(--sur,#e4ecdf));box-shadow:0 1.5px 0 currentColor}
+  @media (max-width:700px){
+    footer.pied .pied-h,footer.pied .pied-g{flex-direction:column;align-items:flex-start}
+    footer.pied .pied-g{gap:18px}
+    .pied-meta{text-align:left}
+    /* on a phone the row wraps on three lines : each link becomes a 36 px target, and the
+       rows no longer add their own gap on top of it */
+    .pied-liens{gap:0 22px;padding-top:6px}
+    .pied-liens a{padding:12px 0}
   }
 </style>
 <header class="barre sur-nuit">
@@ -836,8 +856,12 @@
 </main>
 
 <footer class="pied"><div class="colonne">
-  <p class="pied-p">Nothing of yours leaves your machine. <a class="pied-preuve" href="../privacy.html">See how we prove it <span aria-hidden="true">&#8594;</span></a></p>
-  <span class="sceau">122 tests &#183; content hash 5e2a96e22fa0b59c</span>
+  <div class="pied-h">
+    <div class="pied-g"><p class="pied-p">Nothing of yours leaves your machine.</p>
+      <a class="pied-preuve" href="../privacy.html">See how we prove it <span aria-hidden="true">&#8594;</span></a></div>
+    <p class="pied-meta"><b>122 tests</b>content hash 5e2a96e22fa0b59c</p>
+  </div>
+  <nav class="pied-liens" aria-label="Pages"><a href="method.html">Method</a><a href="security.html">Security</a><a href="../terms.html">Terms</a><a href="../privacy.html">Privacy</a><a href="../accessibility.html">Accessibility</a><a href="../contact.html">Contact</a><a href="../colophon.html">The fine print</a><a href="https://github.com/ArslaneSempai-ui/cascade-monitoring">Repository</a></nav>
 </div></footer>
 
 <script>

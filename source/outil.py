@@ -17,6 +17,7 @@ import hashlib
 import filecmp
 import json
 import pathlib
+import re
 import sys
 
 _MAISON = pathlib.Path.home() / "Documents"
@@ -437,27 +438,106 @@ def lien(outil, cible):
     return outil["prefixe_racine"] + cible
 
 
-# ── LE PIED RENVOIE À SA PREUVE (Arslane, 13/09) ─────────────────────────────
-# « Your records stay on your machine, and no data leaves the network. » affirmait deux
-# fois la même chose et se répétait sur 28 pages : le panel l'a lu comme un refrain. La
-# ligne dit maintenant la chose UNE fois et montre où elle se vérifie. Le lien porte la
-# couleur d'accent par l'<em> que .pied-p stylait déjà, et son soulignement vient de la
-# règle globale des liens : aucune feuille de style à toucher dans les sept bâtisseurs.
-# UNE seule source, comme la question du rideau : la ligne ne peut plus diverger.
+# ── LE PIED, UNE SEULE FOIS (Arslane, 13/09) ─────────────────────────────────────────────
+# Onze pieds écrits à la main dans huit bâtisseurs, sept feuilles de style, et un lien souligné
+# qu'il a trouvé « dégueulasse » deux fois de suite. Six maquettes plus tard il a choisi : la
+# promesse et son bouton de preuve à gauche, le compte de tests et l'empreinte à droite, puis
+# le rang des pages sous un filet, SANS répéter le bouton dedans (« pour pas l'avoir deux
+# fois »). Une fonction, une feuille : les bâtisseurs l'appellent et n'en dessinent plus.
 PIED_PROMESSE = "Nothing of yours leaves your machine."
 
-def pied_promesse(prefixe="", sur_privacy=False):
-    """Le paragraphe du pied. `prefixe` sort du sous-dossier d'un outil (« ../ ») ;
-    vide à la racine. Les pages d'un outil passent outil["prefixe_racine"].
-    Sur la page Privacy elle-même, la phrase reste seule : le renvoi mènerait ici."""
-    if sur_privacy:
-        return f'<p class="pied-p">{PIED_PROMESSE}</p>'
-    # le renvoi parle la langue des liens d'action de la maison (mono, capitales, filet), pas
-    # l'italique souligné dans la phrase (Arslane, 13/09 : « c'est dégueulasse ») ; sa règle
-    # vit dans CSS_BARRE_SITE, que les sept bâtisseurs incluent
-    return (f'<p class="pied-p">{PIED_PROMESSE} '
-            f'<a class="pied-preuve" href="{prefixe}ANNEXE-PRIVACY.html">See how we prove it '
-            f'<span aria-hidden="true">&#8594;</span></a></p>')
+# les pages de la maison, dans l'ordre où un relecteur les cherche. Ce sont des NOMS de pages,
+# pas des actions (le motif 8 de garde-voix vise les liens d'action) ; « Pricing » n'y est pas :
+# la barre du haut le porte déjà sur chaque page.
+LIENS_MAISON = [("ANNEXE-METHODE.html", "Method"), ("ANNEXE-SECURITE.html", "Security"),
+                ("ANNEXE-QUESTIONS.html", "Questions"), ("ANNEXE-TERMS.html", "Terms"),
+                ("ANNEXE-PRIVACY.html", "Privacy"), ("ANNEXE-ACCESSIBILITE.html", "Accessibility"),
+                ("CONTACT.html", "Contact"), ("MENTIONS.html", "The fine print")]
+_PROPRES_A_L_OUTIL = {"ANNEXE-METHODE.html", "ANNEXE-SECURITE.html", "ANNEXE-QUESTIONS.html"}
+
+
+def n_tests(outil):
+    """Le compte de tests d'un outil, lu dans SON README (« **N tests** across F files »), jamais
+    tapé : la garde de dérive de l'assembleur le recompare au dépôt page par page."""
+    m = re.search(r"\*\*(\d+) tests\*\*", (outil["outil_chemin"] / "README.md").read_text())
+    if not m:
+        sys.exit(f"le compte de tests est introuvable dans le README de "
+                 f"{outil['outil_chemin'].name} : refus de le recopier")
+    return m.group(1)
+
+
+def pied_html(outil=None, sceau=None, tests=None, courante=None, prefixe=None):
+    """Le pied du site, identique partout.
+    `outil` : l'outil dont la page fait partie (ses Method/Security propres, son dépôt) ; None
+    pour une page de la maison (accueil, tarifs, annexes de la maison). Routing EST la maison :
+    ses annexes sont les annexes de la maison, seul son dépôt s'ajoute.
+    `sceau` : l'empreinte servie ; `tests` : le compte de tests, lu par n_tests() ; l'un ou
+    l'autre absent, la ligne n'est pas émise (un vide se lirait comme un chiffre).
+    `courante` : le nom source de la page, pour marquer son propre lien dans le rang.
+    `prefixe` : d'ordinaire celui de l'outil (« ../ » sous son dossier) ; l'instrument du
+    routing, servi à la racine, passe « » explicitement.
+    Sur la page Privacy, la phrase reste seule : le bouton mènerait ici."""
+    if prefixe is None:
+        prefixe = outil["prefixe_racine"] if outil else ""
+    if outil and outil["id"] != "routing":
+        ident = outil["id"].upper()
+        liens = [(f"ANNEXE-{ident}-METHODE.html", "Method"), (f"ANNEXE-{ident}-SECURITE.html", "Security")]
+        liens += [(prefixe + h, n) for h, n in LIENS_MAISON if h not in _PROPRES_A_L_OUTIL]
+    else:
+        liens = [(prefixe + h, n) for h, n in LIENS_MAISON]
+    if outil:
+        liens.append((outil["depot"], "Repository"))
+    rang = "".join(f'<a href="{h}"' + (' aria-current="true"' if h == courante else "") + f'>{n}</a>'
+                   for h, n in liens)
+    preuve = "" if courante == "ANNEXE-PRIVACY.html" else (
+        f'\n      <a class="pied-preuve" href="{prefixe}ANNEXE-PRIVACY.html">See how we prove it '
+        f'<span aria-hidden="true">&#8594;</span></a>')
+    forte = f"{tests} tests" if tests else "measured, then frozen"
+    faible = f"content hash {sceau}" if sceau else ""
+    return (f'<footer class="pied"><div class="colonne">\n'
+            f'  <div class="pied-h">\n'
+            f'    <div class="pied-g"><p class="pied-p">{PIED_PROMESSE}</p>{preuve}</div>\n'
+            f'    <p class="pied-meta"><b>{forte}</b>{faible}</p>\n'
+            f'  </div>\n'
+            f'  <nav class="pied-liens" aria-label="Pages">{rang}</nav>\n'
+            f'</div></footer>')
+
+
+# La feuille du pied. Les couleurs passent par currentColor et par des variables à repli
+# (--sur-vert chez le vert, --sur chez le rubis, le lapis, l'onyx, l'améthyste et les tarifs) :
+# la même règle tient sur les cinq palettes sans qu'un bâtisseur la redessine. Les bâtisseurs
+# gardent .pied (fond, couleur, marges) et la taille de .pied-p ; tout le reste est ici.
+CSS_PIED_SITE = '''
+  /* the footer, drawn once for every builder (Arslane, 13/09: the promise and its proof button
+     on the left, the count and the hash on the right, the pages in a row under a hairline) */
+  footer.pied .colonne{display:block}
+  footer.pied .pied-h{display:flex;align-items:center;justify-content:space-between;gap:22px 32px;flex-wrap:wrap}
+  footer.pied .pied-g{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+  footer.pied .pied-p,footer.pied .pied-meta{margin:0}
+  .pied-preuve{display:inline-block;font:400 11px/1 var(--mono,ui-monospace,monospace);letter-spacing:.16em;
+    text-transform:uppercase;color:inherit;text-decoration:none;white-space:nowrap;padding:12px 18px;border-radius:8px;
+    border:1px solid color-mix(in srgb,currentColor 30%,transparent);transition:background .2s,color .2s,border-color .2s}
+  .pied-preuve:hover,.pied-preuve:focus-visible{background:var(--sur-vert,var(--sur,#e4ecdf));
+    color:var(--nuit-c,var(--noir-b,#0e1a15));border-color:transparent}
+  .pied-meta{text-align:right;font:400 11px/1.9 var(--mono,ui-monospace,monospace);letter-spacing:.04em;
+    color:var(--sur-vert-pale,var(--sur-pale,#a9bdaf))}
+  .pied-meta b{display:block;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--sur-vert,var(--sur,#e4ecdf))}
+  .pied-liens{display:flex;align-items:baseline;gap:6px 22px;flex-wrap:wrap;margin-top:28px;padding-top:16px;
+    border-top:1px solid color-mix(in srgb,currentColor 14%,transparent);
+    font:400 11px/1 var(--mono,ui-monospace,monospace);letter-spacing:.14em;text-transform:uppercase}
+  .pied-liens a{color:var(--sur-vert-pale,var(--sur-pale,#a9bdaf));text-decoration:none;padding:7px 0;transition:color .2s}
+  .pied-liens a:hover,.pied-liens a:focus-visible{color:var(--sur-vert,var(--sur,#e4ecdf))}
+  .pied-liens a[aria-current]{color:var(--sur-vert,var(--sur,#e4ecdf));box-shadow:0 1.5px 0 currentColor}
+  @media (max-width:700px){
+    footer.pied .pied-h,footer.pied .pied-g{flex-direction:column;align-items:flex-start}
+    footer.pied .pied-g{gap:18px}
+    .pied-meta{text-align:left}
+    /* on a phone the row wraps on three lines : each link becomes a 36 px target, and the
+       rows no longer add their own gap on top of it */
+    .pied-liens{gap:0 22px;padding-top:6px}
+    .pied-liens a{padding:12px 0}
+  }
+'''
 
 
 # ── LES ÉTIQUETTES SUR LE CRÈME, JAMAIS SUR L'OBJET (Arslane, 9/09 : « les infos directement
@@ -629,13 +709,6 @@ CSS_BARRE_SITE = '''
   /* posée (beige), la barre gardait le lien courant en clair : illisible (relecture du 8/09).
      Il prend la couleur de titre de SA page : vert routing, rubis screening, lapis, améthyste, onyx. */
   .barre.posee nav a[aria-current]{color:var(--vert-titre,#23543f)}
-  /* the footer's pointer to its proof, in the house's action-link language (mono, capitals, a
-     hairline), never an italic underlined clause inside the sentence (Arslane, 13/09) */
-  .pied-preuve{display:inline-block;margin-left:22px;font:400 11.5px/1 var(--mono,ui-monospace,monospace);letter-spacing:.14em;
-    text-transform:uppercase;color:inherit;opacity:.78;text-decoration:none;white-space:nowrap;vertical-align:baseline;
-    padding-bottom:5px;border-bottom:1px solid color-mix(in srgb,currentColor 40%,transparent);transition:opacity .2s,border-color .2s}
-  .pied-preuve:hover,.pied-preuve:focus-visible{opacity:1;border-color:currentColor}
-  @media (max-width:700px){.pied-preuve{display:block;margin:10px 0 0;width:max-content}}
   /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
      colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
   @media (max-width:1080px){
@@ -646,4 +719,4 @@ CSS_BARRE_SITE = '''
     .barre .sceau{order:5;flex-basis:100%;font-size:10px;margin-top:2px}
     .tete{padding-top:36px}.hero{padding-top:40px}
   }
-'''
+''' + CSS_PIED_SITE

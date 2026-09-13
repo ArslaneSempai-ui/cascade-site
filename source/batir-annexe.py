@@ -28,7 +28,7 @@ spec = importlib.util.spec_from_file_location("bn", BASE / "batir-nav.py")
 bn = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(bn)
 
-from outil import SCEAU_ROUTING, barre_site, CSS_BARRE_SITE, pied_promesse
+from outil import SCEAU_ROUTING, barre_site, CSS_BARRE_SITE, pied_html, n_tests
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 
 # ── les six annexes : une lettre, une source, un objet, une sortie ───────────
@@ -287,21 +287,7 @@ CSS = """
 
   /* ── le pied : celui des pages principales, plus le rang des annexes ────── */
   .pied{background:var(--nuit-c);color:var(--sur-vert);padding:44px 0;margin-top:56px}
-  .pied .colonne{display:flex;flex-direction:column;gap:18px}
-  .pied-h{display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;
-    align-items:baseline}
   .pied-p{font-size:clamp(17px,1.8vw,23px);font-weight:600}
-  .pied-p em{font-style:italic;color:var(--vert-clair)}
-  .pied .sceau{color:var(--sur-vert-pale)}
-  .annexes{display:flex;gap:4px 18px;flex-wrap:wrap;
-    border-top:1px solid color-mix(in srgb,var(--sur-vert-pale) 22%,transparent);
-    padding-top:16px}
-  .annexes a{font-size:13.5px;text-decoration:none;color:var(--sur-vert-pale);
-    padding:6px 2px}
-  .annexes a:hover{color:var(--sur-vert);text-decoration:underline;
-    text-decoration-color:var(--vert-vif)}
-  .annexes a[aria-current="true"]{color:var(--sur-vert);font-weight:600;
-    box-shadow:0 1.5px 0 var(--vert-vif)}
 
   @media (prefers-reduced-motion:reduce){
     summary .cr,summary,.barre{transition:none}
@@ -331,7 +317,7 @@ CSS = """
   /* ── l'impression : le mémo qu'un comité fait circuler ───────────────────── */
   @media print{
     body{background:#fff;color:#1b1d18}
-    .barre,.plaque,.retour,.annexes{display:none}
+    .barre,.plaque,.retour,.pied-liens,.pied-preuve{display:none}
     .tete-nuit{background:none;color:#1b1d18;padding:12px 0 4px}
     h1{color:#1b1d18;max-width:none;font-size:26pt}
     h1 .deux{color:#23543f}
@@ -339,8 +325,7 @@ CSS = """
     .ariane .fti{color:#55523f}
     .pied{background:none;color:#1b1d18;margin-top:20px;padding:10px 0;
       border-top:1px solid #999}
-    .pied-p em{color:#23543f}
-    .pied .sceau{color:#55523f}
+    .pied-meta,.pied-meta b{color:#55523f}
     .sec-corps{columns:1;max-width:none}
     details,.pl-sec{break-inside:avoid}
     .term{box-shadow:none}
@@ -353,22 +338,6 @@ def barre_html(courante):
     """Les pages de la maison : la barre du site seule (Arslane, 11/09), le lien courant marqué
     quand la page est dans la barre (Pricing, Contact)."""
     return barre_site(courant=courante)
-
-
-def pied_html(courante):
-    """Le pied commun : la promesse, le sceau, puis le rang des annexes."""
-    liens = [(p["html"], p["nav"]) for p in PAGES]
-    liens += [("CONTACT.html", "Contact"), ("MENTIONS.html", "The fine print")]
-    rang = "".join(
-        f'<a href="{h}"' + (' aria-current="true"' if h == courante else "")
-        + f'>{n}</a>' for h, n in liens)
-    return (f'<footer class="pied"><div class="colonne">\n'
-            f'  <div class="pied-h">\n'
-            f'    {pied_promesse(sur_privacy=courante == "ANNEXE-PRIVACY.html")}\n'
-            f'    <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>\n'
-            f'  </div>\n'
-            f'  <nav class="annexes" aria-label="Appendices">{rang}</nav>\n'
-            f'</div></footer>')
 
 
 def section(sec, ouvert=False):
@@ -455,7 +424,7 @@ for lettre, page in zip(LETTRES, PAGES):
 </div></div>
 </main>
 
-{pied_html(page["html"])}
+{pied_html(sceau=SCEAU, courante=page["html"])}
 """ + SCRIPT + "\n", encoding="utf-8")
     print(f"  {page['html']}")
 
@@ -492,7 +461,7 @@ for page in PLOMBERIE["pages"]:
 </div></div>
 </main>
 
-{pied_html(page["html"])}
+{pied_html(sceau=SCEAU, courante=page["html"])}
 """ + SCRIPT + "\n", encoding="utf-8")
     print(f"  {page['html']}")
 
@@ -580,25 +549,6 @@ def barre_outil(o, pages, instrument, courante, sceau):
     return barre_site(courant=o["page_hero"], sceau=sceau, racine=o["prefixe_racine"])
 
 
-def pied_outil(o, pages, courante, sceau):
-    liens = [(p["html"], p["nav"]) for p in pages]
-    liens += [(lien(o, "ANNEXE-TERMS.html"), "Terms of engagement"),
-              (lien(o, "ANNEXE-PRIVACY.html"), "Privacy"),
-              (lien(o, "ANNEXE-ACCESSIBILITE.html"), "Accessibility"),
-              (lien(o, "CONTACT.html"), "Contact"),
-              (lien(o, "MENTIONS.html"), "The fine print")]
-    rang = "".join(
-        f'<a href="{h}"' + (' aria-current="true"' if h == courante else "")
-        + f'>{n}</a>' for h, n in liens)
-    return (f'<footer class="pied"><div class="colonne">\n'
-            f'  <div class="pied-h">\n'
-            f'    {pied_promesse(o["prefixe_racine"])}\n'
-            f'    <span class="sceau">content hash {sceau} &#183; measured, then frozen</span>\n'
-            f'  </div>\n'
-            f'  <nav class="annexes" aria-label="Appendices">{rang}</nav>\n'
-            f'</div></footer>')
-
-
 def batir_annexes_outil(o, pages, palette, nuit, tete_sombre, accent, lot, instrument, hero, nom):
     absentes = [p["json"] for p in pages if not (BASE / p["json"]).exists()]
     if absentes:
@@ -644,7 +594,7 @@ def batir_annexes_outil(o, pages, palette, nuit, tete_sombre, accent, lot, instr
 </div></div>
 </main>
 
-{pied_outil(o, pages, page["html"], sceau_o)}
+{pied_html(outil=o, sceau=sceau_o, tests=n_tests(o), courante=page["html"])}
 """ + SCRIPT + "\n", encoding="utf-8")
         assert "\u2014" not in (BASE / page["html"]).read_text(), f"cadratin dans {page['html']}"
         print(f"  {page['html']} ({o['id']})")

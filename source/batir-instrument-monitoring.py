@@ -30,7 +30,7 @@ BASE = pathlib.Path(__file__).parent
 
 sys.path.insert(0, str(BASE))
 from instrument_carte import CSS_NOIR, carte_html, PANNEAU_HTML, js_carte  # noqa: E402  (the live chart, shared)
-from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_promesse
+from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_html, n_tests
 
 r = subprocess.run(["node", str(BASE / "extraire-instrument-monitoring.mjs")],
                    capture_output=True, text=True)
@@ -201,10 +201,7 @@ CSS = '''
   .clone .ps{color:var(--accent-vif);font-weight:600}
   .clone .note{color:var(--sur-pale);font-size:12px}
   .pied{background:var(--nuit-c);color:var(--sur);padding:52px 0}
-  .pied .colonne{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:baseline}
-  .pied-p{font-size:clamp(17px,1.8vw,23px);font-weight:600;margin:0}
-  .pied-p em{font-style:italic;color:var(--accent-clair)}
-  .pied .sceau{color:var(--sur-pale)}
+  .pied-p{font-size:clamp(17px,1.8vw,23px);font-weight:600}
 
   /* la barre se replie comme celle du vert : sous 1080 la nav disparaît, le sceau
      garde sa place ; mesuré au banc des tailles : nav et sceau débordaient à 320-500 */
@@ -451,12 +448,7 @@ PAGE = f'''<!doctype html><html lang="en">
   </div>
 </section>
 
-<footer class="pied">
-  <div class="colonne">
-    {pied_promesse("../")}
-    <span class="sceau">content hash {D["provenance"]["empreinte"]} &#183; measured, then frozen &#183; <a href="{DEPOT_URL}">repository</a></span>
-  </div>
-</footer>
+{pied_html(outil=OUTILS["monitoring"], sceau=D["provenance"]["empreinte"], tests=n_tests(OUTILS["monitoring"]))}
 
 <script type="application/json" id="donnees">{json.dumps(D)}</script>
 <script>{JS}</script>

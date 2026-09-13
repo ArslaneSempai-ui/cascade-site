@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-E2tCVsWdK/gbc4zFl1nYGEVTtTnv9DRrg+hkgilm65A=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-wsfRoSCiphOmE92BU6oDeqAXqhbhxTjsE0uJBOa314Q='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-XeTwe+U/+fTkQ8xBeDMQkF8oxboft9QE48AdFMrlGN0=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-wsfRoSCiphOmE92BU6oDeqAXqhbhxTjsE0uJBOa314Q='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Dossier &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/dossier/instrument.html">
@@ -137,10 +137,7 @@
   .clone .ps{color:var(--accent-vif);font-weight:600}
   .clone .note{color:var(--sur-pale);font-size:12px}
   .pied{background:var(--nuit-c);color:var(--sur);padding:52px 0}
-  .pied .colonne{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:baseline}
-  .pied-p{font-size:clamp(17px,1.8vw,23px);font-weight:600;margin:0}
-  .pied-p em{font-style:italic;color:var(--accent-clair)}
-  .pied .sceau{color:var(--sur-pale)}
+  .pied-p{font-size:clamp(17px,1.8vw,23px);font-weight:600}
 
   @media (max-width:1080px){
     .barre{padding:12px 18px;gap:14px}
@@ -299,13 +296,6 @@
   /* posée (beige), la barre gardait le lien courant en clair : illisible (relecture du 8/09).
      Il prend la couleur de titre de SA page : vert routing, rubis screening, lapis, améthyste, onyx. */
   .barre.posee nav a[aria-current]{color:var(--vert-titre,#23543f)}
-  /* the footer's pointer to its proof, in the house's action-link language (mono, capitals, a
-     hairline), never an italic underlined clause inside the sentence (Arslane, 13/09) */
-  .pied-preuve{display:inline-block;margin-left:22px;font:400 11.5px/1 var(--mono,ui-monospace,monospace);letter-spacing:.14em;
-    text-transform:uppercase;color:inherit;opacity:.78;text-decoration:none;white-space:nowrap;vertical-align:baseline;
-    padding-bottom:5px;border-bottom:1px solid color-mix(in srgb,currentColor 40%,transparent);transition:opacity .2s,border-color .2s}
-  .pied-preuve:hover,.pied-preuve:focus-visible{opacity:1;border-color:currentColor}
-  @media (max-width:700px){.pied-preuve{display:block;margin:10px 0 0;width:max-content}}
   /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
      colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
   @media (max-width:1080px){
@@ -315,6 +305,36 @@
     .barre.sur-nuit .marque{color:var(--sur-vert,#e4ecdf)}.barre.sur-nuit .sceau{color:var(--sur-vert-pale,#a9bdaf)}
     .barre .sceau{order:5;flex-basis:100%;font-size:10px;margin-top:2px}
     .tete{padding-top:36px}.hero{padding-top:40px}
+  }
+
+  /* the footer, drawn once for every builder (Arslane, 13/09: the promise and its proof button
+     on the left, the count and the hash on the right, the pages in a row under a hairline) */
+  footer.pied .colonne{display:block}
+  footer.pied .pied-h{display:flex;align-items:center;justify-content:space-between;gap:22px 32px;flex-wrap:wrap}
+  footer.pied .pied-g{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+  footer.pied .pied-p,footer.pied .pied-meta{margin:0}
+  .pied-preuve{display:inline-block;font:400 11px/1 var(--mono,ui-monospace,monospace);letter-spacing:.16em;
+    text-transform:uppercase;color:inherit;text-decoration:none;white-space:nowrap;padding:12px 18px;border-radius:8px;
+    border:1px solid color-mix(in srgb,currentColor 30%,transparent);transition:background .2s,color .2s,border-color .2s}
+  .pied-preuve:hover,.pied-preuve:focus-visible{background:var(--sur-vert,var(--sur,#e4ecdf));
+    color:var(--nuit-c,var(--noir-b,#0e1a15));border-color:transparent}
+  .pied-meta{text-align:right;font:400 11px/1.9 var(--mono,ui-monospace,monospace);letter-spacing:.04em;
+    color:var(--sur-vert-pale,var(--sur-pale,#a9bdaf))}
+  .pied-meta b{display:block;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--sur-vert,var(--sur,#e4ecdf))}
+  .pied-liens{display:flex;align-items:baseline;gap:6px 22px;flex-wrap:wrap;margin-top:28px;padding-top:16px;
+    border-top:1px solid color-mix(in srgb,currentColor 14%,transparent);
+    font:400 11px/1 var(--mono,ui-monospace,monospace);letter-spacing:.14em;text-transform:uppercase}
+  .pied-liens a{color:var(--sur-vert-pale,var(--sur-pale,#a9bdaf));text-decoration:none;padding:7px 0;transition:color .2s}
+  .pied-liens a:hover,.pied-liens a:focus-visible{color:var(--sur-vert,var(--sur,#e4ecdf))}
+  .pied-liens a[aria-current]{color:var(--sur-vert,var(--sur,#e4ecdf));box-shadow:0 1.5px 0 currentColor}
+  @media (max-width:700px){
+    footer.pied .pied-h,footer.pied .pied-g{flex-direction:column;align-items:flex-start}
+    footer.pied .pied-g{gap:18px}
+    .pied-meta{text-align:left}
+    /* on a phone the row wraps on three lines : each link becomes a 36 px target, and the
+       rows no longer add their own gap on top of it */
+    .pied-liens{gap:0 22px;padding-top:6px}
+    .pied-liens a{padding:12px 0}
   }
 </style>
 <header class="barre sur-nuit">
@@ -425,12 +445,14 @@
   </div>
 </section>
 
-<footer class="pied">
-  <div class="colonne">
-    <p class="pied-p">Nothing of yours leaves your machine. <a class="pied-preuve" href="../privacy.html">See how we prove it <span aria-hidden="true">&#8594;</span></a></p>
-    <span class="sceau">content hash 67ff03042f26708e &#183; measured, then frozen &#183; <a href="https://github.com/ArslaneSempai-ui/cascade-dossier">repository</a></span>
+<footer class="pied"><div class="colonne">
+  <div class="pied-h">
+    <div class="pied-g"><p class="pied-p">Nothing of yours leaves your machine.</p>
+      <a class="pied-preuve" href="../privacy.html">See how we prove it <span aria-hidden="true">&#8594;</span></a></div>
+    <p class="pied-meta"><b>63 tests</b>content hash 67ff03042f26708e</p>
   </div>
-</footer>
+  <nav class="pied-liens" aria-label="Pages"><a href="method.html">Method</a><a href="security.html">Security</a><a href="../terms.html">Terms</a><a href="../privacy.html">Privacy</a><a href="../accessibility.html">Accessibility</a><a href="../contact.html">Contact</a><a href="../colophon.html">The fine print</a><a href="https://github.com/ArslaneSempai-ui/cascade-dossier">Repository</a></nav>
+</div></footer>
 
 <script type="application/json" id="donnees">{"provenance": {"releve": "releve-public.json", "empreinte": "67ff03042f26708e", "commit": "34b19c8", "date": "2026-09-07", "note": "every line below comes from the sealed public dossier of cascade-dossier: each question's state was recomposed from its own verdicts by the contract's no-gap rule, and the coverage recounted, before this file was allowed to exist"}, "controles": {"presents": ["present", "sealed", "signed", "fresh", "consistent"], "absents": []}, "questions": {"routing": {"present": true, "fichier": "profiles-2026-08-20-coeur-rendu.json", "etat": "consistent", "joursDepuis": 18, "sceau": "dbf26abec438515e", "signee": true, "verdicts": [{"controle": "present", "tenu": true, "detail": "profiles-2026-08-20-coeur-rendu.json: a routing report, measured 2026-08-20, version 1"}, {"controle": "sealed", "tenu": true, "detail": "profiles-2026-08-20-coeur-rendu.json: seal dbf26abec438515e recomputed and matching"}, {"controle": "signed", "tenu": true, "detail": "profiles-2026-08-20-coeur-rendu.json: cited record dbf26abec438515e, Ed25519 signature verified against cle-publique.pem"}, {"controle": "fresh", "tenu": true, "detail": "profiles-2026-08-20-coeur-rendu.json: measured 18 day(s) before 2026-09-07, validity period 90 day(s): fresh"}, {"controle": "consistent", "tenu": true, "detail": "profiles-2026-08-20-coeur-rendu.json: alone on the routing question, source content hash not carried (nothing to cross-check)"}]}, "screening": {"present": true, "fichier": "releve-public.json", "etat": "consistent", "joursDepuis": 0, "sceau": "556bb39ec055a091", "signee": true, "verdicts": [{"controle": "present", "tenu": true, "detail": "releve-public.json: a screening report, measured 2026-09-07, version 1"}, {"controle": "sealed", "tenu": true, "detail": "releve-public.json: seal 556bb39ec055a091 recomputed and matching"}, {"controle": "signed", "tenu": true, "detail": "releve-public.json: cited record 556bb39ec055a091, Ed25519 signature verified against cle-publique.pem"}, {"controle": "fresh", "tenu": true, "detail": "releve-public.json: measured 0 day(s) before 2026-09-07, validity period 90 day(s): fresh"}, {"controle": "consistent", "tenu": true, "detail": "releve-public.json: alone on the screening question, source content hash not carried (nothing to cross-check)"}]}, "monitoring": {"present": true, "fichier": "releve-public.json", "etat": "consistent", "joursDepuis": 0, "sceau": "5e2a96e22fa0b59c", "signee": true, "verdicts": [{"controle": "present", "tenu": true, "detail": "releve-public.json: a monitoring report, measured 2026-09-07, version 1"}, {"controle": "sealed", "tenu": true, "detail": "releve-public.json: seal 5e2a96e22fa0b59c recomputed and matching"}, {"controle": "signed", "tenu": true, "detail": "releve-public.json: cited record 5e2a96e22fa0b59c, Ed25519 signature verified against cle-publique.pem"}, {"controle": "fresh", "tenu": true, "detail": "releve-public.json: measured 0 day(s) before 2026-09-07, validity period 90 day(s): fresh"}, {"controle": "consistent", "tenu": true, "detail": "releve-public.json: alone on the monitoring question, source content hash not carried (nothing to cross-check)"}]}, "scoring": {"present": true, "fichier": "releve-public.json", "etat": "consistent", "joursDepuis": 0, "sceau": "3cee43edfa7c0064", "signee": true, "verdicts": [{"controle": "present", "tenu": true, "detail": "releve-public.json: a scoring report, measured 2026-09-07, version 1"}, {"controle": "sealed", "tenu": true, "detail": "releve-public.json: seal 3cee43edfa7c0064 recomputed and matching"}, {"controle": "signed", "tenu": true, "detail": "releve-public.json: cited record 3cee43edfa7c0064, Ed25519 signature verified against cle-publique.pem"}, {"controle": "fresh", "tenu": true, "detail": "releve-public.json: measured 0 day(s) before 2026-09-07, validity period 90 day(s): fresh"}, {"controle": "consistent", "tenu": true, "detail": "releve-public.json: alone on the scoring question, source content hash not carried (nothing to cross-check)"}]}}, "couverture": {"n": 4, "sur": 4}, "reglages": {"rythmeJours": 90, "staleApres": 2, "auJour": "2026-09-07"}}</script>
 <script>

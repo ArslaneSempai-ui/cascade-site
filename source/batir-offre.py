@@ -15,7 +15,7 @@ intermédiaire n'est documenté ; aucun n'est affiché.
 import pathlib
 
 BASE = pathlib.Path(__file__).parent
-from outil import SCEAU_ROUTING, OUTILS, pied_promesse
+from outil import SCEAU_ROUTING, OUTILS, pied_html, CSS_PIED_SITE
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 # la barre du site (10/09) : les cinq instruments dans l'ordre du rideau, lus dans OUTILS, jamais tapés
 NAV = "".join(f'\n    <a href="{o["page_hero"]}">{o["nom"]}</a>' for o in OUTILS.values())
@@ -143,10 +143,7 @@ CSS = '''
   .note-fin b{color:var(--sur);font-weight:600}
 
   .pied{background:var(--noir-b);color:var(--sur);padding:52px 0;position:relative;z-index:2;border-top:1px solid var(--filet)}
-  .pied .colonne{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:baseline}
   .pied-p{font-size:clamp(17px,1.8vw,23px);font-weight:600}
-  .pied-p em{font-style:italic;color:var(--vert-clair)}
-  .pied .sceau{color:var(--sur-pale)}
 
   @media (max-width:1080px){
     .colonne{padding:0 22px}
@@ -221,7 +218,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">
 <script>document.documentElement.classList.add("js")</script>
-<style>{CSS}</style>
+<style>{CSS}{CSS_PIED_SITE}</style>
 <div class="grille" aria-hidden="true"></div><div class="lumiere" aria-hidden="true"></div>
 <header class="barre">
   <a class="marque" href="ACCUEIL.html">CASCADE</a>
@@ -328,10 +325,7 @@ PAGE = f'''<!doctype html><html lang="en">
 </div></section>
 </main>
 
-<footer class="pied"><div class="colonne">
-  {pied_promesse()}
-  <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>
-</div></footer>
+{pied_html(sceau=SCEAU)}
 {JS}
 '''
 

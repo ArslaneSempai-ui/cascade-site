@@ -38,7 +38,7 @@ D = json.loads((BASE / "instrument-donnees.json").read_text())
 
 FIELDS, TIERS = D["fields"], D["tiers"]
 from outil import SCEAU_ROUTING
-from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_promesse
+from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_html, n_tests
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-routing"
 
@@ -210,10 +210,7 @@ CSS = '''
   .ouvrir:hover .fl{transform:translateX(4px)}
 
   .pied{background:var(--nuit-c);color:var(--sur-vert);padding:52px 0}
-  .pied .colonne{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:baseline}
   .pied-p{font-size:clamp(17px,1.8vw,23px);font-weight:600}
-  .pied-p em{font-style:italic;color:var(--vert-clair)}
-  .pied .sceau{color:var(--sur-vert-pale)}
 
   @media (max-width:1080px){
     .colonne{padding:0 22px}
@@ -420,10 +417,7 @@ PAGE = f'''<!doctype html><html lang="en">
   </aside>
 </div></section>
 
-<footer class="pied"><div class="colonne">
-  {pied_promesse()}
-  <span class="sceau">content hash {SCEAU} &#183; measured, then frozen</span>
-</div></footer>
+{pied_html(outil=OUTILS["routing"], sceau=SCEAU, tests=n_tests(OUTILS["routing"]), prefixe="")}
 
 <script>
 const DONNEES = {json.dumps({k: D[k] for k in ("fields", "tiers", "price", "acc", "publie", "vise", "provenance")})};
