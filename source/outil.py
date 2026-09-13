@@ -150,7 +150,7 @@ OUTILS = {
         "depot": "https://github.com/ArslaneSempai-ui/cascade-screening",
         "page_hero": "HERO-SCREENING.html",
         "etiquette": "Screening &#183; name matching",
-        "pitch": "Raise it and you miss real matches. Lower it and your analysts drown in alerts. Screening measures both.",
+        "pitch": "Raise it and you miss real matches. Lower it and your analysts drown in alerts. Screening puts a number on each.",
         "robot_rideau": "robot-rubis-curieux.webp",   # il se penche, curieux (etats/robots-rideau.py)
         # l'affiche du film : la plaque 3D (etats/affiche-plaque.py) + la carte des deux
         # chiffres de la frontière lus dans le relevé (etats/affiche-composer.py)
@@ -177,7 +177,7 @@ OUTILS = {
         "depot": "https://github.com/ArslaneSempai-ui/cascade-monitoring",
         "page_hero": "HERO-MONITORING.html",
         "etiquette": "Monitoring &#183; transaction monitoring",
-        "pitch": "Monitoring measures both, because a scenario that fires a hundred times a week is cheap to write and expensive to work through.",
+        "pitch": "A scenario that fires a hundred times a week is cheap to write and expensive to work through. Monitoring weighs the two.",
         "robot_rideau": "robot-lapis-montre.webp",    # il montre (rendu du chef)
         # l'affiche : plaque lapis (affiche-plaque.py --accent lapis) + les deux chiffres
         # de la fiche 03 lus dans le relevé (ici deux BORNES BASSES, champ « bas » :
@@ -195,7 +195,7 @@ OUTILS = {
         "sous_dossier": "scoring/",
         "prefixe_racine": "../",
         # « sort » : rang, classement, tri ? le lecteur devait deviner
-        "question": "Which risk factors really sort your customers?",
+        "question": "Which risk factors separate risky from quiet?",
         "palette": PALETTE_AMETHYSTE,
         "favicon_accent": "%234b2a7a",
         "robots": ("robot-amethyste-penche.webp", "robot-amethyste-pese.webp"),
@@ -204,7 +204,7 @@ OUTILS = {
         "depot": "https://github.com/ArslaneSempai-ui/cascade-scoring",
         "page_hero": "HERO-SCORING.html",
         "etiquette": "Scoring &#183; risk rating",
-        "pitch": "Risk weights come from policy, which writes them once and rarely tests them against what happened next. Scoring measures them.",
+        "pitch": "Risk weights come from policy, which writes them once and rarely tests them against what happened next. Scoring tests them.",
         "robot_rideau": "robot-amethyste-pese.webp",    # il pèse : sa pose à lui
         "affiche": "affiche-scoring.jpg",
         "affiche_alt": "The amethyst Cascade robot, palms up, projecting the two shares the card "

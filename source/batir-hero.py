@@ -1313,7 +1313,7 @@ def batir_accueil():
          ["One command reruns the whole sweep on", "your records. The report is written next", "to your file, and no data leaves the", "network."],
          "3 commands, no account, no upload"),
         ("04 · DOSSIER", "Signed, current, verifiable",
-         ["Four reports against five controls:", "present, sealed, signed, fresh, consistent.", "A reviewer checks the dossier from the", "hashes and signatures alone."],
+         ["Four reports against five controls:", "present, frozen, signed with a key, fresh,", "and consistent. A reviewer checks the dossier", "from the hashes and signatures alone."],
          f"{dossier_r['couverture']['n']} of {dossier_r['couverture']['sur']} reports · {len(dossier_r['controles']['presents'])} controls"),
     ]
     # LA SCÈNE DE LA MÉTHODE : le gros plan 01 du dossier avec ses étiquettes PUBLIÉES (les mêmes
