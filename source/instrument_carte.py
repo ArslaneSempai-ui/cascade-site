@@ -754,6 +754,9 @@ CSS_ACCUEIL = '''
      À 36, il se pose à 132 : trente-six pixels plus haut, toujours quarante-cinq sous la
      barre, et il reste plus bas que le haut de l'éventail, qui garde la main. */
   .hero-texte{padding-top:36px}
+  /* le sous-titre (relecture du 8/09, rouvert par Arslane le 13/09 : le lede revient sous le titre) :
+     aligné à gauche comme le grand livre, 44 caractères de large, une couleur en retrait */
+  .hero-grille .lede{margin:16px 0 0;max-width:44ch;font-size:16px;line-height:1.55;color:var(--sur-vert-pale);text-align:left;text-wrap:pretty}
   .ledger{margin:26px 0 0}
   .ledger div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;min-height:38px;padding:9px 0;
     border-bottom:1px solid color-mix(in srgb,var(--sur-vert) 10%,transparent)}

@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-rWvjk34H0xliWiSOKm4E5ZpDdH7cF4lT/KZYcyNSQ+o=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-oqSHbAvqS+tXc12Do4qxvEB7Q2Zg+unoLKm4zeSB4oY=' 'sha256-RsYxumAh9nfPWTmIlrgVCjiNkhGgnCcljYhs9mtE4XU=' 'sha256-1u/oLzsbSwtV2qAjDUM+GUhu+UtAl5l6B/92RBCDqZs=' 'sha256-4Cr/W1Ty3qpZzxTisCv3JSkcsIXMraspPJQa9hLwT68=' 'sha256-ra2A1gypctBMmnXRW2s5TnMyKZn6Igh62FqoGc2LGjk=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-BZRsrTPl4run2ogTuZKKWAgqCtd4t16xLVU3Mk0jYn8='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-6oZ6B0r2OZRDQORX6Mxx+JeivE955KVFSr+V0ll5ygI=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-oqSHbAvqS+tXc12Do4qxvEB7Q2Zg+unoLKm4zeSB4oY=' 'sha256-RsYxumAh9nfPWTmIlrgVCjiNkhGgnCcljYhs9mtE4XU=' 'sha256-1u/oLzsbSwtV2qAjDUM+GUhu+UtAl5l6B/92RBCDqZs=' 'sha256-4Cr/W1Ty3qpZzxTisCv3JSkcsIXMraspPJQa9hLwT68=' 'sha256-ra2A1gypctBMmnXRW2s5TnMyKZn6Igh62FqoGc2LGjk=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-BZRsrTPl4run2ogTuZKKWAgqCtd4t16xLVU3Mk0jYn8='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; measured instruments for compliance</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/">
@@ -605,6 +605,9 @@
      À 36, il se pose à 132 : trente-six pixels plus haut, toujours quarante-cinq sous la
      barre, et il reste plus bas que le haut de l'éventail, qui garde la main. */
   .hero-texte{padding-top:36px}
+  /* le sous-titre (relecture du 8/09, rouvert par Arslane le 13/09 : le lede revient sous le titre) :
+     aligné à gauche comme le grand livre, 44 caractères de large, une couleur en retrait */
+  .hero-grille .lede{margin:16px 0 0;max-width:44ch;font-size:16px;line-height:1.55;color:var(--sur-vert-pale);text-align:left;text-wrap:pretty}
   .ledger{margin:26px 0 0}
   .ledger div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;min-height:38px;padding:9px 0;
     border-bottom:1px solid color-mix(in srgb,var(--sur-vert) 10%,transparent)}
@@ -715,6 +718,7 @@
   <div class="hero-grille">
     <div class="hero-texte">
       <h1 class="h1 entree">Compliance decisions you can prove.</h1>
+      <p class="lede entree">Cascade turns compliance decisions into measurable evidence: tested against sealed public records, reproducible on your own data, and open to inspection.</p>
       <dl class="ledger entree" aria-label="The routing instrument, in figures">
         <div><dt><i class="pt" aria-hidden="true"></i>routing, mean accuracy per field</dt><dd>94.4%</dd></div>
         <div><dt>accuracy per file</dt><dd>76.7%</dd></div>

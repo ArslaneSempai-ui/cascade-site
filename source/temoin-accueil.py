@@ -16,7 +16,8 @@ Il lit la page SERVIE (docs/index.html) et tient les affirmations du premier éc
      PUBLIÉS de findings-dossier.json (fiche 01), et la note est la phrase de la
      fiche — l'accueil cite le dossier, il ne le paraphrase pas ;
   E. les six liens de la méthode existent dans docs/ ;
-  F. les absences décidées : ni lede, ni hero-cue, ni robot avant le rideau.
+  F. le premier écran : UN lede sous le titre (rouvert le 13/09 : la relecture du 8/09 le
+     propose, Arslane le reprend), sans cadratin ; ni hero-cue, ni robot avant le rideau.
 
 LE TÉMOIN SE PROUVE PAR MUTATION à chaque lancement : la page réelle, altérée
 (sceau changé, carte retirée, annotation réécrite, chiffre déplacé), doit rougir
@@ -123,10 +124,13 @@ def relever(html, hero_routing, findings_dossier):
     if n_liens != 6:
         dire(f"la barre de la méthode porte {n_liens} liens, la décision en met six")
 
-    # F. les absences décidées
+    # F. le premier écran : un lede, et lui seul
     avant_rideau = html.split('class="rideau"')[0]
-    if 'class="lede' in avant_rideau:
-        dire("une lede vit encore sur le premier écran : la décision l'a remplacée par le grand livre")
+    ledes = re.findall(r'<p class="lede[^"]*"[^>]*>(.*?)</p>', avant_rideau, re.S)
+    if len(ledes) != 1:
+        dire(f"le premier écran porte {len(ledes)} lede(s), la décision du 13/09 en met un sous le titre")
+    elif "\u2014" in ledes[0]:
+        dire("le lede porte un cadratin")
     if "hero-cue" in avant_rideau:
         dire("le hero-cue vit encore sur le premier écran")
     if re.search(r'<img[^>]*robot-[a-z-]+\.webp', avant_rideau):
@@ -135,7 +139,7 @@ def relever(html, hero_routing, findings_dossier):
 
 
 def temoin(html, hero, fd):
-    """La page réelle, mutée quatre fois : chaque mutation doit rougir sur la bonne
+    """La page réelle, mutée cinq fois : chaque mutation doit rougir sur la bonne
     affirmation, et la page intacte doit passer."""
     intacte = relever(html, hero, fd)
     if intacte:
@@ -147,6 +151,7 @@ def temoin(html, hero, fd):
         (re.sub(r'(<span class="ap-eti"[^>]*>)[^<]*', r"\1mensonge", html, count=1), "annotations", "l'annotation réécrite"),
         (html.replace("94.4", "93.4") if "94.4" in html else html.replace("1,000", "9,999"),
          "ne se retrouve pas sur le héros routing", "le chiffre déplacé"),
+        (re.sub(r'<p class="lede[^"]*"[^>]*>.*?</p>', "", html, count=1, flags=re.S), "lede", "le lede retiré"),
     ]
     for mue, attendu, nom in mutations:
         fautes = relever(mue, hero, fd)
@@ -167,4 +172,4 @@ if __name__ == "__main__":
             print("  ROUGE", f)
         sys.exit(f"{len(fautes)} refus : l'accueil ne tient pas ses affirmations")
     print("témoin de l'accueil : le grand livre recompose son sceau, l'éventail suit le rideau, "
-          "la méthode cite le dossier — et les quatre mutations rougissent encore")
+          "la méthode cite le dossier — et les cinq mutations rougissent encore")

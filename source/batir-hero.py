@@ -1372,6 +1372,7 @@ def batir_accueil():
   <div class="hero-grille">
     <div class="hero-texte">
       <h1 class="h1 entree">Compliance decisions you can prove.</h1>
+      <p class="lede entree">Cascade turns compliance decisions into measurable evidence: tested against sealed public records, reproducible on your own data, and open to inspection.</p>
       <dl class="ledger entree" aria-label="The routing instrument, in figures">
         <div><dt><i class="pt" aria-hidden="true"></i>routing, mean accuracy per field</dt><dd>{acc_champ}</dd></div>
         <div><dt>accuracy per file</dt><dd>{acc_fichier}</dd></div>
