@@ -1394,18 +1394,6 @@ def batir_accueil():
       <p class="methode-note">{f_dossier['phrase']}</p>
     </div>
   </div>
-  <nav class="methode-liens" aria-label="The house">
-    <!-- « Pricing, in figures » était la faute nommée par la relecture du 8/09 (règle 7),
-         et le motif 8 ne la voyait pas : il ne regarde que lien-fin / affiche-tarif /
-         ouvrir, et cette rangée n'a pas de classe. Ses cinq voisins sont des NOMS de
-         pages, pas des actions : le nom est « Pricing », comme dans la barre du haut. -->
-    <a href="ENGAGEMENT.html">Pricing</a>
-    <a href="ANNEXE-TERMS.html">Terms of engagement</a>
-    <a href="ANNEXE-PRIVACY.html">Privacy</a>
-    <a href="ANNEXE-ACCESSIBILITE.html">Accessibility</a>
-    <a href="CONTACT.html">Contact</a>
-    <a href="MENTIONS.html">The fine print</a>
-  </nav>
   </div>
 </section>
 </main>
@@ -1523,7 +1511,7 @@ SPECS = {
         app_desc="A sanctions-screening audit: which way of comparing names, and where you "
                  "set the bar, measured on your own alert history. ",
         offre="Thirty-day evaluation on your own alert history, granted in the public licence.",
-        h1="See what your screening catches, and what it flags wrongly.",
+        h1="See what your screening catches, and what it flags incorrectly.",
         lede="A screening threshold is the score above which two names count as a match.<br>\n    Cascade Screening compares names seven ways, at every threshold, over alerts your analysts already closed.",
         aria_commande="The measurement on your own alert history",
         commandes=["npm ci --ignore-scripts", "npm run measure:yours -- --alerts=your-alerts.csv"],
@@ -1555,7 +1543,7 @@ SPECS = {
         app_desc="A transaction-monitoring audit: which scenarios catch real cases and which "
                  "only make work, measured on the cases your analysts already closed. ",
         offre="Thirty-day evaluation on your own dispositioned alerts, granted in the public licence.",
-        h1="See what your scenarios catch, and what they flag wrongly.",
+        h1="See what your scenarios catch, and what they flag incorrectly.",
         lede="A scenario's threshold is the score above which it raises an alert.<br>\n    Cascade Monitoring runs seven scenarios at every threshold, over the alerts your analysts already closed.",
         aria_commande="The measurement on your own dispositioned alerts",
         commandes=["npm ci --ignore-scripts",
@@ -1564,7 +1552,7 @@ SPECS = {
         instrument_h2="Read what a threshold change costs.",
         instrument_page="INSTRUMENT-MONITORING.html",
         instrument_eti="Cascade &#183; Monitoring",
-        instrument_sub="Each scenario at each threshold, with what it catches and what it flags wrongly, live from our public test set.",
+        instrument_sub="Each scenario at each threshold: the suspicious cases it catches, and the false alerts it raises. A false alert is a case flagged that turns out to be nothing, and each one costs an analyst the time to close it. Live from our public test set.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it does not.",
                         "ANNEXE-MONITORING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "What is rebuilt, what is assumed, and what stays on your machine.",
@@ -1597,7 +1585,7 @@ SPECS = {
         instrument_h2="See what each factor and threshold gives you.",
         instrument_page="INSTRUMENT-SCORING.html",
         instrument_eti="Cascade &#183; Scoring",
-        instrument_sub="Each risk factor at each threshold, with what it catches and what it flags wrongly, live from our public test set.",
+        instrument_sub="Each risk factor at each threshold: the risky customers it catches, and the quiet ones it flags. Each quiet customer flagged costs a reviewer the time of an extra review. Live from our public test set.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it does not.",
                         "ANNEXE-SCORING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "The tables, the checksum, and what stays on your machine.",
@@ -1631,7 +1619,7 @@ SPECS = {
         instrument_h2="Read the whole chain in one table.",
         instrument_page="INSTRUMENT-DOSSIER.html",
         instrument_eti="Cascade &#183; Dossier",
-        instrument_sub="The four questions against the five controls, with states, seals and dates live from our public test set.",
+        instrument_sub="The four questions against the five controls, with their states, signatures and dates, live from our public test set.",
         annexe_methode=("Method &amp; what is verified", "What the five controls hold, and what a gap means.",
                         "ANNEXE-DOSSIER-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "What is read, what is derived, and what stays on your machine.",

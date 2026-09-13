@@ -376,7 +376,7 @@ PAGE = f'''<!doctype html><html lang="en">
           <p class="tm-sortie" id="g-quoi"></p>
           {carte_html("threshold", "recall", "factor")}
           {table_html()}
-          <p class="tm-sortie" id="g-lecture" data-commun="instrument">pick a cell: what it catches over what it flags wrongly, with the number of files and the interval</p>
+          <p class="tm-sortie" id="g-lecture" data-commun="instrument">pick a cell: what it catches over what it flags incorrectly, with the number of files and the interval</p>
 
           <p class="tm-l"><span class="ps">$</span> cascade optimise --recall</p>
           <div class="b-ligne">
