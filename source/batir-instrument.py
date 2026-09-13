@@ -337,8 +337,7 @@ PAGE = f'''<!doctype html><html lang="en">
   <p class="lede">One model tier per field, which is the size of model that field is sent to.
     Click any cell to see what that routing costs and how often it gets the field right, or set
     your budget and let the tool choose, the way it does on your machine: <b>highest accuracy
-    first, lower cost when two tie</b>. Where a rate carries a confidence interval, the range it
-    could reasonably be in, the page prints it, because a rate on its own can mislead you.</p>
+    first, lower cost when two tie</b>.</p>
 </div></section>
 
 <section aria-label="The live instrument"><div class="colonne">

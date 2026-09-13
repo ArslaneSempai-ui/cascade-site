@@ -140,7 +140,7 @@ CSS_NOIR = '''
 def carte_html(x_titre, y_titre, rangee="setting"):
     """The chart and its side panel, empty : the JS draws both from the embedded record."""
     return f'''<p class="carte-aide" data-commun="instrument">each point is one {rangee} at one threshold, from our public test set. <b>Pull the floor line</b> or the slider, and the {rangee}s that stay above it, confidence interval included, turn green</p>
-          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="{y_titre} of each row at each {x_titre} of our public test set, with the recall floor as a line"></svg></div>'''
+          <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="{y_titre} of each row at each {x_titre} of our public test set, with the floor as a line"></svg></div>'''
 
 
 PANNEAU_HTML = '''<aside class="pan" id="pan" aria-live="polite">

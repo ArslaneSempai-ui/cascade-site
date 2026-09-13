@@ -641,17 +641,17 @@
   <span class="rideau-titre">Cascade &#183; five instruments, one method</span>
   <a class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" href="../routing/index.html#tools"><span class="p-eti">Routing &#183; identity-field extraction</span>
 <img src="../rendus/robot-salut.webp" alt="" width="855" height="962" decoding="async">
-<span class="p-h">Which fields need a model, and which need only a pattern?</span>
+<span class="p-h">How much model does each identity field need?</span>
 <span class="p-d">Some identity fields can be read by a cheap script, while others need a model. Cascade Routing measures which is which, field by field.</span>
 <span class="p-ouvrir">Open Routing <span aria-hidden="true">&#8594;</span></span></a>
   <a class="pan cote-g" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" href="../screening/index.html#tools"><span class="p-eti">Screening &#183; name matching</span>
 <img src="../rendus/robot-rubis-curieux.webp" alt="" width="1023" height="961" decoding="async">
-<span class="p-h">Which way of comparing names, and where do you set the bar?</span>
+<span class="p-h">Where should the bar sit, and what does moving it cost?</span>
 <span class="p-d">If you raise the bar you miss real matches, and if you lower it your analysts drown in alerts.</span>
 <span class="p-ouvrir">Open Screening <span aria-hidden="true">&#8594;</span></span></a>
   <a class="pan cote-g" style="--pan-vif:#4f8ae0;--pan-a:#16213a;--pan-b:#101a30;--pan-c:#0a111f" href="../monitoring/index.html#tools"><span class="p-eti">Monitoring &#183; transaction monitoring</span>
 <img src="../rendus/robot-lapis-montre.webp" alt="" width="916" height="940" decoding="async">
-<span class="p-h">Which scenarios catch real cases, and which only make work?</span>
+<span class="p-h">Do your scenarios catch real cases, or only make work?</span>
 <span class="p-d">A scenario that fires a hundred times a week is cheap to write and expensive to work through, so both are measured here.</span>
 <span class="p-ouvrir">Open Monitoring <span aria-hidden="true">&#8594;</span></span></a>
   <div class="pan cote-d" style="--pan-vif:#9b6fe0;--pan-a:#241a3a;--pan-b:#1a1230;--pan-c:#100b1f" aria-current="page"><span class="p-eti">Scoring &#183; risk rating</span>
@@ -671,7 +671,7 @@
     <nav class="rail" aria-label="Findings"><span class="jauge" aria-hidden="true"><i></i></span><ul><li><button class="jalon actif" data-i="0" aria-label="Go to finding 01: Geography catches none of the escalations, and raises no alert.">
         <img class="j-vig" src="../rendus/etats/rayonnage-01.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">01</span><span class="j-corps"><span class="j-titre">Geography scores 0% on both sides here</span>
-        <span class="j-cote">0% both sides</span></span></button></li><li><button class="jalon" data-i="1" aria-label="Go to finding 02: The product factor catches 92.9% of escalated files, and alerts on 23.8% of the rest.">
+        <span class="j-cote">no weight here</span></span></button></li><li><button class="jalon" data-i="1" aria-label="Go to finding 02: The product factor catches 92.9% of escalated files, and alerts on 23.8% of the rest.">
         <img class="j-vig" src="../rendus/etats/rayonnage-02.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">02</span><span class="j-corps"><span class="j-titre">Product catches 92.9% of escalated files</span>
         <span class="j-cote">23.8% of quiet files alerted</span></span></button></li><li><button class="jalon" data-i="2" aria-label="Go to finding 03: No factor is sure of catching 90% of the escalated files.">
@@ -680,7 +680,7 @@
         <span class="j-cote">closest 81%</span></span></button></li><li><button class="jalon" data-i="3" aria-label="Go to finding 04: The product factor catches 79.4% of generated files against 92.9% of the written ones.">
         <img class="j-vig" src="../rendus/etats/rayonnage-04.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">04</span><span class="j-corps"><span class="j-titre">Generated files are harder, and are counted on their own</span>
-        <span class="j-cote">counted on its own</span></span></button></li><li><button class="jalon" data-i="4" aria-label="Go to finding 05: Run the same measurement on your own review outcomes.">
+        <span class="j-cote">79.4% against 92.9%</span></span></button></li><li><button class="jalon" data-i="4" aria-label="Go to finding 05: Run the same measurement on your own review outcomes.">
         <img class="j-vig" src="../rendus/etats/rayonnage-05.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">05</span><span class="j-corps"><span class="j-titre">Your own review outcomes</span>
         <span class="j-cote">one run, one report</span></span></button></li></ul></nav>
@@ -691,11 +691,11 @@
         alt="The shelving of weights, state 01: Geography catches none of the escalations, and raises no alert." width="1374" height="1120" decoding="async" loading="lazy">
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="70" x2="673" y2="420" pathLength="1"/><circle cx="673" cy="420" r="4"/><line x1="710" y1="960" x2="673" y2="700" pathLength="1"/><circle cx="673" cy="700" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:7.0%">geography factor: recall 0%</span><span class="ap-eti" style="left:50.0%;top:96.0%">kept files: false alerts 0%</span>
       <figure class="fiche">
-        <figcaption class="fiche-t"><span>finding 01</span><span class="ft-cote">0% both sides</span></figcaption>
+        <figcaption class="fiche-t"><span>finding 01</span><span class="ft-cote">no weight here</span></figcaption>
         <p class="fiche-phrase">Each file in our test set sits in an ordinary EU country, because no official country list was copied into the data. The geography factor therefore scores 0% on both sides: the factor a vendor sells hardest carries no weight here, by construction.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">0%</span><span class="leg">recall 0% for the geography factor at 0.50, interval 0% to 8%, 42 files, all escalated</span></div>
-          <div class="val"><span class="chiffre vert-v">0%</span><span class="leg">false alerts 0% at 0.50, interval 0% to 8%, 42 files, all kept at their rating</span></div>
+          <div class="val"><span class="chiffre pale-v">0%</span><span class="leg">catches 0% of escalated files with the geography factor at 0.50, interval 0% to 8%, on 42 files</span></div>
+          <div class="val"><span class="chiffre vert-v">0%</span><span class="leg">false alerts 0% at 0.50, interval 0% to 8%, on 42 files kept at their rating</span></div>
         </div>
       </figure>
     </div>
@@ -705,10 +705,10 @@
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="614" y1="70" x2="636" y2="550" pathLength="1"/><circle cx="636" cy="550" r="4"/><line x1="710" y1="960" x2="747" y2="820" pathLength="1"/><circle cx="747" cy="820" r="4"/></svg><span class="ap-eti" style="left:43.3%;top:7.0%">product factor: recall 92.9%</span><span class="ap-eti" style="left:50.0%;top:96.0%">kept files: false alerts 23.8%</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 02</span><span class="ft-cote">23.8% of quiet files alerted</span></figcaption>
-        <p class="fiche-phrase">Scoring only the products a client holds catches 92.9% of the escalated files at threshold 0.50, because correspondent accounts, private banking and crypto rails carry the signal. The same factor alerts on 23.8% of the files that were kept at their rating, and each alert is a review someone has to run.</p>
+        <p class="fiche-phrase">Scoring only the products a client holds catches 92.9% of the escalated files at threshold 0.50, because correspondent accounts, private banking and crypto rails carry the signal. The same factor alerts on 23.8% of the files kept at their rating, and each alert is a review someone has to run.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">92.9%</span><span class="leg">recall 92.9% for the product factor at 0.50, interval 81% to 98%, 42 files, all escalated</span></div>
-          <div class="val"><span class="chiffre vert-v">23.8%</span><span class="leg">false alerts 23.8% at 0.50, interval 13% to 39%, 42 files, all kept at their rating</span></div>
+          <div class="val"><span class="chiffre pale-v">92.9%</span><span class="leg">catches 92.9% of escalated files with the product factor at 0.50, interval 81% to 98%, on 42 files</span></div>
+          <div class="val"><span class="chiffre vert-v">23.8%</span><span class="leg">false alerts 23.8% at 0.50, interval 13% to 39%, on 42 files kept at their rating</span></div>
         </div>
       </figure>
     </div>
@@ -730,11 +730,11 @@
         alt="The shelving of weights, state 04: The product factor catches 79.4% of generated files against 92.9% of the written ones." width="1374" height="1120" decoding="async" loading="lazy">
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="422" y1="960" x2="514" y2="620" pathLength="1"/><circle cx="514" cy="620" r="4"/><line x1="1191" y1="960" x2="808" y2="620" pathLength="1"/><circle cx="808" cy="620" r="4"/></svg><span class="ap-eti" style="left:29.7%;top:96.0%">written files: recall 92.9%</span><span class="ap-eti" style="left:83.9%;top:96.0%">generated files: recall 79.4%</span>
       <figure class="fiche">
-        <figcaption class="fiche-t"><span>finding 04</span><span class="ft-cote">counted on its own</span></figcaption>
-        <p class="fiche-phrase">The same setting catches 92.9% of the 42 files we wrote and 79.4% of the 126 files a script generated. Here the generated set is harder, and it is still counted on its own, so the rates above come from the files we wrote.</p>
+        <figcaption class="fiche-t"><span>finding 04</span><span class="ft-cote">79.4% against 92.9%</span></figcaption>
+        <p class="fiche-phrase">The same setting catches 92.9% of the files we wrote and 79.4% of the ones a script generated. Here the generated set is harder, and it is still counted on its own, so the rates above come from the files we wrote.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">92.9%</span><span class="leg">recall 92.9% for product at 0.50 on 42 files written, interval 81% to 98%</span></div>
-          <div class="val"><span class="chiffre vert-v">79.4%</span><span class="leg">recall 79.4% at the same cell on 126 files generated, interval 71% to 86%</span></div>
+          <div class="val"><span class="chiffre pale-v">92.9%</span><span class="leg">catches 92.9% with product at 0.50, on the files we wrote, interval 81% to 98%</span></div>
+          <div class="val"><span class="chiffre vert-v">79.4%</span><span class="leg">catches 79.4% at the same setting, on 126 files a script generated, interval 71% to 86%</span></div>
         </div>
       </figure>
     </div>
@@ -765,7 +765,7 @@
     </a>
     <a class="affiche-tarif" href="../engagement.html">See pricing <span aria-hidden="true">&#8594;</span></a>
     <p class="t-note">Measured on 42 escalated files and 42 files kept at their
-      rating, all written by us: recall, meaning the share each one catches, for each factor, which is one way of comparing them, at each threshold. The marked cell, product at 0.50, comes closest to the 90% recall floor. None reaches it, so the tool picks none on these cases. Generated files are counted on their own, and the live instrument shows them.</p>
+      rating, all written by us: what each risk factor catches at each threshold. The marked cell, product at 0.50, comes closest to the 90% floor we set. None reaches it, so the tool picks none on these cases. Generated files are counted on their own, and the live instrument shows them.</p>
   </div>
 </div></section>
 
@@ -779,7 +779,7 @@
   <h2 class="h2">Cascade Scoring, the film.</h2>
   <p class="film-duree">The five Scoring findings, in order.</p>
   <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film of Cascade Scoring, opens on YouTube">
-    <img src="../rendus/affiche-scoring.jpg" alt="The amethyst Cascade robot, palms up, projecting the two lower bounds of recall the card names: product on the left, behaviour on the right, both under the 0.90 floor." width="1280" height="720" decoding="async" loading="lazy">
+    <img src="../rendus/affiche-scoring.jpg" alt="The amethyst Cascade robot, palms up, projecting the two shares the card names: product on the left, behaviour on the right, both under the 0.90 floor." width="1280" height="720" decoding="async" loading="lazy">
     <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
   </a>
   <div class="film-note">

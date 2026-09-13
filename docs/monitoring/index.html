@@ -641,17 +641,17 @@
   <span class="rideau-titre">Cascade &#183; five instruments, one method</span>
   <a class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" href="../routing/index.html#tools"><span class="p-eti">Routing &#183; identity-field extraction</span>
 <img src="../rendus/robot-salut.webp" alt="" width="855" height="962" decoding="async">
-<span class="p-h">Which fields need a model, and which need only a pattern?</span>
+<span class="p-h">How much model does each identity field need?</span>
 <span class="p-d">Some identity fields can be read by a cheap script, while others need a model. Cascade Routing measures which is which, field by field.</span>
 <span class="p-ouvrir">Open Routing <span aria-hidden="true">&#8594;</span></span></a>
   <a class="pan cote-g" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" href="../screening/index.html#tools"><span class="p-eti">Screening &#183; name matching</span>
 <img src="../rendus/robot-rubis-curieux.webp" alt="" width="1023" height="961" decoding="async">
-<span class="p-h">Which way of comparing names, and where do you set the bar?</span>
+<span class="p-h">Where should the bar sit, and what does moving it cost?</span>
 <span class="p-d">If you raise the bar you miss real matches, and if you lower it your analysts drown in alerts.</span>
 <span class="p-ouvrir">Open Screening <span aria-hidden="true">&#8594;</span></span></a>
   <div class="pan cote-g" style="--pan-vif:#4f8ae0;--pan-a:#16213a;--pan-b:#101a30;--pan-c:#0a111f" aria-current="page"><span class="p-eti">Monitoring &#183; transaction monitoring</span>
 <img src="../rendus/robot-lapis-montre.webp" alt="" width="916" height="940" decoding="async">
-<span class="p-h">Which scenarios catch real cases, and which only make work?</span>
+<span class="p-h">Do your scenarios catch real cases, or only make work?</span>
 <span class="p-d">A scenario that fires a hundred times a week is cheap to write and expensive to work through, so both are measured here.</span>
 <span class="p-ouvrir">You are here &#183; Monitoring</span></div>
   <a class="pan cote-d" style="--pan-vif:#9b6fe0;--pan-a:#241a3a;--pan-b:#1a1230;--pan-c:#100b1f" href="../scoring/index.html#tools"><span class="p-eti">Scoring &#183; risk rating</span>
@@ -673,14 +673,14 @@
         <span class="j-num">01</span><span class="j-corps"><span class="j-titre">Amount alone catches 95.2% of suspicious cases</span>
         <span class="j-cote">16.7% of benign cases alerted</span></span></button></li><li><button class="jalon" data-i="1" aria-label="Go to finding 02: The velocity scenario catches 28.6% of suspicious cases, and alerts on half the benign ones.">
         <img class="j-vig" src="../rendus/etats/rack-02.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
-        <span class="j-num">02</span><span class="j-corps"><span class="j-titre">Velocity catches 28.6%, and alerts on half the benign cases</span>
+        <span class="j-num">02</span><span class="j-corps"><span class="j-titre">Velocity catches 28.6% of suspicious cases</span>
         <span class="j-cote">50% of benign cases alerted</span></span></button></li><li><button class="jalon" data-i="2" aria-label="Go to finding 03: No scenario is sure of catching 90% of the suspicious cases.">
         <img class="j-vig" src="../rendus/etats/rack-03.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">03</span><span class="j-corps"><span class="j-titre">No scenario reaches the 90% floor we set</span>
         <span class="j-cote">closest 84.2%</span></span></button></li><li><button class="jalon" data-i="3" aria-label="Go to finding 04: The amount scenario catches 100% of generated cases against 95.2% of the written ones.">
         <img class="j-vig" src="../rendus/etats/rack-04.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">04</span><span class="j-corps"><span class="j-titre">Generated cases are easier, so they are counted on their own</span>
-        <span class="j-cote">counted on its own</span></span></button></li><li><button class="jalon" data-i="4" aria-label="Go to finding 05: Run the same measurement on your own alert history.">
+        <span class="j-cote">100% against 95.2%</span></span></button></li><li><button class="jalon" data-i="4" aria-label="Go to finding 05: Run the same measurement on your own alert history.">
         <img class="j-vig" src="../rendus/etats/rack-05.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">05</span><span class="j-corps"><span class="j-titre">Your own dispositioned alerts</span>
         <span class="j-cote">one run, one report</span></span></button></li></ul></nav>
@@ -692,10 +692,10 @@
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="685" y1="130" x2="643" y2="450" pathLength="1"/><circle cx="643" cy="450" r="4"/><line x1="685" y1="940" x2="802" y2="740" pathLength="1"/><circle cx="802" cy="740" r="4"/></svg><span class="ap-eti" style="left:48.3%;top:13.0%">amount scenario: recall 95.2%</span><span class="ap-eti" style="left:48.3%;top:94.0%">benign cases: false alerts 16.7%</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 01</span><span class="ft-cote">16.7% of benign cases alerted</span></figcaption>
-        <p class="fiche-phrase">Scoring only the largest amount in the window catches 95.2% of the 42 cases marked suspicious. It also alerts on 16.7% of the 42 cases marked benign, because each of those is a one-off family purchase that the history explains.</p>
+        <p class="fiche-phrase">Scoring only the largest amount in the window catches 95.2% of the suspicious cases. It also alerts on 16.7% of the benign ones, because each of those is a one-off family purchase that the history explains.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">95.2%</span><span class="leg">recall 95.2% for the amount scenario at 0.50, interval 84% to 99%, 42 cases, all suspicious</span></div>
-          <div class="val"><span class="chiffre vert-v">16.7%</span><span class="leg">false alerts 16.7% at 0.50, interval 8% to 31%, 42 cases, all benign</span></div>
+          <div class="val"><span class="chiffre pale-v">95.2%</span><span class="leg">catches 95.2% of suspicious cases with the amount scenario at 0.50, interval 84% to 99%, on 42 cases</span></div>
+          <div class="val"><span class="chiffre vert-v">16.7%</span><span class="leg">false alerts 16.7% at 0.50, interval 8% to 31%, on 42 cases, all benign</span></div>
         </div>
       </figure>
     </div>
@@ -705,10 +705,10 @@
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="685" y1="130" x2="643" y2="550" pathLength="1"/><circle cx="643" cy="550" r="4"/><line x1="685" y1="940" x2="802" y2="735" pathLength="1"/><circle cx="802" cy="735" r="4"/></svg><span class="ap-eti" style="left:48.3%;top:13.0%">velocity scenario: recall 28.6%</span><span class="ap-eti" style="left:48.3%;top:94.0%">benign cases: false alerts 50%</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 02</span><span class="ft-cote">50% of benign cases alerted</span></figcaption>
-        <p class="fiche-phrase">Counting transactions catches 28.6% of the suspicious cases, because most of them are not the busiest accounts. The same count alerts on half the 42 cases marked benign, which are payroll, seasonal trade and monthly savings.</p>
+        <p class="fiche-phrase">Counting transactions catches 28.6% of the suspicious cases, because most of them are not the busiest accounts. The same count alerts on half the benign cases, which are payroll, seasonal trade and monthly savings.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">28.6%</span><span class="leg">recall 28.6% for the velocity scenario at 0.50, interval 17% to 44%, 42 cases, all suspicious</span></div>
-          <div class="val"><span class="chiffre vert-v">50%</span><span class="leg">false alerts 50% at 0.50, interval 36% to 64%, 42 cases, all benign</span></div>
+          <div class="val"><span class="chiffre pale-v">28.6%</span><span class="leg">catches 28.6% of suspicious cases with the velocity scenario at 0.50, interval 17% to 44%, on 42 cases</span></div>
+          <div class="val"><span class="chiffre vert-v">50%</span><span class="leg">false alerts 50% at 0.50, interval 36% to 64%, on 42 cases, all benign</span></div>
         </div>
       </figure>
     </div>
@@ -730,11 +730,11 @@
         alt="The surveillance rack, state 04: The amount scenario catches 100% of generated cases against 95.2% of the written ones." width="1374" height="1120" decoding="async" loading="lazy">
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="232" y1="70" x2="465" y2="320" pathLength="1"/><circle cx="465" cy="320" r="4"/><line x1="980" y1="70" x2="820" y2="395" pathLength="1"/><circle cx="820" cy="395" r="4"/></svg><span class="ap-eti" style="left:16.3%;top:7.0%">written cases: recall 95.2%</span><span class="ap-eti" style="left:69.0%;top:7.0%">generated cases: recall 100%</span>
       <figure class="fiche">
-        <figcaption class="fiche-t"><span>finding 04</span><span class="ft-cote">counted on its own</span></figcaption>
-        <p class="fiche-phrase">The same setting catches 95.2% of the 42 cases we wrote and 100% of the 126 cases a script generated. A generated case is easier to spot, so it is counted on its own, and the rates above come from the cases we wrote.</p>
+        <figcaption class="fiche-t"><span>finding 04</span><span class="ft-cote">100% against 95.2%</span></figcaption>
+        <p class="fiche-phrase">The same setting catches 95.2% of the cases we wrote and 100% of the ones a script generated. A generated case is easier to spot, so it is counted on its own, and the rates above come from the cases we wrote.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">95.2%</span><span class="leg">recall 95.2% for amount at 0.50 on 42 cases written, interval 84% to 99%</span></div>
-          <div class="val"><span class="chiffre vert-v">100%</span><span class="leg">recall 100% at the same cell on 126 cases generated, interval 97% to 100%</span></div>
+          <div class="val"><span class="chiffre pale-v">95.2%</span><span class="leg">catches 95.2% with amount at 0.50, on the cases we wrote, interval 84% to 99%</span></div>
+          <div class="val"><span class="chiffre vert-v">100%</span><span class="leg">catches 100% at the same setting, on 126 cases a script generated, interval 97% to 100%</span></div>
         </div>
       </figure>
     </div>
@@ -765,7 +765,7 @@
     </a>
     <a class="affiche-tarif" href="../engagement.html">See pricing <span aria-hidden="true">&#8594;</span></a>
     <p class="t-note">Measured on 42 suspicious cases and 42 benign cases
-      we wrote: recall, meaning the share each one catches, for each scenario, which is one way of comparing them, at each threshold. The marked cell, amount at 0.50, comes closest to the 90% recall floor. None reaches it, so the tool picks none on these cases. Generated cases are counted on their own, and the live instrument shows them.</p>
+      we wrote: what each scenario catches at each threshold. The marked cell, amount at 0.50, comes closest to the 90% floor we set. None reaches it, so the tool picks none on these cases. Generated cases are counted on their own, and the live instrument shows them.</p>
   </div>
 </div></section>
 
@@ -779,7 +779,7 @@
   <h2 class="h2">Cascade Monitoring, the film.</h2>
   <p class="film-duree">The five Monitoring findings, in order.</p>
   <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film of Cascade Monitoring, opens on YouTube">
-    <img src="../rendus/affiche-monitoring.jpg" alt="The lapis Cascade robot, palms up, projecting the two highest lower bounds of recall any single scenario reaches: amount on the left, peer on the right, both under the 0.90 floor." width="1280" height="720" decoding="async" loading="lazy">
+    <img src="../rendus/affiche-monitoring.jpg" alt="The lapis Cascade robot, palms up, projecting the two highest shares any single scenario is sure of catching: amount on the left, peer on the right, both under the 0.90 floor." width="1280" height="720" decoding="async" loading="lazy">
     <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
   </a>
   <div class="film-note">

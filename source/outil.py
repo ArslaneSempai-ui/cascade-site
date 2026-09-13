@@ -107,7 +107,7 @@ OUTILS = {
         "prefixe_racine": "../",
         # 13/09 nuit : trois lecteurs sur cinq ne savaient pas ce qu'est un « model tier »
         # ni un « field » ; la question le dit en clair, le héros définit le terme ensuite
-        "question": "Which fields need a model, and which need only a pattern?",
+        "question": "How much model does each identity field need?",
         "palette": PALETTE_VERTE,
         "favicon_accent": "%2323543f",
         "robots": ("robot-penche.webp", "robot-agrippe.webp"),
@@ -137,7 +137,7 @@ OUTILS = {
         # « Which X suffices, at which threshold? » se lisait comme un gabarit généré
         # 13/09 nuit, consigne A1 : « matcher » arrivait AVANT sa définition, et la
         # question du rideau se lit sur les 28 pages : elle dit la chose en clair
-        "question": "Which way of comparing names, and where do you set the bar?",
+        "question": "Where should the bar sit, and what does moving it cost?",
         "palette": PALETTE_RUBIS,
         "favicon_accent": "%237a1f2e",
         "robots": ("robot-rubis-penche.webp", "robot-rubis-agrippe.webp"),
@@ -152,7 +152,7 @@ OUTILS = {
         # chiffres de la frontière lus dans le relevé (etats/affiche-composer.py)
         "affiche": "affiche-screening.jpg",
         "affiche_alt": "The ruby Cascade robot, palms up, projecting the two rates of the "
-                       "best-trade-off cell: recall on the left, false alerts on the right.",
+                       "setting it picks: what it catches on the left, false alerts on the right.",
         "vif": "#d64a5c",
         "nuit": ("#33191f", "#241217", "#180b0f"),      # la nuit rubis de NUIT_RUBIS
     },
@@ -162,7 +162,7 @@ OUTILS = {
         "sous_dossier": "monitoring/",
         "prefixe_racine": "../",
         # « earns its alerts » : lu comme un slogan par deux lecteurs, mal compris par trois
-        "question": "Which scenarios catch real cases, and which only make work?",
+        "question": "Do your scenarios catch real cases, or only make work?",
         "palette": PALETTE_LAPIS,
         "favicon_accent": "%231f3f7a",
         "robots": ("robot-lapis-penche.webp", "robot-lapis-montre.webp"),
@@ -179,8 +179,8 @@ OUTILS = {
         # de la fiche 03 lus dans le relevé (ici deux BORNES BASSES, champ « bas » :
         # aucune cellule ne tient le plancher, l'affiche le dit avec les deux meilleures)
         "affiche": "affiche-monitoring.jpg",
-        "affiche_alt": "The lapis Cascade robot, palms up, projecting the two highest lower "
-                       "bounds of recall any single scenario reaches: amount on the left, "
+        "affiche_alt": "The lapis Cascade robot, palms up, projecting the two highest shares "
+                       "any single scenario is sure of catching: amount on the left, "
                        "peer on the right, both under the 0.90 floor.",
         "vif": "#4f8ae0",
         "nuit": ("#16213a", "#101a30", "#0a111f"),      # la nuit lapis de NUIT_LAPIS
@@ -203,8 +203,8 @@ OUTILS = {
         "pitch": "Risk weights come from policy, where they are written once and rarely tested against what happened next.",
         "robot_rideau": "robot-amethyste-pese.webp",    # il pèse : sa pose à lui
         "affiche": "affiche-scoring.jpg",
-        "affiche_alt": "The amethyst Cascade robot, palms up, projecting the two lower bounds of recall "
-                       "the card names: product on the left, behaviour on the right, both under the 0.90 floor.",
+        "affiche_alt": "The amethyst Cascade robot, palms up, projecting the two shares the card "
+                       "names: product on the left, behaviour on the right, both under the 0.90 floor.",
         "vif": "#9b6fe0",
         "nuit": ("#241a3a", "#1a1230", "#100b1f"),
     },

@@ -5,12 +5,12 @@
   {
    "num": "01",
    "titre": "Exact matching raises no false alert, and finds few of the true matches.",
-   "phrase": "The tool keeps only the settings that catch at least 90% of true matches, then among those picks the one with the fewest false alerts. Exact matching catches 21.7% of them, and raises no false alert on the 60 pairs of near-matches, which are names that look similar but belong to different people. You use this to choose your own bar, on your own alerts.",
+   "phrase": "The tool keeps only the settings that catch at least 90% of true matches, then among those picks the one with the fewest false alerts. Exact matching catches 21.7% of them, and raises no false alert on the near-matches, which are names that look similar but belong to different people. You use this to choose your own bar, on your own alerts.",
    "a": "21.7%",
-   "leg_a": "recall, the share of true matches found: 21.7% on 60 pairs of confirmed matches, interval 13% to 34%",
+   "leg_a": "catches 21.7% of true matches, interval 13% to 34%, on 60 pairs",
    "b": "0%",
-   "leg_b": "false alerts 0% on 60 pairs of near-matches, interval 0% to 6%",
-   "cote": "0 of 60 pairs",
+   "leg_b": "no false alert, interval 0% to 6%, on 60 pairs of near-matches",
+   "cote": "no false alert",
    "source": {
     "a": {
      "table": "authored",
@@ -45,12 +45,12 @@
   },
   {
    "num": "02",
-   "titre": "Jaro-Winkler at 0.50 finds all 60 pairs of matches, and alerts on most near-matches.",
-   "phrase": "Jaro-Winkler is a score that says how similar two names look, from 0 to 1. If you set the bar at 0.50, the tool finds all 60 pairs of confirmed matches, and alerts on 85% of the 60 pairs of near-matches.",
+   "titre": "Jaro-Winkler at 0.50 finds all the true matches, and alerts on most near-matches.",
+   "phrase": "Jaro-Winkler is a score that says how similar two names look, from 0 to 1. If you set the bar at 0.50, the tool finds all the confirmed matches, and alerts on 85% of the near-matches.",
    "a": "100%",
-   "leg_a": "recall 100% for jaro-winkler at 0.50, interval 94% to 100%, 60 pairs of matches",
+   "leg_a": "catches 100% of true matches with jaro-winkler at 0.50, interval 94% to 100%, on 60 pairs",
    "b": "85%",
-   "leg_b": "false alerts 85% at the same cell, interval 74% to 92%, 60 pairs of near-matches",
+   "leg_b": "false alerts 85% at the same setting, interval 74% to 92%, on 60 pairs of near-matches",
    "cote": "85% false alerts",
    "source": {
     "a": {
@@ -82,16 +82,16 @@
      "near-matches: false alerts 85%"
     ]
    ],
-   "rail": "The lowest bar finds all 60 pairs of matches"
+   "rail": "The lowest bar finds all the true matches"
   },
   {
    "num": "03",
-   "titre": "Catching almost every true match costs a great many false alerts.",
-   "phrase": "This setting finds 98.3% of the true matches. It also alerts on 76.7% of the near-matches, because those pairs were written to be hard to tell apart. Run it on your alert history and the rate will be your own.",
+   "titre": "Catching nearly all the true matches costs a great many false alerts.",
+   "phrase": "This setting finds 98.3% of the true matches. It also alerts on 76.7% of the near-matches, because those pairs were written to be hard to tell apart.",
    "a": "98.3%",
-   "leg_a": "recall 98.3% for jaro-winkler at 0.56, interval 91% to 100%, 60 pairs of matches",
+   "leg_a": "catches 98.3% of true matches with jaro-winkler at 0.56, interval 91% to 100%, on 60 pairs",
    "b": "76.7%",
-   "leg_b": "false alerts 76.7% at the same cell, interval 65% to 86%, 60 pairs of near-matches",
+   "leg_b": "false alerts 76.7% at the same setting, interval 65% to 86%, on 60 pairs of near-matches",
    "cote": "76.7% false alerts",
    "source": {
     "a": {
@@ -128,12 +128,12 @@
   {
    "num": "04",
    "titre": "The same setting alerts on 17.2% of generated pairs and 76.7% of the pairs we wrote.",
-   "phrase": "The same setting alerts on 76.7% of the 60 pairs of near-matches we wrote, and on 17.2% of the 360 pairs a script generated from them. A generated pair is easier to tell apart, so it is counted on its own, and the rates above come from the pairs we wrote.",
+   "phrase": "The same setting alerts on 76.7% of the pairs we wrote, and on 17.2% of the ones a script generated from them. A generated pair is easier to tell apart, so it is counted on its own, and the rates above come from the pairs we wrote.",
    "a": "76.7%",
-   "leg_a": "false alerts 76.7% at the best cell on 60 pairs of near-matches we wrote, interval 65% to 86%",
+   "leg_a": "false alerts 76.7% at the setting the tool picks, on the pairs we wrote, interval 65% to 86%",
    "b": "17.2%",
-   "leg_b": "false alerts 17.2% at the same cell on 360 pairs of generated near-matches, interval 14% to 21%",
-   "cote": "counted on its own",
+   "leg_b": "false alerts 17.2% at the same setting, on 360 pairs a script generated, interval 14% to 21%",
+   "cote": "17.2% against 76.7%",
    "source": {
     "a": {
      "table": "authored",

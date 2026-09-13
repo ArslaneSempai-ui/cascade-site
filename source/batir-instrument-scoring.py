@@ -66,7 +66,7 @@ def table_html():
         f"<td colspan='{len(MONTRES)}'>not in tonight's registry: measured when it ships, absent rather than faked</td></tr>"
         for a in D["absents"])
     return f'''<div class="t-scroll"><table class="grille">
-      <caption class="sr">Pick a cell: each shows recall on confirmed escalations over false alerts on maintained cases, at that factor and threshold</caption>
+      <caption class="sr">Pick a cell: each shows what that factor catches on confirmed escalations, over its false alerts on files kept at their rating, at that threshold</caption>
       <thead><tr><th scope="col">factor \\ threshold</th>{tetes}</tr></thead>
       <tbody>{lignes}{absents}</tbody></table></div>'''
 
@@ -357,10 +357,9 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="colonne">
     <h1 class="h1">See what each risk factor catches, and what it costs.</h1>
     <p class="lede">A factor's threshold is the score above which it pushes a customer up a
-      rating, and recall is the share of escalated files it catches. The figures here come from
-      <b>our public test set</b>: customer files we wrote ourselves, including the ones that
-      were kept at their rating. No real customer file is in it, and the figures are recomputed
-      each time the page loads.</p>
+      rating. The figures here come from <b>our public test set</b>: customer files we wrote
+      ourselves, including the ones kept at their rating. No real customer file is in it, and
+      the figures are recomputed each time the page loads.</p>
   </div>
 </section>
 
@@ -387,7 +386,7 @@ PAGE = f'''<!doctype html><html lang="en">
           <div class="b-ligne">
             <span class="b-val" id="b-val"></span>
             <div class="b-curseur"><input type="range" id="b-curseur" min="0.50" max="1.00" step="0.01"
-              aria-label="Required recall floor, held at the Wilson lower bound"></div>
+              aria-label="Required floor, held at the low end of the interval"></div>
           </div>
           <p class="tm-sortie b-lecture" id="b-lecture"></p>
 

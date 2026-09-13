@@ -65,7 +65,7 @@ def table_html():
         f"<td colspan='{len(MONTRES)}'>not in tonight's registry: measured when it ships, absent rather than faked</td></tr>"
         for a in D["absents"])
     return f'''<div class="t-scroll"><table class="grille">
-      <caption class="sr">Pick a cell: each shows what the matcher catches on confirmed matches, over what it flags wrongly on near-matches, at that threshold</caption>
+      <caption class="sr">Pick a cell: each shows what it catches on confirmed matches, over its false alerts on near-matches, at that threshold</caption>
       <thead><tr><th scope="col">matcher \\ threshold</th>{tetes}</tr></thead>
       <tbody>{lignes}{absents}</tbody></table></div>'''
 
@@ -350,12 +350,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">See what each way of comparing names costs you, live.</h1>
-    <p class="lede">A threshold is the score above which two names count as a match, and a
-      matcher is one way of comparing them, from exact matching to Jaro-Winkler. Recall is the
-      share of true matches a setting catches. The figures here come from <b>our public test
-      set</b>: name pairs we wrote ourselves, near-matches included, which look similar but
-      are different people. Nothing on this page comes from a customer, and the figures are
-      recomputed as the page loads.</p>
+    <p class="lede">A threshold is the score above which two names count as a match. The figures
+      here come from <b>our public test set</b>: name pairs we wrote ourselves, including
+      near-matches that look similar but are different people. Nothing on this page comes from a
+      customer, and the figures are recomputed as the page loads.</p>
   </div>
 </section>
 
@@ -382,7 +380,7 @@ PAGE = f'''<!doctype html><html lang="en">
           <div class="b-ligne">
             <span class="b-val" id="b-val"></span>
             <div class="b-curseur"><input type="range" id="b-curseur" min="0.50" max="1.00" step="0.01"
-              aria-label="Required recall floor, held at the Wilson lower bound"></div>
+              aria-label="Required floor, held at the low end of the interval"></div>
           </div>
           <p class="tm-sortie b-lecture" id="b-lecture"></p>
 

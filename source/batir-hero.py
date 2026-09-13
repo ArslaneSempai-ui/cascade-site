@@ -1550,7 +1550,8 @@ SPECS = {
                          "ANNEXE-SCREENING-SECURITE.html"),
         icone_prefixe="objet-screening",
         table_ligne="matcher",
-        table_caption="Recall, the share of true matches found, over false alerts, for each matcher, which is one way of comparing names, at each threshold, on the pairs we wrote",
+        table_ligne_nom="way of comparing names",
+        table_caption="What each way of comparing names catches, over false alerts, at each threshold, on the pairs we wrote",
         table_note_unites='Measured on {nMatch} matching pairs and {nDifferent} near-matches\n      we wrote',
     ),
     "monitoring": dict(
@@ -1582,7 +1583,8 @@ SPECS = {
                          "ANNEXE-MONITORING-SECURITE.html"),
         icone_prefixe="objet-monitoring",
         table_ligne="scenario",
-        table_caption="Recall, the share of suspicious cases found, over false alerts, for each scenario at each threshold, on the cases we wrote",
+        table_ligne_nom="scenario",
+        table_caption="What each scenario catches, over false alerts, at each threshold, on the cases we wrote",
         table_note_unites='Measured on {nMatch} suspicious cases and {nDifferent} benign cases\n      we wrote',
     ),
     "scoring": dict(
@@ -1614,7 +1616,8 @@ SPECS = {
                          "ANNEXE-SCORING-SECURITE.html"),
         icone_prefixe=ICONES_PREFIXE["scoring"],
         table_ligne="factor",
-        table_caption="Recall, the share of escalated files found, over false alerts, for each risk factor at each threshold, on the files we wrote",
+        table_ligne_nom="risk factor",
+        table_caption="What each risk factor catches, over false alerts, at each threshold, on the files we wrote",
         table_note_unites='Measured on {nMatch} escalated files and {nDifferent} files kept at their\n      rating, all written by us',
     ),
     "dossier": dict(
@@ -1733,13 +1736,13 @@ def _note_outil(spec, releve, findings):
     if palier_f and champ_cite == "taux":
         choix = f"A ring marks the cell the tool picks by default, {palier_f} at {seuil_f}."
     elif palier_f:
-        choix = (f"The marked cell, {palier_f} at {seuil_f}, comes closest to the 90% recall floor. "
+        choix = (f"The marked cell, {palier_f} at {seuil_f}, comes closest to the 90% floor we set. "
                  "None reaches it, so the tool picks none on these cases.")
     else:
-        choix = "No setting reaches the 90% recall floor, so the tool picks none."
-    return (f"{unites}: recall, meaning the share each one catches, for each {spec['table_ligne']}, "
-            f"which is one way of comparing them, at each threshold. {choix} Generated "
-            f"{_NOM_JEU[spec['table_ligne']]} are counted on their own, and the live instrument shows them.")
+        choix = "No setting reaches the 90% floor we set, so the tool picks none."
+    return (f"{unites}: what each {spec.get('table_ligne_nom', spec['table_ligne'])} catches at each "
+            f"threshold. {choix} Generated {_NOM_JEU[spec['table_ligne']]} are counted on their own, "
+            f"and the live instrument shows them.")
 
 
 def _table_outil(spec, releve, findings):
@@ -1772,16 +1775,16 @@ def _table_outil(spec, releve, findings):
     elif palier_f:
         # la fiche 03 cite une BORNE (champ « bas ») : la cellule marquée est la plus forte
         # borne basse, pas un meilleur compromis : la règle de l'outil ne retient rien au plancher
-        frontiere = (f"The marked cell, {palier_f} at {seuil_f}, carries the strongest recall lower"
-                     "\n      bound. Under its default rule the tool retains no cell at the recall floor on"
-                     "\n      these cases, and the instrument shows the same reading live.")
+        frontiere = (f"The marked cell, {palier_f} at {seuil_f}, is the surest of the seven."
+                     "\n      Under its default rule the tool keeps no cell at the 90% floor on these"
+                     "\n      cases, and the live instrument shows the same reading.")
     else:
-        frontiere = ("Under its default rule, the tool retains no cell at the recall floor on these"
-                     "\n      cases, and the instrument shows the strongest bound instead.")
+        frontiere = ("Under its default rule, the tool keeps no cell at the 90% floor on these"
+                     "\n      cases, and the live instrument shows the surest one instead.")
     return f'''<div class="t-scroll"><table class="routage">
       <caption class="sr">{spec["table_caption"]}</caption>
       <thead><tr><th scope="col">{spec["table_ligne"]}</th>{tetes}</tr></thead><tbody>{lignes}</tbody></table></div>
-      <p class="t-note">{unites}: recall, meaning the share each {spec["table_ligne"]} catches, on top, and false alerts below. {frontiere} Generated {_NOM_JEU[spec["table_ligne"]]} are counted on their own, and the live instrument shows them.</p>'''
+      <p class="t-note">{unites}: what each {spec.get("table_ligne_nom", spec["table_ligne"])} catches on top, and false alerts below. {frontiere} Generated {_NOM_JEU[spec["table_ligne"]]} are counted on their own, and the live instrument shows them.</p>'''
 
 
 

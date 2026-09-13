@@ -66,7 +66,7 @@ def table_html():
         f"<td colspan='{len(MONTRES)}'>not in tonight's registry: measured when it ships, absent rather than faked</td></tr>"
         for a in D["absents"])
     return f'''<div class="t-scroll"><table class="grille">
-      <caption class="sr">Pick a cell: each shows recall on confirmed suspicious cases over false alerts on benign cases, at that scenario and threshold</caption>
+      <caption class="sr">Pick a cell: each shows what that scenario catches on confirmed suspicious cases, over its false alerts on benign cases, at that threshold</caption>
       <thead><tr><th scope="col">scenario \\ threshold</th>{tetes}</tr></thead>
       <tbody>{lignes}{absents}</tbody></table></div>'''
 
@@ -356,11 +356,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">See what each scenario catches, and what it costs, live.</h1>
-    <p class="lede">A scenario's threshold is the score above which it raises an alert, and
-      recall is the share of suspicious cases it catches. The figures here come from <b>our
-      public test set</b>: cases we wrote ourselves, benign ones included, which an analyst
-      would close without acting. Nothing here comes from a real bank, and the page recomputes
-      the figures as it loads.</p>
+    <p class="lede">A scenario's threshold is the score above which it raises an alert. The
+      figures here come from <b>our public test set</b>: cases we wrote ourselves, including
+      benign ones an analyst would close without acting. Nothing here comes from a real bank,
+      and the page recomputes the figures as it loads.</p>
   </div>
 </section>
 
@@ -387,7 +386,7 @@ PAGE = f'''<!doctype html><html lang="en">
           <div class="b-ligne">
             <span class="b-val" id="b-val"></span>
             <div class="b-curseur"><input type="range" id="b-curseur" min="0.50" max="1.00" step="0.01"
-              aria-label="Required recall floor, held at the Wilson lower bound"></div>
+              aria-label="Required floor, held at the low end of the interval"></div>
           </div>
           <p class="tm-sortie b-lecture" id="b-lecture"></p>
 

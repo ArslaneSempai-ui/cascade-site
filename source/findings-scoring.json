@@ -7,10 +7,10 @@
    "titre": "Geography catches none of the escalations, and raises no alert.",
    "phrase": "Each file in our test set sits in an ordinary EU country, because no official country list was copied into the data. The geography factor therefore scores 0% on both sides: the factor a vendor sells hardest carries no weight here, by construction.",
    "a": "0%",
-   "leg_a": "recall 0% for the geography factor at 0.50, interval 0% to 8%, 42 files, all escalated",
+   "leg_a": "catches 0% of escalated files with the geography factor at 0.50, interval 0% to 8%, on 42 files",
    "b": "0%",
-   "leg_b": "false alerts 0% at 0.50, interval 0% to 8%, 42 files, all kept at their rating",
-   "cote": "0% both sides",
+   "leg_b": "false alerts 0% at 0.50, interval 0% to 8%, on 42 files kept at their rating",
+   "cote": "no weight here",
    "source": {
     "a": {
      "table": "authored",
@@ -46,11 +46,11 @@
   {
    "num": "02",
    "titre": "The product factor catches 92.9% of escalated files, and alerts on 23.8% of the rest.",
-   "phrase": "Scoring only the products a client holds catches 92.9% of the escalated files at threshold 0.50, because correspondent accounts, private banking and crypto rails carry the signal. The same factor alerts on 23.8% of the files that were kept at their rating, and each alert is a review someone has to run.",
+   "phrase": "Scoring only the products a client holds catches 92.9% of the escalated files at threshold 0.50, because correspondent accounts, private banking and crypto rails carry the signal. The same factor alerts on 23.8% of the files kept at their rating, and each alert is a review someone has to run.",
    "a": "92.9%",
-   "leg_a": "recall 92.9% for the product factor at 0.50, interval 81% to 98%, 42 files, all escalated",
+   "leg_a": "catches 92.9% of escalated files with the product factor at 0.50, interval 81% to 98%, on 42 files",
    "b": "23.8%",
-   "leg_b": "false alerts 23.8% at 0.50, interval 13% to 39%, 42 files, all kept at their rating",
+   "leg_b": "false alerts 23.8% at 0.50, interval 13% to 39%, on 42 files kept at their rating",
    "cote": "23.8% of quiet files alerted",
    "source": {
     "a": {
@@ -130,12 +130,12 @@
   {
    "num": "04",
    "titre": "The product factor catches 79.4% of generated files against 92.9% of the written ones.",
-   "phrase": "The same setting catches 92.9% of the 42 files we wrote and 79.4% of the 126 files a script generated. Here the generated set is harder, and it is still counted on its own, so the rates above come from the files we wrote.",
+   "phrase": "The same setting catches 92.9% of the files we wrote and 79.4% of the ones a script generated. Here the generated set is harder, and it is still counted on its own, so the rates above come from the files we wrote.",
    "a": "92.9%",
-   "leg_a": "recall 92.9% for product at 0.50 on 42 files written, interval 81% to 98%",
+   "leg_a": "catches 92.9% with product at 0.50, on the files we wrote, interval 81% to 98%",
    "b": "79.4%",
-   "leg_b": "recall 79.4% at the same cell on 126 files generated, interval 71% to 86%",
-   "cote": "counted on its own",
+   "leg_b": "catches 79.4% at the same setting, on 126 files a script generated, interval 71% to 86%",
+   "cote": "79.4% against 92.9%",
    "source": {
     "a": {
      "table": "authored",

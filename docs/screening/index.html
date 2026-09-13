@@ -641,17 +641,17 @@
   <span class="rideau-titre">Cascade &#183; five instruments, one method</span>
   <a class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" href="../routing/index.html#tools"><span class="p-eti">Routing &#183; identity-field extraction</span>
 <img src="../rendus/robot-salut.webp" alt="" width="855" height="962" decoding="async">
-<span class="p-h">Which fields need a model, and which need only a pattern?</span>
+<span class="p-h">How much model does each identity field need?</span>
 <span class="p-d">Some identity fields can be read by a cheap script, while others need a model. Cascade Routing measures which is which, field by field.</span>
 <span class="p-ouvrir">Open Routing <span aria-hidden="true">&#8594;</span></span></a>
   <div class="pan cote-g" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" aria-current="page"><span class="p-eti">Screening &#183; name matching</span>
 <img src="../rendus/robot-rubis-curieux.webp" alt="" width="1023" height="961" decoding="async">
-<span class="p-h">Which way of comparing names, and where do you set the bar?</span>
+<span class="p-h">Where should the bar sit, and what does moving it cost?</span>
 <span class="p-d">If you raise the bar you miss real matches, and if you lower it your analysts drown in alerts.</span>
 <span class="p-ouvrir">You are here &#183; Screening</span></div>
   <a class="pan cote-g" style="--pan-vif:#4f8ae0;--pan-a:#16213a;--pan-b:#101a30;--pan-c:#0a111f" href="../monitoring/index.html#tools"><span class="p-eti">Monitoring &#183; transaction monitoring</span>
 <img src="../rendus/robot-lapis-montre.webp" alt="" width="916" height="940" decoding="async">
-<span class="p-h">Which scenarios catch real cases, and which only make work?</span>
+<span class="p-h">Do your scenarios catch real cases, or only make work?</span>
 <span class="p-d">A scenario that fires a hundred times a week is cheap to write and expensive to work through, so both are measured here.</span>
 <span class="p-ouvrir">Open Monitoring <span aria-hidden="true">&#8594;</span></span></a>
   <a class="pan cote-d" style="--pan-vif:#9b6fe0;--pan-a:#241a3a;--pan-b:#1a1230;--pan-c:#100b1f" href="../scoring/index.html#tools"><span class="p-eti">Scoring &#183; risk rating</span>
@@ -671,16 +671,16 @@
     <nav class="rail" aria-label="Findings"><span class="jauge" aria-hidden="true"><i></i></span><ul><li><button class="jalon actif" data-i="0" aria-label="Go to finding 01: Exact matching raises no false alert, and finds few of the true matches.">
         <img class="j-vig" src="../rendus/etats/tamis-01.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">01</span><span class="j-corps"><span class="j-titre">Exact matching catches 21.7% of true matches</span>
-        <span class="j-cote">0 of 60 pairs</span></span></button></li><li><button class="jalon" data-i="1" aria-label="Go to finding 02: Jaro-Winkler at 0.50 finds all 60 pairs of matches, and alerts on most near-matches.">
+        <span class="j-cote">no false alert</span></span></button></li><li><button class="jalon" data-i="1" aria-label="Go to finding 02: Jaro-Winkler at 0.50 finds all the true matches, and alerts on most near-matches.">
         <img class="j-vig" src="../rendus/etats/tamis-02.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
-        <span class="j-num">02</span><span class="j-corps"><span class="j-titre">The lowest bar finds all 60 pairs of matches</span>
-        <span class="j-cote">85% false alerts</span></span></button></li><li><button class="jalon" data-i="2" aria-label="Go to finding 03: Catching almost every true match costs a great many false alerts.">
+        <span class="j-num">02</span><span class="j-corps"><span class="j-titre">The lowest bar finds all the true matches</span>
+        <span class="j-cote">85% false alerts</span></span></button></li><li><button class="jalon" data-i="2" aria-label="Go to finding 03: Catching nearly all the true matches costs a great many false alerts.">
         <img class="j-vig" src="../rendus/etats/tamis-03.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">03</span><span class="j-corps"><span class="j-titre">The setting the tool picks: 98.3% of matches found</span>
         <span class="j-cote">76.7% false alerts</span></span></button></li><li><button class="jalon" data-i="3" aria-label="Go to finding 04: The same setting alerts on 17.2% of generated pairs and 76.7% of the pairs we wrote.">
         <img class="j-vig" src="../rendus/etats/tamis-04.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">04</span><span class="j-corps"><span class="j-titre">Generated pairs are easier, so they are counted on their own</span>
-        <span class="j-cote">counted on its own</span></span></button></li><li><button class="jalon" data-i="4" aria-label="Go to finding 05: Run the same measurement on your own alert history.">
+        <span class="j-cote">17.2% against 76.7%</span></span></button></li><li><button class="jalon" data-i="4" aria-label="Go to finding 05: Run the same measurement on your own alert history.">
         <img class="j-vig" src="../rendus/etats/tamis-05.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">05</span><span class="j-corps"><span class="j-titre">Your own alert history</span>
         <span class="j-cote">one run, one report</span></span></button></li></ul></nav>
@@ -691,37 +691,37 @@
         alt="The sieve tower, state 01: Exact matching raises no false alert, and finds few of the true matches." width="1374" height="1120" decoding="async" loading="lazy">
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="200" x2="710" y2="550" pathLength="1"/><circle cx="710" cy="550" r="4"/><line x1="229" y1="920" x2="685" y2="930" pathLength="1"/><circle cx="685" cy="930" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:20.0%">exact matching: recall 21.7%</span><span class="ap-eti" style="left:16.1%;top:92.0%">near-matches: false alerts 0%</span>
       <figure class="fiche">
-        <figcaption class="fiche-t"><span>finding 01</span><span class="ft-cote">0 of 60 pairs</span></figcaption>
-        <p class="fiche-phrase">The tool keeps only the settings that catch at least 90% of true matches, then among those picks the one with the fewest false alerts. Exact matching catches 21.7% of them, and raises no false alert on the 60 pairs of near-matches, which are names that look similar but belong to different people. You use this to choose your own bar, on your own alerts.</p>
+        <figcaption class="fiche-t"><span>finding 01</span><span class="ft-cote">no false alert</span></figcaption>
+        <p class="fiche-phrase">The tool keeps only the settings that catch at least 90% of true matches, then among those picks the one with the fewest false alerts. Exact matching catches 21.7% of them, and raises no false alert on the near-matches, which are names that look similar but belong to different people. You use this to choose your own bar, on your own alerts.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">21.7%</span><span class="leg">recall, the share of true matches found: 21.7% on 60 pairs of confirmed matches, interval 13% to 34%</span></div>
-          <div class="val"><span class="chiffre vert-v">0%</span><span class="leg">false alerts 0% on 60 pairs of near-matches, interval 0% to 6%</span></div>
+          <div class="val"><span class="chiffre pale-v">21.7%</span><span class="leg">catches 21.7% of true matches, interval 13% to 34%, on 60 pairs</span></div>
+          <div class="val"><span class="chiffre vert-v">0%</span><span class="leg">no false alert, interval 0% to 6%, on 60 pairs of near-matches</span></div>
         </div>
       </figure>
     </div>
     <div class="scene" id="scene-1" data-i="1">
       <img class="objet" src="../rendus/etats/tamis-02.webp"
-        alt="The sieve tower, state 02: Jaro-Winkler at 0.50 finds all 60 pairs of matches, and alerts on most near-matches." width="1374" height="1120" decoding="async" loading="lazy">
+        alt="The sieve tower, state 02: Jaro-Winkler at 0.50 finds all the true matches, and alerts on most near-matches." width="1374" height="1120" decoding="async" loading="lazy">
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="1095" y1="880" x2="735" y2="620" pathLength="1"/><circle cx="735" cy="620" r="4"/><line x1="325" y1="880" x2="587" y2="600" pathLength="1"/><circle cx="587" cy="600" r="4"/></svg><span class="ap-eti" style="left:77.1%;top:88.0%">jaro-winkler 0.50: recall 100%</span><span class="ap-eti" style="left:22.9%;top:88.0%">near-matches: false alerts 85%</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 02</span><span class="ft-cote">85% false alerts</span></figcaption>
-        <p class="fiche-phrase">Jaro-Winkler is a score that says how similar two names look, from 0 to 1. If you set the bar at 0.50, the tool finds all 60 pairs of confirmed matches, and alerts on 85% of the 60 pairs of near-matches.</p>
+        <p class="fiche-phrase">Jaro-Winkler is a score that says how similar two names look, from 0 to 1. If you set the bar at 0.50, the tool finds all the confirmed matches, and alerts on 85% of the near-matches.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">100%</span><span class="leg">recall 100% for jaro-winkler at 0.50, interval 94% to 100%, 60 pairs of matches</span></div>
-          <div class="val"><span class="chiffre vert-v">85%</span><span class="leg">false alerts 85% at the same cell, interval 74% to 92%, 60 pairs of near-matches</span></div>
+          <div class="val"><span class="chiffre pale-v">100%</span><span class="leg">catches 100% of true matches with jaro-winkler at 0.50, interval 94% to 100%, on 60 pairs</span></div>
+          <div class="val"><span class="chiffre vert-v">85%</span><span class="leg">false alerts 85% at the same setting, interval 74% to 92%, on 60 pairs of near-matches</span></div>
         </div>
       </figure>
     </div>
     <div class="scene" id="scene-2" data-i="2">
       <img class="objet" src="../rendus/etats/tamis-03.webp"
-        alt="The sieve tower, state 03: Catching almost every true match costs a great many false alerts." width="1374" height="1120" decoding="async" loading="lazy">
+        alt="The sieve tower, state 03: Catching nearly all the true matches costs a great many false alerts." width="1374" height="1120" decoding="async" loading="lazy">
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="325" y1="130" x2="710" y2="580" pathLength="1"/><circle cx="710" cy="580" r="4"/><line x1="1095" y1="130" x2="710" y2="800" pathLength="1"/><circle cx="710" cy="800" r="4"/></svg><span class="ap-eti" style="left:22.9%;top:13.0%">best trade-off: recall 98.3%</span><span class="ap-eti" style="left:77.1%;top:13.0%">that cell: false alerts 76.7%</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 03</span><span class="ft-cote">76.7% false alerts</span></figcaption>
-        <p class="fiche-phrase">This setting finds 98.3% of the true matches. It also alerts on 76.7% of the near-matches, because those pairs were written to be hard to tell apart. Run it on your alert history and the rate will be your own.</p>
+        <p class="fiche-phrase">This setting finds 98.3% of the true matches. It also alerts on 76.7% of the near-matches, because those pairs were written to be hard to tell apart.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">98.3%</span><span class="leg">recall 98.3% for jaro-winkler at 0.56, interval 91% to 100%, 60 pairs of matches</span></div>
-          <div class="val"><span class="chiffre vert-v">76.7%</span><span class="leg">false alerts 76.7% at the same cell, interval 65% to 86%, 60 pairs of near-matches</span></div>
+          <div class="val"><span class="chiffre pale-v">98.3%</span><span class="leg">catches 98.3% of true matches with jaro-winkler at 0.56, interval 91% to 100%, on 60 pairs</span></div>
+          <div class="val"><span class="chiffre vert-v">76.7%</span><span class="leg">false alerts 76.7% at the same setting, interval 65% to 86%, on 60 pairs of near-matches</span></div>
         </div>
       </figure>
     </div>
@@ -730,11 +730,11 @@
         alt="The sieve tower, state 04: The same setting alerts on 17.2% of generated pairs and 76.7% of the pairs we wrote." width="1374" height="1120" decoding="async" loading="lazy">
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="325" y1="200" x2="465" y2="400" pathLength="1"/><circle cx="465" cy="400" r="4"/><line x1="1095" y1="200" x2="980" y2="490" pathLength="1"/><circle cx="980" cy="490" r="4"/></svg><span class="ap-eti" style="left:22.9%;top:20.0%">written near-matches: 76.7%</span><span class="ap-eti" style="left:77.1%;top:20.0%">generated near-matches: 17.2%</span>
       <figure class="fiche">
-        <figcaption class="fiche-t"><span>finding 04</span><span class="ft-cote">counted on its own</span></figcaption>
-        <p class="fiche-phrase">The same setting alerts on 76.7% of the 60 pairs of near-matches we wrote, and on 17.2% of the 360 pairs a script generated from them. A generated pair is easier to tell apart, so it is counted on its own, and the rates above come from the pairs we wrote.</p>
+        <figcaption class="fiche-t"><span>finding 04</span><span class="ft-cote">17.2% against 76.7%</span></figcaption>
+        <p class="fiche-phrase">The same setting alerts on 76.7% of the pairs we wrote, and on 17.2% of the ones a script generated from them. A generated pair is easier to tell apart, so it is counted on its own, and the rates above come from the pairs we wrote.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">76.7%</span><span class="leg">false alerts 76.7% at the best cell on 60 pairs of near-matches we wrote, interval 65% to 86%</span></div>
-          <div class="val"><span class="chiffre vert-v">17.2%</span><span class="leg">false alerts 17.2% at the same cell on 360 pairs of generated near-matches, interval 14% to 21%</span></div>
+          <div class="val"><span class="chiffre pale-v">76.7%</span><span class="leg">false alerts 76.7% at the setting the tool picks, on the pairs we wrote, interval 65% to 86%</span></div>
+          <div class="val"><span class="chiffre vert-v">17.2%</span><span class="leg">false alerts 17.2% at the same setting, on 360 pairs a script generated, interval 14% to 21%</span></div>
         </div>
       </figure>
     </div>
@@ -765,7 +765,7 @@
     </a>
     <a class="affiche-tarif" href="../engagement.html">See pricing <span aria-hidden="true">&#8594;</span></a>
     <p class="t-note">Measured on 60 matching pairs and 60 near-matches
-      we wrote: recall, meaning the share each one catches, for each matcher, which is one way of comparing them, at each threshold. A ring marks the cell the tool picks by default, jaro-winkler at 0.56. Generated pairs are counted on their own, and the live instrument shows them.</p>
+      we wrote: what each way of comparing names catches at each threshold. A ring marks the cell the tool picks by default, jaro-winkler at 0.56. Generated pairs are counted on their own, and the live instrument shows them.</p>
   </div>
 </div></section>
 
@@ -779,7 +779,7 @@
   <h2 class="h2">Cascade Screening, the film.</h2>
   <p class="film-duree">The five Screening findings, in order.</p>
   <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film of Cascade Screening, opens on YouTube">
-    <img src="../rendus/affiche-screening.jpg" alt="The ruby Cascade robot, palms up, projecting the two rates of the best-trade-off cell: recall on the left, false alerts on the right." width="1280" height="720" decoding="async" loading="lazy">
+    <img src="../rendus/affiche-screening.jpg" alt="The ruby Cascade robot, palms up, projecting the two rates of the setting it picks: what it catches on the left, false alerts on the right." width="1280" height="720" decoding="async" loading="lazy">
     <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
   </a>
   <div class="film-note">

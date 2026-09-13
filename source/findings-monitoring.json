@@ -5,11 +5,11 @@
   {
    "num": "01",
    "titre": "The amount scenario alone catches 95.2% of the suspicious cases.",
-   "phrase": "Scoring only the largest amount in the window catches 95.2% of the 42 cases marked suspicious. It also alerts on 16.7% of the 42 cases marked benign, because each of those is a one-off family purchase that the history explains.",
+   "phrase": "Scoring only the largest amount in the window catches 95.2% of the suspicious cases. It also alerts on 16.7% of the benign ones, because each of those is a one-off family purchase that the history explains.",
    "a": "95.2%",
-   "leg_a": "recall 95.2% for the amount scenario at 0.50, interval 84% to 99%, 42 cases, all suspicious",
+   "leg_a": "catches 95.2% of suspicious cases with the amount scenario at 0.50, interval 84% to 99%, on 42 cases",
    "b": "16.7%",
-   "leg_b": "false alerts 16.7% at 0.50, interval 8% to 31%, 42 cases, all benign",
+   "leg_b": "false alerts 16.7% at 0.50, interval 8% to 31%, on 42 cases, all benign",
    "cote": "16.7% of benign cases alerted",
    "source": {
     "a": {
@@ -46,11 +46,11 @@
   {
    "num": "02",
    "titre": "The velocity scenario catches 28.6% of suspicious cases, and alerts on half the benign ones.",
-   "phrase": "Counting transactions catches 28.6% of the suspicious cases, because most of them are not the busiest accounts. The same count alerts on half the 42 cases marked benign, which are payroll, seasonal trade and monthly savings.",
+   "phrase": "Counting transactions catches 28.6% of the suspicious cases, because most of them are not the busiest accounts. The same count alerts on half the benign cases, which are payroll, seasonal trade and monthly savings.",
    "a": "28.6%",
-   "leg_a": "recall 28.6% for the velocity scenario at 0.50, interval 17% to 44%, 42 cases, all suspicious",
+   "leg_a": "catches 28.6% of suspicious cases with the velocity scenario at 0.50, interval 17% to 44%, on 42 cases",
    "b": "50%",
-   "leg_b": "false alerts 50% at 0.50, interval 36% to 64%, 42 cases, all benign",
+   "leg_b": "false alerts 50% at 0.50, interval 36% to 64%, on 42 cases, all benign",
    "cote": "50% of benign cases alerted",
    "source": {
     "a": {
@@ -82,7 +82,7 @@
      "benign cases: false alerts 50%"
     ]
    ],
-   "rail": "Velocity catches 28.6%, and alerts on half the benign cases"
+   "rail": "Velocity catches 28.6% of suspicious cases"
   },
   {
    "num": "03",
@@ -130,12 +130,12 @@
   {
    "num": "04",
    "titre": "The amount scenario catches 100% of generated cases against 95.2% of the written ones.",
-   "phrase": "The same setting catches 95.2% of the 42 cases we wrote and 100% of the 126 cases a script generated. A generated case is easier to spot, so it is counted on its own, and the rates above come from the cases we wrote.",
+   "phrase": "The same setting catches 95.2% of the cases we wrote and 100% of the ones a script generated. A generated case is easier to spot, so it is counted on its own, and the rates above come from the cases we wrote.",
    "a": "95.2%",
-   "leg_a": "recall 95.2% for amount at 0.50 on 42 cases written, interval 84% to 99%",
+   "leg_a": "catches 95.2% with amount at 0.50, on the cases we wrote, interval 84% to 99%",
    "b": "100%",
-   "leg_b": "recall 100% at the same cell on 126 cases generated, interval 97% to 100%",
-   "cote": "counted on its own",
+   "leg_b": "catches 100% at the same setting, on 126 cases a script generated, interval 97% to 100%",
+   "cote": "100% against 95.2%",
    "source": {
     "a": {
      "table": "authored",

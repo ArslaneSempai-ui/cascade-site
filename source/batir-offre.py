@@ -250,7 +250,7 @@ PAGE = f'''<!doctype html><html lang="en">
         <li>Your thirty days start the first time you run the tool. Downloading it does not start the clock</li>
         <li>Results stay internal, and you may not use them in live operations</li>
       </ul>
-      <a class="cta" href="{DEPOT_URL}"><span class="b">Clone and run <span class="fl" aria-hidden="true">&#8594;</span></span></a>
+      <a class="cta" href="{DEPOT_URL}"><span class="b">Download and run <span class="fl" aria-hidden="true">&#8594;</span></span></a>
       <p class="c-fin">These thirty days are written into the public licence, which ships with the code</p>
     </div>
     <div class="col">
@@ -261,7 +261,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <p class="c-plus">everything in the evaluation, plus</p>
       <ul class="c-liste">
         <li><b>The setting each tool recommends</b>, and what it costs you: which model reads each identity field, where to set the screening bar, which scenarios to keep, and which risk factors carry weight</li>
-        <li>Each rate with the range it could reasonably be in, its confidence interval. Under twenty cases we quote no rate at all, because a rate on ten cases would mislead you</li>
+        <li>Each rate with the range it could reasonably be in, its confidence interval. Under twenty cases we quote no rate at all, because a rate on so few cases would mislead you</li>
         <li>A <b>signed report</b> your audit team can check on its own</li>
         <li>The tool runs on your machine, so your records never reach us</li>
       </ul>
