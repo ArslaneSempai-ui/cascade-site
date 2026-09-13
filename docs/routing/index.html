@@ -625,9 +625,9 @@
 
 <main>
 <section class="hero">
-  <h1 class="h1 entree">See which model tier each field actually needs.</h1>
-  <p class="lede entree">Sending every field to the biggest model is the default.<br>
-    On our test set, three of the five fields are handled by regular expressions, at no cost.</p>
+  <h1 class="h1 entree">See which model each identity field actually needs.</h1>
+  <p class="lede entree">A model tier is the size of model a field is sent to, from a plain text pattern up to the largest.<br>
+    On our test set, three of the five fields are read by a text pattern alone, at no cost.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone https://github.com/ArslaneSempai-ui/cascade-routing</code>
     <code class="ln">node src/premiere-reponse.mjs</code>
@@ -638,11 +638,31 @@
 
 <nav class="rideau" id="tools" aria-label="The instruments">
   <span class="rideau-titre">Cascade &#183; five instruments, one method</span>
-  <div class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" aria-current="page"><span class="p-eti">Routing &#183; identity-field extraction</span><img src="../rendus/robot-salut.webp" alt="" width="855" height="962" decoding="async"><span class="p-h">Which model tier reads each field?</span><span class="p-d">A regular expression reads some fields. This shows which ones still need a model.</span><span class="p-ouvrir">You are here &#183; Routing</span></div>
-  <a class="pan cote-g" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" href="../screening/index.html#tools"><span class="p-eti">Screening &#183; name matching</span><img src="../rendus/robot-rubis-curieux.webp" alt="" width="1023" height="961" decoding="async"><span class="p-h">Which name matcher, and where do you set the bar?</span><span class="p-d">Screening thresholds are usually set once and left there. This shows what yours catches.</span><span class="p-ouvrir">Open Screening <span aria-hidden="true">&#8594;</span></span></a>
-  <a class="pan cote-g" style="--pan-vif:#4f8ae0;--pan-a:#16213a;--pan-b:#101a30;--pan-c:#0a111f" href="../monitoring/index.html#tools"><span class="p-eti">Monitoring &#183; transaction monitoring</span><img src="../rendus/robot-lapis-montre.webp" alt="" width="916" height="940" decoding="async"><span class="p-h">Which scenario earns its alerts?</span><span class="p-d">Monitoring scenarios are tuned at go-live and rarely re-measured. This shows what yours catch.</span><span class="p-ouvrir">Open Monitoring <span aria-hidden="true">&#8594;</span></span></a>
-  <a class="pan cote-d" style="--pan-vif:#9b6fe0;--pan-a:#241a3a;--pan-b:#1a1230;--pan-c:#100b1f" href="../scoring/index.html#tools"><span class="p-eti">Scoring &#183; risk rating</span><img src="../rendus/robot-amethyste-pese.webp" alt="" width="1061" height="968" decoding="async"><span class="p-h">Which risk factors sort your customers?</span><span class="p-d">Risk-factor weights usually come from policy. This shows what yours actually find.</span><span class="p-ouvrir">Open Scoring <span aria-hidden="true">&#8594;</span></span></a>
-  <a class="pan cote-d" style="--pan-vif:#8a8a96;--pan-a:#121216;--pan-b:#0c0c10;--pan-c:#070709" href="../dossier/index.html#tools"><span class="p-eti">Dossier &#183; the audit dossier</span><img src="../rendus/robot-onyx-tient.webp" alt="" width="926" height="963" decoding="async"><span class="p-h">Is the whole chain measured, signed and current?</span><span class="p-d">The Dossier reads the four reports and checks five things on each.</span><span class="p-ouvrir">Open Dossier <span aria-hidden="true">&#8594;</span></span></a>
+  <div class="pan cote-g" style="--pan-vif:#57b184;--pan-a:#1b3229;--pan-b:#14251e;--pan-c:#0e1a15" aria-current="page"><span class="p-eti">Routing &#183; identity-field extraction</span>
+<img src="../rendus/robot-salut.webp" alt="" width="855" height="962" decoding="async">
+<span class="p-h">Which fields need a model, and which need only a pattern?</span>
+<span class="p-d">Some identity fields can be read by a cheap script, while others need a model. Cascade Routing measures which is which, field by field.</span>
+<span class="p-ouvrir">You are here &#183; Routing</span></div>
+  <a class="pan cote-g" style="--pan-vif:#d64a5c;--pan-a:#33191f;--pan-b:#241217;--pan-c:#180b0f" href="../screening/index.html#tools"><span class="p-eti">Screening &#183; name matching</span>
+<img src="../rendus/robot-rubis-curieux.webp" alt="" width="1023" height="961" decoding="async">
+<span class="p-h">Which way of comparing names, and where do you set the bar?</span>
+<span class="p-d">If you raise the bar you miss real matches, and if you lower it your analysts drown in alerts.</span>
+<span class="p-ouvrir">Open Screening <span aria-hidden="true">&#8594;</span></span></a>
+  <a class="pan cote-g" style="--pan-vif:#4f8ae0;--pan-a:#16213a;--pan-b:#101a30;--pan-c:#0a111f" href="../monitoring/index.html#tools"><span class="p-eti">Monitoring &#183; transaction monitoring</span>
+<img src="../rendus/robot-lapis-montre.webp" alt="" width="916" height="940" decoding="async">
+<span class="p-h">Which scenarios catch real cases, and which only make work?</span>
+<span class="p-d">A scenario that fires a hundred times a week is cheap to write and expensive to work through, so both are measured here.</span>
+<span class="p-ouvrir">Open Monitoring <span aria-hidden="true">&#8594;</span></span></a>
+  <a class="pan cote-d" style="--pan-vif:#9b6fe0;--pan-a:#241a3a;--pan-b:#1a1230;--pan-c:#100b1f" href="../scoring/index.html#tools"><span class="p-eti">Scoring &#183; risk rating</span>
+<img src="../rendus/robot-amethyste-pese.webp" alt="" width="1061" height="968" decoding="async">
+<span class="p-h">Which risk factors separate a risky customer from a quiet one?</span>
+<span class="p-d">Risk weights come from policy, where they are written once and rarely tested against what happened next.</span>
+<span class="p-ouvrir">Open Scoring <span aria-hidden="true">&#8594;</span></span></a>
+  <a class="pan cote-d" style="--pan-vif:#8a8a96;--pan-a:#121216;--pan-b:#0c0c10;--pan-c:#070709" href="../dossier/index.html#tools"><span class="p-eti">Dossier &#183; the audit dossier</span>
+<img src="../rendus/robot-onyx-tient.webp" alt="" width="926" height="963" decoding="async">
+<span class="p-h">Is the whole chain measured, current, and signed with a key you can check?</span>
+<span class="p-d">Four reports land on a reviewer's desk, each from a different tool. The Dossier checks all four and answers as one file.</span>
+<span class="p-ouvrir">Open Dossier <span aria-hidden="true">&#8594;</span></span></a>
 </nav>
 
 <section class="sequence" aria-label="The five findings">
@@ -656,9 +676,9 @@
         <span class="j-cote">3.5&#215; lower cost</span></span></button></li><li><button class="jalon" data-i="2" aria-label="Go to finding 03: Abstention: 85 wrong values removed, 12 correct values withheld">
         <img class="j-vig" src="../rendus/etats/objet-03.webp" alt="" width="1600" height="1152" decoding="async" loading="lazy">
         <span class="j-num">03</span><span class="j-corps"><span class="j-titre">Abstention: 85 wrong values removed, 12 correct values withheld</span>
-        <span class="j-cote">after abstention</span></span></button></li><li><button class="jalon" data-i="3" aria-label="Go to finding 04: Identical counts across two passes; unstable durations withheld">
+        <span class="j-cote">after abstention</span></span></button></li><li><button class="jalon" data-i="3" aria-label="Go to finding 04: Identical counts across two passes, and unstable durations withheld">
         <img class="j-vig" src="../rendus/etats/objet-04.webp" alt="" width="1600" height="1152" decoding="async" loading="lazy">
-        <span class="j-num">04</span><span class="j-corps"><span class="j-titre">Identical counts across two passes; unstable durations withheld</span>
+        <span class="j-num">04</span><span class="j-corps"><span class="j-titre">Identical counts across two passes, and unstable durations withheld</span>
         <span class="j-cote">withheld</span></span></button></li><li><button class="jalon" data-i="4" aria-label="Go to finding 05: Every possible routing tested">
         <img class="j-vig" src="../rendus/etats/objet-05.webp" alt="" width="1600" height="1152" decoding="async" loading="lazy">
         <span class="j-num">05</span><span class="j-corps"><span class="j-titre">Every possible routing tested</span>
@@ -706,7 +726,7 @@
     </div>
     <div class="scene" id="scene-3" data-i="3">
       <img class="objet" src="../rendus/etats/objet-04.webp"
-        alt="The measured relief, state 04: Identical counts across two passes; unstable durations withheld" width="1600" height="1152" decoding="async" loading="lazy">
+        alt="The measured relief, state 04: Identical counts across two passes, and unstable durations withheld" width="1600" height="1152" decoding="async" loading="lazy">
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="160" x2="735" y2="480" pathLength="1"/><circle cx="735" cy="480" r="4"/><line x1="1191" y1="780" x2="833" y2="350" pathLength="1"/><circle cx="833" cy="350" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:16.0%">two runs, identical counts</span><span class="ap-eti" style="left:83.9%;top:78.0%">durations vary 16 to 60%, so withheld</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 04</span><span class="ft-cote">withheld</span></figcaption>

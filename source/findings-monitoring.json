@@ -1,209 +1,209 @@
 {
-  "_": "The five findings of the lapis (Monitoring) hero, in the exact keys of findings-screening.json. Provenance: every figure in a/b/cote is a cell of ~/Documents/cascade-monitoring/releve-public.json at seal `sceau`; the builder refuses to build if the record on disk no longer matches. Each figure keeps its cell address in `source` ({table, palier, seuil, mesure} or {table, compte}); the optional `champ` names which field of the Rate is displayed when it is not `taux` (finding 03 displays lower bounds: champ = 'bas'). Builders may ignore `source`; reviewers and guards re-derive every number from it. The tool's rule behind finding 03 is the same as the whole suite: Wilson lower bound of recall at or above 0.90, then the fewest false alerts. Twin attributions in the phrases are measured, not assumed: at 0.50 the seven false alerts of `amount` are all one-off purchases, and `velocity` trips on payroll, seasonal trade and savings transfers. `annotations` are fractions of the delivered close-up of each state (anchor x, anchor y, label x, label y, text): positions and texts were remeasured against the delivered close-ups (rack-01..05, the travellings' arrival frames arbitrated by Arslane): 01 the amount blade pulled out, 02 the counting blade, 03 the brass line over the three left blades, 04 the written and synthetic pair, 05 the whole rack with the eighth, ivory piece pulled. Two labels changed because the framed piece changed what a viewer can count: in 01 the amount blade half-hides its own amber row, so the label no longer counts seven diodes, and in 02 the false alerts read as a grid, not a row. Every label is 60 characters or fewer, per the builder's rule.",
-  "sceau": "5e2a96e22fa0b59c",
-  "findings": [
-    {
-      "num": "01",
-      "titre": "The amount scenario alone reaches 95.2% recall at 16.7% false alerts.",
-      "phrase": "Scoring only the largest amount in the window reaches 95.2% recall on the 42 cases marked suspicious. It alerts on 16.7% of the 42 cases marked benign, each a one-off family purchase the history explains.",
-      "a": "95.2%",
-      "leg_a": "recall 95.2% for the amount scenario at 0.50, interval 84% to 99%, 42 cases, all suspicious",
-      "b": "16.7%",
-      "leg_b": "false alerts 16.7% at 0.50, interval 8% to 31%, 42 cases, all benign",
-      "cote": "recall 95.2%",
-      "source": {
-        "a": {
-          "table": "authored",
-          "palier": "amount",
-          "seuil": "0.50",
-          "mesure": "rappel"
-        },
-        "b": {
-          "table": "authored",
-          "palier": "amount",
-          "seuil": "0.50",
-          "mesure": "fauxPositifs"
-        }
-      },
-      "annotations": [
-        [
-          0.445,
-          0.45,
-          0.48,
-          0.13,
-          "amount scenario: recall 95.2%"
-        ],
-        [
-          0.575,
-          0.74,
-          0.48,
-          0.94,
-          "benign cases: false alerts 16.7%"
-        ]
-      ],
-      "rail": "Amount: 95.2% recall, 16.7% false alerts"
+ "_": "The five findings of the lapis (Monitoring) hero, in the exact keys of findings-screening.json. Provenance: every figure in a/b/cote is a cell of ~/Documents/cascade-monitoring/releve-public.json at seal `sceau`; the builder refuses to build if the record on disk no longer matches. Each figure keeps its cell address in `source` ({table, palier, seuil, mesure} or {table, compte}); the optional `champ` names which field of the Rate is displayed when it is not `taux` (finding 03 displays lower bounds: champ = 'bas'). Builders may ignore `source`; reviewers and guards re-derive every number from it. The tool's rule behind finding 03 is the same as the whole suite: Wilson lower bound of recall at or above 0.90, then the fewest false alerts. Twin attributions in the phrases are measured, not assumed: at 0.50 the seven false alerts of `amount` are all one-off purchases, and `velocity` trips on payroll, seasonal trade and savings transfers. `annotations` are fractions of the delivered close-up of each state (anchor x, anchor y, label x, label y, text): positions and texts were remeasured against the delivered close-ups (rack-01..05, the travellings' arrival frames arbitrated by Arslane): 01 the amount blade pulled out, 02 the counting blade, 03 the brass line over the three left blades, 04 the written and synthetic pair, 05 the whole rack with the eighth, ivory piece pulled. Two labels changed because the framed piece changed what a viewer can count: in 01 the amount blade half-hides its own amber row, so the label no longer counts seven diodes, and in 02 the false alerts read as a grid, not a row. Every label is 60 characters or fewer, per the builder's rule.",
+ "sceau": "5e2a96e22fa0b59c",
+ "findings": [
+  {
+   "num": "01",
+   "titre": "The amount scenario alone catches 95.2% of the suspicious cases.",
+   "phrase": "Scoring only the largest amount in the window catches 95.2% of the 42 cases marked suspicious. It also alerts on 16.7% of the 42 cases marked benign, because each of those is a one-off family purchase that the history explains.",
+   "a": "95.2%",
+   "leg_a": "recall 95.2% for the amount scenario at 0.50, interval 84% to 99%, 42 cases, all suspicious",
+   "b": "16.7%",
+   "leg_b": "false alerts 16.7% at 0.50, interval 8% to 31%, 42 cases, all benign",
+   "cote": "16.7% of benign cases alerted",
+   "source": {
+    "a": {
+     "table": "authored",
+     "palier": "amount",
+     "seuil": "0.50",
+     "mesure": "rappel"
     },
-    {
-      "num": "02",
-      "titre": "The velocity scenario reaches 28.6% recall and alerts on half the benign cases.",
-      "phrase": "Counting transactions reaches 28.6% recall, since most suspicious cases are not the busiest accounts. The same count alerts on half the 42 cases marked benign: payroll, seasonal trade and monthly savings.",
-      "a": "28.6%",
-      "leg_a": "recall 28.6% for the velocity scenario at 0.50, interval 17% to 44%, 42 cases, all suspicious",
-      "b": "50%",
-      "leg_b": "false alerts 50% at 0.50, interval 36% to 64%, 42 cases, all benign",
-      "cote": "false alerts 50%",
-      "source": {
-        "a": {
-          "table": "authored",
-          "palier": "velocity",
-          "seuil": "0.50",
-          "mesure": "rappel"
-        },
-        "b": {
-          "table": "authored",
-          "palier": "velocity",
-          "seuil": "0.50",
-          "mesure": "fauxPositifs"
-        }
-      },
-      "annotations": [
-        [
-          0.445,
-          0.55,
-          0.48,
-          0.13,
-          "velocity scenario: recall 28.6%"
-        ],
-        [
-          0.575,
-          0.735,
-          0.48,
-          0.94,
-          "benign cases: false alerts 50%"
-        ]
-      ],
-      "rail": "Velocity: 28.6% recall, 50% false alerts"
-    },
-    {
-      "num": "03",
-      "titre": "No scenario's recall lower bound reaches the 90% floor.",
-      "phrase": "The tool keeps the settings that catch at least 90% of true cases, then picks the fewest false alerts. No scenario reaches it on the 42 cases: amount comes closest, at 84.2%, then peer at 75%.",
-      "a": "84.2%",
-      "leg_a": "amount at 0.50 comes closest: 84.2%, interval 84% to 99%",
-      "b": "75%",
-      "leg_b": "peer at 0.50 comes next: 75%, interval 75% to 95%",
-      "cote": "closest 84.2%",
-      "source": {
-        "a": {
-          "table": "authored",
-          "palier": "amount",
-          "seuil": "0.50",
-          "mesure": "rappel",
-          "champ": "bas"
-        },
-        "b": {
-          "table": "authored",
-          "palier": "peer",
-          "seuil": "0.50",
-          "mesure": "rappel",
-          "champ": "bas"
-        }
-      },
-      "annotations": [
-        [
-          0.55,
-          0.53,
-          0.64,
-          0.13,
-          "recall floor 90%: no scenario reaches it"
-        ],
-        [
-          0.21,
-          0.545,
-          0.12,
-          0.13,
-          "amount: closest at 84.2%"
-        ]
-      ],
-      "rail": "No scenario reaches the 90% floor"
-    },
-    {
-      "num": "04",
-      "titre": "The amount scenario scores 100% recall on generated cases against 95.2% on written ones.",
-      "phrase": "The same cell scores 95.2% recall on 42 cases written and 100% on 126 cases generated. The generated set is easier, so the tool measures it separately and the headline rate does not include it.",
-      "a": "95.2%",
-      "leg_a": "recall 95.2% for amount at 0.50 on 42 cases written, interval 84% to 99%",
-      "b": "100%",
-      "leg_b": "recall 100% at the same cell on 126 cases generated, interval 97% to 100%",
-      "cote": "kept separate",
-      "source": {
-        "a": {
-          "table": "authored",
-          "palier": "amount",
-          "seuil": "0.50",
-          "mesure": "rappel"
-        },
-        "b": {
-          "table": "synthetic",
-          "palier": "amount",
-          "seuil": "0.50",
-          "mesure": "rappel"
-        }
-      },
-      "annotations": [
-        [
-          0.3,
-          0.32,
-          0.11,
-          0.07,
-          "written cases: recall 95.2%"
-        ],
-        [
-          0.59,
-          0.395,
-          0.72,
-          0.07,
-          "generated cases: recall 100%"
-        ]
-      ],
-      "rail": "Generated cases, kept separate from the written ones"
-    },
-    {
-      "num": "05",
-      "titre": "Measure the whole grid on your own alert history.",
-      "phrase": "Every rate here comes from our public test set: 42 cases marked suspicious and 42 cases marked benign, seven per typology, and another 126 cases of each kind, generated. Two CSV files from your systems, your dispositioned alerts and their transactions, rerun the grid, and the report is written next to them.",
-      "a": "42 cases",
-      "leg_a": "42 cases suspicious and 42 cases benign, written by us, seven per typology",
-      "b": "126 cases",
-      "leg_b": "another 126 cases of each kind, generated under a seed, and kept separate",
-      "cote": "your own figures",
-      "source": {
-        "a": {
-          "table": "authored",
-          "compte": "nSuspicious"
-        },
-        "b": {
-          "table": "synthetic",
-          "compte": "nSuspicious"
-        }
-      },
-      "annotations": [
-        [
-          0.852,
-          0.55,
-          0.72,
-          0.13,
-          "84 cases written"
-        ],
-        [
-          0.805,
-          0.62,
-          0.72,
-          0.82,
-          "252 cases generated"
-        ]
-      ],
-      "rail": "Your own alert history"
+    "b": {
+     "table": "authored",
+     "palier": "amount",
+     "seuil": "0.50",
+     "mesure": "fauxPositifs"
     }
-  ]
+   },
+   "annotations": [
+    [
+     0.445,
+     0.45,
+     0.48,
+     0.13,
+     "amount scenario: recall 95.2%"
+    ],
+    [
+     0.575,
+     0.74,
+     0.48,
+     0.94,
+     "benign cases: false alerts 16.7%"
+    ]
+   ],
+   "rail": "Amount alone catches 95.2% of suspicious cases"
+  },
+  {
+   "num": "02",
+   "titre": "The velocity scenario catches 28.6% of suspicious cases, and alerts on half the benign ones.",
+   "phrase": "Counting transactions catches 28.6% of the suspicious cases, because most of them are not the busiest accounts. The same count alerts on half the 42 cases marked benign, which are payroll, seasonal trade and monthly savings.",
+   "a": "28.6%",
+   "leg_a": "recall 28.6% for the velocity scenario at 0.50, interval 17% to 44%, 42 cases, all suspicious",
+   "b": "50%",
+   "leg_b": "false alerts 50% at 0.50, interval 36% to 64%, 42 cases, all benign",
+   "cote": "50% of benign cases alerted",
+   "source": {
+    "a": {
+     "table": "authored",
+     "palier": "velocity",
+     "seuil": "0.50",
+     "mesure": "rappel"
+    },
+    "b": {
+     "table": "authored",
+     "palier": "velocity",
+     "seuil": "0.50",
+     "mesure": "fauxPositifs"
+    }
+   },
+   "annotations": [
+    [
+     0.445,
+     0.55,
+     0.48,
+     0.13,
+     "velocity scenario: recall 28.6%"
+    ],
+    [
+     0.575,
+     0.735,
+     0.48,
+     0.94,
+     "benign cases: false alerts 50%"
+    ]
+   ],
+   "rail": "Velocity catches 28.6%, and alerts on half the benign cases"
+  },
+  {
+   "num": "03",
+   "titre": "No scenario is sure of catching 90% of the suspicious cases.",
+   "phrase": "The tool keeps only the settings whose confidence interval stays above 90% of true cases, then among those picks the fewest false alerts. We chose that 90% floor ourselves, and you can move it. No scenario reaches it on the 42 cases: amount comes closest, at 84.2%, then peer at 75%.",
+   "a": "84.2%",
+   "leg_a": "amount at 0.50 comes closest: 84.2%, interval 84% to 99%",
+   "b": "75%",
+   "leg_b": "peer at 0.50 comes next: 75%, interval 75% to 95%",
+   "cote": "closest 84.2%",
+   "source": {
+    "a": {
+     "table": "authored",
+     "palier": "amount",
+     "seuil": "0.50",
+     "mesure": "rappel",
+     "champ": "bas"
+    },
+    "b": {
+     "table": "authored",
+     "palier": "peer",
+     "seuil": "0.50",
+     "mesure": "rappel",
+     "champ": "bas"
+    }
+   },
+   "annotations": [
+    [
+     0.55,
+     0.53,
+     0.64,
+     0.13,
+     "recall floor 90%: no scenario reaches it"
+    ],
+    [
+     0.21,
+     0.545,
+     0.12,
+     0.13,
+     "amount: closest at 84.2%"
+    ]
+   ],
+   "rail": "No scenario reaches the 90% floor we set"
+  },
+  {
+   "num": "04",
+   "titre": "The amount scenario catches 100% of generated cases against 95.2% of the written ones.",
+   "phrase": "The same setting catches 95.2% of the 42 cases we wrote and 100% of the 126 cases a script generated. A generated case is easier to spot, so it is counted on its own, and the rates above come from the cases we wrote.",
+   "a": "95.2%",
+   "leg_a": "recall 95.2% for amount at 0.50 on 42 cases written, interval 84% to 99%",
+   "b": "100%",
+   "leg_b": "recall 100% at the same cell on 126 cases generated, interval 97% to 100%",
+   "cote": "counted on its own",
+   "source": {
+    "a": {
+     "table": "authored",
+     "palier": "amount",
+     "seuil": "0.50",
+     "mesure": "rappel"
+    },
+    "b": {
+     "table": "synthetic",
+     "palier": "amount",
+     "seuil": "0.50",
+     "mesure": "rappel"
+    }
+   },
+   "annotations": [
+    [
+     0.3,
+     0.32,
+     0.11,
+     0.07,
+     "written cases: recall 95.2%"
+    ],
+    [
+     0.59,
+     0.395,
+     0.72,
+     0.07,
+     "generated cases: recall 100%"
+    ]
+   ],
+   "rail": "Generated cases are easier, so they are counted on their own"
+  },
+  {
+   "num": "05",
+   "titre": "Run the same measurement on your own alert history.",
+   "phrase": "The rates here come from our public test set: 42 cases marked suspicious and 42 cases marked benign, seven per typology, and another 126 cases of each kind that a script generated. Give the tool two CSV files from your systems, your closed alerts and their transactions, and it writes the report into the folder they are in.",
+   "a": "42 cases",
+   "leg_a": "42 cases suspicious and 42 cases benign, written by us, seven per typology",
+   "b": "126 cases",
+   "leg_b": "another 126 cases of each kind, generated under a seed, and kept separate",
+   "cote": "one run, one report",
+   "source": {
+    "a": {
+     "table": "authored",
+     "compte": "nSuspicious"
+    },
+    "b": {
+     "table": "synthetic",
+     "compte": "nSuspicious"
+    }
+   },
+   "annotations": [
+    [
+     0.852,
+     0.55,
+     0.72,
+     0.13,
+     "84 cases written"
+    ],
+    [
+     0.805,
+     0.62,
+     0.72,
+     0.82,
+     "252 cases generated"
+    ]
+   ],
+   "rail": "Your own dispositioned alerts"
+  }
+ ]
 }

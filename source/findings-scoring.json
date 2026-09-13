@@ -1,209 +1,209 @@
 {
-  "_": "The five findings of the amethyst (Scoring) hero, in the house keys. Provenance: every figure in a/b is a cell of ~/Documents/cascade-scoring/releve-public.json at seal `sceau`; addresses in `source` ({table, palier, seuil, mesure}, optional `champ` naming which Rate field is displayed, or {table, compte}); re-verified mechanically at the displayed precision. Finding 01 states a deliberate design fact the record proves: geography scores zero on both sides because every written dossier resides in ordinary Union countries and no official country list was copied into the data, so risk lives in declared fields, not passports. Finding 04 shows the amethyst's reversal: here the generated variants are HARSHER than the written dossiers on the best factor, which is exactly why separation is a rule and not a convenience. `annotations` are provisional fractions of the shelving tray (eight bays, registry order, amethyst pile = recall bound, ivory pile = false alerts, brass shelf = floor): texts and fractions were measured against the delivered frames (rayonnage-reel/parchemin-01..05). One answer for the re-render: state 2 lights the tenure bay, but finding 02 is about PRODUCT: light bay three (the labels already anchor it, so they hold as-is once the light moves). State 4 keeps its own framing, the two-bay close-up.",
-  "sceau": "3cee43edfa7c0064",
-  "findings": [
-    {
-      "num": "01",
-      "titre": "Geography scores zero recall and zero false alerts here.",
-      "phrase": "Every file in our test set sits in an ordinary EU country, because no official country list was copied into the data. The geography factor therefore scores 0% recall and 0% false alerts: the factor a vendor sells hardest carries no weight here, by construction.",
-      "a": "0%",
-      "leg_a": "recall 0% for the geography factor at 0.50, interval 0% to 8%, 42 files, all escalated",
-      "b": "0%",
-      "leg_b": "false alerts 0% at 0.50, interval 0% to 8%, 42 files, all kept at their rating",
-      "cote": "geography: 0% both sides",
-      "source": {
-        "a": {
-          "table": "authored",
-          "palier": "geography",
-          "seuil": "0.50",
-          "mesure": "rappel"
-        },
-        "b": {
-          "table": "authored",
-          "palier": "geography",
-          "seuil": "0.50",
-          "mesure": "fauxPositifs"
-        }
-      },
-      "annotations": [
-        [
-          0.47,
-          0.42,
-          0.5,
-          0.07,
-          "geography factor: recall 0%"
-        ],
-        [
-          0.47,
-          0.7,
-          0.5,
-          0.96,
-          "kept files: false alerts 0%"
-        ]
-      ],
-      "rail": "Geography: 0% recall, 0% false alerts"
+ "_": "The five findings of the amethyst (Scoring) hero, in the house keys. Provenance: every figure in a/b is a cell of ~/Documents/cascade-scoring/releve-public.json at seal `sceau`; addresses in `source` ({table, palier, seuil, mesure}, optional `champ` naming which Rate field is displayed, or {table, compte}); re-verified mechanically at the displayed precision. Finding 01 states a deliberate design fact the record proves: geography scores zero on both sides because every written dossier resides in ordinary Union countries and no official country list was copied into the data, so risk lives in declared fields, not passports. Finding 04 shows the amethyst's reversal: here the generated variants are HARSHER than the written dossiers on the best factor, which is exactly why separation is a rule and not a convenience. `annotations` are provisional fractions of the shelving tray (eight bays, registry order, amethyst pile = recall bound, ivory pile = false alerts, brass shelf = floor): texts and fractions were measured against the delivered frames (rayonnage-reel/parchemin-01..05). One answer for the re-render: state 2 lights the tenure bay, but finding 02 is about PRODUCT: light bay three (the labels already anchor it, so they hold as-is once the light moves). State 4 keeps its own framing, the two-bay close-up.",
+ "sceau": "3cee43edfa7c0064",
+ "findings": [
+  {
+   "num": "01",
+   "titre": "Geography catches none of the escalations, and raises no alert.",
+   "phrase": "Each file in our test set sits in an ordinary EU country, because no official country list was copied into the data. The geography factor therefore scores 0% on both sides: the factor a vendor sells hardest carries no weight here, by construction.",
+   "a": "0%",
+   "leg_a": "recall 0% for the geography factor at 0.50, interval 0% to 8%, 42 files, all escalated",
+   "b": "0%",
+   "leg_b": "false alerts 0% at 0.50, interval 0% to 8%, 42 files, all kept at their rating",
+   "cote": "0% both sides",
+   "source": {
+    "a": {
+     "table": "authored",
+     "palier": "geography",
+     "seuil": "0.50",
+     "mesure": "rappel"
     },
-    {
-      "num": "02",
-      "titre": "The product factor reaches 92.9% recall at 23.8% false alerts, at threshold 0.50.",
-      "phrase": "Scoring only the products a client holds reaches 92.9% recall at threshold 0.50: correspondent accounts, private banking and crypto rails carry the signal. The same factor alerts on 23.8% of the files that were kept at their rating, and each alert is a review to run.",
-      "a": "92.9%",
-      "leg_a": "recall 92.9% for the product factor at 0.50, interval 81% to 98%, 42 files, all escalated",
-      "b": "23.8%",
-      "leg_b": "false alerts 23.8% at 0.50, interval 13% to 39%, 42 files, all kept at their rating",
-      "cote": "recall 92.9%",
-      "source": {
-        "a": {
-          "table": "authored",
-          "palier": "product",
-          "seuil": "0.50",
-          "mesure": "rappel"
-        },
-        "b": {
-          "table": "authored",
-          "palier": "product",
-          "seuil": "0.50",
-          "mesure": "fauxPositifs"
-        }
-      },
-      "annotations": [
-        [
-          0.44,
-          0.55,
-          0.422,
-          0.07,
-          "product factor: recall 92.9%"
-        ],
-        [
-          0.53,
-          0.82,
-          0.5,
-          0.96,
-          "kept files: false alerts 23.8%"
-        ]
-      ],
-      "rail": "Product: 92.9% recall, 23.8% false alerts"
-    },
-    {
-      "num": "03",
-      "titre": "No factor's recall lower bound reaches the 90% floor.",
-      "phrase": "The tool keeps settings that catch at least 90% of true files, then takes the fewest false alerts. No factor reaches that on the 42 files: product comes closest at 81%, and behaviour, which raises no false alert, at 51.6%.",
-      "a": "81%",
-      "leg_a": "product at 0.50 comes closest: 81%, interval 81% to 98%",
-      "b": "51.6%",
-      "leg_b": "behaviour at 0.50: 51.6%, with no false alert",
-      "cote": "closest 81%",
-      "source": {
-        "a": {
-          "table": "authored",
-          "palier": "product",
-          "seuil": "0.50",
-          "mesure": "rappel",
-          "champ": "bas"
-        },
-        "b": {
-          "table": "authored",
-          "palier": "behaviour",
-          "seuil": "0.50",
-          "mesure": "rappel",
-          "champ": "bas"
-        }
-      },
-      "annotations": [
-        [
-          0.35,
-          0.53,
-          0.186,
-          0.2,
-          "recall floor 90%: no factor reaches it"
-        ],
-        [
-          0.67,
-          0.72,
-          0.814,
-          0.2,
-          "behaviour: 51.6%, no false alert"
-        ]
-      ],
-      "rail": "No factor reaches the 90% floor"
-    },
-    {
-      "num": "04",
-      "titre": "The product factor scores 79.4% recall on generated files against 92.9% on written ones.",
-      "phrase": "The same cell scores 92.9% recall on 42 files written and 79.4% on 126 files generated. Here the generated set is harder, and the tool still measures it separately, outside the headline rate.",
-      "a": "92.9%",
-      "leg_a": "recall 92.9% for product at 0.50 on 42 files written, interval 81% to 98%",
-      "b": "79.4%",
-      "leg_b": "recall 79.4% at the same cell on 126 files generated, interval 71% to 86%",
-      "cote": "kept separate",
-      "source": {
-        "a": {
-          "table": "authored",
-          "palier": "product",
-          "seuil": "0.50",
-          "mesure": "rappel"
-        },
-        "b": {
-          "table": "synthetic",
-          "palier": "product",
-          "seuil": "0.50",
-          "mesure": "rappel"
-        }
-      },
-      "annotations": [
-        [
-          0.34,
-          0.62,
-          0.265,
-          0.96,
-          "written files: recall 92.9%"
-        ],
-        [
-          0.58,
-          0.62,
-          0.892,
-          0.96,
-          "generated files: recall 79.4%"
-        ]
-      ],
-      "rail": "Generated files, kept separate from the written ones"
-    },
-    {
-      "num": "05",
-      "titre": "Measure the whole grid on your own review outcomes.",
-      "phrase": "Every rate here comes from our public test set: 84 files written, 42 files escalated and 42 files kept at their rating, with 252 files generated. Two CSV files from your systems, your review outcomes and the customer attributes, rerun the grid, and the report is written next to them.",
-      "a": "42 files",
-      "leg_a": "84 files written, 42 files escalated and 42 files kept at their rating, seven per typology",
-      "b": "126 files",
-      "leg_b": "252 files generated, 126 files escalated and 126 files kept at their rating, all kept separate",
-      "cote": "your own figures",
-      "source": {
-        "a": {
-          "table": "authored",
-          "compte": "nEscalated"
-        },
-        "b": {
-          "table": "synthetic",
-          "compte": "nEscalated"
-        }
-      },
-      "annotations": [
-        [
-          0.85,
-          0.6,
-          0.892,
-          0.84,
-          "84 files written"
-        ],
-        [
-          0.32,
-          0.66,
-          0.265,
-          0.8,
-          "252 files generated"
-        ]
-      ],
-      "rail": "Your own review outcomes"
+    "b": {
+     "table": "authored",
+     "palier": "geography",
+     "seuil": "0.50",
+     "mesure": "fauxPositifs"
     }
-  ]
+   },
+   "annotations": [
+    [
+     0.47,
+     0.42,
+     0.5,
+     0.07,
+     "geography factor: recall 0%"
+    ],
+    [
+     0.47,
+     0.7,
+     0.5,
+     0.96,
+     "kept files: false alerts 0%"
+    ]
+   ],
+   "rail": "Geography scores 0% on both sides here"
+  },
+  {
+   "num": "02",
+   "titre": "The product factor catches 92.9% of escalated files, and alerts on 23.8% of the rest.",
+   "phrase": "Scoring only the products a client holds catches 92.9% of the escalated files at threshold 0.50, because correspondent accounts, private banking and crypto rails carry the signal. The same factor alerts on 23.8% of the files that were kept at their rating, and each alert is a review someone has to run.",
+   "a": "92.9%",
+   "leg_a": "recall 92.9% for the product factor at 0.50, interval 81% to 98%, 42 files, all escalated",
+   "b": "23.8%",
+   "leg_b": "false alerts 23.8% at 0.50, interval 13% to 39%, 42 files, all kept at their rating",
+   "cote": "23.8% of quiet files alerted",
+   "source": {
+    "a": {
+     "table": "authored",
+     "palier": "product",
+     "seuil": "0.50",
+     "mesure": "rappel"
+    },
+    "b": {
+     "table": "authored",
+     "palier": "product",
+     "seuil": "0.50",
+     "mesure": "fauxPositifs"
+    }
+   },
+   "annotations": [
+    [
+     0.44,
+     0.55,
+     0.422,
+     0.07,
+     "product factor: recall 92.9%"
+    ],
+    [
+     0.53,
+     0.82,
+     0.5,
+     0.96,
+     "kept files: false alerts 23.8%"
+    ]
+   ],
+   "rail": "Product catches 92.9% of escalated files"
+  },
+  {
+   "num": "03",
+   "titre": "No factor is sure of catching 90% of the escalated files.",
+   "phrase": "The tool keeps only the settings whose confidence interval stays above 90% of true files, then among those takes the fewest false alerts. We chose that 90% floor ourselves, and you can move it. No factor reaches it on the 42 files: product comes closest at 81%, and behaviour, which raises no false alert, at 51.6%.",
+   "a": "81%",
+   "leg_a": "product at 0.50 comes closest: 81%, interval 81% to 98%",
+   "b": "51.6%",
+   "leg_b": "behaviour at 0.50: 51.6%, with no false alert",
+   "cote": "closest 81%",
+   "source": {
+    "a": {
+     "table": "authored",
+     "palier": "product",
+     "seuil": "0.50",
+     "mesure": "rappel",
+     "champ": "bas"
+    },
+    "b": {
+     "table": "authored",
+     "palier": "behaviour",
+     "seuil": "0.50",
+     "mesure": "rappel",
+     "champ": "bas"
+    }
+   },
+   "annotations": [
+    [
+     0.35,
+     0.53,
+     0.186,
+     0.2,
+     "recall floor 90%: no factor reaches it"
+    ],
+    [
+     0.67,
+     0.72,
+     0.814,
+     0.2,
+     "behaviour: 51.6%, no false alert"
+    ]
+   ],
+   "rail": "No factor reaches the 90% floor we set"
+  },
+  {
+   "num": "04",
+   "titre": "The product factor catches 79.4% of generated files against 92.9% of the written ones.",
+   "phrase": "The same setting catches 92.9% of the 42 files we wrote and 79.4% of the 126 files a script generated. Here the generated set is harder, and it is still counted on its own, so the rates above come from the files we wrote.",
+   "a": "92.9%",
+   "leg_a": "recall 92.9% for product at 0.50 on 42 files written, interval 81% to 98%",
+   "b": "79.4%",
+   "leg_b": "recall 79.4% at the same cell on 126 files generated, interval 71% to 86%",
+   "cote": "counted on its own",
+   "source": {
+    "a": {
+     "table": "authored",
+     "palier": "product",
+     "seuil": "0.50",
+     "mesure": "rappel"
+    },
+    "b": {
+     "table": "synthetic",
+     "palier": "product",
+     "seuil": "0.50",
+     "mesure": "rappel"
+    }
+   },
+   "annotations": [
+    [
+     0.34,
+     0.62,
+     0.265,
+     0.96,
+     "written files: recall 92.9%"
+    ],
+    [
+     0.58,
+     0.62,
+     0.892,
+     0.96,
+     "generated files: recall 79.4%"
+    ]
+   ],
+   "rail": "Generated files are harder, and are counted on their own"
+  },
+  {
+   "num": "05",
+   "titre": "Run the same measurement on your own review outcomes.",
+   "phrase": "The rates here come from our public test set: 84 files written by hand, 42 files escalated and 42 files kept at their rating, with 252 files generated from them. Give the tool two CSV files from your systems, your review outcomes and the customer attributes, and it writes the report into the folder they are in.",
+   "a": "42 files",
+   "leg_a": "84 files written, 42 files escalated and 42 files kept at their rating, seven per typology",
+   "b": "126 files",
+   "leg_b": "252 files generated, 126 files escalated and 126 files kept at their rating, all kept separate",
+   "cote": "one run, one report",
+   "source": {
+    "a": {
+     "table": "authored",
+     "compte": "nEscalated"
+    },
+    "b": {
+     "table": "synthetic",
+     "compte": "nEscalated"
+    }
+   },
+   "annotations": [
+    [
+     0.85,
+     0.6,
+     0.892,
+     0.84,
+     "84 files written"
+    ],
+    [
+     0.32,
+     0.66,
+     0.265,
+     0.8,
+     "252 files generated"
+    ]
+   ],
+   "rail": "Your own review outcomes"
+  }
+ ]
 }

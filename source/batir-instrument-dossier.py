@@ -319,9 +319,10 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="tete">
   <div class="colonne">
     <h1 class="h1">The whole chain in one table, live.</h1>
-    <p class="lede">Every line here comes from <b>our public test set</b>: the four reports of
-      the suite, read and checked against five controls. None of it comes from a client. The
-      page recomputes them as it loads.</p>
+    <p class="lede">Each report is checked five ways: that it is present, frozen, fresh, signed
+      with a key anyone can check, and consistent with the other three. The lines here come from
+      <b>our public test set</b>, which holds the four reports of the suite. None of it comes
+      from a client, and the page recomputes the table as it loads.</p>
   </div>
 </section>
 
@@ -368,14 +369,14 @@ PAGE = f'''<!doctype html><html lang="en">
         on {D["provenance"]["date"]}. The script that builds this page checks that checksum first. It then
         rebuilds each question&#8217;s state from its own answers, in the order the contract
         sets, and publishes nothing if one line disagrees.</li>
-      <li><b>The suite&#8217;s own public test sets.</b> The reports judged here are the public
-        records of Cascade&#8217;s tools (the reader, the matcher, the scenario, the factor):
-        published, sealed, verifiable by anyone. A question without one is shown as a labelled blank,
-        and no guessed column.</li>
-      <li><b>The five controls, in a fixed order.</b> present, sealed, signed, fresh, consistent: the
+      <li><b>The reports come from the suite&#8217;s own public test sets.</b> The reports judged here are the public
+        records of Cascade&#8217;s tools (the reader, the matcher that compares names, the scenario, the factor):
+        published, sealed, verifiable by anyone. If a question has none, it is shown as a
+        labelled blank, and no column is guessed.</li>
+      <li><b>The five controls are applied in a fixed order.</b> present, frozen, signed, fresh, consistent: the
         state reached is the highest control held <b>without a gap</b> in that order. A held
         control above a hole counts for nothing, and the table shows why.</li>
-      <li><b>Freshness against a declared validity period.</b> Each measurement&#8217;s age is judged
+      <li><b>Freshness is judged against a declared validity period.</b> Each measurement&#8217;s age is judged
         against the validity period written in the dossier itself ({RG["rythmeJours"]} days), never
         against an unstated habit.</li>
     </ul>
@@ -383,7 +384,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <details class="pli"><summary>What this page cannot do</summary>
     <ul>
       <li><b>Your data.</b> This page cannot read it: no network request leaves it
-        (the page&#8217;s security policy forbids them), nothing is loaded from elsewhere, and there is no input
+        (the browser&#8217;s own security rules forbid them), nothing is loaded from elsewhere, and there is no input
         field to paste a report into.</li>
       <li><b>A verdict without its sentence.</b> Each cell opens into the record&#8217;s own
         words: what was checked, on which file, and what the next control still needs.</li>
@@ -392,7 +393,7 @@ PAGE = f'''<!doctype html><html lang="en">
     </div>
     <aside class="clone-col">
     <h2>Assemble the dossier of your own reports</h2>
-    <p>The instrument shows our dossier, over our public test sets. Yours is assembled at home,
+    <p>This page shows our own dossier, over our public test sets. Yours is assembled at home,
       by the tool, from the signed reports the suite&#8217;s tools left on your machine, and nothing
       about them leaves your machine.</p>
     <span class="clone-t">The three commands, exactly as they run</span>

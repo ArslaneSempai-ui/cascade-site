@@ -57,7 +57,7 @@ def table_html():
                       f'<span class="c-prix">${D["price"][t][f]:.2f}</span></button></td>')
         lignes += f"<tr><th scope='row'>{f}</th>{cells}</tr>"
     return f'''<div class="t-scroll"><table class="routage">
-      <caption class="sr">Pick one tier per field; each cell shows measured accuracy and the price of a thousand extractions</caption>
+      <caption class="sr">Pick one tier per field, and each cell shows the measured accuracy and the price of a thousand extractions</caption>
       <thead><tr><th scope="col">field</th>{tetes}</tr></thead><tbody>{lignes}</tbody></table></div>'''
 
 
@@ -334,9 +334,11 @@ PAGE = f'''<!doctype html><html lang="en">
 <main>
 <section class="tete"><div class="colonne">
   <h1 class="h1">Test the routing on our public test set, live.</h1>
-  <p class="lede">One tier per field. Click any cell to see what your routing costs and how often it
-    gets it right. Or set your budget and let the tool choose, the way it does on your machine:
-    <b>highest accuracy first, lower cost on a tie</b>.</p>
+  <p class="lede">One model tier per field, which is the size of model that field is sent to.
+    Click any cell to see what that routing costs and how often it gets the field right, or set
+    your budget and let the tool choose, the way it does on your machine: <b>highest accuracy
+    first, lower cost when two tie</b>. Where a rate carries a confidence interval, the range it
+    could reasonably be in, the page prints it, because a rate on its own can mislead you.</p>
 </div></section>
 
 <section aria-label="The live instrument"><div class="colonne">
@@ -388,19 +390,19 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="reserves"><div class="colonne reserves-grille">
   <div class="plis">
     <details class="pli" open><summary>What this instrument rests on, and what it cannot do.</summary>
-  <p><b>The prices are assumed, and say so.</b> The small and large tiers use assumed per-call
+  <p><b>The prices are assumed, and the page labels them as such.</b> The small and large tiers use assumed per-call
     rates. The generative tiers use their measured latency against an assumed machine cost. The
     human tier uses an assumed pace and salary. <b>Change the assumptions and the dollars move.
     The accuracies do not.</b></p>
-  <p><b>The human column is the one exception: an assumption until you measure it.</b>
-    {D["humanAccuracy"]:.0f}% on each field, declared in the tool's own source. Every other accuracy shown here was measured. <code>npm run measure:humans -- --cases=your-file.csv</code>
+  <p><b>The human column is the one exception, an assumption until you measure it.</b>
+    We assume {D["humanAccuracy"]:.0f}% on each field, which the tool declares in its own source. Each other accuracy shown here was measured. <code>npm run measure:humans -- --cases=your-file.csv</code>
     grades your own reviewers: accuracy per field with intervals, agreement between reviewers,
     seconds per record. Pass the sealed result to <code>optimise</code> with <code>--humans</code>
     and the optimiser reads your measurement instead of the assumption.</p>
-  <p><b>Your documents never touch this page.</b> Nothing is uploaded, nothing is fetched, and the
-    page's security policy refuses each network call.</p>
-  <p><b>These are our readings. Now test them against yours.</b> The tool clones next to
-    your files and measures them there: your CSV stays where it is, the report lands beside it.</p>
+  <p><b>Your documents never touch this page,</b> because nothing is uploaded and nothing is
+    fetched: the browser's own security rules refuse each network call.</p>
+  <p><b>These are our readings. Now test them against yours.</b> The tool clones next to your
+    files and measures them where they sit, so your CSV never moves and the report lands beside it.</p>
     </details>
   </div>
   <aside class="clone-col">

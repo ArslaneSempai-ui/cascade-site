@@ -18,13 +18,13 @@
         {
           "h2": "What to bring",
           "html": [
-            "<p>The page you are on and the figure you dispute: each one here has a declared source, so we can meet at it. If you disagree with a measurement, <b>bring your own rerun</b>. The record is frozen and the command is public, so you can reproduce it. If you measured your own cases, bring the report the tool wrote beside your CSV: it contains rates and intervals, and no values from your documents.</p>"
+            "<p>The page you are on and the figure you dispute: each one here has a declared source, so we can meet at it. If you disagree with a measurement, <b>bring your own rerun</b>. The record is frozen and the command is public, so you can reproduce it. If you measured your own cases, bring the report the tool wrote beside your CSV: it contains rates and their confidence intervals, and no values from your documents.</p>"
           ]
         },
         {
           "h2": "What to keep out",
           "html": [
-            "<p><b>We receive none of your records. We do not want a sample either.</b> The tool exists so your documents never leave your machine; a sample attached to a public issue is published, and a clone, once made, cannot be recalled. If your question needs your data, the answer is a command that runs where the data lives, and we will point you to it.</p>"
+            "<p><b>We receive none of your records. We do not want a sample either.</b> The tool exists so your documents never leave your machine. A sample attached to a public issue is published, and a clone, once made, cannot be taken back. If your question needs your data, the answer is a command that runs where the data lives, and we will point you to it.</p>"
           ]
         },
         {

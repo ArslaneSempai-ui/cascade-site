@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-6kbo0QsazdHddeXrNnBV31mImYTlq63h0k7y5Mz44ak=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-SeGz4c4FPUwlabaUK+RyfKXGhwJ8f3qYRb0NGTeiNig='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-6kbo0QsazdHddeXrNnBV31mImYTlq63h0k7y5Mz44ak=' 'unsafe-hashes' 'sha256-xT6h2iOFCmc+b0YYoNajguP1/DpiqxRRQMAc8B17igQ=' 'sha256-/ghys6tT9gRNa1TeEo9M/QhSqkZ4FE67Hq+dcVeKIaI=' 'sha256-tU9IYK40mkzTMnpl2x0fzcctwYz4W2Z5FcL3DQ/058E='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-be2yXVTaVBWSNuCq6PvwG3InbXZVyeg1IbWxO4Yozy8='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Scoring &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/scoring/instrument.html">
@@ -321,10 +321,12 @@
 
 <section class="tete">
   <div class="colonne">
-    <h1 class="h1">Each risk factor at each threshold, live.</h1>
-    <p class="lede">These figures come from <b>our public test set</b>: customer files we wrote
-      ourselves, retained ones included, run through the risk factors. No real customer file is in
-      it. They are recomputed each time the page loads.</p>
+    <h1 class="h1">See what each risk factor catches, and what it costs.</h1>
+    <p class="lede">A factor's threshold is the score above which it pushes a customer up a
+      rating, and recall is the share of escalated files it catches. The figures here come from
+      <b>our public test set</b>: customer files we wrote ourselves, including the ones that
+      were kept at their rating. No real customer file is in it, and the figures are recomputed
+      each time the page loads.</p>
   </div>
 </section>
 
@@ -343,7 +345,7 @@
             <button class="regl" id="m-synth">generated files</button>
           </div>
           <p class="tm-sortie" id="g-quoi"></p>
-          <p class="carte-aide" data-commun="instrument">each point is one factor at one threshold, from our public test set. <b>Pull the floor line</b> or the slider, and the factors that stay above it, interval included, turn green</p>
+          <p class="carte-aide" data-commun="instrument">each point is one factor at one threshold, from our public test set. <b>Pull the floor line</b> or the slider, and the factors that stay above it, confidence interval included, turn green</p>
           <div class="carte-boite"><svg class="carte" id="carte" viewBox="0 0 900 400" role="img" aria-label="recall of each row at each threshold of our public test set, with the recall floor as a line"></svg></div>
           <div class="t-scroll"><table class="grille">
       <caption class="sr">Pick a cell: each shows recall on confirmed escalations over false alerts on maintained cases, at that factor and threshold</caption>
@@ -387,29 +389,28 @@
       <li><b>Our public test set.</b> releve-public.json in the repository, with a content hash (a checksum) of
         <b>3cee43edfa7c0064</b>, measured at commit <b>a7dc0ee</b>
         on 2026-09-07. The script that builds it checks that hash first, then
-        recomputes each figure from the record. A single disagreement stops the
-        page.</li>
-      <li><b>The files we wrote.</b> The labelled half is written by hand: typologies of risk
-        (shell layers, a PEP relative, cash-intensive trade, an offshore structure, undeclared
-        turnover) and benign cases (a local shop, a salaried resident, a domestic SME,
-        a retiree) that resemble them. The labels ship with the files, debatable ones with
-        their reasons.</li>
-      <li><b>Synthetic variants, kept apart.</b> Generated from the written cases, one kind of change at a
-        time, and kept apart from the written half: the toggle above switches the whole
-        grid, and the two stay separate.</li>
+        recomputes each figure from the record. If a single figure disagrees, the page does not
+        build.</li>
+      <li><b>The files we wrote.</b> The labelled half is written by hand: risky files (shell
+        layers, a PEP relative, cash-intensive trade) and quiet ones that resemble them (a local
+        shop, a salaried resident, a retiree). Where a label is debatable, the reason is written
+        beside it.</li>
+      <li><b>The generated half.</b> Generated from the written cases, one kind of change at a
+        time, and counted on their own, because a generated file turns out harder: the toggle
+        above switches the whole grid.</li>
       <li data-commun="instrument"><b>How the tool picks.</b> The slider sets the share of true files you want caught.
-        A setting counts only if the low end of its interval clears that share. The tool then picks the fewest false alerts.</li>
+        A setting counts only if the low end of its confidence interval clears that share, because a rate measured on few cases can flatter. The tool then picks the setting with the fewest false alerts.</li>
       <li><b>The tables the factors read.</b> The country list, the product and activity tables
-        and the four settings are recorded in our test set, so every figure stays tied to the
+        and the four settings are recorded in our test set, so each figure stays tied to the
         tables it was measured under.</li>
     </ul>
       </details>
       <details class="pli"><summary>What this page cannot do</summary>
     <ul>
       <li><b>Your data.</b> This page cannot read it: no network request leaves it
-        (the page&#8217;s security policy forbids them), nothing is loaded from elsewhere, and there is no input
+        (the browser&#8217;s own security rules forbid them), nothing is loaded from elsewhere, and there is no input
         field to paste a customer file into.</li>
-      <li><b>A rate without the number of files behind it.</b> Both appear in each cell, next to the 95&nbsp;% interval. Every factor the tool ships with appears in our test set, and a missing one shows as a labelled blank.</li>
+      <li><b>It cannot show a rate without the number of files behind it.</b> Both appear in each cell, next to the 95% confidence interval. Each factor the tool ships with appears in our test set, and if one were ever missing it would show as a labelled blank.</li>
     </ul>
       </details>
     </div>
@@ -458,7 +459,7 @@
     }
     $("#g-quoi").innerHTML = moitie === "authored"
       ? "authored files: <b>" + D.authored.nEscalated + " escalated</b>, <b>" + D.authored.nMaintained + " maintained cases</b>"
-      : "synthetic variants, declared and kept apart: <b>" + D.synthetic.nEscalated + " escalated</b>, <b>" + D.synthetic.nMaintained + " maintained</b>";
+      : "generated, declared and counted on their own: <b>" + D.synthetic.nEscalated + " escalated</b>, <b>" + D.synthetic.nMaintained + " maintained</b>";
   }
   function lire(c) {
     cells.forEach((x) => x.setAttribute("aria-pressed", String(x === c)));

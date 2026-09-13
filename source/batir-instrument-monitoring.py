@@ -244,7 +244,7 @@ JS = '''
     }
     $("#g-quoi").innerHTML = moitie === "authored"
       ? "authored cases: <b>" + D.authored.nSuspicious + " suspicious</b>, <b>" + D.authored.nBenign + " benign cases</b>"
-      : "synthetic variants, declared and kept apart: <b>" + D.synthetic.nSuspicious + " suspicious</b>, <b>" + D.synthetic.nBenign + " benign</b>";
+      : "generated, declared and counted on their own: <b>" + D.synthetic.nSuspicious + " suspicious</b>, <b>" + D.synthetic.nBenign + " benign</b>";
   }
   function lire(c) {
     cells.forEach((x) => x.setAttribute("aria-pressed", String(x === c)));
@@ -333,7 +333,8 @@ ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
 PHRASE_ABSENTS = (
     f"a scenario missing from that list ({ABSENTS}) shows as a labelled blank"
     if ABSENTS else
-    "Every scenario the tool ships with appears in our test set, and a missing one shows as a "
+    "Each scenario the tool ships with appears in our test set, and if one were ever missing "
+    "it would show as a "
     "labelled blank")
 
 PAGE = f'''<!doctype html><html lang="en">
@@ -354,10 +355,12 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section class="tete">
   <div class="colonne">
-    <h1 class="h1">Each scenario at each threshold, live.</h1>
-    <p class="lede">The figures on this page come from <b>our public test set</b>: cases we
-      wrote ourselves, benign ones included, run through the scenarios. Nothing here comes from a
-      real bank. The page recomputes them as it loads.</p>
+    <h1 class="h1">See what each scenario catches, and what it costs, live.</h1>
+    <p class="lede">A scenario's threshold is the score above which it raises an alert, and
+      recall is the share of suspicious cases it catches. The figures here come from <b>our
+      public test set</b>: cases we wrote ourselves, benign ones included, which an analyst
+      would close without acting. Nothing here comes from a real bank, and the page recomputes
+      the figures as it loads.</p>
   </div>
 </section>
 
@@ -414,21 +417,21 @@ PAGE = f'''<!doctype html><html lang="en">
         published.</li>
       <li><b>The cases we wrote.</b> The labelled half is written by hand: typologies of suspicion
         (structuring, rapid movement, a dormant account that wakes, round-tripping) and benign
-        cases (payroll, seasonal trade, loan repayments) that resemble them. The labels ship with the
-        cases, debatable ones with their reasons.</li>
-      <li><b>Synthetic variants, kept apart.</b> Generated from the written cases, one kind of change at a
-        time, and kept apart from the written half: the toggle above switches the whole
-        grid, and the two stay separate.</li>
+        cases (payroll, seasonal trade, loan repayments) that resemble them. Each case arrives with its
+        label, and where a label is debatable the reason is written beside it.</li>
+      <li><b>The generated half.</b> Generated from the written cases, one kind of change at a
+        time, and counted on their own, because a generated one is not as hard: the toggle
+        above switches the whole grid.</li>
       <li data-commun="instrument"><b>How the tool picks.</b> The slider sets the share of true cases you want caught.
-        A setting counts only if the low end of its interval clears that share. The tool then takes the fewest false alerts.</li>
+        A setting counts only if the low end of its confidence interval clears that share, because a rate measured on few cases can flatter. The tool then takes the setting with the fewest false alerts.</li>
     </ul>
       </details>
       <details class="pli"><summary>What this page cannot do</summary>
     <ul>
       <li><b>Your data.</b> This page cannot read it: no network request leaves it
-        (the page&#8217;s security policy forbids them), nothing is loaded from elsewhere, and there is no input
+        (the browser&#8217;s own security rules forbid them), nothing is loaded from elsewhere, and there is no input
         field to paste an alert into.</li>
-      <li><b>A rate without the number of cases behind it.</b> Each cell shows both, with its 95&nbsp;% interval. {PHRASE_ABSENTS}.</li>
+      <li><b>It cannot show a rate without the number of cases behind it.</b> Each cell shows both, with its 95% confidence interval. {PHRASE_ABSENTS}.</li>
     </ul>
       </details>
     </div>

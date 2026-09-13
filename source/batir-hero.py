@@ -104,7 +104,7 @@ SCENES = [
     dict(num="03", titre="Abstention: 85 wrong values removed, 12 correct values withheld",
          phrase="Knowing when not to answer more than doubles accuracy.",
          a="30<small>%</small>", b="62.3<small>%</small>", cote="after abstention"),
-    dict(num="04", titre="Identical counts across two passes; unstable durations withheld",
+    dict(num="04", titre="Identical counts across two passes, and unstable durations withheld",
          phrase="Two passes produce identical counts. Durations vary, so they&#8217;re withheld.",
          a="identical", b="16&#8211;60<small>%</small>", cote="withheld"),
     dict(num="05", titre="Every possible routing tested",
@@ -931,10 +931,14 @@ def choix_outils(outil):
         style = (f'--pan-vif:{o["vif"]};--pan-a:{o["nuit"][0]};'
                  f'--pan-b:{o["nuit"][1]};--pan-c:{o["nuit"][2]}')
         prefixe = outil["prefixe_racine"] if outil else ""
-        corps = (f'<span class="p-eti">{o["etiquette"]}</span>'
-                 f'<img src="{prefixe}rendus/{o["robot_rideau"]}" alt="">'
-                 f'<span class="p-h">{o["question"]}</span>'
-                 f'<span class="p-d">{o["pitch"]}</span>')
+        # une NOUVELLE LIGNE entre les spans : le pan est un flex en colonne, donc
+        # l'espace ne change rien à l'écran, mais sans lui l'étiquette, la question et
+        # le pitch se collent (« …pattern?Some identity fields… ») et tout relevé de
+        # prose lit UNE phrase de trente-sept mots là où le lecteur en voit trois.
+        corps = (f'<span class="p-eti">{o["etiquette"]}</span>\n'
+                 f'<img src="{prefixe}rendus/{o["robot_rideau"]}" alt="">\n'
+                 f'<span class="p-h">{o["question"]}</span>\n'
+                 f'<span class="p-d">{o["pitch"]}</span>\n')
         if outil is not None and o["id"] == outil["id"]:
             pans += (f'\n  <div class="pan {cote}" style="{style}" aria-current="page">{corps}'
                      f'<span class="p-ouvrir">You are here &#183; {o["nom"]}</span></div>')
@@ -1187,9 +1191,9 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <main>
 <section class="hero">
-  <h1 class="h1 entree">See which model tier each field actually needs.</h1>
-  <p class="lede entree">Sending every field to the biggest model is the default.<br>
-    On our test set, three of the five fields are handled by regular expressions, at no cost.</p>
+  <h1 class="h1 entree">See which model each identity field actually needs.</h1>
+  <p class="lede entree">A model tier is the size of model a field is sent to, from a plain text pattern up to the largest.<br>
+    On our test set, three of the five fields are read by a text pattern alone, at no cost.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
     <code class="ln">node src/premiere-reponse.mjs</code>
@@ -1300,7 +1304,7 @@ def batir_accueil():
     dossier_r = lire_releve_scelle(OUTILS["dossier"]["releve"])
     stations = [
         ("01 · MEASURE", "On our public test set",
-         ["Each tool measures every tier on the", "tool&#8217;s own public test set: 1,000", "held-out records for the reader, 60 + 60 pairs,", "42 + 42 cases, 84 files. Intervals on every rate."],
+         ["Each tool measures every tier on the", "tool&#8217;s own public test set: 1,000", "held-out records for the reader, 60 + 60 pairs,", "42 + 42 cases, 84 files. Each rate carries its confidence interval."],
          f"{N_SOCLE:,} records · {N_GEN} for the generative tiers"),
         ("02 · SEAL", "Hashed, then frozen",
          ["Each record carries its content hash.", "A page checks it before a figure is shown.", "A record that changed after sealing", "is not used."],
@@ -1524,29 +1528,29 @@ SPECS = {
         alt_plateau="The sieve tower",
         palette=PALETTE_RUBIS, nuit=NUIT_RUBIS,
         titre="Cascade Screening &#183; sanctions screening audit",
-        og_titre="Cascade Screening: which name matcher, and where to set the bar",
-        description="A sanctions-screening audit: which name matcher, and where you set the bar, "
-                    "measured on your own alert history.",
+        og_titre="Cascade Screening: which way of comparing names, and where to set the bar",
+        description="A sanctions-screening audit: which way of comparing names, and where you set "
+                    "the bar, measured on your own alert history.",
         app="Cascade Screening",
-        app_desc="A sanctions-screening audit: which name matcher, and where you set "
-                 "the bar, measured on your own alert history. ",
+        app_desc="A sanctions-screening audit: which way of comparing names, and where you "
+                 "set the bar, measured on your own alert history. ",
         offre="Thirty-day evaluation on your own alert history, granted in the public licence.",
         h1="See what your screening catches, and what it flags wrongly.",
-        lede="Screening thresholds are set once and rarely re-measured.<br>\n    This compares names seven ways, at every threshold, over alerts your analysts already closed.",
+        lede="A screening threshold is the score above which two names count as a match.<br>\n    Cascade Screening compares names seven ways, at every threshold, over alerts your analysts already closed.",
         aria_commande="The measurement on your own alert history",
         commandes=["npm ci --ignore-scripts", "npm run measure:yours -- --alerts=your-alerts.csv"],
         note_commande="Your alert history, measured on your machine.",
         instrument_h2="See what each threshold costs you.",
         instrument_page="INSTRUMENT-SCREENING.html",
         instrument_eti="Cascade &#183; Screening",
-        instrument_sub="Each matcher at each threshold, with what it catches and what it flags wrongly, live from our public test set.",
+        instrument_sub="Each way of comparing names, at each threshold, with what it catches and what it costs in false alerts, live from our public test set.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it does not.",
                         "ANNEXE-SCREENING-METHODE.html"),
         annexe_securite=("Security &amp; data handling", "The lists, the checksum, and what stays on your machine.",
                          "ANNEXE-SCREENING-SECURITE.html"),
         icone_prefixe="objet-screening",
         table_ligne="matcher",
-        table_caption="Recall over false alerts of each matcher at each threshold, on the written pairs",
+        table_caption="Recall, the share of true matches found, over false alerts, for each matcher, which is one way of comparing names, at each threshold, on the pairs we wrote",
         table_note_unites='Measured on {nMatch} matching pairs and {nDifferent} near-matches\n      we wrote',
     ),
     "monitoring": dict(
@@ -1555,15 +1559,15 @@ SPECS = {
         alt_plateau="The surveillance rack",
         palette=PALETTE_LAPIS, nuit=NUIT_LAPIS,
         titre="Cascade Monitoring &#183; transaction monitoring audit",
-        og_titre="Cascade Monitoring: which scenario earns its alerts",
-        description="A transaction-monitoring audit: which scenario earns its alerts, "
-                    "measured on the cases your analysts already closed.",
+        og_titre="Cascade Monitoring: which scenarios catch real cases",
+        description="A transaction-monitoring audit: which scenarios catch real cases and which "
+                    "only make work, measured on the cases your analysts already closed.",
         app="Cascade Monitoring",
-        app_desc="A transaction-monitoring audit: which scenario earns its alerts, "
-                 "measured on the cases your analysts already closed. ",
+        app_desc="A transaction-monitoring audit: which scenarios catch real cases and which "
+                 "only make work, measured on the cases your analysts already closed. ",
         offre="Thirty-day evaluation on your own dispositioned alerts, granted in the public licence.",
         h1="See what your scenarios catch, and what they flag wrongly.",
-        lede="Monitoring scenarios are tuned at go-live and rarely re-measured.<br>\n    This runs seven of them at every threshold, over alerts your analysts already closed.",
+        lede="A scenario's threshold is the score above which it raises an alert.<br>\n    Cascade Monitoring runs seven scenarios at every threshold, over the alerts your analysts already closed.",
         aria_commande="The measurement on your own dispositioned alerts",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --alerts=your-alerts.csv --transactions=your-transactions.csv"],
@@ -1578,7 +1582,7 @@ SPECS = {
                          "ANNEXE-MONITORING-SECURITE.html"),
         icone_prefixe="objet-monitoring",
         table_ligne="scenario",
-        table_caption="Recall over false alerts of each scenario at each threshold, on the written cases",
+        table_caption="Recall, the share of suspicious cases found, over false alerts, for each scenario at each threshold, on the cases we wrote",
         table_note_unites='Measured on {nMatch} suspicious cases and {nDifferent} benign cases\n      we wrote',
     ),
     "scoring": dict(
@@ -1587,15 +1591,15 @@ SPECS = {
         alt_plateau="The shelving of weights",
         palette=PALETTE_AMETHYSTE, nuit=NUIT_AMETHYSTE,
         titre="Cascade Scoring &#183; customer risk rating audit",
-        og_titre="Cascade Scoring: which risk factors sort your customers",
-        description="A customer risk-rating audit: which risk factors actually sort your "
-                    "customers, measured on your own periodic-review outcomes.",
+        og_titre="Cascade Scoring: which risk factors separate risky from quiet",
+        description="A customer risk-rating audit: which risk factors separate a risky customer "
+                    "from a quiet one, measured on your own periodic-review outcomes.",
         app="Cascade Scoring",
-        app_desc="A customer risk-rating audit: which risk factors actually sort your "
-                 "customers, measured on your own periodic-review outcomes. ",
+        app_desc="A customer risk-rating audit: which risk factors separate a risky customer "
+                 "from a quiet one, measured on your own periodic-review outcomes. ",
         offre="Thirty-day evaluation on your own review outcomes, granted in the public licence.",
-        h1="See which risk factors actually sort your customers.",
-        lede="Risk-factor weights usually come from policy.<br>\n    This scores seven factors at every threshold, over the reviews your analysts already decided.",
+        h1="See which risk factors separate a risky customer from a quiet one.",
+        lede="A factor's threshold is the score above which it pushes a customer up a rating.<br>\n    Cascade Scoring runs seven factors at every threshold, over the reviews your analysts already decided.",
         aria_commande="The measurement on your own periodic-review outcomes",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --customers=your-customers.csv --reviews=your-reviews.csv"],
@@ -1610,7 +1614,7 @@ SPECS = {
                          "ANNEXE-SCORING-SECURITE.html"),
         icone_prefixe=ICONES_PREFIXE["scoring"],
         table_ligne="factor",
-        table_caption="Recall over false alerts of each risk factor at each threshold, on the written files",
+        table_caption="Recall, the share of escalated files found, over false alerts, for each risk factor at each threshold, on the files we wrote",
         table_note_unites='Measured on {nMatch} escalated files and {nDifferent} files kept at their\n      rating, all written by us',
     ),
     "dossier": dict(
@@ -1628,7 +1632,7 @@ SPECS = {
                  "machine.",
         offre="Thirty-day evaluation on your own signed reports, granted in the public licence.",
         h1="Check each report: present, sealed, signed, fresh, consistent.",
-        lede="A reviewer asks whether the whole chain still holds.<br>\n    The Dossier reads the four signed reports, checks five things on each, and says which ones hold today.",
+        lede="A reviewer asks whether the whole chain still holds.<br>\n    The Dossier reads the four reports and checks that each one is present, frozen, fresh, signed with a key you can check, and consistent with the others.",
         aria_commande="The dossier over your own signed reports",
         commandes=["npm ci --ignore-scripts",
                    "npm run dossier -- --reports=a-measured.json,b-measured.json"],
@@ -1727,14 +1731,15 @@ def _note_outil(spec, releve, findings):
         nDifferent=auth.get("nDifferent", auth.get("nBenign", auth.get("nMaintained"))))
     champ_cite = src.get("champ", "taux")
     if palier_f and champ_cite == "taux":
-        choix = f"The ring marks the setting the tool picks by default, {palier_f} at {seuil_f}."
+        choix = f"A ring marks the cell the tool picks by default, {palier_f} at {seuil_f}."
     elif palier_f:
         choix = (f"The marked cell, {palier_f} at {seuil_f}, comes closest to the 90% recall floor. "
                  "None reaches it, so the tool picks none on these cases.")
     else:
         choix = "No setting reaches the 90% recall floor, so the tool picks none."
-    return (f"{unites}: recall of each {spec['table_ligne']} at each threshold. {choix} "
-            f"Generated {_NOM_JEU[spec['table_ligne']]} are measured apart, and the instrument shows them.")
+    return (f"{unites}: recall, meaning the share each one catches, for each {spec['table_ligne']}, "
+            f"which is one way of comparing them, at each threshold. {choix} Generated "
+            f"{_NOM_JEU[spec['table_ligne']]} are counted on their own, and the live instrument shows them.")
 
 
 def _table_outil(spec, releve, findings):
@@ -1776,7 +1781,7 @@ def _table_outil(spec, releve, findings):
     return f'''<div class="t-scroll"><table class="routage">
       <caption class="sr">{spec["table_caption"]}</caption>
       <thead><tr><th scope="col">{spec["table_ligne"]}</th>{tetes}</tr></thead><tbody>{lignes}</tbody></table></div>
-      <p class="t-note">{unites}: recall on top, false alerts below. {frontiere} Generated {_NOM_JEU[spec["table_ligne"]]} are measured apart, and the instrument shows them.</p>'''
+      <p class="t-note">{unites}: recall, meaning the share each {spec["table_ligne"]} catches, on top, and false alerts below. {frontiere} Generated {_NOM_JEU[spec["table_ligne"]]} are counted on their own, and the live instrument shows them.</p>'''
 
 
 

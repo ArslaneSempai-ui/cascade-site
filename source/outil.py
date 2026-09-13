@@ -105,7 +105,9 @@ OUTILS = {
         # Routing vit sous routing/ comme Screening sous screening/
         "sous_dossier": "routing/",
         "prefixe_racine": "../",
-        "question": "Which model tier reads each field?",
+        # 13/09 nuit : trois lecteurs sur cinq ne savaient pas ce qu'est un « model tier »
+        # ni un « field » ; la question le dit en clair, le héros définit le terme ensuite
+        "question": "Which fields need a model, and which need only a pattern?",
         "palette": PALETTE_VERTE,
         "favicon_accent": "%2323543f",
         "robots": ("robot-penche.webp", "robot-agrippe.webp"),
@@ -120,7 +122,7 @@ OUTILS = {
         # palette et que le pan vert doit y rester vert
         "page_hero": "HERO.html",
         "etiquette": "Routing &#183; identity-field extraction",
-        "pitch": "A regular expression reads some fields. This shows which ones still need a model.",
+        "pitch": "Some identity fields can be read by a cheap script, while others need a model. Cascade Routing measures which is which, field by field.",
         "robot_rideau": "robot-salut.webp",           # il salue (etats/robots-rideau.py)
         "vif": "#57b184",
         "nuit": ("#1b3229", "#14251e", "#0e1a15"),
@@ -133,7 +135,9 @@ OUTILS = {
         # pas d'insécable ici : « which threshold? » d'un bloc déborde à 320 px (mesuré)
         # 13/09 : la question prend les mots de l'outil (décision d'Arslane) ; le moule
         # « Which X suffices, at which threshold? » se lisait comme un gabarit généré
-        "question": "Which name matcher, and where do you set the bar?",
+        # 13/09 nuit, consigne A1 : « matcher » arrivait AVANT sa définition, et la
+        # question du rideau se lit sur les 28 pages : elle dit la chose en clair
+        "question": "Which way of comparing names, and where do you set the bar?",
         "palette": PALETTE_RUBIS,
         "favicon_accent": "%237a1f2e",
         "robots": ("robot-rubis-penche.webp", "robot-rubis-agrippe.webp"),
@@ -142,7 +146,7 @@ OUTILS = {
         "depot": "https://github.com/ArslaneSempai-ui/cascade-screening",
         "page_hero": "HERO-SCREENING.html",
         "etiquette": "Screening &#183; name matching",
-        "pitch": "Screening thresholds are usually set once and left there. This shows what yours catches.",
+        "pitch": "If you raise the bar you miss real matches, and if you lower it your analysts drown in alerts.",
         "robot_rideau": "robot-rubis-curieux.webp",   # il se penche, curieux (etats/robots-rideau.py)
         # l'affiche du film : la plaque 3D (etats/affiche-plaque.py) + la carte des deux
         # chiffres de la frontière lus dans le relevé (etats/affiche-composer.py)
@@ -157,7 +161,8 @@ OUTILS = {
         "nom": "Monitoring",
         "sous_dossier": "monitoring/",
         "prefixe_racine": "../",
-        "question": "Which scenario earns its alerts?",
+        # « earns its alerts » : lu comme un slogan par deux lecteurs, mal compris par trois
+        "question": "Which scenarios catch real cases, and which only make work?",
         "palette": PALETTE_LAPIS,
         "favicon_accent": "%231f3f7a",
         "robots": ("robot-lapis-penche.webp", "robot-lapis-montre.webp"),
@@ -168,7 +173,7 @@ OUTILS = {
         "depot": "https://github.com/ArslaneSempai-ui/cascade-monitoring",
         "page_hero": "HERO-MONITORING.html",
         "etiquette": "Monitoring &#183; transaction monitoring",
-        "pitch": "Monitoring scenarios are tuned at go-live and rarely re-measured. This shows what yours catch.",
+        "pitch": "A scenario that fires a hundred times a week is cheap to write and expensive to work through, so both are measured here.",
         "robot_rideau": "robot-lapis-montre.webp",    # il montre (rendu du chef)
         # l'affiche : plaque lapis (affiche-plaque.py --accent lapis) + les deux chiffres
         # de la fiche 03 lus dans le relevé (ici deux BORNES BASSES, champ « bas » :
@@ -185,7 +190,8 @@ OUTILS = {
         "nom": "Scoring",
         "sous_dossier": "scoring/",
         "prefixe_racine": "../",
-        "question": "Which risk factors sort your customers?",
+        # « sort » : rang, classement, tri ? le lecteur devait deviner
+        "question": "Which risk factors separate a risky customer from a quiet one?",
         "palette": PALETTE_AMETHYSTE,
         "favicon_accent": "%234b2a7a",
         "robots": ("robot-amethyste-penche.webp", "robot-amethyste-pese.webp"),
@@ -194,7 +200,7 @@ OUTILS = {
         "depot": "https://github.com/ArslaneSempai-ui/cascade-scoring",
         "page_hero": "HERO-SCORING.html",
         "etiquette": "Scoring &#183; risk rating",
-        "pitch": "Risk-factor weights usually come from policy. This shows what yours actually find.",
+        "pitch": "Risk weights come from policy, where they are written once and rarely tested against what happened next.",
         "robot_rideau": "robot-amethyste-pese.webp",    # il pèse : sa pose à lui
         "affiche": "affiche-scoring.jpg",
         "affiche_alt": "The amethyst Cascade robot, palms up, projecting the two lower bounds of recall "
@@ -207,7 +213,8 @@ OUTILS = {
         "nom": "Dossier",
         "sous_dossier": "dossier/",
         "prefixe_racine": "../",
-        "question": "Is the whole chain measured, signed and current?",
+        # « signed » n'était expliqué nulle part sur les écrans (panel, 13/09 nuit)
+        "question": "Is the whole chain measured, current, and signed with a key you can check?",
         "palette": PALETTE_ONYX,
         "favicon_accent": "%231c1c22",
         "robots": ("robot-onyx-penche.webp", "robot-onyx-tient.webp"),
@@ -216,7 +223,7 @@ OUTILS = {
         "depot": "https://github.com/ArslaneSempai-ui/cascade-dossier",
         "page_hero": "HERO-DOSSIER.html",
         "etiquette": "Dossier &#183; the audit dossier",
-        "pitch": "The Dossier reads the four reports and checks five things on each.",
+        "pitch": "Four reports land on a reviewer's desk, each from a different tool. The Dossier checks all four and answers as one file.",
         "robot_rideau": "robot-onyx-tient.webp",        # il tient la pièce
         "affiche": "affiche-dossier.jpg",
         "affiche_encre": "#2a2a31",                    # le gris vif de l'onyx s'efface sur la plaque : l'encre projetée est plus sombre

@@ -244,7 +244,7 @@ JS = '''
     }
     $("#g-quoi").innerHTML = moitie === "authored"
       ? "authored files: <b>" + D.authored.nEscalated + " escalated</b>, <b>" + D.authored.nMaintained + " maintained cases</b>"
-      : "synthetic variants, declared and kept apart: <b>" + D.synthetic.nEscalated + " escalated</b>, <b>" + D.synthetic.nMaintained + " maintained</b>";
+      : "generated, declared and counted on their own: <b>" + D.synthetic.nEscalated + " escalated</b>, <b>" + D.synthetic.nMaintained + " maintained</b>";
   }
   function lire(c) {
     cells.forEach((x) => x.setAttribute("aria-pressed", String(x === c)));
@@ -333,7 +333,8 @@ ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
 PHRASE_ABSENTS = (
     f"a factor missing from that list ({ABSENTS}) shows as a labelled blank"
     if ABSENTS else
-    "Every factor the tool ships with appears in our test set, and a missing one shows as a "
+    "Each factor the tool ships with appears in our test set, and if one were ever missing "
+    "it would show as a "
     "labelled blank")
 
 PAGE = f'''<!doctype html><html lang="en">
@@ -354,10 +355,12 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section class="tete">
   <div class="colonne">
-    <h1 class="h1">Each risk factor at each threshold, live.</h1>
-    <p class="lede">These figures come from <b>our public test set</b>: customer files we wrote
-      ourselves, retained ones included, run through the risk factors. No real customer file is in
-      it. They are recomputed each time the page loads.</p>
+    <h1 class="h1">See what each risk factor catches, and what it costs.</h1>
+    <p class="lede">A factor's threshold is the score above which it pushes a customer up a
+      rating, and recall is the share of escalated files it catches. The figures here come from
+      <b>our public test set</b>: customer files we wrote ourselves, including the ones that
+      were kept at their rating. No real customer file is in it, and the figures are recomputed
+      each time the page loads.</p>
   </div>
 </section>
 
@@ -410,29 +413,28 @@ PAGE = f'''<!doctype html><html lang="en">
       <li><b>Our public test set.</b> releve-public.json in the repository, with a content hash (a checksum) of
         <b>{D["provenance"]["empreinte"]}</b>, measured at commit <b>{D["provenance"]["commit"]}</b>
         on {D["provenance"]["date"]}. The script that builds it checks that hash first, then
-        recomputes each figure from the record. A single disagreement stops the
-        page.</li>
-      <li><b>The files we wrote.</b> The labelled half is written by hand: typologies of risk
-        (shell layers, a PEP relative, cash-intensive trade, an offshore structure, undeclared
-        turnover) and benign cases (a local shop, a salaried resident, a domestic SME,
-        a retiree) that resemble them. The labels ship with the files, debatable ones with
-        their reasons.</li>
-      <li><b>Synthetic variants, kept apart.</b> Generated from the written cases, one kind of change at a
-        time, and kept apart from the written half: the toggle above switches the whole
-        grid, and the two stay separate.</li>
+        recomputes each figure from the record. If a single figure disagrees, the page does not
+        build.</li>
+      <li><b>The files we wrote.</b> The labelled half is written by hand: risky files (shell
+        layers, a PEP relative, cash-intensive trade) and quiet ones that resemble them (a local
+        shop, a salaried resident, a retiree). Where a label is debatable, the reason is written
+        beside it.</li>
+      <li><b>The generated half.</b> Generated from the written cases, one kind of change at a
+        time, and counted on their own, because a generated file turns out harder: the toggle
+        above switches the whole grid.</li>
       <li data-commun="instrument"><b>How the tool picks.</b> The slider sets the share of true files you want caught.
-        A setting counts only if the low end of its interval clears that share. The tool then picks the fewest false alerts.</li>
+        A setting counts only if the low end of its confidence interval clears that share, because a rate measured on few cases can flatter. The tool then picks the setting with the fewest false alerts.</li>
       <li><b>The tables the factors read.</b> The country list, the product and activity tables
-        and the four settings are recorded in our test set, so every figure stays tied to the
+        and the four settings are recorded in our test set, so each figure stays tied to the
         tables it was measured under.</li>
     </ul>
       </details>
       <details class="pli"><summary>What this page cannot do</summary>
     <ul>
       <li><b>Your data.</b> This page cannot read it: no network request leaves it
-        (the page&#8217;s security policy forbids them), nothing is loaded from elsewhere, and there is no input
+        (the browser&#8217;s own security rules forbid them), nothing is loaded from elsewhere, and there is no input
         field to paste a customer file into.</li>
-      <li><b>A rate without the number of files behind it.</b> Both appear in each cell, next to the 95&nbsp;% interval. {PHRASE_ABSENTS}.</li>
+      <li><b>It cannot show a rate without the number of files behind it.</b> Both appear in each cell, next to the 95% confidence interval. {PHRASE_ABSENTS}.</li>
     </ul>
       </details>
     </div>

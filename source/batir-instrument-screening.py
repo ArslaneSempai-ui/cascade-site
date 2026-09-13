@@ -243,7 +243,7 @@ JS = '''
     }
     $("#g-quoi").innerHTML = moitie === "authored"
       ? "pairs we wrote: <b>" + D.authored.nMatch + " match</b>, <b>" + D.authored.nDifferent + " near-matches</b>"
-      : "synthetic variants, declared and kept apart: <b>" + D.synthetic.nMatch + " match</b>, <b>" + D.synthetic.nDifferent + " different</b>";
+      : "generated, declared and counted on their own: <b>" + D.synthetic.nMatch + " match</b>, <b>" + D.synthetic.nDifferent + " different</b>";
   }
   function lire(c) {
     cells.forEach((x) => x.setAttribute("aria-pressed", String(x === c)));
@@ -327,7 +327,8 @@ ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
 PHRASE_ABSENTS = (
     f"a matcher missing from that list ({ABSENTS}) shows as a labelled blank"
     if ABSENTS else
-    "Every matcher the tool ships with appears in our test set, and a missing one shows as a "
+    "Each matcher the tool ships with appears in our test set, and if one were ever missing "
+    "it would show as a "
     "labelled blank")
 
 PAGE = f'''<!doctype html><html lang="en">
@@ -348,10 +349,13 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section class="tete">
   <div class="colonne">
-    <h1 class="h1">Each matcher at each threshold, live.</h1>
-    <p class="lede">Every figure here comes from <b>our public test set</b>: name pairs we
-      wrote ourselves, near-matches included, run through the matchers. No customer data is
-      on this page. The figures are recomputed as the page loads.</p>
+    <h1 class="h1">See what each way of comparing names costs you, live.</h1>
+    <p class="lede">A threshold is the score above which two names count as a match, and a
+      matcher is one way of comparing them, from exact matching to Jaro-Winkler. Recall is the
+      share of true matches a setting catches. The figures here come from <b>our public test
+      set</b>: name pairs we wrote ourselves, near-matches included, which look similar but
+      are different people. Nothing on this page comes from a customer, and the figures are
+      recomputed as the page loads.</p>
   </div>
 </section>
 
@@ -406,23 +410,23 @@ PAGE = f'''<!doctype html><html lang="en">
         on {D["provenance"]["date"]}. The script that builds it checks that hash, rebuilds every
         figure with the tool&#8217;s own code, and publishes nothing if one of them
         disagrees.</li>
-      <li><b>The pairs we wrote.</b> The labelled half is written by hand: true correspondences
-        (transliterations, word order, initials, typos, and particles like van, de or al) and near-matches
-        (siblings, partial homonyms, similar spellings that are not the same person). The labels
-        ship with the pairs, debatable ones with their reasons.</li>
-      <li><b>Synthetic variants, kept apart.</b> Generated from list-entry names, one kind of change at a
-        time, and kept apart from the written half: the toggle above switches the whole
-        grid, and the two stay separate.</li>
+      <li><b>The pairs we wrote.</b> The labelled half is written by hand: true matches, where the
+        same name is transliterated, reordered, abbreviated or mistyped, and near-matches, which are
+        siblings and partial homonyms that are not the same person. Where a label is debatable, the
+        reason is written beside it.</li>
+      <li><b>The generated half.</b> Generated from list-entry names, one kind of change at a
+        time, and counted on their own, because a generated one is not as hard: the toggle
+        above switches the whole grid.</li>
       <li data-commun="instrument"><b>How the tool picks.</b> The slider sets the share of true matches you want
-        caught. A setting counts only if the low end of its interval clears that share. The tool then takes the fewest false alerts.</li>
+        caught. A setting counts only if the low end of its confidence interval clears that share, because a rate measured on few cases can flatter. The tool then takes the setting with the fewest false alerts.</li>
     </ul>
       </details>
       <details class="pli"><summary>What this page cannot do</summary>
     <ul>
       <li><b>Your data.</b> This page cannot read it: no network request leaves it
-        (the page&#8217;s security policy forbids them), nothing is loaded from elsewhere, and there is no input
+        (the browser&#8217;s own security rules forbid them), nothing is loaded from elsewhere, and there is no input
         field to paste a name into.</li>
-      <li><b>A rate without the number of pairs behind it.</b> Each cell carries that number and its 95&nbsp;% interval. {PHRASE_ABSENTS}.</li>
+      <li><b>It cannot show a rate without the number of pairs behind it.</b> Each cell carries that number and its 95% confidence interval. {PHRASE_ABSENTS}.</li>
     </ul>
       </details>
     </div>
