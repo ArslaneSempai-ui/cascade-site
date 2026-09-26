@@ -106,6 +106,11 @@ if [ -f $CTL ]; then
   for t in $OUTILS; do
     node $CTL "http://127.0.0.1:$PORT/$t/index.html" --sortie $SORTIE/ctl-$t > $SORTIE/ctl-$t.log 2>&1; code=$?
     echo "$t : controle code $code $(grep -iE "débord|exception|manquante|contraste|morte|propre" $SORTIE/ctl-$t.log | head -2 | tr '\n' ' ' | cut -c1-160)"
+    # a gate that crashed before looking (missing module, dead symlink) prints no verdict:
+    # that was a silent green from 13/09 to 27/09, so it refuses now, like a real defect
+    grep -q "Mécanique propre" $SORTIE/ctl-$t.log || { grep -qiE "débord|exception|manquante|contraste|morte" $SORTIE/ctl-$t.log \
+      && echo "REFUS : défaut mécanique sur $t ($SORTIE/ctl-$t.log)" \
+      || echo "REFUS : la porte mécanique n'a pas regardé $t ($SORTIE/ctl-$t.log)"; exit 7; }
   done
 else
   echo "SAUTÉE, dit : controle.mjs absent de cette machine ($CTL) — la porte mécanique n'a pas regardé"
