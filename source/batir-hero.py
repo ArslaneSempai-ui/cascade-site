@@ -945,12 +945,22 @@ def choix_outils(outil):
             f'{pans}\n</nav>')
 
 
+# 27/09 : LES FILMS EN LIGNE, chaîne YouTube « HS Industries LLC ». Durée = celle qu'affiche YouTube
+# (arrondie à la seconde supérieure) du fichier livré films-rendus/<outil>-livraison.mp4, mesuré au ffprobe :
+# routing 78,50 s, dossier 92,97, screening 87,87, monitoring 94,63, scoring 90,17.
+FILMS = {"routing":    ("https://youtu.be/SXxViU7rhU8", "1:19", "1 minute 19"),
+         "dossier":    ("https://youtu.be/aNZ5uks7ibE", "1:33", "1 minute 33"),
+         "screening":  ("https://youtu.be/AoINd6J2XMI", "1:28", "1 minute 28"),
+         "monitoring": ("https://youtu.be/xx_1lFJsw9E", "1:35", "1 minute 35"),
+         "scoring":    ("https://youtu.be/mCybN-xq4jA", "1:31", "1 minute 31")}
+
+
 def film_html(outil):
     """LA PLACE DU FILM d'un outil, la même sur chaque couleur : le titre, le lecteur,
-    la note « hosted on YouTube · link pending upload » tant que la vidéo n'est pas
-    en ligne. Sans vidéo rendue, l'affiche est COMPOSÉE (nuit de l'outil, robot
-    penché, question) : aucune durée n'est affichée, parce qu'aucune n'est mesurée ;
-    le vert, dont le film existe, garde son affiche rendue et ses 57 secondes."""
+    le lien direct vers SA vidéo et sa durée (table FILMS, 27/09 : les cinq films sont
+    en ligne). Sans affiche rendue, l'affiche est COMPOSÉE (nuit de l'outil, robot
+    penché, question)."""
+    url, duree, duree_dite = FILMS[outil["id"]]
     if outil.get("affiche"):
         # l'affiche RENDUE, comme le vert : le robot de la couleur, paumes ouvertes,
         # projetant deux chiffres du relevé (etats/affiche-plaque.py + affiche-composer.py)
@@ -964,12 +974,13 @@ def film_html(outil):
 <section class="film"><div class="colonne">
   <h2 class="h2">Cascade, explained.</h2>
   <p class="film-duree">The five {outil["nom"]} findings</p>
-  <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film of Cascade {outil["nom"]}, opens on YouTube">
+  <a class="lecteur" href="{url}" aria-label="Watch the film of Cascade {outil["nom"]}, {duree_dite}, opens on YouTube">
     {visuel}
     <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
+    <span class="duree">{duree}</span>
   </a>
   <div class="film-note">
-    <span class="ou">hosted on YouTube &#183; link pending upload</span>
+    <span class="ou">hosted on YouTube</span>
   </div>
 </div></section>
 """
@@ -1224,15 +1235,15 @@ PAGE = f'''<!doctype html><html lang="en">
 </div></div>
 
 <section class="film"><div class="colonne">
-  <h2 class="h2">Cascade, proven in 57 seconds.</h2>
+  <h2 class="h2">Cascade, proven in 79 seconds.</h2>
   <p class="film-duree">The five findings</p>
-  <a class="lecteur" href="https://www.youtube.com/@cascade-routing" aria-label="Watch the film: 57 seconds, opens on YouTube">
+  <a class="lecteur" href="{FILMS['routing'][0]}" aria-label="Watch the film: 79 seconds, opens on YouTube">
     <img src="rendus/affiche-film.jpg" alt="The Cascade robot, palms up, projecting the two rates: the dashboard 94.4%, your desk 76.7%">
     <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
-    <span class="duree">0:57</span>
+    <span class="duree">{FILMS['routing'][1]}</span>
   </a>
   <div class="film-note">
-    <span class="ou">hosted on YouTube &#183; link pending upload</span>
+    <span class="ou">hosted on YouTube</span>
   </div>
 </div></section>
 
