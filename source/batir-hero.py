@@ -7,7 +7,7 @@ CE QU'ARSLANE A ARRÊTÉ (maquette M1A, validée écran par écran)
   · la séquence : le rail-filmstrip à l'encre verte à gauche (vignettes des
     cinq états), le plateau 3D annoté au centre, la fiche en colonne à droite ;
     le design 3D garde sa taille et sa place, c'est l'intérieur qui change ;
-  · le film : l'affiche du master, lecture sur YouTube ;
+  · le film : l'affiche du master en poster, lecture DANS la page (balise video), YouTube en lien secondaire ;
   · la couture papier au double filet entre les deux blocs nuit ;
   · l'instrument : la table de routage, le bouton fantôme en bas à droite ;
   · les annexes en tuiles, le pied nuit.
@@ -567,12 +567,16 @@ CSS = '''
   .film .h2{color:var(--sur-vert)}
   .film-duree{text-align:center;font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--vert-clair);
     text-transform:uppercase;margin:-.4em 0 1.6em}
-  .lecteur{position:relative;display:block;border-radius:16px;overflow:hidden;
+  .lecteur{position:relative;display:block;border-radius:16px;overflow:hidden;background:var(--nuit-c);
     border:1px solid color-mix(in srgb,var(--vert-vif) 30%,transparent);
-    box-shadow:0 34px 90px rgba(0,0,0,.55);cursor:pointer}
-  .lecteur img{width:100%;transition:transform .4s var(--montee)}
-  .lecteur:hover img{transform:scale(1.02)}
-  .lecteur .jouer{position:absolute;inset:0;margin:auto;width:92px;height:92px;border-radius:50%;
+    box-shadow:0 34px 90px rgba(0,0,0,.55)}
+  .lecteur:not(.joue){cursor:pointer}
+  /* la vidéo native est la boîte : 16/9 par ses attributs, l'affiche en poster ; à l'arrêt
+     elle grossit au survol comme l'affiche d'avant, en lecture elle ne bouge plus */
+  .lecteur video{display:block;width:100%;height:auto;aspect-ratio:16/9;transition:transform .4s var(--montee)}
+  .lecteur:not(.joue):hover video{transform:scale(1.02)}
+  .lecteur .jouer{position:absolute;inset:0;margin:auto;width:92px;height:92px;border-radius:50%;padding:0;
+    appearance:none;cursor:pointer;color:inherit;font:inherit;
     background:color-mix(in srgb,var(--nuit-c) 68%,transparent);backdrop-filter:blur(6px);
     border:1.5px solid var(--vert-clair);display:flex;align-items:center;justify-content:center;
     transition:transform .25s var(--montee),background .25s}
@@ -581,14 +585,18 @@ CSS = '''
   .lecteur .duree{position:absolute;right:16px;bottom:14px;font-family:var(--mono);font-size:12px;
     letter-spacing:.08em;color:var(--sur-vert);background:color-mix(in srgb,var(--nuit-c) 72%,transparent);
     padding:5px 10px;border-radius:6px}
+  /* en lecture : le bouton, la durée et l'affiche composée s'effacent, les commandes natives restent */
+  .lecteur.joue .jouer,.lecteur.joue .duree,.lecteur.joue .affiche{display:none}
   .film-note{display:flex;justify-content:flex-end;gap:16px;flex-wrap:wrap;margin-top:16px;
     font-size:14px;color:var(--sur-vert-pale)}
-  .film-note .ou{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  .film-note .ou{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:inherit;text-decoration:none}
+  .film-note .ou:hover{color:var(--sur-vert)}
   /* l'affiche composée : la place du film d'un outil AVANT que sa vidéo existe
      (Arslane, 6/09 : « une partie pour mettre une vidéo sur toutes les couleurs »).
      Le robot penché de l'outil, sa question, sa nuit ; le jour venu, l'affiche
      rendue remplace la composition, le lecteur et la note ne bougent pas. */
-  .lecteur .affiche{display:block;aspect-ratio:16/9;position:relative;overflow:hidden;
+  .lecteur .affiche{position:absolute;inset:0;overflow:hidden;
     background:radial-gradient(120% 120% at 82% 105%,var(--nuit-a),var(--nuit-c) 70%)}
   .lecteur .affiche img{position:absolute;right:5%;bottom:-9%;width:34%;height:auto;
     filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))}
@@ -600,6 +608,9 @@ CSS = '''
   /* sur l'affiche composée le bouton quitte le centre (il couvrait la question au
      téléphone, relu sur capture 375) : en bas à gauche, dans l'air sous le titre */
   .lecteur .affiche~.jouer{inset:auto auto 9% 6%;margin:0}
+  /* au téléphone, 92 px couvraient le visage du robot (capture 375 du 27/09) : 64, cible encore large */
+  @media (max-width:700px){.lecteur .jouer{width:64px;height:64px}
+    .lecteur .jouer svg{width:20px;height:23px;margin-left:4px}}
   @media (max-width:700px){.lecteur .affiche~.jouer{width:56px;height:56px}
     .lecteur .affiche~.jouer svg{width:18px;height:20px;margin-left:4px}}
 
@@ -839,6 +850,21 @@ JS = '''
               behavior: reduit ? "auto" : "smooth"});
   }));
   poser(0); surScroll();
+  // LE LECTEUR DU FILM (27/09) : sans script la vidéo porte ses commandes natives d'emblée ;
+  // avec, l'affiche reste nue sous le bouton rond et les commandes viennent au premier clic,
+  // n'importe où sur l'affiche. Le bouton est un vrai bouton (clavier), et la vidéo reçoit
+  // le focus quand elle démarre. Si play() est refusé, les commandes natives restent : second essai.
+  for (const lecteur of document.querySelectorAll(".lecteur[data-film]")) {
+    const video = lecteur.querySelector("video");
+    video.removeAttribute("controls");
+    lecteur.addEventListener("click", () => {
+      if (lecteur.classList.contains("joue")) return;
+      lecteur.classList.add("joue");
+      video.setAttribute("controls", "");
+      video.focus();
+      video.play().catch(() => {});
+    });
+  }
 '''
 
 scenes = "".join(scene_html(i, s) for i, s in enumerate(SCENES))
@@ -955,33 +981,49 @@ FILMS = {"routing":    ("https://youtu.be/SXxViU7rhU8", "1:19", "1 minute 19"),
          "scoring":    ("https://youtu.be/mCybN-xq4jA", "1:31", "1 minute 31")}
 
 
+def lecteur_html(oid, nom, prefixe, affiche=None, visuel=""):
+    """LE LECTEUR (27/09, Arslane : « redirigé vers YouTube, c'est pas très pro ») : le film
+    joue DANS la page, par une balise video native et rien d'autre. L'affiche est son poster,
+    le bouton rond reste par-dessus, les commandes natives viennent au premier clic (sans
+    script elles sont là d'emblée : l'attribut controls est écrit, le script le retire).
+    Le fichier est films/<outil>.mp4, encodé pour le web dans source/films/ (moov en tête,
+    sous 25 Mo : gardes de l'assembleur, qui refuse aussi un lecteur sans film). YouTube
+    reste un lien secondaire, pour qui veut partager. Sans affiche rendue, `visuel` est
+    l'affiche COMPOSÉE, posée sur la vidéo et retirée à la lecture."""
+    url, duree, duree_dite = FILMS[oid]
+    src = f"{prefixe}films/{oid}.mp4"
+    poster = f' poster="{prefixe}rendus/{affiche}"' if affiche else ""
+    return f"""<div class="lecteur" data-film="{oid}">
+    <video{poster} preload="none" playsinline controls width="1920" height="1080" aria-label="The film of Cascade {nom}, {duree_dite}">
+      <source src="{src}" type="video/mp4">
+      <a href="{src}">Download the film of Cascade {nom} (mp4).</a>
+    </video>
+    {visuel}<button class="jouer" type="button" aria-label="Play the film of Cascade {nom}, {duree_dite}"><svg width="30" height="34" viewBox="0 0 30 34" fill="none" aria-hidden="true"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></button>
+    <span class="duree" aria-hidden="true">{duree}</span>
+  </div>
+  <div class="film-note">
+    <a class="ou" href="{url}" rel="noopener">also on YouTube <span aria-hidden="true">&#8594;</span></a>
+  </div>"""
+
+
 def film_html(outil):
-    """LA PLACE DU FILM d'un outil, la même sur chaque couleur : le titre, le lecteur,
-    le lien direct vers SA vidéo et sa durée (table FILMS, 27/09 : les cinq films sont
-    en ligne). Sans affiche rendue, l'affiche est COMPOSÉE (nuit de l'outil, robot
-    penché, question)."""
-    url, duree, duree_dite = FILMS[outil["id"]]
+    """LA PLACE DU FILM d'un outil, la même sur chaque couleur : le titre, le lecteur
+    natif et sa durée (table FILMS, 27/09 : les cinq films sont en ligne). Sans affiche
+    rendue, l'affiche est COMPOSÉE (nuit de l'outil, robot penché, question)."""
     if outil.get("affiche"):
         # l'affiche RENDUE, comme le vert : le robot de la couleur, paumes ouvertes,
         # projetant deux chiffres du relevé (etats/affiche-plaque.py + affiche-composer.py)
-        visuel = (f'<img src="{lien(outil, "rendus/" + outil["affiche"])}" '
-                  f'alt="{outil["affiche_alt"]}">')
+        affiche, visuel = outil["affiche"], ""
     else:
+        affiche = None
         visuel = (f'<span class="affiche" role="img" aria-label="The {outil["nom"]} robot, leaning in, beside the question the film answers">'
                   f'<span class="af-t"><span class="af-eti">Cascade &#183; {outil["nom"]}</span><span class="af-q">{outil["question"]}</span></span>'
-                  f'<img src="{lien(outil, "rendus/" + outil["robots"][0])}" alt=""></span>')
+                  f'<img src="{lien(outil, "rendus/" + outil["robots"][0])}" alt=""></span>\n    ')
     return f"""
 <section class="film"><div class="colonne">
   <h2 class="h2">Cascade, explained.</h2>
   <p class="film-duree">The five {outil["nom"]} findings</p>
-  <a class="lecteur" href="{url}" aria-label="Watch the film of Cascade {outil["nom"]}, {duree_dite}, opens on YouTube">
-    {visuel}
-    <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
-    <span class="duree">{duree}</span>
-  </a>
-  <div class="film-note">
-    <span class="ou">hosted on YouTube</span>
-  </div>
+  {lecteur_html(outil["id"], outil["nom"], outil["prefixe_racine"], affiche, visuel)}
 </div></section>
 """
 
@@ -1237,14 +1279,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="film"><div class="colonne">
   <h2 class="h2">Cascade, proven in 79 seconds.</h2>
   <p class="film-duree">The five findings</p>
-  <a class="lecteur" href="{FILMS['routing'][0]}" aria-label="Watch the film: 79 seconds, opens on YouTube">
-    <img src="rendus/affiche-film.jpg" alt="The Cascade robot, palms up, projecting the two rates: the dashboard 94.4%, your desk 76.7%">
-    <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
-    <span class="duree">{FILMS['routing'][1]}</span>
-  </a>
-  <div class="film-note">
-    <span class="ou">hosted on YouTube</span>
-  </div>
+  {lecteur_html("routing", "Routing", "", "affiche-film.jpg")}
 </div></section>
 
 {menus_html()}
@@ -1258,7 +1293,7 @@ PAGE = f'''<!doctype html><html lang="en">
 # Routing vit sous routing/ (décision A du 6/09) : chaque lien relatif de la page
 # sort du sous-dossier par ../ ; ceux qui le portent déjà (le rideau, via la table)
 # ne le reçoivent pas deux fois ; les absolus, les ancres et les data: sont laissés
-PAGE = re.sub(r'(href|src)="(?!(?:https?:|#|data:|mailto:|\.\./))([^"]+)"', r'\1="../\2"', PAGE)
+PAGE = re.sub(r'(href|src|poster)="(?!(?:https?:|#|data:|mailto:|\.\./))([^"]+)"', r'\1="../\2"', PAGE)   # poster : l'affiche du lecteur (27/09)
 assert "—" not in PAGE, "un cadratin s'est glissé dans la page"
 (BASE / "HERO.html").write_text(PAGE, encoding="utf-8")
 print("HERO.html", f"{len(PAGE) / 1e3:.0f} ko")

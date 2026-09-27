@@ -173,7 +173,7 @@ def csp(t):
     regle = ("default-src 'none'; "
              f"style-src {style_src}; "
              f"script-src {script_src}; "
-             "font-src 'self'; img-src 'self' data:; "
+             "font-src 'self'; img-src 'self' data:; media-src 'self'; "
              "base-uri 'self'; "
              "form-action 'none'; connect-src 'none'")
     return t.replace(
@@ -703,7 +703,7 @@ print(f"  données structurées : "
 # ── les ressources réellement référencées ────────────────────────────────────
 refs = set()
 for page in DOCS.rglob("*.html"):
-    for m in re.finditer(r'(?:href|src)="([^"]+)"', page.read_text()):
+    for m in re.finditer(r'(?:href|src|poster)="([^"]+)"', page.read_text()):
         u = m.group(1)
         if u.startswith(("http", "#", "data:", "mailto:")):
             continue
@@ -738,6 +738,58 @@ for _oid in sorted(_outils_emis | {"routing"}):
     _seq = MAQ / "rendus" / "sequences" / ETATS_PREFIXE[_oid]
     if _seq.exists():
         shutil.copytree(_seq, DOCS / "rendus" / "sequences" / ETATS_PREFIXE[_oid])
+# LES FILMS (27/09, Arslane : « redirigés vers YouTube, c'est pas très pro ») : joués DANS
+# la page par une balise video, servis d'ici. Chaque outil émis doit avoir son
+# source/films/<id>.mp4 encodé pour le web : moov EN TÊTE (sinon le navigateur tire tout le
+# fichier avant la première image et la recherche dans le film ne marche pas), et sous 25 Mo
+# (GitHub Pages refuse à 100 ; au-delà de 25 c'est l'encodage qui a dérivé, pas le film :
+# les cinq tiennent entre 13 et 21). Le témoin d'abord : un mp4 où mdat précède moov doit
+# être refusé, sinon la garde est un vert vide.
+def _moov_en_tete(chemin):
+    """Vrai si l'atome moov précède mdat à la racine du mp4 (fichier « faststart »)."""
+    with chemin.open("rb") as h:
+        pos = 0
+        while True:
+            h.seek(pos)
+            en_tete = h.read(8)
+            if len(en_tete) < 8:
+                return False
+            taille, genre = int.from_bytes(en_tete[:4], "big"), en_tete[4:8]
+            if genre == b"moov":
+                return True
+            if genre == b"mdat":
+                return False
+            if taille == 1:                                  # taille étendue sur 8 octets
+                taille = int.from_bytes(h.read(8), "big")
+            if taille < 8:
+                return False
+            pos += taille
+
+
+def _atome(genre, corps=b""):
+    return (8 + len(corps)).to_bytes(4, "big") + genre + corps
+
+
+_temoin_film = DOCS / "zz-temoin.mp4"
+_temoin_film.write_bytes(_atome(b"ftyp", b"isom") + _atome(b"mdat", b"\0" * 16) + _atome(b"moov", b"\0" * 8))
+if _moov_en_tete(_temoin_film):
+    sys.exit("CONTRÔLE CASSÉ : un mp4 témoin avec moov APRÈS mdat est passé pour faststart")
+_temoin_film.write_bytes(_atome(b"ftyp", b"isom") + _atome(b"moov", b"\0" * 8) + _atome(b"mdat", b"\0" * 16))
+if not _moov_en_tete(_temoin_film):
+    sys.exit("CONTRÔLE CASSÉ : un mp4 témoin faststart a été refusé")
+_temoin_film.unlink()
+
+FILM_MAX = 25 * 1024 * 1024
+(DOCS / "films").mkdir()
+for _oid in sorted(_outils_emis | {"routing"}):
+    film = MAQ / "films" / f"{_oid}.mp4"
+    if not film.exists():
+        sys.exit(f"source/films/{_oid}.mp4 absent : la page de {_oid} aurait un lecteur sans film")
+    if film.stat().st_size > FILM_MAX:
+        sys.exit(f"source/films/{_oid}.mp4 : {film.stat().st_size // 1048576} Mo, au-dessus des 25 : ré-encoder (crf 26, preset slow)")
+    if not _moov_en_tete(film):
+        sys.exit(f"source/films/{_oid}.mp4 : moov après mdat : ré-encoder avec -movflags +faststart")
+    shutil.copy(film, DOCS / "films" / film.name)
 shutil.copy(MAQ / "releve.json", DOCS / "releve.json")
 shutil.copy(MAQ / "og.png", DOCS / "og.png")
 (DOCS / ".nojekyll").write_text("")
@@ -962,7 +1014,7 @@ print("  " + _tt.stdout.strip().splitlines()[0].strip())
 def liens_casses(dossier):
     casses = []
     for page in sorted(dossier.rglob("*.html")):
-        for m in re.finditer(r'(?:href|src)="([^"]+)"', page.read_text()):
+        for m in re.finditer(r'(?:href|src|poster)="([^"]+)"', page.read_text()):
             u = m.group(1).split("#")[0]
             if u.startswith(("http", "data:", "mailto:")) or not u:
                 continue

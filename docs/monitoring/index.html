@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-6ZCZc8xvuNxyI3NCQMPhBcOI81TC/PqTA1mXs6aw5AQ=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-OHwsIiniQT7MqYZ23qX2fwSHiqMyynGa2QZZCSRfqHc=' 'sha256-ymcRaC1eUjTjJ9RkgWfaxWb9/ZhMS1J8UVFf8tHuNN8=' 'sha256-P7Vi9MGuq5+qRTFktFVcYnmzuHk5AKV6fBhWbvFxLGk=' 'sha256-MZNvr/siLT80DQg4xlCokQb4hXIZBROwsFUeQ/W9bA4=' 'sha256-kahPlLiJa1REfyc64yVFR2GXo13XOpm50KlDiA1ahRc=' 'sha256-jo/MSB2jUjWPN2UTR2AWeXFGYELpW26Q4LJPzJAN0hU=' 'sha256-v9UtAzkK8rSE3j3XXFwKcOWFzBeZcFwjBVdu1ZvGmI8=' 'sha256-OIwInjP8jkxzHe+P+u3BEpdSwcVEul2atpMlPUbyx0A='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-BZRsrTPl4run2ogTuZKKWAgqCtd4t16xLVU3Mk0jYn8=' 'sha256-h3XEPagyHXWX+lAAdHX4nj8uMkrYERyFotOSvQQK39s='; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-BEHUrhTu6v0Zodc0yiv/ebQReUq7IbYI/d8Jt+ohWQs=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-OHwsIiniQT7MqYZ23qX2fwSHiqMyynGa2QZZCSRfqHc=' 'sha256-ymcRaC1eUjTjJ9RkgWfaxWb9/ZhMS1J8UVFf8tHuNN8=' 'sha256-P7Vi9MGuq5+qRTFktFVcYnmzuHk5AKV6fBhWbvFxLGk=' 'sha256-MZNvr/siLT80DQg4xlCokQb4hXIZBROwsFUeQ/W9bA4=' 'sha256-kahPlLiJa1REfyc64yVFR2GXo13XOpm50KlDiA1ahRc=' 'sha256-jo/MSB2jUjWPN2UTR2AWeXFGYELpW26Q4LJPzJAN0hU=' 'sha256-v9UtAzkK8rSE3j3XXFwKcOWFzBeZcFwjBVdu1ZvGmI8=' 'sha256-OIwInjP8jkxzHe+P+u3BEpdSwcVEul2atpMlPUbyx0A='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-9aY/59FZCg/UiePMl4gFGHR/ue3zj6BRogCz93Ml7vU=' 'sha256-h3XEPagyHXWX+lAAdHX4nj8uMkrYERyFotOSvQQK39s='; font-src 'self'; img-src 'self' data:; media-src 'self'; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Monitoring &#183; transaction monitoring audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/monitoring/">
@@ -322,12 +322,16 @@
   .film .h2{color:var(--sur-vert)}
   .film-duree{text-align:center;font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--vert-clair);
     text-transform:uppercase;margin:-.4em 0 1.6em}
-  .lecteur{position:relative;display:block;border-radius:16px;overflow:hidden;
+  .lecteur{position:relative;display:block;border-radius:16px;overflow:hidden;background:var(--nuit-c);
     border:1px solid color-mix(in srgb,var(--vert-vif) 30%,transparent);
-    box-shadow:0 34px 90px rgba(0,0,0,.55);cursor:pointer}
-  .lecteur img{width:100%;transition:transform .4s var(--montee)}
-  .lecteur:hover img{transform:scale(1.02)}
-  .lecteur .jouer{position:absolute;inset:0;margin:auto;width:92px;height:92px;border-radius:50%;
+    box-shadow:0 34px 90px rgba(0,0,0,.55)}
+  .lecteur:not(.joue){cursor:pointer}
+  /* la vidéo native est la boîte : 16/9 par ses attributs, l'affiche en poster ; à l'arrêt
+     elle grossit au survol comme l'affiche d'avant, en lecture elle ne bouge plus */
+  .lecteur video{display:block;width:100%;height:auto;aspect-ratio:16/9;transition:transform .4s var(--montee)}
+  .lecteur:not(.joue):hover video{transform:scale(1.02)}
+  .lecteur .jouer{position:absolute;inset:0;margin:auto;width:92px;height:92px;border-radius:50%;padding:0;
+    appearance:none;cursor:pointer;color:inherit;font:inherit;
     background:color-mix(in srgb,var(--nuit-c) 68%,transparent);backdrop-filter:blur(6px);
     border:1.5px solid var(--vert-clair);display:flex;align-items:center;justify-content:center;
     transition:transform .25s var(--montee),background .25s}
@@ -336,14 +340,18 @@
   .lecteur .duree{position:absolute;right:16px;bottom:14px;font-family:var(--mono);font-size:12px;
     letter-spacing:.08em;color:var(--sur-vert);background:color-mix(in srgb,var(--nuit-c) 72%,transparent);
     padding:5px 10px;border-radius:6px}
+  /* en lecture : le bouton, la durée et l'affiche composée s'effacent, les commandes natives restent */
+  .lecteur.joue .jouer,.lecteur.joue .duree,.lecteur.joue .affiche{display:none}
   .film-note{display:flex;justify-content:flex-end;gap:16px;flex-wrap:wrap;margin-top:16px;
     font-size:14px;color:var(--sur-vert-pale)}
-  .film-note .ou{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  .film-note .ou{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:inherit;text-decoration:none}
+  .film-note .ou:hover{color:var(--sur-vert)}
   /* l'affiche composée : la place du film d'un outil AVANT que sa vidéo existe
      (Arslane, 6/09 : « une partie pour mettre une vidéo sur toutes les couleurs »).
      Le robot penché de l'outil, sa question, sa nuit ; le jour venu, l'affiche
      rendue remplace la composition, le lecteur et la note ne bougent pas. */
-  .lecteur .affiche{display:block;aspect-ratio:16/9;position:relative;overflow:hidden;
+  .lecteur .affiche{position:absolute;inset:0;overflow:hidden;
     background:radial-gradient(120% 120% at 82% 105%,var(--nuit-a),var(--nuit-c) 70%)}
   .lecteur .affiche img{position:absolute;right:5%;bottom:-9%;width:34%;height:auto;
     filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))}
@@ -355,6 +363,9 @@
   /* sur l'affiche composée le bouton quitte le centre (il couvrait la question au
      téléphone, relu sur capture 375) : en bas à gauche, dans l'air sous le titre */
   .lecteur .affiche~.jouer{inset:auto auto 9% 6%;margin:0}
+  /* au téléphone, 92 px couvraient le visage du robot (capture 375 du 27/09) : 64, cible encore large */
+  @media (max-width:700px){.lecteur .jouer{width:64px;height:64px}
+    .lecteur .jouer svg{width:20px;height:23px;margin-left:4px}}
   @media (max-width:700px){.lecteur .affiche~.jouer{width:56px;height:56px}
     .lecteur .affiche~.jouer svg{width:18px;height:20px;margin-left:4px}}
 
@@ -803,13 +814,16 @@
 <section class="film"><div class="colonne">
   <h2 class="h2">Cascade, explained.</h2>
   <p class="film-duree">The five Monitoring findings</p>
-  <a class="lecteur" href="https://youtu.be/xx_1lFJsw9E" aria-label="Watch the film of Cascade Monitoring, 1 minute 35, opens on YouTube">
-    <img src="../rendus/affiche-monitoring.jpg" alt="The lapis Cascade robot, palms up, projecting the two highest shares any single scenario is sure of catching: amount on the left, peer on the right, both under the 0.90 floor." width="1280" height="720" decoding="async" loading="lazy">
-    <span class="jouer" aria-hidden="true"><svg width="30" height="34" viewBox="0 0 30 34" fill="none"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></span>
-    <span class="duree">1:35</span>
-  </a>
+  <div class="lecteur" data-film="monitoring">
+    <video poster="../rendus/affiche-monitoring.jpg" preload="none" playsinline controls width="1920" height="1080" aria-label="The film of Cascade Monitoring, 1 minute 35">
+      <source src="../films/monitoring.mp4" type="video/mp4">
+      <a href="../films/monitoring.mp4">Download the film of Cascade Monitoring (mp4).</a>
+    </video>
+    <button class="jouer" type="button" aria-label="Play the film of Cascade Monitoring, 1 minute 35"><svg width="30" height="34" viewBox="0 0 30 34" fill="none" aria-hidden="true"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></button>
+    <span class="duree" aria-hidden="true">1:35</span>
+  </div>
   <div class="film-note">
-    <span class="ou">hosted on YouTube</span>
+    <a class="ou" href="https://youtu.be/xx_1lFJsw9E" rel="noopener">also on YouTube <span aria-hidden="true">&#8594;</span></a>
   </div>
 </div></section>
 
@@ -957,6 +971,21 @@
               behavior: reduit ? "auto" : "smooth"});
   }));
   poser(0); surScroll();
+  // LE LECTEUR DU FILM (27/09) : sans script la vidéo porte ses commandes natives d'emblée ;
+  // avec, l'affiche reste nue sous le bouton rond et les commandes viennent au premier clic,
+  // n'importe où sur l'affiche. Le bouton est un vrai bouton (clavier), et la vidéo reçoit
+  // le focus quand elle démarre. Si play() est refusé, les commandes natives restent : second essai.
+  for (const lecteur of document.querySelectorAll(".lecteur[data-film]")) {
+    const video = lecteur.querySelector("video");
+    video.removeAttribute("controls");
+    lecteur.addEventListener("click", () => {
+      if (lecteur.classList.contains("joue")) return;
+      lecteur.classList.add("joue");
+      video.setAttribute("controls", "");
+      video.focus();
+      video.play().catch(() => {});
+    });
+  }
 </script>
 <script type="application/json" id="seq-manifeste">{"prefixe": "rack", "n": 24, "transitions": 5, "ext": ".webp", "mouvement": 0.66, "chemin": "../rendus/sequences/rack/"}</script>
 <script>
