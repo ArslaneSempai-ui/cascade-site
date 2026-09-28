@@ -1021,10 +1021,12 @@ FILMS = {"routing":    ("https://youtu.be/SXxViU7rhU8", "1:19", "1 minute 19"),
          "dossier":    ("https://youtu.be/aNZ5uks7ibE", "1:33", "1 minute 33"),
          "screening":  ("https://youtu.be/AoINd6J2XMI", "1:28", "1 minute 28"),
          "monitoring": ("https://youtu.be/xx_1lFJsw9E", "1:35", "1 minute 35"),
-         "scoring":    ("https://youtu.be/mCybN-xq4jA", "1:31", "1 minute 31")}
+         "scoring":    ("https://youtu.be/mCybN-xq4jA", "1:31", "1 minute 31"),
+         # 29/09 : la DÉMO Screening (Dana, son fichier, la passe, le rapport, le registre), 85,06 s ; validée « parfait »
+         "screening-demo": (None, "1:25", "1 minute 25")}
 
 
-def lecteur_html(oid, nom, prefixe, affiche=None, visuel=""):
+def lecteur_html(oid, nom, prefixe, affiche=None, visuel="", genre="film"):
     """LE LECTEUR (27/09, Arslane : « redirigé vers YouTube, c'est pas très pro ») : le film
     joue DANS la page, par une balise video native et rien d'autre. L'affiche est son poster,
     le bouton rond reste par-dessus, les commandes natives viennent au premier clic (sans
@@ -1036,17 +1038,18 @@ def lecteur_html(oid, nom, prefixe, affiche=None, visuel=""):
     url, duree, duree_dite = FILMS[oid]
     src = f"{prefixe}films/{oid}.mp4"
     poster = f' poster="{prefixe}rendus/{affiche}"' if affiche else ""
-    return f"""<div class="lecteur" data-film="{oid}">
-    <video{poster} preload="none" playsinline controls width="1920" height="1080" aria-label="The film of Cascade {nom}, {duree_dite}">
-      <source src="{src}" type="video/mp4">
-      <a href="{src}">Download the film of Cascade {nom} (mp4).</a>
-    </video>
-    {visuel}<button class="jouer" type="button" aria-label="Play the film of Cascade {nom}, {duree_dite}"><svg width="30" height="34" viewBox="0 0 30 34" fill="none" aria-hidden="true"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></button>
-    <span class="duree" aria-hidden="true">{duree}</span>
-  </div>
+    note = f"""
   <div class="film-note">
     <a class="ou" href="{url}" rel="noopener">also on YouTube <span aria-hidden="true">&#8594;</span></a>
-  </div>"""
+  </div>""" if url else ""
+    return f"""<div class="lecteur" data-film="{oid}">
+    <video{poster} preload="none" playsinline controls width="1920" height="1080" aria-label="The {genre} of Cascade {nom}, {duree_dite}">
+      <source src="{src}" type="video/mp4">
+      <a href="{src}">Download the {genre} of Cascade {nom} (mp4).</a>
+    </video>
+    {visuel}<button class="jouer" type="button" aria-label="Play the {genre} of Cascade {nom}, {duree_dite}"><svg width="30" height="34" viewBox="0 0 30 34" fill="none" aria-hidden="true"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></button>
+    <span class="duree" aria-hidden="true">{duree}</span>
+  </div>{note}"""
 
 
 def film_html(outil):
@@ -1062,11 +1065,15 @@ def film_html(outil):
         visuel = (f'<span class="affiche" role="img" aria-label="The {outil["nom"]} robot, leaning in, beside the question the film answers">'
                   f'<span class="af-t"><span class="af-eti">Cascade &#183; {outil["nom"]}</span><span class="af-q">{outil["question"]}</span></span>'
                   f'<img src="{lien(outil, "rendus/" + outil["robots"][0])}" alt=""></span>\n    ')
+    # 29/09 : sur Screening, la DÉMO suit le film des cinq findings : ce qu'un client fait, de son fichier au registre
+    demo = f"""
+  <p class="film-duree" style="margin-top:56px">The demo: her file, the screening, the report, the record</p>
+  {lecteur_html("screening-demo", outil["nom"], outil["prefixe_racine"], "affiche-screening-demo.jpg", "", genre="demo")}""" if outil["id"] == "screening" else ""
     return f"""
 <section class="film"><div class="colonne">
   <h2 class="h2">Cascade, explained.</h2>
   <p class="film-duree">The five {outil["nom"]} findings</p>
-  {lecteur_html(outil["id"], outil["nom"], outil["prefixe_racine"], affiche, visuel)}
+  {lecteur_html(outil["id"], outil["nom"], outil["prefixe_racine"], affiche, visuel)}{demo}
 </div></section>
 """
 
