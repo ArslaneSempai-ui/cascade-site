@@ -147,6 +147,9 @@ OUTILS = {
         "favicon_accent": "%237a1f2e",
         "robots": ("robot-rubis-penche.webp", "robot-rubis-agrippe.webp"),
         "releve": _MAISON / "cascade-screening" / "releve-public.json",  # scellé, vérifié par lire_releve_scelle
+        # le relevé du matcher de sociétés et navires (releve-entites.json, scellé et signé dans l'outil) :
+        # la section « Company and vessel names » de la page s'y branche par son scellé, comme le héros
+        "releve_entites": _MAISON / "cascade-screening" / "releve-entites.json",
         "outil_chemin": _MAISON / "cascade-screening",
         "depot": "https://github.com/ArslaneSempai-ui/cascade-screening",
         "page_hero": "HERO-SCREENING.html",

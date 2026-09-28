@@ -317,6 +317,21 @@ CSS = '''
     border-color:color-mix(in srgb,var(--vert-vif) 34%,transparent);
     box-shadow:0 26px 70px rgba(0,0,0,.5)}
   .hero .cue{color:var(--sur-vert-pale)}
+  /* la section des sociétés et navires (page Screening) : le relevé sur le papier, trois chiffres en
+     tabulaire sous un filet, la légende en romain, la ligne de scellé en mono ; ni carte ni encadré */
+  .entites{padding:96px 0 104px;background:var(--papier-haut);
+    border-top:1px solid var(--filet-clair);border-bottom:1px solid var(--filet-clair)}
+  .entites .h2{max-width:30ch}
+  .entites .chiffres{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin:44px 0 26px}
+  .entites .chiffre{border-top:1px solid var(--filet);padding-top:18px}
+  .entites .grand{display:block;font-family:var(--mono);font-variant-numeric:tabular-nums;
+    font-size:clamp(44px,5vw,72px);line-height:1;letter-spacing:-.02em;color:var(--vert-titre)}
+  .entites .grand small{font-size:.42em;letter-spacing:0;color:var(--demi);margin-left:.12em}
+  .entites .legende{display:block;margin-top:14px;font-size:15px;line-height:1.5;color:var(--demi);max-width:34ch}
+  .entites .t-note{color:var(--pale);max-width:78ch;margin-top:18px}
+  .entites .sceau-l{display:block;margin-top:22px;font-family:var(--mono);font-size:11px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--pale)}
+  @media (max-width:760px){.entites .chiffres{grid-template-columns:1fr;gap:28px}}
   .marque-h{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--sur-vert-pale)}
   /* depuis la copy (10/09) un titre de héros est une phrase entière : au-delà de 48 caractères
@@ -1809,6 +1824,50 @@ def _table_outil(spec, releve, findings):
 
 
 
+def _section_entites(o):
+    """La section « Company and vessel names » de la page Screening : trois chiffres lus dans le relevé
+    scellé des entités (releve-entites.json, scellé ET signé dans l'outil), refaits depuis leur cellule,
+    et refusés s'ils ne se refont pas ; la date, le commit et le scellé viennent du relevé."""
+    if "releve_entites" not in o:
+        return ""
+    f = json.loads((BASE / "findings-entites.json").read_text())
+    R = lire_releve_scelle(o["releve_entites"])
+    if f.get("sceau") != R["empreinte"]:
+        sys.exit(f"findings-entites.json cite le scellé {f.get('sceau')} mais releve-entites.json porte "
+                 f"{R['empreinte']} : les textes ont dérivé du relevé, section à resceller")
+    blocs = []
+    for c in f["chiffres"]:
+        cell = R
+        for k in c["source"]["chemin"]:
+            cell = cell[k]
+        m = c["source"]["mesure"]
+        if m == "taux":
+            valeur = f"{round(100 * cell['n'] / cell['sur'])}"
+            legende = c["legende"].format(bas=cell["bas"], haut=cell["haut"], sur=cell["sur"])
+        elif m == "n":
+            valeur = f"{cell['n']}"
+            legende = c["legende"].format(bas=cell["bas"], haut=cell["haut"], sur=cell["sur"])
+        elif m == "forts+possibles":
+            if not cell.get("aveugle"):
+                sys.exit("la section des entités cite un livre qui n'est pas aveugle : refusé")
+            valeur = f"{cell['forts'] + cell['possibles']}"
+            legende = c["legende"].format(forts=cell["forts"], possibles=cell["possibles"], lignes=cell["lignes"])
+        else:
+            sys.exit(f"mesure inconnue dans findings-entites.json : {m}")
+        unite = f'<small>{c["unite"]}</small>' if c["unite"] else ""
+        blocs.append(f'<div class="chiffre"><span class="grand">{valeur}{unite}</span>'
+                     f'<span class="legende">{legende}</span></div>')
+    html = f'''<section class="entites" id="companies"><div class="colonne">
+  <p class="marque-h">Company and vessel names</p>
+  <h2 class="h2">{f["titre"]}</h2>
+  <div class="chiffres">{"".join(blocs)}</div>
+  <p class="t-note">{f["note"]}</p>
+  <span class="sceau-l">measured {R["date"]} at commit {R["commit"]} &#183; sealed and signed &#183; content hash {R["empreinte"]}</span>
+</div></section>'''
+    assert "\u2014" not in html, "un cadratin s'est glissé dans la section des entités"
+    return html
+
+
 def batir_outil_catalogue(o, spec):
     # UNE définition de « prêt » : manques(), la même que le rideau et l'assembleur.
     # Elle couvre l'absence, le pret:false et la dérive de sceau (un relevé re-scellé
@@ -1955,6 +2014,7 @@ def batir_outil_catalogue(o, spec):
     </div>
   </div>
 </section>
+{_section_entites(o)}
 <section class="instrument" data-commun="instrument"><div class="colonne">
   <h2 class="h2">Try the {o["nom"]} instrument on our public test set.</h2>
   {affiche_html("horloge" if o["id"] == "dossier" else "courbes", RELEVE, FINDINGS, spec["instrument_page"],

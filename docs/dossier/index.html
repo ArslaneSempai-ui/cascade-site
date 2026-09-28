@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-Y/ybN3UXe0aeTyrAI0Y0Z8onT/MJoUFSYh2JWUbopPg=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-mOyl6x9YzzIyW0KgKTCP176LRPW58h2QDc+H7M/sNLU=' 'sha256-tjFO5ptmdld+VyTooNVrS+UnydTC+ts3f6k0z22Jqxc=' 'sha256-9/lwJejrIxYOssOdIiOgKy/Yeg15T3Mef8gWttLd860=' 'sha256-kv3Sv2Sj8Qeh5H/NNQJtJE1V1TxnvFd2Fe+Y6wrzglQ=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg=' 'sha256-/vYkeP6dXt+l11vONzlXfD8Zv2L2CaEuHLfU62Zvubo=' 'sha256-J3jtxzWdxaAXGj10v/+vK9Lq4f+yS3hCawGN7iBV9xg=' 'sha256-94u25WhXvMAHah9HuVfk6QNXg8h1t8c1QmH2t/TagZw='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-9aY/59FZCg/UiePMl4gFGHR/ue3zj6BRogCz93Ml7vU=' 'sha256-h3XEPagyHXWX+lAAdHX4nj8uMkrYERyFotOSvQQK39s='; font-src 'self'; img-src 'self' data:; media-src 'self'; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-d+LEkG0ZOhi23v7KHhBluXkn0fccHHkEJPZ43GwOQ1k=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-mOyl6x9YzzIyW0KgKTCP176LRPW58h2QDc+H7M/sNLU=' 'sha256-tjFO5ptmdld+VyTooNVrS+UnydTC+ts3f6k0z22Jqxc=' 'sha256-9/lwJejrIxYOssOdIiOgKy/Yeg15T3Mef8gWttLd860=' 'sha256-kv3Sv2Sj8Qeh5H/NNQJtJE1V1TxnvFd2Fe+Y6wrzglQ=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg=' 'sha256-/vYkeP6dXt+l11vONzlXfD8Zv2L2CaEuHLfU62Zvubo=' 'sha256-J3jtxzWdxaAXGj10v/+vK9Lq4f+yS3hCawGN7iBV9xg=' 'sha256-94u25WhXvMAHah9HuVfk6QNXg8h1t8c1QmH2t/TagZw='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-9aY/59FZCg/UiePMl4gFGHR/ue3zj6BRogCz93Ml7vU=' 'sha256-h3XEPagyHXWX+lAAdHX4nj8uMkrYERyFotOSvQQK39s='; font-src 'self'; img-src 'self' data:; media-src 'self'; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Dossier &#183; the assembled audit trail</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/dossier/">
@@ -72,6 +72,21 @@
     border-color:color-mix(in srgb,var(--vert-vif) 34%,transparent);
     box-shadow:0 26px 70px rgba(0,0,0,.5)}
   .hero .cue{color:var(--sur-vert-pale)}
+  /* la section des sociétés et navires (page Screening) : le relevé sur le papier, trois chiffres en
+     tabulaire sous un filet, la légende en romain, la ligne de scellé en mono ; ni carte ni encadré */
+  .entites{padding:96px 0 104px;background:var(--papier-haut);
+    border-top:1px solid var(--filet-clair);border-bottom:1px solid var(--filet-clair)}
+  .entites .h2{max-width:30ch}
+  .entites .chiffres{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin:44px 0 26px}
+  .entites .chiffre{border-top:1px solid var(--filet);padding-top:18px}
+  .entites .grand{display:block;font-family:var(--mono);font-variant-numeric:tabular-nums;
+    font-size:clamp(44px,5vw,72px);line-height:1;letter-spacing:-.02em;color:var(--vert-titre)}
+  .entites .grand small{font-size:.42em;letter-spacing:0;color:var(--demi);margin-left:.12em}
+  .entites .legende{display:block;margin-top:14px;font-size:15px;line-height:1.5;color:var(--demi);max-width:34ch}
+  .entites .t-note{color:var(--pale);max-width:78ch;margin-top:18px}
+  .entites .sceau-l{display:block;margin-top:22px;font-family:var(--mono);font-size:11px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--pale)}
+  @media (max-width:760px){.entites .chiffres{grid-template-columns:1fr;gap:28px}}
   .marque-h{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--sur-vert-pale)}
   /* depuis la copy (10/09) un titre de héros est une phrase entière : au-delà de 48 caractères
@@ -790,6 +805,7 @@
     </div>
   </div>
 </section>
+
 <section class="instrument" data-commun="instrument"><div class="colonne">
   <h2 class="h2">Try the Dossier instrument on our public test set.</h2>
   <div class="affiche-col">

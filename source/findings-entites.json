@@ -1,0 +1,43 @@
+{
+  "_": "The section « Company and vessel names » of the Screening page: three figures, each read from ~/Documents/cascade-screening/releve-entites.json at seal `sceau`. The builder refuses to build if the record on disk no longer carries that seal, recomputes every displayed figure from the named cell and refuses a figure the HTML does not show. Intervals are the Wilson 95% bounds the judge wrote; the date, the commit and the seal shown come from the record itself, never typed here. No em dash anywhere.",
+  "sceau": "68157020f83b6741",
+  "titre": "Company and vessel names: four true names in five come back at the strong level, and none of the two hundred neighbouring counterparties does.",
+  "chiffres": [
+    {
+      "source": {
+        "chemin": [
+          "verdictRealiste",
+          "fort",
+          "trouves"
+        ],
+        "mesure": "taux"
+      },
+      "unite": "%",
+      "legende": "of true pairs found at the strong level, interval {bas}% to {haut}%, on {sur} pairs written blind from a forwarder's quarter of invoices, bills of lading and chat orders."
+    },
+    {
+      "source": {
+        "chemin": [
+          "verdictRealiste",
+          "fort",
+          "fausses"
+        ],
+        "mesure": "n"
+      },
+      "unite": "",
+      "legende": "false alerts on {sur} realistic neighbours, two distinct counterparties that share a word, a city or a surname; interval {bas}% to {haut}%."
+    },
+    {
+      "source": {
+        "chemin": [
+          "livres",
+          1
+        ],
+        "mesure": "forts+possibles"
+      },
+      "unite": "/1000",
+      "legende": "names to read per thousand counterparties that are on no list: {forts} strong, {possibles} possible, on a second book written blind and screened once."
+    }
+  ],
+  "note": "A candidate is a name for your compliance officer to read, never a match established. The realistic set was written by a separate hand and never used to choose a threshold; the book was written after the last rule change and screened once. The eleven blind verdicts of the rounds sit in the public repository, one per population."
+}
