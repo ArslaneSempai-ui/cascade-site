@@ -1,7 +1,7 @@
 {
   "_": "The section « Company and vessel names » of the Screening page: three figures, each read from ~/Documents/cascade-screening/releve-entites.json at seal `sceau`. The builder refuses to build if the record on disk no longer carries that seal, recomputes every displayed figure from the named cell and refuses a figure the HTML does not show. Intervals are the Wilson 95% bounds the judge wrote; the date, the commit and the seal shown come from the record itself, never typed here. No em dash anywhere.",
   "sceau": "68157020f83b6741",
-  "titre": "Company and vessel names: four true names in five come back at the strong level, and none of the two hundred neighbouring counterparties does.",
+  "titre": "Four true names in five come back at the strong level, and none of the two hundred neighbouring counterparties does.",
   "chiffres": [
     {
       "source": {
