@@ -630,6 +630,19 @@ CSS = '''
     padding:5px 10px;border-radius:6px}
   /* en lecture : le bouton, la durée et l'affiche composée s'effacent, les commandes natives restent */
   .lecteur.joue .jouer,.lecteur.joue .duree,.lecteur.joue .affiche{display:none}
+  /* 29/09 : sous le lecteur, les cartes des films (Screening : le film et la démo) ; la carte active porte le trait clair */
+  .liste{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+  .carte-film{display:grid;grid-template-columns:132px 1fr auto;gap:0 14px;align-items:center;padding:10px 14px 10px 10px;border-radius:12px;
+    border:1px solid color-mix(in srgb,var(--vert-clair) 18%,transparent);background:color-mix(in srgb,var(--nuit-c) 60%,transparent);
+    color:inherit;text-decoration:none;transition:border-color .3s var(--montee),background .3s var(--montee)}
+  .carte-film:hover{border-color:color-mix(in srgb,var(--vert-clair) 55%,transparent)}
+  .carte-film.est-actif{border-color:var(--vert-clair);background:color-mix(in srgb,var(--vert-clair) 9%,var(--nuit-c))}
+  .carte-film img{width:132px;height:74px;object-fit:cover;border-radius:7px;display:block}
+  .carte-film .cf-corps{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .carte-film .cf-e{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--vert-clair)}
+  .carte-film .cf-t{font-size:15px;line-height:1.3}
+  .carte-film .cf-d{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--vert-clair)}
+  @media (max-width:700px){.liste{grid-template-columns:1fr}.carte-film{grid-template-columns:96px 1fr auto}.carte-film img{width:96px;height:54px}}
   .film-note{display:flex;justify-content:flex-end;gap:16px;flex-wrap:wrap;margin-top:16px;
     font-size:14px;color:var(--sur-vert-pale)}
   .film-note .ou{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
@@ -907,6 +920,19 @@ JS = '''
       video.focus();
       video.play().catch(() => {});
     });
+    // 29/09 : les cartes sous le lecteur (Screening) : la carte cliquée devient le film du lecteur ; l'affiche
+    // et le bouton reviennent, la durée et les libellés suivent, la note YouTube ne reste que si le film en a une
+    const liste = lecteur.parentElement.querySelector(".liste"); const note = lecteur.parentElement.querySelector(".film-note");
+    if (liste) for (const carte of liste.querySelectorAll(".carte-film")) carte.addEventListener("click", (e) => {
+      e.preventDefault(); if (carte.classList.contains("est-actif")) return;
+      video.pause(); lecteur.classList.remove("joue"); video.removeAttribute("controls");
+      video.querySelector("source").setAttribute("src", carte.dataset.src); video.setAttribute("poster", carte.dataset.poster); video.load();
+      lecteur.querySelector(".duree").textContent = carte.dataset.duree;
+      const nom = "The " + carte.dataset.genre + " of Cascade Screening, " + carte.dataset.dite;
+      video.setAttribute("aria-label", nom); lecteur.querySelector(".jouer").setAttribute("aria-label", "Play " + nom.charAt(0).toLowerCase() + nom.slice(1));
+      for (const c of liste.querySelectorAll(".carte-film")) { c.classList.toggle("est-actif", c === carte); if (c === carte) c.setAttribute("aria-current", "true"); else c.removeAttribute("aria-current"); }
+      if (note) note.style.display = carte.dataset.yt ? "" : "none";
+    });
   }
 '''
 
@@ -1065,15 +1091,21 @@ def film_html(outil):
         visuel = (f'<span class="affiche" role="img" aria-label="The {outil["nom"]} robot, leaning in, beside the question the film answers">'
                   f'<span class="af-t"><span class="af-eti">Cascade &#183; {outil["nom"]}</span><span class="af-q">{outil["question"]}</span></span>'
                   f'<img src="{lien(outil, "rendus/" + outil["robots"][0])}" alt=""></span>\n    ')
-    # 29/09 : sur Screening, la DÉMO suit le film des cinq findings : ce qu'un client fait, de son fichier au registre
-    demo = f"""
-  <p class="film-duree" style="margin-top:56px">The demo: her file, the screening, the report, the record</p>
-  {lecteur_html("screening-demo", outil["nom"], outil["prefixe_racine"], "affiche-screening-demo.jpg", "", genre="demo")}""" if outil["id"] == "screening" else ""
+    # 29/09 : sur Screening, UN lecteur et deux cartes dessous, le film des findings et la démo ; une carte cliquée
+    # change le film du lecteur (script), et sans script chaque carte est un lien vers son mp4
+    pr = outil["prefixe_racine"]
+    liste = f"""
+  <div class="liste" role="list" aria-label="Two films">
+    <a class="carte-film est-actif" role="listitem" aria-current="true" href="{pr}films/screening.mp4" data-src="{pr}films/screening.mp4" data-poster="{pr}rendus/affiche-screening.jpg" data-duree="1:28" data-dite="1 minute 28" data-genre="film" data-yt="{FILMS["screening"][0]}">
+      <img src="{pr}rendus/affiche-screening.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The film</span><span class="cf-t">The five Screening findings</span></span><span class="cf-d">1:28</span></a>
+    <a class="carte-film" role="listitem" href="{pr}films/screening-demo.mp4" data-src="{pr}films/screening-demo.mp4" data-poster="{pr}rendus/affiche-screening-demo.jpg" data-duree="1:25" data-dite="1 minute 25" data-genre="demo" data-yt="">
+      <img src="{pr}rendus/affiche-screening-demo.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The demo</span><span class="cf-t">Her file, the screening, the report, the record</span></span><span class="cf-d">1:25</span></a>
+  </div>""" if outil["id"] == "screening" else ""
     return f"""
 <section class="film"><div class="colonne">
   <h2 class="h2">Cascade, explained.</h2>
-  <p class="film-duree">The five {outil["nom"]} findings</p>
-  {lecteur_html(outil["id"], outil["nom"], outil["prefixe_racine"], affiche, visuel)}{demo}
+  <p class="film-duree">{"The film, and the demo" if outil["id"] == "screening" else "The five " + outil["nom"] + " findings"}</p>
+  {lecteur_html(outil["id"], outil["nom"], outil["prefixe_racine"], affiche, visuel)}{liste}
 </div></section>
 """
 
