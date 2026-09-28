@@ -698,6 +698,57 @@ CSS = '''
     box-shadow:inset 0 0 0 1.5px var(--vert-vif)}
   .cell small{font-size:.7em;color:var(--sur-vert-pale)}
   .t-note{font-size:12.5px;color:var(--pale);margin-top:14px;max-width:none;line-height:1.55}
+  /* le rapport de criblage en service (page Screening, 29/09) : la feuille réelle du rapport exemple posée sur la
+     nuit de l'outil, qui s'incline sous la souris ; à gauche l'offre en trois pas, la grille de prix choisie par
+     Arslane (offre-screening.json), la règle de conservation ; l'action reprend le bandeau .ouvrir */
+  .rapport{padding:112px 0 124px;color:var(--sur-vert);background:linear-gradient(180deg,var(--nuit-c) 0%,var(--nuit-b) 100%);
+    scroll-margin-top:77px}
+  .rapport .r-grille{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,430px);gap:80px;align-items:start}
+  .rapport .marque-h{color:var(--vert-clair);opacity:.9;margin-bottom:22px}
+  .rapport .h2{color:var(--sur-vert);font-size:clamp(28px,2.9vw,42px);line-height:1.14;margin:0;text-wrap:balance}
+  .rapport .r-pas{list-style:none;counter-reset:pas;padding:0;margin:48px 0 0;display:grid;gap:20px}
+  .rapport .r-pas li{counter-increment:pas;display:grid;grid-template-columns:46px minmax(0,1fr);font-size:16.5px;line-height:1.62;
+    color:var(--sur-vert-pale);max-width:62ch}
+  .rapport .r-pas li::before{content:counter(pas,decimal-leading-zero);font-family:var(--mono);font-size:12px;letter-spacing:.1em;
+    color:var(--vert-vif);padding-top:5px}
+  .rapport .r-pas b{color:var(--sur-vert);font-weight:600}
+  .rapport .r-prix{width:100%;border-collapse:collapse;margin-top:52px;font-variant-numeric:tabular-nums lining-nums}
+  .rapport .r-prix th,.rapport .r-prix td{padding:13px 0;border-bottom:1px solid color-mix(in srgb,var(--sur-vert) 14%,transparent);vertical-align:baseline}
+  .rapport .r-prix tr:first-child th,.rapport .r-prix tr:first-child td{border-top:1px solid color-mix(in srgb,var(--sur-vert) 26%,transparent)}
+  .rapport .r-prix th{font-weight:400;text-align:left;font-size:15.5px;color:var(--sur-vert-pale)}
+  .rapport .r-prix tr.tete th{color:var(--sur-vert)}
+  .rapport .r-prix tr.sous th{padding-left:24px}
+  .rapport .r-prix td{text-align:right;font-family:var(--mono);font-size:23px;letter-spacing:-.02em;color:var(--vert-clair);white-space:nowrap}
+  .rapport .r-prix td small{font-size:12px;letter-spacing:.04em;color:var(--sur-vert-pale);margin-left:6px}
+  .rapport .r-prix td.mot{font-size:13px;letter-spacing:.06em;color:var(--sur-vert-pale)}
+  .rapport .r-note{margin-top:28px;font-size:14.5px;line-height:1.68;color:var(--sur-vert-pale);max-width:66ch}
+  .rapport .r-feuille{margin:6px 0 0;position:sticky;top:112px;perspective:1400px}
+  .rapport .r-feuille a{display:block;border-radius:3px;transform-style:preserve-3d;
+    transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px));
+    box-shadow:0 44px 96px rgba(0,0,0,.58),0 0 0 1px color-mix(in srgb,var(--sur-vert) 10%,transparent);
+    transition:transform .5s var(--montee),box-shadow .5s var(--montee)}
+  .rapport .r-feuille a.suit{transition:box-shadow .5s var(--montee)}
+  .rapport .r-feuille img{display:block;width:100%;height:auto;border-radius:3px}
+  .rapport .r-feuille a:hover,.rapport .r-feuille a:focus-visible{--ty:-6px;
+    box-shadow:0 60px 120px rgba(0,0,0,.62),0 0 0 1px color-mix(in srgb,var(--vert-vif) 46%,transparent)}
+  .rapport .r-feuille figcaption{margin-top:20px;font-family:var(--mono);font-size:11px;line-height:1.7;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--sur-vert-pale);opacity:.85}
+  .rapport .ouvrir-ligne{margin-top:68px}
+  .rapport .liens{display:flex;gap:52px;flex-wrap:wrap;margin-top:34px}
+  .rapport .lien-e{color:var(--sur-vert);border-bottom:1px solid var(--sur-vert-pale);padding-bottom:4px;text-decoration:none;
+    font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;transition:color .2s,border-color .2s}
+  .rapport .lien-e:hover{color:var(--vert-clair);border-color:var(--vert-clair)}
+  .rapport .lien-e span{display:inline-block;transition:transform .3s var(--montee)}.rapport .lien-e:hover span{transform:translateX(4px)}
+  .hero .vers-rapport{margin-top:6px;font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--sur-vert);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--vert-vif) 55%,transparent);padding-bottom:5px;
+    transition:color .2s,border-color .2s}
+  .hero .vers-rapport:hover,.hero .vers-rapport:focus-visible{color:var(--vert-clair);border-color:var(--vert-clair)}
+  .hero .vers-rapport span{display:inline-block;transition:transform .3s var(--montee)}.hero .vers-rapport:hover span{transform:translateY(3px)}
+  @media (max-width:980px){.rapport .r-grille{grid-template-columns:minmax(0,1fr);gap:60px}
+    .rapport .r-feuille{position:static;max-width:430px}}
+  @media (max-width:700px){.rapport{padding:84px 0 96px}.rapport .r-prix td{font-size:19px}.rapport .r-prix tr.sous th{padding-left:14px}
+    .rapport .liens{gap:26px}}
+  @media (prefers-reduced-motion:reduce){.rapport .r-feuille a{transition:none;transform:none}}
   /* le bandeau qui ouvre l'instrument, sous la vidéo (Arslane, 6/09 : « impressionnant,
      effet souris, sur chaque couleur ») : large, la couleur de l'outil en halo qui suit la
      souris, un éclat qui balaie, la flèche qui glisse dans son disque, la lueur qui monte ;
@@ -1963,6 +2014,76 @@ for (const pop of document.querySelectorAll('.entites .pop')) {{
     return html
 
 
+def _section_rapport(o):
+    """Le rapport de criblage en service (produit A), page Screening, 29/09 : l'offre lue dans offre-screening.json
+    (grille B choisie par Arslane le 29/09), la feuille lue dans le rapport exemple rendu par batir-rapport-exemple.py
+    depuis le relevé PUBLIC de l'outil ; refusé si le scellé du rapport exemple n'est plus celui du relevé."""
+    if o["id"] != "screening":
+        return ""
+    off = json.loads((BASE / "offre-screening.json").read_text())
+    ex = json.loads((BASE / "rapports" / "screening-sample-report.json").read_text())
+    rec = json.loads((pathlib.Path.home() / "Documents" / ex["source"]).read_text())
+    if rec["empreinte"] != ex["sceau"]:
+        sys.exit(f"le rapport exemple porte le scellé {ex['sceau']} mais le relevé public porte {rec['empreinte']} : "
+                 "relancer batir-rapport-exemple.py")
+    if (ex["forts"], ex["possibles"], ex["sans"]) != (rec["totaux"]["forts"], rec["totaux"]["possibles"], rec["totaux"]["sansCorrespondance"]):
+        sys.exit("le rapport exemple ne se recompte pas sur son relevé : refusé")
+    for f in ("rapports/screening-sample-report.pdf", "rendus/rapport-exemple.webp"):
+        if not (BASE / f).exists():
+            sys.exit(f"{f} absent : relancer batir-rapport-exemple.py")
+    usd = lambda n: f"${n:,}"
+    EN_LETTRES = {5: "five", 10: "ten", 20: "twenty"}
+    r0 = off["rapport"]; rc = off["recriblage"]
+    lignes = [f'<tr class="tete"><th scope="row">One report, up to {r0["noms"]:,} names</th><td>{usd(r0["prix_usd"])}</td></tr>']
+    for i, x in enumerate(rc):
+        cls, eti = ("tete", f"Weekly re-screen, up to {x['noms']:,} names") if i == 0 else ("sous", f"up to {x['noms']:,} names")
+        lignes.append(f'<tr class="{cls}"><th scope="row">{eti}</th><td>{usd(x["prix_usd_mois"])}<small>a month</small></td></tr>')
+    lignes.append(f'<tr class="sous"><th scope="row">paid yearly</th><td class="mot">{off["annuel"]}</td></tr>')
+    sujet = "Ten%20names%20to%20screen"
+    pdf, img = "../rapports/screening-sample-report.pdf", "../rendus/rapport-exemple.webp"
+    depot = o["depot"].rstrip("/")
+    html = f'''<section class="rapport" id="report"><div class="colonne">
+  <div class="r-grille">
+  <div class="r-texte">
+    <p class="marque-h">The screening report</p>
+    <h2 class="h2">Send us your list, and within {off["delai_heures"]} hours it comes back screened and sealed.</h2>
+    <ol class="r-pas">
+      <li><span><b>You send</b> a CSV or a spreadsheet with a column of company and vessel names, and the IMO number of a vessel when you have it.</span></li>
+      <li><span><b>We screen</b> each name against OFAC SDN, the OFAC consolidated lists, the trade.gov Consolidated Screening List, the UN list and the EU list, as downloaded that day.</span></li>
+      <li><span><b>You receive</b> a PDF and a spreadsheet: each candidate with its list entry and the words that matched, the dates of the lists, and a seal anyone can check.</span></li>
+    </ol>
+    <table class="r-prix"><caption class="sr">Prices of the screening report</caption><tbody>{"".join(lignes)}</tbody></table>
+    <p class="r-note">Each weekly report opens with what changed since the last one. {off["conservation"]} A candidate is a name for your compliance officer to check: the report does not decide, does not screen ownership, and is not legal advice.</p>
+  </div>
+  <figure class="r-feuille">
+    <a href="{pdf}" download><img src="{img}" width="1224" height="1584" loading="lazy" decoding="async"
+      alt="First page of the sample report: {ex["lignes"]} invented counterparties, {ex["forts"]} strong candidates, {ex["possibles"]} possible, {ex["sans"]} with no candidate."></a>
+    <figcaption>sample report &#183; {ex["lignes"]} invented counterparties &#183; sealed {ex["emis"]} &#183; record {ex["sceau"]}</figcaption>
+  </figure>
+  </div>
+  <div class="ouvrir-ligne"><a class="ouvrir" href="mailto:{off["contact"]}?subject={sujet}"><span><span class="ouvrir-t">Try it on {EN_LETTRES.get(off["essai_noms"], off["essai_noms"])} of your names</span>
+    <span class="ouvrir-s">Email them to {off["contact"]}. The report comes back within {off["delai_heures"]} hours, at no charge.</span></span>
+    <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+  <p class="liens"><a class="lien-e" href="{pdf}" download>Download the sample report <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{depot}/blob/main/exemple/contreparties-exemple.screening.json">Open the sealed record behind it <span aria-hidden="true">&#8594;</span></a></p>
+</div></section>
+<script>
+(() => {{
+  const f = document.querySelector('.rapport .r-feuille a');
+  if (!f || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  f.addEventListener('pointermove', (e) => {{
+    const r = f.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+    f.classList.add('suit'); f.style.setProperty('--ry', (x * 7).toFixed(2) + 'deg'); f.style.setProperty('--rx', (-y * 5).toFixed(2) + 'deg');
+  }});
+  f.addEventListener('pointerleave', () => {{ f.classList.remove('suit'); f.style.removeProperty('--rx'); f.style.removeProperty('--ry'); }});
+}})();
+</script>'''
+    assert "—" not in html, "un cadratin s'est glissé dans la section du rapport"
+    for attendu in (usd(r0["prix_usd"]), *(usd(x["prix_usd_mois"]) for x in rc), ex["sceau"], off["conservation"]):
+        if attendu not in html:
+            sys.exit(f"la section du rapport n'affiche pas « {attendu} » : refusé")
+    return html
+
+
 def batir_outil_catalogue(o, spec):
     # UNE définition de « prêt » : manques(), la même que le rideau et l'assembleur.
     # Elle couvre l'absence, le pret:false et la dérive de sceau (un relevé re-scellé
@@ -2068,6 +2189,9 @@ def batir_outil_catalogue(o, spec):
         <span class="tuile-fl" aria-hidden="true">&#8594;</span>
       </a>"""
     tuiles_html = "".join(tuile_html(*t) for t in tuiles)
+    vers_rapport = ('\n  <a class="vers-rapport entree" href="#report">Send us your list for a sealed report within '
+                    f'{json.loads((BASE / "offre-screening.json").read_text())["delai_heures"]} hours '
+                    '<span aria-hidden="true">&#8595;</span></a>') if o["id"] == "screening" else ""
     commandes_html = "".join(f'<code class="ln">{c}</code>\n    ' for c in
                              ([f"git clone {o['depot']}"] + spec["commandes"]))
 
@@ -2095,7 +2219,7 @@ def batir_outil_catalogue(o, spec):
   <p class="lede entree">{spec["lede"]}</p>
   <div class="commande entree" role="group" aria-label="{spec["aria_commande"]}">
     {commandes_html}
-  </div>
+  </div>{vers_rapport}
   <div class="cue" aria-hidden="true"><span>scroll</span><span class="fil"></span></div>
 </section>
 
@@ -2110,6 +2234,7 @@ def batir_outil_catalogue(o, spec):
   </div>
 </section>
 {_section_entites(o)}
+{_section_rapport(o)}
 <section class="instrument" data-commun="instrument"><div class="colonne">
   <h2 class="h2">Try the {o["nom"]} instrument on our public test set.</h2>
   {affiche_html("horloge" if o["id"] == "dossier" else "courbes", RELEVE, FINDINGS, spec["instrument_page"],

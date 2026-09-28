@@ -1,0 +1,12 @@
+{
+  "sceau": "4eeefe539e6fce01",
+  "emis": "2026-09-28",
+  "client": "Example Forwarding Inc. (invented)",
+  "lignes": 30,
+  "forts": 9,
+  "possibles": 2,
+  "sans": 19,
+  "commit": "9e18a1c",
+  "listes": "2026-09-26",
+  "source": "cascade-screening/exemple/contreparties-exemple.screening.json"
+}

@@ -1,0 +1,15 @@
+{
+  "quoi": "the screening report service (product A): the buyer sends a list of company and vessel names and receives a sealed report",
+  "decide": "prices chosen by Arslane on 2026-09-29 (grid B), against the market note of the same day",
+  "delai_heures": 48,
+  "essai_noms": 10,
+  "rapport": {"noms": 500, "prix_usd": 99},
+  "recriblage": [
+    {"noms": 500, "prix_usd_mois": 79},
+    {"noms": 5000, "prix_usd_mois": 199},
+    {"noms": 50000, "prix_usd_mois": 499}
+  ],
+  "annuel": "two months free",
+  "contact": "contact@cascade-routing.com",
+  "conservation": "Your file is deleted once the report is sent. A subscriber's list is kept for the weekly re-screen and deleted when the subscription stops."
+}
