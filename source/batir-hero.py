@@ -320,7 +320,8 @@ CSS = '''
   /* la section des sociétés et navires (page Screening), forme M4F validée par Arslane le 28/09 : la nuit
      de l'outil, trois populations point par point (chaque marque une paire ou un nom, allumée quand le
      niveau fort la trouve), la grille se compte sous la souris, le pied aéré sous un filet pâle */
-  .entites{padding:96px 0 136px;color:var(--sur-vert);background:linear-gradient(180deg,var(--nuit-a) 0%,var(--nuit-c) 100%)}
+  .entites{padding:96px 0 136px;color:var(--sur-vert);background:linear-gradient(180deg,var(--nuit-a) 0%,var(--nuit-c) 100%);
+    scroll-margin-top:77px}  /* l'ancre #companies se pose SOUS la barre fixe, comme #tools (Arslane, 28/09 : la barre mangeait le titre) */
   .entites .marque-h{color:var(--vert-clair);opacity:.9;margin-bottom:22px}
   .entites .h2{color:var(--sur-vert);font-size:clamp(34px,4.1vw,58px);margin:0}
   .entites .h2 br{display:none}@media(min-width:1100px){.entites .h2 br{display:inline}}

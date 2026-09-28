@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-BsKSg0XED99VxUWajwDriJ63jybQKRSh0HxOaYESKxs=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-oqSHbAvqS+tXc12Do4qxvEB7Q2Zg+unoLKm4zeSB4oY=' 'sha256-RsYxumAh9nfPWTmIlrgVCjiNkhGgnCcljYhs9mtE4XU=' 'sha256-1u/oLzsbSwtV2qAjDUM+GUhu+UtAl5l6B/92RBCDqZs=' 'sha256-4Cr/W1Ty3qpZzxTisCv3JSkcsIXMraspPJQa9hLwT68=' 'sha256-ra2A1gypctBMmnXRW2s5TnMyKZn6Igh62FqoGc2LGjk=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-9aY/59FZCg/UiePMl4gFGHR/ue3zj6BRogCz93Ml7vU='; font-src 'self'; img-src 'self' data:; media-src 'self'; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-B/9vH4cSDCJMbKJznyLkZfdmBqPR9VPBmGZjaipvIfA=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-oqSHbAvqS+tXc12Do4qxvEB7Q2Zg+unoLKm4zeSB4oY=' 'sha256-RsYxumAh9nfPWTmIlrgVCjiNkhGgnCcljYhs9mtE4XU=' 'sha256-1u/oLzsbSwtV2qAjDUM+GUhu+UtAl5l6B/92RBCDqZs=' 'sha256-4Cr/W1Ty3qpZzxTisCv3JSkcsIXMraspPJQa9hLwT68=' 'sha256-ra2A1gypctBMmnXRW2s5TnMyKZn6Igh62FqoGc2LGjk=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-9aY/59FZCg/UiePMl4gFGHR/ue3zj6BRogCz93Ml7vU='; font-src 'self'; img-src 'self' data:; media-src 'self'; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; measured instruments for compliance</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/">
@@ -74,7 +74,8 @@
   /* la section des sociétés et navires (page Screening), forme M4F validée par Arslane le 28/09 : la nuit
      de l'outil, trois populations point par point (chaque marque une paire ou un nom, allumée quand le
      niveau fort la trouve), la grille se compte sous la souris, le pied aéré sous un filet pâle */
-  .entites{padding:96px 0 136px;color:var(--sur-vert);background:linear-gradient(180deg,var(--nuit-a) 0%,var(--nuit-c) 100%)}
+  .entites{padding:96px 0 136px;color:var(--sur-vert);background:linear-gradient(180deg,var(--nuit-a) 0%,var(--nuit-c) 100%);
+    scroll-margin-top:77px}  /* l'ancre #companies se pose SOUS la barre fixe, comme #tools (Arslane, 28/09 : la barre mangeait le titre) */
   .entites .marque-h{color:var(--vert-clair);opacity:.9;margin-bottom:22px}
   .entites .h2{color:var(--sur-vert);font-size:clamp(34px,4.1vw,58px);margin:0}
   .entites .h2 br{display:none}@media(min-width:1100px){.entites .h2 br{display:inline}}
