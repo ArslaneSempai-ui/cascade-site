@@ -317,21 +317,48 @@ CSS = '''
     border-color:color-mix(in srgb,var(--vert-vif) 34%,transparent);
     box-shadow:0 26px 70px rgba(0,0,0,.5)}
   .hero .cue{color:var(--sur-vert-pale)}
-  /* la section des sociétés et navires (page Screening) : le relevé sur le papier, trois chiffres en
-     tabulaire sous un filet, la légende en romain, la ligne de scellé en mono ; ni carte ni encadré */
-  .entites{padding:96px 0 104px;background:var(--papier-haut);
-    border-top:1px solid var(--filet-clair);border-bottom:1px solid var(--filet-clair)}
-  .entites .h2{max-width:30ch}
-  .entites .chiffres{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin:44px 0 26px}
-  .entites .chiffre{border-top:1px solid var(--filet);padding-top:18px}
-  .entites .grand{display:block;font-family:var(--mono);font-variant-numeric:tabular-nums;
-    font-size:clamp(44px,5vw,72px);line-height:1;letter-spacing:-.02em;color:var(--vert-titre)}
-  .entites .grand small{font-size:.42em;letter-spacing:0;color:var(--demi);margin-left:.12em}
-  .entites .legende{display:block;margin-top:14px;font-size:15px;line-height:1.5;color:var(--demi);max-width:34ch}
-  .entites .t-note{color:var(--pale);max-width:78ch;margin-top:18px}
-  .entites .sceau-l{display:block;margin-top:22px;font-family:var(--mono);font-size:11px;
-    letter-spacing:.14em;text-transform:uppercase;color:var(--pale)}
-  @media (max-width:760px){.entites .chiffres{grid-template-columns:1fr;gap:28px}}
+  /* la section des sociétés et navires (page Screening), forme M4F validée par Arslane le 28/09 : la nuit
+     de l'outil, trois populations point par point (chaque marque une paire ou un nom, allumée quand le
+     niveau fort la trouve), la grille se compte sous la souris, le pied aéré sous un filet pâle */
+  .entites{padding:96px 0 136px;color:var(--sur-vert);background:linear-gradient(180deg,var(--nuit-a) 0%,var(--nuit-c) 100%)}
+  .entites .marque-h{color:var(--vert-clair);opacity:.9;margin-bottom:22px}
+  .entites .h2{color:var(--sur-vert);font-size:clamp(34px,4.1vw,58px);margin:0}
+  .entites .h2 br{display:none}@media(min-width:1100px){.entites .h2 br{display:inline}}
+  .entites .pops{margin-top:84px;display:grid;gap:48px;padding-bottom:64px;
+    border-bottom:1px solid color-mix(in srgb,var(--sur-vert) 16%,transparent)}
+  .entites .pop{position:relative}
+  .entites .tete{display:flex;justify-content:space-between;align-items:baseline;gap:24px;margin-bottom:12px}
+  .entites .tete p{font-size:17px;color:var(--sur-vert-pale);max-width:none;padding-right:24px;margin:0}
+  .entites .chiffre{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:40px;line-height:1;
+    letter-spacing:-.03em;color:var(--vert-vif);white-space:nowrap}
+  .entites .chiffre small{font-size:.4em;color:var(--sur-vert-pale);letter-spacing:0}
+  .entites .grille{display:grid;grid-template-columns:repeat(100,1fr);gap:2px}
+  .entites .grille i{display:block;aspect-ratio:1;border-radius:1px;background:color-mix(in srgb,var(--sur-vert) 18%,var(--nuit-b));
+    transition:transform .2s var(--montee),background .2s,filter .2s}
+  .entites .grille i.v{background:var(--vert-vif)}
+  .entites .grille i.f{background:var(--vert-clair);box-shadow:0 0 10px var(--vert-clair)}
+  .entites .grille i.p{background:var(--vert-vif)}
+  .entites .grille i:hover{transform:scale(1.9);background:#fff}
+  .entites .grille i.lu{filter:brightness(1.6)}
+  .entites .grille i.lu:not(.v):not(.f):not(.p){background:color-mix(in srgb,var(--sur-vert) 38%,var(--nuit-b))}
+  .entites .compteur{position:absolute;right:0;top:54px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--vert-clair);opacity:0;transition:opacity .2s}
+  .entites .pop.suivi .compteur{opacity:1}
+  .entites .cle{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--sur-vert-pale);text-transform:uppercase;
+    margin:10px 0 0;display:flex;gap:22px;flex-wrap:wrap}
+  .entites .cle i{display:inline-block;width:10px;height:10px;vertical-align:-1px;margin-right:6px;border-radius:1px;
+    background:color-mix(in srgb,var(--sur-vert) 18%,var(--nuit-b))}
+  .entites .cle i.v{background:var(--vert-vif)}.entites .cle i.f{background:var(--vert-clair)}
+  .entites .note{margin-top:48px;font-size:15px;line-height:1.65;color:var(--sur-vert-pale);max-width:none}
+  .entites .liens{display:flex;gap:52px;flex-wrap:wrap;margin-top:44px}
+  .entites .lien-e{color:var(--sur-vert);border-bottom:1px solid var(--sur-vert-pale);padding-bottom:4px;text-decoration:none;
+    font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;transition:color .2s,border-color .2s}
+  .entites .lien-e:hover{color:var(--vert-clair);border-color:var(--vert-clair)}
+  .entites .lien-e span{display:inline-block;transition:transform .3s var(--montee)}.entites .lien-e:hover span{transform:translateX(4px)}
+  .entites .sceau-l{display:block;margin-top:52px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sur-vert-pale);opacity:.8}
+  @media(max-width:700px){.entites .grille{grid-template-columns:repeat(50,1fr)}.entites .pops{margin-top:56px}}
+  @media(prefers-reduced-motion:reduce){.entites .grille i,.entites .compteur,.entites .lien-e span{transition:none}}
   .marque-h{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--sur-vert-pale)}
   /* depuis la copy (10/09) un titre de héros est une phrase entière : au-delà de 48 caractères
@@ -1825,9 +1852,10 @@ def _table_outil(spec, releve, findings):
 
 
 def _section_entites(o):
-    """La section « Company and vessel names » de la page Screening : trois chiffres lus dans le relevé
-    scellé des entités (releve-entites.json, scellé ET signé dans l'outil), refaits depuis leur cellule,
-    et refusés s'ils ne se refont pas ; la date, le commit et le scellé viennent du relevé."""
+    """La section « Company and vessel names » de la page Screening, forme M4F validée par Arslane le 28/09 :
+    trois populations lues dans le relevé scellé des entités (releve-entites.json, scellé ET signé dans l'outil),
+    chaque compte refait depuis sa cellule et refusé s'il ne se refait pas ; la date, le commit et le scellé
+    viennent du relevé ; les liens mènent au registre des verdicts et au relevé dans le dépôt public."""
     if "releve_entites" not in o:
         return ""
     f = json.loads((BASE / "findings-entites.json").read_text())
@@ -1835,36 +1863,63 @@ def _section_entites(o):
     if f.get("sceau") != R["empreinte"]:
         sys.exit(f"findings-entites.json cite le scellé {f.get('sceau')} mais releve-entites.json porte "
                  f"{R['empreinte']} : les textes ont dérivé du relevé, section à resceller")
-    blocs = []
-    for c in f["chiffres"]:
-        cell = R
-        for k in c["source"]["chemin"]:
-            cell = cell[k]
-        m = c["source"]["mesure"]
-        if m == "taux":
-            valeur = f"{round(100 * cell['n'] / cell['sur'])}"
-            legende = c["legende"].format(bas=cell["bas"], haut=cell["haut"], sur=cell["sur"])
-        elif m == "n":
-            valeur = f"{cell['n']}"
-            legende = c["legende"].format(bas=cell["bas"], haut=cell["haut"], sur=cell["sur"])
-        elif m == "forts+possibles":
-            if not cell.get("aveugle"):
-                sys.exit("la section des entités cite un livre qui n'est pas aveugle : refusé")
-            valeur = f"{cell['forts'] + cell['possibles']}"
-            legende = c["legende"].format(forts=cell["forts"], possibles=cell["possibles"], lignes=cell["lignes"])
-        else:
-            sys.exit(f"mesure inconnue dans findings-entites.json : {m}")
-        unite = f'<small>{c["unite"]}</small>' if c["unite"] else ""
-        blocs.append(f'<div class="chiffre"><span class="grand">{valeur}{unite}</span>'
-                     f'<span class="legende">{legende}</span></div>')
+    vr = R["verdictRealiste"]["fort"]
+    livre = R["livres"][1]
+    if not livre.get("aveugle"):
+        sys.exit("la section des entités cite un livre qui n'est pas aveugle : refusé")
+    trouves, sur_v = vr["trouves"]["n"], vr["trouves"]["sur"]
+    fausses, sur_f = vr["fausses"]["n"], vr["fausses"]["sur"]
+    forts, possibles, lignes = livre["forts"], livre["possibles"], livre["lignes"]
+    sans = livre["sansCorrespondance"]
+    if forts + possibles + sans != lignes:
+        sys.exit("le livre aveugle ne se recompte pas : forts + possibles + sans candidat != lignes")
+    taux = round(100 * trouves / sur_v)
+    def grille(n, classe):
+        return '<div class="grille" aria-hidden="true">' + "".join(f'<i class="{classe(k)}" title="{k + 1}"></i>' for k in range(n)) + "</div>"
+    pops = [
+        (f["populations"][0].format(sur=sur_v), f"{taux}<small>%</small>", grille(sur_v, lambda k: "v" if k < trouves else ""),
+         f'<span><i class="v"></i>{trouves} found</span><span><i></i>{sur_v - trouves} left at the possible level or below</span>'),
+        (f["populations"][1].format(sur=sur_f), f"{fausses}", grille(sur_f, lambda k: "f" if k < fausses else ""),
+         f'<span><i></i>{sur_f - fausses} with no strong alert</span>'),
+        (f["populations"][2].format(lignes=lignes), f"{forts + possibles}<small>/{lignes}</small>",
+         grille(lignes, lambda k: "f" if k < forts else ("p" if k < forts + possibles else "")),
+         f'<span><i class="f"></i>{forts} strong</span><span><i class="v"></i>{possibles} possible</span><span><i></i>{sans} with no candidate</span>'),
+    ]
+    blocs = "".join(f'''<div class="pop"><span class="compteur" aria-live="polite"></span>
+    <div class="tete"><p>{texte}</p><span class="chiffre">{chiffre}</span></div>{g}<p class="cle">{cle}</p></div>'''
+                    for texte, chiffre, g, cle in pops)
+    depot = o["depot"].rstrip("/")
     html = f'''<section class="entites" id="companies"><div class="colonne">
   <p class="marque-h">Company and vessel names</p>
   <h2 class="h2">{f["titre"]}</h2>
-  <div class="chiffres">{"".join(blocs)}</div>
-  <p class="t-note">{f["note"]}</p>
+  <div class="pops">{blocs}</div>
+  <p class="note">{f["note"]}</p>
+  <p class="liens"><a class="lien-e" href="{depot}/blob/main/verification/VERDICTS.md">Read the eleven blind verdicts <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{depot}/blob/main/releve-entites.json">Open the sealed record <span aria-hidden="true">&#8594;</span></a></p>
   <span class="sceau-l">measured {R["date"]} at commit {R["commit"]} &#183; sealed and signed &#183; content hash {R["empreinte"]}</span>
-</div></section>'''
+</div></section>
+<script>
+for (const pop of document.querySelectorAll('.entites .pop')) {{
+  const g = pop.querySelector('.grille'), c = pop.querySelector('.compteur'), marks = [...g.children], total = marks.length;
+  g.addEventListener('pointermove', (e) => {{
+    const cible = e.target.closest('i'); if (!cible) return;
+    const n = marks.indexOf(cible) + 1;
+    marks.forEach((m, i) => m.classList.toggle('lu', i < n));
+    const lit = marks.slice(0, n).filter((m) => m.classList.contains('v') || m.classList.contains('f') || m.classList.contains('p')).length;
+    c.textContent = n + ' of ' + total + ' counted \u00b7 ' + lit + ' lit';
+    pop.classList.add('suivi');
+  }});
+  g.addEventListener('pointerleave', () => {{ marks.forEach((m) => m.classList.remove('lu')); pop.classList.remove('suivi'); }});
+}}
+</script>
+<div class="couture" aria-hidden="true"><div class="colonne">
+  <span class="filet"></span>
+  <span class="sceau-c">company and vessel names &#183; measured, then frozen &#183; content hash {R["empreinte"]}</span>
+  <span class="filet"></span>
+</div></div>'''
     assert "\u2014" not in html, "un cadratin s'est glissé dans la section des entités"
+    for attendu in (f"{taux}<small>%</small>", f">{fausses}<", f"{forts + possibles}<small>/{lignes}</small>", f"{trouves} found", f"{sans} with no candidate"):
+        if attendu not in html:
+            sys.exit(f"la section des entités n'affiche pas le chiffre refait « {attendu} » : refusé")
     return html
 
 

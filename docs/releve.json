@@ -78,7 +78,10 @@
   "86": "borne haute de Wilson à 95 % sur 332/400, ligne du Juge, scellé 68157020f83b6741 (releve-entites.json, cascade-screening)",
   "2": "borne haute de Wilson à 95 % sur 0/200, scellé 68157020f83b6741 (releve-entites.json, cascade-screening)",
   "3": "alertes fortes pour mille sur le livre aveugle, scellé 68157020f83b6741 (releve-entites.json, cascade-screening)",
-  "1000": "contreparties du livre aveugle, scellé 68157020f83b6741 (releve-entites.json, cascade-screening)"
+  "1000": "contreparties du livre aveugle, scellé 68157020f83b6741 (releve-entites.json, cascade-screening)",
+  "332": "paires vraies du jeu réaliste retrouvées au fort, sur 400, scellé 68157020f83b6741 (releve-entites.json, cascade-screening)",
+  "68": "paires vraies du jeu réaliste laissées au possible ou en dessous, 400 moins 332, scellé 68157020f83b6741 (releve-entites.json, cascade-screening)",
+  "984": "contreparties du livre aveugle sans candidat, 1000 moins 16, scellé 68157020f83b6741 (releve-entites.json, cascade-screening)"
  },
  "derive": {
   "17.7": "94,4 moins 76,7, sur les mêmes 120 dossiers",

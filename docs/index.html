@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-w8rf+VtCUo8vhneFXIsaPstVKiECUxOE4AbGmM52ths=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-oqSHbAvqS+tXc12Do4qxvEB7Q2Zg+unoLKm4zeSB4oY=' 'sha256-RsYxumAh9nfPWTmIlrgVCjiNkhGgnCcljYhs9mtE4XU=' 'sha256-1u/oLzsbSwtV2qAjDUM+GUhu+UtAl5l6B/92RBCDqZs=' 'sha256-4Cr/W1Ty3qpZzxTisCv3JSkcsIXMraspPJQa9hLwT68=' 'sha256-ra2A1gypctBMmnXRW2s5TnMyKZn6Igh62FqoGc2LGjk=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-9aY/59FZCg/UiePMl4gFGHR/ue3zj6BRogCz93Ml7vU='; font-src 'self'; img-src 'self' data:; media-src 'self'; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-BsKSg0XED99VxUWajwDriJ63jybQKRSh0HxOaYESKxs=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-oqSHbAvqS+tXc12Do4qxvEB7Q2Zg+unoLKm4zeSB4oY=' 'sha256-RsYxumAh9nfPWTmIlrgVCjiNkhGgnCcljYhs9mtE4XU=' 'sha256-1u/oLzsbSwtV2qAjDUM+GUhu+UtAl5l6B/92RBCDqZs=' 'sha256-4Cr/W1Ty3qpZzxTisCv3JSkcsIXMraspPJQa9hLwT68=' 'sha256-ra2A1gypctBMmnXRW2s5TnMyKZn6Igh62FqoGc2LGjk=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-9aY/59FZCg/UiePMl4gFGHR/ue3zj6BRogCz93Ml7vU='; font-src 'self'; img-src 'self' data:; media-src 'self'; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade &#183; measured instruments for compliance</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/">
@@ -71,21 +71,48 @@
     border-color:color-mix(in srgb,var(--vert-vif) 34%,transparent);
     box-shadow:0 26px 70px rgba(0,0,0,.5)}
   .hero .cue{color:var(--sur-vert-pale)}
-  /* la section des sociétés et navires (page Screening) : le relevé sur le papier, trois chiffres en
-     tabulaire sous un filet, la légende en romain, la ligne de scellé en mono ; ni carte ni encadré */
-  .entites{padding:96px 0 104px;background:var(--papier-haut);
-    border-top:1px solid var(--filet-clair);border-bottom:1px solid var(--filet-clair)}
-  .entites .h2{max-width:30ch}
-  .entites .chiffres{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin:44px 0 26px}
-  .entites .chiffre{border-top:1px solid var(--filet);padding-top:18px}
-  .entites .grand{display:block;font-family:var(--mono);font-variant-numeric:tabular-nums;
-    font-size:clamp(44px,5vw,72px);line-height:1;letter-spacing:-.02em;color:var(--vert-titre)}
-  .entites .grand small{font-size:.42em;letter-spacing:0;color:var(--demi);margin-left:.12em}
-  .entites .legende{display:block;margin-top:14px;font-size:15px;line-height:1.5;color:var(--demi);max-width:34ch}
-  .entites .t-note{color:var(--pale);max-width:78ch;margin-top:18px}
-  .entites .sceau-l{display:block;margin-top:22px;font-family:var(--mono);font-size:11px;
-    letter-spacing:.14em;text-transform:uppercase;color:var(--pale)}
-  @media (max-width:760px){.entites .chiffres{grid-template-columns:1fr;gap:28px}}
+  /* la section des sociétés et navires (page Screening), forme M4F validée par Arslane le 28/09 : la nuit
+     de l'outil, trois populations point par point (chaque marque une paire ou un nom, allumée quand le
+     niveau fort la trouve), la grille se compte sous la souris, le pied aéré sous un filet pâle */
+  .entites{padding:96px 0 136px;color:var(--sur-vert);background:linear-gradient(180deg,var(--nuit-a) 0%,var(--nuit-c) 100%)}
+  .entites .marque-h{color:var(--vert-clair);opacity:.9;margin-bottom:22px}
+  .entites .h2{color:var(--sur-vert);font-size:clamp(34px,4.1vw,58px);margin:0}
+  .entites .h2 br{display:none}@media(min-width:1100px){.entites .h2 br{display:inline}}
+  .entites .pops{margin-top:84px;display:grid;gap:48px;padding-bottom:64px;
+    border-bottom:1px solid color-mix(in srgb,var(--sur-vert) 16%,transparent)}
+  .entites .pop{position:relative}
+  .entites .tete{display:flex;justify-content:space-between;align-items:baseline;gap:24px;margin-bottom:12px}
+  .entites .tete p{font-size:17px;color:var(--sur-vert-pale);max-width:none;padding-right:24px;margin:0}
+  .entites .chiffre{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:40px;line-height:1;
+    letter-spacing:-.03em;color:var(--vert-vif);white-space:nowrap}
+  .entites .chiffre small{font-size:.4em;color:var(--sur-vert-pale);letter-spacing:0}
+  .entites .grille{display:grid;grid-template-columns:repeat(100,1fr);gap:2px}
+  .entites .grille i{display:block;aspect-ratio:1;border-radius:1px;background:color-mix(in srgb,var(--sur-vert) 18%,var(--nuit-b));
+    transition:transform .2s var(--montee),background .2s,filter .2s}
+  .entites .grille i.v{background:var(--vert-vif)}
+  .entites .grille i.f{background:var(--vert-clair);box-shadow:0 0 10px var(--vert-clair)}
+  .entites .grille i.p{background:var(--vert-vif)}
+  .entites .grille i:hover{transform:scale(1.9);background:#fff}
+  .entites .grille i.lu{filter:brightness(1.6)}
+  .entites .grille i.lu:not(.v):not(.f):not(.p){background:color-mix(in srgb,var(--sur-vert) 38%,var(--nuit-b))}
+  .entites .compteur{position:absolute;right:0;top:54px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--vert-clair);opacity:0;transition:opacity .2s}
+  .entites .pop.suivi .compteur{opacity:1}
+  .entites .cle{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--sur-vert-pale);text-transform:uppercase;
+    margin:10px 0 0;display:flex;gap:22px;flex-wrap:wrap}
+  .entites .cle i{display:inline-block;width:10px;height:10px;vertical-align:-1px;margin-right:6px;border-radius:1px;
+    background:color-mix(in srgb,var(--sur-vert) 18%,var(--nuit-b))}
+  .entites .cle i.v{background:var(--vert-vif)}.entites .cle i.f{background:var(--vert-clair)}
+  .entites .note{margin-top:48px;font-size:15px;line-height:1.65;color:var(--sur-vert-pale);max-width:none}
+  .entites .liens{display:flex;gap:52px;flex-wrap:wrap;margin-top:44px}
+  .entites .lien-e{color:var(--sur-vert);border-bottom:1px solid var(--sur-vert-pale);padding-bottom:4px;text-decoration:none;
+    font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;transition:color .2s,border-color .2s}
+  .entites .lien-e:hover{color:var(--vert-clair);border-color:var(--vert-clair)}
+  .entites .lien-e span{display:inline-block;transition:transform .3s var(--montee)}.entites .lien-e:hover span{transform:translateX(4px)}
+  .entites .sceau-l{display:block;margin-top:52px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--sur-vert-pale);opacity:.8}
+  @media(max-width:700px){.entites .grille{grid-template-columns:repeat(50,1fr)}.entites .pops{margin-top:56px}}
+  @media(prefers-reduced-motion:reduce){.entites .grille i,.entites .compteur,.entites .lien-e span{transition:none}}
   .marque-h{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--sur-vert-pale)}
   /* depuis la copy (10/09) un titre de héros est une phrase entière : au-delà de 48 caractères
