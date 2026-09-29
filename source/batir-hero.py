@@ -23,6 +23,7 @@ CE QUE CETTE PAGE REFUSE
   · une page morte sans JavaScript : sans lui, la séquence se déplie en
     colonne statique, tout se lit.
 """
+import html as html_mod
 import json
 import pathlib
 import re
@@ -699,8 +700,11 @@ CSS = '''
   .cell small{font-size:.7em;color:var(--sur-vert-pale)}
   .t-note{font-size:12.5px;color:var(--pale);margin-top:14px;max-width:none;line-height:1.55}
   /* le rapport de criblage en service (page Screening, 29/09) : la feuille réelle du rapport exemple posée sur la
-     nuit de l'outil, qui s'incline sous la souris ; à gauche l'offre en trois pas, la grille de prix choisie par
-     Arslane (offre-screening.json), la règle de conservation ; l'action reprend le bandeau .ouvrir */
+     nuit de l'outil, qui s'incline sous la souris ; en dessous l'offre dans la langue de la page des tarifs
+     (retouche d'Arslane, 29/09 : « comme notre page pricing, faut que ça soit travaillé ») : deux colonnes au halo
+     qui suit la souris, un robot rubis au-dessus de chacune, le montant qui se compte à l'arrivée, puis le curseur
+     de la taille de la liste qui déplace le prix entre les paliers de offre-screening.json ; mouvement réduit :
+     montants posés, rien ne bouge */
   .rapport{padding:112px 0 124px;color:var(--sur-vert);background:linear-gradient(180deg,var(--nuit-c) 0%,var(--nuit-b) 100%);
     scroll-margin-top:77px}
   .rapport .r-grille{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,430px);gap:80px;align-items:start}
@@ -712,16 +716,6 @@ CSS = '''
   .rapport .r-pas li::before{content:counter(pas,decimal-leading-zero);font-family:var(--mono);font-size:12px;letter-spacing:.1em;
     color:var(--vert-vif);padding-top:5px}
   .rapport .r-pas b{color:var(--sur-vert);font-weight:600}
-  .rapport .r-prix{width:100%;border-collapse:collapse;margin-top:52px;font-variant-numeric:tabular-nums lining-nums}
-  .rapport .r-prix th,.rapport .r-prix td{padding:13px 0;border-bottom:1px solid color-mix(in srgb,var(--sur-vert) 14%,transparent);vertical-align:baseline}
-  .rapport .r-prix tr:first-child th,.rapport .r-prix tr:first-child td{border-top:1px solid color-mix(in srgb,var(--sur-vert) 26%,transparent)}
-  .rapport .r-prix th{font-weight:400;text-align:left;font-size:15.5px;color:var(--sur-vert-pale)}
-  .rapport .r-prix tr.tete th{color:var(--sur-vert)}
-  .rapport .r-prix tr.sous th{padding-left:24px}
-  .rapport .r-prix td{text-align:right;font-family:var(--mono);font-size:23px;letter-spacing:-.02em;color:var(--vert-clair);white-space:nowrap}
-  .rapport .r-prix td small{font-size:12px;letter-spacing:.04em;color:var(--sur-vert-pale);margin-left:6px}
-  .rapport .r-prix td.mot{font-size:13px;letter-spacing:.06em;color:var(--sur-vert-pale)}
-  .rapport .r-note{margin-top:28px;font-size:14.5px;line-height:1.68;color:var(--sur-vert-pale);max-width:66ch}
   .rapport .r-feuille{margin:6px 0 0;position:sticky;top:112px;perspective:1400px}
   .rapport .r-feuille a{display:block;border-radius:3px;transform-style:preserve-3d;
     transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px));
@@ -733,7 +727,73 @@ CSS = '''
     box-shadow:0 60px 120px rgba(0,0,0,.62),0 0 0 1px color-mix(in srgb,var(--vert-vif) 46%,transparent)}
   .rapport .r-feuille figcaption{margin-top:20px;font-family:var(--mono);font-size:11px;line-height:1.7;letter-spacing:.14em;
     text-transform:uppercase;color:var(--sur-vert-pale);opacity:.85}
-  .rapport .ouvrir-ligne{margin-top:68px}
+  .rapport .r-offre{margin-top:150px}
+  .rapport .r-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:stretch}
+  .rapport .r-col{position:relative;isolation:isolate;padding:124px 38px 36px;border-radius:18px;
+    border:1px solid color-mix(in srgb,var(--sur-vert) 12%,transparent);
+    background:linear-gradient(180deg,color-mix(in srgb,var(--nuit-a) 64%,transparent),color-mix(in srgb,var(--nuit-c) 86%,transparent));
+    transition:opacity .45s var(--montee),border-color .3s,transform .45s var(--montee),box-shadow .45s var(--montee)}
+  .rapport .r-col::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;opacity:0;transition:opacity .4s;
+    background:radial-gradient(420px 300px at var(--mx,50%) var(--my,30%),color-mix(in srgb,var(--vert-vif) 15%,transparent),transparent 70%)}
+  .rapport .r-col:hover::before{opacity:1}
+  .rapport .r-col:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--vert-vif) 46%,transparent);
+    box-shadow:0 26px 70px rgba(0,0,0,.42)}
+  .rapport .r-col.haute{border-color:color-mix(in srgb,var(--vert-vif) 36%,transparent)}
+  .rapport .r-robot{position:absolute;top:-80px;left:50%;height:172px;width:auto;transform:translateX(-50%);pointer-events:none;
+    filter:drop-shadow(0 26px 30px rgba(0,0,0,.55));transition:transform .6s var(--montee)}
+  .rapport .r-col:hover .r-robot{transform:translateX(-50%) translateY(-8px) rotate(-2deg)}
+  .rapport .r-eti{margin:0;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--vert-clair)}
+  .rapport .r-montant{margin:14px 0 8px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .rapport .r-n{font-weight:600;font-size:clamp(46px,5vw,72px);letter-spacing:-.02em;line-height:1.02;
+    font-variant-numeric:lining-nums tabular-nums;color:var(--sur-vert)}
+  .rapport .r-n.mot{font-size:clamp(30px,3vw,42px)}
+  .rapport .r-col.haute .r-n{color:var(--vert-clair);text-shadow:0 0 26px color-mix(in srgb,var(--vert-vif) 42%,transparent)}
+  .rapport .r-montant small{font-size:14px;color:var(--sur-vert-pale)}
+  .rapport .r-sous{margin:0 0 22px;font-size:15.5px;line-height:1.6;color:var(--sur-vert-pale);max-width:46ch}
+  .rapport .r-inclus{list-style:none;margin:0;padding:20px 0 0;display:grid;gap:11px;
+    border-top:1px solid color-mix(in srgb,var(--sur-vert) 14%,transparent)}
+  .rapport .r-inclus li{position:relative;padding-left:28px;font-size:15px;line-height:1.55;color:var(--sur-vert-pale)}
+  .rapport .r-inclus li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;height:6px;
+    border-left:1.5px solid var(--vert-vif);border-bottom:1.5px solid var(--vert-vif);transform:rotate(-45deg)}
+  .rapport .r-inclus b{color:var(--sur-vert);font-weight:600}
+  .rapport .r-col.hors{opacity:.4}
+  .rapport .r-au-dela{margin:20px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--vert-clair)}
+  .rapport .r-taille{margin-top:28px;padding:30px 38px 30px;border-radius:18px;
+    border:1px solid color-mix(in srgb,var(--sur-vert) 12%,transparent);background:color-mix(in srgb,var(--nuit-c) 72%,transparent)}
+  .rapport .r-taille-tete{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+  .rapport .r-taille label{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sur-vert-pale)}
+  .rapport .r-noms-v{font-family:var(--mono);font-size:28px;letter-spacing:-.02em;color:var(--sur-vert);font-variant-numeric:tabular-nums}
+  .rapport .r-bascule{margin-left:auto;display:inline-flex;padding:3px;border-radius:999px;
+    border:1px solid color-mix(in srgb,var(--sur-vert) 18%,transparent)}
+  .rapport .r-bascule button{font:inherit;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    background:none;border:0;color:var(--sur-vert-pale);padding:9px 16px;border-radius:999px;cursor:pointer;transition:background .25s,color .25s}
+  .rapport .r-bascule button[aria-pressed="true"]{background:color-mix(in srgb,var(--vert-vif) 24%,transparent);color:var(--sur-vert)}
+  .rapport .r-bascule button:hover{color:var(--sur-vert)}
+  .rapport .r-piste{position:relative;margin:22px 0 62px;--f:0}
+  .rapport .r-piste input{display:block;width:100%;height:40px;margin:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:grab;
+    position:relative;z-index:2}
+  .rapport .r-piste input:active{cursor:grabbing}
+  .rapport .r-piste input::-webkit-slider-runnable-track{height:2px;border-radius:2px;
+    background:linear-gradient(90deg,var(--vert-vif) calc(var(--f)*100%),color-mix(in srgb,var(--sur-vert) 20%,transparent) calc(var(--f)*100%))}
+  .rapport .r-piste input::-moz-range-track{height:2px;border-radius:2px;background:color-mix(in srgb,var(--sur-vert) 20%,transparent)}
+  .rapport .r-piste input::-moz-range-progress{height:2px;background:var(--vert-vif)}
+  .rapport .r-piste input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-11px;border-radius:50%;
+    background:var(--vert-clair);border:5px solid var(--nuit-b);box-shadow:0 0 0 1px var(--vert-vif),0 0 24px color-mix(in srgb,var(--vert-vif) 60%,transparent);
+    transition:transform .2s var(--montee)}
+  .rapport .r-piste input::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--vert-clair);border:5px solid var(--nuit-b);
+    box-shadow:0 0 0 1px var(--vert-vif),0 0 24px color-mix(in srgb,var(--vert-vif) 60%,transparent)}
+  .rapport .r-piste input:hover::-webkit-slider-thumb,.rapport .r-piste input:focus-visible::-webkit-slider-thumb{transform:scale(1.18)}
+  .rapport .r-reperes{position:absolute;left:12px;right:12px;top:0;height:100%;pointer-events:none}
+  .rapport .r-reperes span{position:absolute;left:calc(var(--p)*100%);top:30px;transform:translateX(-50%);display:grid;justify-items:center;gap:2px;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--sur-vert-pale);white-space:nowrap;transition:color .25s}
+  .rapport .r-reperes span::before{content:"";width:1px;height:8px;background:currentColor;opacity:.7;margin-bottom:3px}
+  .rapport .r-reperes span b{font-size:12.5px;font-weight:500;color:var(--sur-vert)}
+  .rapport .r-reperes span.on{color:var(--vert-clair)}.rapport .r-reperes span.on b{color:var(--vert-clair)}
+  .rapport .r-phrase{margin:0;font-size:17px;line-height:1.62;color:var(--sur-vert);max-width:72ch}
+  .rapport .r-phrase b{color:var(--vert-clair);font-weight:600}
+  html:not(.js) .rapport .r-piste,html:not(.js) .rapport .r-bascule{display:none}
+  .rapport .r-note{margin-top:34px;font-size:14.5px;line-height:1.68;color:var(--sur-vert-pale);max-width:88ch}
+  .rapport .ouvrir-ligne{margin-top:56px}
   .rapport .liens{display:flex;gap:52px;flex-wrap:wrap;margin-top:34px}
   .rapport .lien-e{color:var(--sur-vert);border-bottom:1px solid var(--sur-vert-pale);padding-bottom:4px;text-decoration:none;
     font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;transition:color .2s,border-color .2s}
@@ -744,11 +804,17 @@ CSS = '''
     transition:color .2s,border-color .2s}
   .hero .vers-rapport:hover,.hero .vers-rapport:focus-visible{color:var(--vert-clair);border-color:var(--vert-clair)}
   .hero .vers-rapport span{display:inline-block;transition:transform .3s var(--montee)}.hero .vers-rapport:hover span{transform:translateY(3px)}
-  @media (max-width:980px){.rapport .r-grille{grid-template-columns:minmax(0,1fr);gap:60px}
-    .rapport .r-feuille{position:static;max-width:430px}}
-  @media (max-width:700px){.rapport{padding:84px 0 96px}.rapport .r-prix td{font-size:19px}.rapport .r-prix tr.sous th{padding-left:14px}
+  @media (max-width:980px){.rapport .r-grille{grid-template-columns:minmax(0,1fr) minmax(0,300px);gap:44px}}
+  @media (max-width:760px){.rapport{padding:84px 0 96px}
+    .rapport .r-grille{grid-template-columns:minmax(0,1fr);gap:56px}
+    .rapport .r-feuille{position:static;max-width:420px;margin:0 auto}
+    .rapport .r-offre{margin-top:130px}
+    .rapport .r-cols{grid-template-columns:minmax(0,1fr);gap:108px}
+    .rapport .r-col{padding:108px 24px 28px}.rapport .r-robot{height:146px;top:-68px}
+    .rapport .r-taille{padding:24px 20px 24px}.rapport .r-bascule{margin-left:0}
     .rapport .liens{gap:26px}}
-  @media (prefers-reduced-motion:reduce){.rapport .r-feuille a{transition:none;transform:none}}
+  @media (prefers-reduced-motion:reduce){.rapport .r-feuille a,.rapport .r-col,.rapport .r-robot{transition:none;transform:none}
+    .rapport .r-col:hover .r-robot{transform:translateX(-50%)}}
   /* le bandeau qui ouvre l'instrument, sous la vidéo (Arslane, 6/09 : « impressionnant,
      effet souris, sur chaque couleur ») : large, la couleur de l'outil en halo qui suit la
      souris, un éclat qui balaie, la flèche qui glisse dans son disque, la lueur qui monte ;
@@ -2017,7 +2083,10 @@ for (const pop of document.querySelectorAll('.entites .pop')) {{
 def _section_rapport(o):
     """Le rapport de criblage en service (produit A), page Screening, 29/09 : l'offre lue dans offre-screening.json
     (grille B choisie par Arslane le 29/09), la feuille lue dans le rapport exemple rendu par batir-rapport-exemple.py
-    depuis le relevé PUBLIC de l'outil ; refusé si le scellé du rapport exemple n'est plus celui du relevé."""
+    depuis le relevé PUBLIC de l'outil ; refusé si le scellé du rapport exemple n'est plus celui du relevé.
+    Les prix, dans la langue de la page des tarifs (retouche du 29/09) : deux colonnes, puis le curseur de la taille
+    de la liste. Les constantes du script sont écrites depuis le JSON ; l'état au repos (500 noms, au mois) est
+    calculé ici par la même règle, et chaque montant du JSON doit se lire dans la page servie."""
     if o["id"] != "screening":
         return ""
     off = json.loads((BASE / "offre-screening.json").read_text())
@@ -2028,21 +2097,37 @@ def _section_rapport(o):
                  "relancer batir-rapport-exemple.py")
     if (ex["forts"], ex["possibles"], ex["sans"]) != (rec["totaux"]["forts"], rec["totaux"]["possibles"], rec["totaux"]["sansCorrespondance"]):
         sys.exit("le rapport exemple ne se recompte pas sur son relevé : refusé")
-    for f in ("rapports/screening-sample-report.pdf", "rendus/rapport-exemple.webp"):
+    for f in ("rapports/screening-sample-report.pdf", "rendus/rapport-exemple.webp", "rendus/robot-rubis-curieux.webp", "rendus/robot-rubis-penche.webp"):
         if not (BASE / f).exists():
-            sys.exit(f"{f} absent : relancer batir-rapport-exemple.py")
-    usd = lambda n: f"${n:,}"
+            sys.exit(f"{f} absent : la section du rapport aurait un trou")
+    if off["annuel"] != "two months free":
+        sys.exit("offre-screening.json : la règle annuelle a changé, le calcul « dix mois payés » du curseur est à revoir")
+    MOIS_PAYES, SEMAINES = 10, 52      # « two months free » : douze mois moins deux ; un rapport par semaine
     EN_LETTRES = {5: "five", 10: "ten", 20: "twenty"}
-    r0 = off["rapport"]; rc = off["recriblage"]
-    lignes = [f'<tr class="tete"><th scope="row">One report, up to {r0["noms"]:,} names</th><td>{usd(r0["prix_usd"])}</td></tr>']
-    for i, x in enumerate(rc):
-        cls, eti = ("tete", f"Weekly re-screen, up to {x['noms']:,} names") if i == 0 else ("sous", f"up to {x['noms']:,} names")
-        lignes.append(f'<tr class="{cls}"><th scope="row">{eti}</th><td>{usd(x["prix_usd_mois"])}<small>a month</small></td></tr>')
-    lignes.append(f'<tr class="sous"><th scope="row">paid yearly</th><td class="mot">{off["annuel"]}</td></tr>')
+    usd = lambda n: f"${n:,}"
+    r0, rc = off["rapport"], off["recriblage"]
+    PAS = [10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000]
+    for x in [r0["noms"]] + [x["noms"] for x in rc]:
+        if x not in PAS:
+            sys.exit(f"le palier de {x} noms n'est pas un cran du curseur : ajouter le cran")
+    defaut = PAS.index(r0["noms"])
+    def phrase(n, periode):
+        pal = next((x for x in rc if n <= x["noms"]), None)
+        if pal is None:
+            return f"A list above {rc[-1]['noms']:,} names: write to {off['contact']} for a price."
+        m = pal["prix_usd_mois"]; a = m * MOIS_PAYES; par = round(a / SEMAINES)
+        abo = (f"<b>{usd(m)} a month</b> to have it screened again each week" if periode == "mois"
+               else f"<b>{usd(a)} paid yearly</b> for {SEMAINES} weekly reports, about {usd(par)} each")
+        if n <= r0["noms"]:
+            return f"A list of {n:,} names: <b>{usd(r0['prix_usd'])}</b> for one report, or {abo}."
+        return f"A list of {n:,} names is longer than one report covers, so start with the weekly re-screen: {abo}."
+    data = html_mod.escape(json.dumps({"rapport": r0, "paliers": rc, "moisPayes": MOIS_PAYES, "semaines": SEMAINES,
+                                       "pas": PAS, "contact": off["contact"]}), quote=True)
+    reperes = "".join(f'<span class="{"on" if x["noms"] == r0["noms"] else ""}" style="--p:{PAS.index(x["noms"]) / (len(PAS) - 1):.4f}" data-noms="{x["noms"]}"><b>{usd(x["prix_usd_mois"])}</b>{x["noms"]:,}</span>' for x in rc)
     sujet = "Ten%20names%20to%20screen"
     pdf, img = "../rapports/screening-sample-report.pdf", "../rendus/rapport-exemple.webp"
     depot = o["depot"].rstrip("/")
-    html = f'''<section class="rapport" id="report"><div class="colonne">
+    html = f"""<section class="rapport" id="report"><div class="colonne">
   <div class="r-grille">
   <div class="r-texte">
     <p class="marque-h">The screening report</p>
@@ -2052,8 +2137,6 @@ def _section_rapport(o):
       <li><span><b>We screen</b> each name against OFAC SDN, the OFAC consolidated lists, the trade.gov Consolidated Screening List, the UN list and the EU list, as downloaded that day.</span></li>
       <li><span><b>You receive</b> a PDF and a spreadsheet: each candidate with its list entry and the words that matched, the dates of the lists, and a seal anyone can check.</span></li>
     </ol>
-    <table class="r-prix"><caption class="sr">Prices of the screening report</caption><tbody>{"".join(lignes)}</tbody></table>
-    <p class="r-note">Each weekly report opens with what changed since the last one. {off["conservation"]} A candidate is a name for your compliance officer to check: the report does not decide, does not screen ownership, and is not legal advice.</p>
   </div>
   <figure class="r-feuille">
     <a href="{pdf}" download><img src="{img}" width="1224" height="1584" loading="lazy" decoding="async"
@@ -2061,6 +2144,35 @@ def _section_rapport(o):
     <figcaption>sample report &#183; {ex["lignes"]} invented counterparties &#183; sealed {ex["emis"]} &#183; record {ex["sceau"]}</figcaption>
   </figure>
   </div>
+  <div class="r-offre" data-offre="{data}">
+    <div class="r-cols">
+      <article class="r-col" data-col="rapport">
+        <img class="r-robot" src="../rendus/robot-rubis-curieux.webp" width="1023" height="961" alt="" loading="lazy" decoding="async">
+        <p class="r-eti">One report</p>
+        <p class="r-montant"><span class="r-n" data-v="{r0["prix_usd"]}">{usd(r0["prix_usd"])}</span><small>up to {r0["noms"]:,} names</small></p>
+        <p class="r-sous">Your list, screened once and sealed, back within {off["delai_heures"]} hours.</p>
+        <ul class="r-inclus"><li>The report as a PDF and as a spreadsheet</li><li>Each candidate with its list entry and the words that matched</li><li>The dates of the five lists, and a seal anyone can check</li></ul>
+        <p class="r-au-dela" hidden>Stops at {r0["noms"]:,} names</p>
+      </article>
+      <article class="r-col haute" data-col="abo">
+        <img class="r-robot" src="../rendus/robot-rubis-penche.webp" width="726" height="865" alt="" loading="lazy" decoding="async">
+        <p class="r-eti">Weekly re-screen</p>
+        <p class="r-montant"><span class="r-n" data-v="{rc[0]["prix_usd_mois"]}">{usd(rc[0]["prix_usd_mois"])}</span><small class="r-unite">a month, up to {rc[0]["noms"]:,} names</small></p>
+        <p class="r-sous">The same list, screened again each week against the lists of that week.</p>
+        <ul class="r-inclus"><li><b>{SEMAINES}</b> sealed reports a year</li><li>Each report opens with what changed since the last one</li><li>Paid yearly, {off["annuel"]}</li><li>Stop at any time, and your list is deleted when you stop</li></ul>
+      </article>
+    </div>
+    <div class="r-taille">
+      <div class="r-taille-tete"><label for="r-noms">Names on your list</label><output class="r-noms-v" for="r-noms">{r0["noms"]:,}</output>
+        <div class="r-bascule" role="group" aria-label="Billing period"><button type="button" aria-pressed="true" data-p="mois">monthly</button><button type="button" aria-pressed="false" data-p="an">paid yearly</button></div></div>
+      <div class="r-piste" style="--f:{defaut / (len(PAS) - 1):.4f}">
+        <input type="range" id="r-noms" min="0" max="{len(PAS) - 1}" step="1" value="{defaut}" aria-valuetext="{r0["noms"]:,} names">
+        <div class="r-reperes" aria-hidden="true">{reperes}</div>
+      </div>
+      <p class="r-phrase" aria-live="polite">{phrase(r0["noms"], "mois")}</p>
+    </div>
+  </div>
+  <p class="r-note">{off["conservation"]} A candidate is a name for your compliance officer to check: the report does not decide, does not screen ownership, and is not legal advice.</p>
   <div class="ouvrir-ligne"><a class="ouvrir" href="mailto:{off["contact"]}?subject={sujet}"><span><span class="ouvrir-t">Try it on {EN_LETTRES.get(off["essai_noms"], off["essai_noms"])} of your names</span>
     <span class="ouvrir-s">Email them to {off["contact"]}. The report comes back within {off["delai_heures"]} hours, at no charge.</span></span>
     <span class="fl" aria-hidden="true">&#8594;</span></a></div>
@@ -2068,21 +2180,75 @@ def _section_rapport(o):
 </div></section>
 <script>
 (() => {{
+  const calme = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const f = document.querySelector('.rapport .r-feuille a');
-  if (!f || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  f.addEventListener('pointermove', (e) => {{
-    const r = f.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-    f.classList.add('suit'); f.style.setProperty('--ry', (x * 7).toFixed(2) + 'deg'); f.style.setProperty('--rx', (-y * 5).toFixed(2) + 'deg');
+  if (f && !calme) {{
+    f.addEventListener('pointermove', (e) => {{
+      const r = f.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      f.classList.add('suit'); f.style.setProperty('--ry', (x * 7).toFixed(2) + 'deg'); f.style.setProperty('--rx', (-y * 5).toFixed(2) + 'deg');
+    }});
+    f.addEventListener('pointerleave', () => {{ f.classList.remove('suit'); f.style.removeProperty('--rx'); f.style.removeProperty('--ry'); }});
+  }}
+  const bloc = document.querySelector('.rapport .r-offre'); if (!bloc) return;
+  const O = JSON.parse(bloc.dataset.offre), fmt = (n) => n.toLocaleString('en-US'), usd = (n) => '$' + fmt(n);
+  for (const c of bloc.querySelectorAll('.r-col')) c.addEventListener('pointermove', (e) => {{
+    const r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
   }});
-  f.addEventListener('pointerleave', () => {{ f.classList.remove('suit'); f.style.removeProperty('--rx'); f.style.removeProperty('--ry'); }});
+  const colR = bloc.querySelector('[data-col="rapport"]'), colA = bloc.querySelector('[data-col="abo"]');
+  const nA = colA.querySelector('.r-n'), uA = colA.querySelector('.r-unite'), nR = colR.querySelector('.r-n');
+  const curseur = bloc.querySelector('#r-noms'), piste = bloc.querySelector('.r-piste'), sortie = bloc.querySelector('.r-noms-v');
+  const phraseEl = bloc.querySelector('.r-phrase'), reperes = [...bloc.querySelectorAll('.r-reperes span')], auDela = colR.querySelector('.r-au-dela');
+  let periode = 'mois';
+  const compter = (el, vers, texte) => {{
+    const de = Number(el.dataset.v) || 0; el.dataset.v = vers;
+    if (calme || de === vers) {{ el.textContent = texte(vers); return; }}
+    const t0 = performance.now(), duree = 450;
+    const pas = (t) => {{ const k = Math.min(1, (t - t0) / duree), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = texte(Math.round(de + (vers - de) * e)); if (k < 1) requestAnimationFrame(pas); }};
+    requestAnimationFrame(pas);
+  }};
+  const phrase = (n) => {{
+    const pal = O.paliers.find((x) => n <= x.noms);
+    if (!pal) return 'A list above ' + fmt(O.paliers[O.paliers.length - 1].noms) + ' names: write to ' + O.contact + ' for a price.';
+    const m = pal.prix_usd_mois, a = m * O.moisPayes, par = Math.round(a / O.semaines);
+    const abo = periode === 'mois' ? '<b>' + usd(m) + ' a month</b> to have it screened again each week'
+                                   : '<b>' + usd(a) + ' paid yearly</b> for ' + O.semaines + ' weekly reports, about ' + usd(par) + ' each';
+    if (n <= O.rapport.noms) return 'A list of ' + fmt(n) + ' names: <b>' + usd(O.rapport.prix_usd) + '</b> for one report, or ' + abo + '.';
+    return 'A list of ' + fmt(n) + ' names is longer than one report covers, so start with the weekly re-screen: ' + abo + '.';
+  }};
+  const poser = () => {{
+    const i = Number(curseur.value), n = O.pas[i], pal = O.paliers.find((x) => n <= x.noms);
+    piste.style.setProperty('--f', (i / (O.pas.length - 1)).toFixed(4));
+    const plafond = O.paliers[O.paliers.length - 1].noms;
+    sortie.textContent = n > plafond ? fmt(plafond) + '+' : fmt(n);
+    curseur.setAttribute('aria-valuetext', n > plafond ? 'more than ' + fmt(plafond) + ' names' : fmt(n) + ' names');
+    colR.classList.toggle('hors', n > O.rapport.noms); auDela.hidden = n <= O.rapport.noms;
+    reperes.forEach((s) => s.classList.toggle('on', pal && Number(s.dataset.noms) === pal.noms));
+    if (pal) {{
+      nA.classList.remove('mot');
+      const v = periode === 'mois' ? pal.prix_usd_mois : pal.prix_usd_mois * O.moisPayes;
+      compter(nA, v, usd);
+      uA.textContent = (periode === 'mois' ? 'a month' : 'a year') + ', up to ' + fmt(pal.noms) + ' names';
+    }} else {{ nA.dataset.v = 0; nA.classList.add('mot'); nA.textContent = 'on request'; uA.textContent = 'above ' + fmt(O.paliers[O.paliers.length - 1].noms) + ' names'; }}
+    phraseEl.innerHTML = phrase(n);
+  }};
+  curseur.addEventListener('input', poser);
+  for (const b of bloc.querySelectorAll('.r-bascule button')) b.addEventListener('click', () => {{
+    periode = b.dataset.p; bloc.querySelectorAll('.r-bascule button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); poser();
+  }});
+  // à l'arrivée, les deux montants se comptent depuis zéro et retombent sur l'écrit
+  if (!calme && 'IntersectionObserver' in window) {{
+    const io = new IntersectionObserver((es) => {{ if (!es.some((e) => e.isIntersecting)) return; io.disconnect();
+      for (const el of [nR, nA]) {{ const v = Number(el.dataset.v); el.dataset.v = 0; compter(el, v, usd); }} }}, {{ threshold: .4 }});
+    io.observe(bloc.querySelector('.r-cols'));
+  }}
 }})();
-</script>'''
+</script>"""
     assert "—" not in html, "un cadratin s'est glissé dans la section du rapport"
     for attendu in (usd(r0["prix_usd"]), *(usd(x["prix_usd_mois"]) for x in rc), ex["sceau"], off["conservation"]):
         if attendu not in html:
             sys.exit(f"la section du rapport n'affiche pas « {attendu} » : refusé")
     return html
-
 
 def batir_outil_catalogue(o, spec):
     # UNE définition de « prêt » : manques(), la même que le rideau et l'assembleur.
