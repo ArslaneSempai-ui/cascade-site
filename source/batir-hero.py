@@ -789,11 +789,11 @@ CSS = '''
   .rapport .r-reperes span::before{content:"";width:1px;height:8px;background:currentColor;opacity:.7;margin-bottom:3px}
   .rapport .r-reperes span b{font-size:12.5px;font-weight:500;color:var(--sur-vert)}
   .rapport .r-reperes span.on{color:var(--vert-clair)}.rapport .r-reperes span.on b{color:var(--vert-clair)}
-  .rapport .r-phrase{margin:0;font-size:17px;line-height:1.62;color:var(--sur-vert);max-width:72ch}
+  .rapport .r-phrase{margin:0;font-size:17px;line-height:1.62;color:var(--sur-vert);max-width:none}
   .rapport .r-phrase b{color:var(--vert-clair);font-weight:600}
   html:not(.js) .rapport .r-piste,html:not(.js) .rapport .r-bascule{display:none}
-  .rapport .r-note{margin-top:34px;font-size:14.5px;line-height:1.68;color:var(--sur-vert-pale);max-width:88ch}
-  .rapport .ouvrir-ligne{margin-top:56px}
+  .rapport .r-note{margin-top:34px;font-size:14.5px;line-height:1.68;color:var(--sur-vert-pale);max-width:none}
+  .rapport .ouvrir-ligne{margin-top:56px}.rapport .ouvrir-s{max-width:none}
   .rapport .liens{display:flex;gap:52px;flex-wrap:wrap;margin-top:34px}
   .rapport .lien-e{color:var(--sur-vert);border-bottom:1px solid var(--sur-vert-pale);padding-bottom:4px;text-decoration:none;
     font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;transition:color .2s,border-color .2s}
