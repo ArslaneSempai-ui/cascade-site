@@ -715,7 +715,7 @@ CSS_BARRE_SITE = '''
      Il prend la couleur de titre de SA page : vert routing, rubis screening, lapis, améthyste, onyx. */
   .barre.posee nav a[aria-current]{color:var(--vert-titre,#23543f)}
   /* under 1080 px the bar leaves the fixed layer and takes its place in the flow, in the night
-     colours, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
+     colors, the seal on its own line ; no title hides under it, and the pages' top padding shrinks */
   @media (max-width:1080px){
     .barre{position:static;padding:12px 18px 8px;flex-wrap:wrap}
     html:not(.js) .barre{position:static}

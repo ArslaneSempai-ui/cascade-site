@@ -327,11 +327,11 @@ ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
 # la phrase suit l'état du registre : des parenthèses vides « () » se sont affichées
 # le soir où le septième palier est arrivé (relu sur capture)
 PHRASE_ABSENTS = (
-    f"a scenario missing from that list ({ABSENTS}) shows as a labelled blank"
+    f"a scenario missing from that list ({ABSENTS}) shows as a labeled blank"
     if ABSENTS else
     "Each scenario the tool ships with appears in our test set, and if one were ever missing "
     "it would show as a "
-    "labelled blank")
+    "labeled blank")
 
 PAGE = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade Monitoring &#183; live instrument</title>
@@ -410,7 +410,7 @@ PAGE = f'''<!doctype html><html lang="en">
         on {D["provenance"]["date"]}. Before the page is built, that script checks
         that hash and recomputes every figure. If one of them disagrees, nothing is
         published.</li>
-      <li><b>The cases we wrote.</b> The labelled half is written by hand: typologies of suspicion
+      <li><b>The cases we wrote.</b> The labeled half is written by hand: typologies of suspicion
         (structuring, rapid movement, a dormant account that wakes, round-tripping) and benign
         cases (payroll, seasonal trade, loan repayments) that resemble them. Each case arrives with its
         label, and where a label is debatable the reason is written beside it.</li>

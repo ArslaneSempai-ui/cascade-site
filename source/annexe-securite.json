@@ -68,16 +68,16 @@
     {
       "h2": "What the tool depends on",
       "html": [
-        "<p>The tool has <b>one production dependency</b> and two development dependencies. The lockfile lists 77 packages, each with its content hash. Of those, 51 install on a given machine, and the rest are per&#8209;platform variants. A generator classifies their licences, so no one sorts them by hand: <b>50 permissive, 1 with obligations, 0 blocking, 0 undetermined</b>, re&#8209;checked on each test run. A CycloneDX software bill of materials ships with the tool.</p>",
+        "<p>The tool has <b>one production dependency</b> and two development dependencies. The lockfile lists 77 packages, each with its content hash. Of those, 51 install on a given machine, and the rest are per&#8209;platform variants. A generator classifies their licenses, so no one sorts them by hand: <b>50 permissive, 1 with obligations, 0 blocking, 0 undetermined</b>, re&#8209;checked on each test run. A CycloneDX software bill of materials ships with the tool.</p>",
         "<p>The repository itself has no install&#8209;time script, a script that runs when a package is installed, beyond wiring its own git hooks. Two transitive production packages do carry install scripts. On macOS and Windows they touch nothing beyond the npm registry. On one platform, linux/x64, one of them fetches optional GPU providers from a second registry at install time. <code>npm ci --ignore-scripts</code> disables both scripts, and running on CPU, as documented, loses nothing.</p>"
       ],
       "verif": {
         "t": "Check the counts",
-        "p": "The licence table and the test count are both generated. Each has a checker that fails the suite when the document drifts from the sources.",
+        "p": "The license table and the test count are both generated. Each has a checker that fails the suite when the document drifts from the sources.",
         "cmd": [
           {
             "c": "node src/licences.ts --check",
-            "n": "fails when the licence table drifts"
+            "n": "fails when the license table drifts"
           },
           {
             "c": "node src/readme.ts --check",
@@ -90,7 +90,7 @@
     {
       "h2": "Your reviewers can read the code",
       "html": [
-        "<p>The licence is <b>PolyForm Noncommercial</b>, which makes the code source&#8209;available. Anyone may read, study and fork the code with no time limit. An evaluation grant lets any organisation run it on its own data, internally, for thirty days. One limit remains: it is not an OSI&#8209;approved licence, and some organisations exclude such licences by policy.</p>"
+        "<p>The license is <b>PolyForm Noncommercial</b>, which makes the code source&#8209;available. Anyone may read, study and fork the code with no time limit. An evaluation grant lets any organization run it on its own data, internally, for thirty days. One limit remains: it is not an OSI&#8209;approved license, and some organizations exclude such licenses by policy.</p>"
       ]
     },
     {

@@ -1006,6 +1006,19 @@ if _gv.returncode != 0:
     sys.exit("LA VOIX N'EST PAS TENUE (garde-voix, VOIX.md) :\n" + _gv.stdout[-2400:])
 print("  " + next(l.strip() for l in _gv.stdout.splitlines() if "voix tenue" in l))
 
+# ── l'orthographe américaine (30/09, Arslane : « c'est plus américain », décision : tout le site) ──
+# Même mâchoire que la voix : une page plantée doit la faire rougir avant que son zéro soit cru.
+_zzo = DOCS / "zz-temoin-orthographe.html"
+_zzo.write_text("<p>The licence of the organisation.</p>")
+_go = subprocess.run([sys.executable, str(MAQ / "garde-orthographe.py"), "--docs", str(DOCS)], capture_output=True, text=True)
+if _go.returncode == 0:
+    sys.exit("GARDE CASSÉE : la garde de l'orthographe n'a pas vu la page témoin plantée : son zéro ne vaut rien")
+_zzo.unlink()
+_go = subprocess.run([sys.executable, str(MAQ / "garde-orthographe.py"), "--docs", str(DOCS)], capture_output=True, text=True)
+if _go.returncode != 0:
+    sys.exit("L'ORTHOGRAPHE N'EST PAS AMÉRICAINE (garde-orthographe) :\n" + _go.stdout[-2400:] + _go.stderr[-400:])
+print("  " + next(l.strip() for l in _go.stdout.splitlines() if "orthographe" in l))
+
 # ── le témoin de l'accueil : le grand livre, l'éventail, la méthode ──────────
 # Statique et auto-témoigné par mutation (quatre mues doivent rougir avant que le
 # vert soit cru) ; un accueil dont le sceau, les cartes ou les citations dérivent

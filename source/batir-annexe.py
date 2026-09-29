@@ -86,7 +86,7 @@ PAGES = [
         "titre_onglet": "Cascade &#183; accessibility",
         "objet": "rendus/etats/objet-accessibilite.webp",
         "alt": "A summit with two slopes: a green ramp rising on the left, "
-               "grey steps on the right, arriving at the same platform.",
+               "gray steps on the right, arriving at the same platform.",
     },
 ]
 LETTRES = "ABCDEF"

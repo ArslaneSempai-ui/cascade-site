@@ -321,11 +321,11 @@ ABSENTS = ", ".join(D["absents"]) if D["absents"] else ""
 # la phrase suit l'état du registre : des parenthèses vides « () » se sont affichées
 # le soir où le septième palier est arrivé (relu sur capture)
 PHRASE_ABSENTS = (
-    f"a matcher missing from that list ({ABSENTS}) shows as a labelled blank"
+    f"a matcher missing from that list ({ABSENTS}) shows as a labeled blank"
     if ABSENTS else
     "Each matcher the tool ships with appears in our test set, and if one were ever missing "
     "it would show as a "
-    "labelled blank")
+    "labeled blank")
 
 PAGE = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade Screening &#183; live instrument</title>
@@ -404,7 +404,7 @@ PAGE = f'''<!doctype html><html lang="en">
         on {D["provenance"]["date"]}. The script that builds it checks that hash, rebuilds every
         figure with the tool&#8217;s own code, and publishes nothing if one of them
         disagrees.</li>
-      <li><b>The pairs we wrote.</b> The labelled half is written by hand: true matches, where the
+      <li><b>The pairs we wrote.</b> The labeled half is written by hand: true matches, where the
         same name is transliterated, reordered, abbreviated or mistyped, and near-matches, which are
         siblings and partial homonyms that are not the same person. Where a label is debatable, the
         reason is written beside it.</li>

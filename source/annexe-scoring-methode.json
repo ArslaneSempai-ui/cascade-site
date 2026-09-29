@@ -8,7 +8,7 @@
     {
       "h2": "The customer files we wrote, pair by pair",
       "html": [
-        "<p>The test set has a written half and a generated half. The written one rests on customer files <b>we wrote and state as ours</b>. Six escalated typologies come with six retained files, written on purpose to match them. Escalated means an analyst sent the file up for review, and retained is its clean counterpart. A family company with each ownership layer named is paired with the shell that hides them. A neighbourhood shop whose turnover sits on its declaration is paired with one whose cash takings run past it. A salaried account at a ratio of one, observed flows over declared, is paired with a firm at a ratio of five. A foreign student at stipend scale is paired with a newly onboarded customer, opened remotely, at several times his declaration. The two files of a pair differ <b>in the fields</b>, the history and the ratios. The tag alone never separates them. A test checks that all six pairs keep this structure.</p>",
+        "<p>The test set has a written half and a generated half. The written one rests on customer files <b>we wrote and state as ours</b>. Six escalated typologies come with six retained files, written on purpose to match them. Escalated means an analyst sent the file up for review, and retained is its clean counterpart. A family company with each ownership layer named is paired with the shell that hides them. A neighborhood shop whose turnover sits on its declaration is paired with one whose cash takings run past it. A salaried account at a ratio of one, observed flows over declared, is paired with a firm at a ratio of five. A foreign student at stipend scale is paired with a newly onboarded customer, opened remotely, at several times his declaration. The two files of a pair differ <b>in the fields</b>, the history and the ratios. The tag alone never separates them. A test checks that all six pairs keep this structure.</p>",
         "<p>No official country list was copied, and a test makes that refusal structural, part of the test set's own shape. Escalated and retained files <b>share their countries of residence</b>, so no country code can stand in for a list. The geography factor scores zero on this test set, on both sides. The Scoring page above this one reports that zero as a finding and does not hide it.</p>"
       ],
       "verif": {
@@ -41,7 +41,7 @@
       }
     },
     {
-      "h2": "Generated variants are reported apart, whichever side they favour",
+      "h2": "Generated variants are reported apart, whichever side they favor",
       "html": [
         "<p>The generated half comes from the written customer files under a stated seed, the number that fixes the random draw. The generator is built so that it cannot change a file's nature. Factors that depend on each other keep their observed-over-declared ratios. A file's cash share stays on the side of the limit it started on. Ownership layers keep their minimum count. The newly onboarded, remotely opened customer keeps that status. On this tool the generated half is <b>harsher</b> than the written one on the best factor, which means a lower figure there. It is reported apart whether it comes out worse or better. Separation is a rule. It is not a convenience. The page shows both numbers side by side.</p>"
       ],

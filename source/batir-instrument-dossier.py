@@ -368,7 +368,7 @@ PAGE = f'''<!doctype html><html lang="en">
       <li><b>The reports come from the suite&#8217;s own public test sets.</b> The reports judged here are the public
         records of Cascade&#8217;s tools (the reader, the matcher that compares names, the scenario, the factor):
         published, sealed, verifiable by anyone. If a question has none, it is shown as a
-        labelled blank, and no column is guessed.</li>
+        labeled blank, and no column is guessed.</li>
       <li><b>The five controls are applied in a fixed order.</b> present, frozen, signed, fresh, consistent: the
         state reached is the highest control held <b>without a gap</b> in that order. A held
         control above a hole counts for nothing, and the table shows why.</li>

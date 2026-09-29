@@ -17,13 +17,13 @@
       "h2": "Each text pairing clears the contrast floor",
       "html": [
         "<p>We computed these ratios from this site's palette. None of them is an assertion. Body text against the page background measures <b>11.1:1</b>. The weakest text pairing anywhere on the site measures <b>5.6:1</b>. The accessibility floor for body text is 4.5:1, so each pairing on the site clears it with room to spare.</p>",
-        "<p>Colour does not carry a meaning on its own. Wherever the green marks something (a shackle, a plateau, a signature), <b>a word or a shape carries the same meaning beside it</b>.</p>"
+        "<p>Color does not carry a meaning on its own. Wherever the green marks something (a shackle, a plateau, a signature), <b>a word or a shape carries the same meaning beside it</b>.</p>"
       ]
     },
     {
       "h2": "Each section is a native browser element",
       "html": [
-        "<p>The sections of each appendix are <b>native disclosure elements</b>. The browser provides their keyboard behaviour and their screen&#8209;reader semantics, so there is no script of ours to get them wrong. Focus is always visible: each interactive element carries a <b>focus ring drawn in the site's text colour</b>, and no rule suppresses it.</p>",
+        "<p>The sections of each appendix are <b>native disclosure elements</b>. The browser provides their keyboard behavior and their screen&#8209;reader semantics, so there is no script of ours to get them wrong. Focus is always visible: each interactive element carries a <b>focus ring drawn in the site's text color</b>, and no rule suppresses it.</p>",
         "<p><i>Tab through this page: each section header opens or closes with Enter or Space, and with a screen reader on, each one is read out.</i></p>"
       ]
     },

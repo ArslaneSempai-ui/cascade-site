@@ -241,8 +241,8 @@ JS = r'''<script>
     let s;
     if (j <= 30) s = '<b>Day ' + j + ' of the thirty.</b> The counter runs on your machine and results stay internal. No data has reached us, and nothing is owed.';
     else if (j < 45) s = '<b>Day ' + j + '.</b> The thirty days have run. Nothing is owed until you sign; your legal team can read the papers now.';
-    else if (j < 105) s = '<b>Day ' + j + '.</b> Signed ' + (j - 45 === 0 ? 'today' : (j - 45) + ' days ago') + '. Campaign: the invoice (' + fmt(CAMP) + ', fixed) is settled and the sealed report is on your machine. Licence: 30% paid (' + fmt(LIC * PART) + '); the balance (' + fmt(LIC * (1 - PART)) + ') falls due in ' + (105 - j) + ' days.';
-    else if (j < 365) s = '<b>Day ' + j + '.</b> The balance is settled. The licence year runs on all five instruments, updates included, with recertification on fresh records over the period you declare.';
+    else if (j < 105) s = '<b>Day ' + j + '.</b> Signed ' + (j - 45 === 0 ? 'today' : (j - 45) + ' days ago') + '. Campaign: the invoice (' + fmt(CAMP) + ', fixed) is settled and the sealed report is on your machine. License: 30% paid (' + fmt(LIC * PART) + '); the balance (' + fmt(LIC * (1 - PART)) + ') falls due in ' + (105 - j) + ' days.';
+    else if (j < 365) s = '<b>Day ' + j + '.</b> The balance is settled. The license year runs on all five instruments, updates included, with recertification on fresh records over the period you declare.';
     else s = '<b>The twelfth month.</b> Renewal capped at the lower of CPI-U and 5% above this year.';
     etat.innerHTML = s; };
   const depuis = e => { const b = axe.getBoundingClientRect(); return (e.clientX - b.left) / b.width * ECHELLE; };
@@ -262,11 +262,11 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cascade: what an engagement buys">
-<meta property="og:description" content="Evaluate free for thirty days on your own records. Then one sealed measurement campaign at a fixed price, or the annual licence for the suite.">
+<meta property="og:description" content="Evaluate free for thirty days on your own records. Then one sealed measurement campaign at a fixed price, or the annual license for the suite.">
 <meta property="og:url" content="https://cascade-routing.com/engagement.html">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Evaluate free for thirty days on your own records. Then one sealed measurement campaign at a fixed price, or the annual licence for the suite.">
+<meta name="description" content="Evaluate free for thirty days on your own records. Then one sealed measurement campaign at a fixed price, or the annual license for the suite.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">
@@ -285,7 +285,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="tete"><div class="colonne">
   <h1 class="h1">What you get, and what it costs.</h1>
   <p class="lede"><b>Test any of the five tools for thirty days on your own records.</b><br>
-    When you are ready, we run one measurement on your data and hand you a report signed with a key your audit team can check, which you can then licence for the year.</p>
+    When you are ready, we run one measurement on your data and hand you a report signed with a key your audit team can check, which you can then license for the year.</p>
 </div></section>
 
 <section aria-label="The three steps"><div class="colonne">
@@ -301,7 +301,7 @@ PAGE = f'''<!doctype html><html lang="en">
         <li>Results stay internal, and you may not use them in live operations</li>
       </ul>
       <a class="cta" href="{DEPOT_URL}"><span class="b">Download and run <span class="fl" aria-hidden="true">&#8594;</span></span></a>
-      <p class="c-fin">These thirty days are written into the public licence, which ships with the code</p>
+      <p class="c-fin">These thirty days are written into the public license, which ships with the code</p>
     </div>
     <div class="col">
       <img class="col-robot" src="rendus/robot-penche.webp" alt="">
@@ -320,28 +320,28 @@ PAGE = f'''<!doctype html><html lang="en">
     </div>
     <div class="col haute">
       <img class="col-robot" src="rendus/robot-vert-tient.webp" alt="">
-      <p class="c-t">the licence</p>
+      <p class="c-t">the license</p>
       <p class="c-prix">$30,000<small> a year</small></p>
       <p class="c-qui">For using it in your own operations. Commercial use, updates included.</p>
       <p class="c-plus">everything in the campaign, plus</p>
       <ul class="c-liste">
         <li>Commercial use for your own business</li>
-        <li>One licence covers <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b> and <b>Scoring</b></li>
+        <li>One license covers <b>Routing</b>, <b>Screening</b>, <b>Monitoring</b> and <b>Scoring</b></li>
         <li>The <b>Dossier</b>, which reports on all four tools in one file your reviewers can check</li>
         <li>The <b>licensed component</b>: the part that plugs into your own pipeline and changes what reaches production, not only what you know about it. It is not in the public repository</li>
         <li>Updates included for each paid term</li>
         <li><b>Re-measure</b> on fresh records on the schedule you set, and the report is signed again</li>
         <li>One legal entity signs, and every affiliate it covers is named</li>
       </ul>
-      <a class="cta" href="CONTACT.html" data-contact><span class="b">Ask about the licence <span class="fl" aria-hidden="true">&#8594;</span></span></a>
+      <a class="cta" href="CONTACT.html" data-contact><span class="b">Ask about the license <span class="fl" aria-hidden="true">&#8594;</span></span></a>
       <p class="c-fin">30% on signature &#183; net 60 &#183; renewal capped at the lower of CPI&#8209;U and 5%</p>
     </div>
   </div>
 </div></section>
 
 <section class="jours" aria-label="The days"><div class="colonne">
-  <p class="jours-t">From trial to licence.</p>
-  <p class="jours-l">You decide during the thirty days. If you sign, the licence year starts that day, and the balance falls due sixty days later.</p>
+  <p class="jours-t">From trial to license.</p>
+  <p class="jours-l">You decide during the thirty days. If you sign, the license year starts that day, and the balance falls due sixty days later.</p>
   <div class="axe-boite"><div class="axe-defile">
     <div class="axe" id="axe">
       <div class="voies">
@@ -349,16 +349,16 @@ PAGE = f'''<!doctype html><html lang="en">
           <i class="barre-v" style="--a:0;--b:30"></i>
           <img class="v-robot" src="rendus/robot-salut.webp" alt="">
           <span class="anneau" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16"/><circle cx="20" cy="20" r="16" class="plein"/></svg></span>
-          <span class="pap" style="--d:30;--tx:34px"><span>thirty days</span><b>granted in the public licence</b></span>
+          <span class="pap" style="--d:30;--tx:34px"><span>thirty days</span><b>granted in the public license</b></span>
         </div>
         <div class="voie" style="--t:1" data-l="camp"><span class="v-nom">The campaign</span>
           <i class="barre-v pointille" style="--a:45;--b:76"></i>
           <span class="pap" style="--d:45;--tx:0"><span>engagement letter</span><b>$12,000 fixed</b></span>
           <span class="pap" style="--d:76;--tx:12px"><span>signed report</span><b>on your machine, yours to check</b></span>
         </div>
-        <div class="voie" style="--t:2" data-l="lic"><span class="v-nom">The licence</span>
+        <div class="voie" style="--t:2" data-l="lic"><span class="v-nom">The license</span>
           <i class="barre-v" style="--a:45;--b:150"></i>
-          <span class="pap" style="--d:45;--tx:0"><span>commercial licence</span><b>30% on signature</b></span>
+          <span class="pap" style="--d:45;--tx:0"><span>commercial license</span><b>30% on signature</b></span>
           <span class="pap" style="--d:105;--tx:-50%"><span>balance</span><b>net 60 days</b></span>
           <span class="pap" style="--d:150;--tx:-100%"><span>the twelfth month</span><b>renewal capped, the lower of CPI-U and 5%</b></span>
         </div>
@@ -374,7 +374,7 @@ PAGE = f'''<!doctype html><html lang="en">
     <p class="etat" id="etat">What you buy afterwards is delivered on your machine, where you can check it yourself.</p>
     <div class="commande-jour"><span>drag the day, or</span><button type="button" id="courir">show the whole year</button></div>
   </div>
-  <p class="note-fin">Write to <a href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a>. Your vendor onboarding can run during the thirty days, since nothing is signed until you decide. <b>The report certifies only what was measured</b>, and you may not publish the results of an engagement outside your own institution. The full terms are on <a href="ANNEXE-TERMS.html">the terms page</a>, which repeats the licence word for word.</p>
+  <p class="note-fin">Write to <a href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a>. Your vendor onboarding can run during the thirty days, since nothing is signed until you decide. <b>The report certifies only what was measured</b>, and you may not publish the results of an engagement outside your own institution. The full terms are on <a href="ANNEXE-TERMS.html">the terms page</a>, which repeats the license word for word.</p>
 </div></section>
 </main>
 

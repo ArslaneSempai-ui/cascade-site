@@ -1,18 +1,18 @@
 {
   "_": "Contenu de la page Terms of Engagement. Faits de la passe du 31 août 2026 (tasks/w7nrsoqna.output). Interdits par cette passe : citer entre guillemets une clause « a report can conclude change nothing » (n'existe pas mot pour mot : les trois équivalents citables sont utilisés à la place) ; citer la propriété du rapport comme un fait de dépôt (tranchée le 28/08 mais documentée dans le dépôt privé : à énoncer comme engagement, sans citation).",
   "objet": "rendus/etats/objet-terms.webp",
-  "titre": "What the licence grants, and for how long.",
-  "lede": "The terms below are short because they are real. A thirty-day grant is written into the licence file, anyone can read the public licence, and anyone can verify a deliverable. We also commit that the answer may go against us and recommend that you keep what you have. Where a term lives in the source, this page gives its path.",
-  "description": "A thirty-day grant written into the licence file, a public licence anyone can read, a deliverable anyone can verify, and the path to each term.",
+  "titre": "What the license grants, and for how long.",
+  "lede": "The terms below are short because they are real. A thirty-day grant is written into the license file, anyone can read the public license, and anyone can verify a deliverable. We also commit that the answer may go against us and recommend that you keep what you have. Where a term lives in the source, this page gives its path.",
+  "description": "A thirty-day grant written into the license file, a public license anyone can read, a deliverable anyone can verify, and the path to each term.",
   "sections": [
     {
       "h2": "Thirty days, in writing",
       "html": [
-        "<p>The Evaluation Grant is written into the licence file. It gives you <b>thirty days from first use</b>, on your organisation's own data, for its own internal evaluation, and you may share the output inside your organisation. In plain words, it forbids three things: relying on the output in production, redistributing the software, and publishing the output externally. The period is extended <b>only in writing</b>, and anything beyond evaluation needs a separate commercial licence.</p>"
+        "<p>The Evaluation Grant is written into the license file. It gives you <b>thirty days from first use</b>, on your organization's own data, for its own internal evaluation, and you may share the output inside your organization. In plain words, it forbids three things: relying on the output in production, redistributing the software, and publishing the output externally. The period is extended <b>only in writing</b>, and anything beyond evaluation needs a separate commercial license.</p>"
       ],
       "verif": {
         "t": "Read the grant",
-        "p": "It is the first sixteen lines of the licence file on any clone.",
+        "p": "It is the first sixteen lines of the license file on any clone.",
         "cmd": [
           {
             "c": "head -16 LICENSE",
@@ -23,10 +23,10 @@
       }
     },
     {
-      "h2": "How the three levels of the licence work",
+      "h2": "How the three levels of the license work",
       "html": [
-        "<p>The public licence is <b>PolyForm Noncommercial</b>. Under it, anyone may read, study, fork (copy the source) and use the tool for noncommercial purposes, with no time limit. An organisation that evaluates the tool gets the thirty days above. A client gets a negotiated commercial licence. The public licence itself states that <b>it is not what a client buys</b>.</p>",
-        "<p>This licence is not OSI&#8209;approved (approved by the Open Source Initiative), and some organisations exclude such licences by policy. Such a policy holds back an organisation picking up the tool on its own. It does not hold back a negotiated engagement. Like all licences of its kind, it ships <b>without warranty</b>, with a 32&#8209;day cure period, the time to put a violation right after written notice.</p>"
+        "<p>The public license is <b>PolyForm Noncommercial</b>. Under it, anyone may read, study, fork (copy the source) and use the tool for noncommercial purposes, with no time limit. An organization that evaluates the tool gets the thirty days above. A client gets a negotiated commercial license. The public license itself states that <b>it is not what a client buys</b>.</p>",
+        "<p>This license is not OSI&#8209;approved (approved by the Open Source Initiative), and some organizations exclude such licenses by policy. Such a policy holds back an organization picking up the tool on its own. It does not hold back a negotiated engagement. Like all licenses of its kind, it ships <b>without warranty</b>, with a 32&#8209;day cure period, the time to put a violation right after written notice.</p>"
       ]
     },
     {
@@ -68,7 +68,7 @@
       "h2": "Settled before signature",
       "html": [
         "<p>The remaining terms of a paid engagement (payment, confidentiality, audit rights, change of control, precedence, and the rights in the produced report) are settled in the engagement letter, <b>written before signature, with no renegotiation after delivery</b>. They are business terms, so this page names them without quoting them. The letter is the document your counsel receives.</p>",
-        "<p>One rule from the public licence already binds the evaluation period. The output of an evaluation run is <b>internal to your organisation</b>. External publication is excluded from the first day.</p>"
+        "<p>One rule from the public license already binds the evaluation period. The output of an evaluation run is <b>internal to your organization</b>. External publication is excluded from the first day.</p>"
       ]
     }
   ],

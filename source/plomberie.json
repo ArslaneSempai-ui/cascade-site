@@ -47,20 +47,20 @@
    "html": "MENTIONS.html",
    "titre_onglet": "Cascade &#183; the fine print",
    "fno": "The fine print",
-   "titre": "Publisher, licences, hosting and privacy.",
-   "lede": "This page says who publishes the site, under which licences, where it is served from, and whether it sets cookies or tracks visitors. It follows the same rule as the rest of the site, so each figure on it has a stated source.",
-   "description": "Who publishes this site, under which licences, where it is served from, and whether it sets cookies or tracks visitors (it does neither).",
+   "titre": "Publisher, licenses, hosting and privacy.",
+   "lede": "This page says who publishes the site, under which licenses, where it is served from, and whether it sets cookies or tracks visitors. It follows the same rule as the rest of the site, so each figure on it has a stated source.",
+   "description": "Who publishes this site, under which licenses, where it is served from, and whether it sets cookies or tracks visitors (it does neither).",
    "sections": [
     {
      "h2": "Who publishes this",
      "html": [
-      "<p>This site, and the tool it describes, are published by <b>Arslane Chaouche</b>. He is the licensor named in the first line of the licence file that ships with the tool.</p>"
+      "<p>This site, and the tool it describes, are published by <b>Arslane Chaouche</b>. He is the licensor named in the first line of the license file that ships with the tool.</p>"
      ]
     },
     {
-     "h2": "Under which licences",
+     "h2": "Under which licenses",
      "html": [
-      "<p>The tool is licensed <b>PolyForm Noncommercial</b>, with a thirty&#8209;day Evaluation Grant, a right to evaluate the tool that is written into the licence file. The full terms are in <b>Appendix D</b>. The text and figures of this site are by the same author. The typeface is <b>Literata</b>, by TypeTogether, under the SIL Open Font Licence, and it is served from this site's own files. The objects pictured on the appendix pages were modelled for this site by its author.</p>"
+      "<p>The tool is licensed <b>PolyForm Noncommercial</b>, with a thirty&#8209;day Evaluation Grant, a right to evaluate the tool that is written into the license file. The full terms are in <b>Appendix D</b>. The text and figures of this site are by the same author. The typeface is <b>Literata</b>, by TypeTogether, under the SIL Open Font License, and it is served from this site's own files. The objects pictured on the appendix pages were modeled for this site by its author.</p>"
      ]
     },
     {

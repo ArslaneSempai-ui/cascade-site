@@ -393,7 +393,7 @@ PAGE = f'''<!doctype html><html lang="en">
     We assume {D["humanAccuracy"]:.0f}% on each field, which the tool declares in its own source. Each other accuracy shown here was measured. <code>npm run measure:humans -- --cases=your-file.csv</code>
     grades your own reviewers: accuracy per field with intervals, agreement between reviewers,
     seconds per record. Pass the sealed result to <code>optimise</code> with <code>--humans</code>
-    and the optimiser reads your measurement instead of the assumption.</p>
+    and the optimizer reads your measurement instead of the assumption.</p>
   <p><b>Your documents never touch this page,</b> because nothing is uploaded and nothing is
     fetched: the browser's own security rules refuse each network call.</p>
   <p><b>These are our readings. Now test them against yours.</b> The tool clones next to your

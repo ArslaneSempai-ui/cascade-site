@@ -254,9 +254,14 @@ def menus_html():
 
 
 # ── la mise en dépliage : partagée par le petit écran ET l'absence de script ─
+# 30/09 : .theatre et .scenes y prennent toute la largeur. Sans elles, .scenes (conteneur de taille, largeur
+# naturelle NULLE) et .theatre tombaient à 0 px dans la colonne centrée, et chaque fiche faisait 46 px sur
+# téléphone (temoin-effondrement.mjs). Pas de commentaire CSS ICI : ce bloc est aussi préfixé pour le sans-script.
 DEPLIE = '''
     .sequence{height:auto}
-    .colle{position:static;height:auto;flex-direction:column;padding:60px 22px;gap:28px}
+    .colle{position:static;height:auto;flex-direction:column;padding:60px 22px;gap:28px;align-items:stretch}
+    .theatre{width:100%}
+    .scenes{width:100%}
     .rail{width:100%}
     .rail ul{flex-direction:row;flex-wrap:wrap;gap:2px 14px}
     .jalon{padding:8px 0 8px 10px}
@@ -343,8 +348,9 @@ CSS = '''
   .entites .grille i:hover{transform:scale(1.9);background:#fff}
   .entites .grille i.lu{filter:brightness(1.6)}
   .entites .grille i.lu:not(.v):not(.f):not(.p){background:color-mix(in srgb,var(--sur-vert) 38%,var(--nuit-b))}
-  .entites .compteur{position:absolute;right:0;top:54px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--vert-clair);opacity:0;transition:opacity .2s}
+  /* 30/09 (Arslane) : le compteur recouvrait la phrase et le grand chiffre ; il ferme désormais la ligne de légende */
+  .entites .compteur{margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--vert-clair);opacity:0;transition:opacity .2s;white-space:nowrap}
   .entites .pop.suivi .compteur{opacity:1}
   .entites .cle{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--sur-vert-pale);text-transform:uppercase;
     margin:10px 0 0;display:flex;gap:22px;flex-wrap:wrap}
@@ -920,11 +926,20 @@ NOJS
 
 
 def _prefixe_nojs(css):
-    """Chaque sélecteur du dépliage préfixé html:not(.js) : sans script, la page se déplie."""
-    def f(m):
-        sels = ",".join("html:not(.js) " + s.strip() for s in m.group(2).split(","))
-        return m.group(1) + sels + "{"
-    return re.sub(r"(^\s*)([.\w][^{}]*)\{", f, css, flags=re.M)
+    """Chaque sélecteur du dépliage préfixé html:not(.js) : sans script, la page se déplie.
+    30/09 : l'ancienne version ne préfixait que la PREMIÈRE règle d'une ligne (« .a{}.b{} » laissait .b
+    appliquée partout, et la fiche du bureau est partie 238 px hors de l'écran) et lisait un commentaire comme
+    un sélecteur. Désormais : commentaires retirés, chaque règle préfixée, où qu'elle soit ; un @ refusé
+    (le dépliage est plat, une règle imbriquée n'y a pas sa place)."""
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    if "@" in css:
+        sys.exit("DEPLIE contient une règle @ : le préfixe sans-script ne sait pas l'imbriquer")
+    blocs = css.split("}")
+    out = []
+    for bloc in blocs[:-1]:
+        sel, decl = bloc.split("{", 1)
+        out.append("\n    " + ",".join("html:not(.js) " + s.strip() for s in sel.split(",") if s.strip()) + "{" + decl)
+    return "}".join(out) + "}" + blocs[-1]
 
 
 CSS = CSS.replace("NOJS", _prefixe_nojs(DEPLIE))
@@ -964,10 +979,13 @@ JS = '''
      * On force donc le comportement immédiat pour ce seul saut, puis on le rend. La page
      * s'ouvre AU RIDEAU, les robots sont déjà à leur place, et seul le dessous a changé.
      */
-    if (location.hash === "#tools") {
+    // 30/09 (Arslane) : un pan mène désormais à la SÉQUENCE 3D de l'outil choisi (#findings), sous le
+    // rideau ; pour changer d'outil, on remonte au rideau. Même atterrissage immédiat pour les deux ancres.
+    const cibleAncre = (location.hash === "#tools" || location.hash === "#findings") ? document.querySelector(location.hash) : null;
+    if (cibleAncre) {
       const avant = document.documentElement.style.scrollBehavior;
       document.documentElement.style.scrollBehavior = "auto";
-      rideau.scrollIntoView({block: "start"});
+      cibleAncre.scrollIntoView({block: "start"});
       document.documentElement.style.scrollBehavior = avant;
     }
     if (!reduit && "IntersectionObserver" in window) {
@@ -984,7 +1002,8 @@ JS = '''
       // le rideau s'écarte sur la nuit de l'outil choisi : la page qui suit commence dans cette nuit
       rideau.style.setProperty("--ouverture", getComputedStyle(pan).getPropertyValue("--pan-b"));
       rideau.classList.add("ouvre");
-      // 380 ms d'écart, puis la page de l'outil OUVERTE SUR SON RIDEAU (#tools).
+      // 380 ms d'écart, puis la page de l'outil OUVERTE SUR SA SÉQUENCE 3D (#findings, décision du 30/09 ;
+      // avant : sur son rideau, #tools, décision du 13/09).
       //
       // L'ancre avait été retirée le 10/09 au profit du seul fondu, et l'outil suivant s'ouvrait
       // sur son héros : on repartait donc du haut à chaque choix de robot. « ça nous remet tout
@@ -1079,7 +1098,7 @@ DONNEES_STRUCTUREES = json.dumps({
                         "your machine: nothing leaves the network.",
          "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
                     "description": "Thirty-day evaluation on your own records, "
-                                   "granted in the public licence."},
+                                   "granted in the public license."},
          "publisher": {"@id": "https://cascade-routing.com/#org"}},
     ],
 }, ensure_ascii=True)
@@ -1125,7 +1144,7 @@ def choix_outils(outil):
     page d'un outil, son pan est marqué aria-current. Un pan par outil de la table,
     chacun dans SES couleurs (posées en variables sur le pan : la page rubis aliase
     la palette, et le pan vert doit y rester vert), avec son robot, sa question et
-    « Open X ». Cliquer un pan mène à SA page, ancrée sur son propre rideau (#tools).
+    « Open X ». Cliquer un pan mène à SA page, ancrée sur sa séquence 3D (#findings, 30/09).
     Le script (JS) ajoute l'entrée des pans au défilement et l'ouverture du rideau au
     clic ; sans script, ce sont des liens. Grille auto-fit : un troisième robot
     prendra sa place sans qu'on touche ici. Les classes cote-g / cote-d disent de
@@ -1149,7 +1168,7 @@ def choix_outils(outil):
             pans += (f'\n  <div class="pan {cote}" style="{style}" aria-current="page">{corps}'
                      f'<span class="p-ouvrir">You are here &#183; {o["nom"]}</span></div>')
         else:
-            pans += (f'\n  <a class="pan {cote}" style="{style}" href="{prefixe}{o["page_hero"]}#tools">{corps}'
+            pans += (f'\n  <a class="pan {cote}" style="{style}" href="{prefixe}{o["page_hero"]}#findings">{corps}'
                      f'<span class="p-ouvrir">Open {o["nom"]} <span aria-hidden="true">&#8594;</span></span></a>')
     n = NOMBRES.get(len(outils), str(len(outils)))
     return (f'<nav class="rideau" id="tools" aria-label="The instruments">'
@@ -1216,7 +1235,7 @@ def film_html(outil):
     <a class="carte-film est-actif" role="listitem" aria-current="true" href="{pr}films/screening.mp4" data-src="{pr}films/screening.mp4" data-poster="{pr}rendus/affiche-screening.jpg" data-duree="1:28" data-dite="1 minute 28" data-genre="film" data-yt="{FILMS["screening"][0]}">
       <img src="{pr}rendus/affiche-screening.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The film</span><span class="cf-t">The five Screening findings</span></span><span class="cf-d">1:28</span></a>
     <a class="carte-film" role="listitem" href="{pr}films/screening-demo.mp4" data-src="{pr}films/screening-demo.mp4" data-poster="{pr}rendus/affiche-screening-demo.jpg" data-duree="1:25" data-dite="1 minute 25" data-genre="demo" data-yt="">
-      <img src="{pr}rendus/affiche-screening-demo.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The demo</span><span class="cf-t">Her file, the screening, the report, the record</span></span><span class="cf-d">1:25</span></a>
+      <img src="{pr}rendus/affiche-screening-demo.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The demo</span><span class="cf-t">The file, the screening, the report, the record</span></span><span class="cf-d">1:25</span></a>
   </div>""" if outil["id"] == "screening" else ""
     return f"""
 <section class="film"><div class="colonne">
@@ -1450,7 +1469,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 {choix_outils(OUTILS["routing"])}
 
-<section class="sequence" aria-label="The five findings">
+<section class="sequence" id="findings" aria-label="The five findings">
   <div class="colle">
     {rail_html()}
     <div class="theatre">
@@ -1517,7 +1536,7 @@ def batir_accueil():
                        "downloadUrl": o["depot"],
                        "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
                                   "description": "Thirty-day evaluation on your own records, "
-                                                 "granted in the public licence."},
+                                                 "granted in the public license."},
                        "publisher": {"@id": "https://cascade-routing.com/#org"}})
     donnees = json.dumps({"@context": "https://schema.org", "@graph": graphe}, ensure_ascii=True)
     # L'ÉVENTAIL (Arslane, 10/09) : les cinq cartes des instruments, les vraies courbes de chaque
@@ -1755,7 +1774,7 @@ SPECS = {
         app="Cascade Screening",
         app_desc="A sanctions-screening audit: which way of comparing names, and where you "
                  "set the bar, measured on your own alert history. ",
-        offre="Thirty-day evaluation on your own alert history, granted in the public licence.",
+        offre="Thirty-day evaluation on your own alert history, granted in the public license.",
         h1="See what your screening catches, and what it flags incorrectly.",
         lede="A screening threshold is the score above which two names count as a match.<br>\n    Cascade Screening compares names seven ways, at every threshold, over alerts your analysts already closed.",
         aria_commande="The measurement on your own alert history",
@@ -1787,7 +1806,7 @@ SPECS = {
         app="Cascade Monitoring",
         app_desc="A transaction-monitoring audit: which scenarios catch real cases and which "
                  "only make work, measured on the cases your analysts already closed. ",
-        offre="Thirty-day evaluation on your own dispositioned alerts, granted in the public licence.",
+        offre="Thirty-day evaluation on your own dispositioned alerts, granted in the public license.",
         h1="See what your scenarios catch, and what they flag incorrectly.",
         lede="A scenario's threshold is the score above which it raises an alert.<br>\n    Cascade Monitoring runs seven scenarios at every threshold, over the alerts your analysts already closed.",
         aria_commande="The measurement on your own dispositioned alerts",
@@ -1820,7 +1839,7 @@ SPECS = {
         app="Cascade Scoring",
         app_desc="A customer risk-rating audit: which risk factors separate a risky customer "
                  "from a quiet one, measured on your own periodic-review outcomes. ",
-        offre="Thirty-day evaluation on your own review outcomes, granted in the public licence.",
+        offre="Thirty-day evaluation on your own review outcomes, granted in the public license.",
         h1="See which risk factors separate a risky customer from a quiet one.",
         lede="A factor's threshold is the score above which it pushes a customer up a rating.<br>\n    Cascade Scoring runs seven factors at every threshold, over the reviews your analysts already decided.",
         aria_commande="The measurement on your own periodic-review outcomes",
@@ -1854,7 +1873,7 @@ SPECS = {
         app_desc="One dossier over the suite&#8217;s four sealed answers: coverage, "
                  "seals, signatures, freshness and coherence, verified on your "
                  "machine.",
-        offre="Thirty-day evaluation on your own signed reports, granted in the public licence.",
+        offre="Thirty-day evaluation on your own signed reports, granted in the public license.",
         h1="Check each report: present, sealed, signed, fresh, consistent.",
         lede="A reviewer asks whether the whole chain still holds.<br>\n    The Dossier reads the four reports and checks that each one is present, frozen, fresh, signed with a key you can check, and consistent with the others.",
         aria_commande="The dossier over your own signed reports",
@@ -2032,7 +2051,7 @@ def _section_entites(o):
         sys.exit("le livre aveugle ne se recompte pas : forts + possibles + sans candidat != lignes")
     taux = round(100 * trouves / sur_v)
     def grille(n, classe):
-        return '<div class="grille" aria-hidden="true">' + "".join(f'<i class="{classe(k)}" title="{k + 1}"></i>' for k in range(n)) + "</div>"
+        return '<div class="grille" aria-hidden="true">' + "".join(f'<i class="{classe(k)}"></i>' for k in range(n)) + "</div>"
     pops = [
         (f["populations"][0].format(sur=sur_v), f"{taux}<small>%</small>", grille(sur_v, lambda k: "v" if k < trouves else ""),
          f'<span><i class="v"></i>{trouves} found</span><span><i></i>{sur_v - trouves} left at the possible level or below</span>'),
@@ -2042,8 +2061,8 @@ def _section_entites(o):
          grille(lignes, lambda k: "f" if k < forts else ("p" if k < forts + possibles else "")),
          f'<span><i class="f"></i>{forts} strong</span><span><i class="v"></i>{possibles} possible</span><span><i></i>{sans} with no candidate</span>'),
     ]
-    blocs = "".join(f'''<div class="pop"><span class="compteur" aria-live="polite"></span>
-    <div class="tete"><p>{texte}</p><span class="chiffre">{chiffre}</span></div>{g}<p class="cle">{cle}</p></div>'''
+    blocs = "".join(f'''<div class="pop">
+    <div class="tete"><p>{texte}</p><span class="chiffre">{chiffre}</span></div>{g}<p class="cle">{cle}<span class="compteur" aria-live="polite"></span></p></div>'''
                     for texte, chiffre, g, cle in pops)
     depot = o["depot"].rstrip("/")
     html = f'''<section class="entites" id="companies"><div class="colonne">
@@ -2391,7 +2410,7 @@ def batir_outil_catalogue(o, spec):
 
 {choix_outils(o)}
 
-<section class="sequence" aria-label="The five findings">
+<section class="sequence" id="findings" aria-label="The five findings">
   <div class="colle">
     {_rail_outil(o, spec, FINDINGS)}
     <div class="theatre">

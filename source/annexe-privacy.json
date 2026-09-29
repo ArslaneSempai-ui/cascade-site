@@ -9,7 +9,7 @@
       "h2": "No telemetry, and a test enforces it",
       "html": [
         "<p>Telemetry is code that reports usage to a vendor. Searching the sources for each telemetry pattern returns exactly one hit, <b>the comment of the test that forbids them</b>. That test goes through each source file and requires each network destination to be local or on an allow&#8209;list of <b>two entries</b>. The two entries are the local model host and the public benchmark download, which never runs during a measurement. A test enforces this, so it does not depend on a policy.</p>",
-        "<p>This test has a stated limit. It finds calls by pattern, so code built another way to send data out would escape <b>this</b> test. That is why the behavioural check below watches the running process and reads no source text.</p>"
+        "<p>This test has a stated limit. It finds calls by pattern, so code built another way to send data out would escape <b>this</b> test. That is why the behavioral check below watches the running process and reads no source text.</p>"
       ],
       "verif": {
         "t": "Verify the allow-list test",
@@ -26,7 +26,7 @@
     {
       "h2": "Where your measurements live and stay",
       "html": [
-        "<p>Each measurement on your data lands in a folder that <b>git ignores, on purpose</b>. The code spells this out in as many words, so no measurement can travel into a repository. The detailed attempt journals, which do hold extracted values, live under that same folder. For client cases they exist <b>only on an explicit flag</b>, and by default there is no journal. The tool also writes exactly one local marker, the date of its own first use, in a file you can read (<code>~/.cascade/premiere-utilisation.json</code>). The thirty&#8209;day evaluation clause reads that date to tell you where you stand. That file holds one labelled date, and it is never transmitted.</p>",
+        "<p>Each measurement on your data lands in a folder that <b>git ignores, on purpose</b>. The code spells this out in as many words, so no measurement can travel into a repository. The detailed attempt journals, which do hold extracted values, live under that same folder. For client cases they exist <b>only on an explicit flag</b>, and by default there is no journal. The tool also writes exactly one local marker, the date of its own first use, in a file you can read (<code>~/.cascade/premiere-utilisation.json</code>). The thirty&#8209;day evaluation clause reads that date to tell you where you stand. That file holds one labeled date, and it is never transmitted.</p>",
         "<p>A journal header records the CPU model, the platform and the load. The <b>hostname, username and path</b> never enter it.</p>"
       ]
     },
@@ -68,8 +68,8 @@
     {
       "h2": "One production dependency, swept for telemetry too",
       "html": [
-        "<p>The tool has <b>one production dependency</b>, the model runtime library. A telemetry sweep across each of its installed packages finds hits only in a development tool's editor protocol, and none in the production path. The library's single remote destination is the public weights host, used once on first run. The offline flag turns even that off by telling the library <b>never to reach the network</b>. The library disobeys for one public metadata file on each load. The tool now names that file and does not let it pass in silence. Sweeping the dependencies themselves found one more address. A package inside the runtime embeds a CDN host for WebAssembly (WASM) artefacts, on a code path this tool never exercises. It is named here because the allow&#8209;list in our sources cannot see inside a dependency.</p>",
-        "<p>One limit is stated as well. Native binaries cannot be read by a text sweep, so a text search (grep) cannot verify that corner. The lower bound for that corner is the behavioural egress record above.</p>"
+        "<p>The tool has <b>one production dependency</b>, the model runtime library. A telemetry sweep across each of its installed packages finds hits only in a development tool's editor protocol, and none in the production path. The library's single remote destination is the public weights host, used once on first run. The offline flag turns even that off by telling the library <b>never to reach the network</b>. The library disobeys for one public metadata file on each load. The tool now names that file and does not let it pass in silence. Sweeping the dependencies themselves found one more address. A package inside the runtime embeds a CDN host for WebAssembly (WASM) artifacts, on a code path this tool never exercises. It is named here because the allow&#8209;list in our sources cannot see inside a dependency.</p>",
+        "<p>One limit is stated as well. Native binaries cannot be read by a text sweep, so a text search (grep) cannot verify that corner. The lower bound for that corner is the behavioral egress record above.</p>"
       ]
     },
     {

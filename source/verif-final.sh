@@ -43,6 +43,9 @@ grep -q "voix tenue" $SORTIE/assemblage.log || {
   echo "REFUS : l'assemblage est vert mais ne porte pas « voix tenue » — la garde de la voix" ;
   echo "        a été DÉBRANCHÉE de l'assembleur (ou muselée) ; rebrancher avant de servir" ; exit 5 ; }
 
+grep -q "orthographe américaine tenue" $SORTIE/assemblage.log || {
+  echo "REFUS : l'assemblage vert ne porte plus la ligne de la garde d'orthographe américaine — débranchée" ; exit 5 ; }
+
 echo "=== serveur $PORT (127.0.0.1 seulement)"
 # un serveur déjà debout ne se réutilise que s'il sert CE docs/ : la page servie n'est
 # pas la page locale (le 9/09, le 8802 du principal a failli faire capturer un autre
@@ -70,6 +73,13 @@ fi
 echo "=== le pli du rideau (temoin-rideau.mjs) $(date +%H:%M:%S)"
 # on atterrit sur le rideau : ses cinq boutons doivent être dans l'écran à 900 et à 700 de haut (13/09)
 node $SRC/temoin-rideau.mjs "http://127.0.0.1:$PORT/routing/index.html#tools" || { echo "REFUS : les boutons du rideau passent sous le pli" ; exit 6 ; }
+
+echo "=== l'effondrement des blocs de texte (temoin-effondrement.mjs) $(date +%H:%M:%S)"
+# 30/09 : les fiches des trouvailles faisaient 46 px sur téléphone, en ligne, sans qu'aucune garde le dise ;
+# chaque page servie, au téléphone et à la tablette : tout paragraphe d'au moins quinze mots fait au moins 45 % de l'écran
+EPAGES=(); for f in $(cd $SITE/docs && find . -name '*.html' | sed 's#^\./##' | sort); do EPAGES+=("http://127.0.0.1:$PORT/$f"); done
+node $SRC/temoin-effondrement.mjs "${EPAGES[@]}" > $SORTIE/effondrement.log 2>&1 || { tail -4 $SORTIE/effondrement.log | cut -c1-200 ; echo "REFUS : un bloc de texte est écrasé ($SORTIE/effondrement.log)" ; exit 6 ; }
+echo "  $(tail -1 $SORTIE/effondrement.log)"
 
 echo "=== captures natives $(date +%H:%M:%S)"
 sc() { echo "(()=>{const s=document.querySelector('.colle').parentElement; window.scrollTo(0, s.offsetTop + $1*s.offsetHeight)})()"; }
