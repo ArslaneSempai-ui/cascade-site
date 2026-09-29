@@ -96,6 +96,14 @@ PAUMES = {"g": (24.0, 76.0), "d": (78.0, 58.0)}
 HAUT = {"g": 30.0, "d": 11.0}                  # le haut de chaque hologramme
 LARGEUR_FAISCEAU = 22.0                        # % du cadre (420 px sur 1920)
 POS = {c: {"x": PAUMES[c][0] - 15.0, "y": HAUT[c]} for c in PAUMES}
+# deux COMPTES (le Dossier : 4 et 0) se lisent comme une paire : décalés d'une paume à
+# l'autre, deux chiffres d'un seul caractère ont l'air mal alignés (Arslane, 29/09). Ils
+# se posent à la même hauteur, dégagés de la tête, et seuls les faisceaux s'allongent.
+# et chaque chiffre seul se centre entre ses deux lignes, comme un nombre large les remplit
+COMPTES = not A["pourcent"] and not B["pourcent"]
+if COMPTES:
+    HAUT = {"g": 20.0, "d": 20.0}
+    POS = {"g": {"x": 4.2, "y": 20.0}, "d": {"x": 65.0, "y": 20.0}}    # marges égales, 54 px sur 1280
 FAISCEAU = {c: {"x": PAUMES[c][0] - LARGEUR_FAISCEAU / 2, "y": HAUT[c] + 22.0,
                 "h": PAUMES[c][1] - (HAUT[c] + 22.0)} for c in PAUMES}
 html = f"""<!doctype html><html lang="en"><meta charset="utf-8"><title>affiche {outil_id}</title>
@@ -108,6 +116,7 @@ html = f"""<!doctype html><html lang="en"><meta charset="utf-8"><title>affiche {
   .holo{{position:absolute;color:{ENCRE};font-family:"Literata",Georgia,serif;
     font-variant-numeric:tabular-nums;font-weight:600;letter-spacing:-.02em;line-height:1}}
   .holo .n{{display:block;font-size:168px;text-shadow:0 0 28px {ENCRE}66,0 0 70px {ENCRE}33}}
+  {'.holo .n{text-align:center}' if COMPTES else ''}
   .holo .n small{{font-size:96px;font-weight:500}}
   .holo .l{{display:block;font-family:"Roboto Mono",ui-monospace,Menlo,monospace;font-size:28px;
     letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;opacity:.92}}
