@@ -1067,7 +1067,8 @@ JS = '''
       const nom = "The " + carte.dataset.genre + " of Cascade Screening, " + carte.dataset.dite;
       video.setAttribute("aria-label", nom); lecteur.querySelector(".jouer").setAttribute("aria-label", "Play " + nom.charAt(0).toLowerCase() + nom.slice(1));
       for (const c of liste.querySelectorAll(".carte-film")) { c.classList.toggle("est-actif", c === carte); if (c === carte) c.setAttribute("aria-current", "true"); else c.removeAttribute("aria-current"); }
-      if (note) note.style.display = carte.dataset.yt ? "" : "none";
+      // 30/09 : le lien « also on YouTube » suit le film choisi (il gardait l'adresse du premier)
+      if (note) { note.style.display = carte.dataset.yt ? "" : "none"; const ou = note.querySelector("a"); if (ou && carte.dataset.yt) ou.href = carte.dataset.yt; }
     });
   }
 '''
@@ -1185,7 +1186,7 @@ FILMS = {"routing":    ("https://youtu.be/SXxViU7rhU8", "1:19", "1 minute 19"),
          "monitoring": ("https://youtu.be/xx_1lFJsw9E", "1:35", "1 minute 35"),
          "scoring":    ("https://youtu.be/mCybN-xq4jA", "1:31", "1 minute 31"),
          # 29/09 : la DÉMO Screening (Dana, son fichier, la passe, le rapport, le registre), 85,06 s ; validée « parfait »
-         "screening-demo": (None, "1:25", "1 minute 25")}
+         "screening-demo": ("https://youtu.be/mTlpC9yXnXo", "1:26", "1 minute 26")}   # 30/09 : publiée, durée affichée par YouTube
 
 
 def lecteur_html(oid, nom, prefixe, affiche=None, visuel="", genre="film"):
@@ -1232,10 +1233,10 @@ def film_html(outil):
     pr = outil["prefixe_racine"]
     liste = f"""
   <div class="liste" role="list" aria-label="Two films">
-    <a class="carte-film est-actif" role="listitem" aria-current="true" href="{pr}films/screening.mp4" data-src="{pr}films/screening.mp4" data-poster="{pr}rendus/affiche-screening.jpg" data-duree="1:28" data-dite="1 minute 28" data-genre="film" data-yt="{FILMS["screening"][0]}">
-      <img src="{pr}rendus/affiche-screening.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The film</span><span class="cf-t">The five Screening findings</span></span><span class="cf-d">1:28</span></a>
-    <a class="carte-film" role="listitem" href="{pr}films/screening-demo.mp4" data-src="{pr}films/screening-demo.mp4" data-poster="{pr}rendus/affiche-screening-demo.jpg" data-duree="1:25" data-dite="1 minute 25" data-genre="demo" data-yt="">
-      <img src="{pr}rendus/affiche-screening-demo.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The demo</span><span class="cf-t">The file, the screening, the report, the record</span></span><span class="cf-d">1:25</span></a>
+    <a class="carte-film est-actif" role="listitem" aria-current="true" href="{pr}films/screening.mp4" data-src="{pr}films/screening.mp4" data-poster="{pr}rendus/affiche-screening.jpg" data-duree="{FILMS["screening"][1]}" data-dite="{FILMS["screening"][2]}" data-genre="film" data-yt="{FILMS["screening"][0]}">
+      <img src="{pr}rendus/affiche-screening.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The film</span><span class="cf-t">The five Screening findings</span></span><span class="cf-d">{FILMS["screening"][1]}</span></a>
+    <a class="carte-film" role="listitem" href="{pr}films/screening-demo.mp4" data-src="{pr}films/screening-demo.mp4" data-poster="{pr}rendus/affiche-screening-demo.jpg" data-duree="{FILMS["screening-demo"][1]}" data-dite="{FILMS["screening-demo"][2]}" data-genre="demo" data-yt="{FILMS["screening-demo"][0] or ""}">
+      <img src="{pr}rendus/affiche-screening-demo.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The demo</span><span class="cf-t">The file, the screening, the report, the record</span></span><span class="cf-d">{FILMS["screening-demo"][1]}</span></a>
   </div>""" if outil["id"] == "screening" else ""
     return f"""
 <section class="film"><div class="colonne">
