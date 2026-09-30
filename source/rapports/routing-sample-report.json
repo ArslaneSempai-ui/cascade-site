@@ -1,0 +1,26 @@
+{
+  "sceau": "ac7d0adbe4907caf",
+  "mesure": "2026-09-29",
+  "commit": "7e82950",
+  "cas": 100,
+  "champs": [
+    "total",
+    "subtotal",
+    "tax"
+  ],
+  "routage": {
+    "total": "gemini-flash",
+    "subtotal": "gemini-flash",
+    "tax": "gemini-flash"
+  },
+  "sources": 8,
+  "economie": 95710,
+  "volume": 1000000,
+  "juste": {
+    "total": 96.8,
+    "subtotal": 95.4,
+    "tax": 97.5
+  },
+  "source": "cascade/examples/cord-receipts/cord-labels-grouped-measured.json",
+  "lu_depuis": "copie privée identique, en attendant la fusion de la PR #10"
+}

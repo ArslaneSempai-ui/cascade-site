@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-RIQt9l+fPssdm/aDJehUlatgsHLhrXPPQ+ty8kqOdsY=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-OHwsIiniQT7MqYZ23qX2fwSHiqMyynGa2QZZCSRfqHc=' 'sha256-ymcRaC1eUjTjJ9RkgWfaxWb9/ZhMS1J8UVFf8tHuNN8=' 'sha256-P7Vi9MGuq5+qRTFktFVcYnmzuHk5AKV6fBhWbvFxLGk=' 'sha256-MZNvr/siLT80DQg4xlCokQb4hXIZBROwsFUeQ/W9bA4=' 'sha256-kahPlLiJa1REfyc64yVFR2GXo13XOpm50KlDiA1ahRc=' 'sha256-jo/MSB2jUjWPN2UTR2AWeXFGYELpW26Q4LJPzJAN0hU=' 'sha256-v9UtAzkK8rSE3j3XXFwKcOWFzBeZcFwjBVdu1ZvGmI8=' 'sha256-OIwInjP8jkxzHe+P+u3BEpdSwcVEul2atpMlPUbyx0A='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-zryNU/LnUIkIGX55fzTQQD2fHeGBTnb0dmUH8eoYQJM=' 'sha256-h3XEPagyHXWX+lAAdHX4nj8uMkrYERyFotOSvQQK39s='; font-src 'self'; img-src 'self' data:; media-src 'self'; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-LJlIvNjTt4OVXcMb63/uLG03ToMRV5xYJOO9dXrqQyc=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-OHwsIiniQT7MqYZ23qX2fwSHiqMyynGa2QZZCSRfqHc=' 'sha256-ymcRaC1eUjTjJ9RkgWfaxWb9/ZhMS1J8UVFf8tHuNN8=' 'sha256-P7Vi9MGuq5+qRTFktFVcYnmzuHk5AKV6fBhWbvFxLGk=' 'sha256-MZNvr/siLT80DQg4xlCokQb4hXIZBROwsFUeQ/W9bA4=' 'sha256-kahPlLiJa1REfyc64yVFR2GXo13XOpm50KlDiA1ahRc=' 'sha256-jo/MSB2jUjWPN2UTR2AWeXFGYELpW26Q4LJPzJAN0hU=' 'sha256-v9UtAzkK8rSE3j3XXFwKcOWFzBeZcFwjBVdu1ZvGmI8=' 'sha256-OIwInjP8jkxzHe+P+u3BEpdSwcVEul2atpMlPUbyx0A='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-zryNU/LnUIkIGX55fzTQQD2fHeGBTnb0dmUH8eoYQJM=' 'sha256-h3XEPagyHXWX+lAAdHX4nj8uMkrYERyFotOSvQQK39s='; font-src 'self'; img-src 'self' data:; media-src 'self'; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Monitoring &#183; transaction monitoring audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/monitoring/">
@@ -484,6 +484,8 @@
     text-transform:uppercase;color:var(--sur-vert-pale);opacity:.85}
   .rapport .r-offre{margin-top:150px}
   .rapport .r-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:stretch}
+  .rapport .r-cols.trois{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+  @media (max-width:1060px){.rapport .r-cols.trois{grid-template-columns:minmax(0,1fr);gap:108px;max-width:560px;margin-inline:auto}}
   .rapport .r-col{position:relative;isolation:isolate;padding:124px 38px 36px;border-radius:18px;
     border:1px solid color-mix(in srgb,var(--sur-vert) 12%,transparent);
     background:linear-gradient(180deg,color-mix(in srgb,var(--nuit-a) 64%,transparent),color-mix(in srgb,var(--nuit-c) 86%,transparent));

@@ -735,6 +735,8 @@ CSS = '''
     text-transform:uppercase;color:var(--sur-vert-pale);opacity:.85}
   .rapport .r-offre{margin-top:150px}
   .rapport .r-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:stretch}
+  .rapport .r-cols.trois{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+  @media (max-width:1060px){.rapport .r-cols.trois{grid-template-columns:minmax(0,1fr);gap:108px;max-width:560px;margin-inline:auto}}
   .rapport .r-col{position:relative;isolation:isolate;padding:124px 38px 36px;border-radius:18px;
     border:1px solid color-mix(in srgb,var(--sur-vert) 12%,transparent);
     background:linear-gradient(180deg,color-mix(in srgb,var(--nuit-a) 64%,transparent),color-mix(in srgb,var(--nuit-c) 86%,transparent));
@@ -1437,6 +1439,103 @@ def sequence_scrub(prefixe):
 
 _CANEVAS_V, _CSS_SCRUB_V, _SCRUB_V = sequence_scrub(ETATS_PREFIXE["routing"])
 
+
+def _section_rapport_routing():
+    """L'audit du coût d'extraction en service (Routing, produit à prix fixe), page Routing, 30/09 : l'offre lue dans
+    offre-routing.json (grille choisie par Arslane le 29/09), la feuille lue dans le rapport exemple rendu par
+    batir-rapport-routing.py depuis le relevé réel CORD ; refusé si le scellé du rapport exemple n'est plus celui du
+    relevé, ou si un prix du JSON ne se lit pas dans la section."""
+    off = json.loads((BASE / "offre-routing.json").read_text())
+    ex = json.loads((BASE / "rapports" / "routing-sample-report.json").read_text())
+    pub = pathlib.Path.home() / "Documents" / ex["source"]
+    rec_p = pub if pub.exists() else pathlib.Path.home() / "Documents" / "cascade-portes" / "routing" / "cord-labels-grouped-measured.json"
+    rec = json.loads(rec_p.read_text())
+    if rec["empreinte"] != ex["sceau"]:
+        sys.exit(f"le rapport exemple Routing porte le scellé {ex['sceau']} mais le relevé porte {rec['empreinte']} : relancer batir-rapport-routing.py")
+    if rec["audit"]["cost"]["annual"]["saving"] != ex["economie"] or rec["audit"]["routing"] != ex["routage"]:
+        sys.exit("le rapport exemple Routing ne se recompte pas sur son relevé : refusé")
+    for f in ("rapports/routing-sample-report.pdf", "rendus/rapport-routing.webp", "rendus/robot-vert-montre.webp",
+              "rendus/robot-vert-pese.webp", "rendus/robot-vert-tient.webp"):
+        if not (BASE / f).exists():
+            sys.exit(f"{f} absent : la section du rapport Routing aurait un trou")
+    usd = lambda n: f"${n:,}"
+    es, sn, au, tr = off["essai"], off["snapshot"], off["audit"], off["audit_trimestriel"]
+    pick = sorted(set(ex["routage"].values()))
+    pdf, img = "../rapports/routing-sample-report.pdf", "../rendus/rapport-routing.webp"
+    releve = f"{DEPOT_URL}/blob/main/examples/cord-receipts/cord-labels-grouped-measured.json"
+    exemple = f"{DEPOT_URL}/tree/main/examples/cord-receipts"
+    sujet = "Extraction%20cost%20audit%2C%20free%20trial"
+    html = f"""<section class="rapport" id="report"><div class="colonne">
+  <div class="r-grille">
+  <div class="r-texte">
+    <p class="marque-h">The extraction cost audit</p>
+    <h2 class="h2">Find the cheapest extractor for each field of your documents, measured on your own pages.</h2>
+    <ol class="r-pas">
+      <li><span><b>You label</b> a sample of your own documents: for each field, the value it should read.</span></li>
+      <li><span><b>You run the audit</b> on your machine. Your current extractor, the ones you want to compare, and our local models read the same pages.</span></li>
+      <li><span><b>You receive</b> a sealed report: for each field, the cheapest source that is not measurably worse, and the saving at your volume.</span></li>
+    </ol>
+  </div>
+  <figure class="r-feuille">
+    <a href="{pdf}" download><img src="{img}" width="1224" height="1584" loading="lazy" decoding="async"
+      alt="First page of the sample report: {ex["cas"]} real receipts, {ex["sources"]} sources on {len(ex["champs"])} fields, all routed to {", ".join(pick)}, saving {usd(ex["economie"])} a year at {ex["volume"]:,} documents."></a>
+    <figcaption>sample report &#183; {ex["cas"]} real receipts &#183; sealed {ex["mesure"]} &#183; record {ex["sceau"]}</figcaption>
+  </figure>
+  </div>
+  <div class="r-offre">
+    <div class="r-cols trois">
+      <article class="r-col" data-col="snapshot">
+        <img class="r-robot" src="../rendus/robot-vert-montre.webp" width="916" height="940" alt="" loading="lazy" decoding="async">
+        <p class="r-eti">Snapshot</p>
+        <p class="r-montant"><span class="r-n">{usd(sn["prix_usd"])}</span><small>up to {sn["pages"]:,} pages</small></p>
+        <p class="r-sous">One document type, measured once and sealed, back within {sn["delai_heures"]} hours.</p>
+        <ul class="r-inclus"><li>Up to {sn["champs"]} fields and {sn["extracteurs"]} extractors</li><li>The routing for each field, and the saving at your volume</li><li>What the sample is too small to decide</li></ul>
+      </article>
+      <article class="r-col haute" data-col="audit">
+        <img class="r-robot" src="../rendus/robot-vert-pese.webp" width="1061" height="968" alt="" loading="lazy" decoding="async">
+        <p class="r-eti">Audit</p>
+        <p class="r-montant"><span class="r-n">{usd(au["prix_usd"])}</span><small>up to {au["pages"]:,} pages</small></p>
+        <p class="r-sous">Up to {au["types_document"]} document types, sealed, back within {au["delai_heures"]} hours.</p>
+        <ul class="r-inclus"><li>Up to {au["champs"]} fields and {au["extracteurs"]} extractors</li><li>A sample large enough to separate close sources</li><li>The report as a PDF and a sealed record</li></ul>
+      </article>
+      <article class="r-col" data-col="trimestriel">
+        <img class="r-robot" src="../rendus/robot-vert-tient.webp" width="926" height="963" alt="" loading="lazy" decoding="async">
+        <p class="r-eti">Quarterly audit</p>
+        <p class="r-montant"><span class="r-n">{usd(tr["prix_usd_an"])}</span><small>a year</small></p>
+        <p class="r-sous">The audit measured again {tr["remesures_par_an"]} times a year, as vendors change their models and prices.</p>
+        <ul class="r-inclus"><li>{tr["remesures_par_an"]} sealed reports a year</li><li>Each one says what moved since the last</li><li>Stop at any time</li></ul>
+      </article>
+    </div>
+  </div>
+  <p class="r-note">{off["donnees"]} {off["frais_fournisseurs"]}</p>
+  <div class="ouvrir-ligne"><a class="ouvrir" href="mailto:{off["contact"]}?subject={sujet}"><span><span class="ouvrir-t">Try it free on {es["pages"]} of your pages</span>
+    <span class="ouvrir-s">One document type and up to {es["extracteurs"]} extractors. Write to {off["contact"]}.</span></span>
+    <span class="fl" aria-hidden="true">&#8594;</span></a></div>
+  <p class="liens"><a class="lien-e" href="{pdf}" download>Download the sample report <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{exemple}">See the {ex["cas"]} receipts and every output <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{releve}">Open the sealed record <span aria-hidden="true">&#8594;</span></a></p>
+</div></section>
+<script>
+(() => {{
+  const f = document.querySelector('.rapport .r-feuille a');
+  if (!f || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  f.addEventListener('pointermove', (e) => {{
+    const r = f.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+    f.classList.add('suit'); f.style.setProperty('--ry', (x * 7).toFixed(2) + 'deg'); f.style.setProperty('--rx', (-y * 5).toFixed(2) + 'deg');
+  }});
+  f.addEventListener('pointerleave', () => {{ f.classList.remove('suit'); f.style.removeProperty('--rx'); f.style.removeProperty('--ry'); }});
+  for (const c of document.querySelectorAll('.rapport .r-col')) c.addEventListener('pointermove', (e) => {{
+    const r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  }});
+}})();
+</script>"""
+    assert "—" not in html, "un cadratin s'est glissé dans la section du rapport Routing"
+    for attendu in (usd(sn["prix_usd"]), usd(au["prix_usd"]), usd(tr["prix_usd_an"]), ex["sceau"], off["donnees"], off["frais_fournisseurs"]):
+        if attendu not in html:
+            sys.exit(f"la section du rapport Routing n'affiche pas « {attendu} » : refusé")
+    return html
+
+
+_SECTION_RAPPORT_ROUTING = _section_rapport_routing()
+
 PAGE = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Cascade &#183; KYC routing audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -1478,6 +1577,7 @@ PAGE = f'''<!doctype html><html lang="en">
     </div>
   </div>
 </section>
+{_SECTION_RAPPORT_ROUTING}
 
 <section class="instrument" data-commun="instrument"><div class="colonne">
   <h2 class="h2">Try the Routing instrument on our public test set.</h2>

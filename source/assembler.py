@@ -725,16 +725,18 @@ for rb in (MAQ / "rendus").glob("robot-*.webp"):          # les robots de toutes
     shutil.copy(rb, DOCS / "rendus" / rb.name)
 # le rapport exemple de la page Screening (29/09) : le PDF et l'image de sa première page, rendus par
 # batir-rapport-exemple.py depuis le relevé public ; un PDF qui n'en est pas un, ou trop lourd, ne part pas
-_pdf, _img = MAQ / "rapports" / "screening-sample-report.pdf", MAQ / "rendus" / "rapport-exemple.webp"
-if not _pdf.exists() or _pdf.read_bytes()[:5] != b"%PDF-":
-    sys.exit("source/rapports/screening-sample-report.pdf absent ou illisible : relancer batir-rapport-exemple.py")
-if _pdf.stat().st_size > 2 * 1048576:
-    sys.exit(f"le rapport exemple pèse {_pdf.stat().st_size // 1024} Ko, au-dessus de 2 Mo : refusé")
-if not _img.exists() or _img.read_bytes()[8:12] != b"WEBP":
-    sys.exit("source/rendus/rapport-exemple.webp absent ou pas en webp : relancer batir-rapport-exemple.py")
+# et, depuis le 30/09, celui de la page Routing (batir-rapport-routing.py, le relevé réel CORD) : même contrôle
 (DOCS / "rapports").mkdir(exist_ok=True)
-shutil.copy(_pdf, DOCS / "rapports" / _pdf.name)
-shutil.copy(_img, DOCS / "rendus" / _img.name)
+for _pdf, _img, _bat in ((MAQ / "rapports" / "screening-sample-report.pdf", MAQ / "rendus" / "rapport-exemple.webp", "batir-rapport-exemple.py"),
+                         (MAQ / "rapports" / "routing-sample-report.pdf", MAQ / "rendus" / "rapport-routing.webp", "batir-rapport-routing.py")):
+    if not _pdf.exists() or _pdf.read_bytes()[:5] != b"%PDF-":
+        sys.exit(f"source/rapports/{_pdf.name} absent ou illisible : relancer {_bat}")
+    if _pdf.stat().st_size > 2 * 1048576:
+        sys.exit(f"le rapport exemple {_pdf.name} pèse {_pdf.stat().st_size // 1024} Ko, au-dessus de 2 Mo : refusé")
+    if not _img.exists() or _img.read_bytes()[8:12] != b"WEBP":
+        sys.exit(f"source/rendus/{_img.name} absent ou pas en webp : relancer {_bat}")
+    shutil.copy(_pdf, DOCS / "rapports" / _pdf.name)
+    shutil.copy(_img, DOCS / "rendus" / _img.name)
 # les robots de toutes les couleurs partent déjà par le glob ci-dessus (le rideau
 # les montre sur toutes les pages) ; seuls les ÉTATS du plateau bleu sont conditionnels
 # le PRÉFIXE des états vit dans outil.py seul (ETATS_PREFIXE) : le 8/09, « bassins » ici
