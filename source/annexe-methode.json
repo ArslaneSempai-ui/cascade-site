@@ -20,7 +20,7 @@
             "n": "includes the split test"
           }
         ],
-        "refs": "src/corpus.ts:164 &#183; src/cascade.test.ts:47"
+        "refs": "src/corpus.ts:164 &#183; src/cascade.test.ts:48"
       }
     },
     {
@@ -43,7 +43,7 @@
             "n": "measures your reviewers: accuracy per field, agreement between them, seconds per record"
           }
         ],
-        "refs": "src/optimise.ts:379 &#183; src/readme.ts:842"
+        "refs": "src/optimise.ts:379 &#183; src/readme.ts:843"
       }
     },
     {
@@ -127,7 +127,7 @@
             "n": "measures fresh records against the frozen baseline, gives one answer per field, and hashes the new report"
           }
         ],
-        "refs": "src/measure.ts:944 &#183; src/your-cases.ts:1455"
+        "refs": "src/measure.ts:944 &#183; src/your-cases.ts:1849"
       }
     }
   ],
