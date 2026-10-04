@@ -796,7 +796,8 @@ _temoin_film.unlink()
 FILM_MAX = 25 * 1024 * 1024
 (DOCS / "films").mkdir()
 # 29/09 : la démo Screening est un film de plus sur la page Screening, mêmes gardes (poids, moov)
-for _oid in sorted(_outils_emis | {"routing"}) + (["screening-demo"] if "screening" in _outils_emis else []):
+# 04/10 : la démo Routing aussi (Routing est toujours émis)
+for _oid in sorted(_outils_emis | {"routing"}) + ["routing-demo"] + (["screening-demo"] if "screening" in _outils_emis else []):
     film = MAQ / "films" / f"{_oid}.mp4"
     if not film.exists():
         sys.exit(f"source/films/{_oid}.mp4 absent : la page de {_oid} aurait un lecteur sans film")

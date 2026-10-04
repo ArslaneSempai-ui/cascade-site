@@ -623,7 +623,7 @@ CSS = '''
   .lecteur:not(.joue){cursor:pointer}
   /* la vidéo native est la boîte : 16/9 par ses attributs, l'affiche en poster ; à l'arrêt
      elle grossit au survol comme l'affiche d'avant, en lecture elle ne bouge plus */
-  .lecteur video{display:block;width:100%;height:auto;aspect-ratio:16/9;transition:transform .4s var(--montee)}
+  .lecteur video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000;transition:transform .4s var(--montee)}
   .lecteur:not(.joue):hover video{transform:scale(1.02)}
   .lecteur .jouer{position:absolute;inset:0;margin:auto;width:92px;height:92px;border-radius:50%;padding:0;
     appearance:none;cursor:pointer;color:inherit;font:inherit;
@@ -1066,7 +1066,7 @@ JS = '''
       video.pause(); lecteur.classList.remove("joue"); video.removeAttribute("controls");
       video.querySelector("source").setAttribute("src", carte.dataset.src); video.setAttribute("poster", carte.dataset.poster); video.load();
       lecteur.querySelector(".duree").textContent = carte.dataset.duree;
-      const nom = "The " + carte.dataset.genre + " of Cascade Screening, " + carte.dataset.dite;
+      const nom = "The " + carte.dataset.genre + " of Cascade " + liste.dataset.nom + ", " + carte.dataset.dite;   // 04/10 : le nom de l'outil vient de la liste (Routing a aussi sa démo)
       video.setAttribute("aria-label", nom); lecteur.querySelector(".jouer").setAttribute("aria-label", "Play " + nom.charAt(0).toLowerCase() + nom.slice(1));
       for (const c of liste.querySelectorAll(".carte-film")) { c.classList.toggle("est-actif", c === carte); if (c === carte) c.setAttribute("aria-current", "true"); else c.removeAttribute("aria-current"); }
       // 30/09 : le lien « also on YouTube » suit le film choisi (il gardait l'adresse du premier)
@@ -1188,7 +1188,13 @@ FILMS = {"routing":    ("https://youtu.be/SXxViU7rhU8", "1:19", "1 minute 19"),
          "monitoring": ("https://youtu.be/xx_1lFJsw9E", "1:35", "1 minute 35"),
          "scoring":    ("https://youtu.be/mCybN-xq4jA", "1:31", "1 minute 31"),
          # 29/09 : la DÉMO Screening (Dana, son fichier, la passe, le rapport, le registre), 85,06 s ; validée « parfait »
-         "screening-demo": ("https://youtu.be/mTlpC9yXnXo", "1:26", "1 minute 26")}   # 30/09 : publiée, durée affichée par YouTube
+         "screening-demo": ("https://youtu.be/mTlpC9yXnXo", "1:26", "1 minute 26"),   # 30/09 : publiée, durée affichée par YouTube
+         # 04/10 : la DÉMO Routing (le prix, l'arbre des reçus, le routage par champ, le rapport), 30,13 s, validée
+         # « la vidéo est parfaite » ; film vertical 4:5 joué dans le lecteur 16:9, bandes noires ; pas encore sur YouTube
+         "routing-demo": (None, "0:31", "31 seconds")}
+# 04/10 : les outils qui ont une démo en plus de leur film : (le titre de la carte du film, le titre de la carte de la démo)
+DEMOS = {"screening": ("The five Screening findings", "The file, the screening, the report, the record"),
+         "routing":   ("The five Routing findings", "The price, the receipts, the routing, the report")}
 
 
 def lecteur_html(oid, nom, prefixe, affiche=None, visuel="", genre="film"):
@@ -1217,6 +1223,20 @@ def lecteur_html(oid, nom, prefixe, affiche=None, visuel="", genre="film"):
   </div>{note}"""
 
 
+def liste_films(oid, pr, affiche_film):
+    """LES DEUX CARTES sous le lecteur, le film des findings et la démo, pour un outil de DEMOS (sinon rien)."""
+    # 29/09 : sur Screening, UN lecteur et deux cartes dessous, le film des findings et la démo ; une carte cliquée
+    # change le film du lecteur (script), et sans script chaque carte est un lien vers son mp4 ; 04/10 : Routing aussi
+    titre_film, titre_demo = DEMOS.get(oid, ("", ""))
+    return f"""
+  <div class="liste" role="list" aria-label="Two films" data-nom="{oid.capitalize()}">
+    <a class="carte-film est-actif" role="listitem" aria-current="true" href="{pr}films/{oid}.mp4" data-src="{pr}films/{oid}.mp4" data-poster="{pr}rendus/{affiche_film}" data-duree="{FILMS[oid][1]}" data-dite="{FILMS[oid][2]}" data-genre="film" data-yt="{FILMS[oid][0] or ""}">
+      <img src="{pr}rendus/{affiche_film}" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The film</span><span class="cf-t">{titre_film}</span></span><span class="cf-d">{FILMS[oid][1]}</span></a>
+    <a class="carte-film" role="listitem" href="{pr}films/{oid}-demo.mp4" data-src="{pr}films/{oid}-demo.mp4" data-poster="{pr}rendus/affiche-{oid}-demo.jpg" data-duree="{FILMS[oid + "-demo"][1]}" data-dite="{FILMS[oid + "-demo"][2]}" data-genre="demo" data-yt="{FILMS[oid + "-demo"][0] or ""}">
+      <img src="{pr}rendus/affiche-{oid}-demo.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The demo</span><span class="cf-t">{titre_demo}</span></span><span class="cf-d">{FILMS[oid + "-demo"][1]}</span></a>
+  </div>""" if oid in DEMOS else ""
+
+
 def film_html(outil):
     """LA PLACE DU FILM d'un outil, la même sur chaque couleur : le titre, le lecteur
     natif et sa durée (table FILMS, 27/09 : les cinq films sont en ligne). Sans affiche
@@ -1230,20 +1250,12 @@ def film_html(outil):
         visuel = (f'<span class="affiche" role="img" aria-label="The {outil["nom"]} robot, leaning in, beside the question the film answers">'
                   f'<span class="af-t"><span class="af-eti">Cascade &#183; {outil["nom"]}</span><span class="af-q">{outil["question"]}</span></span>'
                   f'<img src="{lien(outil, "rendus/" + outil["robots"][0])}" alt=""></span>\n    ')
-    # 29/09 : sur Screening, UN lecteur et deux cartes dessous, le film des findings et la démo ; une carte cliquée
-    # change le film du lecteur (script), et sans script chaque carte est un lien vers son mp4
     pr = outil["prefixe_racine"]
-    liste = f"""
-  <div class="liste" role="list" aria-label="Two films">
-    <a class="carte-film est-actif" role="listitem" aria-current="true" href="{pr}films/screening.mp4" data-src="{pr}films/screening.mp4" data-poster="{pr}rendus/affiche-screening.jpg" data-duree="{FILMS["screening"][1]}" data-dite="{FILMS["screening"][2]}" data-genre="film" data-yt="{FILMS["screening"][0]}">
-      <img src="{pr}rendus/affiche-screening.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The film</span><span class="cf-t">The five Screening findings</span></span><span class="cf-d">{FILMS["screening"][1]}</span></a>
-    <a class="carte-film" role="listitem" href="{pr}films/screening-demo.mp4" data-src="{pr}films/screening-demo.mp4" data-poster="{pr}rendus/affiche-screening-demo.jpg" data-duree="{FILMS["screening-demo"][1]}" data-dite="{FILMS["screening-demo"][2]}" data-genre="demo" data-yt="{FILMS["screening-demo"][0] or ""}">
-      <img src="{pr}rendus/affiche-screening-demo.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The demo</span><span class="cf-t">The file, the screening, the report, the record</span></span><span class="cf-d">{FILMS["screening-demo"][1]}</span></a>
-  </div>""" if outil["id"] == "screening" else ""
+    liste = liste_films(outil["id"], pr, outil.get("affiche") or "affiche-film.jpg")
     return f"""
 <section class="film"><div class="colonne">
   <h2 class="h2">Cascade, explained.</h2>
-  <p class="film-duree">{"The film, and the demo" if outil["id"] == "screening" else "The five " + outil["nom"] + " findings"}</p>
+  <p class="film-duree">{"The film, and the demo" if outil["id"] in DEMOS else "The five " + outil["nom"] + " findings"}</p>
   {lecteur_html(outil["id"], outil["nom"], outil["prefixe_racine"], affiche, visuel)}{liste}
 </div></section>
 """
@@ -1597,8 +1609,8 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section class="film"><div class="colonne">
   <h2 class="h2">Cascade, proven in 79 seconds.</h2>
-  <p class="film-duree">The five findings</p>
-  {lecteur_html("routing", "Routing", "", "affiche-film.jpg")}
+  <p class="film-duree">The film, and the demo</p>
+  {lecteur_html("routing", "Routing", "", "affiche-film.jpg")}{liste_films("routing", "", "affiche-film.jpg")}
 </div></section>
 
 {menus_html()}
