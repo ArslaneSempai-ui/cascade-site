@@ -3,8 +3,8 @@
   "ancres": {
     "README.md:107": "Every file is checked against its SHA-256 and against the revision this repository pins,",
     "README.md:118": "Under that flag the library is told not to reach the network at all. If a model is missing it",
-    "README.md:223": "| [`retractations.json`](retractations.json) | every conclusion published here that turned out to be wrong |",
-    "README.md:246": "**What the published pass actually took.** The provenance stamps of the profile shipped with this repository run from 10:08:32 to 10:40:28, **32 minutes** of measurement on the machine named in the seal, on top of the weight download. That is the figure to plan for, not a round number: it is read from the relevé, so it moves when the relevé does.",
+    "README.md:227": "| [`retractations.json`](retractations.json) | every conclusion published here that turned out to be wrong |",
+    "README.md:250": "**What the published pass actually took.** The provenance stamps of the profile shipped with this repository run from 10:08:32 to 10:40:28, **32 minutes** of measurement on the machine named in the seal, on top of the weight download. That is the figure to plan for, not a round number: it is read from the relevé, so it moves when the relevé does.",
     "VALIDATION.md:28": "**This file does not certify anything.** It assembles what a reviewer needs in order to",
     "contrainte.json:34": "\"msMedianeNonTransportableFamineMemoire\": 235,",
     "egress.json:12": "\"verdict\": \"no connection observed for the whole pass\",",

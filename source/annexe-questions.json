@@ -103,7 +103,7 @@
             "n": "prints the conclusion from our public test set, with no install"
           }
         ],
-        "refs": "src/premiere-reponse.mjs:10 &#183; README.md:246"
+        "refs": "src/premiere-reponse.mjs:10 &#183; README.md:250"
       }
     },
     {
@@ -132,7 +132,7 @@
             "n": "recomputes each published figure against the sources"
           }
         ],
-        "refs": "src/verifier-rapport.mjs:20 &#183; README.md:223"
+        "refs": "src/verifier-rapport.mjs:20 &#183; README.md:227"
       }
     }
   ],
