@@ -26,7 +26,7 @@
       "h2": "The models are pinned and cached, and their weights take 1.3 GB",
       "html": [
         "<p>Inference runs locally, on four sets of model weights. The sets are <b>pinned by revision and by SHA&#8209;256 per file</b>, and that hash is a fingerprint of the file's content. The weights are cached on disk, and the tool checks them before it writes anything. Two points concern a bank in particular.</p>",
-        "<ul><li>On the <b>first run</b>, the tool fetches the weights once from huggingface.co, 1.3 GB in total, and it announces that size before it starts. If your network policy forbids that download, the weights can be <b>exported on one machine and imported on yours</b>.</li><li>We <b>found and closed</b> one last call. Even with each weight cached, the model library used to ask huggingface.co for one tokenizer configuration file, the file that tells a model how to split text into pieces, each time the extractor models loaded. The library asks for that file at revision <code>main</code> whatever revision is pinned, and it looks in its cache before the network. The loader now places a copy of the pinned file under that cache key, so no call remains, whether the network is reachable or blocked. The offline mode is tested end to end: the suite runs a measurement with the offline flag set and requires it to finish without a single outbound request. If a model is missing, the tool <b>stops before it attempts anything, with a refusal that gives its reason</b>.</li></ul>"
+        "<ul><li>On the <b>first run</b>, the tool fetches the weights once from huggingface.co, 1.3 GB in total, and it announces that size before it starts. If your network policy forbids that download, the weights can be <b>exported on one machine and imported on yours</b>. The OCR engine's two language files (5.2 MB, pinned by SHA&#8209;256) come down the same way, on <code>npm run tessdata -- --prime</code> only; a reading never fetches them.</li><li>We <b>found and closed</b> one last call. Even with each weight cached, the model library used to ask huggingface.co for one tokenizer configuration file, the file that tells a model how to split text into pieces, each time the extractor models loaded. The library asks for that file at revision <code>main</code> whatever revision is pinned, and it looks in its cache before the network. The loader now places a copy of the pinned file under that cache key, so no call remains, whether the network is reachable or blocked. The offline mode is tested end to end: the suite runs a measurement with the offline flag set and requires it to finish without a single outbound request. If a model is missing, the tool <b>stops before it attempts anything, with a refusal that gives its reason</b>.</li></ul>"
       ],
       "verif": {
         "t": "Check the weights",
@@ -55,7 +55,7 @@
             "n": "prints your Node version, to compare with the minimum above"
           }
         ],
-        "refs": "package.json:57 &#183; src/tiers.ts:295"
+        "refs": "package.json:60 &#183; src/tiers.ts:295"
       }
     },
     {
@@ -68,7 +68,7 @@
     {
       "h2": "What the tool depends on",
       "html": [
-        "<p>The tool has <b>one production dependency</b> and two development dependencies. The lockfile lists 77 packages, each with its content hash. Of those, 51 install on a given machine, and the rest are per&#8209;platform variants. A generator classifies their licenses, so no one sorts them by hand: <b>50 permissive, 1 with obligations, 0 blocking, 0 undetermined</b>, re&#8209;checked on each test run. A CycloneDX software bill of materials ships with the tool.</p>",
+        "<p>The tool has <b>two production dependencies</b>, the model runtime library and tesseract.js (the OCR engine, Apache-2.0), and two development dependencies. The lockfile lists 90 packages, each with its content hash. Of those, 64 install on a given machine, and the rest are per&#8209;platform variants. A generator classifies their licenses, so no one sorts them by hand: <b>63 permissive, 1 with obligations, 0 blocking, 0 undetermined</b>, re&#8209;checked on each test run. A CycloneDX software bill of materials ships with the tool.</p>",
         "<p>The repository itself has no install&#8209;time script, a script that runs when a package is installed, beyond wiring its own git hooks. Two transitive production packages do carry install scripts. On macOS and Windows they touch nothing beyond the npm registry. On one platform, linux/x64, one of them fetches optional GPU providers from a second registry at install time. <code>npm ci --ignore-scripts</code> disables both scripts, and running on CPU, as documented, loses nothing.</p>"
       ],
       "verif": {
@@ -98,7 +98,7 @@
       "html": [
         "<p>The tool <b>watches itself run</b>. It samples open connections during a measurement and publishes what it saw. That record states its own limit. Sampling can catch a connection that was open. <b>It cannot prove that none was.</b> The guarantee on this page is the guarded code path and the test that checks it. The observation does not carry that guarantee.</p>",
         "<p>A content hash cannot promise <b>permanence</b> either. A public record that carries its content hash proves what was measured on that day's cases and nothing beyond them. <code>recertify</code> measures again on fresh records, flags drift in the input, says for each field whether the result holds or moved, and re&#8209;computes the report's content hash. It runs on the validity period you declare, every ninety days by default.</p>",
-        "<p>The figures on this page are checked the same way as the rest of this site. The sentence <b>815 tests across 92 files</b> is generated from the sources and re&#8209;checked on each test run, so a stale figure cannot pass unnoticed.</p>"
+        "<p>The figures on this page are checked the same way as the rest of this site. The sentence <b>827 tests across 95 files</b> is generated from the sources and re&#8209;checked on each test run, so a stale figure cannot pass unnoticed.</p>"
       ],
       "verif": {
         "t": "Measure the drift",

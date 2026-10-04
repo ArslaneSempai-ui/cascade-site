@@ -1494,6 +1494,9 @@ def _section_rapport_routing():
     es, sn, au, tr = off["essai"], off["snapshot"], off["audit"], off["audit_trimestriel"]
     pick = sorted(set(ex["routage"].values()))
     pdf, img = "../rapports/routing-sample-report.pdf", "../rendus/rapport-routing.webp"
+    signe = "../rapports/routing-sample-report.html"
+    if not ex.get("signe"):
+        sys.exit("le rapport exemple Routing n'est pas signé : relancer batir-rapport-routing.py")
     releve = f"{DEPOT_URL}/blob/main/examples/cord-receipts/cord-labels-grouped-measured.json"
     exemple = f"{DEPOT_URL}/tree/main/examples/cord-receipts"
     sujet = "Extraction%20cost%20audit%2C%20free%20trial"
@@ -1517,11 +1520,11 @@ def _section_rapport_routing():
     essai = f"""<div class="r-essai">
     <p class="marque-h">How the free test goes</p>
     <ol class="r-pas">
-      <li><span><b>Label {es["pages"]} pages</b> of one document type in a CSV: an id, the text, then one column per field with the value it should read. Write a dash where a document has no such line. Up to {es["extracteurs"]} extractors.</span></li>
+      <li><span><b>Label {es["pages"]} pages</b> of one document type in a CSV: an id, the text, then one column per field with the value it should read. Write a dash where a document has no such line. For the text, take what your vendor already returns (<code>npm run text-from-exports</code>) or read your images with <code>npm run text-from-images -- --ocr=tesseract</code>, on Linux, macOS or Windows, offline. Up to {es["extracteurs"]} extractors.</span></li>
       <li><span><b>Grade each extractor</b> you use or want to compare: <code>npm run grade -- --cases=your.csv --name=&lt;vendor&gt; --values=&lt;its outputs&gt; --price-per-thousand-pages=&lt;your price&gt;</code>. The file it writes holds verdicts, no value.</span></li>
       <li><span><b>Measure, with the margin you accept</b>: <code>npm run measure:yours -- --cases=your.csv --sorties=&lt;each file from step 2&gt; --current=&lt;the one you run today&gt; --margin=2 --pages-per-year=&lt;your volume&gt;</code>. Add <code>--no-encoders</code> to compare vendors only, with no download.</span></li>
       <li><span><b>Email <code>your-measured.json</code></b> to {off["contact"]}. It holds counts, a right, wrong or blank verdict per case and field, your file's name and its hash, and the prices you declared: no document, no value. It is the one file you may attach.</span></li>
-      <li><span><b>You get a one-page PDF back</b> by email, from that record. This one is not sealed; the Snapshot and the Audit are. On our {ex["cas"]}-receipt sample, two vendors {ecart_pts} points apart on totals could not be told apart{(" (" + str(insep_total[0]["discordant"]) + " disagreements, p = " + f"{insep_total[0]['p']:.2f}" + ")") if insep_total else ""}: {es["pages"]} pages separate vendors far apart, and the paid tiers size the sample for close ones.</span></li>
+      <li><span><b>You get a one-page PDF back</b> by email within {es["delai_heures"]} hours, from that record. This one is not sealed, and the free test stays an internal evaluation; the Snapshot and the Audit are sealed, and include the right to act on the recommendation in your own operations. On our {ex["cas"]}-receipt sample, two vendors {ecart_pts} points apart on totals could not be told apart{(" (" + str(insep_total[0]["discordant"]) + " disagreements, p = " + f"{insep_total[0]['p']:.2f}" + ")") if insep_total else ""}: {es["pages"]} pages separate vendors far apart, and the paid tiers size the sample for close ones.</span></li>
     </ol>
   </div>"""
     html = f"""<section class="rapport" id="report"><div class="colonne">
@@ -1532,13 +1535,13 @@ def _section_rapport_routing():
     <ol class="r-pas">
       <li><span><b>You label</b> a sample of your own documents: for each field, the value it should read, or a dash when the document has no such line.</span></li>
       <li><span><b>You run the audit</b> on your machine. Your current extractor, the ones you want to compare, and our local models read the same pages. The local models read them as text: the text your current vendor already returns, or an OCR you run.</span></li>
-      <li><span><b>You receive</b> a sealed report: for each field, the cheapest source that stays within the margin you declare of the best, and the saving at your volume. Sealed means the record carries a content hash, so an edit made after sealing shows. A content hash is not a signature.</span></li>
+      <li><span><b>You receive</b> a sealed record and a signed report: for each field, the cheapest source that stays within the margin you declare of the best, and the saving at your volume. Sealed means the record carries a content hash, so an edit made after sealing shows. Signed means the report page carries a signature your audit team checks against our public key with <code>node src/verifier-rapport.mjs</code>, like the sample below.</span></li>
     </ol>
   </div>
   <figure class="r-feuille">
     <a href="{pdf}" download><img src="{img}" width="1224" height="1584" loading="lazy" decoding="async"
       alt="First page of the sample report: {ex["cas"]} real receipts, {ex["sources"]} sources on {len(ex["champs"])} fields, all routed to {", ".join(pick)}, saving {usd(ex["economie"])} a year at {ex["volume"]:,} documents."></a>
-    <figcaption>sample report &#183; {ex["cas"]} real receipts &#183; sealed {ex["mesure"]} &#183; record {ex["sceau"]}</figcaption>
+    <figcaption>sample report &#183; {ex["cas"]} real receipts &#183; sealed {ex["mesure"]} &#183; record {ex["sceau"]} &#183; signed page beside the PDF</figcaption>
   </figure>
   </div>
   {recus}
@@ -1556,7 +1559,7 @@ def _section_rapport_routing():
         <p class="r-eti">Audit</p>
         <p class="r-montant"><span class="r-n">{usd(au["prix_usd"])}</span><small>up to {au["pages"]:,} pages</small></p>
         <p class="r-sous">Up to {au["types_document"]} document types, sealed, back within {au["delai_heures"]} hours.</p>
-        <ul class="r-inclus"><li>Up to {au["champs"]} fields and {au["extracteurs"]} extractors</li><li>A sample sized to separate sources a few points apart, when they are</li><li>The report as a PDF and a sealed record</li></ul>
+        <ul class="r-inclus"><li>Up to {au["champs"]} fields and {au["extracteurs"]} extractors</li><li>A sample sized to separate sources a few points apart, when they are</li><li>The signed report, its PDF, and the sealed record</li></ul>
       </article>
       <article class="r-col" data-col="trimestriel">
         <img class="r-robot" src="../rendus/robot-vert-tient.webp" width="926" height="963" alt="" loading="lazy" decoding="async">
@@ -1572,7 +1575,7 @@ def _section_rapport_routing():
     <span class="ouvrir-s">One document type and up to {es["extracteurs"]} extractors. Write to {off["contact"]}.</span></span>
     <span class="fl" aria-hidden="true">&#8594;</span></a></div>
   {essai}
-  <p class="liens"><a class="lien-e" href="{pdf}" download>Download the sample report <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{exemple}">See the labels, the OCR text and the vendor outputs <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{releve}">Open the sealed record <span aria-hidden="true">&#8594;</span></a></p>
+  <p class="liens"><a class="lien-e" href="{pdf}" download>Download the sample report <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{signe}">Verify the signed report <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{exemple}">See the labels, the OCR text and the vendor outputs <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{releve}">Open the sealed record <span aria-hidden="true">&#8594;</span></a></p>
 </div></section>
 <script>
 (() => {{
@@ -1598,15 +1601,15 @@ def _section_rapport_routing():
 _SECTION_RAPPORT_ROUTING = _section_rapport_routing()
 
 PAGE = f'''<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade &#183; KYC routing audit</title>
+<meta charset="utf-8"><title>Cascade &#183; Routing, the extraction cost audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Cascade: routing audit, KYC extraction">
-<meta property="og:description" content="A routing audit for KYC extraction: measured on our public test set, rerun on your machine. On your records, on your machine: nothing leaves the network.">
+<meta property="og:title" content="Cascade: Routing, the extraction cost audit">
+<meta property="og:description" content="Which engine each field of your documents needs: measured on our public test set and on 100 real receipts, rerun on your machine. Nothing reaches us unless you send it.">
 <meta property="og:url" content="https://cascade-routing.com/routing/">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="A routing audit for KYC extraction: measured on our public test set, rerun on your machine. On your records, on your machine: nothing leaves the network.">
+<meta name="description" content="Which engine each field of your documents needs: measured on our public test set and on 100 real receipts, rerun on your machine. Nothing reaches us unless you send it.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fontes/literata.css">
 <link rel="stylesheet" href="fontes/roboto-mono.css">
@@ -1617,14 +1620,14 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <main>
 <section class="hero">
-  <h1 class="h1 entree">See which model each identity field actually needs.</h1>
+  <h1 class="h1 entree">See which engine each field of your documents actually needs.</h1>
   <p class="lede entree">A model tier is the size of model a field is sent to, from a plain text pattern up to the largest.<br>
     On our test set, three of the five fields are read by a text pattern alone, at no cost.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
     <code class="ln">cd cascade-routing</code>
     <code class="ln">node src/premiere-reponse.mjs</code>
-    <span class="note">The conclusion, read from our public test set's summary files in under one second. Before npm install.</span>
+    <span class="note">Prints the receipts result from the signed CORD record, then our KYC corpus. Under one second, before npm install.</span>
   </div>
   <div class="cue" aria-hidden="true"><span>scroll</span><span class="fil"></span></div>
 </section>

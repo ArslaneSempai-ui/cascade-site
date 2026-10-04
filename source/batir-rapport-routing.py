@@ -17,12 +17,21 @@ DATA = ("The 100 real receipts of the CORD v2 test split (Clova AI, CC BY 4.0), 
         "since 2022, so the vendors' models may have seen it. Both vendor prices were declared by Cascade for this sample.")
 d = json.loads(RECORD.read_text()); a = d["audit"]
 (BASE / "rapports").mkdir(exist_ok=True); tmp = BASE / "rapports" / "_page-routing.html"
-subprocess.run([sys.executable, str(RENDU), str(RECORD), str(tmp), "--data", DATA, "--declared-by", "Cascade, for this sample"], check=True, capture_output=True)
+# 04/10 (Arslane) : the sample is SIGNED. The page is rendered with the site's own fonts folder (../fontes, which
+# exists under source/ and under docs/), signed with the private key through the house signer (never printed), re-read
+# by cascade's public verifier, and only then rendered to PDF; the signed page ships beside the PDF.
+subprocess.run([sys.executable, str(RENDU), str(RECORD), str(tmp), "--data", DATA, "--declared-by", "Cascade, for this sample",
+                "--fontes", "../fontes"], check=True, capture_output=True)
+SIGNE = BASE / "rapports" / "routing-sample-report.html"
+subprocess.run(["node", str(MAISON / "cascade-portes" / "outils" / "signer-rapport.mjs"), str(tmp), str(SIGNE)], check=True)
+VERIF = subprocess.run(["node", str(MAISON / "cascade" / "src" / "verifier-rapport.mjs"), str(SIGNE)], capture_output=True, text=True)
+if VERIF.returncode != 0 or "Signature valid" not in VERIF.stdout:
+    sys.exit(f"the signed sample report does not verify:\n{VERIF.stdout}{VERIF.stderr}")
 pdf, webp = BASE / "rapports" / "routing-sample-report.pdf", BASE / "rendus" / "rapport-routing.webp"
-subprocess.run(["node", str(BASE / "capturer-rapport.mjs"), str(tmp), str(pdf), str(webp)], check=True)
+subprocess.run(["node", str(BASE / "capturer-rapport.mjs"), str(SIGNE), str(pdf), str(webp)], check=True)
 tmp.unlink()
 F = list(a["fields"]); pick = a["routing"]
-side = {"sceau": d["empreinte"], "mesure": d["measuredAt"][:10], "commit": d["code"]["commit"], "cas": d["source"]["cases"],
+side = {"sceau": d["empreinte"], "mesure": d["measuredAt"][:10], "commit": d["code"]["commit"], "cas": d["source"]["cases"], "signe": True, "verifie": VERIF.stdout.strip().splitlines()[0].strip(),
         "champs": F, "routage": pick, "sources": len(a["fields"][F[0]]["sources"]),
         "economie": a["cost"]["annual"]["saving"], "volume": a["cost"]["annual"]["pagesPerYear"],
         "juste": {f: round(a["fields"][f]["sources"][pick[f]]["accuracy"] * 100, 1) for f in F},

@@ -3,6 +3,8 @@
   "mesure": "2026-09-29",
   "commit": "7e82950",
   "cas": 100,
+  "signe": true,
+  "verifie": "✓ Signature valid. 12521 bytes signed.",
   "champs": [
     "total",
     "subtotal",

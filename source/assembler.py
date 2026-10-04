@@ -737,6 +737,16 @@ for _pdf, _img, _bat in ((MAQ / "rapports" / "screening-sample-report.pdf", MAQ 
         sys.exit(f"source/rendus/{_img.name} absent ou pas en webp : relancer {_bat}")
     shutil.copy(_pdf, DOCS / "rapports" / _pdf.name)
     shutil.copy(_img, DOCS / "rendus" / _img.name)
+# 04/10 : the Routing sample is a signed page served beside its PDF ; the served copy must pass cascade's public verifier
+_signe = MAQ / "rapports" / "routing-sample-report.html"
+if not _signe.exists():
+    sys.exit("source/rapports/routing-sample-report.html absent : relancer batir-rapport-routing.py (la page signée)")
+shutil.copy(_signe, DOCS / "rapports" / _signe.name)
+_v = subprocess.run(["node", str(pathlib.Path.home() / "Documents" / "cascade" / "src" / "verifier-rapport.mjs"), str(DOCS / "rapports" / _signe.name)],
+                    capture_output=True, text=True)
+if _v.returncode != 0 or "Signature valid" not in _v.stdout:
+    sys.exit(f"la page signée SERVIE ne vérifie pas :\n{_v.stdout}{_v.stderr}")
+print("  " + _v.stdout.strip().splitlines()[0].strip() + " (routing-sample-report.html, servie)")
 # les robots de toutes les couleurs partent déjà par le glob ci-dessus (le rideau
 # les montre sur toutes les pages) ; seuls les ÉTATS du plateau bleu sont conditionnels
 # le PRÉFIXE des états vit dans outil.py seul (ETATS_PREFIXE) : le 8/09, « bassins » ici

@@ -6,7 +6,8 @@
     "types_document": 1,
     "extracteurs": 3,
     "scelle": false,
-    "livrable": "a one-page PDF by email, from the record you send; this one is not sealed"
+    "livrable": "a one-page PDF by email within 48 hours, from the record you send; this one is not sealed, and the free test is an internal evaluation",
+    "delai_heures": 48
   },
   "snapshot": {
     "pages": 1000,
@@ -30,5 +31,10 @@
   },
   "contact": "contact@cascade-routing.com",
   "donnees": "The measurement runs on your machine and offline. One sealed record comes to us: counts, a right, wrong or blank verdict per case and field, your file's name and its hash, and the prices and volume you declared. No document, no value read from one. Testing a cloud extractor sends pages to that vendor under your own account, as it does today; the local tiers keep each page on your machine.",
-  "frais_fournisseurs": "Vendor fees for the pages you run through cloud extractors are billed to you by those vendors, on your own keys."
+  "frais_fournisseurs": "Vendor fees for the pages you run through cloud extractors are billed to you by those vendors, on your own keys.",
+  "droits": {
+    "decide": "Arslane, 2026-10-04",
+    "payants": "the Snapshot and the Audit include the right to act on the recommendation in the client's own operations",
+    "essai": "the free test stays an internal evaluation, like the $0 tier and the evaluation grant of the LICENSE"
+  }
 }

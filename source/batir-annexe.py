@@ -430,7 +430,7 @@ for lettre, page in zip(LETTRES, PAGES):
 _OFF = json.loads((BASE / "offre-routing.json").read_text())
 _TERMS = (BASE / "ANNEXE-TERMS.html").read_text()
 for _attendu in (f"${_OFF['snapshot']['prix_usd']:,}", f"${_OFF['audit']['prix_usd']:,}", f"${_OFF['audit_trimestriel']['prix_usd_an']:,}",
-                 f"{_OFF['snapshot']['delai_heures']} hours", f"{_OFF['audit']['delai_heures']} hours", "HS Industries LLC", "not signed"):
+                 f"{_OFF['snapshot']['delai_heures']} hours", f"{_OFF['audit']['delai_heures']} hours", f"within {_OFF['essai']['delai_heures']} hours", "HS Industries LLC", "right to act on the recommendation"):
     if _attendu not in _TERMS:
         sys.exit(f"ANNEXE-TERMS.html n'affiche pas « {_attendu} » : les conditions ne portent plus l'offre Routing")
 
