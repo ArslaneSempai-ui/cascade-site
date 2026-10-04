@@ -45,7 +45,7 @@
             "n": "samples connections during a pass, with the record committed and paths scrubbed"
           }
         ],
-        "refs": "src/egress.ts:341 &#183; egress.json:12"
+        "refs": "src/egress.ts:343 &#183; egress.json:12"
       }
     },
     {
@@ -75,7 +75,8 @@
     {
       "h2": "The report you receive",
       "html": [
-        "<p>The measured report is written <b>beside your CSV</b>, and none of it goes into the tool's folders. It contains rates, confidence intervals (the range a true rate is likely to sit in) and the questions asked. <b>The values extracted from your documents never enter it.</b> It closes with the sentence it earns: measured on this machine, nothing left it.</p>"
+        "<p>The measured report is written <b>beside your CSV</b>, and none of it goes into the tool's folders. It contains rates, confidence intervals (the range a true rate is likely to sit in) and the questions asked. <b>The values extracted from your documents never enter it.</b> It closes with the sentence it earns: measured on this machine, nothing left it.</p>",
+        "<p>A second file is written beside it, the sealed record, and it is the one file the extraction cost audit asks you to send us. It holds counts, a right, wrong or blank verdict per case and field, your file's name and its SHA-256 hash, and the prices and volume you declared. A declared price can be under a vendor contract: replace it with a list price before sending if it is. No document and no value read from one is in that file.</p>"
       ]
     }
   ],

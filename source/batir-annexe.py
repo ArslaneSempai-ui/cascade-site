@@ -22,6 +22,7 @@ CE QUI CHANGE (harmonisation du 4 septembre, appliquée aux 8 pages)
 import importlib.util
 import json
 import pathlib
+import sys
 
 BASE = pathlib.Path(__file__).parent
 spec = importlib.util.spec_from_file_location("bn", BASE / "batir-nav.py")
@@ -423,6 +424,15 @@ for lettre, page in zip(LETTRES, PAGES):
 {pied_html(sceau=SCEAU, courante=page["html"])}
 """ + SCRIPT + "\n", encoding="utf-8")
     print(f"  {page['html']}")
+
+# 04/10 (audit Routing) : la page des conditions porte les quatre offres de Routing et la société qui contracte ;
+# ses chiffres sont ceux de offre-routing.json, et la garde les recompare
+_OFF = json.loads((BASE / "offre-routing.json").read_text())
+_TERMS = (BASE / "ANNEXE-TERMS.html").read_text()
+for _attendu in (f"${_OFF['snapshot']['prix_usd']:,}", f"${_OFF['audit']['prix_usd']:,}", f"${_OFF['audit_trimestriel']['prix_usd_an']:,}",
+                 f"{_OFF['snapshot']['delai_heures']} hours", f"{_OFF['audit']['delai_heures']} hours", "HS Industries LLC", "not signed"):
+    if _attendu not in _TERMS:
+        sys.exit(f"ANNEXE-TERMS.html n'affiche pas « {_attendu} » : les conditions ne portent plus l'offre Routing")
 
 # ── la plomberie : contact et colophon : colonne simple, sans objet ──────────
 PLOMBERIE = json.loads((BASE / "plomberie.json").read_text())

@@ -1,6 +1,6 @@
 <!doctype html><html lang="en">
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-xeP6fKvecg0KzTuPcJzwWnHPOutLtKeK7fDO5bq6d3U=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-mOyl6x9YzzIyW0KgKTCP176LRPW58h2QDc+H7M/sNLU=' 'sha256-tjFO5ptmdld+VyTooNVrS+UnydTC+ts3f6k0z22Jqxc=' 'sha256-9/lwJejrIxYOssOdIiOgKy/Yeg15T3Mef8gWttLd860=' 'sha256-kv3Sv2Sj8Qeh5H/NNQJtJE1V1TxnvFd2Fe+Y6wrzglQ=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg=' 'sha256-/vYkeP6dXt+l11vONzlXfD8Zv2L2CaEuHLfU62Zvubo=' 'sha256-J3jtxzWdxaAXGj10v/+vK9Lq4f+yS3hCawGN7iBV9xg=' 'sha256-94u25WhXvMAHah9HuVfk6QNXg8h1t8c1QmH2t/TagZw='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-XrRETqXE1Hj3pwZlMx749Y5pMRyrGEj1zN8T9XQ9dbI=' 'sha256-h3XEPagyHXWX+lAAdHX4nj8uMkrYERyFotOSvQQK39s='; font-src 'self'; img-src 'self' data:; media-src 'self'; base-uri 'self'; form-action 'none'; connect-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'sha256-xUgqTc/KSLmn3JetuMgmLCIHKHJE8zWN9ZmTd+4Ng+8=' 'unsafe-hashes' 'sha256-0HZErnRGeXfSSbk/z4SKRVqTv0f0NBJn7UkU3+HNPdI=' 'sha256-IOydWiRWi1igmPoSsye5TDkEobQe/5aVDHX28UA/4Ts=' 'sha256-9g0fN3HsQ+WXOCUD5dKQdXIY2TvGqAMbUifSZhx4rwY=' 'sha256-9zQJQ9B48ZyPwEKZebBBelAuaIv5PhbHt8m+l66EtlA=' 'sha256-ZTITrJ2pUfvT5dkkETXJE/2TX1XuQ5FuXtbB5dwYuw4=' 'sha256-S/waUfsy/5V4uijKPM80kAeCleBtxCjMeUmwmXp98w0=' 'sha256-mOyl6x9YzzIyW0KgKTCP176LRPW58h2QDc+H7M/sNLU=' 'sha256-tjFO5ptmdld+VyTooNVrS+UnydTC+ts3f6k0z22Jqxc=' 'sha256-9/lwJejrIxYOssOdIiOgKy/Yeg15T3Mef8gWttLd860=' 'sha256-kv3Sv2Sj8Qeh5H/NNQJtJE1V1TxnvFd2Fe+Y6wrzglQ=' 'sha256-qm1ymCuyj9goSRO0xKI/uxGGEy420yuGBS/VNUtBiJg=' 'sha256-/vYkeP6dXt+l11vONzlXfD8Zv2L2CaEuHLfU62Zvubo=' 'sha256-J3jtxzWdxaAXGj10v/+vK9Lq4f+yS3hCawGN7iBV9xg=' 'sha256-94u25WhXvMAHah9HuVfk6QNXg8h1t8c1QmH2t/TagZw='; script-src 'sha256-qOhFsq0QMV2REqNwk5hGH5bZE9SkX6gt6yeyKdYPv+U=' 'sha256-XrRETqXE1Hj3pwZlMx749Y5pMRyrGEj1zN8T9XQ9dbI=' 'sha256-h3XEPagyHXWX+lAAdHX4nj8uMkrYERyFotOSvQQK39s='; font-src 'self'; img-src 'self' data:; media-src 'self'; base-uri 'self'; form-action 'none'; connect-src 'none'">
 <meta name="referrer" content="no-referrer"><title>Cascade Dossier &#183; the assembled audit trail</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://cascade-routing.com/dossier/">
@@ -513,6 +513,18 @@
   .rapport .r-inclus li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;height:6px;
     border-left:1.5px solid var(--vert-vif);border-bottom:1.5px solid var(--vert-vif);transform:rotate(-45deg)}
   .rapport .r-inclus b{color:var(--sur-vert);font-weight:600}
+  /* 04/10 : the receipts-first entry and the five steps of the free test ; paragraphs run the full column width */
+  .rapport .r-recus{margin-top:64px;padding:30px 34px;border-radius:18px;border:1px solid color-mix(in srgb,var(--sur-vert) 12%,transparent);background:color-mix(in srgb,var(--nuit-c) 72%,transparent)}
+  .rapport .r-recus p{margin:0 0 14px;font-size:15.5px;line-height:1.6;color:var(--sur-vert-pale);max-width:none}
+  .rapport .r-recus p:last-child{margin-bottom:0}
+  .rapport .r-recus .marque-h{margin-bottom:14px}
+  .rapport .r-cmd{display:block;margin:0 0 16px;padding:14px 18px;border-radius:10px;background:var(--nuit-b);border:1px solid color-mix(in srgb,var(--vert-vif) 40%,transparent);
+    font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--sur-vert);white-space:pre-wrap;overflow-wrap:anywhere}
+  .rapport .r-cmd b{color:var(--vert-vif);font-weight:400}
+  .rapport .r-essai{margin-top:64px}
+  .rapport .r-essai .r-pas{margin-top:20px}
+  .rapport .r-essai .r-pas li{max-width:none}
+  .rapport .r-essai code{font-family:var(--mono);font-size:12.5px;color:var(--sur-vert);background:color-mix(in srgb,var(--nuit-b) 80%,transparent);padding:1px 6px;border-radius:5px;overflow-wrap:anywhere}
   .rapport .r-col.hors{opacity:.4}
   .rapport .r-au-dela{margin:20px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--vert-clair)}
   .rapport .r-taille{margin-top:28px;padding:30px 38px 30px;border-radius:18px;

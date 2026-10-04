@@ -43,7 +43,7 @@
             "n": "measures your reviewers: accuracy per field, agreement between them, seconds per record"
           }
         ],
-        "refs": "src/optimise.ts:379 &#183; src/readme.ts:843"
+        "refs": "src/optimise.ts:379 &#183; src/readme.ts:849"
       }
     },
     {
@@ -62,7 +62,7 @@
             "n": "already hashed, and the content hash matches: dbf26abec438515e"
           }
         ],
-        "refs": "src/empreinte.ts:58 &#183; src/sceller.ts:12"
+        "refs": "src/empreinte.ts:58 &#183; src/sceller.ts:13"
       }
     },
     {
@@ -127,7 +127,7 @@
             "n": "measures fresh records against the frozen baseline, gives one answer per field, and hashes the new report"
           }
         ],
-        "refs": "src/measure.ts:944 &#183; src/your-cases.ts:1849"
+        "refs": "src/measure.ts:946 &#183; src/your-cases.ts:1861"
       }
     }
   ],

@@ -13,10 +13,11 @@ PUBLIC = MAISON / "cascade" / "examples" / "cord-receipts" / "cord-labels-groupe
 PRIVE = MAISON / "cascade-portes" / "routing" / "cord-labels-grouped-measured.json"
 RECORD = PUBLIC if PUBLIC.exists() else PRIVE
 RENDU = MAISON / "cascade-portes" / "outils" / "rapport-routing.py"
-DATA = "The 100 real receipts of the CORD v2 test split (Clova AI, CC BY 4.0), labelled by hand."
+DATA = ("The 100 real receipts of the CORD v2 test split (Clova AI, CC BY 4.0), with CORD's own labels; the split has been public "
+        "since 2022, so the vendors' models may have seen it. Both vendor prices were declared by Cascade for this sample.")
 d = json.loads(RECORD.read_text()); a = d["audit"]
 (BASE / "rapports").mkdir(exist_ok=True); tmp = BASE / "rapports" / "_page-routing.html"
-subprocess.run([sys.executable, str(RENDU), str(RECORD), str(tmp), "--data", DATA], check=True, capture_output=True)
+subprocess.run([sys.executable, str(RENDU), str(RECORD), str(tmp), "--data", DATA, "--declared-by", "Cascade, for this sample"], check=True, capture_output=True)
 pdf, webp = BASE / "rapports" / "routing-sample-report.pdf", BASE / "rendus" / "rapport-routing.webp"
 subprocess.run(["node", str(BASE / "capturer-rapport.mjs"), str(tmp), str(pdf), str(webp)], check=True)
 tmp.unlink()

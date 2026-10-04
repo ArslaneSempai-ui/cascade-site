@@ -2,7 +2,7 @@
   "_": "Contenu de la page Terms of Engagement. Faits de la passe du 31 août 2026 (tasks/w7nrsoqna.output). Interdits par cette passe : citer entre guillemets une clause « a report can conclude change nothing » (n'existe pas mot pour mot : les trois équivalents citables sont utilisés à la place) ; citer la propriété du rapport comme un fait de dépôt (tranchée le 28/08 mais documentée dans le dépôt privé : à énoncer comme engagement, sans citation).",
   "objet": "rendus/etats/objet-terms.webp",
   "titre": "What the license grants, and for how long.",
-  "lede": "The terms below are short because they are real. A thirty-day grant is written into the license file, anyone can read the public license, and anyone can verify a deliverable. We also commit that the answer may go against us and recommend that you keep what you have. Where a term lives in the source, this page gives its path.",
+  "lede": "The terms below are short because they are real. They cover the thirty-day grant, the four tiers of the extraction cost audit, the public license, and the deliverable. A thirty-day grant is written into the license file, anyone can read the public license, and anyone can verify a deliverable. We also commit that the answer may go against us and recommend that you keep what you have. Where a term lives in the source, this page gives its path.",
   "description": "A thirty-day grant written into the license file, a public license anyone can read, a deliverable anyone can verify, and the path to each term.",
   "sections": [
     {
@@ -21,6 +21,13 @@
         ],
         "refs": "LICENSE:8 &#183; LICENSE:15"
       }
+    },
+    {
+      "h2": "The extraction cost audit: four tiers, one contracting company",
+      "html": [
+        "<p>The Routing page sells the extraction cost audit as a fixed-price service, apart from the campaign and the license below. The <b>free test</b> covers 100 pages of one document type and up to 3 extractors: you run it, you email us the record, and you get a one-page PDF back, unsealed. The <b>Snapshot</b> ($490) covers one document type, up to 1,000 pages, 10 fields and 4 extractors, and comes back as a PDF and a sealed record within 48 hours. The <b>Audit</b> ($1,900) covers up to 3 document types, 10,000 pages, 30 fields and 10 extractors, within 72 hours. The <b>Quarterly audit</b> ($4,900 a year) is the Audit measured again 4 times a year, each report saying what moved since the last.</p>",
+        "<p><b>HS Industries LLC</b> contracts and invoices each of them, under an engagement letter written before signature. Sealed means the record carries a content hash, which shows an edit made after sealing; the signature described further down is a separate thing, and the sample report on the Routing page is sealed and not signed. The rights to act on a tier's result in your own production are among the terms that letter settles.</p>"
+      ]
     },
     {
       "h2": "How the three levels of the license work",
@@ -43,7 +50,7 @@
             "n": "the conclusion, with what would reverse it"
           }
         ],
-        "refs": "src/your-cases.ts:2362 &#183; VALIDATION.md:28"
+        "refs": "src/your-cases.ts:2421 &#183; VALIDATION.md:28"
       }
     },
     {
@@ -61,7 +68,7 @@
             "n": "either authentic and unaltered, or refused"
           }
         ],
-        "refs": "src/verifier-rapport.mjs:13 &#183; src/intake.ts:183"
+        "refs": "src/verifier-rapport.mjs:13 &#183; src/intake.ts:225"
       }
     },
     {

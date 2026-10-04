@@ -448,6 +448,11 @@ def lien(outil, cible):
 # le rang des pages sous un filet, SANS répéter le bouton dedans (« pour pas l'avoir deux
 # fois »). Une fonction, une feuille : les bâtisseurs l'appellent et n'en dessinent plus.
 PIED_PROMESSE = "Nothing of yours leaves your machine."
+# 04/10 (audit Routing) : sur la page Routing, la phrase du pied contredisait l'offre (un relevé
+# scellé nous parvient ; un fournisseur cloud testé reçoit les pages, sous le compte du client).
+# La page Routing porte la phrase vraie de ce qu'elle vend ; les autres pages gardent celle
+# qu'Arslane a posée, et la question du libellé commun est portée au rapport.
+PIED_PROMESSE_ROUTING = "Your documents and the values read from them never leave your machine."
 
 # les pages de la maison, dans l'ordre où un relecteur les cherche. Ce sont des NOMS de pages,
 # pas des actions (le motif 8 de garde-voix vise les liens d'action) ; « Pricing » n'y est pas :
@@ -497,9 +502,10 @@ def pied_html(outil=None, sceau=None, tests=None, courante=None, prefixe=None):
         f'<span aria-hidden="true">&#8594;</span></a>')
     forte = f"{tests} tests" if tests else "measured, then frozen"
     faible = f"content hash {sceau}" if sceau else ""
+    promesse = PIED_PROMESSE_ROUTING if (outil and outil["id"] == "routing" and courante is None and prefixe == outil["prefixe_racine"]) else PIED_PROMESSE
     return (f'<footer class="pied"><div class="colonne">\n'
             f'  <div class="pied-h">\n'
-            f'    <div class="pied-g"><p class="pied-p">{PIED_PROMESSE}</p>{preuve}</div>\n'
+            f'    <div class="pied-g"><p class="pied-p">{promesse}</p>{preuve}</div>\n'
             f'    <p class="pied-meta"><b>{forte}</b>{faible}</p>\n'
             f'  </div>\n'
             f'  <nav class="pied-liens" aria-label="Pages">{rang}</nav>\n'

@@ -12,10 +12,14 @@ la campagne et la licence de LICENCE-COMMERCIALE.md (décisions des 25 et
 plafond de renouvellement au plus bas de CPI-U et 5 %%). Aucun palier
 intermédiaire n'est documenté ; aucun n'est affiché.
 """
+import json
 import pathlib
 
 BASE = pathlib.Path(__file__).parent
 from outil import SCEAU_ROUTING, OUTILS, pied_html, CSS_PIED_SITE
+# 04/10 (audit Routing) : la page des tarifs ne montrait pas les offres que la page Routing vend ; elles se lisent
+# dans offre-routing.json (la grille choisie par Arslane le 29/09), jamais tapées ici
+OFFRE_ROUTING = json.loads((BASE / "offre-routing.json").read_text())
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 # la barre du site (10/09) : les cinq instruments dans l'ordre du rideau, lus dans OUTILS, jamais tapés
 NAV = "".join(f'\n    <a href="{o["page_hero"]}">{o["nom"]}</a>' for o in OUTILS.values())
@@ -92,6 +96,25 @@ CSS = '''
   .cta .fl{transition:transform .2s var(--montee)}
   .cta:hover .fl{transform:translateX(4px)}
   .c-fin{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:color-mix(in srgb,var(--sur-pale) 70%,transparent);margin-top:14px;line-height:1.7;min-height:3.4em}
+
+  /* 04/10 : the extraction cost audit (Routing), four cells under the three columns, same ground, smaller type */
+  .ex{padding:26px 0 0}
+  .ex-sur{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--sur-pale)}
+  .ex-t{font-size:clamp(24px,2.4vw,32px);font-weight:600;letter-spacing:-.01em;line-height:1.15;margin-top:10px}
+  .ex-l{font-size:17px;color:var(--sur-pale);line-height:1.6;margin-top:8px;max-width:none}
+  .ex-l a{color:var(--sur);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--vert-clair) 50%,transparent)}
+  .ex-grille{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:30px;align-items:stretch}
+  .ex-c{display:flex;flex-direction:column;padding:24px 24px 22px;border-radius:16px;background:var(--noir-c);border:1px solid var(--filet)}
+  .ex-c.haute{border-color:color-mix(in srgb,var(--vert-vif) 45%,var(--filet))}
+  .ex-eti{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--sur-pale)}
+  .ex-prix{font-weight:600;font-size:clamp(30px,3vw,42px);letter-spacing:-.02em;line-height:1.05;margin:12px 0 10px;font-variant-numeric:lining-nums tabular-nums}
+  .ex-prix small{font-size:.38em;font-weight:400;color:var(--sur-pale);letter-spacing:0;white-space:nowrap}
+  .ex-c.haute .ex-prix{color:var(--vert-clair)}
+  .ex-q{font-size:14px;color:var(--sur-pale);line-height:1.55}
+  .ex-fin{font-size:15px;line-height:1.65;color:var(--sur-pale);max-width:none;margin:26px 0 0;text-wrap:pretty}
+  .ex-fin b{color:var(--sur);font-weight:600}
+  @media (max-width:1080px){.ex-grille{grid-template-columns:1fr 1fr}}
+  @media (max-width:640px){.ex-grille{grid-template-columns:1fr}}
 
   /* the days : three lanes to scale, the papers on their lane at their date, one line reads the day */
   .jours{padding:80px 0 30px}
@@ -339,6 +362,19 @@ PAGE = f'''<!doctype html><html lang="en">
   </div>
 </div></section>
 
+<section class="ex" aria-label="The extraction cost audit, by the tier"><div class="colonne">
+  <p class="ex-sur">Routing &#183; the extraction cost audit</p>
+  <h2 class="ex-t">One document type, measured on your own pages, at a fixed price.</h2>
+  <p class="ex-l">You already pay a document extractor. The audit grades it and its challengers on a labeled sample of your pages, on your machine, and names for each field the cheapest source that stays within the margin you declare. <a href="HERO.html#report">See how it runs on 100 real receipts</a>.</p>
+  <div class="ex-grille">
+    <div class="ex-c"><p class="ex-eti">Free test</p><p class="ex-prix">$0<small> &#183; {OFFRE_ROUTING["essai"]["pages"]} pages</small></p><p class="ex-q">One document type, up to {OFFRE_ROUTING["essai"]["extracteurs"]} extractors. You run it, you email us the record, you get a one-page PDF back. This result is not sealed.</p></div>
+    <div class="ex-c"><p class="ex-eti">Snapshot</p><p class="ex-prix">${OFFRE_ROUTING["snapshot"]["prix_usd"]:,}<small> &#183; up to {OFFRE_ROUTING["snapshot"]["pages"]:,} pages</small></p><p class="ex-q">One document type, up to {OFFRE_ROUTING["snapshot"]["champs"]} fields and {OFFRE_ROUTING["snapshot"]["extracteurs"]} extractors. The PDF and the sealed record, back within {OFFRE_ROUTING["snapshot"]["delai_heures"]} hours.</p></div>
+    <div class="ex-c haute"><p class="ex-eti">Audit</p><p class="ex-prix">${OFFRE_ROUTING["audit"]["prix_usd"]:,}<small> &#183; up to {OFFRE_ROUTING["audit"]["pages"]:,} pages</small></p><p class="ex-q">Up to {OFFRE_ROUTING["audit"]["types_document"]} document types, {OFFRE_ROUTING["audit"]["champs"]} fields and {OFFRE_ROUTING["audit"]["extracteurs"]} extractors. The PDF and the sealed record, back within {OFFRE_ROUTING["audit"]["delai_heures"]} hours.</p></div>
+    <div class="ex-c"><p class="ex-eti">Quarterly audit</p><p class="ex-prix">${OFFRE_ROUTING["audit_trimestriel"]["prix_usd_an"]:,}<small> a year</small></p><p class="ex-q">The Audit measured again {OFFRE_ROUTING["audit_trimestriel"]["remesures_par_an"]} times a year, each report saying what moved since the last. Stop at any time.</p></div>
+  </div>
+  <p class="ex-fin">Each engagement is contracted and invoiced by <b>HS Industries LLC</b>, under an engagement letter written before signature. Vendor fees for the pages you run through cloud extractors are billed to you by those vendors, on your own keys. Sealed means the record carries a content hash, which shows an edit made after sealing; a content hash is not a signature.</p>
+</div></section>
+
 <section class="jours" aria-label="The days"><div class="colonne">
   <p class="jours-t">From trial to license.</p>
   <p class="jours-l">You decide during the thirty days. If you sign, the license year starts that day, and the balance falls due sixty days later.</p>
@@ -400,5 +436,7 @@ PAGE = f'''<!doctype html><html lang="en">
 '''
 
 assert "—" not in PAGE, "un cadratin s'est glissé dans la page"
+for _attendu in (f"${OFFRE_ROUTING['snapshot']['prix_usd']:,}", f"${OFFRE_ROUTING['audit']['prix_usd']:,}", f"${OFFRE_ROUTING['audit_trimestriel']['prix_usd_an']:,}", "HS Industries LLC"):
+    assert _attendu in PAGE, f"la page des tarifs n'affiche pas « {_attendu} » : refusé"
 (BASE / "ENGAGEMENT.html").write_text(PAGE, encoding="utf-8")
 print(f"ENGAGEMENT.html {len(PAGE) / 1e3:.0f} ko")

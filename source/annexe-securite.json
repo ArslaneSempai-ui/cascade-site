@@ -1,8 +1,8 @@
 {
   "_": "Contenu de la page Security and data handling. Chaque affirmation a été retrouvée dans ~/Documents/cascade par la passe de vérification du 31 août 2026 (chemins:lignes dans le rapport d'agent). Les trois phrases interdites par cette passe : « ~308 Mo de modèles », « les modèles ne sont jamais téléchargés », « l'outil n'écrit rien hors de son dossier de travail ».",
   "titre": "What runs on your machine, and what reaches the network.",
-  "lede": "This page lists each place the tool touches, on your machine and on the network: the one network call it makes, the two places it writes, the packages it ships, and what an audit cannot promise. When a claim comes from the source code, this page gives the file and line where you can check it.",
-  "description": "Each place the tool touches, on disk and on the network: one network call, two places it writes, the packages it ships, and what an audit cannot promise.",
+  "lede": "This page lists each place the tool touches, on your machine and on the network: the one network call it makes, the three places it writes, the packages it ships, and what an audit cannot promise. When a claim comes from the source code, this page gives the file and line where you can check it.",
+  "description": "Each place the tool touches, on disk and on the network: one network call, three places it writes, the packages it ships, and what an audit cannot promise.",
   "sections": [
     {
       "h2": "One kind of network call, and a guard at each of the four places in the code that make it",
@@ -55,14 +55,14 @@
             "n": "prints your Node version, to compare with the minimum above"
           }
         ],
-        "refs": "package.json:56 &#183; src/tiers.ts:295"
+        "refs": "package.json:57 &#183; src/tiers.ts:295"
       }
     },
     {
-      "h2": "The files it reads, and the two places it writes",
+      "h2": "The files it reads, and the three places it writes",
       "html": [
         "<p>The tool reads only the files you name by flag. <b>It never scans a disk.</b></p>",
-        "<p>It writes to exactly two places. The first is its own records, under its repository root, in a folder that git ignores, so nothing measured on your data can travel into a public repository. The second is <b>one report deposited beside the file you pointed it at</b>, named after that file. Only one record is versioned, the egress observation, the record of the open connections the tool sampled while it ran. In that record your file paths are <b>replaced by a placeholder before it is written</b>, and a journal header records no machine name and no user name.</p>"
+        "<p>It writes to three places. The first is its own records, under its repository root, in a folder that git ignores, so nothing measured on your data can travel into a public repository. The second is <b>one report deposited beside the file you pointed it at</b>, named after that file, with its sealed record. The third is one local marker, the date of the tool's first use, in <code>~/.cascade/premiere-utilisation.json</code>: one labeled date, which the thirty-day clause reads and which is never transmitted. Only one record is versioned, the egress observation, the record of the open connections the tool sampled while it ran. In that record your file paths are <b>replaced by a placeholder before it is written</b>, and a journal header records no machine name and no user name.</p>"
       ]
     },
     {
@@ -98,7 +98,7 @@
       "html": [
         "<p>The tool <b>watches itself run</b>. It samples open connections during a measurement and publishes what it saw. That record states its own limit. Sampling can catch a connection that was open. <b>It cannot prove that none was.</b> The guarantee on this page is the guarded code path and the test that checks it. The observation does not carry that guarantee.</p>",
         "<p>A content hash cannot promise <b>permanence</b> either. A public record that carries its content hash proves what was measured on that day's cases and nothing beyond them. <code>recertify</code> measures again on fresh records, flags drift in the input, says for each field whether the result holds or moved, and re&#8209;computes the report's content hash. It runs on the validity period you declare, every ninety days by default.</p>",
-        "<p>The figures on this page are checked the same way as the rest of this site. The sentence <b>801 tests across 90 files</b> is generated from the sources and re&#8209;checked on each test run, so a stale figure cannot pass unnoticed.</p>"
+        "<p>The figures on this page are checked the same way as the rest of this site. The sentence <b>814 tests across 92 files</b> is generated from the sources and re&#8209;checked on each test run, so a stale figure cannot pass unnoticed.</p>"
       ],
       "verif": {
         "t": "Measure the drift",

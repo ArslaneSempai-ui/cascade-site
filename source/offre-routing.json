@@ -1,11 +1,34 @@
 {
   "quoi": "the extraction cost audit (Routing single service): the buyer measures their current document extractor and the candidates on a labelled sample of their own documents, on their own machine, and receives a sealed report of the cheapest routing that is not measurably worse, per field, with the saving at their volume",
   "decide": "prices chosen by Arslane on 2026-09-29, the grid proposed in the market note of the same day (cascade-portes/prix-marche-routing.md)",
-  "essai": {"pages": 100, "types_document": 1, "extracteurs": 3, "scelle": false},
-  "snapshot": {"pages": 1000, "types_document": 1, "champs": 10, "extracteurs": 4, "delai_heures": 48, "prix_usd": 490},
-  "audit": {"pages": 10000, "types_document": 3, "champs": 30, "extracteurs": 10, "delai_heures": 72, "prix_usd": 1900},
-  "audit_trimestriel": {"remesures_par_an": 4, "prix_usd_an": 4900},
+  "essai": {
+    "pages": 100,
+    "types_document": 1,
+    "extracteurs": 3,
+    "scelle": false,
+    "livrable": "a one-page PDF by email, from the record you send; this one is not sealed"
+  },
+  "snapshot": {
+    "pages": 1000,
+    "types_document": 1,
+    "champs": 10,
+    "extracteurs": 4,
+    "delai_heures": 48,
+    "prix_usd": 490
+  },
+  "audit": {
+    "pages": 10000,
+    "types_document": 3,
+    "champs": 30,
+    "extracteurs": 10,
+    "delai_heures": 72,
+    "prix_usd": 1900
+  },
+  "audit_trimestriel": {
+    "remesures_par_an": 4,
+    "prix_usd_an": 4900
+  },
   "contact": "contact@cascade-routing.com",
-  "donnees": "The measurement runs on your machine and offline. Only an aggregate sealed record comes to us: no document, no extracted value. Testing a cloud extractor sends pages to that vendor under your own account, as it does today; the local tiers keep every page on your machine.",
+  "donnees": "The measurement runs on your machine and offline. One sealed record comes to us: counts, a right, wrong or blank verdict per case and field, your file's name and its hash, and the prices and volume you declared. No document, no value read from one. Testing a cloud extractor sends pages to that vendor under your own account, as it does today; the local tiers keep each page on your machine.",
   "frais_fournisseurs": "Vendor fees for the pages you run through cloud extractors are billed to you by those vendors, on your own keys."
 }

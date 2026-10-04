@@ -99,31 +99,31 @@ SCENES = [
     dict(num="01", titre="94.4% per field, 76.7% per file",
          phrase="The same published routing reads 94.4% accuracy averaged per field and 76.7% as the per-file rate, 92 of 120 files, 17.7 points apart.",
          a="94.4<small>%</small>", b="76.7<small>%</small>", cote="17.7 points apart"),
-    dict(num="02", titre="Never worse on any file, at 3.5&#215; lower cost",
-         phrase="File-aimed routing cuts the cost 3.5&#215; and loses no file in the sample: 3 gained, none lost.",
-         a="$191", b="$54", cote="3.5&#215; lower cost"),
+    dict(num="02", titre="File-aimed routing: 3 files gained, none lost, of 120 files",
+         phrase="Aiming at the file gains 3 files and loses none of the 120 files: too few to separate the two rates. The cost falls 3.5&#215; only if the large model is billed at an assumed price per call.",
+         a="$191", b="$54", cote="on an assumed price"),
     dict(num="03", titre="Abstention: 85 wrong values removed, 12 correct values withheld",
-         phrase="Knowing when not to answer more than doubles accuracy.",
+         phrase="On 30 documents chosen for being hard, abstaining removes 85 values that were wrong and withholds 12 values that were right. Of the values still returned, 62.3% are right, against 30% before.",
          a="30<small>%</small>", b="62.3<small>%</small>", cote="after abstention"),
     dict(num="04", titre="Identical counts across two passes, and unstable durations withheld",
          phrase="Two passes produce identical counts. Durations vary, so they&#8217;re withheld.",
          a="identical", b="16&#8211;60<small>%</small>", cote="withheld"),
-    dict(num="05", titre="Every possible routing tested",
-         phrase="Every possible routing tested, with a report you can inspect line by line. Nothing left to sampling.",
+    dict(num="05", titre="All 16,807 routings computed, none sampled",
+         phrase="The solver computes all 16,807 routings and prints the winner; the record carries the count. None is sampled.",
          a="16,807", b="120<small>&nbsp;files</small>", cote="the full span"),
 ]
 
 LEGS = [
     ("mean accuracy over the five fields",
      "files with all five fields correct (92 of 120)"),
-    ("Published routing, per 100,000 documents.",
-     "File-aimed routing, per 100,000 documents."),
-    ("Accuracy when every value is returned, right or wrong.",
-     "Accuracy when the tool abstains instead of guessing."),
-    ("Every count matches exactly across both runs.",
-     "Duration variance across runs: too unstable to report."),
-    ("Every routing tested, end to end.",
-     f"Held out and frozen, producing {N_TESTS} tests on your machine."),
+    ("Published routing, per 100,000 documents, with the large model at an assumed $1.60 per 1,000 calls.",
+     "File-aimed routing, same volume and assumption. Priced at machine time, it is the dearer of the two."),
+    ("Accuracy when each value is returned, right or wrong, on the 30 documents of the hard corpus.",
+     "Accuracy of the values still returned after abstention; 97 of 150 values go to review."),
+    ("Token counts match exactly across both runs.",
+     "Durations moved between 16% and 60% from one run to the next, so they are withheld; a cost built on a duration carries that spread."),
+    ("All 16,807 routings computed, end to end.",
+     "The 120 records held out for scoring them, frozen with a content hash."),
 ]
 
 # ── les annotations du plateau : géométrie vérifiée sur les rendus ───────────
@@ -137,7 +137,7 @@ APPELS = [
         (0.780, 0.250, 0.343, 0.052, "human tier: 85% assumed, not sampled"),
     ],
     [
-        (0.440, 0.530, 0.500, 0.220, "file-aimed routing: 3.5&#215; lower cost"),
+        (0.440, 0.530, 0.500, 0.220, "file-aimed routing: cheaper only on an assumed price"),
         (0.270, 0.550, 0.108, 0.260, "published routing: the pick it replaces"),
         (0.720, 0.280, 0.696, 0.052, "a tier both routings share"),
     ],
@@ -764,6 +764,18 @@ CSS = '''
   .rapport .r-inclus li::before{content:"";position:absolute;left:3px;top:.42em;width:11px;height:6px;
     border-left:1.5px solid var(--vert-vif);border-bottom:1.5px solid var(--vert-vif);transform:rotate(-45deg)}
   .rapport .r-inclus b{color:var(--sur-vert);font-weight:600}
+  /* 04/10 : the receipts-first entry and the five steps of the free test ; paragraphs run the full column width */
+  .rapport .r-recus{margin-top:64px;padding:30px 34px;border-radius:18px;border:1px solid color-mix(in srgb,var(--sur-vert) 12%,transparent);background:color-mix(in srgb,var(--nuit-c) 72%,transparent)}
+  .rapport .r-recus p{margin:0 0 14px;font-size:15.5px;line-height:1.6;color:var(--sur-vert-pale);max-width:none}
+  .rapport .r-recus p:last-child{margin-bottom:0}
+  .rapport .r-recus .marque-h{margin-bottom:14px}
+  .rapport .r-cmd{display:block;margin:0 0 16px;padding:14px 18px;border-radius:10px;background:var(--nuit-b);border:1px solid color-mix(in srgb,var(--vert-vif) 40%,transparent);
+    font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--sur-vert);white-space:pre-wrap;overflow-wrap:anywhere}
+  .rapport .r-cmd b{color:var(--vert-vif);font-weight:400}
+  .rapport .r-essai{margin-top:64px}
+  .rapport .r-essai .r-pas{margin-top:20px}
+  .rapport .r-essai .r-pas li{max-width:none}
+  .rapport .r-essai code{font-family:var(--mono);font-size:12.5px;color:var(--sur-vert);background:color-mix(in srgb,var(--nuit-b) 80%,transparent);padding:1px 6px;border-radius:5px;overflow-wrap:anywhere}
   .rapport .r-col.hors{opacity:.4}
   .rapport .r-au-dela{margin:20px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--vert-clair)}
   .rapport .r-taille{margin-top:28px;padding:30px 38px 30px;border-radius:18px;
@@ -1191,7 +1203,7 @@ FILMS = {"routing":    ("https://youtu.be/SXxViU7rhU8", "1:19", "1 minute 19"),
          "screening-demo": ("https://youtu.be/mTlpC9yXnXo", "1:26", "1 minute 26"),   # 30/09 : publiée, durée affichée par YouTube
          # 04/10 : la DÉMO Routing (le prix, l'arbre des reçus, le routage par champ, le rapport), 30,13 s, validée
          # « la vidéo est parfaite » ; film vertical 4:5 joué dans le lecteur 16:9, bandes noires ; pas encore sur YouTube
-         "routing-demo": (None, "0:31", "31 seconds")}
+         "routing-demo": (None, "0:30", "30 seconds")}
 # 04/10 : les outils qui ont une démo en plus de leur film : (le titre de la carte du film, le titre de la carte de la démo)
 DEMOS = {"screening": ("The five Screening findings", "The file, the screening, the report, the record"),
          "routing":   ("The five Routing findings", "The price, the receipts, the routing, the report")}
@@ -1477,15 +1489,42 @@ def _section_rapport_routing():
     releve = f"{DEPOT_URL}/blob/main/examples/cord-receipts/cord-labels-grouped-measured.json"
     exemple = f"{DEPOT_URL}/tree/main/examples/cord-receipts"
     sujet = "Extraction%20cost%20audit%2C%20free%20trial"
+    # 04/10 (audit Routing) : l'entrée « reçus d'abord » et les cinq pas de l'essai gratuit. Chaque chiffre
+    # vient du relevé scellé CORD (rec) ou de l'offre (off) ; aucun n'est tapé ici.
+    srcs = rec["audit"]["fields"]["total"]["sources"]
+    pc = lambda n: f"{srcs[n]['accuracy'] * 100:.1f}%"
+    courant, meilleur = rec["audit"]["cost"]["current"]["chain"], pick[0]
+    ecart_pts = f"{abs(srcs[meilleur]['accuracy'] - srcs[courant]['accuracy']) * 100:.1f}"
+    insep_total = [x for x in rec["audit"]["inseparable"] if x["field"] == "total" and {x["source"], x["against"]} == {courant, meilleur}]
+    cmd_grade = (f"npm run grade -- --cases=examples/cord-receipts/cord-labels-grouped.csv --name={courant} "
+                 f"--values=examples/cord-receipts/cord-google-values.json --price-per-thousand-documents=100 --out=/tmp/{courant}.json")
+    recus = f"""<div class="r-recus">
+    <p class="marque-h">Start with receipts</p>
+    <p>The public run grades two vendors and our local tiers on {ex["cas"]} real receipts. Grade one vendor's outputs against the labels yourself, with nothing downloaded:</p>
+    <code class="r-cmd"><b>$ </b>git clone {DEPOT_URL}
+<b>$ </b>cd cascade-routing &amp;&amp; npm ci --ignore-scripts
+<b>$ </b>{cmd_grade}</code>
+    <p>On those receipts, {meilleur} reads {pc(meilleur)} of totals right and {courant} {pc(courant)}. Our two encoder tiers read {pc("small")} and {pc("large")}; the local tier that competes, gen-4b, reads {pc("gen-4b")}, and it needs Ollama. The local tiers read a text that our macOS OCR produced from the images, so their rates include that OCR's errors.</p>
+  </div>"""
+    essai = f"""<div class="r-essai">
+    <p class="marque-h">How the free test goes</p>
+    <ol class="r-pas">
+      <li><span><b>Label {es["pages"]} pages</b> of one document type in a CSV: an id, the text, then one column per field with the value it should read. Write a dash where a document has no such line. Up to {es["extracteurs"]} extractors.</span></li>
+      <li><span><b>Grade each extractor</b> you use or want to compare: <code>npm run grade -- --cases=your.csv --name=&lt;vendor&gt; --values=&lt;its outputs&gt; --price-per-thousand-pages=&lt;your price&gt;</code>. The file it writes holds verdicts, no value.</span></li>
+      <li><span><b>Measure, with the margin you accept</b>: <code>npm run measure:yours -- --cases=your.csv --sorties=&lt;each file from step 2&gt; --current=&lt;the one you run today&gt; --margin=2 --pages-per-year=&lt;your volume&gt;</code>. Add <code>--no-encoders</code> to compare vendors only, with no download.</span></li>
+      <li><span><b>Email <code>your-measured.json</code></b> to {off["contact"]}. It holds counts, a right, wrong or blank verdict per case and field, your file's name and its hash, and the prices you declared: no document, no value. It is the one file you may attach.</span></li>
+      <li><span><b>You get a one-page PDF back</b> by email, from that record. This one is not sealed; the Snapshot and the Audit are. On our {ex["cas"]}-receipt sample, two vendors {ecart_pts} points apart on totals could not be told apart{(" (" + str(insep_total[0]["discordant"]) + " disagreements, p = " + f"{insep_total[0]['p']:.2f}" + ")") if insep_total else ""}: {es["pages"]} pages separate vendors far apart, and the paid tiers size the sample for close ones.</span></li>
+    </ol>
+  </div>"""
     html = f"""<section class="rapport" id="report"><div class="colonne">
   <div class="r-grille">
   <div class="r-texte">
     <p class="marque-h">The extraction cost audit</p>
     <h2 class="h2">Find the cheapest extractor for each field of your documents, measured on your own pages.</h2>
     <ol class="r-pas">
-      <li><span><b>You label</b> a sample of your own documents: for each field, the value it should read.</span></li>
-      <li><span><b>You run the audit</b> on your machine. Your current extractor, the ones you want to compare, and our local models read the same pages.</span></li>
-      <li><span><b>You receive</b> a sealed report: for each field, the cheapest source that is not measurably worse, and the saving at your volume.</span></li>
+      <li><span><b>You label</b> a sample of your own documents: for each field, the value it should read, or a dash when the document has no such line.</span></li>
+      <li><span><b>You run the audit</b> on your machine. Your current extractor, the ones you want to compare, and our local models read the same pages. The local models read them as text: the text your current vendor already returns, or an OCR you run.</span></li>
+      <li><span><b>You receive</b> a sealed report: for each field, the cheapest source that stays within the margin you declare of the best, and the saving at your volume. Sealed means the record carries a content hash, so an edit made after sealing shows. A content hash is not a signature.</span></li>
     </ol>
   </div>
   <figure class="r-feuille">
@@ -1494,6 +1533,7 @@ def _section_rapport_routing():
     <figcaption>sample report &#183; {ex["cas"]} real receipts &#183; sealed {ex["mesure"]} &#183; record {ex["sceau"]}</figcaption>
   </figure>
   </div>
+  {recus}
   <div class="r-offre">
     <div class="r-cols trois">
       <article class="r-col" data-col="snapshot">
@@ -1508,7 +1548,7 @@ def _section_rapport_routing():
         <p class="r-eti">Audit</p>
         <p class="r-montant"><span class="r-n">{usd(au["prix_usd"])}</span><small>up to {au["pages"]:,} pages</small></p>
         <p class="r-sous">Up to {au["types_document"]} document types, sealed, back within {au["delai_heures"]} hours.</p>
-        <ul class="r-inclus"><li>Up to {au["champs"]} fields and {au["extracteurs"]} extractors</li><li>A sample large enough to separate close sources</li><li>The report as a PDF and a sealed record</li></ul>
+        <ul class="r-inclus"><li>Up to {au["champs"]} fields and {au["extracteurs"]} extractors</li><li>A sample sized to separate sources a few points apart, when they are</li><li>The report as a PDF and a sealed record</li></ul>
       </article>
       <article class="r-col" data-col="trimestriel">
         <img class="r-robot" src="../rendus/robot-vert-tient.webp" width="926" height="963" alt="" loading="lazy" decoding="async">
@@ -1523,7 +1563,8 @@ def _section_rapport_routing():
   <div class="ouvrir-ligne"><a class="ouvrir" href="mailto:{off["contact"]}?subject={sujet}"><span><span class="ouvrir-t">Try it free on {es["pages"]} of your pages</span>
     <span class="ouvrir-s">One document type and up to {es["extracteurs"]} extractors. Write to {off["contact"]}.</span></span>
     <span class="fl" aria-hidden="true">&#8594;</span></a></div>
-  <p class="liens"><a class="lien-e" href="{pdf}" download>Download the sample report <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{exemple}">See the {ex["cas"]} receipts and every output <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{releve}">Open the sealed record <span aria-hidden="true">&#8594;</span></a></p>
+  {essai}
+  <p class="liens"><a class="lien-e" href="{pdf}" download>Download the sample report <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{exemple}">See the labels, the OCR text and the vendor outputs <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{releve}">Open the sealed record <span aria-hidden="true">&#8594;</span></a></p>
 </div></section>
 <script>
 (() => {{
@@ -1573,8 +1614,9 @@ PAGE = f'''<!doctype html><html lang="en">
     On our test set, three of the five fields are read by a text pattern alone, at no cost.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
+    <code class="ln">cd cascade-routing</code>
     <code class="ln">node src/premiere-reponse.mjs</code>
-    <span class="note">The conclusion, generated from our public test sets in under one second. Before npm install.</span>
+    <span class="note">The conclusion, read from our public test set's summary files in under one second. Before npm install.</span>
   </div>
   <div class="cue" aria-hidden="true"><span>scroll</span><span class="fil"></span></div>
 </section>
@@ -1711,7 +1753,7 @@ def batir_accueil():
     # routing (SCENES, vérifiées contre l'outil par l'assembleur), le compte du socle et le sceau
     acc_champ = re.sub(r"<[^>]+>", "", SCENES[0]["a"])
     acc_fichier = re.sub(r"<[^>]+>", "", SCENES[0]["b"])
-    moins_cher = SCENES[1]["cote"]
+    moins_cher = re.sub(r"<[^>]+>", "", SCENES[1]["b"])   # 04/10 : le chiffre, avec son hypothèse dans le dt ; la cote dit l'hypothèse
     description = ("Cascade: five instruments, one method. Each tier measured on our public test set, "
                    "the best trade-off read with its interval, rerun on your machine.")
     page = f'''<!doctype html><html lang="en">
@@ -1749,7 +1791,7 @@ def batir_accueil():
         <div><dt><i class="pt" aria-hidden="true"></i>routing, mean accuracy per field</dt><dd>{acc_champ}</dd></div>
         <div><dt>accuracy per file</dt><dd>{acc_fichier}</dd></div>
         <div><dt>records in our public test set</dt><dd>{N_SOCLE:,}</dd></div>
-        <div><dt>at equal accuracy</dt><dd>{moins_cher}</dd></div>
+        <div><dt>file-aimed routing per 100,000 documents, on an assumed price</dt><dd>{moins_cher}</dd></div>
         <div><dt>content hash</dt><dd>{SCEAU_ROUTING}</dd></div>
         <div class="cmd"><dt>rerun on your own files</dt><dd class="c1">node src/premiere-reponse.mjs</dd>
           <small class="c2">git clone {OUTILS["routing"]["depot"]}</small></div>
