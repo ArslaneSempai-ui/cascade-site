@@ -1622,7 +1622,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <section class="hero">
   <h1 class="h1 entree">See which engine each field of your documents actually needs.</h1>
   <p class="lede entree">A model tier is the size of model a field is sent to, from a plain text pattern up to the largest.<br>
-    On our test set, three of the five fields are read by a text pattern alone, at no cost.</p>
+    On our identity-record test set, three of the five fields are read by a text pattern alone, at no cost.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
     <code class="ln">cd cascade-routing</code>

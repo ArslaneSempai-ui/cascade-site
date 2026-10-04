@@ -21,7 +21,7 @@ d = json.loads(RECORD.read_text()); a = d["audit"]
 # exists under source/ and under docs/), signed with the private key through the house signer (never printed), re-read
 # by cascade's public verifier, and only then rendered to PDF; the signed page ships beside the PDF.
 subprocess.run([sys.executable, str(RENDU), str(RECORD), str(tmp), "--data", DATA, "--declared-by", "Cascade, for this sample",
-                "--fontes", "../fontes"], check=True, capture_output=True)
+                "--fontes", "../fontes", "--client", f"Sample: {json.loads(RECORD.read_text())['source']['cases']} receipts of the CORD v2 test split"], check=True, capture_output=True)
 SIGNE = BASE / "rapports" / "routing-sample-report.html"
 subprocess.run(["node", str(MAISON / "cascade-portes" / "outils" / "signer-rapport.mjs"), str(tmp), str(SIGNE)], check=True)
 VERIF = subprocess.run(["node", str(MAISON / "cascade" / "src" / "verifier-rapport.mjs"), str(SIGNE)], capture_output=True, text=True)

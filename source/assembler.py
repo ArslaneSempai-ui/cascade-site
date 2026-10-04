@@ -746,7 +746,17 @@ _v = subprocess.run(["node", str(pathlib.Path.home() / "Documents" / "cascade" /
                     capture_output=True, text=True)
 if _v.returncode != 0 or "Signature valid" not in _v.stdout:
     sys.exit(f"la page signée SERVIE ne vérifie pas :\n{_v.stdout}{_v.stderr}")
-print("  " + _v.stdout.strip().splitlines()[0].strip() + " (routing-sample-report.html, servie)")
+# 04/10 (le chef) : une page signée dont le vérificateur imprime « ? » sur Issued / For / Corpus / Tool porte un bloc de
+# données incomplet ; elle vérifie, mais elle ne dit pas à qui ni sur quoi. Refusée, en nommant les lignes.
+def _lignes_incompletes(sortie):
+    return [l.strip() for l in sortie.splitlines()
+            if l.strip().startswith(("Issued", "For ", "Corpus", "Tool")) and "?" in l]
+_inc = _lignes_incompletes(_v.stdout)
+if _inc:
+    sys.exit("la page signée SERVIE porte un bloc de données incomplet (le vérificateur imprime « ? ») :\n  "
+             + "\n  ".join(_inc) + "\n  → compléter emisLe, client, corpus.empreinte, corpus.dossiers, outil.commit dans le rendu, re-signer")
+print("  " + _v.stdout.strip().splitlines()[0].strip() + " (routing-sample-report.html, servie ; "
+      + ", ".join(l.strip() for l in _v.stdout.splitlines() if l.strip().startswith(("Issued", "For ", "Corpus", "Tool"))) + ")")
 # les robots de toutes les couleurs partent déjà par le glob ci-dessus (le rideau
 # les montre sur toutes les pages) ; seuls les ÉTATS du plateau bleu sont conditionnels
 # le PRÉFIXE des états vit dans outil.py seul (ETATS_PREFIXE) : le 8/09, « bassins » ici
