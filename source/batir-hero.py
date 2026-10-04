@@ -70,6 +70,14 @@ _n_socle = {t["n"] for t in _tiers[:3]}
 _n_gen = {t["n"] for t in _tiers if t["id"].startswith("gen-")}
 assert len(_n_socle) == 1 and len(_n_gen) == 1, "les n des paliers ne sont plus homogènes"
 N_SOCLE, N_GEN = _n_socle.pop(), _n_gen.pop()
+# 04/10 (audit Routing) : la longueur des dossiers du corpus, lue dans la réserve de landing.json, jamais tapée ;
+# la page doit dire que le corpus est écrit par nous et que l'invite des paliers génératifs a été réglée sur la
+# moitié tenue à l'écart (README, bloc fuite : « optimistic by an unknown amount »)
+_m_long = re.search(r"(\d+) caractères", " ".join(LANDING.get("caveats", [])))
+assert _m_long, "la longueur moyenne des dossiers n'est plus dans les réserves de landing.json"
+LONGUEUR_DOSSIER = int(_m_long.group(1))
+CAVEAT_CORPUS = (f"The records are a corpus we wrote, about {LONGUEUR_DOSSIER} characters each; the generative tiers' prompt "
+                 "was tuned on the held-out half, so their figures are optimistic by an amount not yet measured.")
 
 
 def table_html():
@@ -89,7 +97,7 @@ def table_html():
       <caption class="sr">Accuracy of each tier on each field, measured on held-out records</caption>
       <thead><tr><th scope="col">field</th>{tetes}</tr></thead><tbody>{lignes}</tbody></table></div>
       <p class="t-note">Measured on {N_SOCLE:,} held-out records for the rules, small and large tiers, and
-      {N_GEN} for the generative tiers. *Human accuracy is assumed at {qte(HUMAIN)}% until you measure
+      {N_GEN} for the generative tiers. {CAVEAT_CORPUS} *Human accuracy is assumed at {qte(HUMAIN)}% until you measure
       your own reviewers with <code>npm run measure:humans</code>. Green cells mark the
       published routing.</p>'''
 
@@ -1640,6 +1648,7 @@ PAGE = f'''<!doctype html><html lang="en">
                 "rendus/robot-vert-regarde.webp",
                 note=f"Measured on {N_SOCLE:,} held-out records for the rules, small and large tiers, and {N_GEN} for the generative tiers, "
                      "with a ring on the published routing of each field. "
+                     f"{CAVEAT_CORPUS} "
                      f"Human accuracy is assumed at {qte(HUMAIN)} % until you measure your own reviewers.", tarif="ENGAGEMENT.html")}
 </div></section>
 
