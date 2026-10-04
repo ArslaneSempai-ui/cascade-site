@@ -4,12 +4,13 @@
     "src/frontiere.test.ts:20": "const AUTORISES: Record<string, string> = {",
     "src/frontiere.test.ts:45": "test(\"aucun module ne touche le réseau, hors le téléchargeur de listes\", () => {",
     "src/interval.ts:102": "export const ENOUGH = 20;",
-    "src/listes.ts:100": "const JETON_UE_GENERIQUE_PUBLIC = \"dG9rZW4tMjAxNw\";",
-    "src/listes.ts:321": "function ecrireManifeste(m: Manifeste): void {",
-    "src/listes.ts:346": "throw new Error(`${source}: the file on disk does not match the manifest content hash\\n`",
-    "src/listes.ts:403": "if (veutFetch && process.env.CASCADE_OFFLINE === \"1\") {",
-    "src/matcher.ts:43": "export const SEUILS: readonly number[] = Array.from({ length: 51 }, (_, i) => Math.round((0.5 + i * 0.01) * 100) / 100);",
-    "src/matcher.ts:46": "export function exigerScore(s: number, id: string, a: string, b: string): Score {",
+    "src/listes.ts:110": "export const CELEX_833 = \"02014R0833-20260724\";",
+    "src/listes.ts:161": "source: \"EU-VESSELS\", titre: `EU designated vessels: Annex XLII of Regulation (EU) No 833/2014, consolidated text ${CELEX_833.slice(-8, -4)}-${CELEX_833.slice(-4, -2)}-${CELEX_833.slice(-2)}`,",
+    "src/listes.ts:415": "function ecrireManifeste(m: Manifeste): void {",
+    "src/listes.ts:440": "throw new Error(`${source}: the file on disk does not match the manifest content hash\\n`",
+    "src/listes.ts:508": "if (veutFetch && process.env.CASCADE_OFFLINE === \"1\") {",
+    "src/matcher.ts:52": "export const SEUILS: readonly number[] = Array.from({ length: 51 }, (_, i) => Math.round((0.5 + i * 0.01) * 100) / 100);",
+    "src/matcher.ts:55": "export function exigerScore(s: number, id: string, a: string, b: string): Score {",
     "src/measure.ts:106": "rappel: cellule(rate(matchs.filter((s) => s.score >= seuil).length, matchs.length)),",
     "src/measure.ts:123": "natures: Record<string, number>;",
     "src/measure.ts:127": "| { provenance: \"synthetic\"; nMatch: number; nDifferent: number; tables: Record<string, TableDUnPalier> }",
@@ -19,6 +20,6 @@
     "src/optimise.ts:183": "console.error(`\\n${m.source.matches} confirmed match(es) in the record: too few confirmed matches to\\n`",
     "src/your-alerts.ts:162": "+ `  spans most of the scale, and a report full of \"too few to quote\" would waste\\n`",
     "src/your-alerts.ts:24": "* comptes, des taux, des intervalles et des verdicts par `alert_id` : jamais un nom filtré,",
-    "src/your-alerts.ts:396": "<file>-measured.md     the report (five sections, no names)"
+    "src/your-alerts.ts:412": "<file>-measured.md     the report (five sections, no names)"
   }
 }

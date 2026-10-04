@@ -24,6 +24,7 @@ CE QUE CETTE PAGE REFUSE
     colonne statique, tout se lit.
 """
 import html as html_mod
+import hashlib
 import json
 import pathlib
 import re
@@ -2206,28 +2207,49 @@ def _section_entites(o):
     if f.get("sceau") != R["empreinte"]:
         sys.exit(f"findings-entites.json cite le scellé {f.get('sceau')} mais releve-entites.json porte "
                  f"{R['empreinte']} : les textes ont dérivé du relevé, section à resceller")
-    vr = R["verdictRealiste"]["fort"]
+    # LE RÉSULTAT DE TÊTE EST LE VERDICT SUR DE VRAIS NOMS (registre GLEIF), pas le jeu écrit par un agent : ses comptes se
+    # lisent dans la sortie du verdict, telle que l'outil l'a écrite, à l'empreinte que findings-entites.json cite ; une
+    # sortie qui a bougé, ou une ligne qui ne se relit pas, refuse la page.
+    g = f["gleif"]
+    brut = (o["outil_chemin"] / g["fichier"]).read_bytes()
+    if hashlib.sha256(brut).hexdigest() != g["sha256"]:
+        sys.exit(f"findings-entites.json cite {g['fichier']} à l'empreinte {g['sha256'][:12]}… mais le fichier de l'outil en porte une autre : section à relire")
+    def ligne_du_verdict(etiquette):
+        m = re.search(r"^\s*" + re.escape(etiquette) + r"\s+strong\s+(\d+)/(\d+)\s+[\d.]+ % \[([\d.]+)-([\d.]+) %\]\s+possible\s+(\d+)/(\d+)\s+[\d.]+ % \[([\d.]+)-([\d.]+) %\]\s*$",
+                      brut.decode("utf-8"), re.M)
+        if not m:
+            sys.exit(f"{g['fichier']} n'a pas de ligne « {etiquette} » lisible : refusé")
+        fn, fs, fb, fh, pn, ps, pb, ph = m.groups()
+        if fs != ps:
+            sys.exit(f"{g['fichier']}, ligne « {etiquette} » : deux dénominateurs")
+        return int(fn), int(pn), int(fs), (fb, fh), (pb, ph)
+    vf, vp, sur_v, iv_f, iv_p = ligne_du_verdict("same-name")
+    ff, fp, sur_f, if_f, if_p = ligne_du_verdict("TOTAL different")
+    ia = R["verdictRealiste"]["fort"]  # le jeu écrit par un agent, plus bas dans la note
     livre = R["livres"][1]
-    if not livre.get("aveugle"):
-        sys.exit("la section des entités cite un livre qui n'est pas aveugle : refusé")
-    trouves, sur_v = vr["trouves"]["n"], vr["trouves"]["sur"]
-    fausses, sur_f = vr["fausses"]["n"], vr["fausses"]["sur"]
     forts, possibles, lignes = livre["forts"], livre["possibles"], livre["lignes"]
     sans = livre["sansCorrespondance"]
     if forts + possibles + sans != lignes:
-        sys.exit("le livre aveugle ne se recompte pas : forts + possibles + sans candidat != lignes")
-    taux = round(100 * trouves / sur_v)
+        sys.exit("le livre ne se recompte pas : forts + possibles + sans candidat != lignes")
+    pct = lambda n, d: f"{100 * n / d:.0f}"
     def grille(n, classe):
         return '<div class="grille" aria-hidden="true">' + "".join(f'<i class="{classe(k)}"></i>' for k in range(n)) + "</div>"
     pops = [
-        (f["populations"][0].format(sur=sur_v), f"{taux}<small>%</small>", grille(sur_v, lambda k: "v" if k < trouves else ""),
-         f'<span><i class="v"></i>{trouves} found</span><span><i></i>{sur_v - trouves} left at the possible level or below</span>'),
-        (f["populations"][1].format(sur=sur_f), f"{fausses}", grille(sur_f, lambda k: "f" if k < fausses else ""),
-         f'<span><i></i>{sur_f - fausses} with no strong alert</span>'),
-        (f["populations"][2].format(lignes=lignes), f"{forts + possibles}<small>/{lignes}</small>",
+        (f["populations"][0].format(sur=sur_v), f"{pct(vf, sur_v)}<small>%</small>",
+         grille(sur_v, lambda k: "f" if k < vf else ("p" if k < vp else "")),
+         f'<span><i class="f"></i>{vf} found at the strong level, {pct(vf, sur_v)} % [{iv_f[0]}-{iv_f[1]}]</span>'
+         f'<span><i class="v"></i>{vp - vf} more at the possible level, {vp} in all, {pct(vp, sur_v)} % [{iv_p[0]}-{iv_p[1]}]</span>'
+         f'<span><i></i>{sur_v - vp} missed at both levels</span>'),
+        (f["populations"][1].format(sur=f"{sur_f:,}"), f"{ff}",
+         grille(sur_f, lambda k: "f" if k < ff else ("p" if k < fp else "")),
+         f'<span><i class="f"></i>{ff} of {sur_f:,} raised a strong alert [{if_f[0]}-{if_f[1]} %]</span>'
+         f'<span><i class="v"></i>{fp} raised a possible alert [{if_p[0]}-{if_p[1]} %]</span>'),
+        (f["populations"][2].format(lignes=f"{lignes:,}"), f"{forts + possibles}<small>/{lignes}</small>",
          grille(lignes, lambda k: "f" if k < forts else ("p" if k < forts + possibles else "")),
          f'<span><i class="f"></i>{forts} strong</span><span><i class="v"></i>{possibles} possible</span><span><i></i>{sans} with no candidate</span>'),
     ]
+    note = f["note"].format(date_gleif=g["date"], manques=sur_v - vp, sur=sur_v, tiers=pct(sur_v - vp, sur_v),
+                            ia_trouves=ia["trouves"]["n"], ia_sur=ia["trouves"]["sur"], ia_fausses=ia["fausses"]["n"], ia_sur_f=ia["fausses"]["sur"])
     blocs = "".join(f'''<div class="pop">
     <div class="tete"><p>{texte}</p><span class="chiffre">{chiffre}</span></div>{g}<p class="cle">{cle}<span class="compteur" aria-live="polite"></span></p></div>'''
                     for texte, chiffre, g, cle in pops)
@@ -2236,8 +2258,8 @@ def _section_entites(o):
   <p class="marque-h">Company and vessel names</p>
   <h2 class="h2">{f["titre"]}</h2>
   <div class="pops">{blocs}</div>
-  <p class="note">{f["note"]}</p>
-  <p class="liens"><a class="lien-e" href="{depot}/blob/main/verification/VERDICTS.md">Read the eleven blind verdicts <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{depot}/blob/main/releve-entites.json">Open the sealed record <span aria-hidden="true">&#8594;</span></a></p>
+  <p class="note">{note}</p>
+  <p class="liens"><a class="lien-e" href="{depot}/blob/main/verification/GLEIF.md">Read the four verdicts on real names <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{depot}/blob/main/releve-entites.json">Open the sealed record <span aria-hidden="true">&#8594;</span></a></p>
   <span class="sceau-l">measured {R["date"]} at commit {R["commit"]} &#183; sealed and signed &#183; content hash {R["empreinte"]}</span>
 </div></section>
 <script>
@@ -2260,7 +2282,9 @@ for (const pop of document.querySelectorAll('.entites .pop')) {{
   <span class="filet"></span>
 </div></div>'''
     assert "\u2014" not in html, "un cadratin s'est glissé dans la section des entités"
-    for attendu in (f"{taux}<small>%</small>", f">{fausses}<", f"{forts + possibles}<small>/{lignes}</small>", f"{trouves} found", f"{sans} with no candidate"):
+    for attendu in (f"{pct(vf, sur_v)}<small>%</small>", f">{ff}<", f"{forts + possibles}<small>/{lignes}</small>", f"{vf} found at the strong level",
+                    f"{vp} in all", f"{sur_v - vp} missed at both levels", f"{fp} raised a possible alert", f"{sans} with no candidate",
+                    f"{ia['trouves']['n']} of {ia['trouves']['sur']} true pairs", g["date"]):
         if attendu not in html:
             sys.exit(f"la section des entités n'affiche pas le chiffre refait « {attendu} » : refusé")
     return html
@@ -2320,7 +2344,7 @@ def _section_rapport(o):
     <h2 class="h2">Send us your list, and within {off["delai_heures"]} hours it comes back screened and sealed.</h2>
     <ol class="r-pas">
       <li><span><b>You send</b> a CSV or a spreadsheet with a column of company and vessel names, and the IMO number of a vessel when you have it.</span></li>
-      <li><span><b>We screen</b> each name against OFAC SDN, the OFAC consolidated lists, the trade.gov Consolidated Screening List, the UN list and the EU list, as downloaded that day.</span></li>
+      <li><span><b>We screen</b> each name against seven public sources: OFAC SDN, the OFAC consolidated (non-SDN) lists, the US Consolidated Screening List (its Commerce and State lists), the UN Security Council list, the EU financial sanctions list, the UK Sanctions List, and the vessels the EU designates in Annex XLII of Regulation 833/2014, each as downloaded on the date the report states.</span></li>
       <li><span><b>You receive</b> a PDF and a spreadsheet: each candidate with its list entry and the words that matched, the dates of the lists, and a seal anyone can check.</span></li>
     </ol>
   </div>
@@ -2337,7 +2361,7 @@ def _section_rapport(o):
         <p class="r-eti">One report</p>
         <p class="r-montant"><span class="r-n" data-v="{r0["prix_usd"]}">{usd(r0["prix_usd"])}</span><small>up to {r0["noms"]:,} names</small></p>
         <p class="r-sous">Your list, screened once and sealed, back within {off["delai_heures"]} hours.</p>
-        <ul class="r-inclus"><li>The report as a PDF and as a spreadsheet</li><li>Each candidate with its list entry and the words that matched</li><li>The dates of the five lists, and a seal anyone can check</li></ul>
+        <ul class="r-inclus"><li>The report as a PDF and as a spreadsheet</li><li>Each candidate with its list entry and the words that matched</li><li>The dates of the seven sources, and a seal anyone can check</li></ul>
         <p class="r-au-dela" hidden>Stops at {r0["noms"]:,} names</p>
       </article>
       <article class="r-col haute" data-col="abo">

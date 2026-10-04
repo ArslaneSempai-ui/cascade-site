@@ -75,7 +75,7 @@
             "n": "the matcher tests check the grid and the limits on the score"
           }
         ],
-        "refs": "src/matcher.ts:43 &#183; src/matcher.ts:46 &#183; src/measure.ts:106"
+        "refs": "src/matcher.ts:52 &#183; src/matcher.ts:55 &#183; src/measure.ts:106"
       }
     }
   ]

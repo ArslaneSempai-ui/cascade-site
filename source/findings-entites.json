@@ -1,11 +1,16 @@
 {
-  "_": "The section « Company and vessel names » of the Screening page, form M4F validated by Arslane on 28/09: three populations drawn mark by mark from ~/Documents/cascade-screening/releve-entites.json at seal `sceau`. The builder refuses to build if the record on disk no longer carries that seal, recomputes every count from its cell (found of 400, false alerts of 200, strong and possible of 1000) and refuses a figure the HTML does not show. The date, the commit and the seal shown come from the record itself. `populations` are the three one-line labels; {sur} and {lignes} are filled from the record. No em dash anywhere.",
-  "sceau": "68157020f83b6741",
-  "titre": "Four true names in five come back strong. <br>None of two hundred neighbors do.",
+  "_": "The section « Company and vessel names » of the Screening page, form M4F validated by Arslane on 28/09, lead finding changed on 4 October 2026: the first two populations are the fourth verdict on real company names from the GLEIF register, read line by line from the tool's own output (`gleif.fichier`, refused when its SHA-256 is not `gleif.sha256`); the third is the second thousand-name book of ~/Documents/cascade-screening/releve-entites.json at seal `sceau`. The builder refuses to build if the record on disk no longer carries that seal or the verdict file that hash, recomputes every count and refuses a figure the HTML does not show. The date, the commit and the seal shown come from the record itself. {sur}, {lignes} and the figures of the note are filled from those two sources. No em dash anywhere.",
+  "sceau": "ea01de439f1f2478",
+  "titre": "Nearly half of real spelling variants come back strong. <br>None of a thousand different companies do.",
   "populations": [
-    "{sur} true pairs written blind: each mark is one pair, lit when the strong level finds it.",
-    "{sur} realistic neighbors: distinct counterparties that share a word, a city or a surname.",
-    "{lignes} counterparties on no list, screened once: the lit marks are what your officer reads."
+    "{sur} real companies, each under two spellings of its name in the GLEIF register: each mark is one pair, lit when the tool finds it.",
+    "{sur} pairs of real, different companies that share a distinctive word: a lit mark is a false alert.",
+    "{lignes} invented counterparties on no list, screened against the seven sources: the lit marks are what your officer reads."
   ],
-  "note": "A candidate is a name for your compliance officer to read, never a match established. The realistic set was written by a separate hand and never used to choose a threshold; the book was written after the last rule change and screened once."
+  "note": "Measured once, on {date_gleif}, on names the tool had never seen. {manques} of the {sur} spelling variants, about a third ({tiers} %), are missed even at the possible level: a name written very differently can get through. A candidate is a name for your compliance officer to read, never a match established. On an easier set, written by a separate AI agent that never saw the matcher, {ia_trouves} of {ia_sur} true pairs came back strong and {ia_fausses} of {ia_sur_f} neighbors did (28 September 2026, before the tool was recalibrated on real names). The counterparty book was read to set the review budget, so its figure is not blind.",
+  "gleif": {
+    "fichier": "verification/verdict-gleif-4.txt",
+    "sha256": "a67d753f8d50b4cc9a663ee632d0ea0843f595d810daeb4ca94d35f81d05f9df",
+    "date": "4 October 2026"
+  }
 }
