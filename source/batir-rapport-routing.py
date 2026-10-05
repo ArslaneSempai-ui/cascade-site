@@ -14,13 +14,13 @@ PRIVE = MAISON / "cascade-portes" / "routing" / "cord-labels-grouped-measured.js
 RECORD = PUBLIC if PUBLIC.exists() else PRIVE
 RENDU = MAISON / "cascade-portes" / "outils" / "rapport-routing.py"
 DATA = ("The 100 real receipts of the CORD v2 test split (Clova AI, CC BY 4.0), with CORD's own labels; the split has been public "
-        "since 2022, so the vendors' models may have seen it. Both vendor prices were declared by Cascade for this sample.")
+        "since 2022, so the vendors' models may have seen it. Both vendor prices were declared by Crusetra for this sample.")
 d = json.loads(RECORD.read_text()); a = d["audit"]
 (BASE / "rapports").mkdir(exist_ok=True); tmp = BASE / "rapports" / "_page-routing.html"
 # 04/10 (Arslane) : the sample is SIGNED. The page is rendered with the site's own fonts folder (../fontes, which
 # exists under source/ and under docs/), signed with the private key through the house signer (never printed), re-read
 # by cascade's public verifier, and only then rendered to PDF; the signed page ships beside the PDF.
-subprocess.run([sys.executable, str(RENDU), str(RECORD), str(tmp), "--data", DATA, "--declared-by", "Cascade, for this sample",
+subprocess.run([sys.executable, str(RENDU), str(RECORD), str(tmp), "--data", DATA, "--declared-by", "Crusetra, for this sample",
                 "--fontes", "../fontes", "--client", f"Sample: {json.loads(RECORD.read_text())['source']['cases']} receipts of the CORD v2 test split"], check=True, capture_output=True)
 SIGNE = BASE / "rapports" / "routing-sample-report.html"
 subprocess.run(["node", str(MAISON / "cascade-portes" / "outils" / "signer-rapport.mjs"), str(tmp), str(SIGNE)], check=True)

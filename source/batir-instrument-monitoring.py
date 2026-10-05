@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """L'INSTRUMENT ROUGE EN DIRECT, sur la forme terminale du vert.
 
-Trois commandes le structurent : `cascade screen --live` (la grille palier x seuil
+Trois commandes le structurent : `crusetra monitor --live` (la grille palier x seuil
 du releve public, cliquer une cellule lit rappel et fausses alertes avec n et
 intervalle), `optimise --recall` (le curseur de rappel exige rejoue la selection
 de l'outil a la borne BASSE de Wilson sur les 51 seuils, et nomme la cellule ou
@@ -334,10 +334,10 @@ PHRASE_ABSENTS = (
     "labeled blank")
 
 PAGE = f'''<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade Monitoring &#183; live instrument</title>
+<meta charset="utf-8"><title>Crusetra Monitoring &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Cascade Monitoring: the live instrument">
+<meta property="og:title" content="Crusetra Monitoring: the live instrument">
 <meta property="og:description" content="Each scenario at each threshold on our public test set: recall against false alerts, with intervals everywhere, under the recall floor you set.">
 <meta property="og:url" content="https://cascade-routing.com/monitoring/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
@@ -366,9 +366,9 @@ PAGE = f'''<!doctype html><html lang="en">
       <div class="poste-grille">
       <div class="fen-robot">
       <div class="terminal">
-        <div class="tm-barre"><i></i><i></i><i></i><span>cascade monitoring &#183; our public test set, live</span></div>
+        <div class="tm-barre"><i></i><i></i><i></i><span>crusetra monitoring &#183; our public test set, live</span></div>
         <div class="tm-corps">
-          <p class="tm-l"><span class="ps">$</span> cascade monitor --live<span class="caret" aria-hidden="true"></span></p>
+          <p class="tm-l"><span class="ps">$</span> crusetra monitor --live<span class="caret" aria-hidden="true"></span></p>
           <div class="regls" role="group" aria-label="Which half of the record">
             <button class="regl actif" id="m-auth">written cases</button>
             <button class="regl" id="m-synth">generated cases</button>
@@ -378,7 +378,7 @@ PAGE = f'''<!doctype html><html lang="en">
           {table_html()}
           <p class="tm-sortie" id="g-lecture" data-commun="instrument">pick a cell: what it catches over what it flags incorrectly, with the number of cases and the interval</p>
 
-          <p class="tm-l"><span class="ps">$</span> cascade optimise --recall</p>
+          <p class="tm-l"><span class="ps">$</span> crusetra optimise --recall</p>
           <div class="b-ligne">
             <span class="b-val" id="b-val"></span>
             <div class="b-curseur"><input type="range" id="b-curseur" min="0.50" max="1.00" step="0.01"
@@ -386,7 +386,7 @@ PAGE = f'''<!doctype html><html lang="en">
           </div>
           <p class="tm-sortie b-lecture" id="b-lecture"></p>
 
-          <p class="tm-l" style="margin-top:14px"><span class="ps">$</span> cascade verify --sealed</p>
+          <p class="tm-l" style="margin-top:14px"><span class="ps">$</span> crusetra verify --sealed</p>
           <p class="tm-preuve" id="tm-preuve">checking&#8230;</p>
         </div>
       </div>

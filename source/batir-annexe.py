@@ -39,7 +39,7 @@ PAGES = [
         "nav": "Method and reproducibility",
         "json": "annexe-methode.json",
         "html": "ANNEXE-METHODE.html",
-        "titre_onglet": "Cascade &#183; method",
+        "titre_onglet": "Crusetra &#183; method",
         "objet": "rendus/etats/objet-methode.webp",
         "alt": "A matte aluminium balance with two pans at exactly the same "
                "height; the right pan is the site's deep green.",
@@ -48,7 +48,7 @@ PAGES = [
         "nav": "Security and data handling",
         "json": "annexe-securite.json",
         "html": "ANNEXE-SECURITE.html",
-        "titre_onglet": "Cascade &#183; security",
+        "titre_onglet": "Crusetra &#183; security",
         "objet": "rendus/etats/objet-securite.webp",
         "alt": "A matte aluminium padlock; its shackle, closed, is the same "
                "deep green as the site's accents.",
@@ -57,7 +57,7 @@ PAGES = [
         "nav": "Questions",
         "json": "annexe-questions.json",
         "html": "ANNEXE-QUESTIONS.html",
-        "titre_onglet": "Cascade &#183; questions",
+        "titre_onglet": "Crusetra &#183; questions",
         "objet": "rendus/etats/objet-questions.webp",
         "alt": "A matte aluminium key lying across the frame; its bow is a "
                "fat green ring.",
@@ -66,7 +66,7 @@ PAGES = [
         "nav": "Terms of engagement",
         "json": "annexe-terms.json",
         "html": "ANNEXE-TERMS.html",
-        "titre_onglet": "Cascade &#183; terms",
+        "titre_onglet": "Crusetra &#183; terms",
         "objet": "rendus/etats/objet-terms.webp",
         "alt": "A thick page with three lines of text, a green signature "
                "stroke, and a pen resting with its tip at the stroke's end.",
@@ -75,7 +75,7 @@ PAGES = [
         "nav": "Privacy",
         "json": "annexe-privacy.json",
         "html": "ANNEXE-PRIVACY.html",
-        "titre_onglet": "Cascade &#183; privacy",
+        "titre_onglet": "Crusetra &#183; privacy",
         "objet": "rendus/etats/objet-privacy.webp",
         "alt": "A folder ajar: cream paper showing inside, a green tab on "
                "the cover: nothing leaves it.",
@@ -84,7 +84,7 @@ PAGES = [
         "nav": "Accessibility",
         "json": "annexe-accessibilite.json",
         "html": "ANNEXE-ACCESSIBILITE.html",
-        "titre_onglet": "Cascade &#183; accessibility",
+        "titre_onglet": "Crusetra &#183; accessibility",
         "objet": "rendus/etats/objet-accessibilite.webp",
         "alt": "A summit with two slopes: a green ramp rising on the left, "
                "gray steps on the right, arriving at the same platform.",
@@ -499,13 +499,13 @@ LAPIS = OUTILS["monitoring"]
 PAGES_ROUGES = [
     {"nav": "Method and reproducibility", "json": "annexe-screening-methode.json",
      "html": "ANNEXE-SCREENING-METHODE.html", "prod": "screening/method.html",
-     "titre_onglet": "Cascade Screening &#183; method",
+     "titre_onglet": "Crusetra Screening &#183; method",
      "objet": "rendus/etats/objet-screening-methode.webp",
      "alt": "A matte aluminium balance with two pans at exactly the same height; "
             "the right pan is the tool's deep ruby."},
     {"nav": "Security and data handling", "json": "annexe-screening-securite.json",
      "html": "ANNEXE-SCREENING-SECURITE.html", "prod": "screening/security.html",
-     "titre_onglet": "Cascade Screening &#183; security",
+     "titre_onglet": "Crusetra Screening &#183; security",
      "objet": "rendus/etats/objet-screening-securite.webp",
      "alt": "A matte aluminium padlock; its shackle, closed, is the same deep ruby "
             "as the tool's accents."},
@@ -513,13 +513,13 @@ PAGES_ROUGES = [
 PAGES_LAPIS = [
     {"nav": "Method and reproducibility", "json": "annexe-monitoring-methode.json",
      "html": "ANNEXE-MONITORING-METHODE.html", "prod": "monitoring/method.html",
-     "titre_onglet": "Cascade Monitoring &#183; method",
+     "titre_onglet": "Crusetra Monitoring &#183; method",
      "objet": "rendus/etats/objet-monitoring-methode.webp",
      "alt": "A matte aluminium balance with two pans at exactly the same height; "
             "the right pan is the tool's deep lapis blue."},
     {"nav": "Security and data handling", "json": "annexe-monitoring-securite.json",
      "html": "ANNEXE-MONITORING-SECURITE.html", "prod": "monitoring/security.html",
-     "titre_onglet": "Cascade Monitoring &#183; security",
+     "titre_onglet": "Crusetra Monitoring &#183; security",
      "objet": "rendus/etats/objet-monitoring-securite.webp",
      "alt": "A matte aluminium padlock; its shackle, closed, is the same deep lapis "
             "blue as the tool's accents."},
@@ -529,13 +529,13 @@ PAGES_LAPIS = [
 PAGES_AMETHYSTE = [
     {"nav": "Method and reproducibility", "json": "annexe-scoring-methode.json",
      "html": "ANNEXE-SCORING-METHODE.html", "prod": "scoring/method.html",
-     "titre_onglet": "Cascade Scoring &#183; method",
+     "titre_onglet": "Crusetra Scoring &#183; method",
      "objet": "rendus/etats/objet-scoring-methode.webp",
      "alt": "A matte aluminium balance with two pans at exactly the same height; "
             "the right pan is the tool's deep amethyst."},
     {"nav": "Security and data handling", "json": "annexe-scoring-securite.json",
      "html": "ANNEXE-SCORING-SECURITE.html", "prod": "scoring/security.html",
-     "titre_onglet": "Cascade Scoring &#183; security",
+     "titre_onglet": "Crusetra Scoring &#183; security",
      "objet": "rendus/etats/objet-scoring-securite.webp",
      "alt": "A matte aluminium padlock; its shackle, closed, is the same deep amethyst "
             "as the tool's accents."},
@@ -545,13 +545,13 @@ PAGES_AMETHYSTE = [
 PAGES_ONYX = [
     {"nav": "Method and reproducibility", "json": "annexe-dossier-methode.json",
      "html": "ANNEXE-DOSSIER-METHODE.html", "prod": "dossier/method.html",
-     "titre_onglet": "Cascade Dossier &#183; method",
+     "titre_onglet": "Crusetra Dossier &#183; method",
      "objet": "rendus/etats/objet-dossier-methode.webp",
      "alt": "A matte aluminium balance with two pans at exactly the same height; "
             "the right pan is the tool's polished onyx."},
     {"nav": "Security and data handling", "json": "annexe-dossier-securite.json",
      "html": "ANNEXE-DOSSIER-SECURITE.html", "prod": "dossier/security.html",
-     "titre_onglet": "Cascade Dossier &#183; security",
+     "titre_onglet": "Crusetra Dossier &#183; security",
      "objet": "rendus/etats/objet-dossier-securite.webp",
      "alt": "A matte aluminium padlock; its shackle, closed, is the same polished "
             "onyx as the tool's accents."},

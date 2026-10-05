@@ -67,6 +67,8 @@
   "75": "repère d'échelle des instruments par état : spans HTML depuis le 31/08",
   "200": "repère d'échelle des instruments par état : spans HTML depuis le 31/08 ; voisins réalistes du jeu 20 (paires différentes), scellé 68157020f83b6741 (releve-entites.json, cascade-screening)",
   "618": "tests livrés avec l'outil, comptés depuis les sources : README.md:145, vérifié par la garde de dérive de assembler.py",
+  "841": "tests de Crusetra Routing, comptés depuis les sources : README.md:265 de ~/Documents/cascade, vérifié par la garde de dérive de assembler.py",
+  "453": "tests de Crusetra Screening, comptés depuis les sources : README.md:71 de ~/Documents/cascade-screening, vérifié par la garde de dérive de assembler.py",
   "298": "ligne d'empreinteDuReleve dans src/measure.ts : tenue par la garde des citations",
   "960": "ligne du gel des profils dans src/measure.ts : tenue par la garde des citations",
   "827": "ligne du recalcul 7^5 dans src/readme.ts : tenue par la garde des citations",

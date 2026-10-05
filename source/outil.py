@@ -159,7 +159,7 @@ OUTILS = {
         # l'affiche du film : la plaque 3D (etats/affiche-plaque.py) + la carte des deux
         # chiffres de la frontière lus dans le relevé (etats/affiche-composer.py)
         "affiche": "affiche-screening.jpg",
-        "affiche_alt": "The ruby Cascade robot, palms up, projecting the two rates of the "
+        "affiche_alt": "The ruby Crusetra robot, palms up, projecting the two rates of the "
                        "setting it picks: what it catches on the left, false alerts on the right.",
         "vif": "#d64a5c",
         "nuit": ("#33191f", "#241217", "#180b0f"),      # la nuit rubis de NUIT_RUBIS
@@ -187,7 +187,7 @@ OUTILS = {
         # de la fiche 03 lus dans le relevé (ici deux BORNES BASSES, champ « bas » :
         # aucune cellule ne tient le plancher, l'affiche le dit avec les deux meilleures)
         "affiche": "affiche-monitoring.jpg",
-        "affiche_alt": "The lapis Cascade robot, palms up, projecting the two highest shares "
+        "affiche_alt": "The lapis Crusetra robot, palms up, projecting the two highest shares "
                        "any single scenario is sure of catching: amount on the left, "
                        "peer on the right, both under the 0.90 floor.",
         "vif": "#4f8ae0",
@@ -211,7 +211,7 @@ OUTILS = {
         "pitch": "Risk weights come from policy, which writes them once and rarely tests them against what happened next. Scoring tests them.",
         "robot_rideau": "robot-amethyste-pese.webp",    # il pèse : sa pose à lui
         "affiche": "affiche-scoring.jpg",
-        "affiche_alt": "The amethyst Cascade robot, palms up, projecting the two shares the card "
+        "affiche_alt": "The amethyst Crusetra robot, palms up, projecting the two shares the card "
                        "names: product on the left, behaviour on the right, both under the 0.90 floor.",
         "vif": "#9b6fe0",
         "nuit": ("#241a3a", "#1a1230", "#100b1f"),
@@ -235,7 +235,7 @@ OUTILS = {
         "robot_rideau": "robot-onyx-tient.webp",        # il tient la pièce
         "affiche": "affiche-dossier.jpg",
         "affiche_encre": "#2a2a31",                    # le gris vif de l'onyx s'efface sur la plaque : l'encre projetée est plus sombre
-        "affiche_alt": "The onyx Cascade robot, palms up, projecting two counts from our public test set: "
+        "affiche_alt": "The onyx Crusetra robot, palms up, projecting two counts from our public test set: "
                        "the questions holding the fresh control on the left, those not holding it on the right.",
         "vif": "#8a8a96",
         "nuit": ("#121216", "#0c0c10", "#070709"),
@@ -703,7 +703,7 @@ def barre_site(courant=None, racine="", nuit=True):
     # déjà : la barre le répétait. Ce qui reste ici est l'empreinte, qui identifie la
     # version servie et n'a pas d'autre endroit. Sans empreinte, pas de span du tout : un
     # élément vide laisse sa gouttière et se voit.
-    return (f'<header class="barre{" sur-nuit" if nuit else ""}">\n  <a class="marque" href="{racine}ACCUEIL.html">CASCADE</a>\n'
+    return (f'<header class="barre{" sur-nuit" if nuit else ""}">\n  <a class="marque" href="{racine}ACCUEIL.html">CRUSETRA</a>\n'
             f'  <nav aria-label="Site">{nav}</nav>\n'
             + '</header>')
 

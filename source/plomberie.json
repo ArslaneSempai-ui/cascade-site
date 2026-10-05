@@ -3,7 +3,7 @@
   "pages": [
     {
       "html": "CONTACT.html",
-      "titre_onglet": "Cascade &#183; contact",
+      "titre_onglet": "Crusetra &#183; contact",
       "fno": "Contact",
       "titre": "How to reach us about a figure or an engagement.",
       "lede": "Name the figure you are questioning and where you saw it. Every number here has a source, so we start from the same one. No attachments, except the two named below.",
@@ -37,7 +37,7 @@
     },
     {
       "html": "404.html",
-      "titre_onglet": "Cascade, not in the record",
+      "titre_onglet": "Crusetra, not in the record",
       "fno": "Not found",
       "titre": "Not in the record. <span class=\"deux\">Nothing lives at this address.</span>",
       "lede": "This page was never measured, never sealed, never published: the address is wrong, or the page has moved. Everything that exists is one link away: the findings on the main screen, and the six appendices in the footer below.",
@@ -45,7 +45,7 @@
     },
     {
       "html": "MENTIONS.html",
-      "titre_onglet": "Cascade &#183; the fine print",
+      "titre_onglet": "Crusetra &#183; the fine print",
       "fno": "The fine print",
       "titre": "Publisher, licenses, hosting and privacy.",
       "lede": "This page says who publishes the site, under which licenses, where it is served from, and whether it sets cookies or tracks visitors. It follows the same rule as the rest of the site, so each figure on it has a stated source.",

@@ -2,9 +2,9 @@
 """L'INSTRUMENT ONYX EN DIRECT, sur la forme terminale de la maison.
 
 L'onyx n'a ni grille palier x seuil ni curseur de rappel : son relevé public EST
-le Dossier de la suite. Trois commandes structurent la page : `cascade dossier
+le Dossier de la suite. Trois commandes structurent la page : `crusetra dossier
 --live` (les questions de la chaîne contre les cinq contrôles du contrat, cliquer
-une cellule lit le verdict en toutes lettres), `cascade dossier --next` (par
+une cellule lit le verdict en toutes lettres), `crusetra dossier --next` (par
 question : l'état atteint, et ce que le contrôle suivant attend encore, dans les
 mots du relevé), `verify --sealed` (à l'ouverture, la page refait l'état de chaque
 question depuis ses propres verdicts par la règle sans-trou du contrat, recompte
@@ -246,7 +246,7 @@ JS = '''
   }
   cells.forEach((cel) => cel.addEventListener("click", () => lire(cel)));
 
-  /* cascade dossier --next : par question, l'etat atteint et ce que le suivant attend */
+  /* crusetra dossier --next : par question, l'etat atteint et ce que le suivant attend */
   (() => {
     const lignes = [];
     for (const [q, d] of Object.entries(D.questions)) {
@@ -297,10 +297,10 @@ JS = '''
 CV, RG = D["couverture"], D["reglages"]
 
 PAGE = f'''<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade Dossier &#183; live instrument</title>
+<meta charset="utf-8"><title>Crusetra Dossier &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Cascade Dossier: the live instrument">
+<meta property="og:title" content="Crusetra Dossier: the live instrument">
 <meta property="og:description" content="The four questions of the chain against the contract's five controls, with the states, seals and dates all read live from our public test set.">
 <meta property="og:url" content="https://cascade-routing.com/dossier/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
@@ -329,19 +329,19 @@ PAGE = f'''<!doctype html><html lang="en">
       <div class="poste-grille">
       <div class="fen-robot">
       <div class="terminal">
-        <div class="tm-barre"><i></i><i></i><i></i><span>cascade dossier &#183; our public test set, live</span></div>
+        <div class="tm-barre"><i></i><i></i><i></i><span>crusetra dossier &#183; our public test set, live</span></div>
         <div class="tm-corps">
-          <p class="tm-l"><span class="ps">$</span> cascade dossier --live<span class="caret" aria-hidden="true"></span></p>
+          <p class="tm-l"><span class="ps">$</span> crusetra dossier --live<span class="caret" aria-hidden="true"></span></p>
           <p class="tm-sortie">coverage <b>{CV["n"]} / {CV["sur"]}</b> questions with a public test set &#183;
             declared validity period <b>{RG["rythmeJours"]} days</b> &#183; as of <b>{RG["auJour"]}</b></p>
           {CARTE_ONYX_HTML}
           {table_html()}
           <p class="tm-sortie" id="g-lecture">pick a cell: the answer in the record&#8217;s own words &#183; the outlined cell of a row is the state reached with no gap</p>
 
-          <p class="tm-l"><span class="ps">$</span> cascade dossier --next</p>
+          <p class="tm-l"><span class="ps">$</span> crusetra dossier --next</p>
           <p class="tm-sortie suivant" id="g-suivant"></p>
 
-          <p class="tm-l" style="margin-top:14px"><span class="ps">$</span> cascade verify --sealed</p>
+          <p class="tm-l" style="margin-top:14px"><span class="ps">$</span> crusetra verify --sealed</p>
           <p class="tm-preuve" id="tm-preuve">checking&#8230;</p>
         </div>
       </div>
@@ -366,7 +366,7 @@ PAGE = f'''<!doctype html><html lang="en">
         rebuilds each question&#8217;s state from its own answers, in the order the contract
         sets, and publishes nothing if one line disagrees.</li>
       <li><b>The reports come from the suite&#8217;s own public test sets.</b> The reports judged here are the public
-        records of Cascade&#8217;s tools (the reader, the matcher that compares names, the scenario, the factor):
+        records of Crusetra&#8217;s tools (the reader, the matcher that compares names, the scenario, the factor):
         published, sealed, verifiable by anyone. If a question has none, it is shown as a
         labeled blank, and no column is guessed.</li>
       <li><b>The five controls are applied in a fixed order.</b> present, frozen, signed, fresh, consistent: the

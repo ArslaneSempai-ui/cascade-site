@@ -68,7 +68,7 @@
         "p": "Cut the network, run everything, then recompute the content hash.",
         "cmd": [
           {
-            "c": "CASCADE_OFFLINE=1 npm test",
+            "c": "CRUSETRA_OFFLINE=1 npm test",
             "n": "the whole suite, network cut"
           },
           {

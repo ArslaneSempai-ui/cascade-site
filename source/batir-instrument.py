@@ -311,10 +311,10 @@ JS = '''
 '''
 
 PAGE = f'''<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade &#183; live instrument</title>
+<meta charset="utf-8"><title>Crusetra &#183; live instrument</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Cascade: the live instrument">
+<meta property="og:title" content="Crusetra: the live instrument">
 <meta property="og:description" content="Compose a routing cell by cell, or let the budget decide: the same bricks the tool bills, frozen and self-checked in your browser.">
 <meta property="og:url" content="https://cascade-routing.com/instrument.html">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
@@ -343,9 +343,9 @@ PAGE = f'''<!doctype html><html lang="en">
     <div class="poste-grille">
     <div class="fen-robot">
     <div class="terminal">
-      <div class="tm-barre"><i></i><i></i><i></i><span class="tm-titre">cascade &#183; live instrument</span></div>
+      <div class="tm-barre"><i></i><i></i><i></i><span class="tm-titre">crusetra &#183; live instrument</span></div>
       <div class="tm-corps">
-        <p class="tm-l"><span class="ps">$</span> cascade compose --live<span class="caret" aria-hidden="true"></span></p>
+        <p class="tm-l"><span class="ps">$</span> crusetra compose --live<span class="caret" aria-hidden="true"></span></p>
         <p class="tm-sortie">your routing &#160;<span id="tm-rout">name:large &#183; birth:rules &#183; document:rules &#183; country:rules &#183; address:gen-4b</span><br>
           cost &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<b id="tm-cout">$191</b> /100k docs &#183; assumed prices<br>
           accuracy &#160;&#160;&#160;&#160;<b id="tm-just">94.4%</b> per-field mean &#183; no interval<br>
@@ -358,7 +358,7 @@ PAGE = f'''<!doctype html><html lang="en">
       </div>
       {table_html()}
       <div class="tm-corps">
-        <p class="tm-l"><span class="ps">$</span> cascade optimise --budget</p>
+        <p class="tm-l"><span class="ps">$</span> crusetra optimise --budget</p>
         <div class="b-ligne">
           <div class="b-curseur">
             <label class="sr" for="b-curseur">Budget, dollars per hundred thousand documents, logarithmic</label>
@@ -367,7 +367,7 @@ PAGE = f'''<!doctype html><html lang="en">
           </div>
           <p class="b-lecture" id="b-lecture">slide to read the best routing under your budget</p>
         </div>
-        <p class="tm-l" style="margin-top:14px"><span class="ps">$</span> cascade verify --sealed</p>
+        <p class="tm-l" style="margin-top:14px"><span class="ps">$</span> crusetra verify --sealed</p>
         <p class="tm-preuve" id="tm-preuve">self-check requires JavaScript. The figures above are still our frozen readings.</p>
       </div>
     </div>

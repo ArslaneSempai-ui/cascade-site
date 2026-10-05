@@ -75,7 +75,7 @@ def temoin():
     if muets:
         sys.exit(f"GARDE CASSÉE : la page fautive du témoin ne déclenche pas {sorted(muets)} (code 2)")
     saine = ('<p>The license, the organization, the color, the behavior.</p><code>npm run optimise</code>'
-             '<p class="tm-l">$ cascade optimise --recall</p><p>Where it lives src/optimise.ts:379 · LICENCES.md</p>'
+             '<p class="tm-l">$ crusetra optimise --recall</p><p>Where it lives src/optimise.ts:379 · LICENCES.md</p>'
              '<p>activity behaviour exposure</p><p>behaviour: 51.6%</p>'
              '<script type="application/json" id="donnees">{"d": "string similarity favouring the prefix"}</script>')
     if refus(saine):

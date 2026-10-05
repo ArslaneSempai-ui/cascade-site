@@ -62,18 +62,18 @@
     {
       "h2": "With the network cut, the whole tool still runs and reports the cut",
       "html": [
-        "<p>CASCADE_OFFLINE=1 cuts the network for the whole tool. Under it the suite passes and the measurement of your alert history runs. The one command that needs the network refuses, <b>naming the flag and the way out</b>. It prints no stack trace, the raw dump a crash leaves.</p>"
+        "<p>CRUSETRA_OFFLINE=1, or its former name CASCADE_OFFLINE=1, cuts the network for the whole tool. Under it the suite passes and the measurement of your alert history runs. The one command that needs the network refuses, <b>naming the flag and the way out</b>. It prints no stack trace, the raw dump a crash leaves.</p>"
       ],
       "verif": {
         "t": "Verify offline",
         "p": "Cut the network and run everything.",
         "cmd": [
           {
-            "c": "CASCADE_OFFLINE=1 npm test",
+            "c": "CRUSETRA_OFFLINE=1 npm test",
             "n": "runs the whole suite with the network cut, and it passes"
           },
           {
-            "c": "CASCADE_OFFLINE=1 npm run listes -- --fetch",
+            "c": "CRUSETRA_OFFLINE=1 npm run listes -- --fetch",
             "n": "refuses, names the flag and what to do next, writes nothing"
           }
         ],

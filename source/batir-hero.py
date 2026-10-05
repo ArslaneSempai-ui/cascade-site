@@ -1087,7 +1087,7 @@ JS = '''
       video.pause(); lecteur.classList.remove("joue"); video.removeAttribute("controls");
       video.querySelector("source").setAttribute("src", carte.dataset.src); video.setAttribute("poster", carte.dataset.poster); video.load();
       lecteur.querySelector(".duree").textContent = carte.dataset.duree;
-      const nom = "The " + carte.dataset.genre + " of Cascade " + liste.dataset.nom + ", " + carte.dataset.dite;   // 04/10 : le nom de l'outil vient de la liste (Routing a aussi sa démo)
+      const nom = "The " + carte.dataset.genre + " of Crusetra " + liste.dataset.nom + ", " + carte.dataset.dite;   // 04/10 : le nom de l'outil vient de la liste (Routing a aussi sa démo)
       video.setAttribute("aria-label", nom); lecteur.querySelector(".jouer").setAttribute("aria-label", "Play " + nom.charAt(0).toLowerCase() + nom.slice(1));
       for (const c of liste.querySelectorAll(".carte-film")) { c.classList.toggle("est-actif", c === carte); if (c === carte) c.setAttribute("aria-current", "true"); else c.removeAttribute("aria-current"); }
       // 30/09 : le lien « also on YouTube » suit le film choisi (il gardait l'adresse du premier)
@@ -1109,10 +1109,10 @@ DONNEES_STRUCTUREES = json.dumps({
     "@context": "https://schema.org",
     "@graph": [
         {"@type": "Organization", "@id": "https://cascade-routing.com/#org",
-         "name": "Cascade", "url": "https://cascade-routing.com/",
+         "name": "Crusetra", "url": "https://cascade-routing.com/",
          "logo": "https://cascade-routing.com/og.png",
          "email": "contact@cascade-routing.com"},
-        {"@type": "SoftwareApplication", "name": "Cascade Routing",
+        {"@type": "SoftwareApplication", "name": "Crusetra Routing",
          "url": "https://cascade-routing.com/routing/",
          "applicationCategory": "DeveloperApplication",
          "operatingSystem": "macOS, Linux (Node 24+)",
@@ -1196,7 +1196,7 @@ def choix_outils(outil):
                      f'<span class="p-ouvrir">Open {o["nom"]} <span aria-hidden="true">&#8594;</span></span></a>')
     n = NOMBRES.get(len(outils), str(len(outils)))
     return (f'<nav class="rideau" id="tools" aria-label="The instruments">'
-            f'\n  <span class="rideau-titre">Cascade &#183; {n} instruments, one method</span>'
+            f'\n  <span class="rideau-titre">Crusetra &#183; {n} instruments, one method</span>'
             f'{pans}\n</nav>')
 
 
@@ -1237,11 +1237,11 @@ def lecteur_html(oid, nom, prefixe, affiche=None, visuel="", genre="film"):
     <a class="ou" href="{url}" rel="noopener">also on YouTube <span aria-hidden="true">&#8594;</span></a>
   </div>""" if url else ""
     return f"""<div class="lecteur" data-film="{oid}">
-    <video{poster} preload="none" playsinline controls width="1920" height="1080" aria-label="The {genre} of Cascade {nom}, {duree_dite}">
+    <video{poster} preload="none" playsinline controls width="1920" height="1080" aria-label="The {genre} of Crusetra {nom}, {duree_dite}">
       <source src="{src}" type="video/mp4">
-      <a href="{src}">Download the {genre} of Cascade {nom} (mp4).</a>
+      <a href="{src}">Download the {genre} of Crusetra {nom} (mp4).</a>
     </video>
-    {visuel}<button class="jouer" type="button" aria-label="Play the {genre} of Cascade {nom}, {duree_dite}"><svg width="30" height="34" viewBox="0 0 30 34" fill="none" aria-hidden="true"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></button>
+    {visuel}<button class="jouer" type="button" aria-label="Play the {genre} of Crusetra {nom}, {duree_dite}"><svg width="30" height="34" viewBox="0 0 30 34" fill="none" aria-hidden="true"><path d="M2 2l26 15L2 32V2z" fill="#e4ecdf"/></svg></button>
     <span class="duree" aria-hidden="true">{duree}</span>
   </div>{note}"""
 
@@ -1271,13 +1271,13 @@ def film_html(outil):
     else:
         affiche = None
         visuel = (f'<span class="affiche" role="img" aria-label="The {outil["nom"]} robot, leaning in, beside the question the film answers">'
-                  f'<span class="af-t"><span class="af-eti">Cascade &#183; {outil["nom"]}</span><span class="af-q">{outil["question"]}</span></span>'
+                  f'<span class="af-t"><span class="af-eti">Crusetra &#183; {outil["nom"]}</span><span class="af-q">{outil["question"]}</span></span>'
                   f'<img src="{lien(outil, "rendus/" + outil["robots"][0])}" alt=""></span>\n    ')
     pr = outil["prefixe_racine"]
     liste = liste_films(outil["id"], pr, outil.get("affiche") or "affiche-film.jpg")
     return f"""
 <section class="film"><div class="colonne">
-  <h2 class="h2">Cascade, explained.</h2>
+  <h2 class="h2">Crusetra, explained.</h2>
   <p class="film-duree">{"The film, and the demo" if outil["id"] in DEMOS else "The five " + outil["nom"] + " findings"}</p>
   {lecteur_html(outil["id"], outil["nom"], outil["prefixe_racine"], affiche, visuel)}{liste}
 </div></section>
@@ -1614,10 +1614,10 @@ def _section_rapport_routing():
 _SECTION_RAPPORT_ROUTING = _section_rapport_routing()
 
 PAGE = f'''<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade &#183; Routing, the extraction cost audit</title>
+<meta charset="utf-8"><title>Crusetra &#183; Routing, the extraction cost audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Cascade: Routing, the extraction cost audit">
+<meta property="og:title" content="Crusetra: Routing, the extraction cost audit">
 <meta property="og:description" content="Which engine each field of your documents needs: measured on our public test set and on 100 real receipts, rerun on your machine. Nothing reaches us unless you send it.">
 <meta property="og:url" content="https://cascade-routing.com/routing/">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
@@ -1659,7 +1659,7 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section class="instrument" data-commun="instrument"><div class="colonne">
   <h2 class="h2">Try the Routing instrument on our public test set.</h2>
-  {affiche_html("paliers", LANDING, [], "INSTRUMENT.html", "Cascade &#183; Routing",
+  {affiche_html("paliers", LANDING, [], "INSTRUMENT.html", "Crusetra &#183; Routing",
                 "See every field, tier, accuracy and cost, live from our public test set. Set the budget and watch the tool choose.",
                 "rendus/robot-vert-regarde.webp",
                 note=f"Measured on {N_SOCLE:,} held-out records for the rules, small and large tiers, and {N_GEN} for the generative tiers, "
@@ -1675,7 +1675,7 @@ PAGE = f'''<!doctype html><html lang="en">
 </div></div>
 
 <section class="film"><div class="colonne">
-  <h2 class="h2">Cascade, proven in 79 seconds.</h2>
+  <h2 class="h2">Crusetra, proven in 79 seconds.</h2>
   <p class="film-duree">The film, and the demo</p>
   {lecteur_html("routing", "Routing", "", "affiche-film.jpg")}{liste_films("routing", "", "affiche-film.jpg")}
 </div></section>
@@ -1705,11 +1705,11 @@ def batir_accueil():
     vivants = outils_vivants()
     n = NOMBRES.get(len(vivants), str(len(vivants)))
     graphe = [{"@type": "Organization", "@id": "https://cascade-routing.com/#org",
-               "name": "Cascade", "url": "https://cascade-routing.com/",
+               "name": "Crusetra", "url": "https://cascade-routing.com/",
                "logo": "https://cascade-routing.com/og.png",
                "email": "contact@cascade-routing.com"}]
     for o in vivants:
-        graphe.append({"@type": "SoftwareApplication", "name": f"Cascade {o['nom']}",
+        graphe.append({"@type": "SoftwareApplication", "name": f"Crusetra {o['nom']}",
                        "url": f"https://cascade-routing.com/{o['sous_dossier']}",
                        "applicationCategory": "DeveloperApplication",
                        "operatingSystem": "macOS, Linux (Node 24+)",
@@ -1779,13 +1779,13 @@ def batir_accueil():
     acc_champ = re.sub(r"<[^>]+>", "", SCENES[0]["a"])
     acc_fichier = re.sub(r"<[^>]+>", "", SCENES[0]["b"])
     moins_cher = re.sub(r"<[^>]+>", "", SCENES[1]["b"])   # 04/10 : le chiffre, avec son hypothèse dans le dt ; la cote dit l'hypothèse
-    description = ("Cascade: five instruments, one method. Each tier measured on our public test set, "
+    description = ("Crusetra: five instruments, one method. Each tier measured on our public test set, "
                    "the best trade-off read with its interval, rerun on your machine.")
     page = f'''<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade &#183; measured instruments for compliance</title>
+<meta charset="utf-8"><title>Crusetra &#183; measured instruments for compliance</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Cascade: {n} instruments, one method">
+<meta property="og:title" content="Crusetra: {n} instruments, one method">
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="https://cascade-routing.com/">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
@@ -1798,7 +1798,7 @@ def batir_accueil():
 <script>document.documentElement.classList.add("js")</script>
 <style>{CSS}{CSS_ACCUEIL}{CSS_PIED_SITE}.methode{{{tokens_papier}}}</style>
 <header class="barre sur-nuit">
-  <a class="marque" href="ACCUEIL.html">CASCADE</a>
+  <a class="marque" href="ACCUEIL.html">CRUSETRA</a>
   <nav aria-label="Site">
     {chr(10).join(f'    <a href="{o["page_hero"]}">{o["nom"]}</a>' for o in vivants).lstrip()}
     <a href="ENGAGEMENT.html">Pricing</a>
@@ -1811,7 +1811,7 @@ def batir_accueil():
   <div class="hero-grille">
     <div class="hero-texte">
       <h1 class="h1 entree">Compliance decisions you can prove.</h1>
-      <p class="lede entree">Cascade turns compliance decisions into measurable evidence: tested against our public test set, reproducible on your own data, and open to inspection.</p>
+      <p class="lede entree">Crusetra turns compliance decisions into measurable evidence: tested against our public test set, reproducible on your own data, and open to inspection.</p>
       <dl class="ledger entree" aria-label="The routing instrument, in figures">
         <div><dt><i class="pt" aria-hidden="true"></i>routing, mean accuracy per field</dt><dd>{acc_champ}</dd></div>
         <div><dt>accuracy per file</dt><dd>{acc_fichier}</dd></div>
@@ -1947,22 +1947,22 @@ SPECS = {
         etats=ETATS_PREFIXE["screening"],
         alt_plateau="The sieve tower",
         palette=PALETTE_RUBIS, nuit=NUIT_RUBIS,
-        titre="Cascade Screening &#183; sanctions screening audit",
-        og_titre="Cascade Screening: which way of comparing names, and where to set the bar",
+        titre="Crusetra Screening &#183; sanctions screening audit",
+        og_titre="Crusetra Screening: which way of comparing names, and where to set the bar",
         description="A sanctions-screening audit: which way of comparing names, and where you set "
                     "the bar, measured on your own alert history.",
-        app="Cascade Screening",
+        app="Crusetra Screening",
         app_desc="A sanctions-screening audit: which way of comparing names, and where you "
                  "set the bar, measured on your own alert history. ",
         offre="Thirty-day evaluation on your own alert history, granted in the public license.",
         h1="See what your screening catches, and what it flags incorrectly.",
-        lede="A screening threshold is the score above which two names count as a match.<br>\n    Cascade Screening compares names seven ways, at every threshold, over alerts your analysts already closed.",
+        lede="A screening threshold is the score above which two names count as a match.<br>\n    Crusetra Screening compares names seven ways, at every threshold, over alerts your analysts already closed.",
         aria_commande="The measurement on your own alert history",
         commandes=["npm ci --ignore-scripts", "npm run measure:yours -- --alerts=your-alerts.csv"],
         note_commande="Your alert history, measured on your machine.",
         instrument_h2="See what each threshold costs you.",
         instrument_page="INSTRUMENT-SCREENING.html",
-        instrument_eti="Cascade &#183; Screening",
+        instrument_eti="Crusetra &#183; Screening",
         instrument_sub="Each way of comparing names, at each threshold: the real matches it catches, and the false alerts it raises. A false alert is a name flagged as a match that is not one, and each one costs an analyst the time to close it. Live from our public test set.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it does not.",
                         "ANNEXE-SCREENING-METHODE.html"),
@@ -1979,23 +1979,23 @@ SPECS = {
         etats=ETATS_PREFIXE["monitoring"],   # UNE source : outil.py (la divergence bassins/rack a failli faire attendre manques() pour toujours)
         alt_plateau="The surveillance rack",
         palette=PALETTE_LAPIS, nuit=NUIT_LAPIS,
-        titre="Cascade Monitoring &#183; transaction monitoring audit",
-        og_titre="Cascade Monitoring: which scenarios catch real cases",
+        titre="Crusetra Monitoring &#183; transaction monitoring audit",
+        og_titre="Crusetra Monitoring: which scenarios catch real cases",
         description="A transaction-monitoring audit: which scenarios catch real cases and which "
                     "only make work, measured on the cases your analysts already closed.",
-        app="Cascade Monitoring",
+        app="Crusetra Monitoring",
         app_desc="A transaction-monitoring audit: which scenarios catch real cases and which "
                  "only make work, measured on the cases your analysts already closed. ",
         offre="Thirty-day evaluation on your own dispositioned alerts, granted in the public license.",
         h1="See what your scenarios catch, and what they flag incorrectly.",
-        lede="A scenario's threshold is the score above which it raises an alert.<br>\n    Cascade Monitoring runs seven scenarios at every threshold, over the alerts your analysts already closed.",
+        lede="A scenario's threshold is the score above which it raises an alert.<br>\n    Crusetra Monitoring runs seven scenarios at every threshold, over the alerts your analysts already closed.",
         aria_commande="The measurement on your own dispositioned alerts",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --alerts=your-alerts.csv --transactions=your-transactions.csv"],
         note_commande="Your dispositioned alerts, measured on your machine.",
         instrument_h2="Read what a threshold change costs.",
         instrument_page="INSTRUMENT-MONITORING.html",
-        instrument_eti="Cascade &#183; Monitoring",
+        instrument_eti="Crusetra &#183; Monitoring",
         instrument_sub="Each scenario at each threshold: the suspicious cases it catches, and the false alerts it raises. A false alert is a case flagged that turns out to be nothing, and each one costs an analyst the time to close it. Live from our public test set.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it does not.",
                         "ANNEXE-MONITORING-METHODE.html"),
@@ -2012,23 +2012,23 @@ SPECS = {
         etats=ETATS_PREFIXE["scoring"],
         alt_plateau="The shelving of weights",
         palette=PALETTE_AMETHYSTE, nuit=NUIT_AMETHYSTE,
-        titre="Cascade Scoring &#183; customer risk rating audit",
-        og_titre="Cascade Scoring: which risk factors separate risky from quiet",
+        titre="Crusetra Scoring &#183; customer risk rating audit",
+        og_titre="Crusetra Scoring: which risk factors separate risky from quiet",
         description="A customer risk-rating audit: which risk factors separate a risky customer "
                     "from a quiet one, measured on your own periodic-review outcomes.",
-        app="Cascade Scoring",
+        app="Crusetra Scoring",
         app_desc="A customer risk-rating audit: which risk factors separate a risky customer "
                  "from a quiet one, measured on your own periodic-review outcomes. ",
         offre="Thirty-day evaluation on your own review outcomes, granted in the public license.",
         h1="See which risk factors separate a risky customer from a quiet one.",
-        lede="A factor's threshold is the score above which it pushes a customer up a rating.<br>\n    Cascade Scoring runs seven factors at every threshold, over the reviews your analysts already decided.",
+        lede="A factor's threshold is the score above which it pushes a customer up a rating.<br>\n    Crusetra Scoring runs seven factors at every threshold, over the reviews your analysts already decided.",
         aria_commande="The measurement on your own periodic-review outcomes",
         commandes=["npm ci --ignore-scripts",
                    "npm run measure:yours -- --customers=your-customers.csv --reviews=your-reviews.csv"],
         note_commande="Your review outcomes, measured on your machine.",
         instrument_h2="See what each factor and threshold gives you.",
         instrument_page="INSTRUMENT-SCORING.html",
-        instrument_eti="Cascade &#183; Scoring",
+        instrument_eti="Crusetra &#183; Scoring",
         instrument_sub="Each risk factor at each threshold: the risky customers it catches, and the quiet ones it flags. Each quiet customer flagged costs a reviewer the time of an extra review. Live from our public test set.",
         annexe_methode=("Method &amp; what is measured", "What the method measures, and what it does not.",
                         "ANNEXE-SCORING-METHODE.html"),
@@ -2045,11 +2045,11 @@ SPECS = {
         etats=ETATS_PREFIXE["dossier"],
         alt_plateau="The five checks",
         palette=PALETTE_ONYX, nuit=NUIT_ONYX,
-        titre="Cascade Dossier &#183; the assembled audit trail",
-        og_titre="Cascade Dossier: is the whole chain measured, sealed and fresh",
+        titre="Crusetra Dossier &#183; the assembled audit trail",
+        og_titre="Crusetra Dossier: is the whole chain measured, sealed and fresh",
         description="One dossier over the suite&#8217;s four sealed answers: coverage, seals, "
                     "signatures, freshness and coherence, verified on your machine. ",
-        app="Cascade Dossier",
+        app="Crusetra Dossier",
         app_desc="One dossier over the suite&#8217;s four sealed answers: coverage, "
                  "seals, signatures, freshness and coherence, verified on your "
                  "machine.",
@@ -2062,7 +2062,7 @@ SPECS = {
         note_commande="Your signed reports, read on your machine.",
         instrument_h2="Read the whole chain in one table.",
         instrument_page="INSTRUMENT-DOSSIER.html",
-        instrument_eti="Cascade &#183; Dossier",
+        instrument_eti="Crusetra &#183; Dossier",
         instrument_sub="The four questions against the five controls, with their states, signatures and dates, live from our public test set.",
         annexe_methode=("Method &amp; what is verified", "What the five controls hold, and what a gap means.",
                         "ANNEXE-DOSSIER-METHODE.html"),
@@ -2548,7 +2548,7 @@ def batir_outil_catalogue(o, spec):
         "@context": "https://schema.org",
         "@graph": [
             {"@type": "Organization", "@id": "https://cascade-routing.com/#org",
-             "name": "Cascade", "url": "https://cascade-routing.com/",
+             "name": "Crusetra", "url": "https://cascade-routing.com/",
              "logo": "https://cascade-routing.com/og.png",
              "email": "contact@cascade-routing.com"},
             {"@type": "SoftwareApplication", "name": spec["app"],

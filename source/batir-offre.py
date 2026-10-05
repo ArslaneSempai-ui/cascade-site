@@ -285,10 +285,10 @@ JS = r'''<script>
 '''
 
 PAGE = f'''<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade &#183; pricing</title>
+<meta charset="utf-8"><title>Crusetra &#183; pricing</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Cascade: what an engagement buys">
+<meta property="og:title" content="Crusetra: what an engagement buys">
 <meta property="og:description" content="Evaluate free for thirty days on your own records. Then one sealed measurement campaign at a fixed price, or the annual license for the suite.">
 <meta property="og:url" content="https://cascade-routing.com/engagement.html">
 <meta property="og:image" content="https://cascade-routing.com/og.png">
@@ -301,7 +301,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <style>{CSS}{CSS_PIED_SITE}</style>
 <div class="grille" aria-hidden="true"></div><div class="lumiere" aria-hidden="true"></div>
 <header class="barre">
-  <a class="marque" href="ACCUEIL.html">CASCADE</a>
+  <a class="marque" href="ACCUEIL.html">CRUSETRA</a>
   <nav aria-label="Site">{NAV}
     <a href="ENGAGEMENT.html" aria-current="page">Pricing</a>
     <a href="CONTACT.html">Contact</a>
@@ -434,7 +434,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <dialog class="carte-contact" id="contact" aria-labelledby="contact-titre"><div class="cc-plaque" tabindex="-1" autofocus>
   <div class="cc-lueur"></div><div class="cc-grain"></div>
   <div class="cc-corps">
-    <p class="cc-sur">Cascade &#183; Contact</p>
+    <p class="cc-sur">Crusetra &#183; Contact</p>
     <h2 class="cc-titre" id="contact-titre">Get in touch.</h2>
     <div class="cc-mail-ligne"><a class="cc-mail" href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a><button type="button" class="cc-copie" data-copie="contact@cascade-routing.com">copy</button></div>
     <ul class="cc-liste">

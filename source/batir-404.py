@@ -48,7 +48,7 @@ CSS = '''
 '''
 
 PAGE = f'''<!doctype html><html lang="en">
-<meta charset="utf-8"><title>Cascade &#183; nothing measured here</title>
+<meta charset="utf-8"><title>Crusetra &#183; nothing measured here</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
 <meta name="description" content="This address was never measured, never sealed, never published.">
@@ -60,7 +60,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <div class="scene">
   <div class="case" aria-hidden="true"></div>
   <img src="rendus/robot-agrippe.webp"
-    alt="The Cascade robot in front of the blank record card, arms out, with nothing to present">
+    alt="The Crusetra robot in front of the blank record card, arms out, with nothing to present">
 </div>
 <h1>No measurement lives at this address.</h1>
 <p>The address is wrong, or the page has moved.</p>

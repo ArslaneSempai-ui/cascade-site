@@ -234,7 +234,7 @@ def entete_prod(t, neuf):
             mesures = (f'<meta property="og:image:width" content="{d[0]}">\n'
                        f'<meta property="og:image:height" content="{d[1]}">\n')
     t = t.replace('<meta name="twitter:card" content="summary_large_image">',
-                  '<meta property="og:site_name" content="Cascade">\n'
+                  '<meta property="og:site_name" content="Crusetra">\n'
                   '<meta property="og:locale" content="en_US">\n'
                   + mesures
                   + '<meta name="twitter:card" content="summary_large_image">', 1)
@@ -244,7 +244,7 @@ def entete_prod(t, neuf):
 # ── le fil d'Ariane des pages imbriquées ─────────────────────────────────────
 #
 # Vingt-deux des vingt-huit pages vivent sous un outil (screening/method.html), et un résultat
-# de recherche les affichait comme une adresse nue. Un BreadcrumbList dit la place : Cascade
+# de recherche les affichait comme une adresse nue. Un BreadcrumbList dit la place : Crusetra
 # puis l'outil puis la page, et le moteur l'affiche à la place de l'URL.
 #
 # Les noms ne sont PAS retapés : le nom de l'outil se lit dans outils.json, le nom de la page
@@ -261,7 +261,7 @@ def _fil_ariane(page, adresse):
     nom = _NOM_OUTIL.get(dossier)
     if not nom:
         return None
-    elements = [{"@type": "ListItem", "position": 1, "name": "Cascade", "item": BASE_URL},
+    elements = [{"@type": "ListItem", "position": 1, "name": "Crusetra", "item": BASE_URL},
                 {"@type": "ListItem", "position": 2, "name": nom, "item": f"{BASE_URL}{dossier}/"}]
     if not page.endswith("/index.html"):
         feuille = {"method.html": "Method", "security.html": "Security",

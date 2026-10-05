@@ -1,6 +1,6 @@
 # cascade-site
 
-The marketing site for Cascade (routing audit, KYC extraction).
+The marketing site for Crusetra (routing audit, KYC extraction).
 
 - `docs/` — the built site, production names, ready for any static host.
   `index.html` is the single-screen hero; `method/security/questions/terms/

@@ -186,10 +186,10 @@ def table_rase():
     c.sample_clamp_indirect = 8.0
     c.caustics_reflective = False
     c.caustics_refractive = False
-    # le périphérique : METAL sur le Mac (défaut) ; CASCADE_GPU=OPTIX ou CUDA sur une machine louée (9/09)
+    # le périphérique : METAL sur le Mac (défaut) ; CRUSETRA_GPU=OPTIX ou CUDA sur une machine louée (9/09 ; CASCADE_GPU, l'ancien nom, reste lu)
     try:
         prefs = bpy.context.preferences.addons["cycles"].preferences
-        prefs.compute_device_type = os.environ.get("CASCADE_GPU", "METAL")
+        prefs.compute_device_type = os.environ.get("CRUSETRA_GPU") or os.environ.get("CASCADE_GPU") or "METAL"
         prefs.get_devices()
         for d in prefs.devices:
             d.use = (d.type != "CPU")

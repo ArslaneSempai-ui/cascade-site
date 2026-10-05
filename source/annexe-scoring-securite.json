@@ -52,7 +52,7 @@
         "p": "Cut the network, run everything, then recompute the content hash (the fingerprint of its bytes) of our public test set.",
         "cmd": [
           {
-            "c": "CASCADE_OFFLINE=1 npm test",
+            "c": "CRUSETRA_OFFLINE=1 npm test",
             "n": "the whole suite with the network cut"
           },
           {
