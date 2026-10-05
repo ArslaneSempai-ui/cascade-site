@@ -823,7 +823,9 @@ FILM_MAX = 25 * 1024 * 1024
 (DOCS / "films").mkdir()
 # 29/09 : la démo Screening est un film de plus sur la page Screening, mêmes gardes (poids, moov)
 # 04/10 : la démo Routing aussi (Routing est toujours émis)
-for _oid in sorted(_outils_emis | {"routing"}) + ["routing-demo"] + (["screening-demo"] if "screening" in _outils_emis else []):
+# 05/10 (Arslane : « retire-le ») : la démo Screening dit « five sanctions lists » et « measured blind » ; elle n'est plus
+# servie, même par lien direct, jusqu'à ce que le chef la refasse. source/films/screening-demo.mp4 reste, rien n'est effacé.
+for _oid in sorted(_outils_emis | {"routing"}) + ["routing-demo"]:
     film = MAQ / "films" / f"{_oid}.mp4"
     if not film.exists():
         sys.exit(f"source/films/{_oid}.mp4 absent : la page de {_oid} aurait un lecteur sans film")
