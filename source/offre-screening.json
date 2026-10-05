@@ -3,13 +3,26 @@
   "decide": "prices chosen by Arslane on 2026-09-29 (grid B), against the market note of the same day",
   "delai_heures": 48,
   "essai_noms": 10,
-  "rapport": {"noms": 500, "prix_usd": 99},
+  "rapport": {
+    "noms": 500,
+    "prix_usd": 99
+  },
   "recriblage": [
-    {"noms": 500, "prix_usd_mois": 79},
-    {"noms": 5000, "prix_usd_mois": 199},
-    {"noms": 50000, "prix_usd_mois": 499}
+    {
+      "noms": 500,
+      "prix_usd_mois": 79
+    },
+    {
+      "noms": 5000,
+      "prix_usd_mois": 199
+    },
+    {
+      "noms": 50000,
+      "prix_usd_mois": 499
+    }
   ],
   "annuel": "two months free",
   "contact": "contact@cascade-routing.com",
-  "conservation": "Your file is deleted once the report is sent. A subscriber's list is kept for the weekly re-screen and deleted when the subscription stops."
+  "conservation": "Once the report is sent, your file and the mails that carried it go to the trash and are permanently deleted within 30 days. A weekly re-screen subscriber's list is kept for the re-screen and goes the same way when the subscription stops.",
+  "decide_conservation": "Arslane, 2026-10-05: the purge moves the file and the mails to the trashes, which empty themselves after 30 days"
 }

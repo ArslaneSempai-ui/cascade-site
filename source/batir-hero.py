@@ -238,7 +238,7 @@ MENUS = [
     ("securite", "Security &amp; data handling", "Each place the tool touches.", "ANNEXE-SECURITE.html"),
     ("questions", "Questions", "Eight objections a bank's reviewers actually raise.", "ANNEXE-QUESTIONS.html"),
     ("terms", "Terms of engagement", "What the grant allows, for how long, and what a client buys.", "ANNEXE-TERMS.html"),
-    ("privacy", "Privacy", "No data is collected. Written down, and verifiable.", "ANNEXE-PRIVACY.html"),
+    ("privacy", "Privacy", "The tool collects no data. What you send us for a report, and how long it is kept.", "ANNEXE-PRIVACY.html"),
     ("accessibilite", "Accessibility", "Usable by keyboard, by screen reader, and with motion turned off.", "ANNEXE-ACCESSIBILITE.html"),
 ]
 
@@ -1214,8 +1214,10 @@ FILMS = {"routing":    ("https://youtu.be/SXxViU7rhU8", "1:19", "1 minute 19"),
          # « la vidéo est parfaite » ; film vertical 4:5 joué dans le lecteur 16:9, bandes noires ; pas encore sur YouTube
          "routing-demo": (None, "0:30", "30 seconds")}
 # 04/10 : les outils qui ont une démo en plus de leur film : (le titre de la carte du film, le titre de la carte de la démo)
-DEMOS = {"screening": ("The five Screening findings", "The file, the screening, the report, the record"),
-         "routing":   ("The five Routing findings", "The price, the receipts, the routing, the report")}
+# 05/10 (parcours client) : la démo Screening (85 s) dit « five sanctions lists », « OFAC, BIS, UN and EU » et « measured
+# blind … 332 of 400 » : sa carte quitte la page jusqu'à ce que le chef la refasse. Le fichier source/films/screening-demo.mp4
+# et l'entrée FILMS restent (rien n'est effacé) ; sans entrée ici, la page n'a ni carte ni texte qui y mène.
+DEMOS = {"routing":   ("The five Routing findings", "The price, the receipts, the routing, the report")}
 
 
 def lecteur_html(oid, nom, prefixe, affiche=None, visuel="", genre="film"):
@@ -1518,14 +1520,24 @@ def _section_rapport_routing():
 <b>$ </b>{cmd_grade}</code>
     <p>On those receipts, {meilleur} reads {pc(meilleur)} of totals right and {courant} {pc(courant)}. Our two encoder tiers read {pc("small")} and {pc("large")}; the local tier that competes, gen-4b, reads {pc("gen-4b")}, and it needs Ollama. The local tiers read a text that our macOS OCR produced from the images, so their rates include that OCR's errors.</p>
   </div>"""
+    # 05/10 (parcours client) : les cinq pas disent ce que la commande fait vraiment : l'en-tête avec les types de champ (sans
+    # type la comparaison est le texte exact, et l'outil refuse une colonne qui ressemble à des montants ou des dates sans
+    # --exact), le fichier -with-text.csv que les outils de texte écrivent, tessdata -- --prime une fois (tailles lues dans le
+    # manifeste du dépôt, src/tessdata.ts, jamais tapées), la voie des exports bruts, Node 24, la liste à virgules, et « not
+    # signed » (le relevé porte une empreinte de contenu ; c'est la page du rapport qui n'est pas signée).
+    _tess = (pathlib.Path.home() / "Documents" / "cascade" / "src" / "tessdata.ts").read_text()
+    _octets = [int(x.replace("_", "")) for x in re.findall(r"octets:\s*([\d_]+)", _tess)]
+    if len(_octets) < 2:
+        sys.exit("src/tessdata.ts du dépôt cascade ne porte plus les tailles des deux fichiers de langue : le pas 1 ne peut pas les citer")
+    tess_mb = f"{sum(_octets) / 1e6:.1f}"
     essai = f"""<div class="r-essai">
     <p class="marque-h">How the free test goes</p>
     <ol class="r-pas">
-      <li><span><b>Label {es["pages"]} pages</b> of one document type in a CSV: an id, the text, then one column per field with the value it should read. Write a dash where a document has no such line. For the text, take what your vendor already returns (<code>npm run text-from-exports</code>) or read your images with <code>npm run text-from-images -- --ocr=tesseract</code>, on Linux, macOS or Windows, offline. Up to {es["extracteurs"]} extractors.</span></li>
-      <li><span><b>Grade each extractor</b> you use or want to compare: <code>npm run grade -- --cases=your.csv --name=&lt;vendor&gt; --values=&lt;its outputs&gt; --price-per-thousand-pages=&lt;your price&gt;</code>. The file it writes holds verdicts, no value.</span></li>
-      <li><span><b>Measure, with the margin you accept</b>: <code>npm run measure:yours -- --cases=your.csv --sorties=&lt;each file from step 2&gt; --current=&lt;the one you run today&gt; --margin=2 --pages-per-year=&lt;your volume&gt;</code>. Add <code>--no-encoders</code> to compare vendors only, with no download.</span></li>
-      <li><span><b>Email <code>your-measured.json</code></b> to {off["contact"]}. It holds counts, a right, wrong or blank verdict per case and field, your file's name and its hash, and the prices you declared: no document, no value. It is the one file you may attach.</span></li>
-      <li><span><b>You get a one-page PDF back</b> by email within {es["delai_heures"]} hours, from that record. This one is not sealed, and the free test stays an internal evaluation; the Snapshot and the Audit are sealed, and include the right to act on the recommendation in your own operations. On our {ex["cas"]}-receipt sample, two vendors {ecart_pts} points apart on totals could not be told apart{(" (" + str(insep_total[0]["discordant"]) + " disagreements, p = " + f"{insep_total[0]['p']:.2f}" + ")") if insep_total else ""}: {es["pages"]} pages separate vendors far apart, and the paid tiers size the sample for close ones.</span></li>
+      <li><span><b>Label {es["pages"]} pages</b> of one document type in a CSV: an id, the text, then one column per field, each named with its type, as in <code>id,text,total:amount,date:date,vendor:free-text</code>. Without a type the comparison is exact text, so "$1,234.50" and "1234.50" count as different; the tool refuses such a column unless you pass <code>--exact</code>. Write a dash where a document has no such line, and leave the cell empty when you do not know the value. For the text, take what your vendor already returns, <code>npm run text-from-exports -- --cases=your.csv --vendor=&lt;textract|documentai|azure&gt; --exports=&lt;folder&gt;</code>, or read your images offline: once, <code>npm run tessdata -- --prime</code> ({tess_mb} MB of language files), then <code>npm run text-from-images -- --cases=your.csv --images=&lt;folder&gt; --ocr=tesseract --lang=eng</code>. Either one writes <code>your-with-text.csv</code>: use that file in steps 2 and 3. Node 24 or newer. Up to {es["extracteurs"]} extractors.</span></li>
+      <li><span><b>Grade each extractor</b> you use or want to compare. We call no vendor: you run each one on your pages, then grade its outputs here. From a JSON of values, <code>{{ "&lt;id&gt;": {{ "&lt;field&gt;": "&lt;value&gt;" }} }}</code>: <code>npm run grade -- --cases=your-with-text.csv --name=&lt;vendor&gt; --values=&lt;its outputs&gt; --price-per-thousand-pages=&lt;your price&gt; --out=&lt;vendor&gt;.json</code>. From raw Textract, Document AI or Azure exports: <code>--vendor=&lt;textract|documentai|azure&gt; --exports=&lt;folder&gt; --mapping=mapping.json</code> in place of <code>--values</code>. The file it writes holds verdicts, no value.</span></li>
+      <li><span><b>Measure, with the margin you accept</b>: <code>npm run measure:yours -- --cases=your-with-text.csv --sorties=&lt;vendor&gt;.json,&lt;vendor&gt;.json --current=&lt;the one you run today&gt; --margin=2 --pages-per-year=&lt;your volume&gt;</code>, one <code>--sorties</code> per file or a comma list. Add <code>--no-encoders</code> to compare vendors only, with no download; without it, our local models download once.</span></li>
+      <li><span><b>Email the record</b>, the file ending in <code>-measured.json</code> beside your CSV, to {off["contact"]}. It holds counts, a right, wrong or blank verdict per case and field, your file's name and its hash, and the prices you declared: no document, no value. It is the one file you may attach; a price under a vendor contract can be replaced with a list price before you send it.</span></li>
+      <li><span><b>You get a one-page PDF back</b> by email within {es["delai_heures"]} hours, from that record. The record carries a content hash; this report is not signed, and the free test stays an internal evaluation under the thirty-day grant. The Snapshot and the Audit come back signed, and include the right to act on the recommendation in your own operations. On our {ex["cas"]}-receipt sample, two vendors {ecart_pts} points apart on totals could not be told apart{(" (" + str(insep_total[0]["discordant"]) + " disagreements, p = " + f"{insep_total[0]['p']:.2f}" + ")") if insep_total else ""}: {es["pages"]} pages separate vendors far apart, and the paid tiers size the sample for close ones.</span></li>
     </ol>
   </div>"""
     html = f"""<section class="rapport" id="report"><div class="colonne">
@@ -1959,8 +1971,8 @@ SPECS = {
         icone_prefixe="objet-screening",
         table_ligne="matcher",
         table_ligne_nom="way of comparing names",
-        table_caption="What each way of comparing names catches, over false alerts, at each threshold, on the pairs we wrote",
-        table_note_unites='Measured on {nMatch} matching pairs and {nDifferent} near-matches\n      we wrote',
+        table_caption="What each way of comparing names catches, over false alerts, at each threshold, on the pairs an AI agent wrote for us",
+        table_note_unites='Measured on {nMatch} matching pairs and {nDifferent} near-matches\n      an AI agent wrote for us',
     ),
     "monitoring": dict(
         lot="L5-textes",
@@ -2307,7 +2319,18 @@ def _section_rapport(o):
                  "relancer batir-rapport-exemple.py")
     if (ex["forts"], ex["possibles"], ex["sans"]) != (rec["totaux"]["forts"], rec["totaux"]["possibles"], rec["totaux"]["sansCorrespondance"]):
         sys.exit("le rapport exemple ne se recompte pas sur son relevé : refusé")
-    for f in ("rapports/screening-sample-report.pdf", "rendus/rapport-exemple.webp", "rendus/robot-rubis-curieux.webp", "rendus/robot-rubis-penche.webp"):
+    # 05/10 (parcours client) : le PDF servi est le RENDU D'UNE PASSE FRAÎCHE du même fichier au matcher courant (le relevé
+    # commité n'est ni rescellé ni re-signé). La fiche nomme les deux scellés, et le relevé rendu est servi à côté du PDF
+    # pour que le scellé nommé se vérifie. Même fichier (SHA-256) et mêmes comptes, sinon la fiche décrirait deux rapports.
+    rendu = ex.get("rendu")
+    if not rendu:
+        sys.exit("le rapport exemple n'a pas de passe fraîche (clé « rendu ») : relancer batir-rapport-exemple.py --record <passe>.screening.json")
+    frais = json.loads((BASE / "rapports" / "screening-sample-report.screening.json").read_text())
+    if frais["empreinte"] != rendu["empreinte"] or frais["fichier"]["sha256"] != rec["fichier"]["sha256"]:
+        sys.exit("le relevé rendu à côté du PDF n'est pas celui que la fiche nomme, ou ne crible pas le même fichier : refusé")
+    if (frais["totaux"]["forts"], frais["totaux"]["possibles"], frais["totaux"]["sansCorrespondance"]) != (ex["forts"], ex["possibles"], ex["sans"]):
+        sys.exit("la passe fraîche ne recompte pas le relevé commité : la fiche nommerait deux rapports différents : refusé")
+    for f in ("rapports/screening-sample-report.pdf", "rapports/screening-sample-report.screening.json", "rendus/rapport-exemple.webp", "rendus/robot-rubis-curieux.webp", "rendus/robot-rubis-penche.webp"):
         if not (BASE / f).exists():
             sys.exit(f"{f} absent : la section du rapport aurait un trou")
     if off["annuel"] != "two months free":
@@ -2345,13 +2368,13 @@ def _section_rapport(o):
     <ol class="r-pas">
       <li><span><b>You send</b> a CSV or a spreadsheet with a column of company and vessel names, and the IMO number of a vessel when you have it.</span></li>
       <li><span><b>We screen</b> each name against seven public sources: OFAC SDN, the OFAC consolidated (non-SDN) lists, the US Consolidated Screening List (its Commerce and State lists), the UN Security Council list, the EU financial sanctions list, the UK Sanctions List, and the vessels the EU designates in Annex XLII of Regulation 833/2014, each as downloaded on the date the report states.</span></li>
-      <li><span><b>You receive</b> a PDF and a spreadsheet: each candidate with its list entry and the words that matched, the dates of the lists, and a seal anyone can check.</span></li>
+      <li><span><b>You receive</b> a PDF, a spreadsheet and the sealed record: each candidate with its list entry and the words that matched, the dates of the lists, and a seal anyone can check with one command, <code>npm run sceller -- &lt;record&gt;.screening.json --check</code>.</span></li>
     </ol>
   </div>
   <figure class="r-feuille">
     <a href="{pdf}" download><img src="{img}" width="1224" height="1584" loading="lazy" decoding="async"
       alt="First page of the sample report: {ex["lignes"]} invented counterparties, {ex["forts"]} strong candidates, {ex["possibles"]} possible, {ex["sans"]} with no candidate."></a>
-    <figcaption>sample report &#183; {ex["lignes"]} invented counterparties &#183; sealed {ex["emis"]} &#183; record {ex["sceau"]}</figcaption>
+    <figcaption>sample report &#183; {ex["lignes"]} invented counterparties &#183; a fresh run of {rendu["emis"]} at commit {rendu["commit"]}, record {rendu["empreinte"]} &#183; the committed record of the same file is {ex["sceau"]} ({ex["emis"]})</figcaption>
   </figure>
   </div>
   <div class="r-offre" data-offre="{data}">
@@ -2369,7 +2392,7 @@ def _section_rapport(o):
         <p class="r-eti">Weekly re-screen</p>
         <p class="r-montant"><span class="r-n" data-v="{rc[0]["prix_usd_mois"]}">{usd(rc[0]["prix_usd_mois"])}</span><small class="r-unite">a month, up to {rc[0]["noms"]:,} names</small></p>
         <p class="r-sous">The same list, screened again each week against the lists of that week.</p>
-        <ul class="r-inclus"><li><b>{SEMAINES}</b> sealed reports a year</li><li>Each report opens with what changed since the last one</li><li>Paid yearly, {off["annuel"]}</li><li>Stop at any time, and your list is deleted when you stop</li></ul>
+        <ul class="r-inclus"><li><b>{SEMAINES}</b> sealed reports a year</li><li>Each report opens with what changed since the last one</li><li>Paid yearly, {off["annuel"]}</li><li>Stop any time: your list goes to the trash, deleted within 30 days</li></ul>
       </article>
     </div>
     <div class="r-taille">
@@ -2386,7 +2409,7 @@ def _section_rapport(o):
   <div class="ouvrir-ligne"><a class="ouvrir" href="mailto:{off["contact"]}?subject={sujet}"><span><span class="ouvrir-t">Try it on {EN_LETTRES.get(off["essai_noms"], off["essai_noms"])} of your names</span>
     <span class="ouvrir-s">Email them to {off["contact"]}. The report comes back within {off["delai_heures"]} hours, at no charge.</span></span>
     <span class="fl" aria-hidden="true">&#8594;</span></a></div>
-  <p class="liens"><a class="lien-e" href="{pdf}" download>Download the sample report <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{depot}/blob/main/exemple/contreparties-exemple.screening.json">Open the sealed record behind it <span aria-hidden="true">&#8594;</span></a></p>
+  <p class="liens"><a class="lien-e" href="{pdf}" download>Download the sample report <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="../rapports/screening-sample-report.screening.json">Open the record this PDF renders <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="{depot}/blob/main/exemple/contreparties-exemple.screening.json">Open the committed example record <span aria-hidden="true">&#8594;</span></a></p>
 </div></section>
 <script>
 (() => {{
@@ -2548,7 +2571,7 @@ def batir_outil_catalogue(o, spec):
         (*spec["annexe_securite"], is_ + iq2),
         ("Terms of engagement", "What the grant allows, for how long, and what a client buys.",
          lien(o, "ANNEXE-TERMS.html"), _icone_tuile(o, spec, "terms")[0] + _icone_tuile(o, spec, "terms")[1]),
-        ("Privacy", "No data is collected. Written down, and verifiable.",
+        ("Privacy", "The tool collects no data. What you send us for a report, and how long it is kept.",
          lien(o, "ANNEXE-PRIVACY.html"), _icone_tuile(o, spec, "privacy")[0] + _icone_tuile(o, spec, "privacy")[1]),
         ("Accessibility", "Usable by keyboard, by screen reader, and with motion turned off.",
          lien(o, "ANNEXE-ACCESSIBILITE.html"), _icone_tuile(o, spec, "accessibilite")[0] + _icone_tuile(o, spec, "accessibilite")[1]),

@@ -3,8 +3,8 @@
   "ancres": {
     "README.md:109": "Every file is checked against its SHA-256 and against the revision this repository pins,",
     "README.md:120": "Under that flag the library is told not to reach the network at all. If a model is missing it",
-    "README.md:235": "| [`retractations.json`](retractations.json) | every conclusion published here that turned out to be wrong |",
-    "README.md:258": "**What the published pass actually took.** The provenance stamps of the profile shipped with this repository run from 10:08:32 to 10:40:28, **32 minutes** of measurement on the machine named in the seal, on top of the weight download. That is the figure to plan for, not a round number: it is read from the relevé, so it moves when the relevé does.",
+    "README.md:236": "A vendor bills per page, once, whatever the number of fields taken from it, so the audit",
+    "README.md:259": "| [`rules-example.json`](rules-example.json) | an example `--rules` file for `measure:yours`: one regular expression per column of your CSV, the whole match is the value; copy it, keep the columns you have |",
     "VALIDATION.md:28": "**This file does not certify anything.** It assembles what a reviewer needs in order to",
     "contrainte.json:34": "\"msMedianeNonTransportableFamineMemoire\": 235,",
     "egress.json:12": "\"verdict\": \"no connection observed for the whole pass\",",
@@ -35,9 +35,9 @@
     "src/verifier-rapport.mjs:13": "* Un rapport qui affirme sa propre authenticité n'affirme rien. La vérification doit pouvoir",
     "src/verifier-rapport.mjs:20": "*     node src/verifier-rapport.mjs <rapport.html>",
     "src/your-cases.ts:18": "* is a field to extract**, named by its header. Three columns of expected answers means",
-    "src/your-cases.ts:1861": "npm run measure:yours -- --cases=your-file.csv [--rules=rules.json] [--sorties=a.json --sorties=b.json] [--llm]",
-    "src/your-cases.ts:1878": "--sorties  a JSON of the OUTCOMES your own chain was graded to, never the values it",
-    "src/your-cases.ts:2421": "*/",
-    "src/your-cases.ts:436": "return q.provenance === \"deduite\" ? `What is the ${nomSur(champ)}?` : q.texte;"
+    "src/your-cases.ts:1901": "npm run measure:yours -- --cases=your-file.csv [--rules=rules.json] [--sorties=a.json --sorties=b.json] [--llm]",
+    "src/your-cases.ts:1918": "--sorties  a JSON of the OUTCOMES your own chain was graded to, never the values it",
+    "src/your-cases.ts:2476": "* compare cas par cas et ne recommande qu'à l'intérieur d'une marge déclarée.",
+    "src/your-cases.ts:437": "return q.provenance === \"deduite\" ? `What is the ${nomSur(champ)}?` : q.texte;"
   }
 }

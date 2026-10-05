@@ -8,5 +8,16 @@
   "sans": 19,
   "commit": "3b611c5",
   "listes": "2026-09-26",
-  "source": "cascade-screening/exemple/contreparties-exemple.screening.json"
+  "source": "cascade-screening/exemple/contreparties-exemple.screening.json",
+  "rendu": {
+    "empreinte": "a1014cc03e8589b5",
+    "emis": "2026-10-05",
+    "commit": "a4c53bf",
+    "listes": [
+      "2026-09-26",
+      "2026-10-04"
+    ],
+    "fichier": "rapports/screening-sample-report.screening.json",
+    "chaine": "rapport.py + pieces/pdf.mjs, the client chain of rapport-essai.sh"
+  }
 }

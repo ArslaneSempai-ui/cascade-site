@@ -238,7 +238,7 @@ JS = '''
       c.querySelector(".c-fp").textContent = pc(cel.fauxPositifs.taux);
     }
     $("#g-quoi").innerHTML = moitie === "authored"
-      ? "pairs we wrote: <b>" + D.authored.nMatch + " match</b>, <b>" + D.authored.nDifferent + " near-matches</b>"
+      ? "written pairs: <b>" + D.authored.nMatch + " match</b>, <b>" + D.authored.nDifferent + " near-matches</b>"
       : "generated, declared and counted on their own: <b>" + D.synthetic.nMatch + " match</b>, <b>" + D.synthetic.nDifferent + " different</b>";
   }
   function lire(c) {
@@ -347,8 +347,8 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="colonne">
     <h1 class="h1">See what each way of comparing names costs you, live.</h1>
     <p class="lede">A threshold is the score above which two names count as a match. The figures
-      here come from <b>our public test set</b>: name pairs we wrote ourselves, including
-      near-matches that look similar but are different people. Nothing on this page comes from a
+      here come from <b>our public test set</b>: name pairs an AI agent wrote for this repository,
+      including near-matches that look similar but are different people. Nothing on this page comes from a
       customer, and the figures are recomputed as the page loads.</p>
   </div>
 </section>
@@ -404,10 +404,10 @@ PAGE = f'''<!doctype html><html lang="en">
         on {D["provenance"]["date"]}. The script that builds it checks that hash, rebuilds every
         figure with the tool&#8217;s own code, and publishes nothing if one of them
         disagrees.</li>
-      <li><b>The pairs we wrote.</b> The labeled half is written by hand: true matches, where the
-        same name is transliterated, reordered, abbreviated or mistyped, and near-matches, which are
-        siblings and partial homonyms that are not the same person. Where a label is debatable, the
-        reason is written beside it.</li>
+      <li><b>The written pairs.</b> The labeled half was written for this repository by an AI agent
+        (commit 474ffbd): true matches, where the same name is transliterated, reordered, abbreviated
+        or mistyped, and near-matches, which are siblings and partial homonyms that are not the same
+        person. Where a label is debatable, the reason is written beside it.</li>
       <li><b>The generated half.</b> Generated from list-entry names, one kind of change at a
         time, and counted on their own, because a generated one is not as hard: the toggle
         above switches the whole grid.</li>

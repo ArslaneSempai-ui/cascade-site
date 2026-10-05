@@ -6,7 +6,7 @@
     "types_document": 1,
     "extracteurs": 3,
     "scelle": false,
-    "livrable": "a one-page PDF by email within 48 hours, from the record you send; this one is not sealed, and the free test is an internal evaluation",
+    "livrable": "a one-page PDF by email within 48 hours, from the record you send; its record carries a content hash, this report is not signed, and the free test is an internal evaluation",
     "delai_heures": 48
   },
   "snapshot": {

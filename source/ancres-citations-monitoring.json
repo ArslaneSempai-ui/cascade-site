@@ -15,7 +15,7 @@
     "src/measure.ts:71": "rappel: cellule(rate(suspects.filter((x) => x.score >= seuil).length, suspects.length)),",
     "src/optimise.ts:170": "console.error(`\\n${m.source.suspicious} confirmed suspicious case(s) in the record: too few confirmed\\n`",
     "src/rapport.ts:25": "export const TROP_PEU_DE_SUSPECTS = \"too few confirmed cases to bound recall\";",
-    "src/sceller.ts:50": "console.log(`  ${cible}\\n  already sealed, and the seal matches: ${apres}. Nothing to do.`);",
+    "src/sceller.ts:60": "console.log(`  ${cible}\\n  already sealed, and the seal matches: ${apres}. Nothing to do.`);",
     "src/synthetic.ts:31": "export const NATURES_SUSPECTES = [",
     "src/synthetic.ts:51": "export const SEUIL_DECLARATION = 10_000;",
     "src/synthetic.ts:71": "if (!c.raison || !c.raison.trim()) throw new Error(`case \"${c.id}\" carries no raison`);",

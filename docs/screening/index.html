@@ -905,7 +905,7 @@
         <span class="j-cote">85% false alerts</span></span></button></li><li><button class="jalon" data-i="2" aria-label="Go to finding 03: Catching nearly all the true matches costs a great many false alerts.">
         <img class="j-vig" src="../rendus/etats/tamis-03.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">03</span><span class="j-corps"><span class="j-titre">The setting the tool picks: 98.3% of matches found</span>
-        <span class="j-cote">76.7% false alerts</span></span></button></li><li><button class="jalon" data-i="3" aria-label="Go to finding 04: The same setting alerts on 17.2% of generated pairs and 76.7% of the pairs we wrote.">
+        <span class="j-cote">76.7% false alerts</span></span></button></li><li><button class="jalon" data-i="3" aria-label="Go to finding 04: The same setting alerts on 17.2% of generated pairs and 76.7% of the written pairs.">
         <img class="j-vig" src="../rendus/etats/tamis-04.webp" alt="" width="1374" height="1120" decoding="async" loading="lazy">
         <span class="j-num">04</span><span class="j-corps"><span class="j-titre">Generated pairs are easier, so they're counted on their own</span>
         <span class="j-cote">17.2% against 76.7%</span></span></button></li><li><button class="jalon" data-i="4" aria-label="Go to finding 05: Run the same measurement on your own alert history.">
@@ -955,13 +955,13 @@
     </div>
     <div class="scene" id="scene-3" data-i="3">
       <img class="objet" src="../rendus/etats/tamis-04.webp"
-        alt="The sieve tower, state 04: The same setting alerts on 17.2% of generated pairs and 76.7% of the pairs we wrote." width="1374" height="1120" decoding="async" loading="lazy">
+        alt="The sieve tower, state 04: The same setting alerts on 17.2% of generated pairs and 76.7% of the written pairs." width="1374" height="1120" decoding="async" loading="lazy">
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="325" y1="200" x2="465" y2="400" pathLength="1"/><circle cx="465" cy="400" r="4"/><line x1="1095" y1="200" x2="980" y2="490" pathLength="1"/><circle cx="980" cy="490" r="4"/></svg><span class="ap-eti" style="left:22.9%;top:20.0%">written near-matches: 76.7%</span><span class="ap-eti" style="left:77.1%;top:20.0%">generated near-matches: 17.2%</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 04</span><span class="ft-cote">17.2% against 76.7%</span></figcaption>
-        <p class="fiche-phrase">The same setting alerts on 76.7% of the pairs we wrote, and on 17.2% of the ones a script generated from them. A generated pair is easier to tell apart, so it is counted on its own, and the rates above come from the pairs we wrote.</p>
+        <p class="fiche-phrase">The same setting alerts on 76.7% of the pairs an AI agent wrote for us, and on 17.2% of the ones a script generated from them. A generated pair is easier to tell apart, so it is counted on its own, and the rates above come from the written pairs.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">76.7%</span><span class="leg">false alerts 76.7% at the setting the tool picks, on the pairs we wrote, interval 65% to 86%</span></div>
+          <div class="val"><span class="chiffre pale-v">76.7%</span><span class="leg">false alerts 76.7% at the setting the tool picks, on the written pairs, interval 65% to 86%</span></div>
           <div class="val"><span class="chiffre vert-v">17.2%</span><span class="leg">false alerts 17.2% at the same setting, on 360 pairs a script generated, interval 14% to 21%</span></div>
         </div>
       </figure>
@@ -972,10 +972,10 @@
       <svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true"><line x1="710" y1="130" x2="710" y2="280" pathLength="1"/><circle cx="710" cy="280" r="4"/><line x1="806" y1="960" x2="771" y2="870" pathLength="1"/><circle cx="771" cy="870" r="4"/></svg><span class="ap-eti" style="left:50.0%;top:13.0%">120 pairs written</span><span class="ap-eti" style="left:56.7%;top:96.0%">720 pairs generated</span>
       <figure class="fiche">
         <figcaption class="fiche-t"><span>finding 05</span><span class="ft-cote">one run, one report</span></figcaption>
-        <p class="fiche-phrase">The rates here come from our public test set: 60 pairs of confirmed matches and 60 pairs of near-matches we wrote by hand, and another 360 pairs of each kind that a script generated. Run the tool on your own alert history and it writes the report into the folder your file is in.</p>
+        <p class="fiche-phrase">The rates here come from our public test set: 60 pairs of confirmed matches and 60 pairs of near-matches, written for this repository by an AI agent, and another 360 pairs of each kind that a script generated from them. Run the tool on your own alert history and it writes the report into the folder your file is in.</p>
         <div class="paire">
-          <div class="val"><span class="chiffre pale-v">60 pairs</span><span class="leg">60 pairs of confirmed matches and 60 pairs of near-matches, written by us, behind the rates</span></div>
-          <div class="val"><span class="chiffre vert-v">360 pairs</span><span class="leg">another 360 pairs of each kind, generated by a script from the ones we wrote</span></div>
+          <div class="val"><span class="chiffre pale-v">60 pairs</span><span class="leg">60 pairs of confirmed matches and 60 pairs of near-matches, written by an AI agent, behind the rates</span></div>
+          <div class="val"><span class="chiffre vert-v">360 pairs</span><span class="leg">another 360 pairs of each kind, generated by a script from the written ones</span></div>
         </div>
       </figure>
     </div></div>
@@ -1020,13 +1020,13 @@ for (const pop of document.querySelectorAll('.entites .pop')) {
     <ol class="r-pas">
       <li><span><b>You send</b> a CSV or a spreadsheet with a column of company and vessel names, and the IMO number of a vessel when you have it.</span></li>
       <li><span><b>We screen</b> each name against seven public sources: OFAC SDN, the OFAC consolidated (non-SDN) lists, the US Consolidated Screening List (its Commerce and State lists), the UN Security Council list, the EU financial sanctions list, the UK Sanctions List, and the vessels the EU designates in Annex XLII of Regulation 833/2014, each as downloaded on the date the report states.</span></li>
-      <li><span><b>You receive</b> a PDF and a spreadsheet: each candidate with its list entry and the words that matched, the dates of the lists, and a seal anyone can check.</span></li>
+      <li><span><b>You receive</b> a PDF, a spreadsheet and the sealed record: each candidate with its list entry and the words that matched, the dates of the lists, and a seal anyone can check with one command, <code>npm run sceller -- &lt;record&gt;.screening.json --check</code>.</span></li>
     </ol>
   </div>
   <figure class="r-feuille">
     <a href="../rapports/screening-sample-report.pdf" download><img src="../rendus/rapport-exemple.webp" width="1224" height="1584" loading="lazy" decoding="async"
       alt="First page of the sample report: 30 invented counterparties, 9 strong candidates, 2 possible, 19 with no candidate."></a>
-    <figcaption>sample report &#183; 30 invented counterparties &#183; sealed 2026-10-04 &#183; record 571f187a1b3d5ac5</figcaption>
+    <figcaption>sample report &#183; 30 invented counterparties &#183; a fresh run of 2026-10-05 at commit a4c53bf, record a1014cc03e8589b5 &#183; the committed record of the same file is 571f187a1b3d5ac5 (2026-10-04)</figcaption>
   </figure>
   </div>
   <div class="r-offre" data-offre="{&quot;rapport&quot;: {&quot;noms&quot;: 500, &quot;prix_usd&quot;: 99}, &quot;paliers&quot;: [{&quot;noms&quot;: 500, &quot;prix_usd_mois&quot;: 79}, {&quot;noms&quot;: 5000, &quot;prix_usd_mois&quot;: 199}, {&quot;noms&quot;: 50000, &quot;prix_usd_mois&quot;: 499}], &quot;moisPayes&quot;: 10, &quot;semaines&quot;: 52, &quot;pas&quot;: [10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000], &quot;contact&quot;: &quot;contact@cascade-routing.com&quot;}">
@@ -1044,7 +1044,7 @@ for (const pop of document.querySelectorAll('.entites .pop')) {
         <p class="r-eti">Weekly re-screen</p>
         <p class="r-montant"><span class="r-n" data-v="79">$79</span><small class="r-unite">a month, up to 500 names</small></p>
         <p class="r-sous">The same list, screened again each week against the lists of that week.</p>
-        <ul class="r-inclus"><li><b>52</b> sealed reports a year</li><li>Each report opens with what changed since the last one</li><li>Paid yearly, two months free</li><li>Stop at any time, and your list is deleted when you stop</li></ul>
+        <ul class="r-inclus"><li><b>52</b> sealed reports a year</li><li>Each report opens with what changed since the last one</li><li>Paid yearly, two months free</li><li>Stop any time: your list goes to the trash, deleted within 30 days</li></ul>
       </article>
     </div>
     <div class="r-taille">
@@ -1057,11 +1057,11 @@ for (const pop of document.querySelectorAll('.entites .pop')) {
       <p class="r-phrase" aria-live="polite">A list of 500 names: <b>$99</b> for one report, or <b>$79 a month</b> to have it screened again each week.</p>
     </div>
   </div>
-  <p class="r-note">Your file is deleted once the report is sent. A subscriber's list is kept for the weekly re-screen and deleted when the subscription stops. A candidate is a name for your compliance officer to check: the report does not decide, does not screen ownership, and is not legal advice.</p>
+  <p class="r-note">Once the report is sent, your file and the mails that carried it go to the trash and are permanently deleted within 30 days. A weekly re-screen subscriber's list is kept for the re-screen and goes the same way when the subscription stops. A candidate is a name for your compliance officer to check: the report does not decide, does not screen ownership, and is not legal advice.</p>
   <div class="ouvrir-ligne"><a class="ouvrir" href="mailto:contact@cascade-routing.com?subject=Ten%20names%20to%20screen"><span><span class="ouvrir-t">Try it on ten of your names</span>
     <span class="ouvrir-s">Email them to contact@cascade-routing.com. The report comes back within 48 hours, at no charge.</span></span>
     <span class="fl" aria-hidden="true">&#8594;</span></a></div>
-  <p class="liens"><a class="lien-e" href="../rapports/screening-sample-report.pdf" download>Download the sample report <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="https://github.com/ArslaneSempai-ui/cascade-screening/blob/main/exemple/contreparties-exemple.screening.json">Open the sealed record behind it <span aria-hidden="true">&#8594;</span></a></p>
+  <p class="liens"><a class="lien-e" href="../rapports/screening-sample-report.pdf" download>Download the sample report <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="../rapports/screening-sample-report.screening.json">Open the record this PDF renders <span aria-hidden="true">&#8594;</span></a><a class="lien-e" href="https://github.com/ArslaneSempai-ui/cascade-screening/blob/main/exemple/contreparties-exemple.screening.json">Open the committed example record <span aria-hidden="true">&#8594;</span></a></p>
 </div></section>
 <script>
 (() => {
@@ -1140,7 +1140,7 @@ for (const pop of document.querySelectorAll('.entites .pop')) {
     </a>
     <a class="affiche-tarif" href="../engagement.html">See pricing <span aria-hidden="true">&#8594;</span></a>
     <p class="t-note">Measured on 60 matching pairs and 60 near-matches
-      we wrote, at every threshold, with a ring on the cell the tool picks by default, jaro-winkler at 0.56. Generated pairs are counted on their own, and the live instrument shows them.</p>
+      an AI agent wrote for us, at every threshold, with a ring on the cell the tool picks by default, jaro-winkler at 0.56. Generated pairs are counted on their own, and the live instrument shows them.</p>
   </div>
 </div></section>
 
@@ -1152,7 +1152,7 @@ for (const pop of document.querySelectorAll('.entites .pop')) {
 
 <section class="film"><div class="colonne">
   <h2 class="h2">Cascade, explained.</h2>
-  <p class="film-duree">The film, and the demo</p>
+  <p class="film-duree">The five Screening findings</p>
   <div class="lecteur" data-film="screening">
     <video poster="../rendus/affiche-screening.jpg" preload="none" playsinline controls width="1920" height="1080" aria-label="The film of Cascade Screening, 1 minute 28">
       <source src="../films/screening.mp4" type="video/mp4">
@@ -1163,12 +1163,6 @@ for (const pop of document.querySelectorAll('.entites .pop')) {
   </div>
   <div class="film-note">
     <a class="ou" href="https://youtu.be/AoINd6J2XMI" rel="noopener">also on YouTube <span aria-hidden="true">&#8594;</span></a>
-  </div>
-  <div class="liste" role="list" aria-label="Two films" data-nom="Screening">
-    <a class="carte-film est-actif" role="listitem" aria-current="true" href="../films/screening.mp4" data-src="../films/screening.mp4" data-poster="../rendus/affiche-screening.jpg" data-duree="1:28" data-dite="1 minute 28" data-genre="film" data-yt="https://youtu.be/AoINd6J2XMI">
-      <img src="../rendus/affiche-screening.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The film</span><span class="cf-t">The five Screening findings</span></span><span class="cf-d">1:28</span></a>
-    <a class="carte-film" role="listitem" href="../films/screening-demo.mp4" data-src="../films/screening-demo.mp4" data-poster="../rendus/affiche-screening-demo.jpg" data-duree="1:26" data-dite="1 minute 26" data-genre="demo" data-yt="https://youtu.be/mTlpC9yXnXo">
-      <img src="../rendus/affiche-screening-demo.jpg" alt="" width="1920" height="1080"><span class="cf-corps"><span class="cf-e">The demo</span><span class="cf-t">The file, the screening, the report, the record</span></span><span class="cf-d">1:26</span></a>
   </div>
 </div></section>
 
@@ -1196,7 +1190,7 @@ for (const pop of document.querySelectorAll('.entites .pop')) {
       <a class="tuile" href="../privacy.html">
         <span class="tuile-img"><img src="../rendus/etats/objet-screening-privacy.webp" alt="" width="999" height="519" decoding="async" loading="lazy"></span>
         <span class="tuile-corps"><span class="tuile-t">Privacy</span>
-        <span class="tuile-d">No data is collected. Written down, and verifiable.</span></span>
+        <span class="tuile-d">The tool collects no data. What you send us for a report, and how long it is kept.</span></span>
         <span class="tuile-fl" aria-hidden="true">&#8594;</span>
       </a>
       <a class="tuile" href="../accessibility.html">
@@ -1217,7 +1211,7 @@ for (const pop of document.querySelectorAll('.entites .pop')) {
   <div class="pied-h">
     <div class="pied-g"><p class="pied-p">The tools run on your machine. Nothing reaches us unless you send it.</p>
       <a class="pied-preuve" href="../privacy.html">See how we prove it <span aria-hidden="true">&#8594;</span></a></div>
-    <p class="pied-meta"><b>449 tests</b>content hash 556bb39ec055a091</p>
+    <p class="pied-meta"><b>450 tests</b>content hash 556bb39ec055a091</p>
   </div>
   <nav class="pied-liens" aria-label="Pages"><a href="method.html">Method</a><a href="security.html">Security</a><a href="../terms.html">Terms</a><a href="../privacy.html">Privacy</a><a href="../accessibility.html">Accessibility</a><a href="../contact.html">Contact</a><a href="../colophon.html">The fine print</a><a href="https://github.com/ArslaneSempai-ui/cascade-screening">Repository</a></nav>
 </div></footer>

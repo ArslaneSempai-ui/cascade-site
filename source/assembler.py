@@ -737,6 +737,12 @@ for _pdf, _img, _bat in ((MAQ / "rapports" / "screening-sample-report.pdf", MAQ 
         sys.exit(f"source/rendus/{_img.name} absent ou pas en webp : relancer {_bat}")
     shutil.copy(_pdf, DOCS / "rapports" / _pdf.name)
     shutil.copy(_img, DOCS / "rendus" / _img.name)
+# 05/10 (parcours client) : le PDF Screening rend une PASSE FRAÎCHE du fichier d'exemple ; son relevé est servi à côté du
+# PDF, puisque la fiche en nomme le scellé et qu'un scellé nommé doit pouvoir se vérifier
+_frais = MAQ / "rapports" / "screening-sample-report.screening.json"
+if not _frais.exists():
+    sys.exit("source/rapports/screening-sample-report.screening.json absent : relancer batir-rapport-exemple.py --record <passe>.screening.json")
+shutil.copy(_frais, DOCS / "rapports" / _frais.name)
 # 04/10 : the Routing sample is a signed page served beside its PDF ; the served copy must pass cascade's public verifier
 _signe = MAQ / "rapports" / "routing-sample-report.html"
 if not _signe.exists():

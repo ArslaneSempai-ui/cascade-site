@@ -2,8 +2,8 @@
   "_": "Contenu de la page Privacy. Faits de la passe du 31 août 2026 (tasks/w7nrsoqna.output). Chaque limite déclarée par le dépôt est reprise à côté du mécanisme (le test des fetch par motif, l'échantillonnage plancher, la liste de racines du caviardage, les binaires natifs non-greppables).",
   "objet": "rendus/etats/objet-privacy.webp",
   "titre": "Where your data can and cannot go, item by item.",
-  "lede": "Here is where your data can reach and where it cannot. It covers the tests that keep the network shut, the folder that never enters a repository, the scrubbing on what travels, and each mechanism's limit. Each limit listed here is one the source itself states.",
-  "description": "An inventory of the tests that keep the network shut, the folder no repository sees, the scrubbing on what travels, and the limit of each.",
+  "lede": "Here is where your data can reach and where it cannot. It covers the tests that keep the network shut, the folder that never enters a repository, the scrubbing on what travels, and each mechanism's limit. Each limit listed here is one the source itself states. The last section says what you send us when you order a report, and how long it is kept.",
+  "description": "An inventory of the tests that keep the network shut, the folder no repository sees, the scrubbing on what travels, and the limit of each; then what you send us for a report, and how long it is kept.",
   "sections": [
     {
       "h2": "No telemetry, and a test enforces it",
@@ -77,6 +77,14 @@
       "html": [
         "<p>The measured report is written <b>beside your CSV</b>, and none of it goes into the tool's folders. It contains rates, confidence intervals (the range a true rate is likely to sit in) and the questions asked. <b>The values extracted from your documents never enter it.</b> It closes with the sentence it earns: measured on this machine, nothing left it.</p>",
         "<p>A second file is written beside it, the sealed record, and it is the one file the extraction cost audit asks you to send us. It holds counts, a right, wrong or blank verdict per case and field, your file's name and its SHA-256 hash, and the prices and volume you declared. A declared price can be under a vendor contract: replace it with a list price before sending if it is. No document and no value read from one is in that file.</p>"
+      ]
+    },
+    {
+      "h2": "What you send us for a report",
+      "html": [
+        "<p>Two services run on our side, and for them you do send us something. For a <b>Screening report</b>, you email a list of company and vessel names, with the IMO number of a vessel when you have it: a CSV, a spreadsheet, or names in the body of the mail. For a <b>Routing free test</b>, you email the measured record the tool wrote beside your CSV, the file ending in <code>-measured.json</code>: counts, a right, wrong or blank verdict per case and field, your file's name and its SHA-256 hash, and the prices and volume you declared. In both cases nothing else is asked for, and no document of yours is.</p>",
+        "<p>What we receive is used for that report and for nothing else. Once the report is sent, your file and the mails that carried it go to the trash and are permanently deleted within 30 days. A weekly re-screen subscriber's list is kept for the re-screen and goes the same way when the subscription stops.</p>",
+        "<p><b>HS Industries LLC</b> is responsible for this processing. Write to <a href=\"mailto:contact@cascade-routing.com\">contact@cascade-routing.com</a> to ask what we hold about you, to have it deleted earlier, or to object.</p>"
       ]
     }
   ],

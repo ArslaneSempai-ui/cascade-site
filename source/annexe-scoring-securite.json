@@ -56,11 +56,11 @@
             "n": "the whole suite with the network cut"
           },
           {
-            "c": "npm run sceller -- releve-public.json",
+            "c": "npm run sceller -- releve-public.json --check",
             "n": "prints \"already sealed, and the seal matches\" and the content hash"
           }
         ],
-        "refs": "src/sceller.ts:50 &#183; src/dossier.ts:11"
+        "refs": "src/sceller.ts:60 &#183; src/dossier.ts:11"
       }
     }
   ]

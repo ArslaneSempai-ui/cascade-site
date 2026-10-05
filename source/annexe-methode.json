@@ -58,7 +58,7 @@
         "p": "Point the hashing command at the public test set shipped with the repository. It recomputes the content hash and prints it. On an untouched file it changes nothing.",
         "cmd": [
           {
-            "c": "npm run sceller -- profiles-2026-08-20-coeur-rendu.json",
+            "c": "npm run sceller -- profiles-2026-08-20-coeur-rendu.json --check",
             "n": "already hashed, and the content hash matches: dbf26abec438515e"
           }
         ],
@@ -127,7 +127,7 @@
             "n": "measures fresh records against the frozen baseline, gives one answer per field, and hashes the new report"
           }
         ],
-        "refs": "src/measure.ts:946 &#183; src/your-cases.ts:1861"
+        "refs": "src/measure.ts:946 &#183; src/your-cases.ts:1901"
       }
     }
   ],

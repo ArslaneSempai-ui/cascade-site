@@ -433,6 +433,14 @@ for _attendu in (f"${_OFF['snapshot']['prix_usd']:,}", f"${_OFF['audit']['prix_u
                  f"{_OFF['snapshot']['delai_heures']} hours", f"{_OFF['audit']['delai_heures']} hours", f"within {_OFF['essai']['delai_heures']} hours", "HS Industries LLC", "right to act on the recommendation"):
     if _attendu not in _TERMS:
         sys.exit(f"ANNEXE-TERMS.html n'affiche pas « {_attendu} » : les conditions ne portent plus l'offre Routing")
+# 05/10 (parcours client) : la page des conditions porte aussi l'offre Screening et la promesse de conservation tranchée le
+# 5/10 ; chaque montant se relit dans offre-screening.json
+_OFS = json.loads((BASE / "offre-screening.json").read_text())
+for _attendu in (f"${_OFS['rapport']['prix_usd']:,}", *(f"${x['prix_usd_mois']:,}" for x in _OFS["recriblage"]),
+                 f"up to {_OFS['rapport']['noms']:,} names", f"{_OFS['essai_noms']} names", f"within {_OFS['delai_heures']} hours",
+                 "HS Industries LLC", _OFS["conservation"]):
+    if _attendu not in _TERMS:
+        sys.exit(f"ANNEXE-TERMS.html n'affiche pas « {_attendu} » : les conditions ne portent plus l'offre Screening")
 
 # ── la plomberie : contact et colophon : colonne simple, sans objet ──────────
 PLOMBERIE = json.loads((BASE / "plomberie.json").read_text())

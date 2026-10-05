@@ -20,6 +20,9 @@ from outil import SCEAU_ROUTING, OUTILS, pied_html, CSS_PIED_SITE
 # 04/10 (audit Routing) : la page des tarifs ne montrait pas les offres que la page Routing vend ; elles se lisent
 # dans offre-routing.json (la grille choisie par Arslane le 29/09), jamais tapées ici
 OFFRE_ROUTING = json.loads((BASE / "offre-routing.json").read_text())
+# 05/10 (parcours client) : « See pricing » depuis la page Screening menait à une page sans offre Screening ; elle se lit
+# dans offre-screening.json (la grille choisie par Arslane le 29/09, la conservation tranchée le 5/10), jamais tapée ici
+OFFRE_SCREENING = json.loads((BASE / "offre-screening.json").read_text())
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 # la barre du site (10/09) : les cinq instruments dans l'ordre du rideau, lus dans OUTILS, jamais tapés
 NAV = "".join(f'\n    <a href="{o["page_hero"]}">{o["nom"]}</a>' for o in OUTILS.values())
@@ -368,12 +371,25 @@ PAGE = f'''<!doctype html><html lang="en">
   <h2 class="ex-t">One document type, measured on your own pages, at a fixed price.</h2>
   <p class="ex-l">You already pay a document extractor. The audit grades it and its challengers on a labeled sample of your pages, on your machine, and names for each field the cheapest source that stays within the margin you declare. <a href="HERO.html#report">See how it runs on 100 real receipts</a>.</p>
   <div class="ex-grille">
-    <div class="ex-c"><p class="ex-eti">Free test</p><p class="ex-prix">$0<small> &#183; {OFFRE_ROUTING["essai"]["pages"]} pages</small></p><p class="ex-q">One document type, up to {OFFRE_ROUTING["essai"]["extracteurs"]} extractors. You run it, you email us the record, you get a one-page PDF back within {OFFRE_ROUTING["essai"]["delai_heures"]} hours. An internal evaluation, like the thirty days; not sealed.</p></div>
+    <div class="ex-c"><p class="ex-eti">Free test</p><p class="ex-prix">$0<small> &#183; {OFFRE_ROUTING["essai"]["pages"]} pages</small></p><p class="ex-q">One document type, up to {OFFRE_ROUTING["essai"]["extracteurs"]} extractors. You run it, you email us the record, you get a one-page PDF back within {OFFRE_ROUTING["essai"]["delai_heures"]} hours. An internal evaluation, like the thirty days. The record carries a content hash; the report is not signed.</p></div>
     <div class="ex-c"><p class="ex-eti">Snapshot</p><p class="ex-prix">${OFFRE_ROUTING["snapshot"]["prix_usd"]:,}<small> &#183; up to {OFFRE_ROUTING["snapshot"]["pages"]:,} pages</small></p><p class="ex-q">One document type, up to {OFFRE_ROUTING["snapshot"]["champs"]} fields and {OFFRE_ROUTING["snapshot"]["extracteurs"]} extractors. The signed report, its PDF and the sealed record, back within {OFFRE_ROUTING["snapshot"]["delai_heures"]} hours, with the right to act on the recommendation in your own operations.</p></div>
     <div class="ex-c haute"><p class="ex-eti">Audit</p><p class="ex-prix">${OFFRE_ROUTING["audit"]["prix_usd"]:,}<small> &#183; up to {OFFRE_ROUTING["audit"]["pages"]:,} pages</small></p><p class="ex-q">Up to {OFFRE_ROUTING["audit"]["types_document"]} document types, {OFFRE_ROUTING["audit"]["champs"]} fields and {OFFRE_ROUTING["audit"]["extracteurs"]} extractors. The signed report, its PDF and the sealed record, back within {OFFRE_ROUTING["audit"]["delai_heures"]} hours, with the same right to act on the recommendation.</p></div>
     <div class="ex-c"><p class="ex-eti">Quarterly audit</p><p class="ex-prix">${OFFRE_ROUTING["audit_trimestriel"]["prix_usd_an"]:,}<small> a year</small></p><p class="ex-q">The Audit measured again {OFFRE_ROUTING["audit_trimestriel"]["remesures_par_an"]} times a year, each report saying what moved since the last. Stop at any time.</p></div>
   </div>
   <p class="ex-fin">Each engagement is contracted and invoiced by <b>HS Industries LLC</b>, under an engagement letter written before signature. Vendor fees for the pages you run through cloud extractors are billed to you by those vendors, on your own keys. Sealed means the record carries a content hash, which shows an edit made after sealing; a content hash is not a signature.</p>
+</div></section>
+
+<section class="ex" aria-label="The screening report, by the tier"><div class="colonne">
+  <p class="ex-sur">Screening &#183; the screening report</p>
+  <h2 class="ex-t">Your list of names, screened against seven sanctions lists, at a fixed price.</h2>
+  <p class="ex-l">You email a list of company and vessel names. We screen it against seven public sources and send back a PDF, a spreadsheet and the sealed record, each candidate with its list entry and the words that matched. <a href="HERO-SCREENING.html#report">See what a report holds</a>.</p>
+  <div class="ex-grille">
+    <div class="ex-c"><p class="ex-eti">Free test</p><p class="ex-prix">$0<small> &#183; {OFFRE_SCREENING["essai_noms"]} names</small></p><p class="ex-q">Email {OFFRE_SCREENING["essai_noms"]} of your names. The report comes back within {OFFRE_SCREENING["delai_heures"]} hours, at no charge.</p></div>
+    <div class="ex-c haute"><p class="ex-eti">One report</p><p class="ex-prix">${OFFRE_SCREENING["rapport"]["prix_usd"]:,}<small> &#183; up to {OFFRE_SCREENING["rapport"]["noms"]:,} names</small></p><p class="ex-q">Your list, screened once and sealed, back within {OFFRE_SCREENING["delai_heures"]} hours: the PDF, the spreadsheet and the sealed record.</p></div>
+    <div class="ex-c"><p class="ex-eti">Weekly re-screen</p><p class="ex-prix">${OFFRE_SCREENING["recriblage"][0]["prix_usd_mois"]:,}<small> a month &#183; up to {OFFRE_SCREENING["recriblage"][0]["noms"]:,} names</small></p><p class="ex-q">The same list, screened again each week against the lists of that week. Each report opens with what changed since the last one. Paid yearly, {OFFRE_SCREENING["annuel"]}. Stop at any time.</p></div>
+    <div class="ex-c"><p class="ex-eti">Longer lists</p><p class="ex-prix">${OFFRE_SCREENING["recriblage"][1]["prix_usd_mois"]:,}<small> a month &#183; up to {OFFRE_SCREENING["recriblage"][1]["noms"]:,} names</small></p><p class="ex-q">The weekly re-screen for a longer list: ${OFFRE_SCREENING["recriblage"][2]["prix_usd_mois"]:,} a month up to {OFFRE_SCREENING["recriblage"][2]["noms"]:,} names. Above that, write to us for a price.</p></div>
+  </div>
+  <p class="ex-fin">Each report is contracted and invoiced by <b>HS Industries LLC</b>. {OFFRE_SCREENING["conservation"]} A candidate is a name for your compliance officer to check: the report does not decide, does not screen ownership, and is not legal advice.</p>
 </div></section>
 
 <section class="jours" aria-label="The days"><div class="colonne">
@@ -424,7 +440,7 @@ PAGE = f'''<!doctype html><html lang="en">
     <ul class="cc-liste">
       <li><b>Write about a figure or an engagement.</b> Name the page and the figure, so we start from the same source.</li>
       <li><b>Anything worth deciding in the open</b> goes to a public issue on GitHub, with no client names and no records.</li>
-      <li><b>Attach no file.</b> A channel for records is opened in the engagement letter, before signature.</li>
+      <li><b>Attach no file</b>, except the list you send for a Screening report, or the measured record of a Routing free test. A channel for other records is opened in the engagement letter, before signature.</li>
       <li><b>We answer within one business day.</b></li>
     </ul>
     <div class="cc-actions"><a class="cc-bt" href="mailto:contact@cascade-routing.com">Write to us <span aria-hidden="true">&#8594;</span></a><a class="cc-bt cc-sec" href="https://github.com/ArslaneSempai-ui/cascade-routing/issues">Open an issue <span aria-hidden="true">&#8594;</span></a></div>
@@ -438,7 +454,10 @@ PAGE = f'''<!doctype html><html lang="en">
 
 assert "—" not in PAGE, "un cadratin s'est glissé dans la page"
 for _attendu in (f"${OFFRE_ROUTING['snapshot']['prix_usd']:,}", f"${OFFRE_ROUTING['audit']['prix_usd']:,}", f"${OFFRE_ROUTING['audit_trimestriel']['prix_usd_an']:,}", "HS Industries LLC",
-                 f"within {OFFRE_ROUTING['essai']['delai_heures']} hours", "right to act on the recommendation"):
+                 f"within {OFFRE_ROUTING['essai']['delai_heures']} hours", "right to act on the recommendation",
+                 # 05/10 : l'offre Screening, chaque montant et la promesse de conservation lus dans offre-screening.json
+                 f"${OFFRE_SCREENING['rapport']['prix_usd']:,}", *(f"${x['prix_usd_mois']:,}" for x in OFFRE_SCREENING["recriblage"]),
+                 f"up to {OFFRE_SCREENING['rapport']['noms']:,} names", f"within {OFFRE_SCREENING['delai_heures']} hours", OFFRE_SCREENING["conservation"]):
     assert _attendu in PAGE, f"la page des tarifs n'affiche pas « {_attendu} » : refusé"
 (BASE / "ENGAGEMENT.html").write_text(PAGE, encoding="utf-8")
 print(f"ENGAGEMENT.html {len(PAGE) / 1e3:.0f} ko")

@@ -12,6 +12,6 @@
     "src/frontiere.test.ts:51": "test(\"aucun module ne touche le réseau\", () => {",
     "src/measure.ts:93": "export function mesurePublique(reglages: Reglages): {",
     "src/measure.ts:98": "reglages: Reglages;",
-    "src/sceller.ts:50": "console.log(`  ${cible}\\n  already sealed, and the seal matches: ${apres}. Nothing to do.`);"
+    "src/sceller.ts:60": "console.log(`  ${cible}\\n  already sealed, and the seal matches: ${apres}. Nothing to do.`);"
   }
 }
