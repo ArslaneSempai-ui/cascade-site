@@ -184,9 +184,35 @@ def csp(t):
         f'<meta name="referrer" content="no-referrer">', 1)
 
 
+# ── LA MARQUE DESSINÉE (choisie le 6 octobre 2026) ──
+#
+# Le C de Jost coupé en cinq lignes, la ligne du milieu verte, et « crusetra » vectorisé :
+# marque/logo.svg, construit par equipe-cascade/pieces/logo/final/sources/construire.mjs.
+# Les lignes et le nom sont en currentColor : la couleur que .marque portait déjà (clair sur
+# la nuit, encre sur le papier) les peint ; seule la ligne du milieu garde son vert.
+_LOGO = (MAQ / "marque" / "logo.svg").read_text().strip()
+_LOGO_INLINE = _LOGO.replace(
+    "<svg ", '<svg aria-hidden="true" focusable="false" style="display:block;height:30px;width:auto" ', 1)
+_ICONES = (f'<link rel="icon" href="{PREFIXE}favicon.svg" type="image/svg+xml">\n'
+           f'<link rel="icon" href="{PREFIXE}favicon-32.png" sizes="32x32" type="image/png">')
+_MARQUE_TEXTE = re.compile(r'(<a class="marque" href="[^"]*")>CRUSETRA</a>')
+_ICONE = re.compile(r'<link rel="icon" href="[^"]*">')
+
+
 def entete_prod(t, neuf):
     """Les métadonnées de production : canonique, couleur d'onglet, icône
     tactile, compléments de la carte de partage."""
+    # la marque tapée devient la marque dessinée ; l'icône d'onglet devient le C, sur chaque
+    # page. Une page qui garde « CRUSETRA » en texte ou une ancienne icône fait échouer la
+    # construction : un remplacement qui ne trouve rien ne se tait plus.
+    t = _MARQUE_TEXTE.sub(lambda m: f'{m.group(1)} aria-label="Crusetra">{_LOGO_INLINE}</a>', t)
+    if ">CRUSETRA</a>" in t:
+        sys.exit(f"{neuf} : une marque « CRUSETRA » en texte a échappé au logo dessiné")
+    t, nb_icones = _ICONE.subn(lambda m: _ICONES, t, count=1)
+    if nb_icones == 0:
+        sys.exit(f"{neuf} : aucune icône d'onglet à remplacer par le C")
+    if _ICONE.search(t.replace(_ICONES, "")):
+        sys.exit(f"{neuf} : une seconde icône d'onglet reste après le C")
     # la racine et /index.html sont la même page : une seule adresse canonique,
     # la racine, sinon les moteurs comptent deux pages et partagent leur poids
     adresse = BASE_URL if neuf == "index.html" else BASE_URL + neuf
@@ -886,6 +912,8 @@ _titre_readme = (SITE / "README.md").read_text().splitlines()[0]
 if _titre_readme != f"# {DEPOT_SITE}":
     sys.exit(f"README.md:1 dit « {_titre_readme} », le dépôt du site est {DEPOT_SITE} (outil.py) : corriger le titre")
 shutil.copy(MAQ / "apple-touch-icon.png", DOCS / "apple-touch-icon.png")
+shutil.copy(MAQ / "marque" / "favicon.svg", DOCS / "favicon.svg")
+shutil.copy(MAQ / "marque" / "favicon-32.png", DOCS / "favicon-32.png")
 publiques = ([n for n in PROD.values() if n != "404.html"]
              + [n for n in SOUS_DOSSIER_EMISES.values()])
 # ── le sitemap porte une DATE, et c'est celle du dépôt ───────────────────────
