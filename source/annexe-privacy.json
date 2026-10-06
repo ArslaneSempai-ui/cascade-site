@@ -20,13 +20,13 @@
             "n": "fails on any new outbound destination"
           }
         ],
-        "refs": "src/cascade.test.ts:1066 &#183; src/cascade.test.ts:1095"
+        "refs": "src/crusetra.test.ts:1066 &#183; src/crusetra.test.ts:1095"
       }
     },
     {
       "h2": "Where your measurements live and stay",
       "html": [
-        "<p>Each measurement on your data lands in a folder that <b>git ignores, on purpose</b>. The code spells this out in as many words, so no measurement can travel into a repository. The detailed attempt journals, which do hold extracted values, live under that same folder. For client cases they exist <b>only on an explicit flag</b>, and by default there is no journal. The tool also writes exactly one local marker, the date of its own first use, in a file you can read (<code>~/.cascade/premiere-utilisation.json</code>). The thirty&#8209;day evaluation clause reads that date to tell you where you stand. That file holds one labeled date, and it is never transmitted.</p>",
+        "<p>Each measurement on your data lands in a folder that <b>git ignores, on purpose</b>. The code spells this out in as many words, so no measurement can travel into a repository. The detailed attempt journals, which do hold extracted values, live under that same folder. For client cases they exist <b>only on an explicit flag</b>, and by default there is no journal. The tool also writes exactly one local marker, the date of its own first use, in a file you can read (<code>~/.crusetra/premiere-utilisation.json</code>; an earlier date under <code>~/.cascade</code>, the former name, still counts). The thirty&#8209;day evaluation clause reads that date to tell you where you stand. That file holds one labeled date, plus the former file's path when the date was carried over from it, and it is never transmitted.</p>",
         "<p>A journal header records the CPU model, the platform and the load. The <b>hostname, username and path</b> never enter it.</p>"
       ]
     },
@@ -84,7 +84,7 @@
       "html": [
         "<p>Two services run on our side, and for them you do send us something. For a <b>Screening report</b>, you email a list of company and vessel names, with the IMO number of a vessel when you have it: a CSV, a spreadsheet, or names in the body of the mail. For a <b>Routing free test</b>, you email the measured record the tool wrote beside your CSV, the file ending in <code>-measured.json</code>: counts, a right, wrong or blank verdict per case and field, your file's name and its SHA-256 hash, and the prices and volume you declared. In both cases nothing else is asked for, and no document of yours is.</p>",
         "<p>What we receive is used for that report and for nothing else. Once the report is sent, your file and the mails that carried it go to the trash and are permanently deleted within 30 days. A weekly re-screen subscriber's list is kept for the re-screen and goes the same way when the subscription stops.</p>",
-        "<p><b>HS Industries LLC</b> is responsible for this processing. Write to <a href=\"mailto:contact@cascade-routing.com\">contact@cascade-routing.com</a> to ask what we hold about you, to have it deleted earlier, or to object.</p>"
+        "<p><b>HS Industries LLC</b> is responsible for this processing. Write to <a href=\"mailto:contact@crusetra.com\">contact@crusetra.com</a> to ask what we hold about you, to have it deleted earlier, or to object.</p>"
       ]
     }
   ],

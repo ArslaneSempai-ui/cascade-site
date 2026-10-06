@@ -16,7 +16,7 @@ import json
 import pathlib
 
 BASE = pathlib.Path(__file__).parent
-from outil import SCEAU_ROUTING, OUTILS, pied_html, CSS_PIED_SITE
+from outil import SCEAU_ROUTING, OUTILS, pied_html, CSS_PIED_SITE, SITE_URL, CONTACT
 # 04/10 (audit Routing) : la page des tarifs ne montrait pas les offres que la page Routing vend ; elles se lisent
 # dans offre-routing.json (la grille choisie par Arslane le 29/09), jamais tapées ici
 OFFRE_ROUTING = json.loads((BASE / "offre-routing.json").read_text())
@@ -26,7 +26,7 @@ OFFRE_SCREENING = json.loads((BASE / "offre-screening.json").read_text())
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
 # la barre du site (10/09) : les cinq instruments dans l'ordre du rideau, lus dans OUTILS, jamais tapés
 NAV = "".join(f'\n    <a href="{o["page_hero"]}">{o["nom"]}</a>' for o in OUTILS.values())
-DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-routing"
+DEPOT_URL = OUTILS["routing"]["depot"]   # the repository, written once in outil.py
 
 CSS = '''
   :root{--noir:#0e0e11;--noir-b:#08080a;--noir-c:#121215;--filet:#26262c;--sur:#e8e6df;--sur-pale:#9a988f;
@@ -290,8 +290,8 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Crusetra: what an engagement buys">
 <meta property="og:description" content="Evaluate free for thirty days on your own records. Then one sealed measurement campaign at a fixed price, or the annual license for the suite.">
-<meta property="og:url" content="https://cascade-routing.com/engagement.html">
-<meta property="og:image" content="https://cascade-routing.com/og.png">
+<meta property="og:url" content="{SITE_URL}engagement.html">
+<meta property="og:image" content="{SITE_URL}og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Evaluate free for thirty days on your own records. Then one sealed measurement campaign at a fixed price, or the annual license for the suite.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
@@ -427,7 +427,7 @@ PAGE = f'''<!doctype html><html lang="en">
     <p class="etat" id="etat">What you buy afterwards is delivered on your machine, where you can check it yourself.</p>
     <div class="commande-jour"><span>drag the day, or</span><button type="button" id="courir">show the whole year</button></div>
   </div>
-  <p class="note-fin">Write to <a href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a>. Your vendor onboarding can run during the thirty days, since nothing is signed until you decide. <b>The report certifies only what was measured</b>, and you may not publish the results of an engagement outside your own institution. The full terms are on <a href="ANNEXE-TERMS.html">the terms page</a>, which repeats the license word for word.</p>
+  <p class="note-fin">Write to <a href="mailto:{CONTACT}">{CONTACT}</a>. Your vendor onboarding can run during the thirty days, since nothing is signed until you decide. <b>The report certifies only what was measured</b>, and you may not publish the results of an engagement outside your own institution. The full terms are on <a href="ANNEXE-TERMS.html">the terms page</a>, which repeats the license word for word.</p>
 </div></section>
 </main>
 
@@ -436,14 +436,14 @@ PAGE = f'''<!doctype html><html lang="en">
   <div class="cc-corps">
     <p class="cc-sur">Crusetra &#183; Contact</p>
     <h2 class="cc-titre" id="contact-titre">Get in touch.</h2>
-    <div class="cc-mail-ligne"><a class="cc-mail" href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a><button type="button" class="cc-copie" data-copie="contact@cascade-routing.com">copy</button></div>
+    <div class="cc-mail-ligne"><a class="cc-mail" href="mailto:{CONTACT}">{CONTACT}</a><button type="button" class="cc-copie" data-copie="{CONTACT}">copy</button></div>
     <ul class="cc-liste">
       <li><b>Write about a figure or an engagement.</b> Name the page and the figure, so we start from the same source.</li>
       <li><b>Anything worth deciding in the open</b> goes to a public issue on GitHub, with no client names and no records.</li>
       <li><b>Attach no file</b>, except the list you send for a Screening report, or the measured record of a Routing free test. A channel for other records is opened in the engagement letter, before signature.</li>
       <li><b>We answer within one business day.</b></li>
     </ul>
-    <div class="cc-actions"><a class="cc-bt" href="mailto:contact@cascade-routing.com">Write to us <span aria-hidden="true">&#8594;</span></a><a class="cc-bt cc-sec" href="https://github.com/ArslaneSempai-ui/cascade-routing/issues">Open an issue <span aria-hidden="true">&#8594;</span></a></div>
+    <div class="cc-actions"><a class="cc-bt" href="mailto:{CONTACT}">Write to us <span aria-hidden="true">&#8594;</span></a><a class="cc-bt cc-sec" href="{DEPOT_URL}/issues">Open an issue <span aria-hidden="true">&#8594;</span></a></div>
   </div>
   <form method="dialog"><button class="cc-fermer" aria-label="Close">&#215;</button></form>
 </div></dialog>

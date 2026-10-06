@@ -30,7 +30,7 @@ BASE = pathlib.Path(__file__).parent
 
 sys.path.insert(0, str(BASE))
 from instrument_carte import CSS_NOIR, CSS_ONYX, CARTE_ONYX_HTML, PANNEAU_ONYX_HTML, JS_ONYX  # noqa: E402
-from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_html, n_tests
+from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_html, n_tests, SITE_URL
 
 r = subprocess.run(["node", str(BASE / "extraire-instrument-dossier.mjs")],
                    capture_output=True, text=True)
@@ -57,7 +57,7 @@ D = _sans_cadratin(D)
 
 ORDRE = D["controles"]["presents"]
 QUESTIONS = list(D["questions"])
-DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-dossier"
+DEPOT_URL = OUTILS["dossier"]["depot"]   # the repository, written once in outil.py
 
 
 def table_html():
@@ -302,7 +302,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Crusetra Dossier: the live instrument">
 <meta property="og:description" content="The four questions of the chain against the contract's five controls, with the states, seals and dates all read live from our public test set.">
-<meta property="og:url" content="https://cascade-routing.com/dossier/instrument.html">
+<meta property="og:url" content="{SITE_URL}dossier/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="The four questions of the chain against the contract's five controls, with the states, seals and dates all read live from our public test set.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23070709'/%3E%3Cpath d='M16 0v16H0z' fill='%231c1c22'/%3E%3C/svg%3E">

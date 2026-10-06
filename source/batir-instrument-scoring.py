@@ -30,7 +30,7 @@ BASE = pathlib.Path(__file__).parent
 
 sys.path.insert(0, str(BASE))
 from instrument_carte import CSS_NOIR, carte_html, PANNEAU_HTML, js_carte  # noqa: E402  (the live chart, shared)
-from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_html, n_tests
+from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_html, n_tests, SITE_URL
 
 r = subprocess.run(["node", str(BASE / "extraire-instrument-scoring.mjs")],
                    capture_output=True, text=True)
@@ -41,7 +41,7 @@ D = json.loads((BASE / "instrument-scoring-donnees.json").read_text())
 
 PALIERS = [p["id"] for p in D["paliers"]]
 MONTRES = D["seuilsMontres"]
-DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-scoring"
+DEPOT_URL = OUTILS["scoring"]["depot"]   # the repository, written once in outil.py
 
 
 def pc(x):
@@ -339,7 +339,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Crusetra Scoring: the live instrument">
 <meta property="og:description" content="Each risk factor, at each threshold, read from our public test set: recall against false alerts, and the interval that comes with each cell.">
-<meta property="og:url" content="https://cascade-routing.com/scoring/instrument.html">
+<meta property="og:url" content="{SITE_URL}scoring/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Each risk factor, at each threshold, read from our public test set: recall against false alerts, and the interval that comes with each cell.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23100b1f'/%3E%3Cpath d='M16 0v16H0z' fill='%234b2a7a'/%3E%3C/svg%3E">

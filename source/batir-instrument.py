@@ -38,9 +38,9 @@ D = json.loads((BASE / "instrument-donnees.json").read_text())
 
 FIELDS, TIERS = D["fields"], D["tiers"]
 from outil import SCEAU_ROUTING
-from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_html, n_tests
+from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_html, n_tests, SITE_URL
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
-DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-routing"
+DEPOT_URL = OUTILS["routing"]["depot"]   # the repository, written once in outil.py
 
 
 def table_html():
@@ -316,8 +316,8 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Crusetra: the live instrument">
 <meta property="og:description" content="Compose a routing cell by cell, or let the budget decide: the same bricks the tool bills, frozen and self-checked in your browser.">
-<meta property="og:url" content="https://cascade-routing.com/instrument.html">
-<meta property="og:image" content="https://cascade-routing.com/og.png">
+<meta property="og:url" content="{SITE_URL}instrument.html">
+<meta property="og:image" content="{SITE_URL}og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Compose a routing cell by cell, or let the budget decide: the same bricks the tool bills, frozen and self-checked in your browser.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">

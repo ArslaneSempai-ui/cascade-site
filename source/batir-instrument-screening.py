@@ -29,7 +29,7 @@ import sys
 BASE = pathlib.Path(__file__).parent
 sys.path.insert(0, str(BASE))
 from instrument_carte import CSS_NOIR, carte_html, PANNEAU_HTML, js_carte  # noqa: E402  (the live chart, shared)
-from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_html, n_tests
+from outil import OUTILS, barre_site, CSS_BARRE_SITE, pied_html, n_tests, SITE_URL
 
 r = subprocess.run(["node", str(BASE / "extraire-instrument-screening.mjs")],
                    capture_output=True, text=True)
@@ -40,7 +40,7 @@ D = json.loads((BASE / "instrument-screening-donnees.json").read_text())
 
 PALIERS = [p["id"] for p in D["paliers"]]
 MONTRES = D["seuilsMontres"]
-DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-screening"
+DEPOT_URL = OUTILS["screening"]["depot"]   # the repository, written once in outil.py
 
 
 def pc(x):
@@ -333,7 +333,7 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Crusetra Screening: the live instrument">
 <meta property="og:description" content="Matcher by matcher and threshold by threshold, on our public test set: what each one catches, what it flags incorrectly, and where it cannot say.">
-<meta property="og:url" content="https://cascade-routing.com/screening/instrument.html">
+<meta property="og:url" content="{SITE_URL}screening/instrument.html">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Matcher by matcher and threshold by threshold, on our public test set: what each one catches, what it flags incorrectly, and where it cannot say.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%23180b0f'/%3E%3Cpath d='M16 0v16H0z' fill='%237a1f2e'/%3E%3C/svg%3E">

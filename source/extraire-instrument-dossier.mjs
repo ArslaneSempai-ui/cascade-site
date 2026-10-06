@@ -72,7 +72,7 @@ const sortie = {
     empreinte: releve.empreinte,
     commit: releve.commit,
     date: releve.date,
-    note: "every line below comes from the sealed public dossier of cascade-dossier: each question's state was recomposed from its own verdicts by the contract's no-gap rule, and the coverage recounted, before this file was allowed to exist",
+    note: "every line below comes from the sealed public dossier of crusetra-dossier: each question's state was recomposed from its own verdicts by the contract's no-gap rule, and the coverage recounted, before this file was allowed to exist",
   },
   controles: releve.controles,
   questions: releve.questions,

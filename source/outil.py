@@ -22,6 +22,28 @@ import sys
 
 _MAISON = pathlib.Path.home() / "Documents"
 
+# THE HOUSE ADDRESSES, WRITTEN ONCE (Crusetra, waves 2 and 3, 6 October 2026). The domain was
+# typed on 31 lines in 9 builders, and a rename always missed one. The builders, the assembler
+# (BASE_URL, CNAME, robots, sitemap, security.txt) and the annexes read them here; the content
+# JSON may type the address in prose, and garde-adresses.py refuses a served file that names any
+# other address of ours: the old domain, an old repository name, or a foreign contact address.
+DOMAINE = "crusetra.com"
+SITE_URL = f"https://{DOMAINE}/"
+CONTACT = f"contact@{DOMAINE}"
+GITHUB = "https://github.com/ArslaneSempai-ui/"
+# the repositories under their GitHub names; the local folders keep theirs (~/Documents/cascade...)
+DEPOTS = {"routing": "crusetra-routing", "screening": "crusetra-screening",
+          "monitoring": "crusetra-monitoring", "scoring": "crusetra-scoring",
+          "dossier": "crusetra-dossier"}
+DEPOT_SITE = "cascade-site"   # the site's own repository: not renamed in this wave
+ORGANISATION = {"@type": "Organization", "@id": f"{SITE_URL}#org", "name": "Crusetra",
+                "url": SITE_URL, "logo": f"{SITE_URL}og.png", "email": CONTACT}
+
+
+def depot_url(outil_id):
+    """The public repository of a tool, under its GitHub name."""
+    return GITHUB + DEPOTS[outil_id]
+
 
 def _canonique(x, racine=True):
     """Le JSON canonique de empreinteDuReleve (cascade-screening/src/empreinte.ts),
@@ -121,7 +143,7 @@ OUTILS = {
         # source unique du sceau que les pages vertes citent ; landing.json reste le fichier de chiffres
         "releve_scelle": _MAISON / "cascade" / "profiles-2026-08-20-coeur-rendu.json",
         "outil_chemin": _MAISON / "cascade",
-        "depot": "https://github.com/ArslaneSempai-ui/cascade-routing",
+        "depot": depot_url("routing"),
         # le rideau (deuxième écran) : ce que le pan de CET outil dit de lui, sur
         # TOUTE page ; ses teintes vivent ici parce que la page rubis aliase la
         # palette et que le pan vert doit y rester vert
@@ -151,7 +173,7 @@ OUTILS = {
         # la section « Company and vessel names » de la page s'y branche par son scellé, comme le héros
         "releve_entites": _MAISON / "cascade-screening" / "releve-entites.json",
         "outil_chemin": _MAISON / "cascade-screening",
-        "depot": "https://github.com/ArslaneSempai-ui/cascade-screening",
+        "depot": depot_url("screening"),
         "page_hero": "HERO-SCREENING.html",
         "etiquette": "Screening &#183; name matching",
         "pitch": "Raise it and you miss real matches. Lower it and your analysts drown in alerts. Screening puts a number on each.",
@@ -178,7 +200,7 @@ OUTILS = {
         "outil_chemin": _MAISON / "cascade-monitoring",
         # le dépôt n'existe pas encore en ligne : lien mort jusqu'au push d'Arslane,
         # exactement comme le rouge avant le sien
-        "depot": "https://github.com/ArslaneSempai-ui/cascade-monitoring",
+        "depot": depot_url("monitoring"),
         "page_hero": "HERO-MONITORING.html",
         "etiquette": "Monitoring &#183; transaction monitoring",
         "pitch": "A scenario that fires a hundred times a week is cheap to write and expensive to work through. Monitoring weighs the two.",
@@ -205,7 +227,7 @@ OUTILS = {
         "robots": ("robot-amethyste-penche.webp", "robot-amethyste-pese.webp"),
         "releve": _MAISON / "cascade-scoring" / "releve-public.json",   # scellé par le lot A-L4 (à venir) : l'entrée reste gated par manques()
         "outil_chemin": _MAISON / "cascade-scoring",
-        "depot": "https://github.com/ArslaneSempai-ui/cascade-scoring",
+        "depot": depot_url("scoring"),
         "page_hero": "HERO-SCORING.html",
         "etiquette": "Scoring &#183; risk rating",
         "pitch": "Risk weights come from policy, which writes them once and rarely tests them against what happened next. Scoring tests them.",
@@ -228,7 +250,7 @@ OUTILS = {
         "robots": ("robot-onyx-penche.webp", "robot-onyx-tient.webp"),
         "releve": _MAISON / "cascade-dossier" / "releve-public.json",   # scellé 2497928ec273023c (D1 lu + D2 mesuré)
         "outil_chemin": _MAISON / "cascade-dossier",
-        "depot": "https://github.com/ArslaneSempai-ui/cascade-dossier",
+        "depot": depot_url("dossier"),
         "page_hero": "HERO-DOSSIER.html",
         "etiquette": "Dossier &#183; the audit dossier",
         "pitch": "Four reports, four tools. The Dossier checks each one and signs its answer, so that your reviewer can verify it.",

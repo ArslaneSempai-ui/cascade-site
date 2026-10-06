@@ -12,6 +12,6 @@ The marketing site for Crusetra (routing audit, KYC extraction).
   `etats/` holds the Blender scripts that model and render the 3D objects,
   plus the crop pipeline; `assembler.py` rebuilds `docs/` from all of it.
 
-Publishing is a separate decision: the `cascade-routing` repository's
+Publishing is a separate decision: the `crusetra-routing` repository's
 `docs/` folder is *generated* by `npm run pages` and guarded by fingerprint
 tests, so wiring this site into it is an operation inside that repository.

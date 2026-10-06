@@ -94,9 +94,9 @@ LETTRES = "ABCDEF"
 
 # ── la production : adresses publiées et carte de partage ────────────────────
 # L'URL de base est le dépôt Pages DÉDIÉ du site (choix du 31/08 : ne pas
-# toucher au docs/ généré de cascade-routing) ; si l'hébergement change un
-# jour, c'est LA constante à changer : ici, dans batir-hero.py et assembler.py.
-BASE_URL = "https://cascade-routing.com/"
+# toucher au docs/ généré de crusetra-routing). Since 6 October it is written ONCE,
+# in outil.py (SITE_URL), and every builder and the assembler read it from there.
+from outil import SITE_URL as BASE_URL
 PROD = {
     "ACCUEIL.html": "index.html",
     "HERO.html": "routing/index.html",

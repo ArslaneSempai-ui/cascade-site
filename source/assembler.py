@@ -9,7 +9,7 @@ elle-même. Ce qu'il produit :
            scripts Blender : pour que le site reste re-bâtissable.
 
 Le branchement sur la publication N'EST PAS fait ici : docs/ du dépôt
-cascade-routing est GÉNÉRÉ par `npm run pages` et gardé par des tests
+crusetra-routing (dossier local ~/Documents/cascade) est GÉNÉRÉ par `npm run pages` et gardé par des tests
 d'empreintes (.sources.json) : y verser ce site est une opération dans ce
 dépôt-là, à décider séparément.
 
@@ -29,7 +29,8 @@ MAQ = pathlib.Path(__file__).parent
 # une racine absolue fait agir la commande sur un autre dépôt que celui où on la lance.
 SITE = MAQ.parent
 DOCS = SITE / "docs"
-BASE_URL = "https://cascade-routing.com/"
+sys.path.insert(0, str(MAQ))
+from outil import SITE_URL as BASE_URL, CONTACT, GITHUB, DEPOT_SITE, depot_url  # written once, in outil.py
 # Le chemin sous lequel le site est servi se déduit de l'URL : « /cascade-site/ »
 # aujourd'hui, « / » le jour du domaine propre. Trois usages en dépendent (la
 # base de la 404, l'icône tactile, le contrôle de liens) : ils lisent tous ICI.
@@ -850,9 +851,9 @@ if not HOTE.endswith(".github.io"):
     f"User-agent: *\nAllow: /\nSitemap: {BASE_URL}sitemap.xml\n")
 (DOCS / ".well-known").mkdir()
 (DOCS / ".well-known" / "security.txt").write_text(
-    "Contact: mailto:contact@cascade-routing.com\n"
-    "Contact: https://github.com/ArslaneSempai-ui/cascade-site/issues\n"
-    "Contact: https://github.com/ArslaneSempai-ui/cascade-routing/issues\n"
+    f"Contact: mailto:{CONTACT}\n"
+    f"Contact: {GITHUB}{DEPOT_SITE}/issues\n"
+    f"Contact: {depot_url('routing')}/issues\n"
     "Expires: 2027-08-31T00:00:00.000Z\n"
     "Preferred-Languages: en, fr\n"
     f"Canonical: {BASE_URL}.well-known/security.txt\n")
@@ -1049,6 +1050,25 @@ _go = subprocess.run([sys.executable, str(MAQ / "garde-orthographe.py"), "--docs
 if _go.returncode != 0:
     sys.exit("L'ORTHOGRAPHE N'EST PAS AMÉRICAINE (garde-orthographe) :\n" + _go.stdout[-2400:] + _go.stderr[-400:])
 print("  " + next(l.strip() for l in _go.stdout.splitlines() if "orthographe" in l))
+
+# ── the addresses (Crusetra, 6 October 2026): one domain, one contact address, the repositories ──
+# under their GitHub names, all read from outil.py. Same jaw as the voice: a planted page must turn
+# it red before its zero is believed; garde-adresses.py also runs its own witness (exit 2 = broken).
+_zza = DOCS / "zz-temoin-adresses.html"
+_zza.write_text('<a href="mailto:contact@cascade-routing.com">contact@cascade-routing.com</a>')
+_ga = subprocess.run([sys.executable, str(MAQ / "garde-adresses.py"), "--docs", str(DOCS)], capture_output=True, text=True)
+if _ga.returncode == 2:
+    # its inner witness refused: a rule no longer bites, or a constant of outil.py makes the clean text faulty
+    sys.exit("GARDE CASSÉE (garde-adresses, son témoin interne) :\n" + _ga.stdout[-1200:] + _ga.stderr[-400:])
+if _ga.returncode != 1 or "zz-temoin-adresses.html" not in _ga.stdout:
+    sys.exit("GARDE CASSÉE : la garde des adresses n'a pas vu la page témoin plantée : son zéro ne vaut rien\n"
+             + _ga.stdout[-1200:] + _ga.stderr[-400:])
+_zza.unlink()
+_ga = subprocess.run([sys.executable, str(MAQ / "garde-adresses.py"), "--docs", str(DOCS)], capture_output=True, text=True)
+if _ga.returncode != 0:
+    sys.exit("LES ADRESSES NE SONT PAS CELLES DE LA MAISON (garde-adresses, outil.py) :\n"
+             + _ga.stdout[-2400:] + _ga.stderr[-400:])
+print("  " + next(l.strip() for l in _ga.stdout.splitlines() if "adresses tenues" in l))
 
 # ── le témoin de l'accueil : le grand livre, l'éventail, la méthode ──────────
 # Statique et auto-témoigné par mutation (quatre mues doivent rougir avant que le

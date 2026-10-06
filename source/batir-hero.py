@@ -50,10 +50,11 @@ if not _m:
 N_TESTS, N_FICHIERS = _m.group(1), _m.group(2)
 
 from outil import SCEAU_ROUTING, etiquette_sur_objet, SEUIL_OBJET, etiquettes_qui_se_recouvrent, barre_site, CSS_BARRE_SITE, CSS_PIED_SITE, OUTILS, pied_html, n_tests
+from outil import SITE_URL, ORGANISATION   # the house address, written once in outil.py
 from instrument_carte import (CSS_AFFICHE, affiche_html, CSS_ACCUEIL, eventail_html, methode_html,   # l'affiche (10/09), l'accueil (10/09)
                               _svg_courbes, _svg_paliers, _svg_horloge)
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
-DEPOT_URL = "https://github.com/ArslaneSempai-ui/cascade-routing"
+DEPOT_URL = OUTILS["routing"]["depot"]   # the repository, written once in outil.py
 
 
 def qte(v):
@@ -1108,22 +1109,19 @@ scenes = "".join(scene_html(i, s) for i, s in enumerate(SCENES))
 DONNEES_STRUCTUREES = json.dumps({
     "@context": "https://schema.org",
     "@graph": [
-        {"@type": "Organization", "@id": "https://cascade-routing.com/#org",
-         "name": "Crusetra", "url": "https://cascade-routing.com/",
-         "logo": "https://cascade-routing.com/og.png",
-         "email": "contact@cascade-routing.com"},
+        ORGANISATION,
         {"@type": "SoftwareApplication", "name": "Crusetra Routing",
-         "url": "https://cascade-routing.com/routing/",
+         "url": f"{SITE_URL}routing/",
          "applicationCategory": "DeveloperApplication",
          "operatingSystem": "macOS, Linux (Node 24+)",
-         "downloadUrl": "https://github.com/ArslaneSempai-ui/cascade-routing",
+         "downloadUrl": DEPOT_URL,
          "description": "A routing audit for KYC extraction: measured on sealed "
                         "records, rerun on your machine. On your records, on "
                         "your machine: nothing leaves the network.",
          "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
                     "description": "Thirty-day evaluation on your own records, "
                                    "granted in the public license."},
-         "publisher": {"@id": "https://cascade-routing.com/#org"}},
+         "publisher": {"@id": ORGANISATION["@id"]}},
     ],
 }, ensure_ascii=True)
 
@@ -1516,7 +1514,7 @@ def _section_rapport_routing():
     <p class="marque-h">Start with receipts</p>
     <p>The public run grades two vendors and our local tiers on {ex["cas"]} real receipts. Grade one vendor's outputs against the labels yourself, with nothing downloaded:</p>
     <code class="r-cmd"><b>$ </b>git clone {DEPOT_URL}
-<b>$ </b>cd cascade-routing &amp;&amp; npm ci --ignore-scripts
+<b>$ </b>cd {DEPOT_URL.rsplit('/', 1)[1]} &amp;&amp; npm ci --ignore-scripts
 <b>$ </b>{cmd_grade}</code>
     <p>On those receipts, {meilleur} reads {pc(meilleur)} of totals right and {courant} {pc(courant)}. Our two encoder tiers read {pc("small")} and {pc("large")}; the local tier that competes, gen-4b, reads {pc("gen-4b")}, and it needs Ollama. The local tiers read a text that our macOS OCR produced from the images, so their rates include that OCR's errors.</p>
   </div>"""
@@ -1619,8 +1617,8 @@ PAGE = f'''<!doctype html><html lang="en">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Crusetra: Routing, the extraction cost audit">
 <meta property="og:description" content="Which engine each field of your documents needs: measured on our public test set and on 100 real receipts, rerun on your machine. Nothing reaches us unless you send it.">
-<meta property="og:url" content="https://cascade-routing.com/routing/">
-<meta property="og:image" content="https://cascade-routing.com/og.png">
+<meta property="og:url" content="{SITE_URL}routing/">
+<meta property="og:image" content="{SITE_URL}og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Which engine each field of your documents needs: measured on our public test set and on 100 real receipts, rerun on your machine. Nothing reaches us unless you send it.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
@@ -1638,7 +1636,7 @@ PAGE = f'''<!doctype html><html lang="en">
     On our identity-record test set, three of the five fields are read by a text pattern alone, at no cost.</p>
   <div class="commande entree" role="group" aria-label="The first measurement, before any install">
     <code class="ln">git clone {DEPOT_URL}</code>
-    <code class="ln">cd cascade-routing</code>
+    <code class="ln">cd {DEPOT_URL.rsplit("/", 1)[1]}</code>
     <code class="ln">node src/premiere-reponse.mjs</code>
     <span class="note">Prints the receipts result from the signed CORD record, then our KYC corpus. Under one second, before npm install.</span>
   </div>
@@ -1704,20 +1702,17 @@ def batir_accueil():
     outils, chacun sous son sceau."""
     vivants = outils_vivants()
     n = NOMBRES.get(len(vivants), str(len(vivants)))
-    graphe = [{"@type": "Organization", "@id": "https://cascade-routing.com/#org",
-               "name": "Crusetra", "url": "https://cascade-routing.com/",
-               "logo": "https://cascade-routing.com/og.png",
-               "email": "contact@cascade-routing.com"}]
+    graphe = [ORGANISATION]
     for o in vivants:
         graphe.append({"@type": "SoftwareApplication", "name": f"Crusetra {o['nom']}",
-                       "url": f"https://cascade-routing.com/{o['sous_dossier']}",
+                       "url": f"{SITE_URL}{o['sous_dossier']}",
                        "applicationCategory": "DeveloperApplication",
                        "operatingSystem": "macOS, Linux (Node 24+)",
                        "downloadUrl": o["depot"],
                        "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
                                   "description": "Thirty-day evaluation on your own records, "
                                                  "granted in the public license."},
-                       "publisher": {"@id": "https://cascade-routing.com/#org"}})
+                       "publisher": {"@id": ORGANISATION["@id"]}})
     donnees = json.dumps({"@context": "https://schema.org", "@graph": graphe}, ensure_ascii=True)
     # L'ÉVENTAIL (Arslane, 10/09) : les cinq cartes des instruments, les vraies courbes de chaque
     # relevé scellé, dans l'ordre du rideau ; la dernière du paquet est au-dessus
@@ -1787,8 +1782,8 @@ def batir_accueil():
 <meta property="og:type" content="website">
 <meta property="og:title" content="Crusetra: {n} instruments, one method">
 <meta property="og:description" content="{description}">
-<meta property="og:url" content="https://cascade-routing.com/">
-<meta property="og:image" content="https://cascade-routing.com/og.png">
+<meta property="og:url" content="{SITE_URL}">
+<meta property="og:image" content="{SITE_URL}og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="{description}">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='%2323543f'/%3E%3C/svg%3E">
@@ -2547,19 +2542,16 @@ def batir_outil_catalogue(o, spec):
     donnees = json.dumps({
         "@context": "https://schema.org",
         "@graph": [
-            {"@type": "Organization", "@id": "https://cascade-routing.com/#org",
-             "name": "Crusetra", "url": "https://cascade-routing.com/",
-             "logo": "https://cascade-routing.com/og.png",
-             "email": "contact@cascade-routing.com"},
+            ORGANISATION,
             {"@type": "SoftwareApplication", "name": spec["app"],
-             "url": f"https://cascade-routing.com/{o['sous_dossier']}",
+             "url": f"{SITE_URL}{o['sous_dossier']}",
              "applicationCategory": "DeveloperApplication",
              "operatingSystem": "macOS, Linux (Node 24+)",
              "downloadUrl": o["depot"],
              "description": spec["app_desc"],
              "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
                         "description": spec["offre"]},
-             "publisher": {"@id": "https://cascade-routing.com/#org"}},
+             "publisher": {"@id": ORGANISATION["@id"]}},
         ],
     }, ensure_ascii=True)
 
@@ -2600,8 +2592,8 @@ def batir_outil_catalogue(o, spec):
 <meta property="og:type" content="website">
 <meta property="og:title" content="{spec["og_titre"]}">
 <meta property="og:description" content="{spec["description"]}">
-<meta property="og:url" content="https://cascade-routing.com/{o["sous_dossier"]}">
-<meta property="og:image" content="https://cascade-routing.com/og.png">
+<meta property="og:url" content="{SITE_URL}{o["sous_dossier"]}">
+<meta property="og:image" content="{SITE_URL}og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="{spec["description"]}">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0h16L0 16z' fill='%2314251e'/%3E%3Cpath d='M16 0v16H0z' fill='{o["favicon_accent"]}'/%3E%3C/svg%3E">

@@ -115,7 +115,7 @@ const sortie = {
     empreinte: releve.empreinte,
     commit: releve.commit,
     date: releve.date,
-    note: "every figure below comes from the sealed public record of cascade-scoring, recomposed with the tool's own rate() before this file was allowed to exist; the recommended cell applies the tool's rule: recall LOWER BOUND holds the floor, then fewest false alerts, then the cheaper factor, then the higher threshold",
+    note: "every figure below comes from the sealed public record of crusetra-scoring, recomposed with the tool's own rate() before this file was allowed to exist; the recommended cell applies the tool's rule: recall LOWER BOUND holds the floor, then fewest false alerts, then the cheaper factor, then the higher threshold",
   },
   seuils: SEUILS,
   seuilsMontres: [0.50, 0.60, 0.70, 0.80, 0.85, 0.90, 0.95, 1.00],
