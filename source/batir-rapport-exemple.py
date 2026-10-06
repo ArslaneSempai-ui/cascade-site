@@ -39,7 +39,10 @@ tmp_pdf = BASE / "rapports" / "_page.pdf"
 subprocess.run(["node", str(BASE / "capturer-rapport.mjs"), str(tmp), str(tmp_pdf), str(webp)], check=True, capture_output=True)
 tmp.unlink(); tmp_pdf.unlink()
 texte = subprocess.run(["pdftotext", str(pdf), "-"], capture_output=True, text=True).stdout
-for attendu in ("seven sanctions lists", "GLEIF"):
+# the count the renderer prints is the record's own (rapport.py, MOTS): seven lists before the sources-plus merge, ten
+# after it. The check reads it from the rendered record, so a typed count cannot fall behind the tool.
+EN_LETTRES = {5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine", 10: "ten"}   # rapport.py's MOTS, digits beyond
+for attendu in (f"{EN_LETTRES.get(len(fr['listes']), len(fr['listes']))} sanctions lists", "GLEIF"):
     if attendu not in texte:
         sys.exit(f"the rendered sample report does not say « {attendu} »: the rendering is not the current rapport.py")
 if "separate author" in texte:

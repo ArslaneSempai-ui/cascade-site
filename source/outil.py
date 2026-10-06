@@ -35,7 +35,7 @@ GITHUB = "https://github.com/ArslaneSempai-ui/"
 DEPOTS = {"routing": "crusetra-routing", "screening": "crusetra-screening",
           "monitoring": "crusetra-monitoring", "scoring": "crusetra-scoring",
           "dossier": "crusetra-dossier"}
-DEPOT_SITE = "cascade-site"   # the site's own repository: not renamed in this wave
+DEPOT_SITE = "crusetra-site"   # the site's own repository, under its GitHub name (the local folder keeps cascade-site)
 ORGANISATION = {"@type": "Organization", "@id": f"{SITE_URL}#org", "name": "Crusetra",
                 "url": SITE_URL, "logo": f"{SITE_URL}og.png", "email": CONTACT}
 

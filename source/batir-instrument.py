@@ -401,11 +401,12 @@ PAGE = f'''<!doctype html><html lang="en">
     </details>
   </div>
   <aside class="clone-col">
-  <div class="vos" role="group" aria-label="The three commands that measure your own records">
-    <span class="vos-t">The three commands, exactly as they run</span>
+  <div class="vos" role="group" aria-label="The four commands that measure your own records">
+    <span class="vos-t">The four commands, exactly as they run</span>
     <div class="term"><div class="term-bar"><i></i><i></i><i></i><span>run it yourself</span></div>
     <div class="term-corps">
       <code class="cmd">git clone {DEPOT_URL}</code>
+      <code class="cmd">cd {DEPOT_URL.rsplit("/", 1)[1]}</code>
       <code class="cmd">npm ci --ignore-scripts</code>
       <code class="cmd">npm run measure:yours -- --cases=your-file.csv</code>
       <span class="sortie">nothing leaves your machine; cut the network and it still runs</span>

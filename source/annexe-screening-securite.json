@@ -26,7 +26,7 @@
     {
       "h2": "Each list carries a content hash, and a changed file is refused",
       "html": [
-        "<p>npm run listes -- --fetch downloads seven public sources: OFAC SDN, the OFAC consolidated (non-SDN) lists, the US Consolidated Screening List (its Commerce and State lists), the UN Security Council list, the EU financial sanctions list, the UK Sanctions List, and the EU's designated vessels. It writes a manifest, and the manifest is committed to git. The manifest holds the source, the URL, the date, the sha256 (the content hash of the file), the byte and entry counts. The list data itself stays out of the repository. When the tool later reads a list from disk, it recomputes the content hash. Screening against a list other than the recorded one certifies nothing. So the tool <b>refuses a file that no longer matches the manifest</b> and names both content hashes.</p>",
+        "<p>npm run listes -- --fetch downloads ten public sources: OFAC SDN, the OFAC consolidated (non-SDN) lists, the US Consolidated Screening List (its Commerce and State lists), the UN Security Council list, the EU financial sanctions list, the UK Sanctions List, the EU's designated vessels, Australia's DFAT Consolidated List, the Consolidated Canadian Autonomous Sanctions List and New Zealand's Russia Sanctions Register. It writes a manifest, and the manifest is committed to git. The manifest holds the source, the URL, the date, the sha256 (the content hash of the file), the byte and entry counts. The list data itself stays out of the repository. When the tool later reads a list from disk, it recomputes the content hash. Screening against a list other than the recorded one certifies nothing. So the tool <b>refuses a file that no longer matches the manifest</b> and names both content hashes.</p>",
         "<p>OFAC states its own record count inside the file, and on each fetch the tool checks the entries it read against that count. The UN address is the one the Security Council page publishes. Without the --fetch flag, npm run listes reports what is on disk and touches nothing.</p>"
       ],
       "verif": {
@@ -38,7 +38,7 @@
             "n": "reports date, content hash state and entry counts, with no network touched"
           }
         ],
-        "refs": "src/listes.ts:415 &#183; src/listes.ts:440"
+        "refs": "src/listes.ts:750 &#183; src/listes.ts:775"
       }
     },
     {
@@ -53,10 +53,10 @@
         "cmd": [
           {
             "c": "python3 -c \"import json; [print(x['source'], x['disponible'], x.get('entrees'), x.get('telechargeLe','')[:10]) for x in json.load(open('listes-manifest.json'))['listes']]\"",
-            "n": "prints the seven sources, each with its entry count and download date"
+            "n": "prints the ten sources, each with its entry count and download date"
           }
         ],
-        "refs": "src/listes.ts:110 &#183; src/listes.ts:161"
+        "refs": "src/listes.ts:169 &#183; src/listes.ts:280"
       }
     },
     {
@@ -77,7 +77,7 @@
             "n": "refuses, names the flag and what to do next, writes nothing"
           }
         ],
-        "refs": "src/listes.ts:508"
+        "refs": "src/listes.ts:843"
       }
     },
     {

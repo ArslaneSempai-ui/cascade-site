@@ -48,6 +48,9 @@ grep -q "orthographe américaine tenue" $SORTIE/assemblage.log || {
 # the address guard (6 October 2026, Crusetra): a green build without its line has lost the guard
 grep -q "adresses tenues" $SORTIE/assemblage.log || {
   echo "REFUS : l'assemblage vert ne porte plus la ligne de la garde des adresses (garde-adresses.py), débranchée" ; exit 5 ; }
+# the list-count guard (Crusetra V4, 6 October 2026): same jaw
+grep -q "listes tenues" $SORTIE/assemblage.log || {
+  echo "REFUS : l'assemblage vert ne porte plus la ligne de la garde des listes (garde-listes.py), débranchée" ; exit 5 ; }
 
 echo "=== serveur $PORT (127.0.0.1 seulement)"
 # un serveur déjà debout ne se réutilise que s'il sert CE docs/ : la page servie n'est

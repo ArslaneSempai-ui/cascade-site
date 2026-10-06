@@ -764,6 +764,29 @@ if _inc:
              + "\n  ".join(_inc) + "\n  → compléter emisLe, client, corpus.empreinte, corpus.dossiers, outil.commit dans le rendu, re-signer")
 print("  " + _v.stdout.strip().splitlines()[0].strip() + " (routing-sample-report.html, servie ; "
       + ", ".join(l.strip() for l in _v.stdout.splitlines() if l.strip().startswith(("Issued", "For ", "Corpus", "Tool"))) + ")")
+# Crusetra V4, 6 October 2026: a page that says WHOSE corpus the signed example of the Routing repository was issued on
+# quotes that signed file, never a renamed version of it. rapport-exemple.html was signed on 3 September and says
+# « cascade's own held-out corpus »; the FAQ had turned it into « Crusetra's ». The signed file cannot be re-signed to
+# follow the brand, so the page follows the file (or says « our own », which names nobody).
+_exemple_signe = (pathlib.Path.home() / "Documents" / "cascade" / "rapport-exemple.html").read_text()
+def _corpus_mal_cite(texte):
+    import html as _h
+    return [m.group(0) for m in re.finditer(r"\b[A-Z][\w-]*['\u2019]s own (?:synthetic )?held-out corpus", _h.unescape(texte))
+            if m.group(0).replace("\u2019", "'") not in _exemple_signe]
+def _pages_mal_citees():
+    return [f"{pg.relative_to(DOCS)} : « {c} »" for pg in sorted(DOCS.rglob("*.html")) for c in _corpus_mal_cite(pg.read_text())]
+# same jaw as the other guards: the matcher on a true and a false sentence, then a planted page the scan must find
+if not _corpus_mal_cite("<p>It was issued on Crusetra's own held-out corpus.</p>") or _corpus_mal_cite("<p>on our own held-out corpus</p>"):
+    sys.exit("GARDE CASSÉE : la citation du corpus de l'exemple signé ne mord plus (témoin)")
+_zzc = DOCS / "zz-temoin-corpus.html"
+_zzc.write_text("<p>It was issued with that key on Crusetra&#39;s own held-out corpus.</p>")
+if not any(x.startswith("zz-temoin-corpus.html") for x in _pages_mal_citees()):
+    sys.exit("GARDE CASSÉE : la citation de l'exemple signé n'a pas vu la page témoin plantée : son zéro ne vaut rien")
+_zzc.unlink()
+_mal_cites = _pages_mal_citees()
+if _mal_cites:
+    sys.exit("UNE PAGE CITE MAL L'EXEMPLE SIGNÉ (rapport-exemple.html de crusetra-routing) :\n  " + "\n  ".join(_mal_cites))
+print("  exemple signé cité tel quel : aucune page ne lui prête un autre corpus (témoin mordu)")
 # les robots de toutes les couleurs partent déjà par le glob ci-dessus (le rideau
 # les montre sur toutes les pages) ; seuls les ÉTATS du plateau bleu sont conditionnels
 # le PRÉFIXE des états vit dans outil.py seul (ETATS_PREFIXE) : le 8/09, « bassins » ici
@@ -857,6 +880,11 @@ if not HOTE.endswith(".github.io"):
     "Expires: 2027-08-31T00:00:00.000Z\n"
     "Preferred-Languages: en, fr\n"
     f"Canonical: {BASE_URL}.well-known/security.txt\n")
+# the site's repository is named once (DEPOT_SITE, outil.py): security.txt above reads it, and the README's title must
+# say the same name (V4, 6 October 2026: the repository becomes crusetra-site, and « # cascade-site » would have stayed)
+_titre_readme = (SITE / "README.md").read_text().splitlines()[0]
+if _titre_readme != f"# {DEPOT_SITE}":
+    sys.exit(f"README.md:1 dit « {_titre_readme} », le dépôt du site est {DEPOT_SITE} (outil.py) : corriger le titre")
 shutil.copy(MAQ / "apple-touch-icon.png", DOCS / "apple-touch-icon.png")
 publiques = ([n for n in PROD.values() if n != "404.html"]
              + [n for n in SOUS_DOSSIER_EMISES.values()])
@@ -1069,6 +1097,24 @@ if _ga.returncode != 0:
     sys.exit("LES ADRESSES NE SONT PAS CELLES DE LA MAISON (garde-adresses, outil.py) :\n"
              + _ga.stdout[-2400:] + _ga.stderr[-400:])
 print("  " + next(l.strip() for l in _ga.stdout.splitlines() if "adresses tenues" in l))
+
+# ── the list count (Crusetra V4, 6 October 2026): Screening reads the lists of its committed manifest, ten ──
+# since the sources-plus merge; a served sentence that counts them otherwise is refused. Same jaw: a planted
+# page must turn it red first, and garde-listes.py runs its own witness (exit 2 = broken).
+_zzl = DOCS / "zz-temoin-listes.html"
+_zzl.write_text("<h2>Your list of names, screened against seven sanctions lists.</h2>")
+_gl = subprocess.run([sys.executable, str(MAQ / "garde-listes.py"), "--docs", str(DOCS)], capture_output=True, text=True)
+if _gl.returncode == 2:
+    sys.exit("GARDE CASSÉE (garde-listes, son témoin interne) :\n" + _gl.stdout[-1200:] + _gl.stderr[-400:])
+if _gl.returncode != 1 or "zz-temoin-listes.html" not in _gl.stdout:
+    sys.exit("GARDE CASSÉE : la garde des listes n'a pas vu la page témoin plantée : son zéro ne vaut rien\n"
+             + _gl.stdout[-1200:] + _gl.stderr[-400:])
+_zzl.unlink()
+_gl = subprocess.run([sys.executable, str(MAQ / "garde-listes.py"), "--docs", str(DOCS)], capture_output=True, text=True)
+if _gl.returncode != 0:
+    sys.exit("LE COMPTE DES LISTES N'EST PAS CELUI DE L'OUTIL (garde-listes, listes-manifest.json) :\n"
+             + _gl.stdout[-2400:] + _gl.stderr[-400:])
+print("  " + next(l.strip() for l in _gl.stdout.splitlines() if "listes tenues" in l))
 
 # ── le témoin de l'accueil : le grand livre, l'éventail, la méthode ──────────
 # Statique et auto-témoigné par mutation (quatre mues doivent rougir avant que le

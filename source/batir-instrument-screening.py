@@ -427,9 +427,10 @@ PAGE = f'''<!doctype html><html lang="en">
     <aside class="clone-col">
     <h2>Measure your own alert history</h2>
     <p>The page above shows our own measurement. Yours runs on your own machine.</p>
-    <span class="clone-t">The three commands, exactly as they run</span>
-    <div class="clone" role="group" aria-label="The three commands that measure your own alert history">
+    <span class="clone-t">The four commands, exactly as they run</span>
+    <div class="clone" role="group" aria-label="The four commands that measure your own alert history">
       <div><span class="ps">$</span> git clone {DEPOT_URL}.git</div>
+      <div><span class="ps">$</span> cd {DEPOT_URL.rsplit("/", 1)[1]}</div>
       <div><span class="ps">$</span> npm ci --ignore-scripts</div>
       <div><span class="ps">$</span> npm run measure:yours -- --alerts=your-alerts.csv</div>
       <div class="note">the report and the record are written next to your file, and nowhere else</div>

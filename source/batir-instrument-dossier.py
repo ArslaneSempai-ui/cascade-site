@@ -392,9 +392,10 @@ PAGE = f'''<!doctype html><html lang="en">
     <p>This page shows our own dossier, over our public test sets. Yours is assembled at home,
       by the tool, from the signed reports the suite&#8217;s tools left on your machine, and nothing
       about them leaves your machine.</p>
-    <span class="clone-t">The three commands, exactly as they run</span>
-    <div class="clone" role="group" aria-label="The three commands that assemble the dossier of your own reports">
+    <span class="clone-t">The four commands, exactly as they run</span>
+    <div class="clone" role="group" aria-label="The four commands that assemble the dossier of your own reports">
       <div><span class="ps">$</span> git clone {DEPOT_URL}.git</div>
+      <div><span class="ps">$</span> cd {DEPOT_URL.rsplit("/", 1)[1]}</div>
       <div><span class="ps">$</span> npm ci --ignore-scripts</div>
       <div><span class="ps">$</span> npm run dossier -- --reports=a-measured.json,b-measured.json</div>
       <div class="note">the dossier is written next to your reports, and nowhere else</div>

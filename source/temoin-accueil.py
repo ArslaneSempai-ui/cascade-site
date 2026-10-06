@@ -11,7 +11,7 @@ Il lit la page SERVIE (docs/index.html) et tient les affirmations du premier éc
   B. l'éventail : cinq cartes vivantes, une par outil, dans l'ordre du rideau
      (OUTILS d'outil.py, jamais une liste retapée), chacune portant son SVG ;
   C. la méthode : quatre stations numérotées, la station 03 porte le terminal aux
-     TROIS commandes, la station 02 explique le scellé par son content hash ;
+     QUATRE commandes (le cd depuis le 6/10), la station 02 explique le scellé par son content hash ;
   D. la scène : l'escalier-01 avec DEUX annotations dont les textes sont ceux
      PUBLIÉS de findings-dossier.json (fiche 01), et la note est la phrase de la
      fiche — l'accueil cite le dossier, il ne le paraphrase pas ;
@@ -98,8 +98,9 @@ def relever(html, hero_routing, findings_dossier):
         if lis and "methode-term" not in lis[2]:
             dire("la station 03 (RERUN) ne porte pas le terminal des commandes")
         n_cmd = len(re.findall(r"<code[^>]*>", lis[2])) if len(lis) >= 3 else 0
-        if n_cmd != 3:
-            dire(f"le terminal de la station 03 porte {n_cmd} commandes, la maison en montre trois")
+        if n_cmd != 4:
+            # trois jusqu'au 6/10 ; le cd entre le clone et npm ci (Crusetra V4, demandé par le chef) en fait quatre
+            dire(f"le terminal de la station 03 porte {n_cmd} commandes, la maison en montre quatre")
         # 13/09 : « sealed public record » a quitté les ÉCRANS (décision d'Arslane) ; la
         # station 01 dit « our public test set ». Le scellé se DÉFINIT désormais à la
         # station 02 (« SEAL · Hashed, then frozen »), et c'est elle qu'on garde : l'accueil

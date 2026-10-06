@@ -381,8 +381,8 @@ PAGE = f'''<!doctype html><html lang="en">
 
 <section class="ex" aria-label="The screening report, by the tier"><div class="colonne">
   <p class="ex-sur">Screening &#183; the screening report</p>
-  <h2 class="ex-t">Your list of names, screened against seven sanctions lists, at a fixed price.</h2>
-  <p class="ex-l">You email a list of company and vessel names. We screen it against seven public sources and send back a PDF, a spreadsheet and the sealed record, each candidate with its list entry and the words that matched. <a href="HERO-SCREENING.html#report">See what a report holds</a>.</p>
+  <h2 class="ex-t">Your list of names, screened against ten sanctions lists, at a fixed price.</h2>
+  <p class="ex-l">You email a list of company and vessel names. We screen it against ten public sources and send back a PDF, a spreadsheet and the sealed record, each candidate with its list entry and the words that matched. <a href="HERO-SCREENING.html#report">See what a report holds</a>.</p>
   <div class="ex-grille">
     <div class="ex-c"><p class="ex-eti">Free test</p><p class="ex-prix">$0<small> &#183; {OFFRE_SCREENING["essai_noms"]} names</small></p><p class="ex-q">Email {OFFRE_SCREENING["essai_noms"]} of your names. The report comes back within {OFFRE_SCREENING["delai_heures"]} hours, at no charge.</p></div>
     <div class="ex-c haute"><p class="ex-eti">One report</p><p class="ex-prix">${OFFRE_SCREENING["rapport"]["prix_usd"]:,}<small> &#183; up to {OFFRE_SCREENING["rapport"]["noms"]:,} names</small></p><p class="ex-q">Your list, screened once and sealed, back within {OFFRE_SCREENING["delai_heures"]} hours: the PDF, the spreadsheet and the sealed record.</p></div>

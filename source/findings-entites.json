@@ -5,7 +5,7 @@
   "populations": [
     "{sur} real companies, each under two spellings of its name in the GLEIF register: each mark is one pair, lit when the tool finds it.",
     "{sur} pairs of real, different companies that share a distinctive word: a lit mark is a false alert.",
-    "{lignes} invented counterparties on no list, screened against the seven sources: the lit marks are what your officer reads."
+    "{lignes} invented counterparties on no list, screened against the {listes} sources of {jour}: the lit marks are what your officer reads."
   ],
   "note": "Measured once, on {date_gleif}, on names the tool had never seen. {manques} of the {sur} spelling variants, about a third ({tiers} %), are missed even at the possible level: a name written very differently can get through. A candidate is a name for your compliance officer to read, never a match established. On an easier set, written by a separate AI agent that never saw the matcher, {ia_trouves} of {ia_sur} true pairs came back strong and {ia_fausses} of {ia_sur_f} neighbors did (28 September 2026, before the tool was recalibrated on real names). The counterparty book was read to set the review budget, so its figure is not blind.",
   "gleif": {

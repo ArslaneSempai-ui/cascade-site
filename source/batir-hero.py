@@ -1732,6 +1732,11 @@ def batir_accueil():
                         "scoring": "#e2d3ff", "dossier": "#e8e6df"}[o["id"]], o["nuit"]))
     # LA MÉTHODE : quatre stations, chaque chiffre lu dans un relevé
     dossier_r = lire_releve_scelle(OUTILS["dossier"]["releve"])
+    # the RERUN terminal's commands, written once: the station counts them, the terminal prints them (V4, 6 October
+    # 2026: the cd after the clone made three commands four, and a typed « 3 commands » would have stayed)
+    depot_routing = OUTILS["routing"]["depot"]
+    cmd_accueil = [f"git clone {depot_routing}", f"cd {depot_routing.rsplit('/', 1)[1]}", "npm ci --ignore-scripts",
+                   "npm run measure:yours -- --cases=your-file.csv"]
     stations = [
         ("01 · MEASURE", "On our public test set",
          ["Each tool measures every tier on the", "tool&#8217;s own public test set: 1,000", "held-out records for the reader, 60 + 60 pairs,", "42 + 42 cases, 84 files. Each rate carries its confidence interval."],
@@ -1741,7 +1746,7 @@ def batir_accueil():
          f"content hash {SCEAU_ROUTING[:8]}… (reader)"),
         ("03 · RERUN", "On your own files, on your machine",
          ["One command reruns the whole sweep on", "your records. The report is written next", "to your file, and no data leaves the", "network."],
-         "3 commands, no account, no upload"),
+         f"{len(cmd_accueil)} commands, no account, no upload"),
         ("04 · DOSSIER", "Signed, current, verifiable",
          ["Four reports against five controls:", "present, frozen, signed with a key, fresh,", "and consistent. A reviewer checks the dossier", "from the hashes and signatures alone."],
          f"{dossier_r['couverture']['n']} of {dossier_r['couverture']['sur']} reports · {len(dossier_r['controles']['presents'])} controls"),
@@ -1760,10 +1765,9 @@ def batir_accueil():
     scene = (f'<div class="scene actif"><img class="objet" src="rendus/etats/{img_dossier.name}" '
              f'alt="{SPECS["dossier"]["alt_plateau"]}, state {f_dossier["num"]}: {f_dossier["titre"]}">'
              f'<svg class="appels" viewBox="0 0 1420 1000" aria-hidden="true">{lignes}</svg>{etiquettes}</div>')
-    terminal = f'''<div class="methode-term" role="group" aria-label="The three commands that measure your own records">
+    terminal = f'''<div class="methode-term" role="group" aria-label="The {({3: 'three', 4: 'four', 5: 'five'})[len(cmd_accueil)]} commands that measure your own records">
         <div class="tb"><i></i><i></i><i></i><span>run it yourself</span></div>
-        <div class="tc"><code>git clone {OUTILS["routing"]["depot"]}</code><code>npm ci --ignore-scripts</code>
-          <code>npm run measure:yours -- --cases=your-file.csv</code>
+        <div class="tc">{"".join(f"<code>{c}</code>" for c in cmd_accueil)}
           <span class="note">the report is written next to your file, and nowhere else</span></div>
       </div>'''
     # the black page redefines the paper tokens ; the method section gets the REAL paper back,
@@ -1814,7 +1818,7 @@ def batir_accueil():
         <div><dt>file-aimed routing per 100,000 documents, on an assumed price</dt><dd>{moins_cher}</dd></div>
         <div><dt>content hash</dt><dd>{SCEAU_ROUTING}</dd></div>
         <div class="cmd"><dt>rerun on your own files</dt><dd class="c1">node src/premiere-reponse.mjs</dd>
-          <small class="c2">git clone {OUTILS["routing"]["depot"]}</small></div>
+          <small class="c2">{cmd_accueil[0]}</small><small class="c2">{cmd_accueil[1]}</small></div>
       </dl>
     </div>
     {eventail_html(cartes)}
@@ -2238,6 +2242,18 @@ def _section_entites(o):
     sans = livre["sansCorrespondance"]
     if forts + possibles + sans != lignes:
         sys.exit("le livre ne se recompte pas : forts + possibles + sans candidat != lignes")
+    # Crusetra V4, 6 October 2026: the book was screened on the lists of ITS day (seven on 4 October), while the report
+    # section of the same page names the ten of today. The sentence reads the count and the day from the book's own
+    # sealed record, so it stays true when the book is screened again on more lists.
+    rec_livre = lire_releve_scelle(o["outil_chemin"] / livre["releve"])
+    if rec_livre["empreinte"] != livre["sceau"]:
+        sys.exit(f"releve-entites.json cite le livre {livre['sceau']} mais {livre['releve']} porte {rec_livre['empreinte']} : refusé")
+    EN_LETTRES_L = {5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine", 10: "ten"}
+    n_l = len(rec_livre["listes"])
+    listes_livre = EN_LETTRES_L.get(n_l, str(n_l))
+    a_m_j = [int(x) for x in rec_livre["emisLe"][:10].split("-")]
+    jour_livre = f"{a_m_j[2]} " + ("January February March April May June July August September October November "
+                                   "December").split()[a_m_j[1] - 1]
     pct = lambda n, d: f"{100 * n / d:.0f}"
     def grille(n, classe):
         return '<div class="grille" aria-hidden="true">' + "".join(f'<i class="{classe(k)}"></i>' for k in range(n)) + "</div>"
@@ -2251,7 +2267,7 @@ def _section_entites(o):
          grille(sur_f, lambda k: "f" if k < ff else ("p" if k < fp else "")),
          f'<span><i class="f"></i>{ff} of {sur_f:,} raised a strong alert [{if_f[0]}-{if_f[1]} %]</span>'
          f'<span><i class="v"></i>{fp} raised a possible alert [{if_p[0]}-{if_p[1]} %]</span>'),
-        (f["populations"][2].format(lignes=f"{lignes:,}"), f"{forts + possibles}<small>/{lignes}</small>",
+        (f["populations"][2].format(lignes=f"{lignes:,}", listes=listes_livre, jour=jour_livre), f"{forts + possibles}<small>/{lignes}</small>",
          grille(lignes, lambda k: "f" if k < forts else ("p" if k < forts + possibles else "")),
          f'<span><i class="f"></i>{forts} strong</span><span><i class="v"></i>{possibles} possible</span><span><i></i>{sans} with no candidate</span>'),
     ]
@@ -2362,7 +2378,7 @@ def _section_rapport(o):
     <h2 class="h2">Send us your list, and within {off["delai_heures"]} hours it comes back screened and sealed.</h2>
     <ol class="r-pas">
       <li><span><b>You send</b> a CSV or a spreadsheet with a column of company and vessel names, and the IMO number of a vessel when you have it.</span></li>
-      <li><span><b>We screen</b> each name against seven public sources: OFAC SDN, the OFAC consolidated (non-SDN) lists, the US Consolidated Screening List (its Commerce and State lists), the UN Security Council list, the EU financial sanctions list, the UK Sanctions List, and the vessels the EU designates in Annex XLII of Regulation 833/2014, each as downloaded on the date the report states.</span></li>
+      <li><span><b>We screen</b> each name against ten public sources: OFAC SDN, the OFAC consolidated (non-SDN) lists, the US Consolidated Screening List (its Commerce and State lists), the UN Security Council list, the EU financial sanctions list, the UK Sanctions List, the vessels the EU designates in Annex XLII of Regulation 833/2014, Australia's DFAT Consolidated List, the Consolidated Canadian Autonomous Sanctions List and New Zealand's Russia Sanctions Register, each as downloaded on the date the report states.</span></li>
       <li><span><b>You receive</b> a PDF, a spreadsheet and the sealed record: each candidate with its list entry and the words that matched, the dates of the lists, and a seal anyone can check with one command, <code>npm run sceller -- &lt;record&gt;.screening.json --check</code>.</span></li>
     </ol>
   </div>
@@ -2379,7 +2395,7 @@ def _section_rapport(o):
         <p class="r-eti">One report</p>
         <p class="r-montant"><span class="r-n" data-v="{r0["prix_usd"]}">{usd(r0["prix_usd"])}</span><small>up to {r0["noms"]:,} names</small></p>
         <p class="r-sous">Your list, screened once and sealed, back within {off["delai_heures"]} hours.</p>
-        <ul class="r-inclus"><li>The report as a PDF and as a spreadsheet</li><li>Each candidate with its list entry and the words that matched</li><li>The dates of the seven sources, and a seal anyone can check</li></ul>
+        <ul class="r-inclus"><li>The report as a PDF and as a spreadsheet</li><li>Each candidate with its list entry and the words that matched</li><li>The dates of the ten sources, and a seal anyone can check</li></ul>
         <p class="r-au-dela" hidden>Stops at {r0["noms"]:,} names</p>
       </article>
       <article class="r-col haute" data-col="abo">
@@ -2584,7 +2600,7 @@ def batir_outil_catalogue(o, spec):
                     f'{json.loads((BASE / "offre-screening.json").read_text())["delai_heures"]} hours '
                     '<span aria-hidden="true">&#8595;</span></a>') if o["id"] == "screening" else ""
     commandes_html = "".join(f'<code class="ln">{c}</code>\n    ' for c in
-                             ([f"git clone {o['depot']}"] + spec["commandes"]))
+                             ([f"git clone {o['depot']}", f"cd {o['depot'].rstrip('/').rsplit('/', 1)[1]}"] + spec["commandes"]))
 
     page = f"""<!doctype html><html lang="en">
 <meta charset="utf-8"><title>{spec["titre"]}</title>
