@@ -84,6 +84,7 @@
       "h2": "No screened name appears in anything the tool writes",
       "html": [
         "<p>When you measure your own alert history, the outputs are written <b>next to your file and nowhere else</b>. They are a report and a public results file with its content hash. That file holds counts, rates, confidence intervals (the range a true rate likely sits in) and the answers keyed by your alert id. No screened name, no list entry you matched and no path with your username leaves the machine. Your identifiers do survive as those keys, so choose ones that carry no meaning. An account number used as an id stays in the outputs.</p>",
+        "<p>Apart from those outputs, the tool keeps one local marker, the date of its first use, in <code>~/.crusetra/premiere-utilisation-screening.json</code> (an earlier date under the former <code>~/.cascade</code> still counts): one labeled date, which the thirty-day evaluation clause of the license reads and which is never transmitted.</p>",
         "<p>The screening itself runs on your machine against the lists on disk. There is no callback to us, no telemetry (usage data sent back) and no account. The only thing the evaluation needs from us is the repository, the code itself.</p>"
       ],
       "verif": {

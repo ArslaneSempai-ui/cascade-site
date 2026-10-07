@@ -27,7 +27,8 @@
       "h2": "What the Dossier reads from a report",
       "html": [
         "<p>The Dossier reads the other tools' signed reports: their content hashes, dates, versions, rule settings and answer counts. It never reads, stores or reprints a client value, because <b>no name, no amount, no account, no country of yours</b> exists in any report of the suite. It cites a report by its content hash and its answers, and names the review by its identifier only.</p>",
-        "<p>The document the Dossier writes is saved next to your files and in no other place. Its content hash is computed like that of each tool's results file in the suite, and the command that checks it is printed on the page that presents it.</p>"
+        "<p>The document the Dossier writes is saved next to your files and in no other place. Its content hash is computed like that of each tool's results file in the suite, and the command that checks it is printed on the page that presents it.</p>",
+        "<p>Apart from that document, the Dossier keeps one local marker, the date of its first use, in <code>~/.crusetra/premiere-utilisation-dossier.json</code> (an earlier date under the former <code>~/.cascade</code> still counts): one labeled date, which the thirty-day evaluation clause of the license reads and which is never transmitted.</p>"
       ],
       "verif": {
         "t": "Verify on the results file itself",

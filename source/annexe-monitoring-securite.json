@@ -44,6 +44,7 @@
       "h2": "Your two files stay yours, and the outputs carry no value",
       "html": [
         "<p>The measurement runs at your desk. It reads, in memory, your dispositioned alerts (those your analysts already decided) and your transactions, and writes its outputs <b>next to your files and nowhere else</b>. The outputs hold counts, rates, confidence intervals (the range the true rate likely sits in) and verdicts by your alert id. A verdict is the tool's answer on one alert. None of your account ids, amounts, transaction dates or countries leave the machine. Your alert ids do survive as verdict keys, so choose opaque ones.</p>",
+        "<p>Apart from those outputs, the tool keeps one local marker, the date of its first use, in <code>~/.crusetra/premiere-utilisation-monitoring.json</code> (an earlier date under the former <code>~/.cascade</code> still counts): one labeled date, which the thirty-day evaluation clause of the license reads and which is never transmitted.</p>",
         "<p>It makes no callback, sends no telemetry and needs no account. The whole measurement is a local process reading two CSV files (plain text tables) on your machine.</p>"
       ],
       "verif": {

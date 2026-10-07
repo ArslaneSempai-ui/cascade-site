@@ -45,6 +45,7 @@
       "h2": "Your two files stay yours, and the outputs carry no value from them",
       "html": [
         "<p>The measurement is a local process at your desk, reading your two CSV files. It loads the reviews your analysts already closed and your customer attributes into memory and writes its outputs <b>next to your files and nowhere else</b>. They are counts, rates, confidence intervals (the range the true rate is likely to sit in) and one answer per review, keyed by review id. Your customer ids, countries and amounts do not leave the machine. Your review ids survive as those keys, so choose opaque ids.</p>",
+        "<p>Apart from those outputs, the tool keeps one local marker, the date of its first use, in <code>~/.crusetra/premiere-utilisation-scoring.json</code> (an earlier date under the former <code>~/.cascade</code> still counts): one labeled date, which the thirty-day evaluation clause of the license reads and which is never transmitted.</p>",
         "<p>The tool has no callback and no telemetry, so it opens no connection to us and sends no usage data. There is no account to create.</p>"
       ],
       "verif": {
