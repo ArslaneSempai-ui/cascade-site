@@ -1131,11 +1131,15 @@ print("  " + next(l.strip() for l in _ga.stdout.splitlines() if "adresses tenues
 # page must turn it red first, and garde-listes.py runs its own witness (exit 2 = broken).
 _zzl = DOCS / "zz-temoin-listes.html"
 _zzl.write_text("<h2>Your list of names, screened against seven sanctions lists.</h2>")
+# and one on another tool's page: until 7 October 2026 routing/ was skipped whole, and this sentence passed
+_zzr = DOCS / "routing" / "zz-temoin-listes.html"
+_zzr.write_text("<p>Crusetra Screening reads seven sanctions lists.</p>")
 _gl = subprocess.run([sys.executable, str(MAQ / "garde-listes.py"), "--docs", str(DOCS)], capture_output=True, text=True)
+_zzr.unlink()
 if _gl.returncode == 2:
     sys.exit("GARDE CASSÉE (garde-listes, son témoin interne) :\n" + _gl.stdout[-1200:] + _gl.stderr[-400:])
-if _gl.returncode != 1 or "zz-temoin-listes.html" not in _gl.stdout:
-    sys.exit("GARDE CASSÉE : la garde des listes n'a pas vu la page témoin plantée : son zéro ne vaut rien\n"
+if _gl.returncode != 1 or "  zz-temoin-listes.html:" not in _gl.stdout or "routing/zz-temoin-listes.html:" not in _gl.stdout:
+    sys.exit("GARDE CASSÉE : la garde des listes n'a pas vu les pages témoins plantées : son zéro ne vaut rien\n"
              + _gl.stdout[-1200:] + _gl.stderr[-400:])
 _zzl.unlink()
 _gl = subprocess.run([sys.executable, str(MAQ / "garde-listes.py"), "--docs", str(DOCS)], capture_output=True, text=True)
