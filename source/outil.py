@@ -38,6 +38,8 @@ DEPOTS = {"routing": "crusetra-routing", "screening": "crusetra-screening",
 DEPOT_SITE = "crusetra-site"   # the site's own repository, under its GitHub name (the local folder keeps cascade-site)
 ORGANISATION = {"@type": "Organization", "@id": f"{SITE_URL}#org", "name": "Crusetra",
                 "url": SITE_URL, "logo": f"{SITE_URL}og.png", "email": CONTACT}
+# Films hidden because the six mp4 files and their YouTube uploads still say "Cascade"; set True once they are re-voiced to bring back every player, card and link.
+FILMS_VISIBLES = False
 
 
 def depot_url(outil_id):

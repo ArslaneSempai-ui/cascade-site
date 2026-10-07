@@ -51,6 +51,7 @@ N_TESTS, N_FICHIERS = _m.group(1), _m.group(2)
 
 from outil import SCEAU_ROUTING, etiquette_sur_objet, SEUIL_OBJET, etiquettes_qui_se_recouvrent, barre_site, CSS_BARRE_SITE, CSS_PIED_SITE, OUTILS, pied_html, n_tests
 from outil import SITE_URL, ORGANISATION   # the house address, written once in outil.py
+from outil import FILMS_VISIBLES   # the films switch, written once in outil.py
 from instrument_carte import (CSS_AFFICHE, affiche_html, CSS_ACCUEIL, eventail_html, methode_html,   # l'affiche (10/09), l'accueil (10/09)
                               _svg_courbes, _svg_paliers, _svg_horloge)
 SCEAU = SCEAU_ROUTING   # lu dans le relevé scellé du vert, jamais tapé (8/09)
@@ -1066,7 +1067,9 @@ JS = '''
               behavior: reduit ? "auto" : "smooth"});
   }));
   poser(0); surScroll();
-  // LE LECTEUR DU FILM (27/09) : sans script la vidéo porte ses commandes natives d'emblée ;
+'''
+# the player script ships only with the films (FILMS_VISIBLES, outil.py)
+JS_LECTEUR = '''  // LE LECTEUR DU FILM (27/09) : sans script la vidéo porte ses commandes natives d'emblée ;
   // avec, l'affiche reste nue sous le bouton rond et les commandes viennent au premier clic,
   // n'importe où sur l'affiche. Le bouton est un vrai bouton (clavier), et la vidéo reçoit
   // le focus quand elle démarre. Si play() est refusé, les commandes natives restent : second essai.
@@ -1096,6 +1099,7 @@ JS = '''
     });
   }
 '''
+JS += JS_LECTEUR if FILMS_VISIBLES else ""
 
 scenes = "".join(scene_html(i, s) for i, s in enumerate(SCENES))
 
@@ -1262,6 +1266,8 @@ def film_html(outil):
     """LA PLACE DU FILM d'un outil, la même sur chaque couleur : le titre, le lecteur
     natif et sa durée (table FILMS, 27/09 : les cinq films sont en ligne). Sans affiche
     rendue, l'affiche est COMPOSÉE (nuit de l'outil, robot penché, question)."""
+    if not FILMS_VISIBLES:
+        return ""
     if outil.get("affiche"):
         # l'affiche RENDUE, comme le vert : le robot de la couleur, paumes ouvertes,
         # projetant deux chiffres du relevé (etats/affiche-plaque.py + affiche-composer.py)
@@ -1611,6 +1617,14 @@ def _section_rapport_routing():
 
 _SECTION_RAPPORT_ROUTING = _section_rapport_routing()
 
+# the Routing film section, empty while the films are hidden (FILMS_VISIBLES, outil.py)
+_SECTION_FILM_ROUTING = f'''<section class="film"><div class="colonne">
+  <h2 class="h2">Crusetra, proven in 79 seconds.</h2>
+  <p class="film-duree">The film, and the demo</p>
+  {lecteur_html("routing", "Routing", "", "affiche-film.jpg")}{liste_films("routing", "", "affiche-film.jpg")}
+</div></section>
+''' if FILMS_VISIBLES else ""
+
 PAGE = f'''<!doctype html><html lang="en">
 <meta charset="utf-8"><title>Crusetra &#183; Routing, the extraction cost audit</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -1672,12 +1686,7 @@ PAGE = f'''<!doctype html><html lang="en">
   <span class="filet"></span>
 </div></div>
 
-<section class="film"><div class="colonne">
-  <h2 class="h2">Crusetra, proven in 79 seconds.</h2>
-  <p class="film-duree">The film, and the demo</p>
-  {lecteur_html("routing", "Routing", "", "affiche-film.jpg")}{liste_films("routing", "", "affiche-film.jpg")}
-</div></section>
-
+{_SECTION_FILM_ROUTING}
 {menus_html()}
 </main>
 

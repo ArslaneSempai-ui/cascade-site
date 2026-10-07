@@ -51,6 +51,9 @@ grep -q "adresses tenues" $SORTIE/assemblage.log || {
 # the list-count guard (Crusetra V4, 6 October 2026): same jaw
 grep -q "listes tenues" $SORTIE/assemblage.log || {
   echo "REFUS : l'assemblage vert ne porte plus la ligne de la garde des listes (garde-listes.py), débranchée" ; exit 5 ; }
+# the films switch guard (7 October 2026, FILMS_VISIBLES in outil.py): same jaw
+grep -q "films guard held" $SORTIE/assemblage.log || {
+  echo "REFUS : the green build no longer carries the films guard line (assembler.py), unplugged" ; exit 5 ; }
 
 echo "=== serveur $PORT (127.0.0.1 seulement)"
 # un serveur déjà debout ne se réutilise que s'il sert CE docs/ : la page servie n'est

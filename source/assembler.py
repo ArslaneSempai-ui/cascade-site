@@ -875,6 +875,7 @@ FILM_MAX = 25 * 1024 * 1024
 # 04/10 : la démo Routing aussi (Routing est toujours émis)
 # 05/10 (Arslane : « retire-le ») : la démo Screening dit « five sanctions lists » et « measured blind » ; elle n'est plus
 # servie, même par lien direct, jusqu'à ce que le chef la refasse. source/films/screening-demo.mp4 reste, rien n'est effacé.
+# 07/10: this copy runs whatever FILMS_VISIBLES says, so docs/films keeps its six files byte for byte while no page links them.
 for _oid in sorted(_outils_emis | {"routing"}) + ["routing-demo"]:
     film = MAQ / "films" / f"{_oid}.mp4"
     if not film.exists():
@@ -1164,6 +1165,50 @@ _tt = subprocess.run([sys.executable, str(MAQ / "temoin-tarifs.py"), "--statique
 if _tt.returncode != 0:
     sys.exit("LES TARIFS NE TIENNENT PAS LEUR STRUCTURE (temoin-tarifs) :\n" + _tt.stdout[-2000:] + _tt.stderr[-400:])
 print("  " + _tt.stdout.strip().splitlines()[0].strip())
+
+# ── the films switch (FILMS_VISIBLES, outil.py), 7 October 2026 ──────────────
+# The six films and their YouTube uploads still say the old brand name. Hidden, no served file may carry a
+# player, a film card, a YouTube link or a link to films/*.mp4 (the mp4 files stay in docs/films, unlinked, so
+# the switch turns back without a re-encode); shown, each emitted tool page must carry its own film, as before.
+# Same jaw as the other guards: a planted page must turn the hidden scan red, and a page without its film must
+# turn the shown check red, before either green is believed.
+from outil import FILMS_VISIBLES  # noqa: E402
+_TRACE_FILM = re.compile(r'<video\b|films/[\w.-]+\.mp4|youtu\.be/|youtube\.com/|class="film"|class="carte-film|data-film=|data-yt=',
+                         re.I)
+
+
+def _traces_de_film(dossier):
+    return [f"{f.relative_to(dossier)} : {m.group(0)}" for f in sorted(dossier.rglob("*"))
+            if f.is_file() and f.suffix in (".html", ".xml", ".txt", ".json")
+            for m in _TRACE_FILM.finditer(f.read_text(errors="replace"))]
+
+
+def _film_absent(texte, oid):
+    return '<section class="film">' not in texte or f"films/{oid}.mp4" not in texte
+
+
+_pages_outils = {"routing": "routing/index.html"} | {n.split("/", 1)[0]: n for n in EMISES_EN_BLOC.values()
+                                                     if n.endswith("/index.html")}
+if FILMS_VISIBLES:
+    if not _film_absent("<main></main>", "routing") or _film_absent(
+            '<section class="film"><video><source src="../films/routing.mp4"></video></section>', "routing"):
+        sys.exit("BROKEN GUARD: the shown-films check no longer tells a page with its film from one without")
+    _sans_film = [n for oid, n in sorted(_pages_outils.items()) if _film_absent((DOCS / n).read_text(), oid)]
+    if _sans_film:
+        sys.exit(f"FILMS_VISIBLES is True but these tool pages carry no film of their own: {_sans_film}")
+    print(f"  films guard held: shown, {len(_pages_outils)} tool pages carry their film (witness bitten)")
+else:
+    _zzf = DOCS / "zz-temoin-films.html"
+    _zzf.write_text('<video><source src="films/routing.mp4"></video><a href="https://youtu.be/x">YouTube</a>')
+    _vu = any(x.startswith("zz-temoin-films.html") for x in _traces_de_film(DOCS))
+    _zzf.unlink()
+    if not _vu:
+        sys.exit("BROKEN GUARD: the hidden-films scan did not see the planted page: its zero is worth nothing")
+    _traces = _traces_de_film(DOCS)
+    if _traces:
+        sys.exit("FILMS_VISIBLES is False but served files still point at a film:\n  " + "\n  ".join(_traces))
+    print(f"  films guard held: hidden, 0 film trace in the served files (witness bitten); "
+          f"{len(list((DOCS / 'films').glob('*.mp4')))} mp4 files left unlinked in docs/films")
 
 # ── le contrôle de liens, témoin d'abord ─────────────────────────────────────
 def liens_casses(dossier):
